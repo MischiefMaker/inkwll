@@ -79,7 +79,8 @@ Rails.application.routes.draw do
   end
   resource :chapter_tabs, only: :show
   get "where", to: "where#show"
-  get "how-it-works", to: "guides#show", as: :how_it_works
+  get "getting-started", to: "guides#show", as: :getting_started
+  get "how-it-works", to: redirect("/getting-started")
   get "archives", to: "archives#index"
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"
@@ -115,6 +116,7 @@ Rails.application.routes.draw do
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do
     root "dashboard#show"
+    get "getting-started", to: "guides#show", as: :getting_started
     resources :areas, only: %i[ index new create edit update ]
     resource :bulk_build, only: %i[ new create ], path: "build_several"
     resources :rooms, only: %i[ new create edit update ] do

@@ -1,15 +1,28 @@
-<% content_for :title, "How it works · Inkwll" %>
+<% content_for :title, "Getting started · Inkwll" %>
 
 <article class="guide">
-  <h1 class="page-title">How it works</h1>
+  <h1 class="page-title">Getting started</h1>
   <p class="guide__intro text">
     <%= game_name %> is a roleplaying game you play in your browser. You write
     your character's part in stories with other players, in places you can
-    walk between. Here's the short version.
+    walk between.
   </p>
 
+  <section class="guide__section guide__section--first-steps">
+    <h2 class="section-title">Your first steps</h2>
+    <ol class="guide__steps list">
+      <li class="guide__step list__item"><strong class="emphasis">Sign up</strong> for a player account. Your player name is for you; your characters get their own names.</li>
+      <li class="guide__step list__item">Go to <strong class="emphasis">My characters</strong> and make a character. Fill in their profile and send them in for staff to approve.</li>
+      <li class="guide__step list__item">Once they're approved, pick them in <strong class="emphasis">Playing as</strong> at the top of the page.</li>
+      <li class="guide__step list__item">On the front page, press <strong class="emphasis">Enter</strong> on an <%= term(:area).downcase %> to step into the world, then follow the <%= term(:exit, count: 2).downcase %> to look around.</li>
+      <li class="guide__step list__item">Find a <%= term(:room).downcase %> you like and start a <%= term(:scene).downcase %>, or join one that's already open there.</li>
+    </ol>
+  </section>
+
+  <h2 class="guide__heading section-title">How it works</h2>
+
   <section class="guide__section guide__section--places">
-    <h2 class="section-title">Getting around</h2>
+    <h2 class="subsection-title">Getting around</h2>
     <p class="text">
       The world is split into <strong class="emphasis"><%= term(:area, count: 2) %></strong>,
       such as a town or a district. Each <%= term(:area).downcase %> holds
@@ -27,7 +40,7 @@
   </section>
 
   <section class="guide__section guide__section--scenes">
-    <h2 class="section-title">Playing a story</h2>
+    <h2 class="subsection-title">Playing a story</h2>
     <p class="text">
       A story is a <strong class="emphasis"><%= term(:scene) %></strong>. Any
       <%= term(:room).downcase %> can hold several <%= term(:scene, count: 2).downcase %>
@@ -49,18 +62,16 @@
   </section>
 
   <section class="guide__section guide__section--characters">
-    <h2 class="section-title">Your characters</h2>
+    <h2 class="subsection-title">Your characters</h2>
     <p class="text">
-      Make a character under <strong class="emphasis">My characters</strong> and
-      send it in for staff to approve. Once it's approved you can play it. If
-      you have more than one, pick who you're playing at the top of the page.
-      The <%= link_to "Roster", roster_path %> lists characters waiting for a
-      new player.
+      You can have more than one character, and switch between them with
+      <strong class="emphasis">Playing as</strong>. The
+      <%= link_to "Roster", roster_path %> lists characters waiting for a new player.
     </p>
   </section>
 
   <section class="guide__section guide__section--talking">
-    <h2 class="section-title">Talking out of character</h2>
+    <h2 class="subsection-title">Talking out of character</h2>
     <p class="text">
       <strong class="emphasis">Messages</strong> are private notes between
       players, outside the story. <strong class="emphasis">OOC Chat</strong> is
@@ -71,7 +82,7 @@
   </section>
 
   <section class="guide__section guide__section--staff">
-    <h2 class="section-title">Getting help</h2>
+    <h2 class="subsection-title">Getting help</h2>
     <p class="text">
       Staff look after the game. If something in a <%= term(:scene).downcase %>
       worries you, use its <strong class="emphasis">Report</strong> link and staff

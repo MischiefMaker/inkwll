@@ -1,0 +1,82 @@
+<% content_for :title, "Getting started · Admin panel · Inkwll" %>
+<% wellkeeper = t("terms.staff_levels.wellkeeper") %>
+<% scribe = t("terms.staff_levels.scribe") %>
+<% page = t("terms.staff_levels.page") %>
+
+<article class="guide guide--admin">
+  <h1 class="page-title">Getting started for staff</h1>
+  <p class="guide__intro text">
+    What to set up first in a new game, in a sensible order, and where to find
+    the everyday jobs. You only see the admin menu links your staff level
+    allows, so some of these may be done by someone else.
+    <%= link_to "The players' guide", getting_started_path %> explains the game from their side.
+  </p>
+
+  <section class="guide__section guide__section--setup">
+    <h2 class="section-title">Setting up the game</h2>
+    <ol class="guide__steps list">
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to "Game settings", edit_admin_game_settings_path %>:</strong>
+        give the game its name and a short blurb for the front page. Decide
+        whether players need an email address, whether characters need
+        approval, and the game's date. <span class="guide__who muted">(<%= wellkeeper.pluralize %>)</span>
+      </li>
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to "Look", edit_admin_skin_path %>:</strong>
+        pick a ready-made look or set your own colours, fonts, pictures and
+        extra CSS. <span class="guide__who muted">(<%= wellkeeper.pluralize %>)</span>
+      </li>
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to "Features", edit_admin_features_path %>:</strong>
+        switch SOUL, Inklings, Grimoire, the wiki, guest chat and the compass
+        on or off. <span class="guide__who muted">(<%= wellkeeper.pluralize %>)</span>
+      </li>
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to "Building", admin_areas_path %>:</strong>
+        a new game comes with a starter map to rename or replace. Make
+        <%= term(:area, count: 2).downcase %>, put <%= term(:room, count: 2).downcase %>
+        in them and join those with <%= term(:exit, count: 2).downcase %>.
+        "Build several" makes many at once. Tick "New characters start here" on
+        one <%= term(:room).downcase %>, and "Default <%= term(:room).downcase %>"
+        on the one each <%= term(:area).downcase %>'s Enter button leads to.
+        <span class="guide__who muted">(<%= scribe.pluralize %>, and <%= page.pluralize %> with the Build job)</span>
+      </li>
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to "Profile fields", admin_profile_fields_path %> and
+        <%= link_to "Character groups", admin_character_groups_path %>:</strong>
+        the questions on a character's profile and application, and the groups
+        characters belong to. <span class="guide__who muted">(<%= wellkeeper.pluralize %>)</span>
+      </li>
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to term(:forum_board, count: 2), admin_forum_boards_path %>:</strong>
+        the news, advertising and wanted ads boards, and who can post on each.
+        <span class="guide__who muted">(<%= scribe.pluralize %> and up)</span>
+      </li>
+      <li class="guide__step list__item">
+        <strong class="emphasis"><%= link_to "Players and staff", admin_accounts_path %>:</strong>
+        bring in your team once they've signed up. <%= page.pluralize %> do the
+        jobs you give them (Build, App), <%= scribe.pluralize %> run the game
+        day to day, <%= wellkeeper.pluralize %> can change everything, and only
+        a <%= term(:founder) %> can make a <%= wellkeeper %>. You can also mark
+        players as <%= term(:storyteller).pluralize %>.
+        <span class="guide__who muted">(<%= scribe.pluralize %> and up)</span>
+      </li>
+    </ol>
+  </section>
+
+  <section class="guide__section guide__section--daily">
+    <h2 class="section-title">Day to day</h2>
+    <p class="text">
+      <strong class="emphasis">Waiting on staff</strong> at the top of the admin
+      menu shows a number when something needs you: character applications,
+      roster requests, and SOUL or Inkling requests if those are on.
+      <strong class="emphasis">Reports</strong> holds anything players have
+      reported, where you can lock a <%= term(:scene).downcase %>, hide a
+      <%= term(:pose).downcase %> or warn a player, and
+      <strong class="emphasis">Bans</strong> keeps people out when you need to.
+    </p>
+    <p class="text">
+      Staff see a hidden <%= term(:scene).downcase %> only once it has been reported.
+    </p>
+  </section>
+</article>

@@ -10,6 +10,7 @@
     <nav class="admin-menu__body" aria-label="Admin panel">
       <h2 class="admin-menu__title">Admin panel</h2>
       <%= link_to admin_menu_overview.label, admin_menu_overview.path, class: [ "admin-menu__link", "admin-menu__link--overview", ("is-current" if admin_menu_overview.current) ], aria: { current: ("page" if admin_menu_overview.current) } %>
+      <%= link_to "Getting started", admin_getting_started_path, class: [ "admin-menu__link", "admin-menu__link--guide", ("is-current" if controller_name == "guides") ], aria: { current: ("page" if controller_name == "guides") } %>
       <% groups.each do |heading, links| %>
         <section class="admin-menu__group">
           <h3 class="admin-menu__heading"><%= heading %></h3>

@@ -67,7 +67,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.site-header--guest`, `.site-header__preview`, `.main--preview` | The top bar and page body for guests previewing |
 | `.place__preview`, `.exit-link--preview`, `.numbered-path--preview`, `.compass__point--preview`, `.compass__centre--preview` | The Preview button and Paths shown as plain links to guests |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
-| `.guide`, `.guide__intro`, `.guide__section`, `.guide__section--places` (and `--scenes`, `--characters`, `--talking`, `--staff`), `.guide__join`, `.menu__guide` | The How it works page and its Menu link |
+| `.guide`, `.guide__intro`, `.guide__heading`, `.guide__section`, `.guide__section--first-steps` (and `--places`, `--scenes`, `--characters`, `--talking`, `--staff`), `.guide__steps`, `.guide__step`, `.guide__join`, `.menu__guide` | The players' Getting started page and its Menu link |
+| `.guide--admin`, `.guide__section--setup`, `.guide__section--daily`, `.guide__who`, `.admin-menu__link--guide`, `.admin-guide-link` | The staff Getting started page and its links in the admin panel |
 
 ## Forum boards
 
