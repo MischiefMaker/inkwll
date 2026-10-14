@@ -80,7 +80,7 @@ h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   min-height: calc(100vh - 3.5rem);
 }
 

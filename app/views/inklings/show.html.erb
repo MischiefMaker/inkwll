@@ -37,6 +37,10 @@
       <p class="text"><strong class="emphasis">Staff can't see this yet.</strong> Build it up as you like, then send it to staff when you want an answer.</p>
     <% elsif @inkling.needs_changes? %>
       <p class="text"><strong class="emphasis">Staff asked for changes.</strong> Add them below, then send it again.</p>
+    <% elsif @inkling.approved? %>
+      <p class="text"><strong class="emphasis">Staff approved the last round.</strong> Carry on, and send it again when there's more for staff.</p>
+    <% elsif @inkling.draft? %>
+      <p class="text">Staff started this. Reply below; send it back to staff when you want an answer.</p>
     <% end %>
     <% if owner && @inkling.open? && !@inkling.submitted? %>
       <%= button_to "Send to staff", inkling_submission_path(@inkling), class: "button inkling__submit",

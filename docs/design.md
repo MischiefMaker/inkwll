@@ -407,6 +407,16 @@ words, and `config/locales/en.yml` maps one to the other.
 - **Front page:** the game's date, staff-written weather, and the
   characters online now.
 
+### Step 8: Inklings
+
+- **An Inkling** is a thread about one character, of a type the game sets.
+  Players build it privately, share it with characters or groups, and send
+  it to staff, which locks it until staff approve or ask for changes.
+- **Entries** are numbered and can be for everyone, private (with staff),
+  personal (only the writer) or staff-only notes. SOUL rolls can be added.
+- **Staff** start staff types for characters and grant rewards (XP, Boons
+  and Banes, Culminations, notes) that go through SOUL.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

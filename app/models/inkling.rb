@@ -64,8 +64,10 @@ class Inkling < ApplicationRecord
   end
 
   # Adds an entry, numbered within the thread.
-  def add_entry!(account:, body:, kind: "public", character: nil, private_to: nil, private: false, soul_roll: nil)
+  # unless_locked: refuse if it was sent to staff in the meantime.
+  def add_entry!(account:, body:, kind: "public", character: nil, private_to: nil, private: false, soul_roll: nil, unless_locked: false)
     with_lock do
+      raise ArgumentError, "This is waiting for staff, so it's locked until they answer." if unless_locked && (locked? || closed?)
       entry = entries.create!(sequence: last_sequence + 1, account: account, character: character, kind: kind,
         body: body, private_to: private_to, private: private, soul_roll: soul_roll)
       update!(last_sequence: entry.sequence, last_entry_at: entry.created_at)

@@ -16,6 +16,20 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 8 details picked while building (Inklings)
+
+Rebuilt from github.com/MischiefMaker/ares-inklings-plugin, keeping its rules: drafts are hidden from staff, sending to staff locks the Inkling, only approving or asking for changes unlocks it (a staff reply never does), approving a round isn't the end, and closing is. Defaults picked by Claude, for the owner to check:
+
+- **Types** come from the plugin (Initiative, Request, Pitch, Goal, Secret, Progress; staff types Hint, Vision, Nudge, Hook) and live in `config/inklings.yml`, where each game can change them.
+- **Where:** "Inklings" in the Menu lists your characters' Inklings and those shared with you, with a "New" marker. Admin → Inklings (App staff) shows those waiting for an answer, then the rest. Staff start one for a character from that character's profile. New entries ring the alerts bell.
+- **Entries:** an update everyone with access sees, private (you and staff; staff can address one character), a personal note (only you, not even staff) or a staff note (staff only). Each is numbered like 14.3. Personal notes can be added even while it's locked.
+- **Sharing** with characters by name or with a whole character group. They can read and write in it, but not private or personal entries.
+- **Rolls** are SOUL rolls by the Inkling's character (or a character it's shared with), shown to everyone or only to staff.
+- **Rewards** (staff): XP, a new Boon or Bane, progressing one the character has, a Culmination, or a written note. They go through SOUL and its staff log, and show to the player only unless staff tick "everyone".
+- **Switch:** Game settings has "Use Inklings", on by default.
+- **Left for later:** the plugin's Secret and Goal drafts during character creation (games can add those as Application fields for now), bonus XP for Progress entries, search, asking staff to delete one, and email for Inkling activity.
+- **Storyteller tools** (also in step 8 of the roadmap) aren't built: they need the owner to say what Storytellers should be able to do.
+
 ## 2026-10-14: Step 7 details picked while building (IC clock)
 
 Defaults picked by Claude, for the owner to check.

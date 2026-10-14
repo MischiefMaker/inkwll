@@ -14,10 +14,13 @@ class Inklings::EntriesController < Inklings::BaseController
 
     writer = staff_view? ? nil : writing_character
     private_to = (Character.find_by(id: params[:private_to_id]) || @inkling.character) if kind == "private" && staff_view?
-    @inkling.add_entry!(account: current_account, character: writer, kind: kind, body: params[:body].to_s.strip, private_to: private_to)
+    @inkling.add_entry!(account: current_account, character: writer, kind: kind, body: params[:body].to_s.strip, private_to: private_to,
+      unless_locked: !staff_view? && kind != "personal")
     back(notice: "Added.")
   rescue ActiveRecord::RecordInvalid => e
     back(alert: e.record.errors.full_messages.to_sentence)
+  rescue ArgumentError => e
+    back(alert: e.message)
   end
 
   private

@@ -15,7 +15,7 @@ module Inkling::Outcomes
     text = "#{roller.name} rolls #{skill.name} against #{difficulty_name.to_s.humanize} (#{roll.difficulty})" \
       "#{" with #{roll.applied_text}" if roll.applied.any?} and gets #{roll.result}. " \
       "#{"Extraordinary! " if roll.extraordinary?}#{roll.degree_text}"
-    add_entry!(account: by, character: roller, kind: "roll", body: text, private: private, soul_roll: roll)
+    add_entry!(account: by, character: roller, kind: "roll", body: text, private: private, soul_roll: roll, unless_locked: true)
   rescue Character::SoulSheet::SheetError => e
     raise ArgumentError, e.message
   end

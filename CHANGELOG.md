@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 8: Inklings
+
+- Inklings: threads about a character (goals, secrets, requests, hints)
+  that players build up, share and send to staff. Staff approve them, ask
+  for changes, add staff notes and grant rewards through SOUL.
+
 ## 2026-10-14 — Step 7: Game time
 
 - Each Chapter has its own in-character date and time of day, which its

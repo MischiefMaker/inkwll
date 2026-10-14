@@ -20,7 +20,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 6c. Jcink add-ons | Mini-profile fields beside Passages, a “My Chapters” tracker, an alerts bell, Chapter subtitles and staff labels, and character groups that colour names. | Built, waiting for you to try it |
 | Security | The owner's security rules from the review: upload limits, HTTPS, email changes, hidden Chapters, staff locks, Scribe bans, posting limits with a cool-off, password rules. See "Security rules" in `decisions.md`. | Built, waiting for you to try it (HTTPS switches on at the first deploy) |
 | 7. IC clock | The rest of game time (the basic game date comes in step 4) and per-scene date overrides. | Built, waiting for you to try it |
-| 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Next |
+| 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Inklings built, waiting for you to try it. Storyteller tools need your input. |
 | 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Later |
 | 9b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Any player can edit, with full history; staff can lock pages. | Later |
 | 10. Platform | Feature toggles screen, CSS skins (colors, fonts, extra CSS) from the admin panel. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
