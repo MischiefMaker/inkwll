@@ -9,6 +9,11 @@ suggestion that still needs the owner's confirmation; don't treat it as settled.
 
 ## 1. Concept
 
+Players see themed words: a room is a **Setting**, an exit is a **Path**, a
+scene is a **Chapter**, a pose is a **Passage**, and finished logs are
+**Manuscripts** in the **Archives**. This document and the code use the plain
+words.
+
 A web-only (no telnet) roleplaying game that combines forum RP and MUSH.
 Inspired by AresMUSH, but web-first.
 

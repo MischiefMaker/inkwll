@@ -16,8 +16,8 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 | scene | **Chapter** |
 | all finished logs | **Archives** |
 | one finished log | **Manuscript** |
-| pose | still to pick (Passage is the favourite) |
-| exit | still to pick, if poses become Passages |
+| pose | **Passage** |
+| exit | **Path** |
 
 Only the words players see change. The code keeps the plain words (room, scene, pose), and the visible words live in one wording file so a game can swap them for its own.
 
