@@ -8,6 +8,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Tabs for several Chapters at once
+
+When a character is in more than one Chapter, the roleplay view shows them as tabs so the player can switch quickly. Each tab should feel like being in that Chapter's Setting (its name, image and description, who is there).
+
+Still open: how this fits with "a character is always in exactly one Setting" when their Chapters are in different Settings (see `roadmap.md`).
+
 ## 2026-10-14: A wiki, inspired by Wikidot
 
 The game has a wiki where staff and players can put whatever information they like (rules, setting lore, plots, guides). Pages are written in Markdown. Pages can pull in live game content, such as characters, Manuscripts and Settings, for example a list of every character or Manuscript with a given tag.

@@ -10,7 +10,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | --- | --- | --- |
 | 1. Foundation | Accounts, characters with the switcher (remembering the last character per room and scene), rooms with exits and click-to-move, site-wide OOC chat. | Done |
 | 1b. Step 1 changes | A forum-like layout with the roleplay front and centre and extras in the menu, and nestable Areas that group Settings (the homepage lists the top-level Areas). Areas and Settings can have an image, text or both. Player-facing words switch to Setting, Path, Chapter, Passage, Archives and Manuscript (one wording file). From the owner's review: one login/player name, an email field, character names with spaces and special characters, a default starting room, a "create the return exit too" option, staff levels (Founder flag, Wellkeepers, Scribes, Pages, Storytellers) and a first admin panel (setting staff, building, deleting characters for the top level), and the per-game settings for email and approval. | Now |
-| 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers. | Next (after you review step 1) |
+| 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers; a tabbed view when a character is in several Chapters, each tab showing its Setting. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow, banning accounts and IP addresses, and an optional block on known VPNs. | Later |
 | 4. Character profiles and approval | A profile for every character with game-configured profile and application fields (background, set questions, images, an optional description), each marked public or private by the game. Each game decides whether a written description and/or image is required., and room for SOUL, Grimoire and Inklings sections. Submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
 | 4b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Placement not yet confirmed. | Later |
@@ -27,6 +27,10 @@ Status: **Now**, **Next**, **Later** or **Done**.
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
+
+**Chapters**
+
+- Can a character be in a Chapter set somewhere other than the Setting they're standing in?
 
 **Wiki**
 
