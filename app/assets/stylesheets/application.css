@@ -342,4 +342,5 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
   margin-bottom: -1px;
 }
 
-.travel-button { margin-top: 0.5rem; }
+.from-afar { margin: var(--space) 0; padding: 0.6rem var(--space); border: 1px dashed var(--color-border); border-radius: var(--radius); }
+.from-afar p { margin-top: 0; }

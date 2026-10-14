@@ -8,10 +8,24 @@
 
   <%= render "shared/description", record: @room %>
 
+  <% here = current_character&.room_id == @room.id %>
+  <% unless here %>
+    <div class="from-afar">
+      <% if current_character %>
+        <p class="muted">
+          You're looking in from afar. <%= current_character.name %> is in
+          <%= link_to current_character.room.name, room_path(current_character.room) %>.
+        </p>
+        <%= button_to "Travel here", room_travel_path(@room), class: "button" %>
+      <% else %>
+        <p class="muted"><%= link_to "Create a character", new_character_path %> to explore.</p>
+      <% end %>
+    </div>
+  <% end %>
+
   <section>
     <h2><%= term(:exit, count: 2) %></h2>
     <% if @room.exits.any? %>
-      <% here = current_character&.room_id == @room.id %>
       <ul class="exits">
         <% @room.exits.each do |room_exit| %>
           <li>
@@ -24,17 +38,6 @@
           </li>
         <% end %>
       </ul>
-      <% unless here %>
-        <p class="muted">
-          <% if current_character %>
-            You're looking in from afar. <%= current_character.name %> is in
-            <%= link_to current_character.room.name, room_path(current_character.room) %>.
-            <%= button_to "Travel here", room_travel_path(@room), class: "button travel-button" %>
-          <% else %>
-            <%= link_to "Create a character", new_character_path %> to explore.
-          <% end %>
-        </p>
-      <% end %>
     <% else %>
       <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>
     <% end %>
