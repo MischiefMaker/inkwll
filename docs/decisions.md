@@ -36,6 +36,8 @@ Players can opt in to emails about new activity, using the email address on thei
 - **Only when I'm not logged in:** nothing while they're on the site.
 - **Only after I've been away a while:** one email once they've been away for a number of days they choose.
 
+Sign-up has a box to opt in (owner, 2026-10-14). Default picked by Claude: ticking it chooses "only when I'm not logged in", and players can change the level later.
+
 Players can also tick **only when it's my turn** (owner, 2026-10-14). In a Chapter with more than two players, they're emailed only when their turn comes up, not for every Passage. Default picked by Claude: this works alongside the level above, so "only when I'm not logged in" plus "only when it's my turn" means a turn email only while they're away. In a two-player Chapter, or one with no turn order, they're emailed as usual.
 
 What counts as new activity (owner, 2026-10-14): new Passages in Chapters the player's characters are in, their turn coming up, being @mentioned, staff announcements, and their character application being approved or returned.
@@ -47,7 +49,7 @@ The email includes the text of the Passages the player missed (owner, 2026-10-14
 
 ## 2026-10-14: OOC chat folds away
 
-The OOC chat sidebar can collapse into the right edge, leaving a slim "OOC" tab that brings it back. Default picked by Claude: it starts open, and each browser remembers whether the player left it open or folded.
+The OOC chat sidebar can collapse into the right edge, leaving a slim "OOC" tab that brings it back. While folded, the tab shows how many new messages the player hasn't seen (owner, 2026-10-14). Default picked by Claude: it starts open, and each browser remembers whether the player left it open or folded.
 
 ## 2026-10-14: Character icons in Passages
 

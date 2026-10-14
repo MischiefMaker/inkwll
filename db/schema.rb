@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_050001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_060001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_050001) do
     t.boolean "founder", default: false, null: false
     t.boolean "storyteller", default: false, null: false
     t.string "job_flags", default: [], null: false, array: true
+    t.string "email_notifications", default: "off", null: false
     t.index "lower((email)::text)", name: "index_accounts_on_lower_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["active_character_id"], name: "index_accounts_on_active_character_id"
     t.index ["username"], name: "index_accounts_on_username", unique: true

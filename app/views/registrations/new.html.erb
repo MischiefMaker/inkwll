@@ -16,6 +16,13 @@
     <small>Used for password resets.<%= " Optional." unless GameSetting.current.email_required? %></small>
   </div>
   <div class="field">
+    <div class="field field--checkbox">
+      <%= form.check_box :email_notifications, {}, "when_away", "off" %>
+      <%= form.label :email_notifications, "Email me about new activity in my Chapters while I'm not logged in" %>
+    </div>
+    <small>Needs an email address. You can change how often, or turn it off, later.</small>
+  </div>
+  <div class="field">
     <%= form.label :password %>
     <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72 %>
   </div>

@@ -10,6 +10,18 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert cookies[:session_id]
   end
 
+  test "players can opt in to email notifications when signing up" do
+    post registration_path, params: { account: { display_name: "Newbie", email: "newbie@example.com", email_notifications: "when_away", password: "secret123", password_confirmation: "secret123" } }
+
+    assert_equal "when_away", Account.find_by(username: "newbie").email_notifications
+  end
+
+  test "email notifications are off unless the player opts in" do
+    post registration_path, params: { account: { display_name: "Newbie", email: "newbie@example.com", password: "secret123", password_confirmation: "secret123" } }
+
+    assert_equal "off", Account.find_by(username: "newbie").email_notifications
+  end
+
   test "invalid sign up shows the form again" do
     post registration_path, params: { account: { display_name: "", password: "x", password_confirmation: "y" } }
     assert_response :unprocessable_entity

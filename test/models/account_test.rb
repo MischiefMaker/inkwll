@@ -82,4 +82,14 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal characters(:moth), alice.remembered_character_for(rooms(:commons))
     assert_equal 1, alice.remembered_characters.where(context: rooms(:commons)).count
   end
+
+  test "email notifications need an email address" do
+    GameSetting.current.update!(email_required: false)
+    account = Account.new(display_name: "NoEmail", password: "secret123", email_notifications: "when_away")
+    assert_not account.valid?
+    assert_includes account.errors[:email], "is needed to get email notifications"
+
+    account.email_notifications = "off"
+    assert account.valid?
+  end
 end

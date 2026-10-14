@@ -11,6 +11,12 @@ class Account < ApplicationRecord
   # Jobs a Page can be given. Scribes and Wellkeepers can do all of them.
   JOB_FLAGS = %w[ build app ].freeze
 
+  # How often a player is emailed about new activity. The emails themselves
+  # are built in roadmap step 3; for now the choice is only stored.
+  # every_time: every time. when_away: only when not logged in.
+  # after_days: only after being away for some days.
+  EMAIL_NOTIFICATIONS = %w[ off every_time when_away after_days ].freeze
+
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :characters, dependent: :destroy
@@ -31,6 +37,8 @@ class Account < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
   validates :email, presence: true, if: -> { GameSetting.current.email_required? }
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates :email_notifications, inclusion: { in: EMAIL_NOTIFICATIONS }
+  validate :email_needed_for_notifications
   validate :job_flags_are_known
   validate :active_character_must_be_own
 
@@ -100,6 +108,12 @@ class Account < ApplicationRecord
       return if username.blank?
       taken = Account.where(username: username).where.not(id: id).exists?
       errors.add(:display_name, "is already taken") if taken
+    end
+
+    def email_needed_for_notifications
+      if email_notifications != "off" && email.blank?
+        errors.add(:email, "is needed to get email notifications")
+      end
     end
 
     def job_flags_are_known

@@ -13,6 +13,10 @@ Short, plain-language notes on what changed. Newest first.
 - Extras (all Settings, OOC chat, admin panel) moved into a Menu.
 - The OOC chat can fold into the right edge and slide back out. Each browser
   remembers whether you left it open.
+- While the OOC chat is folded, its tab shows how many new messages you
+  haven't seen.
+- Sign-up has a box to opt in to email notifications. The emails themselves
+  arrive in step 3; the choice is saved now.
 - One player name for logging in and for the OOC chat. Accounts now have an
   email address, required unless the game turns that off.
 - Character names can use spaces and special characters.
