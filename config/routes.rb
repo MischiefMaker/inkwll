@@ -79,6 +79,7 @@ Rails.application.routes.draw do
   end
   resource :chapter_tabs, only: :show
   get "where", to: "where#show"
+  get "how-it-works", to: "guides#show", as: :how_it_works
   get "archives", to: "archives#index"
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"

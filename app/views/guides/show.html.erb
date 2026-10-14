@@ -1,0 +1,89 @@
+<% content_for :title, "How it works · Inkwll" %>
+
+<article class="guide">
+  <h1 class="page-title">How it works</h1>
+  <p class="guide__intro text">
+    <%= game_name %> is a roleplaying game you play in your browser. You write
+    your character's part in stories with other players, in places you can
+    walk between. Here's the short version.
+  </p>
+
+  <section class="guide__section guide__section--places">
+    <h2 class="section-title">Getting around</h2>
+    <p class="text">
+      The world is split into <strong class="emphasis"><%= term(:area, count: 2) %></strong>,
+      such as a town or a district. Each <%= term(:area).downcase %> holds
+      <strong class="emphasis"><%= term(:room, count: 2) %></strong>: the
+      individual places your character can stand, like a street, a shop or a flat.
+    </p>
+    <p class="text">
+      <%= term(:room, count: 2) %> are joined by
+      <strong class="emphasis"><%= term(:exit, count: 2) %></strong>. Follow a
+      <%= term(:exit).downcase %> to walk your character to the next
+      <%= term(:room).downcase %>. To start, press <strong class="emphasis">Enter</strong>
+      on an <%= term(:area).downcase %> on the front page.
+      <%= link_to "Where", where_path %> shows where everyone is.
+    </p>
+  </section>
+
+  <section class="guide__section guide__section--scenes">
+    <h2 class="section-title">Playing a story</h2>
+    <p class="text">
+      A story is a <strong class="emphasis"><%= term(:scene) %></strong>. Any
+      <%= term(:room).downcase %> can hold several <%= term(:scene, count: 2).downcase %>
+      at once, so you never have to wait for a quiet spot. Start one, or join
+      an open one you find there.
+    </p>
+    <p class="text">
+      Each post you write in a <%= term(:scene).downcase %> is a
+      <strong class="emphasis"><%= term(:pose) %></strong>. Most
+      <%= term(:scene, count: 2).downcase %> take turns, and the page tells you
+      when it's yours. Your open <%= term(:scene, count: 2).downcase %> sit in
+      tabs along the top, so you can play more than one at a time.
+    </p>
+    <p class="text">
+      When a <%= term(:scene).downcase %> finishes, it becomes a
+      <strong class="emphasis"><%= term(:log) %></strong> and goes into the
+      <%= link_to term(:logs_collection), archives_path %> to be read again later.
+    </p>
+  </section>
+
+  <section class="guide__section guide__section--characters">
+    <h2 class="section-title">Your characters</h2>
+    <p class="text">
+      Make a character under <strong class="emphasis">My characters</strong> and
+      send it in for staff to approve. Once it's approved you can play it. If
+      you have more than one, pick who you're playing at the top of the page.
+      The <%= link_to "Roster", roster_path %> lists characters waiting for a
+      new player.
+    </p>
+  </section>
+
+  <section class="guide__section guide__section--talking">
+    <h2 class="section-title">Talking out of character</h2>
+    <p class="text">
+      <strong class="emphasis">Messages</strong> are private notes between
+      players, outside the story. <strong class="emphasis">OOC Chat</strong> is
+      the open chat for everyone, and the
+      <%= link_to term(:forum_board, count: 2), forum_boards_path %> hold news
+      and wanted ads.
+    </p>
+  </section>
+
+  <section class="guide__section guide__section--staff">
+    <h2 class="section-title">Getting help</h2>
+    <p class="text">
+      Staff look after the game. If something in a <%= term(:scene).downcase %>
+      worries you, use its <strong class="emphasis">Report</strong> link and staff
+      will take a look. Everything else lives in the
+      <strong class="emphasis">Menu</strong> at the top.
+    </p>
+  </section>
+
+  <% unless current_account %>
+    <p class="guide__join">
+      <%= link_to "Sign up", new_registration_path, class: "button" %>
+      <%= link_to "Have a look around", root_path, class: "button button--quiet" %>
+    </p>
+  <% end %>
+</article>

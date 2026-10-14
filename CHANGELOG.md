@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — How it works page
+
+- A short "How it works" page explains Areas, Settings, Paths, Chapters,
+  Passages, the Archives and Messages for new players. It's first in the
+  Menu, and guests see it in the top bar before they sign up.
+
 ## 2026-10-14 — Optional email and staff reset links
 
 - Games that make email optional (Game settings) now have a way back in

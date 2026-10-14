@@ -10,6 +10,7 @@
     <details class="menu">
       <summary class="disclosure__summary">Menu</summary>
       <div class="menu__items">
+        <%= link_to "How it works", how_it_works_path, class: "menu__guide" %>
         <%= link_to "All #{term(:room, count: 2).downcase}", rooms_path %>
         <%= link_to "Where", where_path %>
         <%= link_to "My #{term(:scene, count: 2)}", my_chapters_path %>
