@@ -28,10 +28,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
 
-**Chapters**
-
-- Can a character be in a Chapter set somewhere other than the Setting they're standing in?
-
 **To revisit later**
 
 - A themed word for Areas (kept as "Area" for now).

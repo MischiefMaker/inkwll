@@ -12,7 +12,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 When a character is in more than one Chapter, the roleplay view shows them as tabs so the player can switch quickly. Each tab should feel like being in that Chapter's Setting (its name, image and description, who is there).
 
-Still open: how this fits with "a character is always in exactly one Setting" when their Chapters are in different Settings (see `roadmap.md`).
+A character still stands in exactly one Setting (the one whose "Here" list shows them), but can stay in Chapters set in other Settings. Each tab shows that Chapter's own Setting.
 
 ## 2026-10-14: A wiki, inspired by Wikidot
 
