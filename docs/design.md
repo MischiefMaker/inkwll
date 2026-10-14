@@ -63,6 +63,8 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
   players or staff can be a scene's storyteller. Storytellers get some SOUL and
   Inklings tools but never other players' secret details. See `decisions.md`.
 - Lurkers can watch joinable scenes without posing.
+- Every character has a profile: game-configured profile and application
+  fields, plus SOUL, Grimoire and Inklings sections when those are on.
 - Character approval is a per-game setting. When it is on, new characters
   cannot pose in scenes until staff approve them.
 
