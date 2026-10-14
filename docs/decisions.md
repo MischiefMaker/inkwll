@@ -38,6 +38,8 @@ Players can opt in to emails about new activity, using the email address on thei
 
 Players can also tick **only when it's my turn** (owner, 2026-10-14). In a Chapter with more than two players, they're emailed only when their turn comes up, not for every Passage. Default picked by Claude: this works alongside the level above, so "only when I'm not logged in" plus "only when it's my turn" means a turn email only while they're away. In a two-player Chapter, or one with no turn order, they're emailed as usual.
 
+What counts as new activity (owner, 2026-10-14): new Passages in Chapters the player's characters are in, their turn coming up, being @mentioned, staff announcements, and their character application being approved or returned.
+
 Defaults picked by Claude: the emails cover the same events as the in-game alerts, so the two are built together in step 3. Several new Passages in the same Chapter are bundled into one email until the player visits, so a busy Chapter doesn't flood their inbox. Every email has a one-click link to turn them off.
 
 The email includes the text of the Passages the player missed (owner, 2026-10-14), each with the character's name. Only Chapters the player can already read are included. Default picked by Claude: a long catch-up shows the 20 most recent missed Passages in full, then says how many more there are, with a link to read the rest in the Chapter. Sending email needs a mail-sending service, set up in step 3 rather than waiting for step 11.
