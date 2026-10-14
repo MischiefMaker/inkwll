@@ -33,6 +33,6 @@ class Admin::RoomsController < Admin::BaseController
     end
 
     def room_params
-      params.expect(room: [ :name, :summary, :description, :icon, :remove_icon, :image, :remove_image, :background, :remove_background, :area_id, :starting, :kind ])
+      params.expect(room: [ :name, :summary, :description, :icon, :remove_icon, :image, :remove_image, :background, :remove_background, :area_id, :area_default, :starting, :kind ])
     end
 end

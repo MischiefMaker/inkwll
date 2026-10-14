@@ -17,10 +17,13 @@ class Area < ApplicationRecord
 
   scope :top_level, -> { where(parent_id: nil).order(:position, :name) }
 
-  # Where players arrive when they open this area: its chosen entrance, or
-  # failing that its first Setting, or the entrance of the first area inside it.
+  # Where Enter on the front page takes a character: the area's chosen
+  # default Setting, or failing that the first Setting made in it, or the
+  # entrance of the first area inside it.
   def entrance
-    return entrance_room || rooms.first if entrance_room || rooms.any?
+    return entrance_room if entrance_room
+    first_made = rooms.listed.reorder(:created_at, :id).first || rooms.reorder(:created_at, :id).first
+    return first_made if first_made
     children.each do |child|
       found = child.entrance
       return found if found

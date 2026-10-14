@@ -2,6 +2,13 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Enter and default Settings
+
+- Every Area on the front page has an Enter button, which moves your
+  character to the Area's default Setting. Areas with no Settings show Look.
+- Builders tick "Default Setting for its Area" on a Setting's edit page.
+  Without one, Enter goes to the first Setting made in the Area.
+
 ## 2026-10-14 — Path types
 
 - Paths have a type: Street, Building or Unit. Streets can point a compass

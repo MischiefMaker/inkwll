@@ -11,9 +11,9 @@
   </div>
   <% if area.persisted? %>
     <div class="field">
-      <%= form.label :entrance_room_id, "Entrance" %>
-      <%= form.collection_select :entrance_room_id, area.all_rooms, :id, :name, include_blank: "The first #{term(:room).downcase} (alphabetically)" %>
-      <small class="hint">Where players arrive when they open this <%= term(:area).downcase %>. From there they walk the <%= term(:exit, count: 2).downcase %>.</small>
+      <%= form.label :entrance_room_id, "Default #{term(:room).downcase}" %>
+      <%= form.collection_select :entrance_room_id, area.all_rooms, :id, :name, include_blank: "The first #{term(:room).downcase} made in it" %>
+      <small class="hint">Enter on the front page moves a character here. From there they walk the <%= term(:exit, count: 2).downcase %>. You can also tick "Default <%= term(:room).downcase %>" on a <%= term(:room).downcase %>'s own page.</small>
     </div>
   <% end %>
   <div class="field">

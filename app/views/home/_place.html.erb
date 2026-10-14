@@ -1,6 +1,7 @@
-<%# One top-level Area on the front page. "Enter" takes the character to the
-    Area's entrance Setting, and from there they walk the Paths. Shortcuts
-    straight to each Setting are tucked away at the bottom, on purpose. %>
+<%# One top-level Area on the front page. "Enter" moves the character to the
+    Area's default Setting, and from there they walk the Paths. Shortcuts
+    straight to each Setting are tucked away at the bottom, on purpose; each
+    opens the Setting, where "Travel here" moves the character. %>
 <% entrance = area.entrance %>
 <article class="place<%= " place--banner" if area.image.attached? %>" id="<%= dom_id(area, :place) %>">
   <% if area.image.attached? %>
@@ -29,14 +30,14 @@
   </div>
 
   <div class="place__actions">
-    <% if entrance && current_character %>
-      <% if current_character.room.area_id.in?([ area.id, *area.descendant_ids ]) %>
-        <%= link_to "Return", room_path(current_character.room), class: "button place__enter" %>
-      <% else %>
-        <%= button_to "Enter", room_travel_path(entrance), class: "button place__enter", form_class: "place__enter-form" %>
-      <% end %>
+    <%# Enter moves the character to the Area's default Setting. An Area with
+        no Settings yet can only be looked at. %>
+    <% if entrance && current_character&.room&.area_id.in?([ area.id, *area.descendant_ids ]) %>
+      <%= link_to "Return", room_path(current_character.room), class: "button place__enter" %>
     <% elsif entrance %>
-      <%= link_to "Look in", room_path(entrance), class: "button place__enter" %>
+      <%= button_to "Enter", room_travel_path(entrance), class: "button place__enter", form_class: "place__enter-form" %>
+    <% else %>
+      <%= link_to "Look", area_path(area), class: "button place__enter place__look" %>
     <% end %>
 
     <details class="place__shortcuts">

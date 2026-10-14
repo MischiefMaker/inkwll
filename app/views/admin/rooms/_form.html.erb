@@ -14,6 +14,11 @@
     <%= form.select :kind, Room::KINDS.map { |key, kind| [ kind[:label], key ] } %>
     <small class="hint">An apartment building, hotel and so on lists its numbered <%= term(:exit, count: 2).downcase %> compactly, under a heading like "Apartments".</small>
   </div>
+  <div class="field field--checkbox room-area-default">
+    <%= form.check_box :area_default, checked: room.area_default? %>
+    <%= form.label :area_default, "Default #{term(:room).downcase} for its #{term(:area).downcase}" %>
+    <small class="hint">Enter on the front page moves a character here. If no <%= term(:room).downcase %> is ticked, it's the first one made in the <%= term(:area).downcase %>.</small>
+  </div>
   <div class="field field--checkbox">
     <%= form.check_box :starting %>
     <%= form.label :starting, "New characters start here" %>

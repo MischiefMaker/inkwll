@@ -31,11 +31,31 @@ class Room < ApplicationRecord
 
   after_save :clear_other_starting_rooms, if: -> { starting? && saved_change_to_starting? }
 
+  # The "Default Setting for its Area" tick box on the Setting form: Enter on
+  # the front page moves a character here. Left alone when the form doesn't
+  # send it.
+  attribute :area_default, :boolean
+  after_save :save_area_default, unless: -> { area_default.nil? }
+
+  def area_default?
+    area_default.nil? ? area&.entrance_room_id == id : area_default
+  end
+
   # The room new characters are placed in. A game always has one: if there are
   # no rooms at all yet, a default starting room is made.
   def self.starting
     find_by(starting: true) || order(:id).first || create_default_starting_room!
   end
+
+  def save_area_default
+    if area_default
+      area.update_column(:entrance_room_id, id)
+      Area.where(entrance_room_id: id).where.not(id: area_id).update_all(entrance_room_id: nil) if saved_change_to_area_id?
+    elsif area.entrance_room_id == id
+      area.update_column(:entrance_room_id, nil)
+    end
+  end
+  private :save_area_default
 
   def kind_details
     KINDS.fetch(kind, KINDS["plain"])

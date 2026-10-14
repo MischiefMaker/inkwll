@@ -38,6 +38,35 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_equal room, characters(:wren).reload.room
   end
 
+  test "Enter goes to the first Setting made unless another is ticked as the default" do
+    area = Area.create!(name: "Elsewhere")
+    first = Room.create!(name: "Zed Gate", area: area)
+    second = Room.create!(name: "Arch", area: area)
+    assert_equal first, area.entrance
+
+    sign_in_as(accounts(:builder))
+    patch admin_room_path(second), params: { room: { area_default: "1" } }
+    assert_equal second, area.reload.entrance
+
+    patch admin_room_path(second), params: { room: { area_default: "0" } }
+    assert_equal first, area.reload.entrance
+  end
+
+  test "an Area with no Settings can only be looked at" do
+    area = Area.create!(name: "Empty Moor")
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select "##{ActionView::RecordIdentifier.dom_id(area, :place)} a.place__look[href=?]", area_path(area)
+  end
+
+  test "players without a character see Enter too, and are asked to make one" do
+    sign_in_as(accounts(:scribe))
+    get root_path
+    assert_select ".place__enter-form", minimum: 1
+    post room_travel_path(rooms(:commons))
+    assert_redirected_to new_character_path
+  end
+
   test "shortcuts to every setting are tucked into a fold" do
     sign_in_as(accounts(:alice))
     get root_path

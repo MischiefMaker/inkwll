@@ -6,6 +6,13 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Enter, Look and an Area's default Setting (owner, 2026-10-14)
+
+- On the front page, every Area with Settings has an **Enter** button (no more "Look in"). Enter physically moves the character you're playing as to the Area's default Setting (owner). Players without a character are asked to make one first.
+- The **default Setting** is picked with a tick box, "Default Setting for its Area", on the Setting's edit page (also still a menu on the Area's edit page). Until one is ticked, it's the first Setting made in the Area (owner).
+- An Area with no Settings shows **Look** instead, which opens the Area's overview (owner).
+- The Shortcuts open a Setting's page, where **Travel here** moves the character (owner).
+
 ## Apartment-style Settings with numbered Paths (owner, 2026-10-14; details picked by Claude)
 
 The owner asked for special Settings like apartments: a main room with sub-rooms off it, reached by numbered Paths shown simply so a room can have lots of them ("100 - Jaxon Marley").
