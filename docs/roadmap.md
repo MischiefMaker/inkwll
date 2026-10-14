@@ -23,6 +23,12 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 10. Platform | Feature toggles screen, CSS skins (colors, fonts, extra CSS) from the admin panel. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
 | 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and password reset emails (the mail service is set up in step 3). | Later |
 
+## Version 2.0 (later, not in the current plan)
+
+Ideas the owner wants after the first release. Not built until the owner says so.
+
+- **Live private chat:** players chat privately in real time, shown as tabs inside the OOC sidebar. Builds on Messages (step 3b).
+
 ## Decisions still needed
 
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
