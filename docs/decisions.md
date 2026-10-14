@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Layout puts the roleplay front and centre
+
+Don't copy AresMUSH's layout too closely. The roleplay itself (Settings, Chapters and their Passages) is the main thing on screen, laid out more like a forum. Extras such as rules, plots and other reference pages are reached through the menu.
+
 ## 2026-10-14: The first game stays setting-neutral for now
 
 Sample content (the default starting Setting, starter Skills, example Boons and Banes) stays generic. The owner can describe a setting later.

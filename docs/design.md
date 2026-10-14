@@ -14,6 +14,9 @@ scene is a **Chapter**, a pose is a **Passage**, and finished logs are
 **Manuscripts** in the **Archives**. This document and the code use the plain
 words.
 
+Layout [Decided]: the roleplay is front and centre, laid out more like a
+forum than AresMUSH. Rules, plots and other extras live in the menu.
+
 A web-only (no telnet) roleplaying game that combines forum RP and MUSH.
 Inspired by AresMUSH, but web-first.
 
