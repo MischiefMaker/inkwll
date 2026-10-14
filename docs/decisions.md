@@ -8,6 +8,13 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Images and text for descriptions
+
+- **Areas and Settings** can be described with an image only, an image and text, or text only. Pages simply show whatever staff filled in.
+- **Characters** can have the same mix. Each game decides whether a character must have a written description, an image, both, or neither.
+
+Areas and Settings get this in step 1b. Characters get it with profiles in step 4.
+
 ## 2026-10-14: Banning
 
 Staff need to be able to ban:
