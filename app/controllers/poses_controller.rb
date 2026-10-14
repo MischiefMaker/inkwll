@@ -27,7 +27,7 @@ class PosesController < ApplicationController
 
   def update
     @pose.edit!(params.expect(pose: [ :body ])[:body])
-    redirect_to scene_path(@scene, anchor: dom_id(@pose))
+    redirect_to scene_path(@scene, anchor: dom_id(@pose), all: ("1" if @scene.before_live_page?(@pose)))
   rescue ActiveRecord::RecordInvalid
     render :edit, status: :unprocessable_entity
   end

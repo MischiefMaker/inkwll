@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Long Chapters stay quick
+
+- An open Chapter shows its latest 50 posts, live. "Read the whole
+  chapter" above them opens every post on a page that doesn't update by
+  itself. Finished Chapters still show everything.
+
 ## 2026-10-14 — Bug fixes from the code audit
 
 - A password reset link with the new password left blank no longer says

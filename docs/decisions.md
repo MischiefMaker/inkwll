@@ -6,6 +6,14 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Long Chapters show their latest posts live (owner, 2026-10-14; number picked by Claude)
+
+An open Chapter's page shows only its latest 50 posts and updates live. Above them, "Read the whole chapter (N earlier posts)" opens every post on a page that doesn't update by itself, with a link back to the live page to post. Finished Chapters (Manuscripts) always show everything. This keeps long, busy Chapters quick on a small server. The number is `Scene::LIVE_PASSAGES`.
+
+## Inklings belong to the character (owner, 2026-10-14)
+
+When a character changes hands through the roster, its Inklings go with it, secrets included, so the new player knows what the character knows. This matches the AresMUSH Inklings plugin, where the character is the login, so everything moved with it and players were warned that personal entries "may become visible under game policies (character transfers, roster changes, or administration)". In Inkwll, personal notes belong to the player who wrote them, so the old player's personal notes stay private to them.
+
 ## Staff password reset links, for players with no email (owner asked, 2026-10-14; details picked by Claude)
 
 The "email required" game setting already existed (on by default). The owner asked for games to be able to make email optional, so the missing half was built: staff (Scribes and up, for players they can manage) open a player in **Players and staff** and press **Make a password reset link**. The link is shown once for staff to send privately (for example in Messages), works for one day, and stops working once used. The setting's hint now says what a player without email misses: resetting their own password and email notifications. Alerts and browser pop-ups still work.

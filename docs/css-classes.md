@@ -166,6 +166,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.scene-people`, `.scene-people__list`, `.scene-people__actions` | Who's in it, and Leave / Pause / Finish |
 | `.turn-bar`, `.turn-bar__text`, `.turn-bar__timer`, `.turn-bar__warning` | Whose turn it is |
 | `.passages` | All the posts |
+| `.passages__earlier`, `.passages__whole` | The "Read the whole chapter" link above the latest posts, and the note on the whole-chapter page |
 | `.pose`, `.pose__icon`, `.pose__name`, `.pose__time`, `.pose__body`, `.pose__actions` | One post |
 | `.pose--passage`, `.pose--npc`, `.pose--narration`, `.pose--ooc`, `.pose--system` | Each kind of post |
 | `.pose__tag`, `.pose__played-by` | The OOC / Narration tag, and "NPC, played by" |

@@ -6,6 +6,9 @@ class Scene < ApplicationRecord
 
   # Players can undo finishing a scene for this long.
   UNDO_FINISH_WITHIN = 24.hours
+  # How many of the latest posts an open Chapter's live page shows. The rest
+  # are a click away, on a page that doesn't update by itself.
+  LIVE_PASSAGES = 50
 
   belongs_to :room
   belongs_to :finished_by, class_name: "Character", optional: true
@@ -91,6 +94,11 @@ class Scene < ApplicationRecord
   # "October 14, 1526, late evening"
   def ic_when
     [ ic_date&.to_fs(:long), ic_time ].compact.join(", ")
+  end
+
+  # Whether a post is old enough to be only on the whole-Chapter page.
+  def before_live_page?(pose)
+    !finished? && pose.sequence <= last_sequence - LIVE_PASSAGES
   end
 
   def last_activity_at

@@ -1,6 +1,10 @@
 <% content_for :title, "#{@scene.title} · Inkwll" %>
-<%# Re-renders live whenever the Chapter changes (new Passages, turns, people). %>
-<%= turbo_stream_from @scene %>
+<%# An open Chapter's page shows its latest Passages and re-renders live
+    whenever the Chapter changes (new Passages, turns, people). ?all=1 shows
+    every Passage instead, on a page that doesn't update by itself, so long
+    Chapters stay quick. A finished Chapter always shows everything. %>
+<% whole = @scene.finished? || params[:all] == "1" %>
+<%= turbo_stream_from @scene unless whole && !@scene.finished? %>
 
 <% readable = @scene.readable_by?(current_account) %>
 <article class="scene" data-controller="scene-reader"
@@ -31,6 +35,16 @@
 
   <% if readable %>
     <% poses = @scene.poses.includes(:soul_roll, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>
+    <% unless whole %>
+      <% earlier = [ @scene.last_sequence - Scene::LIVE_PASSAGES, 0 ].max %>
+      <% if earlier.positive? %>
+        <% poses = poses.where(sequence: (earlier + 1)..) %>
+        <p class="text passages__earlier"><%= link_to "Read the whole #{term(:scene).downcase} (#{pluralize(earlier, "earlier post")})", scene_path(@scene, all: 1) %></p>
+      <% end %>
+    <% end %>
+    <% if whole && !@scene.finished? %>
+      <p class="muted passages__whole">Showing every <%= term(:pose).downcase %>. This page doesn't update by itself. <%= link_to "Back to the live #{term(:scene).downcase}", scene_path(@scene) %></p>
+    <% end %>
     <%# A finished Chapter is a Manuscript, so OOC lines are left out unless asked for. %>
     <% if @scene.finished? && @scene.poses.ooc.exists? %>
       <% if params[:ooc] == "1" %>
@@ -55,7 +69,9 @@
     <% if !@scene.writable? && @participant&.storyteller? && Soul.enabled? %>
       <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant %>
     <% end %>
-    <% if @scene.writable? %>
+    <% if whole && !@scene.finished? %>
+      <p class="text passages__whole"><%= link_to "Back to the live #{term(:scene).downcase} to post", scene_path(@scene) %></p>
+    <% elsif @scene.writable? %>
       <div class="scene__footer">
         <%= render "scenes/pending_rolls", scene: @scene, participant: @participant if Soul.enabled? %>
         <%= render "scenes/turn_bar", scene: @scene, participant: @participant %>

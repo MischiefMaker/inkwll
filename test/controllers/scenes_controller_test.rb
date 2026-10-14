@@ -73,4 +73,30 @@ class ScenesControllerTest < ActionDispatch::IntegrationTest
     patch scene_path(scenes(:duel)), params: { scene: { title: "Mine now" } }
     assert_equal "Duel at Dusk", scenes(:duel).reload.title
   end
+
+  test "a long open Chapter shows its latest posts live, and the rest on a whole-Chapter page" do
+    scene = scenes(:duel)
+    (Scene::LIVE_PASSAGES + 5).times { |n| scene.add_system_line!("Line #{n}.") }
+    oldest = scene.poses.first
+
+    get scene_path(scene)
+    assert_select "#passages .pose", Scene::LIVE_PASSAGES
+    assert_select "##{ActionView::RecordIdentifier.dom_id(oldest)}", count: 0
+    assert_select ".passages__earlier a[href=?]", scene_path(scene, all: 1)
+    live_streams = css_select("turbo-cable-stream-source").size
+
+    get scene_path(scene, all: 1)
+    assert_select "#passages .pose", scene.reload.last_sequence
+    assert_select "turbo-cable-stream-source", count: live_streams - 1
+    assert_select ".composer", count: 0
+  end
+
+  test "editing an old Passage returns to the whole-Chapter page" do
+    scene = scenes(:duel)
+    pose = poses(:duel_one)
+    Scene::LIVE_PASSAGES.times { |n| scene.add_system_line!("Line #{n}.") }
+
+    patch scene_pose_path(scene, pose), params: { pose: { body: "Wren draws." } }
+    assert_redirected_to scene_path(scene, anchor: "pose_#{pose.id}", all: "1")
+  end
 end
