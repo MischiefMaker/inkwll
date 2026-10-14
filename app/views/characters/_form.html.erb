@@ -21,6 +21,18 @@
       <%= form.text_area :description, rows: 8 %>
       <small class="hint">How they look and come across.<%= " Needed before you submit." if GameSetting.current.require_description? %></small>
     </div>
+    <% groups = CharacterGroup.ordered %>
+    <% if groups.any? %>
+      <div class="field character-form__group">
+        <%= form.label :character_group_id, "Group" %>
+        <% if character.new_record? || character.group_choosable? %>
+          <%= form.select :character_group_id, groups.map { |group| [ group.name, group.id ] }, include_blank: "None" %>
+          <small class="hint">Colours <%= character.name.presence || "their" %><%= "'s" if character.name.present? %> name. Once approved, only staff can change it.</small>
+        <% else %>
+          <p class="text"><%= character.character_group&.name || "None" %> <span class="muted">(ask staff to change it)</span></p>
+        <% end %>
+      </div>
+    <% end %>
   </fieldset>
 
   <% { "demographics" => "Demographics", "application" => "Application" }.each do |section, heading| %>

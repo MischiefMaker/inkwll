@@ -8,6 +8,9 @@
 # Several new Passages in one Chapter make one email until the player reads
 # it. Players who tick "only when it's my turn" get turn emails instead, in
 # Chapters of three or more with a turn order. @mentions always email.
+#
+# Everything here also goes under the alerts bell (see Alert), whatever the
+# player's email settings.
 module Notifier
   AWAY_DELAY = 10.minutes
   PASSAGES_PER_EMAIL = 20
@@ -20,7 +23,9 @@ module Notifier
 
     scene.participants.includes(character: :account).each do |participant|
       account = participant.character.account
-      next if account == poster || !account.wants_email? || account.only_turn_emails_for?(scene)
+      next if account == poster
+      Alert.notify!(account, "passage", scene: scene, character: pose.character, pose: pose)
+      next if !account.wants_email? || account.only_turn_emails_for?(scene)
 
       case account.email_notifications
       when "every_time" then ChapterEmailJob.perform_later(participant)
@@ -30,7 +35,9 @@ module Notifier
 
     mentioned_characters(pose).each do |character|
       account = character.account
-      next if account == poster || !account.wants_email? || !scene.readable_by?(account)
+      next if account == poster || account.system? || !scene.readable_by?(account)
+      Alert.notify!(account, "mention", scene: scene, character: character, pose: pose)
+      next unless account.wants_email?
       NotificationMailer.mention(account, pose).deliver_later
     end
   end
@@ -38,11 +45,21 @@ module Notifier
   def turn_given(participant)
     scene = participant.scene
     account = participant.character.account
+    Alert.notify!(account, "turn", scene: scene, character: participant.character) unless scene.finished?
     return unless account.wants_email? && account.only_turn_emails_for?(scene)
 
     case account.email_notifications
     when "every_time" then TurnEmailJob.perform_later(participant, scene.turn_token)
     when "when_away" then TurnEmailJob.set(wait: AWAY_DELAY).perform_later(participant, scene.turn_token, away_only: true)
+    end
+  end
+
+  # Tells everyone else in a Chapter that it was finished.
+  def chapter_finished(scene, by: nil)
+    scene.participants.includes(character: :account).each do |participant|
+      account = participant.character.account
+      next if by && account == by.account
+      Alert.notify!(account, "finished", scene: scene, character: participant.character)
     end
   end
 

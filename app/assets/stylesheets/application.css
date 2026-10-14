@@ -859,3 +859,25 @@ span.pose__icon { cursor: default; }
 .directory__value-shown { font-size: 0.85rem; overflow-wrap: anywhere; }
 .table__row--archived { opacity: 0.6; }
 .account-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+/* --- Jcink add-ons: groups, passage details, labels, alerts, tracker ----- */
+.character-name--grouped { color: var(--group-colour); }
+a.character-name--grouped, button.character-name--grouped { color: var(--group-colour); }
+.character-profile__group { margin: 0; font-weight: 600; }
+.pose__details, .mini-profile__details { display: block; font-size: 0.85rem; }
+.directory__group { font-size: 0.85rem; }
+.scene-labels { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; }
+.scene-label { display: inline-block; padding: 0.05rem 0.45rem; border: 1px solid var(--color-border); border-radius: 999px; font-size: 0.8rem; }
+.scene-list__subtitle, .scene__subtitle { margin: 0.1rem 0 0; font-style: italic; }
+.scene-form__labels { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.alert-bell { display: inline-flex; align-items: center; gap: 0.2rem; }
+.alert-bell__icon { vertical-align: middle; }
+.alert-bell__number { display: inline-block; min-width: 1.2rem; padding: 0 0.3rem; border-radius: 999px; background: var(--color-accent); color: var(--color-accent-text); font-size: 0.8rem; text-align: center; }
+.alerts__list { list-style: none; margin: 0; padding: 0; }
+.alerts__item { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.alerts__item--unread .alerts__text { font-weight: 600; }
+.alerts__text { margin: 0; }
+.alerts__time { font-size: 0.85rem; }
+.chapter-tracker__character { margin-bottom: var(--space); overflow-x: auto; }
+.chapter-tracker__subtitle { display: block; font-size: 0.85rem; }
+.chapter-tracker__row--my-turn .chapter-tracker__turn { color: var(--color-accent); }

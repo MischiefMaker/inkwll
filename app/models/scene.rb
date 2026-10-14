@@ -23,6 +23,10 @@ class Scene < ApplicationRecord
 
   normalizes :title, with: ->(t) { t.squish }
   validates :title, presence: true, length: { maximum: 100 }
+  normalizes :subtitle, with: ->(s) { s.squish.presence }
+  validates :subtitle, length: { maximum: 150 }
+  # Only labels staff have defined.
+  before_validation { self.label_ids = SceneLabel.where(id: Array(label_ids).compact_blank).ordered.pluck(:id) if label_ids_changed? }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
   validate :hidden_stays_hidden_without_agreement, on: :update
 
@@ -176,6 +180,7 @@ class Scene < ApplicationRecord
       update!(finished_at: Time.current, finished_by: by, current_turn_participant: nil,
         turn_started_at: nil, turn_warned_at: nil, turn_token: turn_token + 1)
       ActiveRecord.after_all_transactions_commit { award_xp! }
+      ActiveRecord.after_all_transactions_commit { Notifier.chapter_finished(self, by: by) }
       true
     end
   end

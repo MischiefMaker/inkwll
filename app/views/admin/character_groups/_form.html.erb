@@ -1,0 +1,22 @@
+<%= form_with model: [ :admin, group ], class: "form character-group-form" do |form| %>
+  <%= render "shared/errors", record: group %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 60 %>
+  </div>
+  <div class="field">
+    <%= form.label :colour, "Name colour" %>
+    <%= form.color_field :colour %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_field :description, maxlength: 300 %>
+  </div>
+  <% if group.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit class: "button" %>
+<% end %>

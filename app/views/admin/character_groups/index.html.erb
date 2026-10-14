@@ -1,0 +1,30 @@
+<% content_for :title, "Character groups · Admin · Inkwll" %>
+
+<h1 class="page-title">Character groups</h1>
+<p class="muted">Groups such as houses or factions. A character's group colours their name beside <%= term(:pose, count: 2).downcase %>, in the Here list and in the directory.
+  Players pick a group before their character is approved; after that, Wellkeepers change it under Characters.</p>
+
+<% if @groups.any? %>
+  <table class="table character-groups-admin">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Group</th><th class="table__heading">Characters</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
+      <% @groups.each do |group| %>
+        <tr class="table__row">
+          <td class="table__cell"><span class="character-name character-name--grouped character-group-<%= group.id %>" style="--group-colour: <%= group.colour %>"><%= group.name %></span>
+            <% if group.description.present? %><span class="muted">: <%= group.description %></span><% end %></td>
+          <td class="table__cell"><%= group.characters.count %></td>
+          <td class="table__cell">
+            <%= link_to "Edit", edit_admin_character_group_path(group) %>
+            <%= button_to "Delete", admin_character_group_path(group), method: :delete, class: "button-link",
+                  form: { data: { turbo_confirm: "Delete #{group.name}? Its characters are left without a group." } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">No groups yet.</p>
+<% end %>
+
+<h2 class="section-title">Add a group</h2>
+<%= render "form", group: @group %>

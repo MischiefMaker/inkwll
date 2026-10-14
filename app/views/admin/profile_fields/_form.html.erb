@@ -27,6 +27,10 @@
     <%= form.label :public, "Everyone can see it (otherwise only the player and staff)" %>
   </div>
   <div class="field field--checkbox">
+    <%= form.check_box :on_passages %>
+    <%= form.label :on_passages, "Show beside #{term(:pose, count: 2).downcase} (only if everyone can see it)" %>
+  </div>
+  <div class="field field--checkbox">
     <%= form.check_box :required %>
     <%= form.label :required, "Must be filled in before submitting" %>
   </div>

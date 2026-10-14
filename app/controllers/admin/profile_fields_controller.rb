@@ -42,6 +42,6 @@ class Admin::ProfileFieldsController < Admin::BaseController
     end
 
     def field_params
-      params.expect(profile_field: [ :name, :section, :field_type, :public, :required, :hint, :position ])
+      params.expect(profile_field: [ :name, :section, :field_type, :public, :required, :on_passages, :hint, :position ])
     end
 end

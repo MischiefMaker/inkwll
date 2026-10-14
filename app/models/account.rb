@@ -43,6 +43,7 @@ class Account < ApplicationRecord
   has_many :account_warnings, dependent: :destroy
   has_many :bans, dependent: :destroy
   has_many :roster_applications, dependent: :delete_all
+  has_many :alerts, dependent: :delete_all
   belongs_to :active_character, class_name: "Character", optional: true
 
   enum :staff_level, STAFF_LEVELS, default: :player, validate: true
@@ -142,6 +143,12 @@ class Account < ApplicationRecord
   end
 
   # Reloads this player's Chapter tabs on whatever page they have open.
+  # The alerts bell in the header, replaced live when an alert arrives.
+  def broadcast_alert_count
+    Turbo::StreamsChannel.broadcast_replace_later_to [ self, :chapters ], target: "alert_count",
+      partial: "alerts/count", locals: { account: self }
+  end
+
   def broadcast_chapter_tabs
     Turbo::StreamsChannel.broadcast_replace_later_to [ self, :chapters ], target: "chapter_tabs", partial: "chapter_tabs/frame"
   end

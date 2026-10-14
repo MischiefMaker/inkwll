@@ -1,0 +1,19 @@
+<%= form_with model: [ :admin, label ], class: "form scene-label-form" do |form| %>
+  <%= render "shared/errors", record: label %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 40 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "What it means (optional)" %>
+    <%= form.text_field :description, maxlength: 200 %>
+    <small class="hint">Shown when someone points at the label.</small>
+  </div>
+  <% if label.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit class: "button" %>
+<% end %>

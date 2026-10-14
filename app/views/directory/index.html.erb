@@ -17,6 +17,10 @@
       <%= form.label :value, "Containing", class: "visually-hidden" %>
       <%= form.search_field :value, value: @value, placeholder: "Containing…", maxlength: 100, class: "directory__value" %>
     <% end %>
+    <% if @groups.any? %>
+      <%= form.label :group, "Group", class: "visually-hidden" %>
+      <%= form.select :group, @groups.map { |group| [ group.name, group.id ] }, { include_blank: "Any group", selected: @group&.id }, class: "directory__group-filter" %>
+    <% end %>
     <label class="field--checkbox directory__roster-only"><%= check_box_tag :roster, "1", @roster_only %> Roster only</label>
     <%= form.submit "Filter", name: nil, class: "button button--quiet" %>
   <% end %>
@@ -27,8 +31,9 @@
         <li class="directory__item<%= " directory__item--roster" if character.on_roster? %>">
           <%= link_to character_path(character), class: "directory__link" do %>
             <%= character_icon(character, size: :large) %>
-            <span class="directory__name"><%= character.name %></span>
+            <%= tag.span character.name, **character_name_options(character, "directory__name") %>
           <% end %>
+          <% if character.character_group %><span class="directory__group muted"><%= character.character_group.name %></span><% end %>
           <% if character.on_roster? %><span class="tag directory__tag">On the roster</span><% end %>
           <% if (value = @values[character.id]) %><span class="directory__value-shown muted"><%= @field.name %>: <%= value.value.truncate(80) %></span><% end %>
         </li>

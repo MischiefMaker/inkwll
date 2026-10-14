@@ -57,7 +57,7 @@
     <% if @room.characters.any? %>
       <ul class="list list--inline">
         <% @room.characters.each do |character| %>
-          <li class="list__item"><%= link_to character.name, character %></li>
+          <li class="list__item"><%= character_name_link(character) %></li>
         <% end %>
       </ul>
     <% else %>

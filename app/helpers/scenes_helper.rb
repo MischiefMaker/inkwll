@@ -66,6 +66,17 @@ module ScenesHelper
   end
 
   # "Take turns", or "3-Passage rule (taking turns until there are four)".
+  # The labels on a Chapter, such as content warnings. Staff define them.
+  def scene_labels(scene)
+    return "" if scene.label_ids.blank?
+    @all_scene_labels ||= SceneLabel.ordered.index_by(&:id)
+    labels = scene.label_ids.filter_map { |id| @all_scene_labels[id] }
+    return "" if labels.empty?
+    tag.span(class: "scene-labels") do
+      safe_join(labels.map { |label| tag.span(label.name, class: "scene-label scene-label--#{label.id}", title: label.description) }, " ")
+    end
+  end
+
   def scene_mode_summary(scene)
     label = pose_mode_label(scene.pose_mode)
     if scene.three_pose? && scene.turn_based?

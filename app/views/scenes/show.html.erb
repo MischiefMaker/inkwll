@@ -10,9 +10,11 @@
 
   <header class="scene__header">
     <h1 class="page-title"><%= @scene.title %></h1>
+    <% if @scene.subtitle %><p class="scene__subtitle"><%= @scene.subtitle %></p><% end %>
     <p class="scene__meta muted">
       <span class="badge badge--<%= @scene.visibility %>"><%= scene_visibility_label(@scene) %></span>
       <%= scene_mode_summary(@scene) %>
+      <%= scene_labels(@scene) %>
       <% if @scene.participating?(current_account) && @scene.writable? %>
         · <%= link_to "#{term(:scene)} settings", edit_scene_path(@scene) %>
       <% end %>
@@ -27,7 +29,7 @@
   <%= render "scenes/participants", scene: @scene, participant: @participant %>
 
   <% if readable %>
-    <% poses = @scene.poses.includes(:soul_roll, character: [ :room, { icon_attachment: :blob } ]) %>
+    <% poses = @scene.poses.includes(:soul_roll, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>
     <%# A finished Chapter is a Manuscript, so OOC lines are left out unless asked for. %>
     <% if @scene.finished? && @scene.poses.ooc.exists? %>
       <% if params[:ooc] == "1" %>

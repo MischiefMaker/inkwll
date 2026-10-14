@@ -9,6 +9,7 @@ class ScenesController < ApplicationController
   def show
     use_character_in_scene
     @participant = @scene.participant_for(current_character)
+    Alert.read_for!(current_account, @scene)
   end
 
   def create
@@ -42,7 +43,7 @@ class ScenesController < ApplicationController
     end
 
     def scene_params
-      params.expect(scene: [ :title, :visibility, :pose_mode, :auto_skip, :turn_minutes ])
+      params.expect(scene: [ :title, :subtitle, :visibility, :pose_mode, :auto_skip, :turn_minutes, label_ids: [] ])
     end
 
     # Like Settings, a Chapter remembers which of the player's characters they

@@ -11,7 +11,9 @@
             <%= link_to scene.title, scene_path(scene), class: "scene-list__title" %>
             <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_label(scene) %></span>
             <% if scene.paused? %><span class="badge">Paused</span><% elsif scene.idle? %><span class="badge">Idle</span><% end %>
+            <%= scene_labels(scene) %>
           </div>
+          <% if scene.subtitle %><p class="scene-list__subtitle"><%= scene.subtitle %></p><% end %>
           <div class="muted scene-list__meta">
             <%= scene.participants.map { |p| p.character.name }.to_sentence.presence || "Nobody yet" %>
             · <%= time_ago_in_words(scene.last_activity_at) %> ago
@@ -36,6 +38,19 @@
           <%= form.label :title %>
           <%= form.text_field :title, required: true, maxlength: 100 %>
         </div>
+        <div class="field">
+          <%= form.label :subtitle, "Subtitle (optional)" %>
+          <%= form.text_field :subtitle, maxlength: 150 %>
+          <small class="hint">One line about what's happening, shown under the title.</small>
+        </div>
+        <% if (labels = SceneLabel.ordered).any? %>
+          <fieldset class="field scene-form__labels">
+            <legend class="fieldset__legend">Labels</legend>
+            <%= form.collection_check_boxes :label_ids, labels, :id, :name do |box| %>
+              <label class="field--checkbox scene-form__label" title="<%= box.object.description %>"><%= box.check_box %> <%= box.text %></label>
+            <% end %>
+          </fieldset>
+        <% end %>
         <fieldset class="field">
           <legend class="fieldset__legend">Who can join</legend>
           <label class="field--checkbox"><%= form.radio_button :visibility, "joinable", checked: true %> <%= t("terms.scene_visibility.joinable") %>: anyone can watch and join.</label>

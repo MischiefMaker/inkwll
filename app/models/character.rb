@@ -8,6 +8,7 @@ class Character < ApplicationRecord
 
   belongs_to :account
   belongs_to :room
+  belongs_to :character_group, optional: true
   has_many :scene_participants, dependent: :destroy
   has_many :scenes, through: :scene_participants
   has_many :scene_invitations, dependent: :destroy
@@ -88,6 +89,11 @@ class Character < ApplicationRecord
 
   def age
     IcClock.age(birthday)
+  end
+
+  # Whether the player may still pick this character's group themselves.
+  def group_choosable?
+    !approved? || !GameSetting.current.approval_required?
   end
 
   # --- Applications ------------------------------------------------------------

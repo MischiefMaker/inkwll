@@ -1,0 +1,28 @@
+<% content_for :title, "#{term(:scene)} labels · Admin · Inkwll" %>
+
+<h1 class="page-title"><%= term(:scene) %> labels</h1>
+<p class="muted">Labels players can put on their <%= term(:scene, count: 2).downcase %>, such as content warnings. They show in each <%= term(:room).downcase %>'s list of <%= term(:scene, count: 2).downcase %>.</p>
+
+<% if @labels.any? %>
+  <table class="table scene-labels-admin">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Label</th><th class="table__heading">What it means</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
+      <% @labels.each do |label| %>
+        <tr class="table__row">
+          <td class="table__cell"><span class="scene-label scene-label--<%= label.id %>"><%= label.name %></span></td>
+          <td class="table__cell"><%= label.description %></td>
+          <td class="table__cell">
+            <%= link_to "Edit", edit_admin_scene_label_path(label) %>
+            <%= button_to "Delete", admin_scene_label_path(label), method: :delete, class: "button-link",
+                  form: { data: { turbo_confirm: "Delete #{label.name}? It comes off every #{term(:scene).downcase}." } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">No labels yet.</p>
+<% end %>
+
+<h2 class="section-title">Add a label</h2>
+<%= render "form", label: @label %>

@@ -1,0 +1,32 @@
+<% content_for :title, "Alerts · Inkwll" %>
+
+<div class="alerts">
+  <h1 class="page-title">Alerts</h1>
+  <% if @alerts.any? %>
+    <ul class="alerts__list">
+      <% @alerts.each do |alert| %>
+        <% scene = alert.scene %>
+        <li class="alerts__item alerts__item--<%= alert.kind %><%= " alerts__item--unread" if alert.unread? %>">
+          <p class="text alerts__text">
+            <% chapter = scene ? link_to(scene.title, scene_path(scene, anchor: alert.pose_id && "pose_#{alert.pose_id}"), class: "alerts__chapter") : "a #{term(:scene).downcase} that's gone" %>
+            <% case alert.kind %>
+            <% when "passage" %>
+              <%= alert.count > 1 ? "#{alert.count} new #{term(:pose, count: 2).downcase}" : "A new #{term(:pose).downcase}" %>
+              in <%= chapter %><%= ", the latest by #{alert.character.name}" if alert.character %>.
+            <% when "turn" %>
+              It's <%= alert.character ? "#{alert.character.name}'s" : "your" %> turn in <%= chapter %>.
+            <% when "mention" %>
+              <%= alert.character&.name || "You" %> was mentioned in <%= chapter %>.
+            <% when "finished" %>
+              <%= chapter %> was finished.
+            <% end %>
+          </p>
+          <time class="alerts__time muted" datetime="<%= alert.updated_at.iso8601 %>"><%= time_ago_in_words(alert.updated_at) %> ago</time>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">No alerts yet. They appear here when someone posts in your <%= term(:scene, count: 2).downcase %>, when it's your turn, when you're @mentioned, and when a <%= term(:scene).downcase %> you were in is finished.</p>
+  <% end %>
+  <p class="text muted alerts__settings"><%= link_to "Email and browser notifications", edit_notification_settings_path %></p>
+</div>

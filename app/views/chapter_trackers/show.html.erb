@@ -1,0 +1,51 @@
+<% content_for :title, "My #{term(:scene, count: 2)} · Inkwll" %>
+
+<div class="chapter-tracker">
+  <h1 class="page-title">My <%= term(:scene, count: 2) %></h1>
+  <% if @participations.any? %>
+    <% @participations.sort_by { |character, _| character.name }.each do |character, participations| %>
+      <section class="chapter-tracker__character">
+        <h2 class="section-title chapter-tracker__name"><%= link_to character.name, character %></h2>
+        <table class="table chapter-tracker__table">
+          <thead class="table__head">
+            <tr class="table__row">
+              <th class="table__heading"><%= term(:scene) %></th>
+              <th class="table__heading"><%= term(:room) %></th>
+              <th class="table__heading">Turn</th>
+              <th class="table__heading">Last <%= term(:pose).downcase %></th>
+            </tr>
+          </thead>
+          <tbody class="table__body">
+            <% participations.each do |participant| %>
+              <% scene = participant.scene %>
+              <% last = @last_posts[scene.id] %>
+              <tr class="table__row chapter-tracker__row<%= " chapter-tracker__row--my-turn" if scene.turn_of?(participant) %>">
+                <td class="table__cell">
+                  <%= link_to scene.title, scene_path(scene), class: "chapter-tracker__title" %>
+                  <% if scene.subtitle %><span class="chapter-tracker__subtitle muted"><%= scene.subtitle %></span><% end %>
+                </td>
+                <td class="table__cell"><%= link_to scene.room.name, room_path(scene.room) %></td>
+                <td class="table__cell chapter-tracker__turn">
+                  <% if scene.paused? %>Paused
+                  <% elsif scene.turn_of?(participant) %><strong class="emphasis">Yours</strong>
+                  <% elsif scene.turn_based? && scene.current_turn_participant %><%= scene.current_turn_participant.character.name %>
+                  <% else %><span class="muted">Free order</span>
+                  <% end %>
+                </td>
+                <td class="table__cell chapter-tracker__last">
+                  <% if last %>
+                    <%= last.npc? ? last.npc_name : last.character&.name %>, <%= time_ago_in_words(last.created_at) %> ago
+                  <% else %>
+                    <span class="muted">Nothing yet</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    <% end %>
+  <% else %>
+    <p class="text muted">None of your characters are in an open <%= term(:scene).downcase %>.</p>
+  <% end %>
+</div>

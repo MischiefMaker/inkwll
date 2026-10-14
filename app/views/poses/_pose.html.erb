@@ -30,9 +30,10 @@
           <span class="pose__played-by muted">NPC, played by
             <% if character %><button type="button" class="button-link" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button><% else %>a departed character<% end %></span>
         <% elsif character && pose.passage? %>
-          <button type="button" class="pose__name" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button>
+          <%= tag.button character.name, type: "button", popovertarget: "mini-profile-#{character.id}", **character_name_options(character, "pose__name") %>
+          <%= character_details(character, "pose__details muted") %>
         <% elsif character %>
-          <button type="button" class="pose__name pose__name--small" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button>
+          <%= tag.button character.name, type: "button", popovertarget: "mini-profile-#{character.id}", **character_name_options(character, "pose__name pose__name--small") %>
         <% else %>
           <span class="pose__name muted">A departed character</span>
         <% end %>

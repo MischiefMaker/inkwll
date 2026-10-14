@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_200001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,6 +82,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "alerts", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "character_id"
+    t.bigint "scene_id"
+    t.bigint "pose_id"
+    t.string "kind", null: false
+    t.integer "count", default: 1, null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "read_at"], name: "index_alerts_on_account_id_and_read_at"
+    t.index ["account_id"], name: "index_alerts_on_account_id"
+    t.index ["character_id"], name: "index_alerts_on_character_id"
+    t.index ["pose_id"], name: "index_alerts_on_pose_id"
+    t.index ["scene_id"], name: "index_alerts_on_scene_id"
+  end
+
   create_table "areas", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -107,6 +124,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
     t.index ["banned_by_id"], name: "index_bans_on_banned_by_id"
   end
 
+  create_table "character_groups", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "colour", default: "#5b3f8c", null: false
+    t.string "description"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "characters", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "room_id", null: false
@@ -127,8 +153,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
     t.text "roster_note"
     t.boolean "roster_when_idle", default: false, null: false
     t.datetime "roster_requested_at"
+    t.bigint "character_group_id"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
+    t.index ["character_group_id"], name: "index_characters_on_character_group_id"
     t.index ["on_roster_at"], name: "index_characters_on_on_roster_at"
     t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"
     t.index ["room_id"], name: "index_characters_on_room_id"
@@ -245,6 +273,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
     t.string "hint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "on_passages", default: false, null: false
   end
 
   create_table "profile_values", force: :cascade do |t|
@@ -344,6 +373,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
     t.index ["scene_id"], name: "index_scene_invitations_on_scene_id"
   end
 
+  create_table "scene_labels", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "scene_participants", force: :cascade do |t|
     t.bigint "scene_id", null: false
     t.bigint "character_id", null: false
@@ -380,6 +417,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
     t.datetime "made_public_at"
     t.datetime "paused_at"
     t.string "pause_note"
+    t.string "subtitle"
+    t.integer "label_ids", default: [], null: false, array: true
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"
@@ -577,12 +616,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
   add_foreign_key "accounts", "characters", column: "active_character_id", on_delete: :nullify
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "alerts", "accounts", on_delete: :cascade
+  add_foreign_key "alerts", "characters", on_delete: :cascade
+  add_foreign_key "alerts", "poses", on_delete: :nullify
+  add_foreign_key "alerts", "scenes", on_delete: :cascade
   add_foreign_key "areas", "areas", column: "parent_id"
   add_foreign_key "areas", "rooms", column: "entrance_room_id", on_delete: :nullify
   add_foreign_key "bans", "accounts"
   add_foreign_key "bans", "accounts", column: "banned_by_id"
   add_foreign_key "characters", "accounts"
   add_foreign_key "characters", "accounts", column: "reviewed_by_id"
+  add_foreign_key "characters", "character_groups", on_delete: :nullify
   add_foreign_key "characters", "rooms"
   add_foreign_key "conversation_members", "accounts"
   add_foreign_key "conversation_members", "characters", column: "via_character_id"

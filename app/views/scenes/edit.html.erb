@@ -8,6 +8,19 @@
     <%= form.label :title %>
     <%= form.text_field :title, required: true, maxlength: 100 %>
   </div>
+  <div class="field">
+    <%= form.label :subtitle, "Subtitle (optional)" %>
+    <%= form.text_field :subtitle, maxlength: 150 %>
+    <small class="hint">One line about what's happening, shown under the title.</small>
+  </div>
+  <% if (labels = SceneLabel.ordered).any? %>
+    <fieldset class="field scene-form__labels">
+      <legend class="fieldset__legend">Labels</legend>
+      <%= form.collection_check_boxes :label_ids, labels, :id, :name do |box| %>
+        <label class="field--checkbox scene-form__label" title="<%= box.object.description %>"><%= box.check_box %> <%= box.text %></label>
+      <% end %>
+    </fieldset>
+  <% end %>
   <fieldset class="field">
     <legend class="fieldset__legend">Who can join</legend>
     <% locked_hidden = @scene.visibility_was == "hidden" && @scene.made_public_at.nil? %>

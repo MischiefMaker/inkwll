@@ -1,0 +1,5 @@
+<% content_for :title, "#{@label.name} · #{term(:scene)} labels · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "#{term(:scene)} labels", admin_scene_labels_path %></p>
+<h1 class="page-title">Edit <%= @label.name_was %></h1>
+<%= render "form", label: @label %>

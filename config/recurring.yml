@@ -25,6 +25,9 @@ production:
   roster_idle:
     class: RosterIdleJob
     schedule: every day at 4:30am
+  alert_cleanup:
+    class: AlertCleanupJob
+    schedule: every day at 4:45am
   weekly_xp:
     class: WeeklyXpJob
     schedule: every sunday at midnight

@@ -1,0 +1,5 @@
+<% content_for :title, "#{@group.name} · Character groups · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Character groups", admin_character_groups_path %></p>
+<h1 class="page-title">Edit <%= @group.name_was %></h1>
+<%= render "form", group: @group %>

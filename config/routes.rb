@@ -77,6 +77,8 @@ Rails.application.routes.draw do
   get "where", to: "where#show"
   get "archives", to: "archives#index"
   get "directory", to: "directory#index"
+  get "my_chapters", to: "chapter_trackers#show"
+  resources :alerts, only: :index
   get "roster", to: "directory#index", defaults: { roster: "1" }, as: :roster
 
   # The admin panel. Each section checks the visitor's staff level.
@@ -92,7 +94,7 @@ Rails.application.routes.draw do
         post :archive
       end
     end
-    resources :characters, only: :index do
+    resources :characters, only: %i[ index update ] do
       member do
         post :retire
         post :unretire
@@ -100,6 +102,8 @@ Rails.application.routes.draw do
     end
     resource :game_settings, only: %i[ edit update ]
     resources :profile_fields, except: %i[ show new ]
+    resources :character_groups, except: %i[ show new ]
+    resources :scene_labels, except: %i[ show new ]
     resource :soul, only: :show, controller: "soul"
     resources :soul_aspects, only: %i[ create edit update destroy ]
     resources :soul_skills, only: %i[ create edit update destroy ]

@@ -3,10 +3,18 @@
 # bring it back.
 class Admin::CharactersController < Admin::BaseController
   require_job :delete_characters
-  before_action :set_character, only: %i[ retire unretire ]
+  before_action :set_character, only: %i[ update retire unretire ]
 
   def index
     @characters = Character.includes(:account, :room).order(:retired_at, :name)
+    @groups = CharacterGroup.ordered
+  end
+
+  # Changing a character's group.
+  def update
+    group = CharacterGroup.find_by(id: params.dig(:character, :character_group_id).presence)
+    @character.update!(character_group: group)
+    redirect_to admin_characters_path, notice: "#{@character.name} is now in #{group&.name || "no group"}."
   end
 
   def retire
