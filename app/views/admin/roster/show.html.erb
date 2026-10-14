@@ -11,6 +11,15 @@
           <p class="text"><%= link_to application.account.display_name, player_path(application.account.username) %> wants to play
             <%= link_to application.character.name, character_path(application.character) %>
             <span class="muted">(<%= time_ago_in_words(application.created_at) %> ago)</span></p>
+          <% if application.answers.any? %>
+            <dl class="roster-admin__answers">
+              <% RosterApplication.questions.each do |field| %>
+                <% next unless (answer = application.answers[field.id.to_s]) %>
+                <dt class="roster-admin__question"><%= field.name %></dt>
+                <dd class="prose roster-admin__answer"><%= simple_format answer %></dd>
+              <% end %>
+            </dl>
+          <% end %>
           <div class="prose roster-admin__note"><%= simple_format application.note %></div>
           <div class="roster-admin__actions">
             <%= button_to "Approve", admin_roster_application_path(application), method: :patch, params: { decision: "approve" }, class: "button",

@@ -74,6 +74,15 @@
     <%= form.number_field :roster_idle_days, min: 7, max: 3650 %>
     <small class="hint">Only for characters whose players ticked "put on the roster if they go idle".</small>
   </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :roster_claim %>
+    <%= form.label :roster_claim, "Players can claim roster characters and play straight away, without staff picking" %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :roster_resubmit %>
+    <%= form.label :roster_resubmit, "A roster character's new player redoes the whole application for staff to approve" %>
+  </div>
+  <small class="hint">To ask only some questions again, or extra ones, tick "Ask again when someone takes a character from the roster" on those Profile fields.</small>
 
   <%= form.submit "Save", class: "button" %>
 <% end %>

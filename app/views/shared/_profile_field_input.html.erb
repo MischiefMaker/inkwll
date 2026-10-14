@@ -1,0 +1,11 @@
+<%# One profile question's input, for the character form and roster applications. %>
+<% case field.field_type %>
+<% when "long_text" %>
+  <%= text_area_tag name, value, id: id, rows: 6 %>
+<% when "birthday", "date" %>
+  <%= date_field_tag name, value, id: id %>
+<% when "number" %>
+  <%= number_field_tag name, value, id: id %>
+<% else %>
+  <%= text_field_tag name, value, id: id, maxlength: 200 %>
+<% end %>

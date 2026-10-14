@@ -2,6 +2,13 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Roster options
+
+- Games choose how roster characters change hands: claim and play
+  straight away, answer some questions again, or redo the whole
+  application.
+- Fixed: changing a profile answer that was already filled in didn't save.
+
 ## 2026-10-14 — Step 10: Platform
 
 - Admin → Features: switch SOUL, Inklings, Grimoire, the wiki and guest

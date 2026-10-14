@@ -54,4 +54,12 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     post admin_profile_fields_path, params: { profile_field: { name: "Eye colour", section: "demographics", field_type: "text", public: "1" } }
     assert ProfileField.exists?(name: "Eye colour")
   end
+
+  test "changing an answer that's already filled in saves it" do
+    character = characters(:wren)
+    character.update!(profile: { profile_fields(:hometown).id => "York" })
+    sign_in_as(accounts(:alice))
+    patch character_path(character), params: { character: { profile: { profile_fields(:hometown).id => "Leeds" } } }
+    assert_equal "Leeds", character.reload.profile_value_for(profile_fields(:hometown)).value
+  end
 end

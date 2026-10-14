@@ -182,4 +182,70 @@ class RosterTest < ActionDispatch::IntegrationTest
     delete admin_account_path(empty)
     assert_not Account.exists?(empty.id)
   end
+
+  # --- Roster options (owner, 2026-10-14) ------------------------------------
+
+  test "roster questions are asked again, and the new answers replace the old" do
+    wren = characters(:wren)
+    background = profile_fields(:background)
+    background.update!(ask_on_roster: true, required: true)
+    wren.profile_values.create!(profile_field: background, value: "Old player's story.")
+    wren.put_on_roster!
+    sign_in_as(accounts(:bob))
+
+    get new_character_roster_application_path(wren)
+    assert_select "#roster_answer_#{background.id}"
+    assert_select "textarea", text: /Old player's story/, count: 0
+
+    assert_no_difference "RosterApplication.count" do
+      post character_roster_applications_path(wren), params: { roster_application: { note: "Please." } }
+    end
+    post character_roster_applications_path(wren), params: { roster_application: { note: "Please.",
+      answers: { background.id => "Bob's new story.", 99999 => "sneaky" } } }
+    application = RosterApplication.last
+    assert_equal({ background.id.to_s => "Bob's new story." }, application.answers)
+
+    sign_in_as(accounts(:scribe))
+    get admin_roster_path
+    assert_select ".roster-admin__answer", text: /Bob's new story/
+    patch admin_roster_application_path(application), params: { decision: "approve" }
+    assert_equal "Bob's new story.", wren.reload.profile_value_for(background).value
+  end
+
+  test "games can let players claim roster characters and play straight away" do
+    GameSetting.current.update!(roster_claim: true)
+    wren = characters(:wren)
+    wren.put_on_roster!
+    sign_in_as(accounts(:bob))
+    get character_path(wren)
+    assert_select ".roster-status__apply", text: /Claim Wren/
+
+    post character_roster_applications_path(wren), params: { roster_application: { note: "" } }
+    wren.reload
+    assert_equal accounts(:bob), wren.account
+    assert wren.approved?
+
+    sign_in_as(accounts(:builder))
+    assert_no_difference "RosterApplication.count" do
+      post character_roster_applications_path(wren), params: { roster_application: { note: "" } }
+    end
+    assert_equal accounts(:bob), wren.reload.account
+  end
+
+  test "games can make a roster character's new player redo the application" do
+    GameSetting.current.update!(roster_claim: true, roster_resubmit: true)
+    wren = characters(:wren)
+    wren.put_on_roster!
+    sign_in_as(accounts(:bob))
+    post character_roster_applications_path(wren), params: { roster_application: { note: "" } }
+    wren.reload
+    assert_equal accounts(:bob), wren.account
+    assert wren.draft?
+  end
+
+  test "only Wellkeepers change the roster options" do
+    sign_in_as(accounts(:scribe))
+    patch admin_game_settings_path, params: { game_setting: { roster_claim: "1" } }
+    assert_not GameSetting.current.reload.roster_claim?
+  end
 end

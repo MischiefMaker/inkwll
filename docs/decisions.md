@@ -16,6 +16,16 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Roster take-overs are configurable (owner)
+
+Each game chooses how a new player takes over a roster character: redo all of the application, redo some of it or answer extra questions, or simply claim and play (owner).
+
+Built as:
+- **Claim and play** (Game settings, off by default): the character becomes the player's straight away, with no staff review. Two people can't claim the same one.
+- **Redo the whole application** (Game settings, off by default): after a take-over, the character goes back to a draft that the new player sends to staff for approval.
+- **Redo some, or extra questions:** any Profile field can be ticked "Ask again when someone takes a character from the roster". Those questions appear on the apply or claim form, staff see the answers, and the new answers replace the old player's.
+- These can be combined, for example claim and play plus a couple of questions.
+
 ## 2026-10-14: Step 10 details picked while building (Platform)
 
 Defaults picked by Claude, for the owner to check:

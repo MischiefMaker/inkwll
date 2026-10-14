@@ -44,17 +44,7 @@
         <% value = character.profile_value_for(field)&.value %>
         <div class="field character-form__field character-form__field--<%= field.field_type %>">
           <%= label_tag "character_profile_#{field.id}", field.name + (field.required? ? " *" : "") %>
-          <% name = "character[profile][#{field.id}]" %>
-          <% case field.field_type %>
-          <% when "long_text" %>
-            <%= text_area_tag name, value, id: "character_profile_#{field.id}", rows: 6 %>
-          <% when "birthday", "date" %>
-            <%= date_field_tag name, value, id: "character_profile_#{field.id}" %>
-          <% when "number" %>
-            <%= number_field_tag name, value, id: "character_profile_#{field.id}" %>
-          <% else %>
-            <%= text_field_tag name, value, id: "character_profile_#{field.id}", maxlength: 200 %>
-          <% end %>
+          <%= render "shared/profile_field_input", field: field, value: value, name: "character[profile][#{field.id}]", id: "character_profile_#{field.id}" %>
           <small class="hint"><%= field.hint %><%= " Only you and staff can see this." unless field.public? %></small>
         </div>
       <% end %>

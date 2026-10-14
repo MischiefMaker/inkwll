@@ -36,10 +36,17 @@ module Character::Roster
     end
   end
 
-  # Staff approved a roster application: the character changes hands. A
-  # sheet staff never filled in stays open for the new player to finish.
-  def take_over!(new_account)
-    update!(account: new_account, on_roster_at: nil, retired_at: nil, roster_note: nil, status: "approved")
+  # Staff approved a roster application (or the player claimed it): the
+  # character changes hands. The new player's answers to the game's roster
+  # questions replace the old ones. If the game asks for the whole
+  # application again, the character goes back to a draft for staff to
+  # approve. A sheet staff never filled in stays open for the new player.
+  def take_over!(new_account, answers: {})
+    transaction do
+      self.profile = RosterApplication.questions.to_h { |field| [ field.id.to_s, answers[field.id.to_s] ] }
+      update!(account: new_account, on_roster_at: nil, retired_at: nil, roster_note: nil,
+        status: GameSetting.current.roster_resubmit? ? "draft" : "approved")
+    end
   end
 
   class_methods do

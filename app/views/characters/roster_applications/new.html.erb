@@ -1,20 +1,37 @@
-<% content_for :title, "Apply to play #{@character.name} · Inkwll" %>
+<% claim = GameSetting.current.roster_claim? %>
+<% resubmit = GameSetting.current.roster_resubmit? %>
+<% questions = RosterApplication.questions %>
+<% content_for :title, "#{claim ? "Claim" : "Apply to play"} #{@character.name} · Inkwll" %>
 
 <div class="roster-apply">
-  <h1 class="page-title">Apply to play <%= @character.name %></h1>
+  <h1 class="page-title"><%= claim ? "Claim" : "Apply to play" %> <%= @character.name %></h1>
   <% if @character.roster_note.present? %>
     <div class="prose roster-apply__note"><%= simple_format @character.roster_note %></div>
   <% end %>
-  <p class="text muted">If staff pick you, <%= @character.name %> becomes yours with everything in character:
+  <p class="text muted"><%= claim ? "Once you claim them" : "If staff pick you" %>, <%= @character.name %> becomes yours with everything in character:
     their profile, private answers, sheet, relationships and gallery. Their old player's Messages don't come with them.</p>
+  <% if resubmit %>
+    <p class="text roster-apply__resubmit">You'll then go over their application and send it to staff, who approve it before you can play.</p>
+  <% end %>
 
   <%= form_with model: @application, url: character_roster_applications_path(@character), class: "form roster-apply__form" do |form| %>
     <%= render "shared/errors", record: @application %>
-    <div class="field">
-      <%= form.label :note, "Why you'd like to play #{@character.name}" %>
-      <%= form.text_area :note, rows: 8, maxlength: 2_000, required: true %>
-      <small class="hint">How you'd play them, and any ideas you have. Only staff see this.</small>
-    </div>
-    <%= form.submit "Apply", class: "button" %>
+    <% questions.each do |field| %>
+      <% id = "roster_answer_#{field.id}" %>
+      <div class="field roster-apply__question roster-apply__question--<%= field.field_type %>">
+        <%= label_tag id, field.name + (field.required? ? " *" : "") %>
+        <%= render "shared/profile_field_input", field: field, value: @application.answers[field.id.to_s], name: "roster_application[answers][#{field.id}]", id: id %>
+        <small class="hint"><%= field.hint %><%= " Only you and staff will see this." unless field.public? %></small>
+      </div>
+    <% end %>
+    <% unless claim %>
+      <div class="field">
+        <%= form.label :note, "Why you'd like to play #{@character.name}" %>
+        <%= form.text_area :note, rows: 8, maxlength: 2_000, required: true %>
+        <small class="hint">How you'd play them, and any ideas you have. Only staff see this.</small>
+      </div>
+    <% end %>
+    <%= form.submit claim ? "Claim #{@character.name}" : "Apply", class: "button",
+          data: (claim ? { turbo_confirm: "Claim #{@character.name}?" } : {}) %>
   <% end %>
 </div>

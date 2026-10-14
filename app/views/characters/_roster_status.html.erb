@@ -13,7 +13,7 @@
       <% if mine&.denied? %>
         <p class="text roster-status__denied muted">Your last application was turned down<%= ": #{mine.staff_reason}" if mine.staff_reason %>.</p>
       <% end %>
-      <%= link_to "Apply to play #{character.name}", new_character_roster_application_path(character), class: "button roster-status__apply" %>
+      <%= link_to "#{GameSetting.current.roster_claim? ? "Claim" : "Apply to play"} #{character.name}", new_character_roster_application_path(character), class: "button roster-status__apply" %>
     <% end %>
   </div>
 <% elsif character.account_id == current_account.id && !character.retired? %>

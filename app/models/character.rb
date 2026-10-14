@@ -14,7 +14,7 @@ class Character < ApplicationRecord
   has_many :scenes, through: :scene_participants
   has_many :scene_invitations, dependent: :destroy
   has_many :poses, dependent: :nullify
-  has_many :profile_values, dependent: :delete_all
+  has_many :profile_values, dependent: :delete_all, autosave: true
   has_many :gallery_images, dependent: :destroy
   has_many :relationships, dependent: :delete_all
   has_many :relationships_with, class_name: "Relationship", foreign_key: :other_character_id, dependent: :nullify, inverse_of: :other_character

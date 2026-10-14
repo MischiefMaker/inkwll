@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_250001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_260001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -235,6 +235,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_250001) do
     t.string "font_body"
     t.string "font_heading"
     t.text "custom_css"
+    t.boolean "roster_claim", default: false, null: false
+    t.boolean "roster_resubmit", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
@@ -402,6 +404,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_250001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "on_passages", default: false, null: false
+    t.boolean "ask_on_roster", default: false, null: false
   end
 
   create_table "profile_values", force: :cascade do |t|
@@ -476,6 +479,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_250001) do
     t.datetime "reviewed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "answers", default: {}, null: false
     t.index ["account_id"], name: "index_roster_applications_on_account_id"
     t.index ["character_id"], name: "index_roster_applications_on_character_id"
     t.index ["reviewed_by_id"], name: "index_roster_applications_on_reviewed_by_id"

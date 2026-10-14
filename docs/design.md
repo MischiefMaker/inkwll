@@ -384,6 +384,9 @@ words, and `config/locales/en.yml` maps one to the other.
   characters straight to it.
 - **Applying** is a short note to staff. Approving one hands the character
   over with everything in character; nothing out of character comes with it.
+  Each game can instead let players claim and play straight away, ask some
+  application questions again (or extra ones), and/or have the new player
+  redo the whole application [Decided].
 - **The character directory** (Menu) lists approved characters in play and
   everyone on the roster, filtered by any public profile field.
 - **Accounts are archived, not deleted.** Archived players can't log in.
