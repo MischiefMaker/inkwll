@@ -83,6 +83,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.pose__details`, `.mini-profile__details`, `.character-profile__group`, `.directory__group` | The group and chosen fields beside Passages and on profiles |
 | `.alert-bell`, `.alert-bell--unread`, `.alert-bell__number`, `.alerts`, `.alerts__item`, `.alerts__item--passage`, `--turn`, `--mention`, `--finished`, `--unread` | The alerts bell and the alerts list |
 | `.chapter-tracker`, `.chapter-tracker__character`, `.chapter-tracker__row`, `.chapter-tracker__row--my-turn`, `.chapter-tracker__subtitle` | My Chapters |
+| `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list` | The game's date, weather and who's online, on the front page |
+| `.scene__when`, `.scene-list__when`, `.manuscript__when`, `.chapter-tracker__when`, `.scene-form__when` | A Chapter's in-character date and time |
 | `.scene-list__subtitle`, `.scene__subtitle`, `.scene-labels`, `.scene-label`, `.scene-label--<id>`, `.scene-form__labels` | Chapter subtitles and labels |
 
 ## SOUL

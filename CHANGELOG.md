@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 7: Game time
+
+- Each Chapter has its own in-character date and time of day, which its
+  players can move forward. The Chapter notes each change.
+- The front page shows the game's date, today's weather and who's online.
+
 ## 2026-10-14 — Step 6c: Ideas from Jcink boards
 
 - An alerts bell in the header for new Passages, your turn, @mentions and

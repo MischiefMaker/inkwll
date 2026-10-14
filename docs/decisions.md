@@ -16,6 +16,17 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 7 details picked while building (IC clock)
+
+Defaults picked by Claude, for the owner to check.
+
+- **Each Chapter has its own date,** plus an optional time of day in words ("Late evening"). A new Chapter starts on the game's date unless its starter picks another.
+- **Moving a Chapter's date:** any player in the Chapter can change it in the Chapter's settings, and the Chapter gets a line such as "Wren moved the chapter to October 15, 1526, Morning." so everyone sees. There's no vote; players can talk it over first, and staff can see the line if there's a dispute.
+- **Where it shows:** at the top of the Chapter, in the Setting's Chapter list, in My Chapters and on Manuscripts in the Archives.
+- **Front page:** "It is (the game's date)." with today's weather, which staff type in Game settings (optional, free text). At the bottom, "Online now" lists the characters being played by everyone seen in the last 10 minutes, linking to the Where list. Players are not named, to keep the no-cliques aim.
+- **Dates before 1582** use the modern calendar throughout, so historical games get consistent dates.
+- Seasons, moon phases and automatic weather are left for later.
+
 ## 2026-10-14: Step 6c details picked while building (Jcink add-ons)
 
 Defaults picked by Claude, for the owner to check.

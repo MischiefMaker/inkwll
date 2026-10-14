@@ -6,7 +6,7 @@
   </h2>
   <p class="muted manuscript__meta">
     <%= link_to scene.room.name, archives_path(room_id: scene.room_id) %>
-    <% if scene.ic_date %>· <span class="manuscript__when"><%= scene.ic_when %></span><% end %>
+    <% if scene.ic_when.present? %>· <span class="manuscript__when"><%= scene.ic_when %></span><% end %>
     · finished <%= scene.finished_at.to_date.to_fs(:long) %>
     · <%= safe_join(scene.participants.map { |p| link_to(p.character.name, archives_path(character_id: p.character_id)) }, ", ") %>
   </p>

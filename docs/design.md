@@ -399,6 +399,14 @@ words, and `config/locales/en.yml` maps one to the other.
   Chapters.
 - **Chapters** can have a subtitle and staff-defined labels.
 
+### Step 7: IC clock
+
+- **Chapter dates:** each Chapter starts on the game's date (or one its
+  starter picks) and keeps it. Its players can move it, which adds a line
+  to the Chapter.
+- **Front page:** the game's date, staff-written weather, and the
+  characters online now.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

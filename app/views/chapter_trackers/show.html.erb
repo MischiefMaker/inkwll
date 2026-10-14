@@ -23,7 +23,7 @@
                 <td class="table__cell">
                   <%= link_to scene.title, scene_path(scene), class: "chapter-tracker__title" %>
                   <% if scene.subtitle %><span class="chapter-tracker__subtitle muted"><%= scene.subtitle %></span><% end %>
-                  <% if scene.ic_date %><span class="chapter-tracker__when muted"><%= scene.ic_when %></span><% end %>
+                  <% if scene.ic_when.present? %><span class="chapter-tracker__when muted"><%= scene.ic_when %></span><% end %>
                 </td>
                 <td class="table__cell"><%= link_to scene.room.name, room_path(scene.room) %></td>
                 <td class="table__cell chapter-tracker__turn">

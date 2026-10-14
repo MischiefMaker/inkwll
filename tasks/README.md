@@ -28,3 +28,4 @@ Done tasks stay in this folder as a record.
 | [0016: Roster](0016-roster.md) | Review | No | 6b. Rosters |
 | [0017: SOUL extras](0017-soul-extras.md) | Review | No | 6. SOUL extras |
 | [0018: Jcink add-ons](0018-jcink-add-ons.md) | Review | No | 6c. Jcink add-ons |
+| [0019: IC clock](0019-ic-clock.md) | Review | No | 7. IC clock |
