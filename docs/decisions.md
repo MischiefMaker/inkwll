@@ -51,7 +51,31 @@ The owner answered the security review (`security/review.md` in the project file
 
 ## 2026-10-14: Rosters (owner)
 
-The roster is a list of characters other players can apply to take over, with staff approval. Idle characters go back on the roster. Roadmap step 6b; the open questions are in task 0016.
+The roster is a list of characters other players can apply to take over, with staff approval. Idle characters go back on the roster. The owner picked "Both": the roster, plus a public character directory that includes it. Answers to the task 0016 questions:
+
+1. **Idle:** after a set time without a post or move (a game setting, 90 days by default), when the player gives the character up, or when staff decide.
+2. **Players and the roster:** the application has a checkbox, "return this character to the roster if it goes idle". A player can also ask to put a character straight on the roster without waiting for it to go idle; staff review and approve that.
+3. **Applying:** the character's existing Application tab answers stay, plus a short note on how the applicant would play it, through the normal staff approval.
+4. **What the new player gets:** everything in character, including secrets (private fields, the SOUL sheet and explanations, relationships, gallery). Nothing out of character, such as Messages, and not the old player's unfinished Chapters.
+5. **Past Manuscripts** credit neither player.
+6. **Staff can add unowned characters** (pre-made or "wanted") to the roster.
+
+## 2026-10-14: Accounts are archived, not deleted (owner)
+
+Player accounts are archived instead of deleted, for now. The Founder can delete an account only if it never had any characters.
+
+## 2026-10-14: Jcink features (owner approved)
+
+From the Jcink shortlist (`design/jcink-shortlist.md` in the project files), all six recommended features are approved:
+
+1. Mini-profile beside every Passage (image and name now; a few game-chosen profile fields added).
+2. A "My Chapters" tracker per character: open Chapters, Setting, whose turn, last post.
+3. An alerts bell: new post in your Chapter, your turn, @mentions, a Chapter you were in finished.
+4. A Chapter subtitle, plus staff-defined labels such as content warnings, shown in the Setting's Chapter list.
+5. A character directory players can filter by public profile fields (claims lists build themselves).
+6. Game-defined character groups (houses, factions) that colour the character's name.
+
+Awards and profile comments are "maybe later" (Version 2.0). Points and shop aren't adopted.
 
 ## 2026-10-14: Step 5 details picked while building (SOUL basics)
 

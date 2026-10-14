@@ -1,6 +1,6 @@
 # 0016: Roster
 
-- **Status:** Open
+- **Status:** Doing
 - **Hand off?:** No
 - **Roadmap step:** 6b. Rosters
 - **Created:** 2026-10-14
@@ -13,7 +13,7 @@ A roster: characters other players can apply to take over, with staff approval. 
 
 Owner decisions are under "Characters are retired, never deleted" and "Rosters" in `docs/decisions.md`. Retiring characters is already built (Admin → Characters).
 
-## Questions for the owner
+## Questions for the owner (answered 2026-10-14; see `docs/decisions.md`)
 
 1. When does a character count as idle: after a set time without a post or move (a game setting), when the player gives it up, when staff decide, or a mix?
 2. Can a player put their own character on the roster directly?
@@ -24,6 +24,6 @@ Owner decisions are under "Characters are retired, never deleted" and "Rosters" 
 
 ## Done when
 
-- [ ] The questions above are answered
+- [x] The questions above are answered
 - [ ] Built, with tests passing
 - [ ] The owner has tried it
