@@ -3,7 +3,7 @@
 #
 # Needs, under Settings → Secrets and variables → Actions:
 #   Secrets:   DEPLOY_SSH_KEY, SECRET_KEY_BASE, DATABASE_PASSWORD
-#   Variables: INKWLL_SERVER (the droplet's IP address)
+#   Variables: INKWLL_SERVER (the droplet's IP address; a secret works too)
 # See docs/deploying.md.
 name: Deploy
 
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      INKWLL_SERVER: ${{ vars.INKWLL_SERVER }}
+      INKWLL_SERVER: ${{ vars.INKWLL_SERVER || secrets.INKWLL_SERVER }}
       INKWLL_SSH_KEY: /home/runner/.ssh/inkwll-deploy
       SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
@@ -39,6 +39,7 @@ jobs:
 
       - name: Add the droplet's key
         run: |
+          if [ -z "$INKWLL_SERVER" ]; then echo "::error::Add the droplet's IP address as INKWLL_SERVER under Settings, Secrets and variables, Actions."; exit 1; fi
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
           chmod 600 ~/.ssh/inkwll-deploy
