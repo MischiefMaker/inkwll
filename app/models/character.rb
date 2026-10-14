@@ -1,6 +1,7 @@
 # An in-character identity owned by an account. Always located in exactly one room.
 class Character < ApplicationRecord
   include SoulSheet
+  include SoulExtras
 
   scope :active, -> { where(retired_at: nil) }
 

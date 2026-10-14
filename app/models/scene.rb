@@ -14,6 +14,7 @@ class Scene < ApplicationRecord
   has_many :characters, through: :participants
   has_many :invitations, class_name: "SceneInvitation", dependent: :destroy
   has_many :poses, -> { order(:sequence) }, dependent: :destroy, inverse_of: :scene
+  has_many :pending_rolls, class_name: "Soul::PendingRoll", dependent: :delete_all
 
   # joinable: anyone can watch and join. private: others can see it exists and
   # who is in it, but need an invitation to read or join. hidden: only its
@@ -251,17 +252,15 @@ class Scene < ApplicationRecord
   end
 
   # A SOUL roll: the game posts the result as a "roll" pose. It doesn't
-  # take a turn.
-  def roll!(character, skill, difficulty_name)
-    raise ArgumentError, "Rolls are switched off in this game." unless Soul.enabled?
-    participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
-    raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
-    raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
-
-    roll = character.roll_skill(skill, difficulty_name)
+  # take a turn. A Storyteller rolling for a player passes the Boons and
+  # Banes they chose.
+  def roll!(character, skill, difficulty_name, bnbs: nil, storyteller: nil)
+    check_can_roll!(character)
+    roll = character.roll_skill(skill, difficulty_name, bnbs: bnbs, storyteller: storyteller)
     with_lock do
       resume!(by: character) if paused?
-      text = "#{character.name} rolls #{skill.name} against #{difficulty_name.to_s.humanize} (#{roll.difficulty}) and gets #{roll.result}. " \
+      text = "#{character.name} rolls #{skill.name} against #{difficulty_name.to_s.humanize} (#{roll.difficulty})" \
+        "#{" as judged by #{storyteller.name}" if storyteller}#{" with #{roll.applied_text}" if roll.applied.any?} and gets #{roll.result}. " \
         "#{"Extraordinary! " if roll.extraordinary?}#{roll.degree_text}"
       pose = add_pose!(character: character, kind: "roll", body: text)
       roll.update!(scene: self, pose: pose)
@@ -269,6 +268,40 @@ class Scene < ApplicationRecord
     end
   rescue Character::SoulSheet::SheetError => e
     raise ArgumentError, e.message
+  end
+
+  # Asks the Chapter's Storyteller to judge a roll: they set the difficulty
+  # and choose which Boons and Banes count.
+  def ask_storyteller_to_roll!(character, skill, difficulty_name)
+    check_can_roll!(character)
+    raise ArgumentError, "This #{Term[:scene]} has no Storyteller to ask." unless storyteller_for(character)
+    raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.waiting.exists?(character: character)
+
+    pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s)
+    add_system_line!("#{character.name} asks the #{Term[:storyteller]} for a #{skill.name} roll.")
+    pending
+  end
+
+  # The Storyteller rolls a waiting roll.
+  def judge_roll!(pending, by:, difficulty_name:, bnb_ids:)
+    participant = participant_for(by)
+    raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant&.storyteller?
+    raise ArgumentError, "That roll has already been dealt with." unless pending.waiting?
+
+    chosen = pending.character.active_bnbs.select { |entry| Array(bnb_ids).map(&:to_i).include?(entry.id) }
+    pose = roll!(pending.character, pending.skill, difficulty_name, bnbs: chosen, storyteller: by)
+    pending.rolled!
+    pose
+  end
+
+  def cancel_pending_roll!(pending)
+    pending.cancelled! if pending.waiting?
+    broadcast_change
+  end
+
+  # A Storyteller who can judge this character's rolls (not their own).
+  def storyteller_for(character)
+    participants.detect { |p| p.storyteller? && p.character.account_id != character.account_id }
   end
 
   # Finishing gives XP to each character who posted, once per Chapter.
@@ -280,6 +313,14 @@ class Scene < ApplicationRecord
       next unless posted.include?(character.id) && character.can_play?
       character.award_xp!(amount, source: "scene", key: "scene:#{id}:#{character.id}", catchup: true, median: median)
     end
+  end
+
+  # Checks a character may roll in this Chapter.
+  def check_can_roll!(character)
+    raise ArgumentError, "Rolls are switched off in this game." unless Soul.enabled?
+    participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
+    raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
+    raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
   end
 
   # What a participant may post. Narration is for the Storyteller, or for

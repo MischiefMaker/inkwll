@@ -1,0 +1,88 @@
+<%# A character's Boons and Banes on the SOUL tab. The player sees their own
+    private explanations; staff see everything and can change entries. %>
+<% entries = character.character_bnbs.includes(:bnb).ordered %>
+<% staff = current_account.can?(:review_apps) %>
+<% skills = Soul::Skill.ordered %>
+<section class="soul-bnbs">
+  <h2 class="section-title">Boons and Banes</h2>
+  <% if entries.any? %>
+    <ul class="soul-bnbs__list">
+      <% entries.each do |entry| %>
+        <li class="soul-bnb soul-bnb--<%= entry.kind %><%= " soul-bnb--resolved" if entry.resolved? %>">
+          <div class="soul-bnb__head">
+            <strong class="emphasis soul-bnb__name"><%= entry.name %></strong>
+            <span class="badge soul-bnb__kind"><%= entry.level.capitalize %> <%= entry.kind.capitalize %></span>
+            <% if entry.resolved? %><span class="badge soul-bnb__resolved">Resolved</span><% end %>
+            <span class="muted soul-bnb__skills">Affects <%= entry.skills.map(&:name).to_sentence %></span>
+          </div>
+          <% if entry.explanation.present? %><div class="prose soul-bnb__explanation"><%= simple_format entry.explanation %></div><% end %>
+          <% if staff %>
+            <div class="soul-bnb__staff">
+              <% unless entry.resolved? %>
+                <%= button_to "Progress", character_bnb_path(character, entry), method: :patch, params: { change: "progress" }, class: "button-link", title: entry.boon? ? "Make it stronger" : "Make it weaker" %>
+                <%= button_to "Regress", character_bnb_path(character, entry), method: :patch, params: { change: "regress" }, class: "button-link" %>
+                <%= button_to "Resolve", character_bnb_path(character, entry), method: :patch, params: { change: "resolve" }, class: "button-link", title: "It stops counting but stays on record" %>
+              <% else %>
+                <%= button_to "Restore", character_bnb_path(character, entry), method: :patch, params: { change: "restore" }, class: "button-link" %>
+              <% end %>
+              <%= button_to "Delete", character_bnb_path(character, entry), method: :delete, class: "button-link",
+                    form: { data: { turbo_confirm: "Delete #{entry.name} for good? Resolving keeps it on record instead." } } %>
+            </div>
+          <% elsif character.sheet_open? && entry.source == "starting" && character.account_id == current_account.id %>
+            <%= button_to "Drop", character_bnb_path(character, entry), method: :delete, class: "button-link soul-bnb__drop" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">None yet.</p>
+  <% end %>
+  <p class="hint">A Boon rerolls the low dice on rolls of its Skills; a Bane rerolls the high ones. A character needs one Bane for every <%= Soul::Rules.boons_per_bane %> Boons.</p>
+
+  <% mine = character.account_id == current_account.id %>
+  <% catalogue = Soul::Bnb.active.ordered %>
+  <% if catalogue.any? && ((mine && character.sheet_open?) || staff || mine) %>
+    <% picking = mine && character.sheet_open? %>
+    <% choices = picking && !staff ? catalogue.select(&:starting?) : catalogue %>
+    <details class="soul-bnbs__add">
+      <summary class="disclosure__summary"><%= picking || staff ? "Add a Boon or Bane" : "Ask staff for a Boon or Bane" %></summary>
+      <%= form_with url: (picking || staff ? character_bnbs_path(character) : character_bnb_requests_path(character)), class: "form soul-bnbs__form" do |form| %>
+        <div class="field">
+          <%= form.label :bnb_id, "Which one" %>
+          <%= form.select :bnb_id, choices.map { |b| [ "#{b.label}#{" – #{b.description.truncate(70)}" if b.description.present?}", b.id ] } %>
+        </div>
+        <div class="field">
+          <%= form.label :level %>
+          <%= form.select :level, Soul::Rules.bnb_levels.map { |level, n| [ "#{level.capitalize} (#{n})", level ] } %>
+        </div>
+        <div class="field">
+          <%= form.label :skill_ids, "Skills it affects" %>
+          <%= form.select :skill_ids, skills.map { |s| [ s.name, s.id ] }, {}, multiple: true, size: [ skills.size, 6 ].min %>
+          <small class="hint">Leave empty to use the Skills the catalogue gives it, if it has any.</small>
+        </div>
+        <div class="field">
+          <%= form.label :explanation, picking || staff ? "What it means for #{character.name} (only the player and staff see this)" : "Why #{character.name} should have it (only you and staff see this)" %>
+          <%= form.text_area :explanation, rows: 3, required: !(picking || staff) %>
+        </div>
+        <% if staff && !picking %>
+          <div class="field">
+            <%= form.label :reason, "Reason (for the staff log)" %>
+            <%= form.text_field :reason, maxlength: 250 %>
+          </div>
+        <% end %>
+        <%= form.submit picking || staff ? "Add" : "Ask staff", class: "button button--quiet" %>
+      <% end %>
+    </details>
+  <% end %>
+
+  <% requests = character.bnb_requests.includes(:bnb).order(created_at: :desc).limit(5) %>
+  <% if mine && requests.any? %>
+    <ul class="soul-bnbs__requests">
+      <% requests.each do |request| %>
+        <li class="soul-bnbs__request soul-bnbs__request--<%= request.status %>">
+          Asked for <%= request.bnb.name %>: <%= { "pending" => "waiting for staff", "approved" => "approved", "denied" => "denied" }[request.status] %><%= " (#{request.staff_reason})" if request.staff_reason.present? %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</section>

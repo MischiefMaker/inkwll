@@ -1,0 +1,5 @@
+<% content_for :title, "#{@bnb.name} · Boons and Banes · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Boons and Banes", admin_soul_bnbs_path %></p>
+<h1 class="page-title">Edit <%= @bnb.name %></h1>
+<%= render "form", bnb: @bnb %>

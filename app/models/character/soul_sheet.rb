@@ -69,7 +69,12 @@ module Character::SoulSheet
   # Locks Resonance and the starting ratings. Happens at approval, or when
   # the player finishes their sheet in a game without approval.
   def lock_sheet!
-    update!(sheet_locked_at: Time.current) if sheet_open?
+    return unless sheet_open?
+    update!(sheet_locked_at: Time.current)
+    if history_entries.where(event: "sheet_locked").none?
+      note_history!("sheet_locked", "Began play#{" with Resonance #{resonance.positive? ? "+#{resonance}" : resonance}" if Soul::Rules.resonance_enabled?}.")
+      note_starting_bnbs!
+    end
   end
 
   def unlock_sheet!
@@ -99,6 +104,7 @@ module Character::SoulSheet
 
       store_rating!(trait, new_rating)
       xp_entries.create!(kind: "spend", amount: -cost, trait: trait, new_rating: new_rating)
+      note_history!("rating_raised", "Raised #{trait.name} to #{new_rating}.")
     end
   end
 
@@ -121,18 +127,21 @@ module Character::SoulSheet
 
   # --- Rolls -------------------------------------------------------------------
 
-  # Rolls a Skill against a named difficulty. Returns an unsaved Soul::Roll
-  # holding the result.
-  def roll_skill(skill, difficulty_name, random: Random)
+  # Rolls a Skill against a named difficulty. Boons and Banes tied to the
+  # Skill count, unless bnbs says which ones do (a Storyteller choosing).
+  # Returns an unsaved Soul::Roll holding the result.
+  def roll_skill(skill, difficulty_name, bnbs: nil, storyteller: nil, random: Random)
     difficulty = Soul::Rules.difficulties.fetch(difficulty_name.to_s) { raise SheetError, "Pick a difficulty." }
+    applied = (bnbs || bnbs_for(skill)).map { |entry| { "name" => entry.name, "kind" => entry.kind, "level" => entry.level, "modifier" => entry.modifier } }
+    net = applied.sum { |entry| entry["modifier"] }
     skill_rating = rating_for(skill)
     bonus = Soul::Rules.aspect_bonus(rating_for(skill.aspect))
-    chance = Soul::Dice.success_probability(0, difficulty - skill_rating - bonus)
-    dice = Soul::Dice.roll(0, random: random)
+    chance = Soul::Dice.success_probability(net, difficulty - skill_rating - bonus)
+    dice = Soul::Dice.roll(net, random: random)
     result = dice[:total] + skill_rating + bonus
     succeeded = result >= difficulty
     soul_rolls.new(skill: skill, skill_name: skill.name, difficulty_name: difficulty_name.to_s, difficulty: difficulty,
-      skill_rating: skill_rating, aspect_bonus: bonus, dice: dice, result: result,
+      skill_rating: skill_rating, aspect_bonus: bonus, dice: dice, result: result, net_modifier: net, applied: applied, storyteller: storyteller,
       degree: Soul::Rules.degree_for(result - difficulty), probability: succeeded ? chance : 1 - chance,
       extraordinary: Soul::Rules.extraordinary?(succeeded ? chance : 1 - chance))
   end

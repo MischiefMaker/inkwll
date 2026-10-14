@@ -11,6 +11,11 @@
     <% if current_account.can?(:review_apps) %>
       <% waiting = Character.submitted.count %>
       <%= link_to "Applications#{" (#{waiting})" if waiting.positive?}", admin_applications_path, class: ("is-current" if controller_name == "applications") %>
+      <% if Soul.enabled? %>
+        <% soul_waiting = Soul::BnbRequest.pending.count + Soul::Culmination.proposed.count %>
+        <%= link_to "SOUL requests#{" (#{soul_waiting})" if soul_waiting.positive?}", admin_soul_reviews_path, class: ("is-current" if controller_name == "soul_reviews") %>
+        <%= link_to "Boons and Banes", admin_soul_bnbs_path, class: ("is-current" if controller_name == "soul_bnbs") %>
+      <% end %>
     <% end %>
     <% if current_account.can?(:handle_reports) %>
       <% open_reports = Report.unresolved.count %>

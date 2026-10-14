@@ -24,6 +24,9 @@ Rails.application.routes.draw do
       resource :sheet_lock, only: %i[ create destroy ]
       resources :xp_spends, only: :create
       resources :xp_entries, only: :create
+      resources :bnbs, only: %i[ create update destroy ]
+      resources :bnb_requests, only: :create
+      resources :culminations, only: %i[ create update ]
     end
   end
   resource :active_character, only: :update
@@ -51,6 +54,7 @@ Rails.application.routes.draw do
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
       resources :rolls, only: :create
+      resources :pending_rolls, only: %i[ update destroy ]
       resource :reading, only: :update
       resource :turn, only: [] do
         post :pass
@@ -90,6 +94,8 @@ Rails.application.routes.draw do
     resource :soul, only: :show, controller: "soul"
     resources :soul_aspects, only: %i[ create edit update destroy ]
     resources :soul_skills, only: %i[ create edit update destroy ]
+    resources :soul_bnbs, only: %i[ index create edit update ]
+    resources :soul_reviews, only: %i[ index update ]
     resources :applications, only: %i[ index show update ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do

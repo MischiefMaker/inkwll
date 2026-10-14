@@ -101,6 +101,8 @@
     </table>
   <% end %>
 
+  <%= render "characters/tabs/soul_bnbs", character: character %>
+
   <section class="soul-xp">
     <h2 class="section-title">XP</h2>
     <p class="soul-xp__summary">
@@ -125,6 +127,8 @@
       </table>
     <% end %>
   </section>
+
+  <%= render "characters/tabs/soul_story", character: character %>
 
   <% if current_account.can?(:review_apps) %>
     <section class="soul-staff">

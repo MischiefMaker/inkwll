@@ -1,0 +1,31 @@
+<%= form_with model: bnb, url: bnb.persisted? ? admin_soul_bnb_path(bnb) : admin_soul_bnbs_path, scope: :soul_bnb, class: "form bnb-form" do |form| %>
+  <%= render "shared/errors", record: bnb %>
+  <div class="field">
+    <%= form.label :kind, "Boon or Bane" %>
+    <%= form.select :kind, [ [ "Boon", "boon" ], [ "Bane", "bane" ] ] %>
+  </div>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 60 %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 3 %>
+  </div>
+  <div class="field">
+    <%= form.label :skill_ids, "Skills it always affects (optional)" %>
+    <%= form.select :skill_ids, Soul::Skill.ordered.map { |s| [ s.name, s.id ] }, {}, multiple: true, size: 5 %>
+    <small class="hint">Leave empty if it differs for each character, like Cursed. Whoever adds it to a character then picks the Skills.</small>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :starting %>
+    <%= form.label :starting, "Players can pick it on a starting sheet" %>
+  </div>
+  <% if bnb.persisted? %>
+    <div class="field field--checkbox">
+      <%= form.check_box :active %>
+      <%= form.label :active, "In use (untick to retire it; characters who have it keep it)" %>
+    </div>
+  <% end %>
+  <%= form.submit bnb.persisted? ? "Save" : "Add to the catalogue", class: "button" %>
+<% end %>

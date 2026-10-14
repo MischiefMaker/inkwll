@@ -1,0 +1,79 @@
+<%# Culminations, the Narrative History and (for staff) the audit trail. %>
+<% mine = character.account_id == current_account.id %>
+<% staff = current_account.can?(:review_apps) %>
+<section class="soul-culminations">
+  <h2 class="section-title">Culminations</h2>
+  <% culminations = character.culminations.newest_first.to_a %>
+  <% shown = culminations.select { |c| c.approved? || mine || staff } %>
+  <% if shown.any? %>
+    <ul class="soul-culminations__list">
+      <% shown.each do |culmination| %>
+        <li class="soul-culmination soul-culmination--<%= culmination.status %>">
+          <strong class="emphasis soul-culmination__title"><%= culmination.title %></strong>
+          <% unless culmination.approved? %><span class="badge"><%= { "proposed" => "Waiting for staff", "denied" => "Denied", "revoked" => "Withdrawn" }[culmination.status] %></span><% end %>
+          <% if culmination.staff_reason.present? %><span class="muted"> · <%= culmination.staff_reason %></span><% end %>
+          <% if culmination.description.present? %><div class="prose soul-culmination__description"><%= simple_format culmination.description %></div><% end %>
+          <% if staff && culmination.approved? %>
+            <%= button_to "Withdraw", character_culmination_path(character, culmination), method: :patch, params: { decision: "revoked" }, class: "button-link",
+                  form: { data: { turbo_confirm: "Withdraw this Culmination?" } } %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">None yet.</p>
+  <% end %>
+  <% if mine %>
+    <details class="soul-culminations__propose">
+      <summary class="disclosure__summary">Propose a Culmination</summary>
+      <p class="hint">A turning point in <%= character.name %>'s story. Staff approve it before it counts.</p>
+      <%= form_with url: character_culminations_path(character), class: "form" do |form| %>
+        <div class="field">
+          <%= form.label :title %>
+          <%= form.text_field :title, required: true, maxlength: 120 %>
+        </div>
+        <div class="field">
+          <%= form.label :description, "What happened and why it matters" %>
+          <%= form.text_area :description, rows: 4 %>
+        </div>
+        <%= form.submit "Propose", class: "button button--quiet" %>
+      <% end %>
+    </details>
+  <% end %>
+</section>
+
+<section class="soul-history">
+  <h2 class="section-title">Narrative History</h2>
+  <% history = character.history_entries.newest_first.limit(30) %>
+  <% if history.any? %>
+    <ul class="soul-history__list">
+      <% history.each do |entry| %>
+        <li class="soul-history__item soul-history__item--<%= entry.event %>"><span class="muted soul-history__date"><%= entry.created_at.to_date.to_fs(:long) %></span> <%= entry.narrative %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">How <%= character.name %> changes over time will show here.</p>
+  <% end %>
+</section>
+
+<% if staff %>
+  <details class="soul-audit">
+    <summary class="disclosure__summary">Staff log (only staff see this)</summary>
+    <% audit = Soul::AuditEntry.where(character: character).newest_first.includes(:actor).limit(50) %>
+    <% if audit.any? %>
+      <table class="table soul-audit__table">
+        <tbody class="table__body">
+          <% audit.each do |entry| %>
+            <tr class="table__row">
+              <td class="table__cell muted"><%= entry.created_at.to_fs(:short) %></td>
+              <td class="table__cell"><%= entry.actor&.display_name || "The game" %></td>
+              <td class="table__cell"><%= entry.summary %><%= tag.span(" · #{entry.reason}", class: "muted") if entry.reason.present? %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text muted">No staff changes yet.</p>
+    <% end %>
+  </details>
+<% end %>

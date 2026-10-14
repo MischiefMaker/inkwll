@@ -1,0 +1,26 @@
+<% content_for :title, "Boons and Banes · Admin · Inkwll" %>
+
+<h1 class="page-title">Boons and Banes</h1>
+<p class="text muted">Qualities, possessions, connections or troubles. Each one changes rolls of the Skills it's tied to: a Boon rerolls low dice, a Bane rerolls high ones, by its level (Minor 1, Major 2, Legendary 3).</p>
+
+<% if @bnbs.any? %>
+  <table class="table bnb-catalogue">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Name</th><th class="table__heading">Kind</th><th class="table__heading">Skills</th><th class="table__heading">Starting sheets</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
+      <% @bnbs.each do |bnb| %>
+        <tr class="table__row bnb-catalogue__item bnb-catalogue__item--<%= bnb.kind %><%= " table__row--retired" unless bnb.active? %>">
+          <td class="table__cell"><strong class="emphasis"><%= bnb.name %></strong><%= tag.span(" (retired)", class: "muted") unless bnb.active? %><br><span class="muted"><%= bnb.description %></span></td>
+          <td class="table__cell"><%= bnb.kind.capitalize %></td>
+          <td class="table__cell"><%= bnb.skills.map(&:name).to_sentence.presence || tag.span("Picked per character", class: "muted") %></td>
+          <td class="table__cell"><%= bnb.starting? ? "Yes" : "No" %></td>
+          <td class="table__cell"><%= link_to "Edit", edit_admin_soul_bnb_path(bnb) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="text muted">The catalogue is empty. Add a few so players have something to pick.</p>
+<% end %>
+
+<h2 class="section-title">Add one</h2>
+<%= render "form", bnb: @bnb %>

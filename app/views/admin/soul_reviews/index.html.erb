@@ -1,0 +1,51 @@
+<% content_for :title, "SOUL requests · Admin · Inkwll" %>
+
+<h1 class="page-title">SOUL requests</h1>
+
+<h2 class="section-title">Boons and Banes asked for</h2>
+<% if @requests.any? %>
+  <ul class="soul-reviews">
+    <% @requests.each do |request| %>
+      <li class="soul-reviews__item">
+        <p class="text"><%= link_to request.character.name, character_path(request.character, tab: "soul") %> asks for
+          <strong class="emphasis"><%= request.bnb.name %></strong> (<%= request.level.capitalize %> <%= request.bnb.kind.capitalize %>)
+          for <%= request.skills.map(&:name).to_sentence.presence || request.bnb.skills.map(&:name).to_sentence %>.</p>
+        <div class="prose soul-reviews__why"><%= simple_format request.explanation %></div>
+        <div class="soul-reviews__actions">
+          <%= button_to "Approve", admin_soul_review_path(request), method: :patch, params: { decision: "approve" }, class: "button" %>
+          <%= form_with url: admin_soul_review_path(request), method: :patch, class: "form form--inline soul-reviews__deny" do |form| %>
+            <%= hidden_field_tag :decision, "deny" %>
+            <%= form.label :reason, "Reason", class: "visually-hidden" %>
+            <%= form.text_field :reason, placeholder: "Why not (the player sees this)", maxlength: 250 %>
+            <%= form.submit "Deny", class: "button button--quiet" %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text muted">Nothing waiting.</p>
+<% end %>
+
+<h2 class="section-title">Culminations proposed</h2>
+<% if @culminations.any? %>
+  <ul class="soul-reviews">
+    <% @culminations.each do |culmination| %>
+      <li class="soul-reviews__item">
+        <p class="text"><%= link_to culmination.character.name, character_path(culmination.character, tab: "soul") %>: <strong class="emphasis"><%= culmination.title %></strong></p>
+        <div class="prose soul-reviews__why"><%= simple_format culmination.description %></div>
+        <div class="soul-reviews__actions">
+          <%= button_to "Approve", character_culmination_path(culmination.character, culmination), method: :patch, params: { decision: "approved" }, class: "button" %>
+          <%= form_with url: character_culmination_path(culmination.character, culmination), method: :patch, class: "form form--inline soul-reviews__deny" do |form| %>
+            <%= hidden_field_tag :decision, "denied" %>
+            <%= form.label :reason, "Reason", class: "visually-hidden" %>
+            <%= form.text_field :reason, placeholder: "Why not (the player sees this)", maxlength: 250 %>
+            <%= form.submit "Deny", class: "button button--quiet" %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text muted">Nothing waiting.</p>
+<% end %>

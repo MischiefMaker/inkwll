@@ -5,6 +5,11 @@ class Soul::Roll < ApplicationRecord
   belongs_to :scene, optional: true
   belongs_to :pose, optional: true
   belongs_to :skill, class_name: "Soul::Skill", foreign_key: :soul_skill_id, optional: true
+  belongs_to :storyteller, class_name: "Character", optional: true
+
+  def applied_text
+    Array(applied).map { |entry| "#{entry["name"]} (#{entry["level"].to_s.capitalize} #{entry["kind"].to_s.capitalize}, #{entry["modifier"].to_i.positive? ? "+" : ""}#{entry["modifier"]})" }.to_sentence
+  end
 
   def succeeded? = Soul::Rules::SUCCESSES.include?(degree)
   def degree_text = Soul::Rules::DEGREE_TEXT.fetch(degree, degree.humanize)
