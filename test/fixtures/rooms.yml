@@ -1,0 +1,9 @@
+commons:
+  name: The Commons
+  starting: true
+
+hall:
+  name: North Hall
+
+garden:
+  name: Garden

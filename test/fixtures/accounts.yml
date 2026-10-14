@@ -1,0 +1,19 @@
+<% password_digest = BCrypt::Password.create("password") %>
+
+alice:
+  username: alice
+  display_name: Alice
+  password_digest: <%= password_digest %>
+  active_character: wren
+
+bob:
+  username: bob
+  display_name: Bob
+  password_digest: <%= password_digest %>
+  active_character: sable
+
+staff:
+  username: staff
+  display_name: Staff
+  password_digest: <%= password_digest %>
+  admin: true

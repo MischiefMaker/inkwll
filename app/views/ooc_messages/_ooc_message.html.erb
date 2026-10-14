@@ -1,0 +1,5 @@
+<div class="ooc-message" id="<%= dom_id ooc_message %>">
+  <span class="ooc-message__author"><%= ooc_message.account.display_name %></span>
+  <time class="ooc-message__time" datetime="<%= ooc_message.created_at.iso8601 %>"><%= ooc_message.created_at.utc.strftime("%H:%M") %></time>
+  <span class="ooc-message__body"><%= ooc_message.body %></span>
+</div>

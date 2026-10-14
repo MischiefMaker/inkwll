@@ -1,0 +1,59 @@
+<% content_for :title, "#{@room.name} · Inkwll" %>
+<%# Reloads this page live when someone enters or leaves. %>
+<%= turbo_stream_from @room %>
+
+<article class="room">
+  <h1><%= @room.name %></h1>
+
+  <% if @room.description.present? %>
+    <div class="prose"><%= simple_format @room.description %></div>
+  <% end %>
+
+  <section>
+    <h2>Exits</h2>
+    <% if @room.exits.any? %>
+      <% here = current_character&.room_id == @room.id %>
+      <ul class="exits">
+        <% @room.exits.each do |room_exit| %>
+          <li>
+            <% if here %>
+              <%= button_to room_exit.name, exit_movement_path(room_exit), class: "exit-link",
+                    title: "Go to #{room_exit.destination_room.name}" %>
+            <% else %>
+              <span class="exit-link exit-link--disabled"><%= room_exit.name %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <% unless here %>
+        <p class="muted">
+          <% if current_character %>
+            You're looking in from afar. <%= current_character.name %> is in
+            <%= link_to current_character.room.name, room_path(current_character.room) %>.
+          <% else %>
+            <%= link_to "Create a character", new_character_path %> to explore.
+          <% end %>
+        </p>
+      <% end %>
+    <% else %>
+      <p class="muted">There is no way out of here.</p>
+    <% end %>
+  </section>
+
+  <section>
+    <h2>Here</h2>
+    <% if @room.characters.any? %>
+      <ul class="list list--inline">
+        <% @room.characters.each do |character| %>
+          <li><%= link_to character.name, character %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="muted">Nobody is here.</p>
+    <% end %>
+  </section>
+
+  <% if current_account.admin? %>
+    <p><%= link_to "Edit room", edit_admin_room_path(@room) %></p>
+  <% end %>
+</article>

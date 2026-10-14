@@ -1,1 +1,49 @@
-# inkwll
+# Inkwll
+
+A web-first roleplaying game that mixes forum RP and MUSH: characters move
+between rooms, and (soon) each room can hold several live, resumable scenes.
+
+- **Design and decisions:** [`docs/design.md`](docs/design.md)
+- **What changed recently:** [`CHANGELOG.md`](CHANGELOG.md)
+
+Built with Ruby on Rails 8, Hotwire (Turbo + Stimulus) and PostgreSQL.
+
+## Running it
+
+You need Ruby (version in `.ruby-version`) and PostgreSQL running.
+
+```sh
+bundle install
+bin/rails db:prepare   # creates the database and adds the placeholder rooms
+bin/dev                # starts the site at http://localhost:3000
+```
+
+Then sign up, create a character, and you'll appear in the starting room.
+
+To give an account staff powers (the **Build** menu for rooms and exits):
+
+```sh
+bin/rails "inkwll:make_admin[your_username]"
+```
+
+## Checking your work
+
+```sh
+bin/rails test   # automated tests
+bin/rubocop      # code style
+bin/brakeman     # security scan
+```
+
+GitHub Actions runs all of these on every pull request.
+
+## Where things live
+
+| What | Where |
+| --- | --- |
+| Data (accounts, characters, rooms…) | `app/models/` |
+| Page logic | `app/controllers/` |
+| Page templates (HTML) | `app/views/` |
+| Styles (colours and fonts are CSS variables at the top) | `app/assets/stylesheets/application.css` |
+| Small bits of JavaScript | `app/javascript/controllers/` |
+| Database changes | `db/migrate/` |
+| Tests | `test/` |

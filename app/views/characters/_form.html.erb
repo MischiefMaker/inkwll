@@ -1,0 +1,13 @@
+<%= form_with model: character, class: "form" do |form| %>
+  <%= render "shared/errors", record: character %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 8 %>
+  </div>
+  <%= form.submit class: "button" %>
+<% end %>

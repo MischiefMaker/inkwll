@@ -1,0 +1,17 @@
+<%= form_with model: [ :admin, room ], class: "form" do |form| %>
+  <%= render "shared/errors", record: room %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 8 %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :starting %>
+    <%= form.label :starting, "New characters start here" %>
+  </div>
+  <%= form.submit class: "button" %>
+<% end %>

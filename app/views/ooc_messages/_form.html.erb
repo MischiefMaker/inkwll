@@ -1,0 +1,5 @@
+<%= form_with model: OocMessage.new, id: "ooc_message_form", class: "ooc-form" do |form| %>
+  <%= form.text_field :body, placeholder: "Say something OOC…", autocomplete: "off", required: true, maxlength: 1000,
+        "aria-label": "OOC message" %>
+  <%= form.submit "Send", class: "button" %>
+<% end %>
