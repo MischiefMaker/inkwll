@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Path types
+
+- Paths have a type: Street, Building or Unit. Streets can point a compass
+  direction; buildings are listed under "Go in" on a Setting; units are the
+  numbered doors (apartments and the like).
+- A new direction, Out: the way back from a building or unit. "Add the
+  way back" makes it for you, and on the compass it sits in the middle.
+
 ## 2026-10-14 — Apartment-style Settings
 
 - A Setting can be a special type: apartment building, hotel or inn,

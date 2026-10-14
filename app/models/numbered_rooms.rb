@@ -46,7 +46,7 @@ class NumberedRooms
       name = "#{room.numbered_unit} #{number}"
       sub_room = Room.new(area: room.area, name: name, kind: "plain")
       way_in = Exit.new(source_room: room, destination_room: sub_room, number: number, name: label || name)
-      way_out = Exit.new(source_room: sub_room, destination_room: room, name: return_name)
+      way_out = Exit.new(source_room: sub_room, destination_room: room, name: return_name, direction: "OUT")
       [ sub_room, way_in, way_out ].each do |record|
         next if record.save
         record.errors.full_messages.each { |message| errors.add(:base, "#{number}: #{message}") }

@@ -36,24 +36,20 @@
   <div class="room-ways">
     <section class="room-paths">
       <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
+      <%# Streets (with the compass), then buildings to go into. Numbered
+          units get their own compact list below. %>
       <% all_exits = @room.exits.includes(:destination_room).to_a %>
       <% exits = Exit.in_compass_order(all_exits.reject(&:number)) %>
-      <% if GameSetting.current.compass_enabled? && exits.any?(&:direction) %>
-        <%= render "rooms/compass", room: @room, exits: exits, here: here %>
+      <% streets, buildings = %w[ street building ].map { |kind| exits.select { |e| e.kind == kind } } %>
+      <% if GameSetting.current.compass_enabled? && streets.any?(&:compass?) %>
+        <%= render "rooms/compass", room: @room, exits: streets, here: here %>
       <% end %>
       <% if exits.any? %>
-        <ul class="exits">
-          <% exits.each do |room_exit| %>
-            <li class="list__item">
-              <% label = capture do %><% if room_exit.direction %><span class="exit-link__direction"><%= room_exit.direction %></span> <% end %><%= room_exit.name %><% end %>
-              <% if here %>
-                <%= button_to exit_movement_path(room_exit), class: "exit-link", title: "Go to #{room_exit.destination_room.name}" do %><%= label %><% end %>
-              <% else %>
-                <span class="exit-link exit-link--disabled"><%= label %></span>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+        <% if streets.any? %><%= render "rooms/path_list", exits: streets, here: here, kind: "street" %><% end %>
+        <% if buildings.any? %>
+          <h3 class="room-paths__heading room-paths__heading--building"><%= t("terms.exit_kinds.building") %></h3>
+          <%= render "rooms/path_list", exits: buildings, here: here, kind: "building" %>
+        <% end %>
       <% elsif all_exits.none? %>
         <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>
       <% end %>

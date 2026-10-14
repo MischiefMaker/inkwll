@@ -5,10 +5,12 @@ class Admin::ExitsController < Admin::BaseController
   before_action :set_room
 
   def create
-    @exit = @room.exits.new(params.expect(exit: [ :name, :direction, :number, :destination_room_id ]))
+    @exit = @room.exits.new(params.expect(exit: [ :name, :kind, :direction, :number, :destination_room_id ]))
     return_name = params.dig(:exit, :return_name).to_s.squish
-    # "Add the way back" with no name, on a Path with a direction, names it after the opposite direction.
-    return_name = Exit::DIRECTIONS[Exit.opposite(@exit.direction)] if return_name.blank? && params.dig(:exit, :add_return) == "1" && @exit.direction.present?
+    # "Add the way back" with no name names it after its direction: the
+    # opposite way on a street, Out from a building or unit.
+    return_direction = Exit.opposite(@exit.direction, kind: @exit.kind)
+    return_name = Exit::DIRECTIONS[return_direction] if return_name.blank? && params.dig(:exit, :add_return) == "1" && return_direction
 
     saved = Exit.transaction do
       @exit.save &&
@@ -33,9 +35,10 @@ class Admin::ExitsController < Admin::BaseController
     end
 
     def save_return_exit(name)
-      # The way back points the opposite way: a Path north comes back south.
+      # The way back points the opposite way: a Path north comes back south,
+      # and the way out of a building is Out. It's always a street.
       return_exit = Exit.new(source_room: @exit.destination_room, destination_room: @room, name: name,
-        direction: Exit.opposite(@exit.direction))
+        direction: Exit.opposite(@exit.direction, kind: @exit.kind))
       return true if return_exit.save
       return_exit.errors.full_messages.each { |message| @exit.errors.add(:base, "Return #{Term[:exit].downcase}: #{message}") }
       false

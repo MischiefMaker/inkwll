@@ -23,4 +23,20 @@ class ExitTest < ActiveSupport::TestCase
     c = Exit.new(name: "Yard", direction: "N")
     assert_equal [ c, a, b ], Exit.in_compass_order([ b, a, c ])
   end
+
+  test "compass points are for streets; buildings and units come back Out" do
+    assert_not Exit.new(source_room: rooms(:garden), destination_room: rooms(:hall), name: "Shop", kind: "building", direction: "N").valid?
+    assert Exit.new(source_room: rooms(:garden), destination_room: rooms(:hall), kind: "street", direction: "OUT").valid?
+    assert_equal "OUT", Exit.opposite(nil, kind: "building")
+    assert_equal "OUT", Exit.opposite(nil, kind: "unit")
+    assert_nil Exit.opposite(nil)
+    assert_nil Exit.opposite("OUT")
+    assert_not Exit.new(source_room: rooms(:garden), destination_room: rooms(:hall), name: "x", kind: "tunnel").valid?
+  end
+
+  test "a Path with a door number is a unit, and a unit needs a number" do
+    path = Exit.create!(source_room: rooms(:garden), destination_room: rooms(:hall), name: "Jaxon Marley", number: "100")
+    assert_equal "unit", path.kind
+    assert_not Exit.new(source_room: rooms(:garden), destination_room: rooms(:hall), name: "Flat", kind: "unit").valid?
+  end
 end

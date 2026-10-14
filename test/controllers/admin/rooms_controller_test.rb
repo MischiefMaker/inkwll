@@ -83,4 +83,17 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
     get room_path(rooms(:commons))
     assert_select ".compass button.compass__point--n"
   end
+
+  test "a building's way back is Out, and buildings are listed apart from streets" do
+    sign_in_as(accounts(:builder))
+    post admin_room_exits_path(rooms(:garden)), params: { exit: { kind: "building", name: "Greenhouse", destination_room_id: rooms(:hall).id, add_return: "1" } }
+
+    back = rooms(:hall).exits.find_by!(destination_room: rooms(:garden))
+    assert_equal [ "OUT", "Out", "street" ], [ back.direction, back.name, back.kind ]
+
+    sign_in_as(accounts(:alice))
+    get room_path(rooms(:garden))
+    assert_select ".room-paths__heading--building", "Go in"
+    assert_select ".exits--building .exit-link", text: "Greenhouse"
+  end
 end

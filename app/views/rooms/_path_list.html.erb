@@ -1,0 +1,14 @@
+<%# A list of Paths as buttons (or greyed out when looking in from afar). %>
+<ul class="exits exits--<%= kind %>">
+  <% exits.each do |room_exit| %>
+    <li class="list__item">
+      <% label = capture do %><% if room_exit.direction && room_exit.direction != "OUT" %><span class="exit-link__direction"><%= room_exit.direction %></span> <% end %><%= room_exit.name %><% end %>
+      <% if here %>
+        <%= button_to exit_movement_path(room_exit), class: "exit-link exit-link--#{room_exit.kind}#{" exit-link--out" if room_exit.direction == "OUT"}",
+              title: "Go to #{room_exit.destination_room.name}" do %><%= label %><% end %>
+      <% else %>
+        <span class="exit-link exit-link--<%= room_exit.kind %> exit-link--disabled"><%= label %></span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

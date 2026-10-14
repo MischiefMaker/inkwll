@@ -35,6 +35,7 @@ Ideas the owner wants after the first release. Not built until the owner says so
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.
 - **Crafting:** characters make items (owner, 2026-10-14). Details to be decided.
 - **Economy:** money or trade between characters (owner, 2026-10-14). Details to be decided.
+- **Mini map:** a small map of the Settings around you, beyond the compass's next step. Needs each Setting placed on a grid first (owner, 2026-10-14).
 - **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
 
 ## Decisions still needed

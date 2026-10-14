@@ -32,6 +32,16 @@ en:
       one: "Manuscript"
       other: "Manuscripts"
     logs_collection: "Archives"
+    # Kinds of Path, as headings on a Setting's page. Rename them freely.
+    exit_kinds:
+      street: "Streets"
+      building: "Go in"
+      unit: "Units"
+    # The same kinds, as the builder chooses them.
+    exit_kind_names:
+      street: "Street"
+      building: "Building"
+      unit: "Unit"
     # Forum boards for news, advertising, wanted ads and so on.
     forum_board:
       one: "Board"

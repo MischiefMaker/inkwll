@@ -19,6 +19,13 @@ Defaults picked by Claude, for the owner to check:
 - **Keeping lists tidy:** Settings behind a numbered door don't appear in their Area's list or the front page Shortcuts, so a block of 50 flats doesn't flood them. They're reached from their building.
 - **In a Chapter:** the Chapter's Setting box keeps the ordinary Paths as buttons and folds the numbered ones into a small "Apartments (18)" drop-down.
 
+## Path types: streets, buildings and units (owner, 2026-10-14)
+
+- Every Path has a type. **Streets** are the ordinary ways between places and can point a compass direction. **Buildings** are things to go into from a street; a Setting lists them under "Go in", by name, because a street usually has several. **Units** are numbered doors like apartments (a Path with a door number), shown in the compact numbered list.
+- The usual way back from a building or unit is **Out**, a direction of its own. "Add the way back" makes it automatically, and when the compass is on, Out sits in its middle.
+- The headings and type names are in the wording file (`config/locales/en.yml`, `exit_kinds` and `exit_kind_names`), so games can rename them.
+- The mini map waits for Version 2.0.
+
 ## Path directions and a compass (owner, 2026-10-14)
 
 Paths can optionally point one of the 16 compass directions (N, NNE, NE ... NNW). A Path with a direction but no name is named after it, and "Add the way back" points the opposite way (NNW comes back SSE). Paths are listed clockwise from north. Games can switch on a compass (Admin, Features) that shows each Setting's directional Paths around a compass rose; it's off by default.

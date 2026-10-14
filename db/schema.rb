@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_330001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_340001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -195,6 +195,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_330001) do
     t.datetime "updated_at", null: false
     t.string "direction"
     t.string "number"
+    t.string "kind", default: "street", null: false
     t.index ["destination_room_id"], name: "index_exits_on_destination_room_id"
     t.index ["source_room_id", "name"], name: "index_exits_on_source_room_id_and_name", unique: true
     t.index ["source_room_id", "number"], name: "index_exits_on_source_room_id_and_number", unique: true, where: "(number IS NOT NULL)"

@@ -4,8 +4,14 @@
     --angle, so a skin can move or restyle them. %>
 <% by_direction = exits.select(&:direction).index_by(&:direction) %>
 <div class="compass" aria-label="Compass">
-  <span class="compass__centre"><%= room.name %></span>
-  <% Exit::DIRECTIONS.each do |short, long| %>
+  <%# The middle shows where you are, or is the way Out when there is one. %>
+  <% if (out = by_direction["OUT"]) && here %>
+    <%= button_to exit_movement_path(out), class: "compass__centre compass__centre--out", form_class: "compass__form",
+          title: "Out, to #{out.destination_room.name}" do %>Out<% end %>
+  <% else %>
+    <span class="compass__centre"><%= room.name %></span>
+  <% end %>
+  <% Exit::COMPASS.each do |short, long| %>
     <% room_exit = by_direction[short] %>
     <% angle = Exit.compass_index(short) * 22.5 %>
     <% classes = [ "compass__point", "compass__point--#{short.downcase}", ("compass__point--main" if short.length == 1) ] %>
