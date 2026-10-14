@@ -50,6 +50,10 @@ module AdminMenuHelper
       groups["Game world"] << admin_link("Building", admin_areas_path, %w[ areas rooms exits bulk_builds ])
     end
 
+    if current_account.can?(:manage_forums)
+      groups["Game world"] << admin_link(term(:forum_board, count: 2), admin_forum_boards_path, %w[ forum_boards ])
+    end
+
     if current_account.can?(:manage_staff)
       groups["Players and characters"] << admin_link("Players and staff", admin_accounts_path, %w[ accounts ])
     end

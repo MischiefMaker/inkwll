@@ -1,0 +1,47 @@
+<% content_for :title, "#{@board.name} · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to term(:forum_board, count: 2), forum_boards_path %></p>
+<h1 class="page-title forum-board-page__name"><%= @board.name %></h1>
+<% if @board.description.present? %>
+  <p class="text forum-board-page__description"><%= @board.description %></p>
+<% end %>
+
+<p class="forum-board-page__rules muted">
+  Starting <%= term(:forum_topic, count: 2).downcase %>: <%= forum_poster_label(@board.who_can_start).downcase %>.
+  Replying: <%= forum_poster_label(@board.who_can_reply).downcase %>.
+</p>
+
+<% if @board.may_start_topic?(current_account) %>
+  <p class="forum-board-page__start"><%= link_to "Start a #{term(:forum_topic).downcase}", new_forum_board_forum_topic_path(@board), class: "button" %></p>
+<% end %>
+
+<% if @topics.any? %>
+  <table class="table forum-topics">
+    <thead class="table__head">
+      <tr class="table__row">
+        <th class="table__heading"><%= term(:forum_topic) %></th>
+        <th class="table__heading">Replies</th>
+        <th class="table__heading">Latest</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      <% @topics.each do |topic| %>
+        <tr class="table__row forum-topic-row<%= " forum-topic-row--pinned" if topic.pinned? %><%= " forum-topic-row--locked" if topic.locked? %>">
+          <td class="table__cell forum-topic-row__title">
+            <% if topic.pinned? %><span class="badge forum-topic-row__badge forum-topic-row__badge--pinned">Pinned</span><% end %>
+            <% if topic.locked? %><span class="badge forum-topic-row__badge forum-topic-row__badge--locked">Locked</span><% end %>
+            <%= link_to topic.title, forum_topic_path(topic) %>
+            <span class="muted forum-topic-row__starter">by <%= topic.account&.display_name || "a departed player" %></span>
+          </td>
+          <td class="table__cell forum-topic-row__replies"><%= [ topic.posts_count - 1, 0 ].max %></td>
+          <td class="table__cell forum-topic-row__latest">
+            <%= link_to "#{time_ago_in_words(topic.last_posted_at)} ago", forum_topic_path(topic, page: "last"), class: "muted" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= render "forum_boards/pages", pages: @pages, current: @page %>
+<% else %>
+  <p class="muted">No <%= term(:forum_topic, count: 2).downcase %> yet.</p>
+<% end %>

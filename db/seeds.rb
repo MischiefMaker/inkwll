@@ -248,3 +248,21 @@ seed_paths(clearing, "Old Road to the City", grand_avenue, "Forest Road")
 }.each do |area, room|
   area.update!(entrance_room: room) if area.entrance_room.nil?
 end
+
+# ---------------------------------------------------------------------------
+# Forum boards, listed on the front page after the Areas. Change them, or who
+# may post on them, under Admin → Boards.
+# ---------------------------------------------------------------------------
+
+[
+  [ "News", "Announcements from staff. Everyone can reply.", "staff", "everyone" ],
+  [ "Advertising", "Tell people about your character, a plot you're running or something you'd like to play.", "everyone", "everyone" ],
+  [ "Wanted ads", "Looking for a friend, a rival, a sibling or a whole family? Post here.", "everyone", "everyone" ]
+].each_with_index do |(name, description, start, reply), position|
+  ForumBoard.find_or_create_by!(name: name) do |board|
+    board.description = description
+    board.position = position
+    board.who_can_start = start
+    board.who_can_reply = reply
+  end
+end

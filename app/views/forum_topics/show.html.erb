@@ -1,0 +1,52 @@
+<% content_for :title, "#{@topic.title} · #{@board.name} · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to term(:forum_board, count: 2), forum_boards_path %> › <%= link_to @board.name, forum_board_path(@board) %></p>
+<h1 class="page-title forum-topic__title"><%= @topic.title %></h1>
+<p class="forum-topic__meta">
+  <% if @topic.pinned? %><span class="badge forum-topic__badge forum-topic__badge--pinned">Pinned</span><% end %>
+  <% if @topic.locked? %><span class="badge forum-topic__badge forum-topic__badge--locked">Locked</span><% end %>
+  <% if current_account == @topic.account || ForumTopic.moderator?(current_account) %>
+    <%= link_to ForumTopic.moderator?(current_account) ? "Pin, lock or rename" : "Rename", edit_forum_topic_path(@topic), class: "forum-topic__edit" %>
+  <% end %>
+</p>
+
+<div class="forum-posts">
+  <% @posts.each do |post| %>
+    <article class="forum-post" id="<%= dom_id post %>">
+      <header class="forum-post__header">
+        <% if post.account %><%= player_avatar(post.account) %><% end %>
+        <%= forum_author(post.account) %>
+        <time class="forum-post__time muted" datetime="<%= post.created_at.iso8601 %>"><%= post.created_at.to_fs(:long) %></time>
+        <% if post.edited_at %><span class="forum-post__edited muted">(edited)</span><% end %>
+        <span class="forum-post__actions">
+          <% if post.editable_by?(current_account) %>
+            <%= link_to "Edit", edit_forum_topic_forum_post_path(@topic, post), class: "forum-post__action" %>
+          <% end %>
+          <% if ForumTopic.moderator?(current_account) && !(@page == 1 && post == @posts.first) %>
+            <%= button_to "Delete", forum_topic_forum_post_path(@topic, post), method: :delete, class: "button-link forum-post__action",
+                  form: { class: "forum-post__delete", data: { turbo_confirm: "Delete this post?" } } %>
+          <% end %>
+        </span>
+      </header>
+      <%= render_forum_post(post.body) %>
+    </article>
+  <% end %>
+</div>
+
+<%= render "forum_boards/pages", pages: @pages, current: @page %>
+
+<% if @reply %>
+  <h2 class="section-title">Reply</h2>
+  <%= form_with model: @reply, url: forum_topic_forum_posts_path(@topic), class: "form forum-reply-form" do |form| %>
+    <div class="field">
+      <%= form.label :body, "Your reply", class: "visually-hidden" %>
+      <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000 %>
+      <small class="hint">Markdown works here. It's posted under your player name.</small>
+    </div>
+    <%= form.submit "Post reply", class: "button" %>
+  <% end %>
+<% elsif @topic.locked? %>
+  <p class="notice-box forum-topic__closed">This <%= term(:forum_topic).downcase %> is locked, so it takes no more replies.</p>
+<% elsif @board.who_can_reply != "nobody" %>
+  <p class="muted forum-topic__closed">Replies here: <%= forum_poster_label(@board.who_can_reply).downcase %>.</p>
+<% end %>

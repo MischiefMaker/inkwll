@@ -1,0 +1,13 @@
+<%# Page links for a long board or thread. %>
+<% if pages > 1 %>
+  <nav class="forum-pages" aria-label="Pages">
+    <span class="forum-pages__label muted">Page</span>
+    <% (1..pages).each do |number| %>
+      <% if number == current %>
+        <span class="forum-pages__link forum-pages__link--current"><%= number %></span>
+      <% else %>
+        <%= link_to number, url_for(page: number), class: "forum-pages__link" %>
+      <% end %>
+    <% end %>
+  </nav>
+<% end %>

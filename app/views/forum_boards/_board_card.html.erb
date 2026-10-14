@@ -1,0 +1,28 @@
+<%# One forum board as a card, styled like the Area cards on the front page:
+    picture, name, description, its latest post and an "Open" button. %>
+<article class="place forum-board<%= " place--banner" if board.image.attached? %>" id="<%= dom_id board %>">
+  <% if board.image.attached? %>
+    <%= image_tag board.image, alt: "", class: "place__banner forum-board__banner" %>
+  <% end %>
+  <div class="place__body forum-board__body">
+    <h3 class="place__name forum-board__name">
+      <% if board.icon.attached? %><%= image_tag board.icon, alt: "", class: "place__icon forum-board__icon" %><% end %>
+      <%= link_to board.name, forum_board_path(board), class: "place__title forum-board__title" %>
+    </h3>
+    <% if board.description.present? %>
+      <p class="place__summary forum-board__summary"><%= board.description %></p>
+    <% end %>
+    <% count = board.topics.size %>
+    <% latest = board.latest_post %>
+    <p class="place__activity forum-board__activity">
+      <span class="forum-board__count"><%= count.zero? ? "No #{term(:forum_topic, count: 2).downcase} yet" : pluralize(count, term(:forum_topic).downcase) %></span>
+      <% if latest %>
+        <span class="forum-board__latest">Latest: <%= link_to latest.topic.title, forum_topic_path(latest.topic, page: "last", anchor: dom_id(latest)) %>,
+          by <%= latest.account&.display_name || "a departed player" %>, <%= time_ago_in_words(latest.created_at) %> ago</span>
+      <% end %>
+    </p>
+  </div>
+  <div class="place__actions forum-board__actions">
+    <%= link_to "Open", forum_board_path(board), class: "button place__enter forum-board__open" %>
+  </div>
+</article>

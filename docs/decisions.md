@@ -13,6 +13,22 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - The default skin stays very simple but customisable. Areas and Settings can each have any of: a small icon, a large banner, a page background, short text and long text. A Setting without a background uses its Area's.
 - Lots of room for customising: Admin, Look takes a background picture for the whole page, one for boxes and panels, and one behind the game's name on the front page. Everything else is still reachable with extra CSS.
 
+## 2026-10-14: Forum boards (owner, details picked by Claude)
+
+The owner asked for a place for things that work better in a forum than a chat (advertising, wanted ads, news), customizable along with who can start threads and reply, placed after the Areas on the front page and styled a lot like them.
+
+Defaults picked by Claude, for the owner to check:
+
+- **Names:** players see "Boards", "Threads" and "Posts" (changeable in `config/locales/en.yml` like the other themed words). The code calls them forum boards, topics and posts.
+- **Starting boards:** News (staff start threads, anyone replies), Advertising and Wanted ads (anyone starts and replies).
+- **Who can post:** each board picks, separately for starting threads and replying: anyone with an account, staff only, Scribes and Wellkeepers only, or (replies only) nobody.
+- **Reading:** anyone with an account, like the rest of the game. Guests can't see boards.
+- **Who sets them up:** Scribes and Wellkeepers, under Admin → Boards (in "Game world"). Each board has a name, description, order, small icon and large banner, like an Area card. Deleting a board deletes its threads.
+- **Posts are out of character**, shown under the player's name and picture like the OOC Chat, not a character's. Written in Markdown, made safe the same way as the wiki.
+- **Moderation:** writers edit their own posts (marked "edited"); a thread's starter can rename it. Scribes and Wellkeepers can pin a thread to the top, lock it (no more replies except from them), delete a thread, and delete or edit any reply.
+- **Pages:** 30 threads or posts per page.
+- **Left for later:** "new" markers and alerts for replies, reporting a post, and letting writers delete their own posts.
+
 ## Admin panel uses a side menu (owner, 2026-10-14)
 
 The admin panel had too many tabs. It now has a grouped menu down the right-hand side, like Jcink's admin CP, and the OOC Chat folds away while you're in the admin panel (it comes back as you left it when you return to the game). On phones the menu folds into one button at the top.

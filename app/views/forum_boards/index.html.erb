@@ -1,0 +1,11 @@
+<% content_for :title, "#{term(:forum_board, count: 2)} · Inkwll" %>
+
+<h1 class="page-title"><%= term(:forum_board, count: 2) %></h1>
+
+<% if @boards.any? %>
+  <div class="places forum-boards">
+    <%= render partial: "forum_boards/board_card", collection: @boards, as: :board %>
+  </div>
+<% else %>
+  <p class="muted">No <%= term(:forum_board, count: 2).downcase %> yet.</p>
+<% end %>

@@ -58,6 +58,19 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.room-here`, `.where-now` | Who is standing here |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
 
+## Forum boards
+
+| Class | What it is |
+| --- | --- |
+| `.forum-section`, `.forum-section__title`, `.forum-section__boards` | The boards section on the front page, after the Areas |
+| `.forum-board`, `.forum-board__banner`, `.forum-board__icon`, `.forum-board__body`, `.forum-board__name`, `.forum-board__title`, `.forum-board__summary`, `.forum-board__activity`, `.forum-board__count`, `.forum-board__latest`, `.forum-board__actions`, `.forum-board__open` | One board's card (it also has the Area card classes `.place`, `.place__name` and so on, so it looks like an Area) |
+| `.forum-board-page__name`, `.forum-board-page__description`, `.forum-board-page__rules`, `.forum-board-page__start` | A board's own page |
+| `.forum-topics`, `.forum-topic-row`, `.forum-topic-row--pinned`, `.forum-topic-row--locked`, `.forum-topic-row__title`, `.forum-topic-row__badge`, `.forum-topic-row__starter`, `.forum-topic-row__replies`, `.forum-topic-row__latest` | The list of threads on a board |
+| `.forum-topic__title`, `.forum-topic__meta`, `.forum-topic__badge`, `.forum-topic__edit`, `.forum-topic__closed` | A thread's page |
+| `.forum-posts`, `.forum-post`, `.forum-post__header`, `.forum-author`, `.forum-post__time`, `.forum-post__edited`, `.forum-post__actions`, `.forum-post__body` | Posts in a thread |
+| `.forum-pages`, `.forum-pages__link`, `.forum-pages__link--current` | Page numbers on long boards and threads |
+| `.forum-topic-form`, `.forum-reply-form`, `.forum-post-form`, `.forum-board-form`, `.forum-boards-admin` | Forms, and the admin list of boards |
+
 ## Messages
 
 | Class | What it is |

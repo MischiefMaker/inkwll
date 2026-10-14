@@ -1103,4 +1103,33 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 
 @media (max-width: 600px) {
   .room-ways { grid-template-columns: 1fr; gap: 0; }
+
+/* Forum boards (news, advertising, wanted ads). Their cards reuse the Area
+   .place card styles; these are the extras and the board and thread pages. */
+
+.forum-section { margin: 0 0 calc(var(--space) * 2); }
+.forum-section__title a { color: inherit; text-decoration: none; }
+.forum-board__title { color: inherit; text-decoration: none; }
+.forum-board-page__rules { font-family: var(--font-ui); font-size: 0.9rem; }
+.forum-topics { width: 100%; }
+.forum-topic-row__title a { font-weight: bold; }
+.forum-topic-row__starter { margin-left: 0.3rem; font-size: 0.85rem; }
+.forum-topic-row__replies, .forum-topic-row__latest { white-space: nowrap; font-family: var(--font-ui); font-size: 0.9rem; }
+.forum-topic-row--pinned { background: var(--color-surface); }
+.forum-topic__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-family: var(--font-ui); font-size: 0.9rem; }
+.forum-posts { margin: var(--space) 0; border-top: 1px solid var(--color-border); }
+.forum-post { padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); }
+.forum-post__header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-family: var(--font-ui); font-size: 0.9rem; }
+.forum-author { font-weight: bold; }
+.forum-post__actions { display: flex; gap: 0.5rem; margin-left: auto; }
+.forum-post__delete { display: inline; }
+.forum-post__body { margin-top: 0.4rem; line-height: 1.6; overflow-wrap: anywhere; }
+.forum-post__body img { max-width: 100%; height: auto; }
+.forum-post__body blockquote { margin-left: 0; padding-left: var(--space); border-left: 3px solid var(--color-border); }
+.forum-pages { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin: var(--space) 0; font-family: var(--font-ui); }
+.forum-pages__link--current { font-weight: bold; }
+.forum-reply-form textarea { width: 100%; }
+
+@media (max-width: 600px) {
+  .forum-topic-row__latest { display: none; }
 }

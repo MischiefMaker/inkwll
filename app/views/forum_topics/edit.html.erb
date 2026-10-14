@@ -1,0 +1,19 @@
+<% content_for :title, "Change #{term(:forum_topic).downcase} · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to @topic.board.name, forum_board_path(@topic.board) %> › <%= link_to @topic.title, forum_topic_path(@topic) %></p>
+<h1 class="page-title">Change the <%= term(:forum_topic).downcase %></h1>
+
+<%= form_with model: @topic, class: "form forum-topic-form" do |form| %>
+  <%= render "shared/errors", record: @topic %>
+  <%= render "forum_topics/form_fields", form: form %>
+  <% if ForumTopic.moderator?(current_account) %>
+    <label class="field--checkbox"><%= form.check_box :pinned, checked: @topic.pinned? %> Pinned (kept at the top of the <%= term(:forum_board).downcase %>)</label>
+    <label class="field--checkbox"><%= form.check_box :locked, checked: @topic.locked? %> Locked (no more replies)</label>
+  <% end %>
+  <%= form.submit "Save", class: "button" %>
+<% end %>
+
+<% if ForumTopic.moderator?(current_account) %>
+  <%= button_to "Delete this #{term(:forum_topic).downcase}", forum_topic_path(@topic), method: :delete, class: "button button--quiet forum-topic-delete",
+        form: { data: { turbo_confirm: "Delete \"#{@topic.title}\" and every post in it? This can't be undone." } } %>
+<% end %>

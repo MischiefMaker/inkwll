@@ -1,0 +1,36 @@
+<% content_for :title, "#{term(:forum_board, count: 2)} · Admin · Inkwll" %>
+
+<h1 class="page-title"><%= term(:forum_board, count: 2) %></h1>
+<p class="muted">Forum-style <%= term(:forum_board, count: 2).downcase %> for things that work better than a <%= term(:scene).downcase %>, such as news, advertising and wanted ads. They're listed on the front page after the <%= term(:area, count: 2).downcase %>.</p>
+
+<% if @boards.any? %>
+  <table class="table forum-boards-admin">
+    <thead class="table__head">
+      <tr class="table__row">
+        <th class="table__heading"><%= term(:forum_board) %></th>
+        <th class="table__heading">Who can start <%= term(:forum_topic, count: 2).downcase %></th>
+        <th class="table__heading">Who can reply</th>
+        <th class="table__heading"></th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      <% @boards.each do |board| %>
+        <tr class="table__row">
+          <td class="table__cell"><%= link_to board.name, forum_board_path(board) %></td>
+          <td class="table__cell"><%= forum_poster_label(board.who_can_start) %></td>
+          <td class="table__cell"><%= forum_poster_label(board.who_can_reply) %></td>
+          <td class="table__cell">
+            <%= link_to "Edit", edit_admin_forum_board_path(board) %>
+            <%= button_to "Delete", admin_forum_board_path(board), method: :delete, class: "button-link",
+                  form: { data: { turbo_confirm: "Delete #{board.name} and every #{term(:forum_topic).downcase} on it? This can't be undone." } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">No <%= term(:forum_board, count: 2).downcase %> yet.</p>
+<% end %>
+
+<h2 class="section-title">Add a <%= term(:forum_board).downcase %></h2>
+<%= render "form", board: @board %>

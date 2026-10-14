@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_290001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_300001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -196,6 +196,43 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_290001) do
     t.index ["destination_room_id"], name: "index_exits_on_destination_room_id"
     t.index ["source_room_id", "name"], name: "index_exits_on_source_room_id_and_name", unique: true
     t.index ["source_room_id"], name: "index_exits_on_source_room_id"
+  end
+
+  create_table "forum_boards", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "position", default: 0, null: false
+    t.string "who_can_start", default: "everyone", null: false
+    t.string "who_can_reply", default: "everyone", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "forum_posts", force: :cascade do |t|
+    t.bigint "topic_id", null: false
+    t.bigint "account_id"
+    t.text "body", null: false
+    t.datetime "edited_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_forum_posts_on_account_id"
+    t.index ["topic_id", "created_at"], name: "index_forum_posts_on_topic_id_and_created_at"
+    t.index ["topic_id"], name: "index_forum_posts_on_topic_id"
+  end
+
+  create_table "forum_topics", force: :cascade do |t|
+    t.bigint "board_id", null: false
+    t.bigint "account_id"
+    t.string "title", null: false
+    t.datetime "pinned_at"
+    t.datetime "locked_at"
+    t.datetime "last_posted_at", null: false
+    t.integer "posts_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_forum_topics_on_account_id"
+    t.index ["board_id", "last_posted_at"], name: "index_forum_topics_on_board_id_and_last_posted_at"
+    t.index ["board_id"], name: "index_forum_topics_on_board_id"
   end
 
   create_table "gallery_images", force: :cascade do |t|
@@ -818,6 +855,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_290001) do
   add_foreign_key "conversation_members", "conversations"
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
+  add_foreign_key "forum_posts", "accounts", on_delete: :nullify
+  add_foreign_key "forum_posts", "forum_topics", column: "topic_id", on_delete: :cascade
+  add_foreign_key "forum_topics", "accounts", on_delete: :nullify
+  add_foreign_key "forum_topics", "forum_boards", column: "board_id", on_delete: :cascade
   add_foreign_key "gallery_images", "characters"
   add_foreign_key "grimoire_branches", "soul_skills"
   add_foreign_key "grimoire_learned_spells", "characters"

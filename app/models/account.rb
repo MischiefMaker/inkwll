@@ -170,7 +170,7 @@ class Account < ApplicationRecord
     when :build, :review_apps
       flag = job == :build ? "build" : "app"
       scribe? || wellkeeper? || (page? && job_flags.include?(flag))
-    when :manage_staff, :handle_reports, :ban then scribe? || wellkeeper?
+    when :manage_staff, :handle_reports, :ban, :manage_forums then scribe? || wellkeeper?
     when :delete_characters, :change_game_settings then wellkeeper?
     else false
     end

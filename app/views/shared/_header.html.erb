@@ -18,6 +18,7 @@
         <%= link_to term(:logs_collection), archives_path %>
         <%= link_to "Character directory", directory_path %>
         <%= link_to "Roster", roster_path %>
+        <%= link_to term(:forum_board, count: 2), forum_boards_path %>
         <% if WikiPage.enabled? %>
           <%= link_to "Wiki", wiki_pages_path %>
           <% WikiPage.in_menu.each do |page| %>

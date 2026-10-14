@@ -1,0 +1,16 @@
+<% content_for :title, "Start a #{term(:forum_topic).downcase} · #{@board.name} · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to term(:forum_board, count: 2), forum_boards_path %> › <%= link_to @board.name, forum_board_path(@board) %></p>
+<h1 class="page-title">Start a <%= term(:forum_topic).downcase %></h1>
+
+<%= form_with model: @topic, url: forum_board_forum_topics_path(@board), class: "form forum-topic-form" do |form| %>
+  <%= render "shared/errors", record: @topic %>
+  <%= render "shared/errors", record: @post %>
+  <%= render "forum_topics/form_fields", form: form %>
+  <div class="field">
+    <%= form.label :body, "Message" %>
+    <%= form.text_area :body, value: @post.body, rows: 10, required: true, maxlength: 20_000 %>
+    <small class="hint">Markdown works here, as on the wiki: **bold**, *italic*, [links](https://example.com) and lists. It's posted under your player name.</small>
+  </div>
+  <%= form.submit "Post #{term(:forum_topic).downcase}", class: "button" %>
+<% end %>

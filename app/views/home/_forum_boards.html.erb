@@ -1,0 +1,11 @@
+<%# The forum boards (news, advertising, wanted ads...) on the front page,
+    after the Areas and styled like them. Left out when a game has none. %>
+<% boards = ForumBoard.ordered.with_attached_icon.with_attached_image %>
+<% if boards.any? %>
+  <section class="forum-section">
+    <h2 class="section-title forum-section__title"><%= link_to term(:forum_board, count: 2), forum_boards_path %></h2>
+    <div class="places forum-section__boards">
+      <%= render partial: "forum_boards/board_card", collection: boards, as: :board %>
+    </div>
+  </section>
+<% end %>

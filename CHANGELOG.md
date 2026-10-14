@@ -2,6 +2,21 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Forum boards
+
+- New forum-style Boards for things that work better than a Chapter:
+  news, advertising, wanted ads and so on. They're listed on the front
+  page after the Areas, as cards like the Area cards, and in the Menu.
+- Each board has threads and replies, written in Markdown and posted under
+  the player's name. Writers can edit their own posts; Scribes and
+  Wellkeepers can pin, lock and delete threads and delete replies.
+- Admin, Boards (Scribes and Wellkeepers) adds, renames, reorders and
+  removes boards, with a small icon and banner, and picks who can start
+  threads and who can reply on each: anyone with an account, staff only,
+  Scribes and Wellkeepers only, or (for replies) nobody.
+- New games start with three boards: News (staff start threads, anyone
+  replies), Advertising and Wanted ads (anyone).
+
 ## 2026-10-14 — Simpler look and the game's name
 
 - The front page now opens with the game's name in large letters and a

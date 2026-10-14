@@ -1,0 +1,13 @@
+<% content_for :title, "Edit #{term(:forum_post).downcase} · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to @topic.board.name, forum_board_path(@topic.board) %> › <%= link_to @topic.title, forum_topic_path(@topic) %></p>
+<h1 class="page-title">Edit <%= term(:forum_post).downcase %></h1>
+
+<%= form_with model: @post, url: forum_topic_forum_post_path(@topic, @post), class: "form forum-post-form" do |form| %>
+  <%= render "shared/errors", record: @post %>
+  <div class="field">
+    <%= form.label :body, "Message" %>
+    <%= form.text_area :body, rows: 10, required: true, maxlength: 20_000 %>
+  </div>
+  <%= form.submit "Save", class: "button" %>
+<% end %>

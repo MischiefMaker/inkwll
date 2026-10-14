@@ -1,0 +1,5 @@
+<% content_for :title, "#{@board.name} · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to term(:forum_board, count: 2), admin_forum_boards_path %></p>
+<h1 class="page-title"><%= @board.name %></h1>
+<%= render "form", board: @board %>

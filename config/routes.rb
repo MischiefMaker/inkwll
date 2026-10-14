@@ -103,6 +103,14 @@ Rails.application.routes.draw do
     end
   end
 
+  # Forum boards (news, advertising, wanted ads...) and their threads.
+  resources :forum_boards, path: "boards", only: %i[ index show ] do
+    resources :forum_topics, path: "threads", only: %i[ new create ]
+  end
+  resources :forum_topics, path: "threads", only: %i[ show edit update destroy ] do
+    resources :forum_posts, path: "posts", only: %i[ create edit update destroy ]
+  end
+
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do
     root "dashboard#show"
@@ -129,6 +137,7 @@ Rails.application.routes.draw do
     resources :profile_fields, except: %i[ show new ]
     resources :character_groups, except: %i[ show new ]
     resources :scene_labels, except: %i[ show new ]
+    resources :forum_boards, except: %i[ show new ]
     resource :soul, only: :show, controller: "soul"
     resources :soul_aspects, only: %i[ create edit update destroy ]
     resources :soul_skills, only: %i[ create edit update destroy ]

@@ -32,6 +32,16 @@ en:
       one: "Manuscript"
       other: "Manuscripts"
     logs_collection: "Archives"
+    # Forum boards for news, advertising, wanted ads and so on.
+    forum_board:
+      one: "Board"
+      other: "Boards"
+    forum_topic:
+      one: "Thread"
+      other: "Threads"
+    forum_post:
+      one: "Post"
+      other: "Posts"
     staff_levels:
       player: "Player"
       page: "Page"
