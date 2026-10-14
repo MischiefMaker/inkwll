@@ -21,6 +21,16 @@
       <% end %>
     </fieldset>
   <% end %>
+  <fieldset class="field scene-form__when">
+    <legend class="fieldset__legend">When it happens</legend>
+    <div class="form--inline">
+      <%= form.label :ic_date, "Date", class: "visually-hidden" %>
+      <%= form.date_field :ic_date %>
+      <%= form.label :ic_time, "Time of day", class: "visually-hidden" %>
+      <%= form.text_field :ic_time, maxlength: 40, placeholder: "Time of day (optional)" %>
+    </div>
+    <small class="hint">The game's date was <%= IcClock.today.to_fs(:long) %> when this <%= term(:scene).downcase %> started or since. Changing it adds a line to the <%= term(:scene).downcase %> so everyone sees.</small>
+  </fieldset>
   <fieldset class="field">
     <legend class="fieldset__legend">Who can join</legend>
     <% locked_hidden = @scene.visibility_was == "hidden" && @scene.made_public_at.nil? %>

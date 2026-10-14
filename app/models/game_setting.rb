@@ -5,6 +5,8 @@ class GameSetting < ApplicationRecord
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }
   validate :auto_finish_after_idle
+  normalizes :weather, with: ->(w) { w.squish.presence }
+  validates :weather, length: { maximum: 200 }
   validates :roster_idle_days, numericality: { only_integer: true, in: 7..3650 }
   validates :ic_days_per_day, numericality: { greater_than: 0, less_than_or_equal_to: 365 }
 
@@ -19,7 +21,7 @@ class GameSetting < ApplicationRecord
       self.ic_anchor_date = self.ic_anchor_at = nil
       return
     end
-    date = value.is_a?(Date) ? value : (Date.iso8601(value.to_s) rescue nil)
+    date = value.is_a?(Date) ? value : (Date.iso8601(value.to_s, Date::GREGORIAN) rescue nil)
     return if date.nil? || date == ic_today
     self.ic_anchor_date = date
     self.ic_anchor_at = Time.current

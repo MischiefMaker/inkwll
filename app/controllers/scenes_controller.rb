@@ -26,10 +26,16 @@ class ScenesController < ApplicationController
 
   def update
     if @scene.update(scene_params)
+      if params.dig(:scene, :ic_date) || params.dig(:scene, :ic_time)
+        by = @scene.participants_for(current_account).first.character
+        @scene.change_ic_date!(by: by, date: params.dig(:scene, :ic_date), time: params.dig(:scene, :ic_time))
+      end
       redirect_to @scene, notice: "Saved."
     else
       render :edit, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordInvalid
+    render :edit, status: :unprocessable_entity
   end
 
   private
@@ -42,8 +48,12 @@ class ScenesController < ApplicationController
       redirect_to @scene, alert: "Only characters in this #{Term[:scene]} can change it." unless @scene.participating?(current_account)
     end
 
+    # A new Chapter takes its date here; later changes go through
+    # Scene#change_ic_date! so the Chapter gets a line about it.
     def scene_params
-      params.expect(scene: [ :title, :subtitle, :visibility, :pose_mode, :auto_skip, :turn_minutes, label_ids: [] ])
+      permitted = [ :title, :subtitle, :visibility, :pose_mode, :auto_skip, :turn_minutes, label_ids: [] ]
+      permitted.unshift(:ic_date, :ic_time) if action_name == "create"
+      params.expect(scene: permitted)
     end
 
     # Like Settings, a Chapter remembers which of the player's characters they

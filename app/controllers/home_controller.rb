@@ -3,5 +3,8 @@
 class HomeController < ApplicationController
   def show
     @areas = Area.top_level.with_attached_image
+    # The character each player seen in the last few minutes is playing.
+    @online = Character.active.where(id: Account.where(last_seen_at: 10.minutes.ago..).select(:active_character_id))
+      .includes(:character_group).order(:name)
   end
 end

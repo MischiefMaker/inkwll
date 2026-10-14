@@ -25,6 +25,11 @@ class Scene < ApplicationRecord
   validates :title, presence: true, length: { maximum: 100 }
   normalizes :subtitle, with: ->(s) { s.squish.presence }
   validates :subtitle, length: { maximum: 150 }
+  # The Chapter's own in-character date. It starts as the game's date and
+  # only moves when one of its players changes it.
+  normalizes :ic_time, with: ->(t) { t.squish.presence }
+  validates :ic_time, length: { maximum: 40 }
+  before_create { self.ic_date ||= IcClock.today }
   # Only labels staff have defined.
   before_validation { self.label_ids = SceneLabel.where(id: Array(label_ids).compact_blank).ordered.pluck(:id) if label_ids_changed? }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
@@ -66,6 +71,24 @@ class Scene < ApplicationRecord
         role: storyteller && character.account.may_storytell? ? "storyteller" : "player")
       scene
     end
+  end
+
+  # Changing the date or time of day, with a line in the Chapter saying so.
+  def change_ic_date!(by:, date:, time:)
+    date = date.is_a?(Date) ? date : (Date.iso8601(date.to_s, Date::GREGORIAN) rescue nil)
+    transaction do
+      self.ic_date = date if date
+      self.ic_time = time
+      next true unless ic_date_changed? || ic_time_changed?
+      save!
+      add_system_line!("#{by.name} moved the #{Term[:scene].downcase} to #{ic_when}.")
+      true
+    end
+  end
+
+  # "October 14, 1526, late evening"
+  def ic_when
+    [ ic_date&.to_fs(:long), ic_time ].compact.join(", ")
   end
 
   def last_activity_at

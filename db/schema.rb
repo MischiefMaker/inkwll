@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_200001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_210001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -223,6 +223,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_200001) do
     t.boolean "require_icon", default: false, null: false
     t.boolean "soul_enabled", default: true, null: false
     t.integer "roster_idle_days", default: 90, null: false
+    t.string "weather"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -419,6 +420,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_200001) do
     t.string "pause_note"
     t.string "subtitle"
     t.integer "label_ids", default: [], null: false, array: true
+    t.date "ic_date"
+    t.string "ic_time"
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"

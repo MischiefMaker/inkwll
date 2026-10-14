@@ -13,6 +13,7 @@
     <% if @scene.subtitle %><p class="scene__subtitle"><%= @scene.subtitle %></p><% end %>
     <p class="scene__meta muted">
       <span class="badge badge--<%= @scene.visibility %>"><%= scene_visibility_label(@scene) %></span>
+      <% if @scene.ic_date %><span class="scene__when"><%= @scene.ic_when %></span> ·<% end %>
       <%= scene_mode_summary(@scene) %>
       <%= scene_labels(@scene) %>
       <% if @scene.participating?(current_account) && @scene.writable? %>

@@ -881,3 +881,11 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .chapter-tracker__character { margin-bottom: var(--space); overflow-x: auto; }
 .chapter-tracker__subtitle { display: block; font-size: 0.85rem; }
 .chapter-tracker__row--my-turn .chapter-tracker__turn { color: var(--color-accent); }
+
+/* --- Game time ------------------------------------------------------------ */
+.game-time { margin: 0 0 var(--space); }
+.game-time__date { font-weight: 600; }
+.game-time__weather { color: var(--color-muted); }
+.chapter-tracker__when { display: block; font-size: 0.85rem; }
+.scene-form__when .form--inline { flex-wrap: wrap; }
+.online-now { margin-top: calc(var(--space) * 2); }
