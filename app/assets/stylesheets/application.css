@@ -838,3 +838,5 @@ span.pose__icon { cursor: default; }
 .pending-rolls { margin-bottom: var(--space); padding: 0.75rem var(--space); border: 1px dashed var(--color-accent); border-radius: var(--radius); background: var(--color-surface); }
 .pending-roll + .pending-roll { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--color-border); }
 .pending-roll__form { flex-direction: row; flex-wrap: wrap; align-items: flex-end; }
+.soul-reviews__deny { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.soul-reviews__deny input[type=text] { flex: 1 1 12rem; min-width: 0; max-width: 24rem; }

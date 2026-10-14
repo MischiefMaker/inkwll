@@ -16,6 +16,20 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 6 details picked while building (SOUL extras)
+
+Defaults picked by Claude, for the owner to check. Numbers follow the SOUL plugin.
+
+- **Boons and Banes catalogue:** starts empty. App staff (Scribes, Wellkeepers, App Pages) add entries under Boons and Banes in the admin panel, optionally tied to fixed Skills. Entries are retired rather than deleted.
+- **Levels:** Minor (1), Major (2), Legendary (3). A Boon rerolls dice showing 1 up to its level; a Bane rerolls the high dice the same way. On a roll, every unresolved Boon and Bane tied to that Skill counts automatically, and the roll line names them.
+- **Starting sheets:** players pick their own Boons and Banes while the sheet is open, within the plugin's Resonance limits. A character always needs one Bane for every two Boons, before and after approval.
+- **After the sheet locks,** players ask staff for new ones with a reason, and staff approve or deny them on the new SOUL requests page. Staff can also grant, progress (a Boon grows, a Bane fades), regress, resolve (it stops counting but stays on record), restore or delete them.
+- **The player's explanation** of each Boon and Bane is seen only by the player and staff, like the rest of the sheet.
+- **Storyteller rolls:** in a Chapter with a Storyteller, players can tick "Ask the Storyteller to judge it". The Storyteller sees the waiting roll, picks the difficulty and which of the player's Boons and Banes count, and rolls it. The player can cancel while it waits. A Storyteller doesn't judge their own player's rolls.
+- **Culminations:** players propose one (title and description) on the SOUL tab, and staff approve or deny it on the SOUL requests page. Approved ones show on the sheet, and staff can withdraw them later.
+- **Narrative History:** a plain list on the SOUL tab of how the character changed: starting play, ratings raised, Boons and Banes gained or changed, and Culminations. Only the player and staff see it.
+- **Staff log:** every staff change (XP, sheet locks, Boons and Banes, requests, Culminations, retiring characters) is recorded with who did it and why. It's shown only to staff, folded at the bottom of the SOUL tab.
+
 ## 2026-10-14: Security rules (owner)
 
 The owner answered the security review (`security/review.md` in the project files). All of these are built:

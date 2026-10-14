@@ -2,6 +2,15 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 6: SOUL extras
+
+- Boons and Banes: staff keep a catalogue, players pick theirs on a starting
+  sheet or ask staff later, and they change rolls of the Skills they're tied to.
+- Players can ask a Chapter's Storyteller to judge a roll.
+- Culminations: players propose milestones and staff approve them.
+- Each character has a Narrative History, and staff have a log of every
+  staff change.
+
 ## 2026-10-14 — Security rules
 
 - New passwords need 10 characters, with a number, a capital and a
