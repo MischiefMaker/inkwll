@@ -15,6 +15,7 @@ class Admin::SkinsController < Admin::BaseController
     else
       @game_setting.assign_attributes(skin_params)
     end
+    @game_setting.look_chosen_at ||= Time.current
     if @game_setting.save
       redirect_to edit_admin_skin_path, notice: "Look saved. Reload any open pages to see it."
     else

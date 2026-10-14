@@ -37,6 +37,7 @@ class PlatformTest < ActionDispatch::IntegrationTest
   end
 
   test "colours, fonts and extra CSS make a stylesheet every page loads" do
+    GameSetting.current.tap { |settings| settings.apply_preset("plain") }.save!
     sign_in_as(accounts(:wellkeeper))
     colours = GameSetting::Skin::COLOURS.transform_values { |(_, light, _)| light }.merge("accent" => "#B3202A")
     patch admin_skin_path, params: { game_setting: { skin_colours: colours, font_heading: "Georgia, 'Times New Roman', serif",
@@ -63,13 +64,26 @@ class PlatformTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     patch admin_skin_path, params: { game_setting: { skin_colours: { "accent" => "red; } x {" } } }
     assert_response :unprocessable_entity
-    assert_not GameSetting.current.reload.skinned?
+    assert_equal "wild", GameSetting.current.reload.current_preset
   end
 
-  test "a ready-made look, and no stylesheet until there's a skin" do
+  test "new games start in Slate blue and gold until an admin picks a look" do
     sign_in_as(accounts(:wellkeeper))
+    assert_equal "wild", GameSetting.current.current_preset
+    get root_path
+    assert_select "link[href^='/skin.css']"
+    get admin_root_path
+    assert_select ".admin-setup__look"
+
+    patch admin_skin_path, params: { preset: "plain" }
     get root_path
     assert_select "link[href^='/skin.css']", count: 0
+    get admin_root_path
+    assert_select ".admin-setup__look", count: 0
+  end
+
+  test "a ready-made look" do
+    sign_in_as(accounts(:wellkeeper))
 
     patch admin_skin_path, params: { preset: "shadow" }
     settings = GameSetting.current.reload

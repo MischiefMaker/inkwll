@@ -17,4 +17,4 @@ See "Step 10 details picked while building" in `docs/decisions.md`. Screenshots 
 
 - [x] Built, with tests passing
 - [ ] The owner has tried it
-- [ ] The owner has picked the default look
+- [x] The owner has picked the default look (Slate blue and gold)

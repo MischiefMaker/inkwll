@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_260001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_270001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -237,6 +237,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_260001) do
     t.text "custom_css"
     t.boolean "roster_claim", default: false, null: false
     t.boolean "roster_resubmit", default: false, null: false
+    t.datetime "look_chosen_at"
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

@@ -16,6 +16,12 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: New games start in Slate blue and gold (owner)
+
+New games start with the "Slate blue and gold" look. The ready-made looks, plain included, stay as templates the admin picks from when launching a new game (owner).
+
+Built as: a new game's settings start in Slate blue and gold. Until a Wellkeeper saves a look, the admin Overview shows "Pick your game's look" with a link to Admin → Look, where the look in use is marked.
+
 ## 2026-10-14: Roster take-overs are configurable (owner)
 
 Each game chooses how a new player takes over a roster character: redo all of the application, redo some of it or answer extra questions, or simply claim and play (owner).
@@ -33,7 +39,7 @@ Defaults picked by Claude, for the owner to check:
 - **Admin → Features** (Wellkeepers) gathers the on/off switches: SOUL, Inklings, Grimoire, the wiki (new, on by default) and guest chat. They moved there from Game settings. The switches stay columns on the game settings table rather than a separate features table, since that's how each system was already built.
 - **Admin → Look** (Wellkeepers): a colour picker for each of the stylesheet's nine colours, in light and dark, fonts for text and headings, and an extra CSS box. Only colours that differ from the built-in ones are saved.
 - **Dark mode:** on by default, as now. A game can switch it off so everyone sees its light colours.
-- **Ready-made looks** after the owner's forum skins: "Black and red" (Falls the Shadow), "Slate blue and gold" (Last Call of the Wild) and "Black and white" (What's Left of the Flag), plus "Inkwll plain". They use fonts already on people's devices. Inkwll's own default is still plain; the owner can pick which of these, if any, should be the default.
+- **Ready-made looks** after the owner's forum skins: "Black and red" (Falls the Shadow), "Slate blue and gold" (Last Call of the Wild) and "Black and white" (What's Left of the Flag), plus "Inkwll plain". They use fonts already on people's devices. The owner later picked Slate blue and gold as the default (see above).
 - **How it's served:** the skin is its own stylesheet at /skin.css, loaded after the built-in one, so nothing typed on the Look page is mixed into page HTML. Fonts can only hold letters, numbers, spaces, commas, hyphens and quotes, and colours must look like #5b3f8c. Extra CSS is trusted, because only Wellkeepers can write it. Web fonts work with @import in the extra CSS.
 - **Left for later:** the swappable page templates in Version 2.0, and the roster getting its own on/off switch.
 

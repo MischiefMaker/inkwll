@@ -6,6 +6,13 @@
   You only see the tabs your level allows.
 </p>
 
+<% if current_account.can?(:change_game_settings) && !GameSetting.current.look_chosen_at %>
+  <div class="notice-box admin-setup">
+    <p class="text"><strong class="emphasis">Pick your game's look.</strong> It starts in <%= GameSetting::Skin::PRESETS[GameSetting::Skin::DEFAULT_PRESET][:name] %>; there are other ready-made looks, including plain, or you can set your own colours.</p>
+    <%= link_to "Choose a look", edit_admin_skin_path, class: "button admin-setup__look" %>
+  </div>
+<% end %>
+
 <ul class="admin-sections">
   <% if current_account.can?(:build) %>
     <li class="list__item">

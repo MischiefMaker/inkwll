@@ -98,7 +98,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.wiki-history`, `.wiki-history__item`, `.wiki-history__current` | A page's history |
 | `.menu__wiki-page` | A wiki page listed in the Menu |
 | `.features`, `.features__item` | Admin: Features |
-| `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
+| `.admin-setup`, `.admin-setup__look` | "Pick your game's look" on the admin Overview |
+| `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-preset__current`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
 | `.inklings-admin`, `.inklings-admin--waiting` | Admin: Inklings |
 | `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list` | The game's date, weather and who's online, on the front page |
 | `.scene__when`, `.scene-list__when`, `.manuscript__when`, `.chapter-tracker__when`, `.scene-form__when` | A Chapter's in-character date and time |

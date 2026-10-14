@@ -23,6 +23,9 @@ module GameSetting::Skin
   # nothing else can be slipped into the stylesheet.
   FONT_FORMAT = /\A[\p{L}\p{N} ,'"-]*\z/
 
+  # The look a new game starts with, until an admin picks one (owner).
+  DEFAULT_PRESET = "wild"
+
   # Ready-made starting points, after the owner's earlier forum skins.
   PRESETS = {
     "plain" => { name: "Inkwll plain", colours: {}, dark_colours: {}, dark_mode: true, font_heading: nil },
@@ -38,6 +41,7 @@ module GameSetting::Skin
   }.freeze
 
   included do
+    before_create { apply_preset(DEFAULT_PRESET) }
     normalizes :font_body, :font_heading, with: ->(f) { f.squish.presence }
     normalizes :custom_css, with: ->(css) { css.presence }
     validates :font_body, :font_heading, length: { maximum: 200 }, format: { with: FONT_FORMAT, message: "can only have letters, numbers, spaces, commas, hyphens and quotes" }, allow_nil: true
@@ -66,6 +70,12 @@ module GameSetting::Skin
     self.skin_dark_colours = preset[:dark_colours] || {}
     self.skin_dark_mode = preset[:dark_mode]
     self.font_heading = preset[:font_heading]
+  end
+
+  # Which ready-made look the colours match, if any.
+  def current_preset
+    PRESETS.find { |_, preset| changed_colours(preset[:colours], 1) == skin_colours && changed_colours(preset[:dark_colours] || {}, 2) == skin_dark_colours &&
+      preset[:dark_mode] == skin_dark_mode? && preset[:font_heading] == font_heading }&.first
   end
 
   def skinned?

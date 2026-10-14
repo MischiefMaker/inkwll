@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Default look
+
+- New games start in Slate blue and gold, and the admin panel asks the
+  admin to pick a look (plain and the others are one click away).
+
 ## 2026-10-14 — Roster options
 
 - Games choose how roster characters change hands: claim and play

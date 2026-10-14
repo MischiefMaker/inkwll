@@ -5,7 +5,7 @@
 
 <section class="skin-presets">
   <h2 class="section-title">Start from a ready-made look</h2>
-  <p class="muted">This replaces the colours and heading font below. The text font and extra CSS are kept.</p>
+  <p class="muted">This replaces the colours and heading font below. The text font and extra CSS are kept.<% unless @game_setting.look_chosen_at %> New games start in <%= GameSetting::Skin::PRESETS[GameSetting::Skin::DEFAULT_PRESET][:name] %>; pick another here or keep it.<% end %></p>
   <div class="skin-presets__list">
     <% GameSetting::Skin::PRESETS.each do |key, preset| %>
       <%= button_to admin_skin_path, method: :patch, params: { preset: key }, class: "skin-preset", form_class: "skin-presets__form",
@@ -16,6 +16,7 @@
           <% end %>
         </span>
         <span class="skin-preset__name"><%= preset[:name] %></span>
+        <% if key == @game_setting.current_preset %><span class="tag skin-preset__current">In use</span><% end %>
       <% end %>
     <% end %>
   </div>
