@@ -5,8 +5,9 @@ class WeeklyXpJob < ApplicationJob
 
     week = now.to_date.cweek
     year = now.to_date.cwyear
+    median = Character.median_xp_earned
     Character.where(status: "approved").find_each do |character|
-      character.award_xp!(amount, source: "weekly", key: "weekly:#{year}-#{week}:#{character.id}", catchup: true)
+      character.award_xp!(amount, source: "weekly", key: "weekly:#{year}-#{week}:#{character.id}", catchup: true, median: median)
     end
   end
 end

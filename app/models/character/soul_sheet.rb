@@ -104,10 +104,11 @@ module Character::SoulSheet
 
   # Gives XP. key makes repeated awards for the same thing (a Chapter, a
   # week) count once. Automatic awards add catch-up XP for characters behind
-  # the median.
-  def award_xp!(amount, source:, key: nil, actor: nil, note: nil, catchup: false)
+  # the median. When awarding many characters at once, work the median out
+  # first and pass it in, so the ones awarded first don't raise it for the rest.
+  def award_xp!(amount, source:, key: nil, actor: nil, note: nil, catchup: false, median: nil)
     return if amount.to_i <= 0 || (key && Soul::XpEntry.exists?(idempotency_key: key))
-    bonus = catchup ? catchup_bonus(amount.to_i) : 0
+    bonus = catchup ? catchup_bonus(amount.to_i, median || self.class.median_xp_earned) : 0
     xp_entries.create!(kind: "award", source: source, amount: amount.to_i, catchup_amount: bonus, idempotency_key: key, actor: actor, note: note)
   rescue ActiveRecord::RecordNotUnique
     nil
@@ -149,10 +150,9 @@ module Character::SoulSheet
 
     # Characters behind the median earn up to double on automatic awards,
     # but never past the median.
-    def catchup_bonus(amount)
+    def catchup_bonus(amount, median)
       settings = Soul::Rules.catchup
       return 0 unless settings["enabled"]
-      median = self.class.median_xp_earned
       progress = xp_earned + xp_catchup_earned
       return 0 unless progress < median
       [ [ amount * settings["multiplier"].to_f - amount, median - progress ].min, 0 ].max.floor

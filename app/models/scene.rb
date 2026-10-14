@@ -275,9 +275,10 @@ class Scene < ApplicationRecord
   def award_xp!
     return unless Soul.enabled? && (amount = Soul::Rules.scene_award).positive?
     posted = poses.story.pluck(:character_id).uniq
+    median = Character.median_xp_earned
     participants.includes(:character).map(&:character).each do |character|
       next unless posted.include?(character.id) && character.can_play?
-      character.award_xp!(amount, source: "scene", key: "scene:#{id}:#{character.id}", catchup: true)
+      character.award_xp!(amount, source: "scene", key: "scene:#{id}:#{character.id}", catchup: true, median: median)
     end
   end
 
