@@ -1,0 +1,31 @@
+# Admin → Look: the game's colours, fonts and extra CSS. Wellkeepers only,
+# because extra CSS can change how every page looks.
+class Admin::SkinsController < Admin::BaseController
+  require_job :change_game_settings
+
+  def edit
+    @game_setting = GameSetting.current
+  end
+
+  def update
+    @game_setting = GameSetting.current
+    if (preset = params[:preset]).present?
+      return redirect_to(edit_admin_skin_path, alert: "Unknown skin.") unless GameSetting::Skin::PRESETS.key?(preset)
+      @game_setting.apply_preset(preset)
+    else
+      @game_setting.assign_attributes(skin_params)
+    end
+    if @game_setting.save
+      redirect_to edit_admin_skin_path, notice: "Look saved. Reload any open pages to see it."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def skin_params
+      keys = GameSetting::Skin::COLOURS.keys
+      params.expect(game_setting: [ :skin_dark_mode, :font_body, :font_heading, :custom_css,
+        skin_colours: keys, skin_dark_colours: keys ])
+    end
+end

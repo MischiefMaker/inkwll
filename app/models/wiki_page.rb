@@ -17,6 +17,10 @@ class WikiPage < ApplicationRecord
   scope :in_menu, -> { where.not(menu_position: nil).order(:menu_position, :title) }
   scope :tagged, ->(tag) { where("? = ANY(tags)", tag.to_s.downcase) }
 
+  def self.enabled?
+    GameSetting.current.wiki_enabled?
+  end
+
   # "Rules of the Game" -> "rules-of-the-game"
   def self.slug_for(title)
     title.to_s.unicode_normalize(:nfkd).downcase.gsub(/[^a-z0-9]+/, "-").delete_prefix("-").delete_suffix("-").first(100)

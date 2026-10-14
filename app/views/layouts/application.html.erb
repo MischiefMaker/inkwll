@@ -19,6 +19,10 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%# The game's own colours, fonts and extra CSS, from Admin → Look. %>
+    <% if (settings = GameSetting.current).skinned? %>
+      <%= stylesheet_link_tag skin_stylesheet_path(v: settings.updated_at.to_i), "data-turbo-track": "reload" %>
+    <% end %>
     <%= javascript_importmap_tags %>
   </head>
 

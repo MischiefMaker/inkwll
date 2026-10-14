@@ -39,6 +39,14 @@
   <% end %>
   <% if current_account.can?(:change_game_settings) %>
     <li class="list__item">
+      <%= link_to "Features", edit_admin_features_path %>
+      <span class="muted">Switch SOUL, Inklings, Grimoire, the wiki and guest chat on or off.</span>
+    </li>
+    <li class="list__item">
+      <%= link_to "Look", edit_admin_skin_path %>
+      <span class="muted">The game's colours, fonts and extra CSS.</span>
+    </li>
+    <li class="list__item">
       <%= link_to "Game settings", edit_admin_game_settings_path %>
       <span class="muted">Whether email and character approval are required.</span>
     </li>

@@ -1,6 +1,8 @@
 # Game-wide switches that each game can change from the admin panel.
 # There is only ever one row; use GameSetting.current.
 class GameSetting < ApplicationRecord
+  include Skin
+
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }

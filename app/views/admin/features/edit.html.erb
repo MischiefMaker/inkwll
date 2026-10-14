@@ -1,0 +1,50 @@
+<% content_for :title, "Features · Inkwll" %>
+
+<h1 class="page-title">Features</h1>
+<p class="text muted">Switch the game's systems on or off. Switching one off hides it; nothing is deleted, and switching it back on brings everything back.</p>
+
+<%= form_with model: @game_setting, url: admin_features_path, method: :patch, class: "form features" do |form| %>
+  <%= render "shared/errors", record: @game_setting %>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :soul_enabled %>
+      <%= form.label :soul_enabled, "SOUL: character sheets, XP and rolls" %>
+    </div>
+    <p class="muted features__hint">When it's off, sheets, XP and the roll box are hidden, and no XP is given. Aspects and Skills are under SOUL in the admin panel.</p>
+  </div>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :inklings_enabled %>
+      <%= form.label :inklings_enabled, "Inklings: threads about characters that players send to staff" %>
+    </div>
+    <p class="muted features__hint">The types are set in config/inklings.yml.</p>
+  </div>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :grimoire_enabled %>
+      <%= form.label :grimoire_enabled, "Grimoire: magic, with spells learned with XP and cast as SOUL rolls" %>
+    </div>
+    <p class="muted features__hint">Grimoire needs SOUL. Branches and spells are under Grimoire in the admin panel once it's on.</p>
+  </div>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :wiki_enabled %>
+      <%= form.label :wiki_enabled, "Wiki: pages for rules, lore and plots that players can write" %>
+    </div>
+    <p class="muted features__hint">The wiki is in the Menu, with any pages staff place there.</p>
+  </div>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :guest_chat %>
+      <%= form.label :guest_chat, "Guest chat: guests can talk in the OOC Chat without logging in" %>
+    </div>
+    <p class="muted features__hint">So people can ask questions before signing up. Guests can't post links, and bans and the VPN block apply to them. Staff can ban a guest from the Bans page.</p>
+  </div>
+
+  <%= form.submit "Save", class: "button" %>
+<% end %>

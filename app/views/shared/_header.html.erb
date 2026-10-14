@@ -18,9 +18,11 @@
         <%= link_to term(:logs_collection), archives_path %>
         <%= link_to "Character directory", directory_path %>
         <%= link_to "Roster", roster_path %>
-        <%= link_to "Wiki", wiki_pages_path %>
-        <% WikiPage.in_menu.each do |page| %>
-          <%= link_to page.title, wiki_page_path(page), class: "menu__wiki-page" %>
+        <% if WikiPage.enabled? %>
+          <%= link_to "Wiki", wiki_pages_path %>
+          <% WikiPage.in_menu.each do |page| %>
+            <%= link_to page.title, wiki_page_path(page), class: "menu__wiki-page" %>
+          <% end %>
         <% end %>
         <%= link_to "OOC Chat", ooc_messages_path %>
         <%= link_to "My player profile", player_path(current_account.username) %>

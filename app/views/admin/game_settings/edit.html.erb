@@ -49,28 +49,7 @@
   </div>
   <p class="muted">When this is off, only staff can see it. Players can still message "the player of" a character, who stays anonymous.</p>
 
-  <div class="field field--checkbox">
-    <%= form.check_box :guest_chat %>
-    <%= form.label :guest_chat, "Guests can talk in the OOC Chat without logging in" %>
-  </div>
-  <p class="muted">So people can ask questions before signing up. Guests can't post links, and bans and the VPN block apply to them. Staff can ban a guest from the Bans page.</p>
-
-  <h2 class="section-title">Systems</h2>
-  <div class="field field--checkbox">
-    <%= form.check_box :soul_enabled %>
-    <%= form.label :soul_enabled, "Use SOUL: character sheets, XP and rolls" %>
-  </div>
-  <p class="muted">When it's off, sheets, XP and the roll box are hidden, and no XP is given. Nothing is deleted. Aspects and Skills are under SOUL in the admin panel.</p>
-  <div class="field field--checkbox">
-    <%= form.check_box :inklings_enabled %>
-    <%= form.label :inklings_enabled, "Use Inklings: threads about characters that players send to staff" %>
-  </div>
-  <p class="muted">When it's off, Inklings are hidden. Nothing is deleted. The types are set in config/inklings.yml.</p>
-  <div class="field field--checkbox">
-    <%= form.check_box :grimoire_enabled %>
-    <%= form.label :grimoire_enabled, "Use Grimoire: magic, with spells learned with XP and cast as SOUL rolls" %>
-  </div>
-  <p class="muted">Grimoire needs SOUL. Branches and spells are under Grimoire in the admin panel once it's on.</p>
+  <p class="muted">SOUL, Inklings, Grimoire, the wiki and guest chat are switched on and off under Features.</p>
 
   <h2 class="section-title"><%= term(:scene, count: 2) %></h2>
   <div class="field field--checkbox">

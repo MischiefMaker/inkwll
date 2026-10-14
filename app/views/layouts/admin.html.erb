@@ -42,6 +42,8 @@
       <%= link_to "Character groups", admin_character_groups_path, class: ("is-current" if controller_name == "character_groups") %>
       <%= link_to "#{term(:scene)} labels", admin_scene_labels_path, class: ("is-current" if controller_name == "scene_labels") %>
       <%= link_to "SOUL", admin_soul_path, class: ("is-current" if controller_name.in?(%w[ soul soul_aspects soul_skills ])) %>
+      <%= link_to "Features", edit_admin_features_path, class: ("is-current" if controller_name == "features") %>
+      <%= link_to "Look", edit_admin_skin_path, class: ("is-current" if controller_name == "skins") %>
       <%= link_to "Game settings", edit_admin_game_settings_path, class: ("is-current" if controller_name == "game_settings") %>
     <% end %>
   </nav>

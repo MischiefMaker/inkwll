@@ -1,6 +1,7 @@
 # The wiki: pages anyone with an account can read and write. Locked pages
 # only staff can change. Every save keeps a revision (see RevisionsController).
 class WikiPagesController < ApplicationController
+  include WikiRequired
   limit_posting to: 10, within: 10.minutes, only: %i[ create update ]
   before_action :set_page, only: %i[ edit update destroy ]
   before_action :require_editable, only: %i[ edit update ]

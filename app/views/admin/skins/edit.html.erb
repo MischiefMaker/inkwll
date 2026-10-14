@@ -1,0 +1,66 @@
+<% content_for :title, "Look · Inkwll" %>
+
+<h1 class="page-title">Look</h1>
+<p class="text muted">The game's colours, fonts and extra CSS. Every part of every page also has a CSS class you can style; the list is in docs/css-classes.md, or right-click anything and choose Inspect.</p>
+
+<section class="skin-presets">
+  <h2 class="section-title">Start from a ready-made look</h2>
+  <p class="muted">This replaces the colours and heading font below. The text font and extra CSS are kept.</p>
+  <div class="skin-presets__list">
+    <% GameSetting::Skin::PRESETS.each do |key, preset| %>
+      <%= button_to admin_skin_path, method: :patch, params: { preset: key }, class: "skin-preset", form_class: "skin-presets__form",
+            form: { data: { turbo_confirm: "Switch to #{preset[:name]}? Your colours will be replaced." } } do %>
+        <span class="skin-preset__swatches">
+          <% %w[ bg accent text ].each do |colour| %>
+            <span class="skin-preset__swatch" style="--swatch: <%= preset[:colours][colour] || GameSetting::Skin::COLOURS[colour][1] %>"></span>
+          <% end %>
+        </span>
+        <span class="skin-preset__name"><%= preset[:name] %></span>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+
+<%= form_with model: @game_setting, url: admin_skin_path, method: :patch, class: "form skin-form" do |form| %>
+  <%= render "shared/errors", record: @game_setting %>
+
+  <h2 class="section-title">Colours</h2>
+  <div class="skin-form__colours">
+    <div class="skin-form__row skin-form__row--head">
+      <span></span><span class="muted">Light</span><span class="muted">Dark</span>
+    </div>
+    <% GameSetting::Skin::COLOURS.each do |key, (label, _light, _dark)| %>
+      <div class="skin-form__row">
+        <span class="skin-form__label"><%= label %></span>
+        <%= color_field_tag "game_setting[skin_colours][#{key}]", @game_setting.colour(key), class: "skin-form__colour", "aria-label": "#{label}, light" %>
+        <%= color_field_tag "game_setting[skin_dark_colours][#{key}]", @game_setting.colour(key, dark: true), class: "skin-form__colour", "aria-label": "#{label}, dark" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :skin_dark_mode %>
+    <%= form.label :skin_dark_mode, "Use the dark colours for visitors whose device is set to dark mode" %>
+  </div>
+  <small class="hint">When this is off, everyone sees the light colours.</small>
+
+  <h2 class="section-title">Fonts</h2>
+  <div class="field">
+    <%= form.label :font_body, "Font for text" %>
+    <%= form.text_field :font_body, maxlength: 200, placeholder: "Arial, Helvetica, sans-serif" %>
+  </div>
+  <div class="field">
+    <%= form.label :font_heading, "Font for headings" %>
+    <%= form.text_field :font_heading, maxlength: 200, placeholder: "Georgia, serif" %>
+    <small class="hint">List a few fonts, separated by commas; visitors see the first one their device has. Leave empty to use the built-in fonts. To use a web font, load it in the extra CSS with @import, then name it here.</small>
+  </div>
+
+  <h2 class="section-title">Extra CSS</h2>
+  <div class="field">
+    <%= form.label :custom_css, "Extra CSS", class: "visually-hidden" %>
+    <%= form.text_area :custom_css, rows: 14, maxlength: 50_000, class: "skin-form__css", spellcheck: false,
+          placeholder: ".page-title { letter-spacing: 0.05em; }" %>
+    <small class="hint">Added after everything else, so it wins. If something goes wrong, empty this box and save.</small>
+  </div>
+
+  <%= form.submit "Save", class: "button" %>
+<% end %>

@@ -93,6 +93,7 @@ Rails.application.routes.draw do
       resources :rewards, only: :create
     end
   end
+  get "skin.css", to: "skins#show", as: :skin_stylesheet
   get "roster", to: "directory#index", defaults: { roster: "1" }, as: :roster
   resources :wiki_pages, path: "wiki", param: :slug do
     scope module: :wiki_pages do
@@ -121,6 +122,8 @@ Rails.application.routes.draw do
       end
     end
     resource :game_settings, only: %i[ edit update ]
+    resource :features, only: %i[ edit update ]
+    resource :skin, only: %i[ edit update ]
     resources :profile_fields, except: %i[ show new ]
     resources :character_groups, except: %i[ show new ]
     resources :scene_labels, except: %i[ show new ]
