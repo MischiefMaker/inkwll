@@ -54,6 +54,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.room`, `.description-image`, `.lede`, `.page-title__icon` | A Setting's or Area's page: its banner, short text and icon |
 | `.skin-mush` (on `<body>`), `--ansi-red`, `--ansi-green`, `--ansi-yellow`, `--ansi-blue`, `--ansi-magenta`, `--ansi-cyan`, `--ansi-white`, `--ansi-grey` | The Old-school MUSH look and its ANSI colours (each ready-made look adds `.skin-<name>` to `<body>`) |
 | `--page-image`, `--box-image`, `--intro-image` | CSS variables holding the background pictures from Admin → Look (an Area's or Setting's own background sets `--page-image` on its page) |
+| `.exit-link__direction`, `.exit-direction` | A Path's compass direction (NNW), on the Path and in the builder |
+| `.compass`, `.compass__centre`, `.compass__point`, `.compass__point--main`, `.compass__point--path`, `.compass__point--disabled`, `.compass__point--n` ... `.compass__point--nnw`, `--compass-size`, `--angle` | The compass on a Setting's page |
 | `.room-ways` | The box holding a Setting's Paths and who is here |
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |

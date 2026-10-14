@@ -7,12 +7,14 @@
 <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
 <p class="muted">
   <%= term(:exit, count: 2) %> are one-way. Fill in "Return <%= term(:exit).downcase %>" to add the way back at the same time.
+  A direction is optional; with one, the way back points the opposite way (north comes back south).
 </p>
 
 <% if @room.exits.any? %>
   <ul class="list">
     <% @room.exits.includes(:destination_room).each do |room_exit| %>
       <li class="list__item">
+        <% if room_exit.direction %><span class="tag exit-direction"><%= room_exit.direction %></span><% end %>
         <strong class="emphasis"><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
         <%= button_to "Remove", admin_room_exit_path(@room, room_exit), method: :delete, class: "button-link",
               form: { data: { turbo_confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?" } } %>
@@ -23,8 +25,13 @@
 
 <%= form_with model: [ :admin, @room, Exit.new ], class: "form form--inline" do |form| %>
   <div class="field">
+    <%= form.label :direction, "Direction (optional)" %>
+    <%= form.select :direction, Exit::DIRECTIONS.map { |short, long| [ "#{short} (#{long})", short ] }, include_blank: "None" %>
+  </div>
+  <div class="field">
     <%= form.label :name, "#{term(:exit)} name" %>
-    <%= form.text_field :name, required: true, placeholder: "e.g. North" %>
+    <%= form.text_field :name, placeholder: "e.g. Lamplight Café" %>
+    <small class="hint">Leave empty to name it after its direction.</small>
   </div>
   <div class="field">
     <%= form.label :destination_room_id, "Leads to" %>
@@ -32,7 +39,9 @@
   </div>
   <div class="field">
     <%= label_tag "exit_return_name", "Return #{term(:exit).downcase} (optional)" %>
-    <%= text_field_tag "exit[return_name]", nil, id: "exit_return_name", placeholder: "e.g. South" %>
+    <%= text_field_tag "exit[return_name]", nil, id: "exit_return_name", placeholder: "e.g. Back to the square" %>
+    <label class="field--checkbox"><%= check_box_tag "exit[add_return]", "1", false, id: "exit_add_return" %> Add the way back</label>
+    <small class="hint">The way back points the opposite direction. Tick the box to add it even without a name.</small>
   </div>
   <%= form.submit "Add #{term(:exit).downcase}", class: "button" %>
 <% end %>

@@ -2,6 +2,15 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Path directions and a compass
+
+- Paths can have a compass direction, from N round to NNW (16 points).
+  Leave the name empty and the Path is named after its direction; tick
+  "Add the way back" and the return Path points the opposite way.
+- Paths are listed clockwise from north, with their direction beside them.
+- Admin, Features has a new Compass switch: each Setting then shows a
+  compass rose with its Paths at their points, clickable to walk.
+
 ## 2026-10-14 — Old-school MUSH look
 
 - A new ready-made look in Admin, Look: "Old-school MUSH". White Courier

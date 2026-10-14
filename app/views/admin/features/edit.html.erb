@@ -46,5 +46,13 @@
     <p class="muted features__hint">So people can ask questions before signing up. Guests can't post links, and bans and the VPN block apply to them. Staff can ban a guest from the Bans page.</p>
   </div>
 
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :compass_enabled %>
+      <%= form.label :compass_enabled, "Compass: show a compass on each #{term(:room).downcase} with its #{term(:exit, count: 2).downcase} around it" %>
+    </div>
+    <p class="muted features__hint">Only <%= term(:exit, count: 2).downcase %> with a direction (N, NNE ... NNW) go on the compass; the rest are listed beside it. Builders set directions when adding <%= term(:exit, count: 2).downcase %>.</p>
+  </div>
+
   <%= form.submit "Save", class: "button" %>
 <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_310001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_320001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -193,6 +193,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_310001) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "direction"
     t.index ["destination_room_id"], name: "index_exits_on_destination_room_id"
     t.index ["source_room_id", "name"], name: "index_exits_on_source_room_id_and_name", unique: true
     t.index ["source_room_id"], name: "index_exits_on_source_room_id"
@@ -279,6 +280,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_310001) do
     t.string "game_name"
     t.text "game_blurb"
     t.string "skin_base"
+    t.boolean "compass_enabled", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

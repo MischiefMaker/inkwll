@@ -1,0 +1,24 @@
+<%# A compass rose for a Setting: the 16 points around a circle, with each
+    Path that has a direction sitting at its point. Shown when the game
+    switches the compass on (Admin, Features). Each point gets the angle as
+    --angle, so a skin can move or restyle them. %>
+<% by_direction = exits.select(&:direction).index_by(&:direction) %>
+<div class="compass" aria-label="Compass">
+  <span class="compass__centre"><%= room.name %></span>
+  <% Exit::DIRECTIONS.each do |short, long| %>
+    <% room_exit = by_direction[short] %>
+    <% angle = Exit.compass_index(short) * 22.5 %>
+    <% classes = [ "compass__point", "compass__point--#{short.downcase}", ("compass__point--main" if short.length == 1) ] %>
+    <% if room_exit && here %>
+      <%= button_to exit_movement_path(room_exit), class: [ *classes, "compass__point--path" ].compact.join(" "), form_class: "compass__form",
+            style: "--angle: #{angle}deg", title: "#{long}: #{room_exit.name}, to #{room_exit.destination_room.name}" do %>
+        <%= short %>
+      <% end %>
+    <% elsif room_exit %>
+      <span class="<%= [ *classes, "compass__point--path", "compass__point--disabled" ].compact.join(" ") %>" style="--angle: <%= angle %>deg"
+            title="<%= long %>: <%= room_exit.name %>"><%= short %></span>
+    <% elsif short.length == 1 %>
+      <span class="<%= classes.compact.join(" ") %>" style="--angle: <%= angle %>deg" aria-hidden="true"><%= short %></span>
+    <% end %>
+  <% end %>
+</div>

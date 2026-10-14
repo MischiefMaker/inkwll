@@ -36,15 +36,19 @@
   <div class="room-ways">
     <section class="room-paths">
       <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
-      <% if @room.exits.any? %>
+      <% exits = Exit.in_compass_order(@room.exits.includes(:destination_room)) %>
+      <% if GameSetting.current.compass_enabled? && exits.any?(&:direction) %>
+        <%= render "rooms/compass", room: @room, exits: exits, here: here %>
+      <% end %>
+      <% if exits.any? %>
         <ul class="exits">
-          <% @room.exits.each do |room_exit| %>
+          <% exits.each do |room_exit| %>
             <li class="list__item">
+              <% label = capture do %><% if room_exit.direction %><span class="exit-link__direction"><%= room_exit.direction %></span> <% end %><%= room_exit.name %><% end %>
               <% if here %>
-                <%= button_to room_exit.name, exit_movement_path(room_exit), class: "exit-link",
-                      title: "Go to #{room_exit.destination_room.name}" %>
+                <%= button_to exit_movement_path(room_exit), class: "exit-link", title: "Go to #{room_exit.destination_room.name}" do %><%= label %><% end %>
               <% else %>
-                <span class="exit-link exit-link--disabled"><%= room_exit.name %></span>
+                <span class="exit-link exit-link--disabled"><%= label %></span>
               <% end %>
             </li>
           <% end %>

@@ -5,8 +5,10 @@ class Admin::ExitsController < Admin::BaseController
   before_action :set_room
 
   def create
-    @exit = @room.exits.new(params.expect(exit: [ :name, :destination_room_id ]))
+    @exit = @room.exits.new(params.expect(exit: [ :name, :direction, :destination_room_id ]))
     return_name = params.dig(:exit, :return_name).to_s.squish
+    # "Add the way back" with no name, on a Path with a direction, names it after the opposite direction.
+    return_name = Exit::DIRECTIONS[Exit.opposite(@exit.direction)] if return_name.blank? && params.dig(:exit, :add_return) == "1" && @exit.direction.present?
 
     saved = Exit.transaction do
       @exit.save &&
@@ -31,7 +33,9 @@ class Admin::ExitsController < Admin::BaseController
     end
 
     def save_return_exit(name)
-      return_exit = Exit.new(source_room: @exit.destination_room, destination_room: @room, name: name)
+      # The way back points the opposite way: a Path north comes back south.
+      return_exit = Exit.new(source_room: @exit.destination_room, destination_room: @room, name: name,
+        direction: Exit.opposite(@exit.direction))
       return true if return_exit.save
       return_exit.errors.full_messages.each { |message| @exit.errors.add(:base, "Return #{Term[:exit].downcase}: #{message}") }
       false

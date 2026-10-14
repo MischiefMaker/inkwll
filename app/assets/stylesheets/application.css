@@ -1135,3 +1135,42 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 @media (max-width: 600px) {
   .forum-topic-row__latest, .forum-topics__latest-heading { display: none; }
 }
+
+/* Path directions, and the compass on a Setting's page (Admin, Features).
+   Each point sits at its --angle around the circle. */
+
+.exit-link__direction { font-size: 0.75em; font-weight: bold; opacity: 0.75; letter-spacing: 0.03em; }
+
+.compass {
+  --compass-size: 15rem;
+  position: relative;
+  width: var(--compass-size);
+  height: var(--compass-size);
+  margin: 0.5rem auto var(--space);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  font-family: var(--font-ui);
+}
+.compass__centre {
+  position: absolute; inset: 30%;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; font-size: 0.8rem; color: var(--color-muted);
+  border: 1px dashed var(--color-border); border-radius: 50%;
+}
+.compass__form { display: contents; }
+.compass__point {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 2.6rem; height: 1.8rem; margin: -0.9rem 0 0 -1.3rem;
+  display: flex; align-items: center; justify-content: center;
+  transform: rotate(var(--angle)) translateY(calc(var(--compass-size) / -2 + 1.1rem)) rotate(calc(var(--angle) * -1));
+  font-size: 0.75rem; color: var(--color-muted);
+  background: none; border: none; padding: 0;
+}
+.compass__point--main { font-weight: bold; }
+.compass__point--path {
+  font-weight: bold; color: var(--color-accent); background: var(--color-surface);
+  border: 1px solid var(--color-accent); border-radius: var(--radius); cursor: pointer;
+}
+button.compass__point--path:hover { background: var(--color-accent); color: var(--color-accent-text); }
+.compass__point--disabled { cursor: default; opacity: 0.6; }

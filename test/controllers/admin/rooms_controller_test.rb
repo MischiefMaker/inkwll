@@ -60,4 +60,27 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
     patch admin_room_path(rooms(:hall)), params: { room: { remove_icon: "1" } }
     assert_not rooms(:hall).reload.icon.attached?
   end
+
+  test "a Path with a direction can add the way back pointing the opposite way" do
+    sign_in_as(accounts(:builder))
+    post admin_room_exits_path(rooms(:garden)), params: { exit: { direction: "NNW", name: "", destination_room_id: rooms(:hall).id, add_return: "1" } }
+
+    there = rooms(:garden).exits.find_by!(direction: "NNW")
+    assert_equal "North-northwest", there.name
+    back = rooms(:hall).exits.find_by!(destination_room: rooms(:garden))
+    assert_equal "SSE", back.direction
+    assert_equal "South-southeast", back.name
+  end
+
+  test "the compass shows on a Setting only when the game switches it on" do
+    exits(:commons_north).update!(direction: "N")
+    sign_in_as(accounts(:alice))
+    get room_path(rooms(:commons))
+    assert_select ".compass", count: 0
+    assert_select ".exit-link .exit-link__direction", "N"
+
+    GameSetting.current.update!(compass_enabled: true)
+    get room_path(rooms(:commons))
+    assert_select ".compass button.compass__point--n"
+  end
 end

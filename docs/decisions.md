@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Path directions and a compass (owner, 2026-10-14)
+
+Paths can optionally point one of the 16 compass directions (N, NNE, NE ... NNW). A Path with a direction but no name is named after it, and "Add the way back" points the opposite way (NNW comes back SSE). Paths are listed clockwise from north. Games can switch on a compass (Admin, Features) that shows each Setting's directional Paths around a compass rose; it's off by default.
+
 ## An old-school MUSH look (owner, 2026-10-14)
 
 A ready-made look in Admin, Look: white Courier text on black, with the classic ANSI colours for context (character names yellow, Paths green as <Path>, OOC magenta, links and buttons cyan, section titles yellow between blue -=[ ]=- marks). Its extra styling is in `app/assets/stylesheets/skin-mush.css`, and its colours are CSS variables (`--ansi-yellow` and so on) a game can change.
