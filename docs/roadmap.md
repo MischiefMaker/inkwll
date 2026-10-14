@@ -9,7 +9,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | Step | What it covers | Status |
 | --- | --- | --- |
 | 1. Foundation | Accounts, characters with the switcher (remembering the last character per room and scene), rooms with exits and click-to-move, site-wide OOC chat. | Done |
-| 1b. Step 1 changes | From the owner's review: one login/player name, an email field, character names with spaces and special characters, a default starting room, a "create the return exit too" option, staff levels and a first admin panel (setting staff, building, deleting characters for the top level), and the per-game settings for email and approval. | Now |
+| 1b. Step 1 changes | From the owner's review: one login/player name, an email field, character names with spaces and special characters, a default starting room, a "create the return exit too" option, staff levels (Founder flag, Wellkeepers, Scribes, Pages, Storytellers) and a first admin panel (setting staff, building, deleting characters for the top level), and the per-game settings for email and approval. | Now |
 | 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow. | Later |
 | 4. Character approval | A character profile, submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
@@ -27,7 +27,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Now (before step 2 starts)**
 
-4. How a new Wellkeeper (top-level staff) is made (see "Staff levels" in `decisions.md`).
 
 **Before step 2: Scenes**
 
