@@ -8,6 +8,15 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Areas group Settings, and nest
+
+Settings are grouped into **Areas**, and Areas can nest inside each other as deep as a game likes. Example: Hogwarts (Area) holds Castle, Grounds and Forest (Areas); Castle holds its floors (Areas); each floor holds rooms such as the Entry Hall and Great Hall (Settings).
+
+- Characters are never "in" an Area, only in a Setting. You are in the Great Hall, not in the Castle or the First Floor.
+- The homepage shows the list of top-level Areas. Opening an Area shows the Areas and Settings inside it.
+
+Defaults picked by Claude, not yet confirmed: every Setting belongs to exactly one Area, and Paths can link Settings in different Areas.
+
 ## 2026-10-14: Layout puts the roleplay front and centre
 
 Don't copy AresMUSH's layout too closely. The roleplay itself (Settings, Chapters and their Passages) is the main thing on screen, laid out more like a forum. Extras such as rules, plots and other reference pages are reached through the menu.

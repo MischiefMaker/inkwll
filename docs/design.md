@@ -177,7 +177,8 @@ Items built in step 1 are marked ✅.
 
 - ✅ Account: login, display name (OOC identity), active character.
 - ✅ Character: belongs to an account.
-- ✅ Room, Exit: description, links. *Optional parent area: not built yet.*
+- ✅ Room, Exit: description, links. [Decided] Rooms belong to nestable Areas (not built yet); characters are
+  only ever in a room, never in an Area.
 - Scene: room, visibility, hidden flag, pose mode, status
   (active/idle/finished), optional IC date override, frozen-date flag.
 - SceneParticipant: character, scene, role (player/storyteller/lurker),
