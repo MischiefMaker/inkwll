@@ -15,7 +15,7 @@ class BansTest < ActionDispatch::IntegrationTest
   end
 
   test "an IP ban stops sign-ups from that address" do
-    Ban.create!(ip_range: "127.0.0.0/8", reason: "Brigade", banned_by: accounts(:scribe))
+    Ban.create!(ip_range: "127.0.0.0/16", reason: "Brigade", banned_by: accounts(:scribe))
     assert_no_difference "Account.count" do
       post registration_path, params: { account: { display_name: "Troll", email: "t@example.com", password: "secret123", password_confirmation: "secret123" } }
     end

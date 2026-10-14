@@ -24,6 +24,7 @@ class Account < ApplicationRecord
   generates_token_for(:unsubscribe) { email }
 
   has_secure_password
+  validates :password, length: { minimum: 8, maximum: 72 }, allow_nil: true
   has_many :sessions, dependent: :destroy
   has_many :characters, dependent: :destroy
   has_many :remembered_characters, dependent: :delete_all

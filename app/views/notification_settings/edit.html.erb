@@ -13,6 +13,10 @@
       <%= form.label :email %>
       <%= form.email_field :email, autocomplete: "email" %>
     </div>
+    <div class="field">
+      <%= label_tag :current_password, "Current password (only needed to change your email)" %>
+      <%= password_field_tag :current_password, nil, autocomplete: "current-password", class: "notification-settings__password" %>
+    </div>
 
     <% { "off" => "Don't email me",
          "every_time" => "Every time there's something new",

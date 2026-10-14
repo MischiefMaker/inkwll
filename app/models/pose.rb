@@ -39,11 +39,13 @@ class Pose < ApplicationRecord
   after_update_commit { scene.broadcast_change }
 
   def edit!(new_body)
+    raise ActiveRecord::RecordInvalid, self unless scene.writable?
     self.original_body ||= body
     update!(body: new_body, edited_at: Time.current)
   end
 
   def remove!
+    raise ActiveRecord::RecordInvalid, self unless scene.writable?
     update!(removed_at: Time.current)
   end
 

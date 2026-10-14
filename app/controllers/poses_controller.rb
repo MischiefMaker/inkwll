@@ -1,8 +1,10 @@
 # Posting, editing and removing Passages (poses) in a Chapter.
 class PosesController < ApplicationController
+  limit_posting to: 20
   before_action :require_character
   before_action :set_scene
   before_action :set_own_pose, only: %i[ edit update destroy ]
+  before_action :require_writable, only: %i[ edit update destroy ]
 
   # Posting out of turn needs a second click ("Post anyway"); the page asks
   # first, and this double-checks in case the turn moved in the meantime.
@@ -44,6 +46,11 @@ class PosesController < ApplicationController
     # Players can only change their own Passages.
     def set_own_pose
       @pose = @scene.poses.where.not(kind: "system").where(character: current_account.characters).find(params[:id])
+    end
+
+    # Nothing can be changed once a Chapter is finished or staff have locked it.
+    def require_writable
+      redirect_to @scene, alert: "This #{Term[:scene]} can't be changed now." unless @scene.writable?
     end
 
     def dom_id(record)

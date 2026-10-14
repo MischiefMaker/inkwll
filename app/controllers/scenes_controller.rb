@@ -4,6 +4,7 @@ class ScenesController < ApplicationController
   before_action :require_character, only: :create
   before_action :set_scene, only: %i[ show edit update ]
   before_action :require_participant, only: %i[ edit update ]
+  before_action :require_writable, only: %i[ edit update ]
 
   def show
     use_character_in_scene
@@ -55,5 +56,10 @@ class ScenesController < ApplicationController
         remembered = current_account.remembered_character_for(@scene)
         current_account.update!(active_character: mine.include?(remembered) ? remembered : mine.first)
       end
+    end
+
+    # Finished and locked Chapters can't be changed.
+    def require_writable
+      redirect_to @scene, alert: "This #{Term[:scene]} can't be changed now." unless @scene.writable?
     end
 end

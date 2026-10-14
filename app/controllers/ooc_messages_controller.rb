@@ -13,7 +13,8 @@ class OocMessagesController < ApplicationController
   before_action :resume_session
   before_action :end_banned_session, if: -> { Current.session }
   before_action :check_guest, unless: :current_account
-  rate_limit to: 5, within: 1.minute, only: :create, unless: -> { current_account },
+  limit_posting to: 10
+  rate_limit to: 5, within: 1.minute, only: :create, name: "guests", unless: -> { current_account },
     with: -> { redirect_to ooc_messages_path, alert: "That's a lot of messages. Please wait a minute." }
 
   GUEST_WAIT = 3.seconds

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  # Inkwll uploads images through its own forms, so Active Storage's
+  # "upload straight to storage" addresses are switched off: they don't check
+  # who's logged in or what the file is, and could be used to fill the disk.
+  not_found = ->(_env) { [ 404, { "content-type" => "text/plain" }, [ "Not found" ] ] }
+  post "/rails/active_storage/direct_uploads", to: not_found
+  put "/rails/active_storage/disk/:encoded_token", to: not_found
+
   resource :session, only: %i[ new create destroy ]
   resource :registration, only: %i[ new create ]
   resources :passwords, param: :token, only: %i[ new create edit update ]

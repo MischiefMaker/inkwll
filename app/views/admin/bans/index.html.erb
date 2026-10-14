@@ -13,7 +13,7 @@
           <td class="table__cell"><%= ban.reason %></td>
           <td class="table__cell"><%= ban.lifted_at ? "Lifted" : (ban.expires_at ? ban.expires_at.to_date.to_fs(:long) : "Permanent") %></td>
           <td class="table__cell"><%= ban.banned_by.display_name %></td>
-          <td class="table__cell"><% if ban.in_force? %><%= button_to "Lift", admin_ban_path(ban), method: :patch, class: "button-link" %><% end %></td>
+          <td class="table__cell"><% if ban.in_force? && ban.liftable_by?(current_account) %><%= button_to "Lift", admin_ban_path(ban), method: :patch, class: "button-link" %><% end %></td>
         </tr>
       <% end %>
     </tbody>

@@ -19,6 +19,14 @@ The owner is comfortable with HTML and CSS but is not an experienced programmer.
 - Do not add services that need extra hosting (for example Redis).
 - Give every element you add a meaningful CSS class, so games can skin everything. Use the naming in `docs/css-classes.md` (`block`, `block__part`, `block--kind`), with plain words rather than the themed words players see, and add new classes to that file.
 
+## Security checklist
+
+- Never use `html_safe` or `raw` on anything a player wrote.
+- Every new controller action checks who is allowed to do it, and gets a test that someone who isn't allowed is turned away.
+- Every new form that posts something gets a rate limit (`limit_posting` in `ApplicationController`).
+- Uploads stay image-only and size-limited.
+- No secrets (passwords, keys) in git. They go in Kamal secrets on the server.
+
 ## Where things live
 
 | Path | What it holds |

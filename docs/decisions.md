@@ -16,6 +16,17 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Security review fixes
+
+Fixes from the security review (owner asked for them through the project chat). Defaults picked by Claude where the review left a choice:
+
+- **Hidden Chapters:** going public needs every player's agreement, whether the Chapter is finished or still running (the reviewer's recommended default; the owner hasn't confirmed it yet). The agreement buttons are on a running Chapter's settings page. Finished and locked Chapters' settings can't be changed.
+- **Passwords** need at least 8 characters.
+- **IP bans** can be no wider than /16 (about 65,000 addresses) for IPv4 or /32 for IPv6. They never apply to the Founder or to staff at or above the level of whoever set them, and only staff at that level or above can lift them.
+- **Posting limits** per account (or per address for guests): OOC Chat 10 a minute (guests 5), Passages 20 a minute, invitations 20 a minute, reports 5 and new characters 5 per 10 minutes.
+- **Changing your email** needs your current password, and the old address gets an email saying it changed.
+- Left for the owner at launch: Cloudflare, the firewall, SSH settings, 2FA on the owner's accounts, and the Kamal SSL and upload-size settings.
+
 ## 2026-10-14: CSS classes on everything
 
 Every element gets a CSS class so games can style things easily (owner). Classes follow `block`, `block__part` and `block--kind`, use plain words rather than themed ones, and are listed for skinners in `docs/css-classes.md`. Each page's `<body>` also gets page classes (such as `page-scenes-show`) and `is-logged-in`, `is-guest` or `is-staff`.

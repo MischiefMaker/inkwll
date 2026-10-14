@@ -1,4 +1,5 @@
 class CharactersController < ApplicationController
+  limit_posting to: 5, within: 10.minutes
   before_action :set_own_character, only: %i[ edit update ]
 
   def index

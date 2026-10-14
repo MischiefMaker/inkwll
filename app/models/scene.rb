@@ -23,6 +23,7 @@ class Scene < ApplicationRecord
   normalizes :title, with: ->(t) { t.squish }
   validates :title, presence: true, length: { maximum: 100 }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
+  validate :hidden_stays_hidden_without_agreement, on: :update
 
   after_update_commit :broadcast_change
 
@@ -191,7 +192,7 @@ class Scene < ApplicationRecord
   # A finished hidden scene becomes public only when every player agrees.
   def consent_to_public!(participant, agree: true)
     with_lock do
-      next false unless finished? && visibility_hidden? && made_public_at.nil?
+      next false unless visibility_hidden? && made_public_at.nil?
 
       participant.update!(public_consent_at: agree ? Time.current : nil)
       update!(made_public_at: Time.current) if participants.reload.all?(&:public_consent_at)
@@ -265,6 +266,14 @@ class Scene < ApplicationRecord
   end
 
   private
+    # One player alone can't open up a Hidden scene: it becomes public only
+    # when every player agrees (consent_to_public!).
+    def hidden_stays_hidden_without_agreement
+      if visibility_changed? && visibility_was == "hidden" && made_public_at.nil?
+        errors.add(:visibility, "can't change from Hidden unless every player agrees to make it public")
+      end
+    end
+
     # Locks the scene while numbering, so two poses can never get the same number.
     def add_pose!(**attributes)
       with_lock do

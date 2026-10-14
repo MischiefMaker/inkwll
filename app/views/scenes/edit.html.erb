@@ -10,8 +10,12 @@
   </div>
   <fieldset class="field">
     <legend class="fieldset__legend">Who can join</legend>
+    <% locked_hidden = @scene.visibility_was == "hidden" && @scene.made_public_at.nil? %>
     <% Scene.visibilities.each_key do |visibility| %>
-      <label class="field--checkbox"><%= form.radio_button :visibility, visibility %> <%= t("terms.scene_visibility.#{visibility}") %></label>
+      <label class="field--checkbox"><%= form.radio_button :visibility, visibility, disabled: locked_hidden && visibility != "hidden" %> <%= t("terms.scene_visibility.#{visibility}") %></label>
+    <% end %>
+    <% if locked_hidden %>
+      <small class="hint">A Hidden <%= term(:scene).downcase %> only opens up when every player agrees, below.</small>
     <% end %>
   </fieldset>
   <div class="field">
@@ -31,4 +35,18 @@
     <%= form.submit "Save", class: "button" %>
     <%= link_to "Cancel", scene_path(@scene) %>
   </div>
+<% end %>
+
+<% if @scene.visibility_hidden? && @scene.made_public_at.nil? %>
+  <section class="scene-consent">
+    <h2 class="section-title">Making it public</h2>
+    <p class="text">This <%= term(:scene).downcase %> stays hidden unless every player agrees to make it public.
+      Agreed so far: <%= @scene.participants.count(&:public_consent_at) %> of <%= @scene.participants.size %>.</p>
+    <% participant = @scene.participant_for(current_character) %>
+    <% if participant&.public_consent_at %>
+      <%= button_to "Take back my agreement", scene_public_consent_path(@scene), method: :delete, class: "button-link" %>
+    <% elsif participant %>
+      <%= button_to "I agree to make it public", scene_public_consent_path(@scene), class: "button button--quiet" %>
+    <% end %>
+  </section>
 <% end %>

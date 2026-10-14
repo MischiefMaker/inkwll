@@ -20,7 +20,7 @@ class Admin::BansController < Admin::BaseController
       @ban.errors.add(:base, "There's no player called \"#{params.dig(:ban, :player_name)}\"")
       return render :new, status: :unprocessable_entity
     end
-    if @ban.account&.staff_rank.to_i >= current_account.staff_rank
+    if @ban.account && (@ban.account.founder? || @ban.account.staff_rank >= current_account.staff_rank)
       @ban.errors.add(:account, "is staff at your level or above")
       return render :new, status: :unprocessable_entity
     end
@@ -40,8 +40,13 @@ class Admin::BansController < Admin::BaseController
       VpnListJob.perform_later if GameSetting.current.block_vpns?
       redirect_to admin_bans_path, notice: GameSetting.current.block_vpns? ? "VPN block on. The list downloads in the background." : "VPN block off."
     else
-      Ban.find(params[:id]).lift!
-      redirect_to admin_bans_path, notice: "Ban lifted."
+      ban = Ban.find(params[:id])
+      if ban.liftable_by?(current_account)
+        ban.lift!
+        redirect_to admin_bans_path, notice: "Ban lifted."
+      else
+        redirect_to admin_bans_path, alert: "Only staff at #{ban.banned_by.display_name}'s level or above can lift that ban."
+      end
     end
   end
 

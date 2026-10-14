@@ -1,5 +1,6 @@
 # Characters in a private or hidden Chapter can invite others by name.
 class Scenes::InvitationsController < Scenes::BaseController
+  limit_posting to: 20
   before_action :require_participant
 
   def create

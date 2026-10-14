@@ -1,5 +1,6 @@
 # Reporting a Chapter, or one Passage in it, to staff.
 class Scenes::ReportsController < Scenes::BaseController
+  limit_posting to: 5, within: 10.minutes
   before_action :require_reader
 
   def new

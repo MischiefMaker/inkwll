@@ -17,6 +17,12 @@ Short, plain-language notes on what changed. Newest first.
 - "Forgot your password?" on the log-in page emails a reset link.
 - Chapters have OOC lines, narration and NPC Passages as well as ordinary
   Passages. OOC lines don't take a turn and stay out of the Manuscript.
+- Security fixes: switched off an upload address that could fill the disk,
+  forced HTTPS on the live site, required your password to change your email,
+  made hidden Chapters need everyone's agreement to go public, blocked edits
+  after a Chapter is finished or locked, limited how wide IP bans can be (and
+  kept them off senior staff), added posting speed limits, and set an
+  8-character minimum for passwords.
 - Every part of every page has a CSS class for skins, listed in
   `docs/css-classes.md`.
 - Players can pause a Chapter, with a note saying when they'll be back.
