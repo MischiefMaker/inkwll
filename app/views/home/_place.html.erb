@@ -1,0 +1,52 @@
+<%# One top-level Area on the front page. "Enter" takes the character to the
+    Area's entrance Setting, and from there they walk the Paths. Shortcuts
+    straight to each Setting are tucked away at the bottom, on purpose. %>
+<% entrance = area.entrance %>
+<article class="place<%= " place--banner" if area.image.attached? %>" id="<%= dom_id(area, :place) %>">
+  <% if area.image.attached? %>
+    <%= image_tag area.image, alt: "", class: "place__banner" %>
+  <% end %>
+  <div class="place__body">
+    <h2 class="place__name">
+      <% if area.icon.attached? %><%= image_tag area.icon, alt: "", class: "place__icon" %><% end %>
+      <span class="place__title"><%= area.name %></span>
+    </h2>
+    <% blurb = area.summary || truncate(area.description.to_s.squish, length: 220, separator: " ").presence %>
+    <% if blurb %><p class="place__summary"><%= blurb %></p><% end %>
+
+    <%# Signs of life: who's around and the latest open Chapter (never private or hidden ones). %>
+    <% here = Character.active.where(room_id: area.all_rooms.unscope(:order).select(:id)).count %>
+    <% latest = area.latest_public_pose %>
+    <% if here.positive? || latest %>
+      <p class="place__activity">
+        <% if here.positive? %><span class="place__here"><%= pluralize(here, "character") %> here</span><% end %>
+        <% if latest %>
+          <span class="place__latest">Latest: <%= link_to latest.scene.title, scene_path(latest.scene) %>,
+            <%= time_ago_in_words(latest.created_at) %> ago</span>
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+
+  <div class="place__actions">
+    <% if entrance && current_character %>
+      <% if current_character.room.area_id.in?([ area.id, *area.descendant_ids ]) %>
+        <%= link_to "Return", room_path(current_character.room), class: "button place__enter" %>
+      <% else %>
+        <%= button_to "Enter", room_travel_path(entrance), class: "button place__enter", form_class: "place__enter-form" %>
+      <% end %>
+    <% elsif entrance %>
+      <%= link_to "Look in", room_path(entrance), class: "button place__enter" %>
+    <% end %>
+
+    <details class="place__shortcuts">
+      <summary class="place__shortcuts-toggle">Shortcuts</summary>
+      <div class="place__shortcuts-list">
+        <%= link_to "Overview of #{area.name}", area_path(area) %>
+        <% area.all_rooms.each do |room| %>
+          <%= link_to room.name, room_path(room) %>
+        <% end %>
+      </div>
+    </details>
+  </div>
+</article>

@@ -341,7 +341,7 @@ a.ooc-message__author:hover { text-decoration: underline; }
   border-radius: var(--radius);
 }
 
-/* Front page and Area pages: boards like a forum */
+/* Area pages: the Settings and Areas inside, as lists */
 
 .where-now { font-family: var(--font-ui); color: var(--color-muted); }
 
@@ -402,65 +402,48 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
 .board__image { max-height: 12rem; margin-bottom: 0.5rem; }
 .image-preview { max-width: 12rem; height: auto; border-radius: var(--radius); }
 
-/* Front page: each top-level Area is a banner, like a forum category,
-   with the Areas inside it listed beneath as boards. */
+/* Front page: the game's name and blurb, then one card per top-level Area
+   with an Enter button. Shortcuts to Settings are tucked in a small fold. */
 
-.category { margin: calc(var(--space) * 1.5) 0; }
-.category__banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 3.5rem;
-  margin: 0;
-  padding: 0.6rem var(--space);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
+.game-intro {
+  margin: calc(var(--space) * 1.5) 0 var(--space);
+  padding: calc(var(--space) * 2) var(--space);
+  text-align: center;
   border-radius: var(--radius);
-  font-size: 1.6rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  background: var(--intro-image, none) center / cover;
 }
-.category__banner--image {
-  min-height: 8rem;
-  background-size: cover;
-  background-position: center;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
-  color: #fff;
-}
-.category__description { margin: 0.5rem 0 0; color: var(--color-muted); text-align: center; }
+.game-intro__name { margin: 0; font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: 0.02em; }
+.game-intro__blurb { max-width: 40rem; margin: 0.75rem auto 0; color: var(--color-muted); font-size: 1.05rem; }
+.game-intro__blurb p { margin: 0.5rem 0; }
+.game-status { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1rem; text-align: center; }
+.game-status > p { margin: 0.25rem 0; }
 
-.boards { display: flex; flex-direction: column; }
-.board-row {
+.places { display: flex; flex-direction: column; gap: var(--space); margin: var(--space) 0 calc(var(--space) * 2); }
+.place {
   display: grid;
-  grid-template-columns: auto 1fr minmax(8rem, auto);
-  gap: var(--space);
+  grid-template-columns: 1fr auto;
+  gap: 0 var(--space);
   align-items: center;
-  padding: 0.75rem var(--space);
+  padding: var(--space);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-top: none;
+  border-radius: var(--radius);
 }
-.board-row:first-child { border-top: 1px solid var(--color-border); margin-top: 0.5rem; }
-.board-row__image { display: block; width: 6rem; height: 6rem; object-fit: cover; border-radius: var(--radius); }
-.board-row__image--empty { background: var(--color-bg); border: 1px dashed var(--color-border); }
-.board-row__title { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 1.15rem; }
-.board-row__description { margin: 0.3rem 0 0; color: var(--color-muted); }
-.board-row__activity { font-family: var(--font-ui); font-size: 0.9rem; text-align: right; }
-
-@media (max-width: 600px) {
-  .board-row { grid-template-columns: 1fr; }
-  .board-row__activity { text-align: left; }
-}
-
-/* The arrow beside an Area's name, with shortcuts to its Settings */
-
-.shortcuts { position: relative; font-size: 1rem; font-weight: normal; }
-.shortcuts summary { cursor: pointer; color: var(--color-accent); list-style: none; padding: 0 0.3rem; }
-.shortcuts summary::-webkit-details-marker { display: none; }
-.shortcuts summary::after { content: "▾"; }
-.shortcuts[open] summary::after { content: "▴"; }
-.shortcuts__items {
+.place__banner { grid-column: 1 / -1; width: calc(100% + 2 * var(--space)); max-height: 12rem; margin: calc(var(--space) * -1) calc(var(--space) * -1) var(--space);
+  object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
+.place__name { display: flex; align-items: center; gap: 0.6rem; margin: 0; font-size: 1.4rem; }
+.place__icon { width: 2.5rem; height: 2.5rem; object-fit: cover; border-radius: var(--radius); }
+.place__summary { margin: 0.4rem 0 0; color: var(--color-muted); }
+.place__activity { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin: 0.5rem 0 0; font-family: var(--font-ui); font-size: 0.85rem; color: var(--color-muted); }
+.place__actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+.place__enter { min-width: 6rem; text-align: center; line-height: 1.5; }
+.place__enter-form { margin: 0; }
+.place__shortcuts { position: relative; font-family: var(--font-ui); font-size: 0.8rem; }
+.place__shortcuts-toggle { cursor: pointer; color: var(--color-muted); list-style: none; }
+.place__shortcuts-toggle::-webkit-details-marker { display: none; }
+.place__shortcuts-list {
   position: absolute;
+  right: 0;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -472,7 +455,29 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  font-family: var(--font-ui);
+}
+
+@media (max-width: 600px) {
+  .place { grid-template-columns: 1fr; }
+  .place__actions { flex-direction: row; align-items: center; justify-content: space-between; margin-top: var(--space); }
+}
+
+/* Area and Setting pages */
+
+.lede { font-size: 1.1rem; color: var(--color-muted); }
+.page-title__icon { width: 2.2rem; height: 2.2rem; object-fit: cover; border-radius: var(--radius); margin-right: 0.6rem; vertical-align: middle; }
+.board__icon { width: 1.5rem; height: 1.5rem; object-fit: cover; border-radius: 3px; margin-right: 0.4rem; vertical-align: middle; }
+.board__summary { flex: 1; color: var(--color-muted); }
+
+/* Background pictures, from Admin → Look or an Area's or Setting's own.
+   --page-image goes behind the whole page, --box-image behind boxes. */
+
+body { background: var(--color-bg) var(--page-image, none) center top / cover fixed; }
+.site-header, .ooc-sidebar, .board, .place, .admin-menu, .chapter-tabs, .scene-setting, .notice-box,
+.conversation-message, .pose--narration, .pending-rolls, .menu__items, .mini-profile {
+  background-image: var(--box-image, none);
+  background-size: cover;
+  background-position: center;
 }
 
 /* Admin panel menu: links grouped under headings, down the right-hand side.
@@ -1072,3 +1077,10 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .storyteller-sheet__ratings { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.15rem 0.75rem; margin: 0; font-size: 0.9rem; }
 .storyteller-sheet__aspect { font-weight: 600; }
 .storyteller-sheet__skills { margin: 0; }
+
+/* The "How it looks" part of the Area and Setting forms */
+
+.look-fields { display: flex; flex-direction: column; gap: var(--space); min-width: 0; margin: 0; padding: 0.5rem var(--space) var(--space);
+  border: 1px solid var(--color-border); border-radius: var(--radius); }
+.look-fields .fieldset__legend { padding: 0 0.25rem; font-weight: 600; }
+.image-preview--icon { width: 4rem; height: 4rem; object-fit: cover; }

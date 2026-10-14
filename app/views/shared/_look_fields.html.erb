@@ -1,0 +1,22 @@
+<%# The optional dressing for an Area or Setting: short and long text, an
+    icon, a banner and a background. Any, all or none. %>
+<% thing = record.is_a?(Area) ? term(:area).downcase : term(:room).downcase %>
+<fieldset class="fieldset look-fields">
+  <legend class="fieldset__legend">How it looks (all optional)</legend>
+  <div class="field">
+    <%= form.label :summary, "Short text" %>
+    <%= form.text_field :summary, maxlength: 200 %>
+    <small class="hint">A line or two, shown in lists beside the name.</small>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Long text" %>
+    <%= form.text_area :description, rows: rows %>
+    <small class="hint">Shown on the <%= thing %>'s own page.</small>
+  </div>
+  <%= render "shared/image_field", form: form, record: record, picture: :icon, label: "Small icon",
+        hint: "A small square picture shown beside the name." %>
+  <%= render "shared/image_field", form: form, record: record, picture: :image, label: "Large banner",
+        hint: "Shown wide across the top of the #{thing}'s page." %>
+  <%= render "shared/image_field", form: form, record: record, picture: :background, label: "Page background",
+        hint: record.is_a?(Area) ? "Shown behind the whole page here and in every #{term(:room).downcase} inside, unless one has its own." : "Shown behind the whole page. Leave empty to use the #{term(:area).downcase}'s background." %>
+</fieldset>

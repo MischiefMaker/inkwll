@@ -23,6 +23,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.table`, `.table__head`, `.table__body`, `.table__row`, `.table__heading`, `.table__cell` | Tables |
 | `.disclosure`, `.disclosure__summary` | Fold-out sections ("About this setting") |
 | `.form`, `.field`, `.field--checkbox`, `.fieldset`, `.fieldset__legend` | Forms |
+| `.look-fields`, `.field--picture`, `.field--icon`, `.field--image`, `.field--background`, `.image-preview`, `.image-preview--icon` | The "How it looks" pictures and text on Area, Setting and Look forms |
 | `.button`, `.button--quiet`, `.button-link` | Buttons |
 | `.badge`, `.tag` | Small labels ("Open", "Turn") |
 | `.flash`, `.flash--notice`, `.flash--alert` | Messages after an action ("Saved.") |
@@ -46,9 +47,12 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 | Class | What it is |
 | --- | --- |
-| `.boards`, `.board`, `.board__header`, `.board__title`, `.board__description`, `.board__rows` | The front page's Area boards |
-| `.board-row`, `.board-row__image`, `.board-row__title`, `.board-row__description`, `.board-row__activity` | One Setting or Area on a board |
-| `.room`, `.description-image` | A Setting's page and its picture |
+| `.game-intro`, `.game-intro__name`, `.game-intro__blurb` | The game's name and blurb at the top of the front page |
+| `.places`, `.place`, `.place--banner`, `.place__banner`, `.place__body`, `.place__name`, `.place__icon`, `.place__title`, `.place__summary`, `.place__activity`, `.place__here`, `.place__latest` | One Area on the front page |
+| `.place__actions`, `.place__enter`, `.place__shortcuts`, `.place__shortcuts-toggle`, `.place__shortcuts-list` | Its Enter button and the tucked-away shortcuts |
+| `.board`, `.board__header`, `.board__title`, `.board__description`, `.board__rows`, `.board__row`, `.board__name`, `.board__icon`, `.board__summary` | The lists on an Area's page |
+| `.room`, `.description-image`, `.lede`, `.page-title__icon` | A Setting's or Area's page: its banner, short text and icon |
+| `--page-image`, `--box-image`, `--intro-image` | CSS variables holding the background pictures from Admin → Look (an Area's or Setting's own background sets `--page-image` on its page) |
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
@@ -105,7 +109,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-preset__current`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
 | `.inklings-admin`, `.inklings-admin--waiting` | Admin: Inklings |
 | `.bulk-build`, `.bulk-build__rooms`, `.bulk-build__room`, `.bulk-build__room-number`, `.bulk-build__paths`, `.bulk-build__path`, `.bulk-build__room-select`, `.bulk-build__new-rooms`, `.bulk-build__add`, `.bulk-build__remove`, `.bulk-build__submit` | Admin: Build several Settings |
-| `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list` | The game's date, weather and who's online, on the front page |
+| `.game-status`, `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list` | The game's date, weather and who's online, on the front page |
 | `.scene__when`, `.scene-list__when`, `.manuscript__when`, `.chapter-tracker__when`, `.scene-form__when` | A Chapter's in-character date and time |
 | `.scene-list__subtitle`, `.scene__subtitle`, `.scene-labels`, `.scene-label`, `.scene-label--<id>`, `.scene-form__labels` | Chapter subtitles and labels |
 

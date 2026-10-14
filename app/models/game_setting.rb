@@ -9,6 +9,10 @@ class GameSetting < ApplicationRecord
   validate :auto_finish_after_idle
   normalizes :weather, with: ->(w) { w.squish.presence }
   validates :weather, length: { maximum: 200 }
+  normalizes :game_name, with: ->(name) { name.squish.presence }
+  normalizes :game_blurb, with: ->(text) { text.strip.presence }
+  validates :game_name, length: { maximum: 80 }
+  validates :game_blurb, length: { maximum: 3_000 }
   validates :roster_idle_days, numericality: { only_integer: true, in: 7..3650 }
   validates :ic_days_per_day, numericality: { greater_than: 0, less_than_or_equal_to: 365 }
 

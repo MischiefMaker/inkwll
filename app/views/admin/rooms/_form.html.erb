@@ -9,14 +9,10 @@
     <%= form.label :area_id, term(:area) %>
     <%= form.select :area_id, Area.nested_options, {}, required: true %>
   </div>
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 8 %>
-  </div>
   <div class="field field--checkbox">
     <%= form.check_box :starting %>
     <%= form.label :starting, "New characters start here" %>
   </div>
-  <%= render "shared/image_field", form: form, record: form.object %>
+  <%= render "shared/look_fields", form: form, record: form.object, rows: 8 %>
   <%= form.submit room.persisted? ? "Save" : "Create #{term(:room).downcase}", class: "button" %>
 <% end %>

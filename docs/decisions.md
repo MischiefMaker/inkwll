@@ -6,6 +6,13 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## A simpler, less forum-like look (owner, 2026-10-14)
+
+- The layout was feeling too much like a forum. The front page now shows the game's name, large, with a paragraph or two about the game under it (both set in Admin, Game settings).
+- Below that it just lists the top-level Areas. Each has an **Enter** button that takes the character to the Area's entrance Setting. Shortcuts straight to Settings still exist but are tucked into a small "Shortcuts" fold, so players get around by walking the Paths.
+- The default skin stays very simple but customisable. Areas and Settings can each have any of: a small icon, a large banner, a page background, short text and long text. A Setting without a background uses its Area's.
+- Lots of room for customising: Admin, Look takes a background picture for the whole page, one for boxes and panels, and one behind the game's name on the front page. Everything else is still reachable with extra CSS.
+
 ## Admin panel uses a side menu (owner, 2026-10-14)
 
 The admin panel had too many tabs. It now has a grouped menu down the right-hand side, like Jcink's admin CP, and the OOC Chat folds away while you're in the admin panel (it comes back as you left it when you return to the game). On phones the menu folds into one button at the top.

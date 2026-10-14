@@ -16,6 +16,8 @@ class Admin::SkinsController < Admin::BaseController
       @game_setting.assign_attributes(skin_params)
     end
     @game_setting.look_chosen_at ||= Time.current
+    # The skin stylesheet's address changes with this, so new pictures show at once.
+    @game_setting.updated_at = Time.current
     if @game_setting.save
       redirect_to edit_admin_skin_path, notice: "Look saved. Reload any open pages to see it."
     else
@@ -26,7 +28,8 @@ class Admin::SkinsController < Admin::BaseController
   private
     def skin_params
       keys = GameSetting::Skin::COLOURS.keys
-      params.expect(game_setting: [ :skin_dark_mode, :font_body, :font_heading, :custom_css,
+      pictures = GameSetting::Skin::PICTURES.keys.flat_map { |picture| [ picture.to_sym, :"remove_#{picture}" ] }
+      params.expect(game_setting: [ :skin_dark_mode, :font_body, :font_heading, :custom_css, *pictures,
         skin_colours: keys, skin_dark_colours: keys ])
     end
 end

@@ -6,20 +6,42 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
   end
 
-  test "shows top-level areas as banners with the areas inside as boards" do
+  test "shows the game's name and blurb" do
+    GameSetting.current.update!(game_name: "Moonfall", game_blurb: "A city under two moons.")
+    sign_in_as(accounts(:alice))
+    get root_path
+
+    assert_select ".game-intro__name", "Moonfall"
+    assert_select ".game-intro__blurb", text: "A city under two moons."
+    assert_select ".site-header__title", "Moonfall"
+    assert_select "title", "Moonfall"
+  end
+
+  test "lists only top-level areas, each with a way in" do
     sign_in_as(accounts(:alice))
     get root_path
 
     assert_response :success
-    assert_select ".category__title", "The World"
-    assert_select ".board-row__title > a", text: "Castle"
+    assert_select ".place__title", "The World"
+    assert_select ".place__title", text: "Castle", count: 0
     assert_select ".where-now a", "The Commons"
   end
 
-  test "the arrow beside an area lists shortcuts to its settings" do
+  test "Enter takes the character to the area's entrance" do
+    area = Area.create!(name: "Elsewhere")
+    room = Room.create!(name: "Gate", area: area)
     sign_in_as(accounts(:alice))
     get root_path
-    assert_select ".shortcuts a", text: "Garden"
+    assert_select "##{ActionView::RecordIdentifier.dom_id(area, :place)} form[action=?]", room_travel_path(room)
+
+    post room_travel_path(room)
+    assert_equal room, characters(:wren).reload.room
+  end
+
+  test "shortcuts to every setting are tucked into a fold" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".place__shortcuts .place__shortcuts-list a", text: "Garden"
   end
 
   test "players without characters are asked to make one" do
@@ -28,7 +50,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".where-now a[href=?]", new_character_path
   end
 
-  test "boards show their latest open Chapter, never a private or hidden one" do
+  test "areas show their latest open Chapter, never a private or hidden one" do
     party = Scene.create!(room: rooms(:garden), title: "Garden Party")
     party.participants.create!(character: characters(:wren), position: 1)
     party.post!(characters(:wren), "Wren pours the tea.")
@@ -39,13 +61,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(accounts(:alice))
     get root_path
 
-    assert_select ".board-row__latest", text: "Garden Party"
-    assert_select ".board-row__latest", text: "Behind the Hedge", count: 0
-  end
-
-  test "Settings directly in a top-level Area show their latest open Chapter under its banner" do
-    sign_in_as(accounts(:alice))
-    get root_path
-    assert_select ".category__latest a", text: "Duel at Dawn"
+    assert_select ".place__latest a", text: "Garden Party"
+    assert_select ".place__latest a", text: "Behind the Hedge", count: 0
   end
 end

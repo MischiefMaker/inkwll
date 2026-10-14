@@ -58,6 +58,21 @@ class PlatformTest < ActionDispatch::IntegrationTest
     assert css.index("@import") < css.index(":root"), "@import must come first"
   end
 
+  test "background pictures from Look become CSS variables" do
+    sign_in_as(accounts(:wellkeeper))
+    patch admin_skin_path, params: { game_setting: { page_background: fixture_file_upload("pixel.png", "image/png"),
+      box_background: fixture_file_upload("pixel.png", "image/png") } }
+    assert GameSetting.current.reload.page_background.attached?
+
+    get skin_stylesheet_path
+    assert_match %r{--page-image: url\("/rails/active_storage/blobs/}, response.body
+    assert_includes response.body, "--box-image: url("
+    assert_not_includes response.body, "--intro-image"
+
+    patch admin_skin_path, params: { game_setting: { remove_page_background: "1" } }
+    assert_not GameSetting.current.reload.page_background.attached?
+  end
+
   test "fonts and colours can't break out of the stylesheet" do
     sign_in_as(accounts(:wellkeeper))
     patch admin_skin_path, params: { game_setting: { font_body: "Arial; } body { display: none" } }

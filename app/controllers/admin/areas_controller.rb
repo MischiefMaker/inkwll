@@ -37,6 +37,6 @@ class Admin::AreasController < Admin::BaseController
     end
 
     def area_params
-      params.expect(area: [ :name, :description, :image, :remove_image, :parent_id, :position, :entrance_room_id ])
+      params.expect(area: [ :name, :summary, :description, :icon, :remove_icon, :image, :remove_image, :background, :remove_background, :parent_id, :position, :entrance_room_id ])
     end
 end

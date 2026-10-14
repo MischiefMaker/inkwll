@@ -1,6 +1,11 @@
-<%# Shows whatever a builder gave an Area or Setting: an image, text, or both. %>
+<%# Shows whatever a builder gave an Area or Setting: a banner, short text
+    and long text, any or all. The background is set on the page itself
+    (see page_background in ApplicationHelper). %>
 <% if record.image.attached? %>
   <figure class="description-image"><%= image_tag record.image, alt: record.name %></figure>
+<% end %>
+<% if record.summary.present? %>
+  <p class="lede"><%= record.summary %></p>
 <% end %>
 <% if record.description.present? %>
   <div class="prose"><%= simple_format record.description %></div>

@@ -25,6 +25,9 @@ listings and the default skin.
 
 Layout [Decided]: the roleplay is front and centre, laid out more like a
 forum than AresMUSH. Rules, plots and other extras live in the menu.
+Updated 2026-10-14: less like a forum. The front page shows the game's name
+and blurb, then the top-level Areas, each with an Enter button; shortcuts to
+single Settings are tucked away so players get around by Paths.
 
 A web-only (no telnet) roleplaying game that combines forum RP and MUSH.
 Inspired by AresMUSH, but web-first.
@@ -283,8 +286,10 @@ words, and `config/locales/en.yml` maps one to the other.
   retire them from the admin panel, and logs still show them, greyed out.
   Deleting a player account keeps that player's characters.
 - **Areas.** Every room belongs to an Area, and Areas can nest. The front page
-  lists the top-level Areas like forum boards. Areas and rooms can have an
-  image, a text description, or both.
+  lists the top-level Areas, each with an Enter button that takes the
+  character to the Area's entrance room; shortcuts to single rooms sit in a
+  small "Shortcuts" fold. Areas and rooms can each have any of: a small icon,
+  a large banner, a page background, short text and long text.
 - **Starting room.** A builder ticks "New characters start here" on one room.
   If none is ticked, the oldest room is used, and a game with no rooms makes
   a default one.

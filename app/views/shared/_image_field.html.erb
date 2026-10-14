@@ -1,10 +1,11 @@
-<%# Image upload for an Area or Setting, with a way to remove the current one. %>
-<div class="field">
-  <%= form.label :image, "Image (optional)" %>
-  <% if record.image.attached? %>
-    <%= image_tag record.image, class: "image-preview", alt: "" %>
-    <label class="field--checkbox"><%= form.check_box :remove_image %> Remove this image</label>
+<%# One optional picture upload for an Area or Setting (icon, banner or
+    background), with a way to remove the current one. %>
+<div class="field field--picture field--<%= picture %>">
+  <%= form.label picture, label %>
+  <% if record.public_send(picture).attached? %>
+    <%= image_tag record.public_send(picture), class: "image-preview image-preview--#{picture}", alt: "" %>
+    <label class="field--checkbox"><%= form.check_box :"remove_#{picture}" %> Remove this picture</label>
   <% end %>
-  <%= form.file_field :image, accept: "image/png,image/jpeg,image/gif,image/webp" %>
-  <small class="hint">Use an image, a description, or both. PNG, JPEG, GIF or WebP, up to 5 MB.</small>
+  <%= form.file_field picture, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+  <small class="hint"><%= hint %> PNG, JPEG, GIF or WebP, up to 5 MB.</small>
 </div>

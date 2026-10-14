@@ -5,6 +5,25 @@ module ApplicationHelper
     t("terms.#{name}", count: count)
   end
 
+  # The game's name from Admin → Game settings, or "Inkwll" until it has one.
+  def game_name
+    GameSetting.current.game_name || "Inkwll"
+  end
+
+  # The browser tab title. Pages end theirs with "· Inkwll"; the game's own
+  # name replaces it.
+  def page_title
+    (content_for(:title) || "Inkwll").sub(/Inkwll\z/, game_name)
+  end
+
+  # Puts an Area's or Setting's background picture behind the whole page.
+  # A Setting without one uses its Area's, or the nearest Area above that has one.
+  def page_background(record)
+    holder = [ record, *(record.is_a?(Room) ? [ record.area, *record.area.ancestors.reverse ] : record.ancestors.reverse) ]
+      .find { |place| place.background.attached? }
+    content_for :page_background, "--page-image: url(\"#{url_for(holder.background)}\")" if holder
+  end
+
   # Classes on <body> so a skin can style one page or kind of visitor:
   # "page-scenes page-scenes-show is-logged-in", or "page-admin-bans ... is-staff".
   def body_classes

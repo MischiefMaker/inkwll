@@ -1,24 +1,35 @@
 <% content_for :title, "Inkwll" %>
 
 <% settings = GameSetting.current %>
-<p class="game-time">
-  <span class="game-time__date">It is <%= IcClock.today.to_fs(:long) %>.</span>
-  <% if settings.weather %><span class="game-time__weather"><%= settings.weather %></span><% end %>
-</p>
+<header class="game-intro">
+  <h1 class="game-intro__name"><%= game_name %></h1>
+  <% if settings.game_blurb %>
+    <div class="game-intro__blurb"><%= simple_format settings.game_blurb %></div>
+  <% end %>
+</header>
 
-<% if current_character %>
-  <p class="where-now">
-    <%= current_character.name %> is in
-    <%= link_to current_character.room.name, room_path(current_character.room) %>.
+<div class="game-status">
+  <p class="game-time">
+    <span class="game-time__date">It is <%= IcClock.today.to_fs(:long) %>.</span>
+    <% if settings.weather %><span class="game-time__weather"><%= settings.weather %></span><% end %>
   </p>
-<% else %>
-  <p class="where-now">
-    <%= link_to "Create a character", new_character_path %> to start playing.
-  </p>
-<% end %>
+
+  <% if current_character %>
+    <p class="where-now">
+      <%= current_character.name %> is in
+      <%= link_to current_character.room.name, room_path(current_character.room) %>.
+    </p>
+  <% else %>
+    <p class="where-now">
+      <%= link_to "Create a character", new_character_path %> to start playing.
+    </p>
+  <% end %>
+</div>
 
 <% if @areas.any? %>
-  <%= render partial: "home/category", collection: @areas, as: :area %>
+  <section class="places">
+    <%= render partial: "home/place", collection: @areas, as: :area %>
+  </section>
 <% else %>
   <p class="muted">No <%= term(:area, count: 2).downcase %> yet.</p>
 <% end %>

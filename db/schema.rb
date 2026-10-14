@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_280001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_290001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -109,6 +109,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_280001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "entrance_room_id"
+    t.string "summary"
     t.index ["entrance_room_id"], name: "index_areas_on_entrance_room_id"
     t.index ["parent_id"], name: "index_areas_on_parent_id"
   end
@@ -238,6 +239,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_280001) do
     t.boolean "roster_claim", default: false, null: false
     t.boolean "roster_resubmit", default: false, null: false
     t.datetime "look_chosen_at"
+    t.string "game_name"
+    t.text "game_blurb"
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
@@ -467,6 +470,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_280001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "area_id", null: false
+    t.string "summary"
     t.index ["area_id"], name: "index_rooms_on_area_id"
   end
 

@@ -21,10 +21,6 @@
     <%= form.number_field :position %>
     <small class="hint">Lower numbers are listed first.</small>
   </div>
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 4 %>
-  </div>
-  <%= render "shared/image_field", form: form, record: form.object %>
+  <%= render "shared/look_fields", form: form, record: form.object, rows: 4 %>
   <%= form.submit area.persisted? ? "Save" : "Create #{term(:area).downcase}", class: "button" %>
 <% end %>

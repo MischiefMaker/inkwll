@@ -2,6 +2,20 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Simpler look and the game's name
+
+- The front page now opens with the game's name in large letters and a
+  paragraph or two about the game. Set both in Admin, Game settings. The
+  name also replaces "Inkwll" in the top bar and the browser tab.
+- The front page lists just the top-level Areas, each with an Enter button
+  that takes your character to the Area's entrance (or Return, if you're
+  already there). Shortcuts to single Settings are tucked into a small
+  "Shortcuts" fold.
+- Areas and Settings can each have a small icon, a large banner, a page
+  background, short text and long text. All optional.
+- Admin, Look takes background pictures for the whole page, for boxes and
+  panels, and for behind the game's name.
+
 ## 2026-10-14 — Admin menu
 
 - The admin panel's row of tabs is now a menu down the right-hand side,

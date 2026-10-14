@@ -22,7 +22,7 @@
   </div>
 </section>
 
-<%= form_with model: @game_setting, url: admin_skin_path, method: :patch, class: "form skin-form" do |form| %>
+<%= form_with model: @game_setting, url: admin_skin_path, method: :patch, class: "form skin-form", multipart: true do |form| %>
   <%= render "shared/errors", record: @game_setting %>
 
   <h2 class="section-title">Colours</h2>
@@ -54,6 +54,11 @@
     <%= form.text_field :font_heading, maxlength: 200, placeholder: "Georgia, serif" %>
     <small class="hint">List a few fonts, separated by commas; visitors see the first one their device has. Leave empty to use the built-in fonts. To use a web font, load it in the extra CSS with @import, then name it here.</small>
   </div>
+
+  <h2 class="section-title">Pictures</h2>
+  <% GameSetting::Skin::PICTURES.each do |picture, (_variable, label, hint)| %>
+    <%= render "shared/image_field", form: form, record: @game_setting, picture: picture, label: label, hint: hint %>
+  <% end %>
 
   <h2 class="section-title">Extra CSS</h2>
   <div class="field">

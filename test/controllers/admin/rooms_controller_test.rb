@@ -46,4 +46,18 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
     get room_path(rooms(:hall))
     assert_select ".description-image img"
   end
+
+  test "rooms can have an icon, short text and a background, and use their area's background otherwise" do
+    sign_in_as(accounts(:builder))
+    patch admin_room_path(rooms(:hall)), params: { room: { summary: "Echoing stone.", icon: fixture_file_upload("pixel.png", "image/png") } }
+    patch admin_area_path(rooms(:hall).area), params: { area: { background: fixture_file_upload("pixel.png", "image/png") } }
+
+    get room_path(rooms(:hall))
+    assert_select ".page-title__icon"
+    assert_select ".lede", "Echoing stone."
+    assert_select "body[style*=?]", "--page-image"
+
+    patch admin_room_path(rooms(:hall)), params: { room: { remove_icon: "1" } }
+    assert_not rooms(:hall).reload.icon.attached?
+  end
 end

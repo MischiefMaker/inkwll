@@ -40,7 +40,23 @@ module GameSetting::Skin
                  "accent" => "#111111", "accent-text" => "#ffffff", "notice" => "#e8e8e8", "alert" => "#f0dede" } }
   }.freeze
 
+  # Optional pictures from Admin → Look, each set as a CSS variable:
+  # --page-image behind every page, --box-image behind boxes and panels,
+  # --intro-image behind the game's name on the front page.
+  PICTURES = {
+    "page_background" => [ "--page-image", "Page background", "Shown behind every page. Areas and Settings can have their own instead." ],
+    "box_background" => [ "--box-image", "Box background", "Shown behind boxes and panels: the header, lists, the OOC chat, Chapter details." ],
+    "intro_banner" => [ "--intro-image", "Front page banner", "Shown behind the game's name at the top of the front page." ]
+  }.freeze
+
   included do
+    PICTURES.each_key do |picture|
+      has_one_attached picture
+      attribute :"remove_#{picture}", :boolean, default: false
+      after_save { send(picture).purge_later if send(:"remove_#{picture}") && send(picture).attached? }
+    end
+    validate :pictures_are_reasonable
+
     before_create { apply_preset(DEFAULT_PRESET) }
     normalizes :font_body, :font_heading, with: ->(f) { f.squish.presence }
     normalizes :custom_css, with: ->(css) { css.presence }
@@ -79,7 +95,7 @@ module GameSetting::Skin
   end
 
   def skinned?
-    skin_colours.any? || skin_dark_colours.any? || !skin_dark_mode? || font_body || font_heading || custom_css
+    PICTURES.keys.any? { |picture| send(picture).attached? } || skin_colours.any? || skin_dark_colours.any? || !skin_dark_mode? || font_body || font_heading || custom_css
   end
 
   # The stylesheet itself. Every value in it has been checked above, except
@@ -91,6 +107,10 @@ module GameSetting::Skin
     COLOURS.each_key { |key| lines << "  --color-#{key}: #{colour(key)};" if skin_colours[key] }
     lines << "  --font-body: #{font_body};" << "  --font-ui: #{font_body};" if font_body
     lines << "  --font-heading: #{font_heading};" if font_heading
+    PICTURES.each do |picture, (variable, _label, _hint)|
+      file = send(picture)
+      lines << "  #{variable}: url(\"#{Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)}\");" if file.attached?
+    end
     lines << "}"
     dark = skin_dark_mode? ? COLOURS.keys.select { |key| skin_dark_colours[key] } : COLOURS.keys
     if dark.any?
@@ -104,6 +124,15 @@ module GameSetting::Skin
   end
 
   private
+    def pictures_are_reasonable
+      PICTURES.each_key do |picture|
+        file = send(picture)
+        next unless file.attached? && attachment_changes[picture]
+        errors.add(picture, "must be a picture (PNG, JPEG, GIF or WebP)") unless file.content_type.in?(%w[ image/png image/jpeg image/gif image/webp ])
+        errors.add(picture, "must be smaller than 5 MB") if file.blob.byte_size > DescribedWithImage::MAX_IMAGE_SIZE
+      end
+    end
+
     def changed_colours(values, index)
       values.to_h.to_h { |key, value| [ key.to_s, value.to_s.strip.downcase ] }
         .select { |key, value| COLOURS.key?(key) && value != COLOURS[key][index] }
