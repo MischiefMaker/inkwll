@@ -52,9 +52,10 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
   scene, and applies it automatically.
 - Accounts need an email address by default, used for password reset links.
   Each game can make it optional; without one, staff reset the password.
-- Storyteller is a flag staff give to a player, separate from staff. Only
-  flagged players or staff can be a scene's storyteller. SOUL's storyteller
-  tools (such as GM-assisted rolls) are staff only.
+- Staff has three levels: top level, admin, and staff with job flags (such as
+  Build and App). Storyteller is a flag on a player, below staff. Only flagged
+  players or staff can be a scene's storyteller. Storytellers get some SOUL and
+  Inklings tools but never other players' secret details. See `decisions.md`.
 - Lurkers can watch joinable scenes without posing.
 - Character approval is a per-game setting. When it is on, new characters
   cannot pose in scenes until staff approve them.

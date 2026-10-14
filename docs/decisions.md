@@ -8,6 +8,17 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Staff levels
+
+Names are still to be picked; the owner wants names that fit the Inkwll / Inklings / SOUL theme (like "Wizard" fits a MUSH).
+
+1. **Top level** (like Head Wizards on a MUSH; there can be several). Can do almost anything, except make another top-level staff member. That takes a higher permission that is not a character, such as an extra password or a special flag on a top-level account.
+2. **Admin** (like Wizards). Can do almost everything the top level can, except fundamental changes to the game, such as deleting or renaming things.
+3. **Staff** (name to pick). Gets individual job flags, for example Build Staff (create and delete rooms and exits) and App Staff (review character applications and approve or deny them). More flags can be added later.
+4. **Storyteller.** A flag on a player, not really staff. Storytellers can run approved plots and use some SOUL and Inklings tools, but cannot see other players' secret details.
+
+This replaces part of the earlier "Lurkers and storytellers" entry: storytellers can use some SOUL tools, not none. Which tools count as "some" is decided when SOUL and Inklings are planned.
+
 ## 2026-10-14: Step 1 choices reviewed
 
 1. **One name:** the login name and the player name are the same thing. Player names keep the current rules (letters, numbers, underscores).
@@ -32,7 +43,7 @@ Defaults picked by Claude, not yet confirmed: the game sets the default and each
 
 - **Lurkers:** anyone can watch a joinable (open, public) scene live without posing. Private and hidden scenes have no lurkers.
 - **Storyteller flag:** storyteller status is its own flag on a player, separate from being staff, so staff can make trusted players storytellers. Only a flagged player (or staff) can take the storyteller role in a scene.
-- **SOUL storyteller tools are staff only:** GM-assisted rolls and the other SOUL storyteller tools are gated to staff, not to the storyteller flag.
+- ~~**SOUL storyteller tools are staff only.**~~ Changed the same day: see "Staff levels" above.
 
 ## 2026-10-14: Email on accounts is required by default, games can relax it
 

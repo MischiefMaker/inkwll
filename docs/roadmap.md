@@ -27,7 +27,7 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Now (before step 2 starts)**
 
-4. Staff levels: how many there are, what each is called, and what each can do (delete characters, build, handle reports, set staff, change game settings).
+4. Staff level names, and how a new top-level staff member is made (see "Staff levels" in `decisions.md`).
 
 **Before step 2: Scenes**
 
@@ -42,7 +42,7 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 **Before SOUL, Inklings and Grimoire**
 
 11. Which SOUL pieces make the first version (see steps 5 and 6 above).
-16. What a flagged (non-staff) storyteller can do in a scene: skip turns, change the pose order, use Inklings storyteller tools.
+16. Exactly which SOUL and Inklings tools storytellers get, and which details count as secret.
 17. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
 12. How much XP a finished scene gives, and whether there is a weekly cap.
 13. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
