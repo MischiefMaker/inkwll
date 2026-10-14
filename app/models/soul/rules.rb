@@ -55,6 +55,19 @@ module Soul::Rules
     probability <= config.dig("rolls", "extraordinary_below").to_f
   end
 
+  # --- Boons and Banes ---------------------------------------------------------
+
+  def bnb_levels = config.dig("bnb", "levels")
+  def boons_per_bane = config.dig("bnb", "boons_per_bane").to_i
+  def storyteller_rolls? = config.dig("rolls", "storyteller_rolls")
+
+  # How many Banes a character needs for this many Boons.
+  def banes_needed(boons) = boons_per_bane.positive? ? boons / boons_per_bane : 0
+
+  def starting_limits(resonance, kind)
+    config.dig("bnb", "starting_limits", (resonance_enabled? ? resonance.to_i : 0).to_s, kind == "boon" ? "boons" : "banes") || {}
+  end
+
   # --- XP ----------------------------------------------------------------------
 
   def weekly_award = config.dig("xp", "weekly_award").to_i
