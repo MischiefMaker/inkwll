@@ -2,6 +2,16 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — New starting map
+
+- A fresh game now starts with three Areas, City, Country and Forest,
+  each holding three smaller Areas (Uptown, Midtown and Downtown; The
+  Village, Farmland and Riverside; Forest's Edge, Deep Woods and
+  Lakeshore). Each small Area has two described Settings, all joined by
+  Paths, and the three big Areas link to each other. New characters
+  start in Central Square. Everything can be edited or replaced from
+  the admin panel.
+
 ## 2026-10-14 — Storyteller tools
 
 - A Chapter's Storyteller can call for rolls from players, see the
