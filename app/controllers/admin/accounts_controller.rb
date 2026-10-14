@@ -2,13 +2,35 @@
 # Scribes manage Pages and Storytellers, Wellkeepers also manage Scribes, and
 # only Founders can make Wellkeepers. The Founder flag itself is only set from
 # the server's command line.
+#
+# Accounts are archived, not deleted: the player can't log in and their
+# characters are retired, or go on the roster if they asked for that. Only a
+# Founder can delete an account, and only one that never had characters.
 class Admin::AccountsController < Admin::BaseController
   require_job :manage_staff
-  before_action :set_account, only: %i[ edit update unmute ]
-  before_action :require_manageable, only: %i[ edit update ]
+  before_action :set_account, only: %i[ edit update unmute archive destroy ]
+  before_action :require_manageable, only: %i[ edit update archive destroy ]
 
   def index
-    @accounts = Account.order(staff_level: :desc, username: :asc)
+    @accounts = Account.where(system: false).order(:archived_at, staff_level: :desc, username: :asc)
+  end
+
+  def archive
+    @account.archive!
+    redirect_to admin_accounts_path, notice: "#{@account.display_name} has been archived."
+  end
+
+  def destroy
+    unless current_account.founder? && @account.characters.none?
+      return redirect_to admin_accounts_path, alert: "Only a #{Term[:founder]} can delete an account, and only one that never had characters."
+    end
+    if @account.destroy
+      redirect_to admin_accounts_path, notice: "#{@account.display_name} has been deleted."
+    else
+      redirect_to admin_accounts_path, alert: @account.errors.full_messages.to_sentence.presence || "#{@account.display_name} couldn't be deleted."
+    end
+  rescue ActiveRecord::InvalidForeignKey
+    redirect_to admin_accounts_path, alert: "#{@account.display_name} has left things in the game that need their account, so archive it instead."
   end
 
   def edit
@@ -35,7 +57,7 @@ class Admin::AccountsController < Admin::BaseController
 
   private
     def set_account
-      @account = Account.find(params[:id])
+      @account = Account.where(system: false).find(params[:id])
     end
 
     def require_manageable

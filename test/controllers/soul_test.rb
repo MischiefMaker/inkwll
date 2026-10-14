@@ -29,9 +29,10 @@ class SoulControllersTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
-  test "players finish their own sheet only when the game doesn't need approval" do
+  test "players finish their own sheet only when the game doesn't need approval, or once approved" do
     sign_in_as(accounts(:alice))
     GameSetting.current.update!(approval_required: true)
+    characters(:wren).update!(status: "submitted")
     post character_sheet_lock_path(characters(:wren))
     assert characters(:wren).reload.sheet_open?
 

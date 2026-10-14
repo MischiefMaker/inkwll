@@ -1,0 +1,26 @@
+<%# Roster notices on a character's page: the roster note and "apply" for
+    characters on the roster, or the request button for the player's own. %>
+<% if character.on_roster? %>
+  <div class="notice-box roster-status roster-status--on-roster">
+    <p class="text"><strong class="emphasis">On the roster.</strong> <%= character.name %> is waiting for someone to play them.</p>
+    <% if character.roster_note.present? %>
+      <div class="prose roster-status__note"><%= simple_format character.roster_note %></div>
+    <% end %>
+    <% mine = character.roster_applications.where(account: current_account).order(:created_at).last %>
+    <% if mine&.pending? %>
+      <p class="text roster-status__applied">You applied <%= time_ago_in_words(mine.created_at) %> ago. Staff will let you know.</p>
+    <% else %>
+      <% if mine&.denied? %>
+        <p class="text roster-status__denied muted">Your last application was turned down<%= ": #{mine.staff_reason}" if mine.staff_reason %>.</p>
+      <% end %>
+      <%= link_to "Apply to play #{character.name}", new_character_roster_application_path(character), class: "button roster-status__apply" %>
+    <% end %>
+  </div>
+<% elsif character.account_id == current_account.id && !character.retired? %>
+  <% if character.roster_requested? %>
+    <div class="notice-box roster-status roster-status--requested">
+      <p class="text">You asked staff to put <%= character.name %> on the roster.</p>
+      <%= button_to "Withdraw", character_roster_request_path(character), method: :delete, class: "button button--quiet" %>
+    </div>
+  <% end %>
+<% end %>

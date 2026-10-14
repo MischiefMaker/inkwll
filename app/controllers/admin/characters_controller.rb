@@ -16,6 +16,7 @@ class Admin::CharactersController < Admin::BaseController
   end
 
   def unretire
+    return redirect_to(admin_roster_path, alert: "#{@character.name} is on the roster. Approve an application to bring them back.") if @character.on_roster?
     @character.unretire!
     Soul::AuditEntry.record!("unretire", "Brought #{@character.name} back from retirement", actor: current_account, character: @character)
     redirect_to admin_characters_path, notice: "#{@character.name} is back in play."

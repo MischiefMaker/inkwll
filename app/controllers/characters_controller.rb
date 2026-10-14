@@ -51,6 +51,6 @@ class CharactersController < ApplicationController
     end
 
     def character_params
-      params.expect(character: [ :name, :description, :icon, :remove_icon, profile: {} ])
+      params.expect(character: [ :name, :description, :icon, :remove_icon, :roster_when_idle, profile: {} ])
     end
 end

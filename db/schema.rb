@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_180001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_190001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_180001) do
     t.integer "browser_notify_minutes", default: 5, null: false
     t.text "about_me"
     t.datetime "muted_until"
+    t.boolean "system", default: false, null: false
+    t.datetime "archived_at"
     t.index "lower((email)::text)", name: "index_accounts_on_lower_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["active_character_id"], name: "index_accounts_on_active_character_id"
     t.index ["username"], name: "index_accounts_on_username", unique: true
@@ -121,8 +123,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_180001) do
     t.integer "resonance", default: 0, null: false
     t.datetime "sheet_locked_at"
     t.datetime "retired_at"
+    t.datetime "on_roster_at"
+    t.text "roster_note"
+    t.boolean "roster_when_idle", default: false, null: false
+    t.datetime "roster_requested_at"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
+    t.index ["on_roster_at"], name: "index_characters_on_on_roster_at"
     t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"
     t.index ["room_id"], name: "index_characters_on_room_id"
   end
@@ -187,6 +194,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_180001) do
     t.boolean "require_description", default: false, null: false
     t.boolean "require_icon", default: false, null: false
     t.boolean "soul_enabled", default: true, null: false
+    t.integer "roster_idle_days", default: 90, null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -299,6 +307,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_180001) do
     t.datetime "updated_at", null: false
     t.bigint "area_id", null: false
     t.index ["area_id"], name: "index_rooms_on_area_id"
+  end
+
+  create_table "roster_applications", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "account_id", null: false
+    t.text "note", null: false
+    t.string "status", default: "pending", null: false
+    t.string "staff_reason"
+    t.bigint "reviewed_by_id"
+    t.datetime "reviewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_roster_applications_on_account_id"
+    t.index ["character_id"], name: "index_roster_applications_on_character_id"
+    t.index ["reviewed_by_id"], name: "index_roster_applications_on_reviewed_by_id"
   end
 
   create_table "saved_places", force: :cascade do |t|
@@ -583,6 +606,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_180001) do
   add_foreign_key "reports", "poses"
   add_foreign_key "reports", "scenes"
   add_foreign_key "rooms", "areas"
+  add_foreign_key "roster_applications", "accounts"
+  add_foreign_key "roster_applications", "accounts", column: "reviewed_by_id"
+  add_foreign_key "roster_applications", "characters"
   add_foreign_key "saved_places", "accounts"
   add_foreign_key "saved_places", "rooms"
   add_foreign_key "scene_invitations", "characters"

@@ -2,6 +2,7 @@
 class Character < ApplicationRecord
   include SoulSheet
   include SoulExtras
+  include Roster
 
   scope :active, -> { where(retired_at: nil) }
 

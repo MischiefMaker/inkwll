@@ -1,0 +1,20 @@
+<% content_for :title, "Apply to play #{@character.name} · Inkwll" %>
+
+<div class="roster-apply">
+  <h1 class="page-title">Apply to play <%= @character.name %></h1>
+  <% if @character.roster_note.present? %>
+    <div class="prose roster-apply__note"><%= simple_format @character.roster_note %></div>
+  <% end %>
+  <p class="text muted">If staff pick you, <%= @character.name %> becomes yours with everything in character:
+    their profile, private answers, sheet, relationships and gallery. Their old player's Messages don't come with them.</p>
+
+  <%= form_with model: @application, url: character_roster_applications_path(@character), class: "form roster-apply__form" do |form| %>
+    <%= render "shared/errors", record: @application %>
+    <div class="field">
+      <%= form.label :note, "Why you'd like to play #{@character.name}" %>
+      <%= form.text_area :note, rows: 8, maxlength: 2_000, required: true %>
+      <small class="hint">How you'd play them, and any ideas you have. Only staff see this.</small>
+    </div>
+    <%= form.submit "Apply", class: "button" %>
+  <% end %>
+</div>

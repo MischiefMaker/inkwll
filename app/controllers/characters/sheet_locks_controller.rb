@@ -1,12 +1,13 @@
 # Locking a SOUL sheet fixes Resonance and the starting ratings. Approval
-# locks it; in games without approval the player locks it themselves.
+# locks it; in games without approval the player locks it themselves, and so
+# does the new player of a roster character, or one staff unlocked.
 # Staff can unlock a sheet to fix it.
 class Characters::SheetLocksController < ApplicationController
   include SoulRequired
   before_action :set_character
 
   def create
-    unless current_account.can?(:review_apps) || (@character.account_id == current_account.id && !GameSetting.current.approval_required?)
+    unless current_account.can?(:review_apps) || (@character.account_id == current_account.id && (@character.approved? || !GameSetting.current.approval_required?))
       return redirect_to character_path(@character, tab: "soul"), alert: "Staff lock this sheet when they approve #{@character.name}."
     end
     @character.lock_sheet!

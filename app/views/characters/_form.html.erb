@@ -49,5 +49,13 @@
     </fieldset>
   <% end %>
 
+  <fieldset class="fieldset character-form__roster">
+    <legend class="fieldset__legend">If you stop playing</legend>
+    <label class="field--checkbox character-form__roster-when-idle">
+      <%= form.check_box :roster_when_idle %> Put <%= character.name.presence || "this character" %> on the roster for someone else to play if they go idle
+    </label>
+    <small class="hint">After <%= GameSetting.current.roster_idle_days %> days without posting or moving, another player can apply to take them over. They get everything in character, but none of your Messages.</small>
+  </fieldset>
+
   <%= form.submit class: "button" %>
 <% end %>

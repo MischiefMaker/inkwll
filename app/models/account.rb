@@ -42,6 +42,7 @@ class Account < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_many :account_warnings, dependent: :destroy
   has_many :bans, dependent: :destroy
+  has_many :roster_applications, dependent: :delete_all
   belongs_to :active_character, class_name: "Character", optional: true
 
   enum :staff_level, STAFF_LEVELS, default: :player, validate: true
@@ -68,8 +69,29 @@ class Account < ApplicationRecord
   validate :active_character_must_be_own
 
   # Logs in by player name, ignoring capitals.
+  # Archived accounts and the built-in Roster account can't log in.
   def self.log_in(name, password)
-    authenticate_by(username: name.to_s.strip.downcase, password: password.to_s)
+    account = authenticate_by(username: name.to_s.strip.downcase, password: password.to_s)
+    account unless account.nil? || account.system? || account.archived?
+  end
+
+  # The built-in account that holds characters on the roster. Its name has
+  # a space, which player names can't, so no player can ever take it.
+  def self.roster_keeper
+    find_by(username: "the roster") || new(display_name: "The Roster", username: "the roster", system: true,
+      password: SecureRandom.base58(24) + "Aa1").tap { |account| account.save!(validate: false) }
+  end
+
+  def archived? = archived_at.present?
+
+  # Accounts are archived, not deleted. The player can't log in, and their
+  # characters are retired, or go on the roster if they asked for that.
+  def archive!
+    transaction do
+      characters.active.each { |character| character.roster_when_idle? ? character.put_on_roster! : character.retire! }
+      sessions.destroy_all
+      update!(archived_at: Time.current, active_character: nil)
+    end
   end
 
   # Makes the given character active and remembers it for the room it is in.

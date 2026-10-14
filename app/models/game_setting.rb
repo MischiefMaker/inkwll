@@ -5,6 +5,7 @@ class GameSetting < ApplicationRecord
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }
   validate :auto_finish_after_idle
+  validates :roster_idle_days, numericality: { only_integer: true, in: 7..3650 }
   validates :ic_days_per_day, numericality: { greater_than: 0, less_than_or_equal_to: 365 }
 
   # "Today's date in the game", as set on the settings page. Setting it

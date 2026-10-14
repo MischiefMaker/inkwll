@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       resources :bnbs, only: %i[ create update destroy ]
       resources :bnb_requests, only: :create
       resources :culminations, only: %i[ create update ]
+      resource :roster_request, only: %i[ create destroy ]
+      resources :roster_applications, only: %i[ new create ]
     end
   end
   resource :active_character, only: :update
@@ -74,6 +76,8 @@ Rails.application.routes.draw do
   resource :chapter_tabs, only: :show
   get "where", to: "where#show"
   get "archives", to: "archives#index"
+  get "directory", to: "directory#index"
+  get "roster", to: "directory#index", defaults: { roster: "1" }, as: :roster
 
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do
@@ -82,8 +86,11 @@ Rails.application.routes.draw do
     resources :rooms, only: %i[ new create edit update ] do
       resources :exits, only: %i[ create destroy ]
     end
-    resources :accounts, only: %i[ index edit update ] do
-      post :unmute, on: :member
+    resources :accounts, only: %i[ index edit update destroy ] do
+      member do
+        post :unmute
+        post :archive
+      end
     end
     resources :characters, only: :index do
       member do
@@ -99,6 +106,9 @@ Rails.application.routes.draw do
     resources :soul_bnbs, only: %i[ index create edit update ]
     resources :soul_reviews, only: %i[ index update ]
     resources :applications, only: %i[ index show update ]
+    resource :roster, only: :show, controller: "roster"
+    resources :roster_applications, only: :update
+    resources :roster_characters, only: %i[ create update ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do
       resource :hiding, only: :create

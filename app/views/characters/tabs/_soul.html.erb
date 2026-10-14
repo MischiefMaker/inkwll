@@ -9,7 +9,7 @@
   <% if character.sheet_open? && mine %>
     <% allowances = Soul::Rules.resonance_range.to_h { |r| [ r, Soul::Rules.chargen_allowance(r) ] } %>
     <p class="text soul-sheet__intro">Set <%= character.name %>'s starting sheet. You can change it as often as you like
-      <%= GameSetting.current.approval_required? ? "until staff approve #{character.name}." : "until you finish it." %>
+      <%= GameSetting.current.approval_required? && !character.approved? ? "until staff approve #{character.name}." : "until you finish it." %>
       After that, ratings rise by spending XP.</p>
 
     <%= form_with url: character_sheet_path(character), method: :patch, scope: :sheet, class: "form soul-sheet__form",
@@ -52,7 +52,7 @@
       <%= form.submit "Save sheet", class: "button" %>
     <% end %>
 
-    <% unless GameSetting.current.approval_required? %>
+    <% if character.approved? || !GameSetting.current.approval_required? %>
       <%= button_to "Finish my sheet", character_sheet_lock_path(character), class: "button button--quiet soul-sheet__finish",
             form: { data: { turbo_confirm: "Finish #{character.name}'s sheet? Resonance is then fixed, and ratings only rise by spending XP." } } %>
     <% end %>

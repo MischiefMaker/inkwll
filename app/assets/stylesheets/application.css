@@ -840,3 +840,22 @@ span.pose__icon { cursor: default; }
 .pending-roll__form { flex-direction: row; flex-wrap: wrap; align-items: flex-end; }
 .soul-reviews__deny { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .soul-reviews__deny input[type=text] { flex: 1 1 12rem; min-width: 0; max-width: 24rem; }
+
+/* --- Roster and character directory ------------------------------------- */
+.roster-status__note, .roster-apply__note { margin: 0.4rem 0; }
+.roster-status__apply { margin-top: 0.4rem; }
+.character-profile__roster-request { display: inline-block; }
+.roster-admin__list { list-style: none; margin: 0 0 var(--space); padding: 0; }
+.roster-admin__item { padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.roster-admin__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 0.3rem; font-size: 0.9rem; }
+.roster-admin__deny, .roster-admin__put-on { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.roster-admin__deny input[type=text], .roster-admin__put-on input[type=text] { flex: 1 1 12rem; min-width: 0; max-width: 24rem; }
+.directory__filter { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: var(--space); }
+.directory__value { flex: 1 1 10rem; min-width: 0; max-width: 18rem; }
+.directory__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: var(--space); }
+.directory__item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-align: center; }
+.directory__link { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-decoration: none; }
+.directory__name { font-weight: 600; }
+.directory__value-shown { font-size: 0.85rem; overflow-wrap: anywhere; }
+.table__row--archived { opacity: 0.6; }
+.account-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }

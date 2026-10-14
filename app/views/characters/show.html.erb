@@ -1,17 +1,21 @@
 <% content_for :title, "#{@character.name} · Inkwll" %>
 <% show_private = @mine || @staff_view %>
 
-<article class="character-profile character-profile--<%= @character.status %><%= " character-profile--retired" if @character.retired? %>">
+<article class="character-profile character-profile--<%= @character.status %><%= " character-profile--retired" if @character.retired? %><%= " character-profile--on-roster" if @character.on_roster? %>">
   <header class="character-profile__header">
     <%= character_icon(@character, size: :large) %>
     <div class="character-profile__heading">
       <h1 class="page-title character-profile__name"><%= @character.name %></h1>
-      <% if @character.retired? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
+      <% if @character.retired? && !@character.on_roster? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
       <div class="character-profile__actions">
         <% if @mine %>
           <%= link_to "Edit", edit_character_path(@character), class: "button button--quiet" %>
-        <% else %>
+          <% unless @character.retired? || @character.roster_requested? %>
+            <%= button_to "Ask staff to put on the roster", character_roster_request_path(@character), class: "button button--quiet character-profile__roster-request",
+                  form: { data: { turbo_confirm: "Ask staff to give #{@character.name} up for someone else to play? If they agree, #{@character.name} stops being yours." } } %>
+          <% end %>
+        <% elsif !@character.on_roster? %>
           <%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %>
         <% end %>
       </div>
@@ -21,6 +25,7 @@
   <% if @mine || @staff_view %>
     <%= render "characters/application_status", character: @character %>
   <% end %>
+  <%= render "characters/roster_status", character: @character %>
 
   <nav class="profile-tabs" aria-label="Profile sections">
     <% tabs = { "profile" => "Profile", "application" => "Application" } %>

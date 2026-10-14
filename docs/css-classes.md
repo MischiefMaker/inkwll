@@ -73,6 +73,12 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.relationships`, `.relationships__item`, `.relationships__name`, `.relationships__kind`, `.relationships__note` | Relationships |
 | `.player-profile`, `.player-profile__header`, `.player-profile__about`, `.player-characters` | A player's profile |
 | `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest` | Player icons |
+| `.character-profile--on-roster`, `.roster-status`, `.roster-status--on-roster`, `--requested`, `.roster-status__note`, `.roster-status__apply` | Roster notices on a character |
+| `.roster-apply`, `.roster-apply__form` | Applying to play a roster character |
+| `.directory`, `.directory__filter`, `.directory__list`, `.directory__item`, `.directory__item--roster`, `.directory__name`, `.directory__tag` | The character directory and the Roster page |
+| `.roster-admin`, `.roster-admin__item--application`, `--request`, `--character`, `.roster-admin__actions` | Admin: the Roster page |
+| `.character-form__roster` | "If you stop playing" on the character form |
+| `.table__row--archived`, `.account-archived`, `.account-actions` | Archived accounts in Players and staff |
 
 ## SOUL
 

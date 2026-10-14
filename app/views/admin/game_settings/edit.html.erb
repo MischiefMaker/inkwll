@@ -75,6 +75,11 @@
     <%= form.label :auto_finish_days, "Days without a #{term(:pose).downcase} before a #{term(:scene).downcase} finishes on its own" %>
     <%= form.number_field :auto_finish_days, min: 2, max: 3650 %>
   </div>
+  <div class="field">
+    <%= form.label :roster_idle_days, "Days without posting or moving before a character goes back on the roster" %>
+    <%= form.number_field :roster_idle_days, min: 7, max: 3650 %>
+    <small class="hint">Only for characters whose players ticked "put on the roster if they go idle".</small>
+  </div>
 
   <%= form.submit "Save", class: "button" %>
 <% end %>

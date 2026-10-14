@@ -14,11 +14,15 @@
         <td class="table__cell"><%= character.account.display_name %></td>
         <td class="table__cell"><%= link_to character.room.name, room_path(character.room) %></td>
         <td class="table__cell">
-          <% if character.retired? %>
+          <% if character.on_roster? %>
+            <%= link_to "On the roster", admin_roster_path, class: "muted" %>
+          <% elsif character.retired? %>
             <%= button_to "Bring back", unretire_admin_character_path(character), class: "button-link" %>
           <% else %>
             <%= button_to "Retire", retire_admin_character_path(character), class: "button-link",
                   form: { data: { turbo_confirm: "Retire #{character.name}? They can't be played until you bring them back." } } %>
+            <%= button_to "Put on the roster", admin_roster_character_path(character), method: :patch, class: "button-link",
+                  form: { data: { turbo_confirm: "Put #{character.name} on the roster? They stop being #{character.account.display_name}'s, and other players can apply to play them." } } %>
           <% end %>
         </td>
       </tr>
