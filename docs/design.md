@@ -278,8 +278,9 @@ words, and `config/locales/en.yml` maps one to the other.
   settings. Password reset emails come in the Going live step; until then
   staff reset passwords by hand.
 - **Characters.** Names are unique across the game (ignoring capitals) and may
-  use spaces and special characters. Only Wellkeepers can delete a character,
-  from the admin panel.
+  use spaces and special characters. Characters are never deleted: Wellkeepers
+  retire them from the admin panel, and logs still show them, greyed out.
+  Deleting a player account keeps that player's characters.
 - **Areas.** Every room belongs to an Area, and Areas can nest. The front page
   lists the top-level Areas like forum boards. Areas and rooms can have an
   image, a text description, or both.

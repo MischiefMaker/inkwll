@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_160001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_170001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -119,6 +119,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_160001) do
     t.text "review_note"
     t.integer "resonance", default: 0, null: false
     t.datetime "sheet_locked_at"
+    t.datetime "retired_at"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"

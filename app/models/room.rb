@@ -6,7 +6,7 @@ class Room < ApplicationRecord
   belongs_to :area
   has_many :exits, -> { order(:name) }, foreign_key: :source_room_id, dependent: :destroy, inverse_of: :source_room
   has_many :entrances, class_name: "Exit", foreign_key: :destination_room_id, dependent: :destroy, inverse_of: :destination_room
-  has_many :characters, -> { order(:name) }, dependent: :restrict_with_error
+  has_many :characters, -> { active.order(:name) }, dependent: :restrict_with_error, inverse_of: :room
   has_many :saved_places, dependent: :delete_all
 
   validates :name, presence: true, length: { maximum: 80 }

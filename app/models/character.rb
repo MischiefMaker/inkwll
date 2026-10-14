@@ -2,6 +2,8 @@
 class Character < ApplicationRecord
   include SoulSheet
 
+  scope :active, -> { where(retired_at: nil) }
+
   belongs_to :account
   belongs_to :room
   has_many :scene_participants, dependent: :destroy
@@ -42,7 +44,24 @@ class Character < ApplicationRecord
   # Whether the character can take part in Chapters: approved, or the game
   # doesn't need approval.
   def can_play?
-    approved? || !GameSetting.current.approval_required?
+    !retired? && (approved? || !GameSetting.current.approval_required?)
+  end
+
+  # --- Retiring ------------------------------------------------------------------
+  # Characters are never deleted. A retired character can't be played and
+  # leaves the Where list and Settings, but its Passages and Manuscripts stay.
+
+  def retired? = retired_at.present?
+
+  def retire!
+    transaction do
+      update!(retired_at: Time.current)
+      account.update!(active_character: nil) if account.active_character_id == id
+    end
+  end
+
+  def unretire!
+    update!(retired_at: nil)
   end
 
   # --- Profile -----------------------------------------------------------------

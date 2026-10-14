@@ -30,7 +30,9 @@ class Account < ApplicationRecord
   after_save { icon.purge_later if remove_icon && icon.attached? }
   validates :password, length: { minimum: 8, maximum: 72 }, allow_nil: true
   has_many :sessions, dependent: :destroy
-  has_many :characters, dependent: :destroy
+  # Characters outlive their account: an account with characters can't be
+  # deleted (decided 2026-10-14; deleted accounts keep their characters).
+  has_many :characters, dependent: :restrict_with_error
   has_many :remembered_characters, dependent: :delete_all
   has_many :saved_places, dependent: :delete_all
   has_many :conversation_members, dependent: :destroy

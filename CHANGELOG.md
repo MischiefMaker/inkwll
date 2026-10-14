@@ -2,6 +2,13 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Retiring characters and faster cloud sessions
+
+- Characters are no longer deleted. Wellkeepers retire them instead, and
+  their Passages and Manuscripts stay, greyed out.
+- New cloud sessions now start the database, install gems and set up the
+  databases automatically.
+
 ## 2026-10-14 — Step 5: SOUL basics
 
 - Characters have a SOUL tab: Resonance, Aspects and Skills. Players set a

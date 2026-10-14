@@ -3,7 +3,7 @@
 # Private and hidden Chapters never show here.
 class WhereController < ApplicationController
   def show
-    @characters = Character.includes(:room).order(:name)
+    @characters = Character.active.includes(:room).order(:name)
     @open_scenes = SceneParticipant.joins(:scene).merge(Scene.visibility_joinable).merge(Scene.active)
       .includes(scene: :room).group_by(&:character_id)
   end

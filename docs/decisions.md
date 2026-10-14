@@ -16,9 +16,15 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
-## 2026-10-14: Rosters (owner asked; reading picked by Claude)
+## 2026-10-14: Characters are retired, never deleted (owner)
 
-The owner asked for rosters. Read as both a canon roster (pre-made or canon characters staff list as open, reserved or taken, which players apply to take over through the usual approval) and a public character directory that includes the roster. Added as roadmap step 6b, after the SOUL extras. Waiting on the owner to confirm which kind they meant.
+- Characters are never deleted. They are retired (idle) instead, and logs and the Archives still show them, greyed out. This replaces the earlier rule that only the highest admin can delete characters.
+- Deleting a player account keeps that player's characters, as archived. Still open: whether the account itself should be archived instead of deleted.
+- As built: Wellkeepers retire a character (or bring it back) from Admin → Characters. A retired character can't be played and leaves the Where list, Settings and the character switcher. An account that still has characters can't be deleted, so no character is lost by accident.
+
+## 2026-10-14: Rosters (owner)
+
+The roster is a list of characters other players can apply to take over, with staff approval. Idle characters go back on the roster. Roadmap step 6b; the open questions are in task 0016.
 
 ## 2026-10-14: Step 5 details picked while building (SOUL basics)
 
@@ -407,7 +413,7 @@ This replaces part of the earlier "Lurkers and storytellers" entry: storytellers
 ## 2026-10-14: Step 1 choices reviewed
 
 1. **One name:** the login name and the player name are the same thing. Player names keep the current rules (letters, numbers, underscores).
-2. **Deleting characters:** only the highest level of admin can delete a character. Inkwll needs several staff levels.
+2. **Deleting characters:** only the highest level of admin can delete a character. Inkwll needs several staff levels. *(Replaced on 2026-10-14: characters are never deleted, only retired. See "Characters are retired, never deleted".)*
 3. **Character names** stay unique across the whole game, and may include spaces and special characters. (Player names may not.)
 4. **Starting room:** keep the builder's "New characters start here" tick, and the game ships with a default starting room so there is always one.
 5. **Exits** stay one-way, but the exit form gets an easy way to create the matching return exit at the same time.

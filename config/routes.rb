@@ -79,7 +79,12 @@ Rails.application.routes.draw do
       resources :exits, only: %i[ create destroy ]
     end
     resources :accounts, only: %i[ index edit update ]
-    resources :characters, only: %i[ index destroy ]
+    resources :characters, only: :index do
+      member do
+        post :retire
+        post :unretire
+      end
+    end
     resource :game_settings, only: %i[ edit update ]
     resources :profile_fields, except: %i[ show new ]
     resource :soul, only: :show, controller: "soul"

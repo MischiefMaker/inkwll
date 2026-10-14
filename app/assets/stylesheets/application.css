@@ -820,3 +820,8 @@ span.pose__icon { cursor: default; }
 .pose--roll { border-left: 3px solid var(--color-accent); padding-left: 0.75rem; }
 .roll-details { font-size: 0.85rem; color: var(--color-muted); }
 .button--small { padding: 0.2rem 0.6rem; font-size: 0.85rem; }
+
+/* Retired characters stay in logs, greyed out */
+.pose--retired .pose__icon, .pose--retired .pose__name { opacity: 0.55; filter: grayscale(1); }
+.character-profile--retired .character-icon { filter: grayscale(1); }
+.table__row--retired { color: var(--color-muted); }

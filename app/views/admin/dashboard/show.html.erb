@@ -34,7 +34,7 @@
   <% if current_account.can?(:delete_characters) %>
     <li class="list__item">
       <%= link_to "Characters", admin_characters_path %>
-      <span class="muted">See every character, and delete one if needed.</span>
+      <span class="muted">See every character, and retire one if needed.</span>
     </li>
   <% end %>
   <% if current_account.can?(:change_game_settings) %>

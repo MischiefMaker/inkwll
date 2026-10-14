@@ -24,7 +24,7 @@
   </nav>
 
   <div class="site-header__account">
-    <% characters = current_account.characters.order(:name) %>
+    <% characters = current_account.characters.active.order(:name) %>
     <% if characters.any? %>
       <%= form_with url: active_character_path, method: :patch, class: "switcher",
             data: { controller: "auto-submit" } do |form| %>
