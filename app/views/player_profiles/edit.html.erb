@@ -1,0 +1,22 @@
+<% content_for :title, "My profile · Inkwll" %>
+
+<h1 class="page-title">My player profile</h1>
+<p class="muted">The out-of-character you. <%= GameSetting.current.players_public? ? "Your characters are listed on it." : "It doesn't show which characters you play." %></p>
+
+<%= form_with model: @player, url: player_profile_path, method: :patch, class: "form player-profile-form" do |form| %>
+  <%= render "shared/errors", record: @player %>
+  <div class="field">
+    <%= form.label :icon %>
+    <% if @player.icon.attached? && @player.icon.blob.persisted? %>
+      <%= player_avatar(@player, size: :large) %>
+      <label class="field--checkbox"><%= form.check_box :remove_icon %> Remove this icon</label>
+    <% end %>
+    <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+    <small class="hint">Shown on your profile and beside your messages in the OOC Chat. PNG, JPEG, GIF or WebP, up to 5 MB.</small>
+  </div>
+  <div class="field">
+    <%= form.label :about_me, "About me" %>
+    <%= form.text_area :about_me, rows: 8 %>
+  </div>
+  <%= form.submit "Save", class: "button" %>
+<% end %>

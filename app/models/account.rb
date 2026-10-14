@@ -24,6 +24,10 @@ class Account < ApplicationRecord
   generates_token_for(:unsubscribe) { email }
 
   has_secure_password
+  # The player's own picture, on their player profile and in the OOC Chat.
+  has_one_attached :icon
+  attribute :remove_icon, :boolean, default: false
+  after_save { icon.purge_later if remove_icon && icon.attached? }
   validates :password, length: { minimum: 8, maximum: 72 }, allow_nil: true
   has_many :sessions, dependent: :destroy
   has_many :characters, dependent: :destroy
@@ -53,6 +57,8 @@ class Account < ApplicationRecord
   validates :browser_notifications, inclusion: { in: BROWSER_NOTIFICATIONS }
   validates :email_after_days, numericality: { only_integer: true, in: 1..60 }
   validates :browser_notify_minutes, numericality: { only_integer: true, in: 1..240 }
+  validates :about_me, length: { maximum: 5_000 }
+  validate :icon_is_a_reasonable_picture
   validate :email_needed_for_notifications
   validate :job_flags_are_known
   validate :active_character_must_be_own
@@ -160,6 +166,12 @@ class Account < ApplicationRecord
       return if username.blank?
       taken = Account.where(username: username).where.not(id: id).exists?
       errors.add(:display_name, "is already taken") if taken
+    end
+
+    def icon_is_a_reasonable_picture
+      return unless icon.attached? && attachment_changes["icon"]
+      errors.add(:icon, "must be a picture (PNG, JPEG, GIF or WebP)") unless icon.content_type.in?(%w[ image/png image/jpeg image/gif image/webp ])
+      errors.add(:icon, "must be smaller than 5 MB") if icon.blob.byte_size > DescribedWithImage::MAX_IMAGE_SIZE
     end
 
     def email_needed_for_notifications

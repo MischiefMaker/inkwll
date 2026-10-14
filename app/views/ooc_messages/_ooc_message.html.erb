@@ -1,6 +1,10 @@
 <div class="ooc-message" id="<%= dom_id ooc_message %>">
   <%= player_icon(ooc_message) %>
-  <span class="ooc-message__author<%= " ooc-message__author--guest" if ooc_message.guest? %>"><%= ooc_message.author_name %></span>
+  <% if ooc_message.guest? %>
+    <span class="ooc-message__author ooc-message__author--guest"><%= ooc_message.author_name %></span>
+  <% else %>
+    <%= link_to ooc_message.author_name, player_path(ooc_message.account.username), class: "ooc-message__author" %>
+  <% end %>
   <time class="ooc-message__time" datetime="<%= ooc_message.created_at.iso8601 %>"><%= ooc_message.created_at.utc.strftime("%H:%M") %></time>
   <span class="ooc-message__body"><%= ooc_message.body %></span>
 </div>

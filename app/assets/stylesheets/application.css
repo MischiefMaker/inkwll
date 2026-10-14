@@ -306,6 +306,15 @@ form.button_to { display: inline; }
 .ooc-message__author { font-weight: bold; }
 .ooc-message__author--guest { font-weight: normal; font-style: italic; }
 .player-icon--guest { background: var(--color-muted); }
+.player-icon--image { object-fit: cover; }
+.player-icon--large { width: 6rem; height: 6rem; margin: 0; border-radius: var(--radius); font-size: 2.5rem; vertical-align: middle; }
+a.ooc-message__author { color: inherit; text-decoration: none; }
+a.ooc-message__author:hover { text-decoration: underline; }
+.player-profile__header, .character-profile__header { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space); margin-bottom: var(--space); }
+.player-profile__name, .character-profile__name { margin: 0; }
+.player-profile__kind, .character-profile__where { margin: 0.2rem 0 0.5rem; }
+.player-characters { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+.player-characters__item { display: flex; align-items: center; gap: 0.5rem; }
 .ooc-message__time { color: var(--color-muted); font-size: 0.8rem; margin: 0 0.25rem; }
 
 .ooc-form { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }

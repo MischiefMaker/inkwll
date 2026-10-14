@@ -12,15 +12,24 @@ module ScenesHelper
   # A player's tiny icon in the OOC Chat: their initial on a colour picked
   # from their name, so each player keeps the same colour. It's never a
   # character's icon, which could show who plays that character.
-  # Guests get a plain grey one.
+  # Guests get a plain grey one. Players who uploaded a player icon get that.
   def player_icon(ooc_message)
     if ooc_message.guest?
       tag.span ooc_message.guest_name.first.upcase, class: "player-icon player-icon--guest", aria: { hidden: true }
     else
-      account = ooc_message.account
+      player_avatar(ooc_message.account, size: :tiny)
+    end
+  end
+
+  # A player's picture: their uploaded icon, or their initial on their colour.
+  def player_avatar(account, size: :tiny)
+    classes = "player-icon player-icon--#{size}"
+    # A picture that was just refused isn't saved, so it can't be shown.
+    if account.icon.attached? && account.icon.blob.persisted?
+      image_tag account.icon, alt: "", class: "#{classes} player-icon--image"
+    else
       hue = Zlib.crc32(account.username) % 360
-      tag.span account.display_name.first.upcase, class: "player-icon", aria: { hidden: true },
-        style: "background: hsl(#{hue} 45% 45%)"
+      tag.span account.display_name.first.upcase, class: classes, aria: { hidden: true }, style: "background: hsl(#{hue} 45% 45%)"
     end
   end
 
