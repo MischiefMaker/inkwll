@@ -10,10 +10,15 @@ class TravelsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to room_path(rooms(:garden))
   end
 
-  test "Setting pages seen from afar don't offer a jump there; players walk" do
+  test "Setting pages seen from afar offer Travel here" do
     sign_in_as(accounts(:alice))
     get room_path(rooms(:garden))
-    assert_select ".from-afar"
+    assert_select ".from-afar button", text: "Travel here"
+  end
+
+  test "no travel button where the character already is" do
+    sign_in_as(accounts(:alice))
+    get room_path(rooms(:commons))
     assert_select "button", text: "Travel here", count: 0
   end
 end

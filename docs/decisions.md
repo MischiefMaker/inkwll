@@ -14,6 +14,7 @@ A ready-made look in Admin, Look: white Courier text on black, with the classic 
 
 - The layout was feeling too much like a forum. The front page now shows the game's name, large, with a paragraph or two about the game under it (both set in Admin, Game settings).
 - Below that it just lists the top-level Areas. Each has an **Enter** button that takes the character to the Area's entrance Setting. Shortcuts straight to Settings still exist but are tucked into a small "Shortcuts" fold, so players get around by walking the Paths.
+- On a Setting's page, its Paths and who's here sit right under the description, above the Chapters. "Travel here" stays for Settings seen from afar (owner chose this over removing it).
 - The default skin stays very simple but customisable. Areas and Settings can each have any of: a small icon, a large banner, a page background, short text and long text. A Setting without a background uses its Area's.
 - Lots of room for customising: Admin, Look takes a background picture for the whole page, one for boxes and panels, and one behind the game's name on the front page. Everything else is still reachable with extra CSS.
 

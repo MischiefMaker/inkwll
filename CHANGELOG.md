@@ -37,9 +37,8 @@ Short, plain-language notes on what changed. Newest first.
 - Admin, Look takes background pictures for the whole page, for boxes and
   panels, and for behind the game's name.
 - On a Setting's page, its Paths and who's here now sit in one box right
-  under the description, above the Chapters. Looking at a Setting from afar
-  no longer offers "Travel here": walk the Paths, or Enter from the front
-  page. (My places still has its Travel button.)
+  under the description, above the Chapters. "Travel here" stays for
+  Settings you look at from afar (owner's choice).
 
 ## 2026-10-14 — Admin menu
 
