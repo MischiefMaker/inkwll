@@ -12,6 +12,12 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Character icons in Passages
+
+As on the owner's forums, every character has at least one icon, shown beside their Passages. Games can also allow extra images (including animated GIFs) that get pulled into Passages.
+
+Still open: how players use the extra images (see `roadmap.md`). Default picked by Claude: whether an icon is required is a game setting, on by default.
+
 ## 2026-10-14: Front page laid out like the owner's forums
 
 Each top-level Area is a banner (its image, or a styled heading), like a forum category. The Areas inside it are listed beneath as boards, each with an image, a short description, the ▾ shortcuts and its latest activity. An Area with nothing inside it shows as a single board. Clicking a board opens its entrance Setting.
