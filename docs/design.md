@@ -9,6 +9,11 @@ suggestion that still needs the owner's confirmation; don't treat it as settled.
 
 ## 1. Concept
 
+**Guiding principle [Decided]:** keep forum RP's easy navigation and many
+Chapters at once, but make the grid feel real and physical, like moving
+through space on a traditional MU. When the two pull apart, protect the
+feeling of physical space.
+
 Players see themed words: a room is a **Setting**, an exit is a **Path**, a
 scene is a **Chapter**, a pose is a **Passage**, and finished logs are
 **Manuscripts** in the **Archives**. This document and the code use the plain
