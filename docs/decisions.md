@@ -8,6 +8,18 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Hosting confirmed, plus nightly database backups
+
+After comparing Hetzner, Render, Fly.io, Heroku and DO App Platform, the owner kept one DigitalOcean droplet with Kamal. The owner already knows DigitalOcean, and none of the others was clearly cheaper or simpler. Render is the fallback if the owner later wants no server to look after.
+
+Backups, set up during the deployment step:
+
+- Turn on DigitalOcean's droplet backups, which copy the whole server.
+- Add a Kamal accessory in `config/deploy.yml` that copies the database every night and uploads it to a DigitalOcean Spaces bucket, so the copies live off the server.
+- The owner creates the Spaces bucket and its access key. The key goes in Kamal's secrets file, never in the code.
+
+Why: a copy of the whole server can catch PostgreSQL mid-write. A nightly database-only copy is the safer one to restore from.
+
 ## 2026-10-14: SOUL, Inklings and Grimoire are the default systems
 
 SOUL is the backbone of the stats and character system. Inklings supports roleplay (threaded requests, plot tracking, storyteller tools). Grimoire supports magic, for games that want it. All three are rebuilt for Inkwll rather than ported from AresMUSH, and each can be switched on or off with the feature toggles, leaving room for alternative plugins later.
