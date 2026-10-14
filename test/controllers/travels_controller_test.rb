@@ -5,7 +5,7 @@ class TravelsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(accounts(:alice))
 
     get room_path(rooms(:garden))
-    assert_select "button", "Travel here"
+    assert_select "button", text: "Travel here"
 
     post room_travel_path(rooms(:garden))
 
