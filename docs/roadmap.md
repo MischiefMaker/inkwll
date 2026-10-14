@@ -32,6 +32,10 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 - A 3-pose scene that drops below four players switches to turn-based.
 - Deleting a pose leaves a "pose removed" note.
 
+**Before step 2: Scenes**
+
+- The player-facing word for a pose, and for exits if poses become Passages.
+
 **Before step 3: Logs and safety**
 
 1. Who finishes a scene, and when does a quiet scene count as idle?

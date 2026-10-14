@@ -8,6 +8,19 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Themed names players see
+
+| Code word | Players see |
+| --- | --- |
+| room | **Setting** |
+| scene | **Chapter** |
+| all finished logs | **Archives** |
+| one finished log | **Manuscript** |
+| pose | still to pick (Passage is the favourite) |
+| exit | still to pick, if poses become Passages |
+
+Only the words players see change. The code keeps the plain words (room, scene, pose), and the visible words live in one wording file so a game can swap them for its own.
+
 ## 2026-10-14: Players can edit their poses until the scene finishes
 
 A player can edit their own poses any time before the scene finishes. Edited poses show an "edited" mark. Staff can still see the original, so reports show what was really posted. Once the scene finishes, poses are locked.
