@@ -5,6 +5,8 @@
 <article class="board-row">
   <% if area.image.attached? %>
     <%= link_to image_tag(area.image, alt: "", class: "board-row__image"), target %>
+  <% else %>
+    <span class="board-row__image board-row__image--empty" aria-hidden="true"></span>
   <% end %>
   <div class="board-row__body">
     <h3 class="board-row__title">

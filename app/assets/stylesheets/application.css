@@ -326,6 +326,7 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
 }
 .board-row:first-child { border-top: 1px solid var(--color-border); margin-top: 0.5rem; }
 .board-row__image { display: block; width: 6rem; height: 6rem; object-fit: cover; border-radius: var(--radius); }
+.board-row__image--empty { background: var(--color-bg); border: 1px dashed var(--color-border); }
 .board-row__title { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 1.15rem; }
 .board-row__description { margin: 0.3rem 0 0; color: var(--color-muted); }
 .board-row__activity { font-family: var(--font-ui); font-size: 0.9rem; text-align: right; }
