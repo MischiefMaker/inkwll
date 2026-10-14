@@ -1,0 +1,44 @@
+# Shows the live game's recent logs, to help track down problems.
+# It only reads: nothing on the droplet changes. Start it by hand
+# (Actions → Show logs → Run workflow). See docs/deploying.md.
+name: Show logs
+
+on:
+  workflow_dispatch:
+    inputs:
+      lines:
+        description: "How many recent log lines to show"
+        type: string
+        default: "300"
+
+jobs:
+  logs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      INKWLL_SERVER: ${{ vars.INKWLL_SERVER || secrets.INKWLL_SERVER }}
+      INKWLL_SSH_KEY: /home/runner/.ssh/inkwll-deploy
+      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      LINES: ${{ inputs.lines }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Add the droplet's key
+        run: |
+          if [ -z "$INKWLL_SERVER" ]; then echo "::error::Add the droplet's IP address as INKWLL_SERVER under Settings, Secrets and variables, Actions."; exit 1; fi
+          case "$LINES" in ''|*[!0-9]*) echo "Lines must be a number."; exit 1;; esac
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
+          chmod 600 ~/.ssh/inkwll-deploy
+          ssh-keyscan -H "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+
+      - name: Game logs
+        run: bin/kamal app logs --lines "$LINES"
+
+      - name: Proxy logs
+        run: bin/kamal proxy logs --lines 50
