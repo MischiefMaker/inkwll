@@ -1,0 +1,14 @@
+<%# Casting a learned spell. The game posts the roll into the Chapter. %>
+<% spells = participant.character.spells.includes(branch: :skill).order(:name) %>
+<% if spells.any? %>
+  <details class="roll-box cast-box">
+    <summary class="disclosure__summary roll-box__summary">Cast a spell</summary>
+    <%= form_with url: scene_casts_path(scene), class: "form roll-box__form cast-box__form" do |form| %>
+      <div class="field roll-box__field">
+        <%= form.label :spell_id, "Spell" %>
+        <%= form.select :spell_id, spells.map { |spell| [ "#{spell.name} (#{spell.branch.skill.name}, #{spell.difficulty_label})", spell.id ] } %>
+      </div>
+      <%= form.submit "Cast as #{participant.character.name}", class: "button button--quiet" %>
+    <% end %>
+  </details>
+<% end %>

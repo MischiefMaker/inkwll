@@ -1,0 +1,94 @@
+<%# Grimoire: the spells a character knows, the ones they can learn, and
+    proposing a new one. Only the player and staff see this tab. %>
+<% mine = character.account_id == current_account.id %>
+<% known = character.learned_spells.includes(spell: { branch: :skill }).sort_by { |learned| learned.spell.name } %>
+<% branches = Grimoire::Branch.ordered.includes(:skill) %>
+
+<div class="grimoire">
+  <h2 class="section-title">Spells <%= character.name %> knows</h2>
+  <% if known.any? %>
+    <ul class="grimoire__spells grimoire__spells--known">
+      <% known.each do |learned| %>
+        <% spell = learned.spell %>
+        <li class="grimoire-spell grimoire-spell--known">
+          <p class="grimoire-spell__name"><strong class="emphasis"><%= spell.name %></strong>
+            <span class="muted grimoire-spell__meta"><%= spell.branch.name %> · <%= spell.branch.skill.name %> against <%= spell.difficulty_label %></span></p>
+          <% if spell.description.present? %><div class="prose grimoire-spell__description"><%= simple_format spell.description %></div><% end %>
+        </li>
+      <% end %>
+    </ul>
+    <p class="hint">Cast them from a <%= term(:scene).downcase %>'s "Cast a spell" box.</p>
+  <% else %>
+    <p class="text muted">None yet.</p>
+  <% end %>
+
+  <h2 class="section-title">Spells to learn</h2>
+  <% if character.sheet_open? %>
+    <p class="text muted">Finish <%= character.name %>'s SOUL sheet first.</p>
+  <% end %>
+  <% branches.each do |branch| %>
+    <% spells = branch.spells.active.ordered.reject { |spell| known.any? { |learned| learned.spell_id == spell.id } } %>
+    <% next if spells.empty? %>
+    <section class="grimoire__branch">
+      <h3 class="grimoire__branch-name"><%= branch.name %> <span class="muted">(<%= branch.skill.name %> <%= character.rating_for(branch.skill) %>)</span></h3>
+      <ul class="grimoire__spells">
+        <% spells.each do |spell| %>
+          <% reason = character.cannot_learn_reason(spell) %>
+          <li class="grimoire-spell<%= " grimoire-spell--out-of-reach" if reason %>">
+            <p class="grimoire-spell__name"><strong class="emphasis"><%= spell.name %></strong>
+              <span class="muted grimoire-spell__meta">needs <%= branch.skill.name %> <%= spell.minimum_rating %> · costs <%= spell.xp_cost %> XP · cast against <%= spell.difficulty_label %></span></p>
+            <% if spell.description.present? %><div class="prose grimoire-spell__description"><%= simple_format spell.description %></div><% end %>
+            <% if mine %>
+              <% if reason %>
+                <p class="hint grimoire-spell__reason"><%= reason %></p>
+              <% else %>
+                <%= button_to "Learn for #{spell.xp_cost} XP", character_spells_path(character), params: { spell_id: spell.id }, class: "button button--quiet",
+                      form: { data: { turbo_confirm: "Spend #{spell.xp_cost} XP to learn #{spell.name}?" } } %>
+              <% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <% if mine && branches.any? %>
+    <details class="grimoire__propose">
+      <summary class="disclosure__summary">Propose a new spell</summary>
+      <%= form_with model: Grimoire::Proposal.new(minimum_rating: 1, difficulty_name: "standard"), url: character_spell_proposals_path(character), class: "form grimoire__propose-form" do |form| %>
+        <div class="field">
+          <%= form.label :branch_id, "Branch" %>
+          <%= form.select :branch_id, branches.map { |branch| [ branch.name, branch.id ] } %>
+        </div>
+        <div class="field">
+          <%= form.label :name %>
+          <%= form.text_field :name, required: true, maxlength: 80 %>
+        </div>
+        <div class="field">
+          <%= form.label :description, "What it does" %>
+          <%= form.text_area :description, rows: 5, required: true, maxlength: 5_000 %>
+        </div>
+        <div class="form--inline">
+          <div class="field">
+            <%= form.label :minimum_rating, "Skill needed" %>
+            <%= form.number_field :minimum_rating, min: 0, max: 20 %>
+          </div>
+          <div class="field">
+            <%= form.label :difficulty_name, "Difficulty" %>
+            <%= form.select :difficulty_name, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] } %>
+          </div>
+        </div>
+        <%= form.submit "Send to staff", class: "button button--quiet" %>
+      <% end %>
+    </details>
+    <% proposals = character.spell_proposals.order(created_at: :desc).limit(10) %>
+    <% if proposals.any? %>
+      <ul class="list grimoire__proposals">
+        <% proposals.each do |proposal| %>
+          <li class="list__item grimoire-proposal grimoire-proposal--<%= proposal.status %>"><%= proposal.name %>:
+            <%= { "pending" => "waiting for staff", "approved" => "approved, so it can be learned now", "rejected" => "not approved" }[proposal.status] %><%= " (#{proposal.staff_reason})" if proposal.staff_reason %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

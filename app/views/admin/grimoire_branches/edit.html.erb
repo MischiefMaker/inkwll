@@ -1,0 +1,7 @@
+<% content_for :title, "#{@branch.name_was} · Grimoire · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Grimoire", admin_grimoire_path %></p>
+<h1 class="page-title">Edit <%= @branch.name_was %></h1>
+<%= render "form", branch: @branch, url: admin_grimoire_branch_path(@branch), method: :patch %>
+<%= button_to "Delete this branch", admin_grimoire_branch_path(@branch), method: :delete, class: "button button--quiet",
+      form: { data: { turbo_confirm: "Delete #{@branch.name_was}? Only works if it has no spells." } } %>

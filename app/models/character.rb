@@ -3,6 +3,7 @@ class Character < ApplicationRecord
   include SoulSheet
   include SoulExtras
   include Roster
+  include GrimoireBook
 
   scope :active, -> { where(retired_at: nil) }
 

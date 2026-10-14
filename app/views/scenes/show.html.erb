@@ -59,6 +59,7 @@
         <% if @participant %>
           <%= render "scenes/composer", scene: @scene, participant: @participant %>
           <%= render "scenes/roll", scene: @scene, participant: @participant if Soul.enabled? %>
+          <%= render "scenes/cast", scene: @scene, participant: @participant if Grimoire.enabled? %>
         <% else %>
           <%= render "scenes/join", scene: @scene %>
         <% end %>

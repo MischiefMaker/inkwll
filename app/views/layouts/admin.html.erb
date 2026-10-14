@@ -11,6 +11,10 @@
     <% if current_account.can?(:review_apps) %>
       <% waiting = Character.submitted.count %>
       <%= link_to "Applications#{" (#{waiting})" if waiting.positive?}", admin_applications_path, class: ("is-current" if controller_name == "applications") %>
+      <% if Grimoire.enabled? %>
+        <% spells_waiting = Grimoire::Proposal.pending.count %>
+        <%= link_to "Grimoire#{" (#{spells_waiting})" if spells_waiting.positive?}", admin_grimoire_path, class: ("is-current" if controller_name.start_with?("grimoire")) %>
+      <% end %>
       <% if Inkling.enabled? %>
         <% inklings_waiting = Inkling.submitted.open.count %>
         <%= link_to "Inklings#{" (#{inklings_waiting})" if inklings_waiting.positive?}", admin_inklings_path, class: ("is-current" if controller_name == "inklings") %>

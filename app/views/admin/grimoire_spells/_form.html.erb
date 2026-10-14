@@ -1,0 +1,32 @@
+<%= form_with model: spell, scope: :grimoire_spell, url: url, method: method, class: "form grimoire-spell-form" do |form| %>
+  <%= render "shared/errors", record: spell %>
+  <div class="field">
+    <%= form.label :branch_id, "Branch" %>
+    <%= form.select :branch_id, Grimoire::Branch.ordered.map { |branch| [ branch.name, branch.id ] } %>
+  </div>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 80 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "What it does" %>
+    <%= form.text_area :description, rows: 4, maxlength: 5_000 %>
+  </div>
+  <div class="form--inline">
+    <div class="field">
+      <%= form.label :minimum_rating, "Skill needed" %>
+      <%= form.number_field :minimum_rating, min: 0, max: 20 %>
+    </div>
+    <div class="field">
+      <%= form.label :difficulty_name, "Difficulty" %>
+      <%= form.select :difficulty_name, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] } %>
+    </div>
+  </div>
+  <% if spell.persisted? %>
+    <div class="field field--checkbox">
+      <%= form.check_box :active %>
+      <%= form.label :active, "Can be learned (untick to retire it; characters who know it keep it)" %>
+    </div>
+  <% end %>
+  <%= form.submit spell.persisted? ? "Save" : "Add spell", class: "button" %>
+<% end %>

@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       resources :bnb_requests, only: :create
       resources :culminations, only: %i[ create update ]
       resource :roster_request, only: %i[ create destroy ]
+      resources :spells, only: :create
+      resources :spell_proposals, only: :create
       resources :roster_applications, only: %i[ new create ]
     end
   end
@@ -56,6 +58,7 @@ Rails.application.routes.draw do
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
       resources :rolls, only: :create
+      resources :casts, only: :create
       resources :pending_rolls, only: %i[ update destroy ]
       resource :reading, only: :update
       resource :turn, only: [] do
@@ -124,6 +127,10 @@ Rails.application.routes.draw do
     resource :roster, only: :show, controller: "roster"
     resources :roster_applications, only: :update
     resources :inklings, only: :index
+    resource :grimoire, only: :show, controller: "grimoire"
+    resources :grimoire_branches, only: %i[ create edit update destroy ]
+    resources :grimoire_spells, only: %i[ create edit update ]
+    resources :grimoire_proposals, only: :update
     resources :roster_characters, only: %i[ create update ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do

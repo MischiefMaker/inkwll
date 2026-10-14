@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_220001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_230001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -227,6 +227,62 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_220001) do
     t.integer "roster_idle_days", default: 90, null: false
     t.string "weather"
     t.boolean "inklings_enabled", default: true, null: false
+    t.boolean "grimoire_enabled", default: false, null: false
+  end
+
+  create_table "grimoire_branches", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.bigint "soul_skill_id", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["soul_skill_id"], name: "index_grimoire_branches_on_soul_skill_id"
+  end
+
+  create_table "grimoire_learned_spells", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "spell_id", null: false
+    t.integer "xp_cost", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id", "spell_id"], name: "index_grimoire_learned_spells_on_character_id_and_spell_id", unique: true
+    t.index ["character_id"], name: "index_grimoire_learned_spells_on_character_id"
+    t.index ["spell_id"], name: "index_grimoire_learned_spells_on_spell_id"
+  end
+
+  create_table "grimoire_proposals", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "branch_id", null: false
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "minimum_rating", default: 1, null: false
+    t.string "difficulty_name", default: "standard", null: false
+    t.string "status", default: "pending", null: false
+    t.string "staff_reason"
+    t.bigint "reviewed_by_id"
+    t.datetime "reviewed_at"
+    t.bigint "spell_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_grimoire_proposals_on_branch_id"
+    t.index ["character_id"], name: "index_grimoire_proposals_on_character_id"
+    t.index ["reviewed_by_id"], name: "index_grimoire_proposals_on_reviewed_by_id"
+    t.index ["spell_id"], name: "index_grimoire_proposals_on_spell_id"
+  end
+
+  create_table "grimoire_spells", force: :cascade do |t|
+    t.bigint "branch_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "minimum_rating", default: 1, null: false
+    t.string "difficulty_name", default: "standard", null: false
+    t.boolean "active", default: true, null: false
+    t.bigint "created_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_grimoire_spells_on_branch_id"
+    t.index ["created_by_id"], name: "index_grimoire_spells_on_created_by_id"
   end
 
   create_table "inkling_entries", force: :cascade do |t|
@@ -702,6 +758,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_220001) do
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
   add_foreign_key "gallery_images", "characters"
+  add_foreign_key "grimoire_branches", "soul_skills"
+  add_foreign_key "grimoire_learned_spells", "characters"
+  add_foreign_key "grimoire_learned_spells", "grimoire_spells", column: "spell_id"
+  add_foreign_key "grimoire_proposals", "accounts", column: "reviewed_by_id"
+  add_foreign_key "grimoire_proposals", "characters"
+  add_foreign_key "grimoire_proposals", "grimoire_branches", column: "branch_id"
+  add_foreign_key "grimoire_proposals", "grimoire_spells", column: "spell_id", on_delete: :nullify
+  add_foreign_key "grimoire_spells", "accounts", column: "created_by_id", on_delete: :nullify
+  add_foreign_key "grimoire_spells", "grimoire_branches", column: "branch_id"
   add_foreign_key "inkling_entries", "accounts", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", column: "private_to_id", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", on_delete: :nullify

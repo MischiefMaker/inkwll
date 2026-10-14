@@ -1,0 +1,23 @@
+<%= form_with model: branch, scope: :grimoire_branch, url: url, method: method, class: "form grimoire-branch-form" do |form| %>
+  <%= render "shared/errors", record: branch %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 60 %>
+  </div>
+  <div class="field">
+    <%= form.label :soul_skill_id, "SOUL Skill used to learn and cast its spells" %>
+    <%= form.select :soul_skill_id, Soul::Aspect.ordered.includes(:skills).map { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }.to_h.then { |groups| grouped_options_for_select(groups, branch.soul_skill_id) } %>
+    <small class="hint">Add a Skill for it under SOUL first if the game needs one, such as "Hedgecraft".</small>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_area :description, rows: 3, maxlength: 2_000 %>
+  </div>
+  <% if branch.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit branch.persisted? ? "Save" : "Add branch", class: "button" %>
+<% end %>

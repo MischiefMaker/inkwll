@@ -1,0 +1,66 @@
+<% content_for :title, "Grimoire · Admin · Inkwll" %>
+
+<div class="grimoire-admin">
+  <h1 class="page-title">Grimoire</h1>
+  <p class="muted">Branches of magic, each tied to a SOUL Skill, and their spells. Characters learn a spell once their Skill reaches its minimum,
+    for <%= Grimoire.xp_cost_per_rating %> XP per point of that minimum, and cast it in <%= term(:scene, count: 2).downcase %> as a roll of the Skill against its difficulty.</p>
+
+  <h2 class="section-title">Spells players proposed</h2>
+  <% if @proposals.any? %>
+    <ul class="grimoire-admin__proposals">
+      <% @proposals.each do |proposal| %>
+        <li class="grimoire-admin__proposal">
+          <p class="text"><%= link_to proposal.character.name, character_path(proposal.character, tab: "grimoire") %> proposes
+            <strong class="emphasis"><%= proposal.name %></strong> in <%= proposal.branch.name %>:
+            needs <%= proposal.minimum_rating %>, against <%= proposal.difficulty_name.humanize %>.</p>
+          <div class="prose"><%= simple_format proposal.description %></div>
+          <div class="grimoire-admin__actions">
+            <%= button_to "Approve", admin_grimoire_proposal_path(proposal), method: :patch, params: { decision: "approve" }, class: "button" %>
+            <%= form_with url: admin_grimoire_proposal_path(proposal), method: :patch, class: "form form--inline grimoire-admin__reject" do |form| %>
+              <%= hidden_field_tag :decision, "reject" %>
+              <%= form.label :reason, "Reason", class: "visually-hidden" %>
+              <%= form.text_field :reason, placeholder: "Why not (the player sees this)", maxlength: 250 %>
+              <%= form.submit "Reject", class: "button button--quiet" %>
+            <% end %>
+          </div>
+          <p class="hint">To change it before it's used, approve it, then edit the spell below.</p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">Nothing waiting.</p>
+  <% end %>
+
+  <% @branches.each do |branch| %>
+    <section class="grimoire-admin__branch">
+      <h2 class="section-title"><%= branch.name %> <span class="muted">(<%= branch.skill.name %>)</span>
+        <%= link_to "Edit", edit_admin_grimoire_branch_path(branch), class: "grimoire-admin__edit" %></h2>
+      <% if branch.spells.any? %>
+        <table class="table grimoire-admin__spells">
+          <thead class="table__head"><tr class="table__row"><th class="table__heading">Spell</th><th class="table__heading">Needs</th><th class="table__heading">Difficulty</th><th class="table__heading">Known by</th><th class="table__heading"></th></tr></thead>
+          <tbody class="table__body">
+            <% branch.spells.sort_by { |spell| [ spell.minimum_rating, spell.name ] }.each do |spell| %>
+              <tr class="table__row<%= " table__row--retired" unless spell.active? %>">
+                <td class="table__cell"><%= spell.name %><%= tag.span(" (retired)", class: "muted") unless spell.active? %></td>
+                <td class="table__cell"><%= spell.minimum_rating %></td>
+                <td class="table__cell"><%= spell.difficulty_label %></td>
+                <td class="table__cell"><%= spell.learned_spells.size %></td>
+                <td class="table__cell"><%= link_to "Edit", edit_admin_grimoire_spell_path(spell) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text muted">No spells yet.</p>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if @branches.any? %>
+    <h2 class="section-title">Add a spell</h2>
+    <%= render "admin/grimoire_spells/form", spell: @spell, url: admin_grimoire_spells_path, method: :post %>
+  <% end %>
+
+  <h2 class="section-title">Add a branch</h2>
+  <%= render "admin/grimoire_branches/form", branch: @branch, url: admin_grimoire_branches_path, method: :post %>
+</div>

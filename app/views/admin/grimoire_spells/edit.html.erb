@@ -1,0 +1,5 @@
+<% content_for :title, "#{@spell.name_was} · Grimoire · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Grimoire", admin_grimoire_path %></p>
+<h1 class="page-title">Edit <%= @spell.name_was %></h1>
+<%= render "form", spell: @spell, url: admin_grimoire_spell_path(@spell), method: :patch %>

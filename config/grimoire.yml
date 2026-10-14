@@ -1,0 +1,4 @@
+# Grimoire settings. Branches and spells are set up in the admin panel.
+shared:
+  # Learning a spell costs its minimum rating times this much XP.
+  xp_cost_per_rating: 1

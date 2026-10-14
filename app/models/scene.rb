@@ -298,6 +298,27 @@ class Scene < ApplicationRecord
     raise ArgumentError, e.message
   end
 
+  # Casting a learned spell (Grimoire): a SOUL roll of the branch's Skill
+  # against the spell's difficulty, posted like any other roll.
+  def cast!(character, spell)
+    raise ArgumentError, "Magic is switched off in this game." unless Grimoire.enabled?
+    raise ArgumentError, "#{character.name} hasn't learned #{spell.name}." unless character.knows_spell?(spell)
+    check_can_roll!(character)
+    skill = spell.branch.skill
+    roll = character.roll_skill(skill, spell.difficulty_name)
+    with_lock do
+      resume!(by: character) if paused?
+      text = "#{character.name} casts #{spell.name} (#{skill.name} against #{spell.difficulty_name.humanize}, #{roll.difficulty})" \
+        "#{" with #{roll.applied_text}" if roll.applied.any?} and gets #{roll.result}. " \
+        "#{"Extraordinary! " if roll.extraordinary?}#{roll.degree_text}"
+      pose = add_pose!(character: character, kind: "roll", body: text)
+      roll.update!(scene: self, pose: pose)
+      pose
+    end
+  rescue Character::SoulSheet::SheetError => e
+    raise ArgumentError, e.message
+  end
+
   # Asks the Chapter's Storyteller to judge a roll: they set the difficulty
   # and choose which Boons and Banes count.
   def ask_storyteller_to_roll!(character, skill, difficulty_name)

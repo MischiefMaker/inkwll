@@ -918,3 +918,15 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .inkling__shares .button-link { margin-left: 0.5rem; }
 .inkling__close { margin-top: var(--space); }
 .inkling-new__types { display: flex; flex-direction: column; gap: 0.35rem; }
+
+/* --- Grimoire -------------------------------------------------------------- */
+.grimoire__spells, .grimoire-admin__proposals { list-style: none; margin: 0 0 var(--space); padding: 0; }
+.grimoire-spell, .grimoire-admin__proposal { padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.grimoire-spell__name { margin: 0; }
+.grimoire-spell__meta { display: block; font-size: 0.85rem; }
+.grimoire-spell--out-of-reach .grimoire-spell__name { opacity: 0.7; }
+.grimoire__branch-name { font-size: 1rem; margin: var(--space) 0 0.25rem; }
+.grimoire-admin__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.grimoire-admin__reject { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.grimoire-admin__reject input[type=text] { flex: 1 1 12rem; min-width: 0; max-width: 24rem; }
+.grimoire-admin__edit { font-size: 0.85rem; font-weight: 400; margin-left: 0.5rem; }
