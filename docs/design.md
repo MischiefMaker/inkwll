@@ -144,7 +144,8 @@ effectively three states.
 
 - The tab title shows a count and the favicon gets a dot when there's
   something new (step 2). Players can turn on optional browser notifications
-  (step 3). Details in `decisions.md`.
+  (step 3): for all activity, only on their turn, or only after something
+  has sat unread for some minutes. Details in `decisions.md`.
 
 ### OOC chat [Decided]
 

@@ -19,7 +19,13 @@ Like AresMUSH, Inkwll alerts players inside the browser as well as by email (own
 - **The browser tab changes** when there's something new: the tab title shows a count, such as "(3) Inkwll", and the small site icon (favicon) gets a dot. Built in step 2 with live Chapters, since it comes almost free with live updates.
 - **Browser notifications** (the pop-ups in the corner of the screen) are optional. A player turns them on, and the browser asks their permission once. Built in step 3 with the other alerts, using the same events as the emails.
 
-Default picked by Claude: browser notifications only arrive while the game is open in a tab, even a background one. Notifications with the site fully closed need extra setup and can come later if wanted.
+Players choose when browser notifications pop up (owner, 2026-10-14), much like the email levels:
+
+- **All activity:** every new Passage in their Chapters.
+- **Only when it's my turn:** as with email, this applies in Chapters with more than two players.
+- **Only after X minutes:** a pop-up only if something new has sat unread for the number of minutes they choose, so a player who is actively reading isn't nagged.
+
+Default picked by Claude: these settings control the pop-ups only. The tab count and favicon dot always update, since they're quiet. Default picked by Claude: browser notifications only arrive while the game is open in a tab, even a background one. Notifications with the site fully closed need extra setup and can come later if wanted.
 
 
 ## 2026-10-14: Email notifications for new activity
