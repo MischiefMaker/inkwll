@@ -12,9 +12,9 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
-## 2026-10-14: The "Where" list (in progress)
+## 2026-10-14: The "Where" list
 
-A "Where" page (like a MUSH's `where` command) shows where characters are. Settled so far: a public (joinable) Chapter is shown with a link to it, and private or hidden Chapters are never shown. Still open: whether it shows the Setting a character stands in, their active Chapters, or both.
+A "Where" page (like a MUSH's `where` command) shows where characters are. Settled so far: a public (joinable) Chapter is shown with a link to it, and private or hidden Chapters are never shown. For each character it shows the Setting they stand in, plus each public Chapter they've posted in recently, linked (for example: Wren, Great Hall, also in "Duel at Dawn" in the Forest).
 
 ## 2026-10-14: Tabs for several Chapters at once
 
