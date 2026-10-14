@@ -19,7 +19,7 @@
           <span class="muted"><%= term(:area) %></span>
         </li>
       <% end %>
-      <% area.rooms.each do |room| %>
+      <% area.rooms.listed.each do |room| %>
         <li class="board__row">
           <%= link_to room.name, room_path(room), class: "board__name" %>
           <span class="muted">

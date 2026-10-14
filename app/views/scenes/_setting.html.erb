@@ -17,9 +17,15 @@
     <% if current_character&.room_id == room.id && room.exits.any? %>
       <div class="scene-setting__paths">
         <span class="scene-setting__paths-label muted"><%= term(:exit, count: 2) %>:</span>
-        <% Exit.in_compass_order(room.exits).each do |room_exit| %>
+        <% Exit.in_compass_order(room.exits.reject(&:number)).each do |room_exit| %>
           <%= button_to exit_movement_path(room_exit), class: "exit-link exit-link--small",
                 title: "Walk to #{room_exit.destination_room.name}", form_class: "scene-setting__path" do %><% if room_exit.direction %><span class="exit-link__direction"><%= room_exit.direction %></span> <% end %><%= room_exit.name %><% end %>
+        <% end %>
+        <% if room.exits.any?(&:number) %>
+          <details class="scene-setting__numbered">
+            <summary class="disclosure__summary"><%= room.numbered_list_title %> (<%= room.exits.to_a.count(&:number) %>)</summary>
+            <%= render "rooms/numbered_paths", room: room, exits: room.exits, here: true %>
+          </details>
         <% end %>
       </div>
     <% end %>

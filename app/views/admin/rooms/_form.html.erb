@@ -9,6 +9,11 @@
     <%= form.label :area_id, term(:area) %>
     <%= form.select :area_id, Area.nested_options, {}, required: true %>
   </div>
+  <div class="field room-kind">
+    <%= form.label :kind, "Type of #{term(:room).downcase}" %>
+    <%= form.select :kind, Room::KINDS.map { |key, kind| [ kind[:label], key ] } %>
+    <small class="hint">An apartment building, hotel and so on lists its numbered <%= term(:exit, count: 2).downcase %> compactly, under a heading like "Apartments".</small>
+  </div>
   <div class="field field--checkbox">
     <%= form.check_box :starting %>
     <%= form.label :starting, "New characters start here" %>

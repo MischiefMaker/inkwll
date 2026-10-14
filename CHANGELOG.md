@@ -2,6 +2,16 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Apartment-style Settings
+
+- A Setting can be a special type: apartment building, hotel or inn,
+  dormitory, office block or street of houses (Edit setting, "Type of setting").
+- Paths can have a number. Numbered Paths show as a compact list in columns,
+  "100 - Jaxon Marley", with a search box once there are more than 12.
+- "Add numbered settings" on a Setting's edit page makes many at once from
+  lines like "100 Jaxon Marley", each with a Path in and a Path back out.
+- Rooms behind numbered doors stay out of Area lists and Shortcuts.
+
 ## 2026-10-14 — Path directions and a compass
 
 - Paths can have a compass direction, from N round to NNW (16 points).

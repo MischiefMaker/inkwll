@@ -12,9 +12,11 @@
 
 <% if @room.exits.any? %>
   <ul class="list">
-    <% @room.exits.includes(:destination_room).each do |room_exit| %>
+    <% all_exits = @room.exits.includes(:destination_room).to_a %>
+    <% (Exit.in_compass_order(all_exits.reject(&:number)) + Exit.in_number_order(all_exits.select(&:number))).each do |room_exit| %>
       <li class="list__item">
         <% if room_exit.direction %><span class="tag exit-direction"><%= room_exit.direction %></span><% end %>
+        <% if room_exit.number %><span class="tag exit-number"><%= room_exit.number %></span><% end %>
         <strong class="emphasis"><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
         <%= button_to "Remove", admin_room_exit_path(@room, room_exit), method: :delete, class: "button-link",
               form: { data: { turbo_confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?" } } %>
@@ -27,6 +29,11 @@
   <div class="field">
     <%= form.label :direction, "Direction (optional)" %>
     <%= form.select :direction, Exit::DIRECTIONS.map { |short, long| [ "#{short} (#{long})", short ] }, include_blank: "None" %>
+  </div>
+  <div class="field">
+    <%= form.label :number, "Number (optional)" %>
+    <%= form.text_field :number, placeholder: "e.g. 101", size: 6, maxlength: 10 %>
+    <small class="hint">Numbered <%= term(:exit, count: 2).downcase %> show in a compact list, like "101 - Nestor Nash".</small>
   </div>
   <div class="field">
     <%= form.label :name, "#{term(:exit)} name" %>
@@ -45,3 +52,26 @@
   </div>
   <%= form.submit "Add #{term(:exit).downcase}", class: "button" %>
 <% end %>
+
+<section class="numbered-rooms-builder">
+  <h2 class="section-title">Add numbered <%= term(:room, count: 2).downcase %></h2>
+  <p class="muted">
+    For apartments, hotel rooms and the like. Each line makes a new <%= term(:room).downcase %> called
+    "<%= @room.numbered_unit %> 100" in the same <%= term(:area).downcase %>, a numbered <%= term(:exit).downcase %> to it from here,
+    and a <%= term(:exit).downcase %> back out. Write the number, then what the door says (often who lives there).
+    Change the "Type of <%= term(:room).downcase %>" above first if you want them called something else.
+  </p>
+  <%= form_with url: admin_room_numbered_rooms_path(@room), class: "form numbered-rooms-builder__form" do |form| %>
+    <div class="field">
+      <%= form.label :lines, "One per line" %>
+      <%= form.text_area :lines, value: params[:lines], rows: 6, class: "numbered-rooms-builder__lines",
+            placeholder: "100 Jaxon Marley\n101 Nestor Nash\n203 Harry Potter" %>
+      <small class="hint">Up to <%= NumberedRooms::MAX_LINES %> at a time. A line with just a number labels the door "<%= @room.numbered_unit %> 100".</small>
+    </div>
+    <div class="field">
+      <%= form.label :return_name, "Name of the way back out" %>
+      <%= form.text_field :return_name, value: "Out", maxlength: 40 %>
+    </div>
+    <%= form.submit "Add numbered #{term(:room, count: 2).downcase}", class: "button" %>
+  <% end %>
+</section>

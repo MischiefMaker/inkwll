@@ -1,0 +1,26 @@
+<%# A Setting's numbered Paths (apartments, hotel rooms...) as a compact
+    list: "100 - Jaxon Marley". Long lists get a box to narrow them down.
+    Each door can be skinned through its parts: number, dash and name. %>
+<% numbered = Exit.in_number_order(exits.select(&:number)) %>
+<% if numbered.any? %>
+  <section class="numbered-paths numbered-paths--<%= room.kind %>" data-controller="list-filter">
+    <h3 class="numbered-paths__title"><%= room.numbered_list_title %> <span class="numbered-paths__count muted">(<%= numbered.size %>)</span></h3>
+    <% if numbered.size > 12 %>
+      <input type="search" class="numbered-paths__filter" placeholder="Find a number or name" aria-label="Find a number or name"
+             data-list-filter-target="input" data-action="input->list-filter#filter">
+    <% end %>
+    <ul class="numbered-paths__list">
+      <% numbered.each do |room_exit| %>
+        <li class="numbered-paths__item" data-list-filter-target="item">
+          <% label = capture do %><span class="numbered-path__number"><%= room_exit.number %></span><span class="numbered-path__dash"> - </span><span class="numbered-path__name"><%= room_exit.name %></span><% end %>
+          <% if here %>
+            <%= button_to exit_movement_path(room_exit), class: "numbered-path", form_class: "numbered-path__form",
+                  title: "Go to #{room_exit.destination_room.name}" do %><%= label %><% end %>
+          <% else %>
+            <span class="numbered-path numbered-path--disabled"><%= label %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

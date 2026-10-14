@@ -1174,3 +1174,51 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 }
 button.compass__point--path:hover { background: var(--color-accent); color: var(--color-accent-text); }
 .compass__point--disabled { cursor: default; opacity: 0.6; }
+
+/* Numbered Paths (apartments, hotel rooms...): a compact list in columns,
+   "100 - Jaxon Marley", so a building can have lots of doors. */
+
+.numbered-paths { margin-top: var(--space); }
+.numbered-paths__title { margin: 0 0 0.4rem; font-family: var(--font-ui); font-size: 0.95rem; }
+.numbered-paths__count { font-weight: normal; font-size: 0.85em; }
+.numbered-paths__filter { width: 100%; max-width: 18rem; margin-bottom: 0.4rem; font: inherit; font-family: var(--font-ui); font-size: 0.9rem; padding: 0.25rem 0.5rem; }
+.numbered-paths__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0 var(--space);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.numbered-paths__item { min-width: 0; }
+.numbered-paths__item[hidden] { display: none; }
+.numbered-path__form { display: block; margin: 0; }
+.numbered-path {
+  display: block;
+  width: 100%;
+  padding: 0.15rem 0.3rem;
+  border: none;
+  border-bottom: 1px dotted var(--color-border);
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.numbered-path:hover { background: var(--color-accent); color: var(--color-accent-text); }
+.numbered-path__number { display: inline-block; min-width: 2.5em; font-weight: bold; color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.numbered-path:hover .numbered-path__number { color: inherit; }
+.numbered-path__dash { opacity: 0.6; }
+.numbered-path--disabled { color: var(--color-muted); cursor: default; }
+.numbered-path--disabled:hover { background: none; color: var(--color-muted); }
+.numbered-path--disabled .numbered-path__number { color: inherit; }
+.scene-setting__numbered { flex-basis: 100%; }
+.scene-setting__numbered .numbered-paths { margin-top: 0.3rem; }
+.scene-setting__numbered .numbered-paths__title { display: none; }
+.exit-number { font-variant-numeric: tabular-nums; }
+.numbered-rooms-builder__lines { width: 100%; max-width: 30rem; font-family: var(--font-mono, monospace); }

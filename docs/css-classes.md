@@ -56,6 +56,9 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `--page-image`, `--box-image`, `--intro-image` | CSS variables holding the background pictures from Admin → Look (an Area's or Setting's own background sets `--page-image` on its page) |
 | `.exit-link__direction`, `.exit-direction` | A Path's compass direction (NNW), on the Path and in the builder |
 | `.compass`, `.compass__centre`, `.compass__point`, `.compass__point--main`, `.compass__point--path`, `.compass__point--disabled`, `.compass__point--n` ... `.compass__point--nnw`, `--compass-size`, `--angle` | The compass on a Setting's page |
+| `.numbered-paths`, `.numbered-paths--apartments` (and `--hotel`, `--dorms`, `--offices`, `--street`, `--plain`), `.numbered-paths__title`, `.numbered-paths__count`, `.numbered-paths__filter`, `.numbered-paths__list`, `.numbered-paths__item` | A Setting's compact list of numbered Paths (apartments, hotel rooms...) |
+| `.numbered-path`, `.numbered-path--disabled`, `.numbered-path__form`, `.numbered-path__number`, `.numbered-path__dash`, `.numbered-path__name` | One numbered door: "100 - Jaxon Marley" |
+| `.scene-setting__numbered`, `.exit-number`, `.room-kind`, `.numbered-rooms-builder`, `.numbered-rooms-builder__form`, `.numbered-rooms-builder__lines` | Numbered doors in a Chapter's Setting box; the number tag, Setting type and "Add numbered settings" tool in the builder |
 | `.room-ways` | The box holding a Setting's Paths and who is here |
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |

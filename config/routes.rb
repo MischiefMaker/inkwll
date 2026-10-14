@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     resource :bulk_build, only: %i[ new create ], path: "build_several"
     resources :rooms, only: %i[ new create edit update ] do
       resources :exits, only: %i[ create destroy ]
+      resource :numbered_rooms, only: :create
     end
     resources :accounts, only: %i[ index edit update destroy ] do
       member do

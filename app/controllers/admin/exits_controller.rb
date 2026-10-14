@@ -5,7 +5,7 @@ class Admin::ExitsController < Admin::BaseController
   before_action :set_room
 
   def create
-    @exit = @room.exits.new(params.expect(exit: [ :name, :direction, :destination_room_id ]))
+    @exit = @room.exits.new(params.expect(exit: [ :name, :direction, :number, :destination_room_id ]))
     return_name = params.dig(:exit, :return_name).to_s.squish
     # "Add the way back" with no name, on a Path with a direction, names it after the opposite direction.
     return_name = Exit::DIRECTIONS[Exit.opposite(@exit.direction)] if return_name.blank? && params.dig(:exit, :add_return) == "1" && @exit.direction.present?

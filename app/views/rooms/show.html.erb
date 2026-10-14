@@ -36,7 +36,8 @@
   <div class="room-ways">
     <section class="room-paths">
       <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
-      <% exits = Exit.in_compass_order(@room.exits.includes(:destination_room)) %>
+      <% all_exits = @room.exits.includes(:destination_room).to_a %>
+      <% exits = Exit.in_compass_order(all_exits.reject(&:number)) %>
       <% if GameSetting.current.compass_enabled? && exits.any?(&:direction) %>
         <%= render "rooms/compass", room: @room, exits: exits, here: here %>
       <% end %>
@@ -53,9 +54,10 @@
             </li>
           <% end %>
         </ul>
-      <% else %>
+      <% elsif all_exits.none? %>
         <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>
       <% end %>
+      <%= render "rooms/numbered_paths", room: @room, exits: all_exits, here: here %>
     </section>
 
     <section class="room-here">

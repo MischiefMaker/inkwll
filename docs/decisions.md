@@ -6,6 +6,19 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Apartment-style Settings with numbered Paths (owner, 2026-10-14; details picked by Claude)
+
+The owner asked for special Settings like apartments: a main room with sub-rooms off it, reached by numbered Paths shown simply so a room can have lots of them ("100 - Jaxon Marley").
+
+Defaults picked by Claude, for the owner to check:
+
+- **Setting types:** each Setting has a type, picked on its edit page: Ordinary (the default), Apartment building, Hotel or inn, Dormitory, Office block, or Street of houses. The type names the numbered list ("Apartments", "Rooms", "Dorm rooms", "Offices", "Houses") and what new numbered rooms are called ("Apartment 100").
+- **Numbered Paths:** any Path can have a number (letters, numbers, dots and dashes, like 101 or 2B). Numbered Paths sit in their own compact list under the ordinary Paths, in number order, in columns, as "100 - Jaxon Marley". An Ordinary Setting with numbered Paths calls the list "Doors". They're left out of the compass.
+- **Long lists:** more than 12 doors adds a "Find a number or name" box that narrows the list as you type.
+- **Building them:** "Add numbered settings" on a Setting's edit page takes one line per room ("100 Jaxon Marley", "101 - Nestor Nash", or just "203"). Each line makes a Setting called "Apartment 100" in the same Area, the numbered Path to it, and a Path back out (called "Out" unless the builder names it). Up to 100 at a time; if any line has a problem, nothing is saved.
+- **Keeping lists tidy:** Settings behind a numbered door don't appear in their Area's list or the front page Shortcuts, so a block of 50 flats doesn't flood them. They're reached from their building.
+- **In a Chapter:** the Chapter's Setting box keeps the ordinary Paths as buttons and folds the numbered ones into a small "Apartments (18)" drop-down.
+
 ## Path directions and a compass (owner, 2026-10-14)
 
 Paths can optionally point one of the 16 compass directions (N, NNE, NE ... NNW). A Path with a direction but no name is named after it, and "Add the way back" points the opposite way (NNW comes back SSE). Paths are listed clockwise from north. Games can switch on a compass (Admin, Features) that shows each Setting's directional Paths around a compass rose; it's off by default.

@@ -40,4 +40,28 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal characters(:wren), @alice.reload.active_character
   end
+
+  test "numbered Paths show as a compact list in number order, apart from the other Paths" do
+    commons = rooms(:commons)
+    commons.update!(kind: "apartments")
+    Exit.create!(source_room: commons, destination_room: rooms(:garden), number: "101", name: "Nestor Nash")
+    Exit.create!(source_room: commons, destination_room: rooms(:tower), number: "20", name: "Jaxon Marley")
+
+    get room_path(commons)
+
+    assert_select ".numbered-paths__title", /Apartments/
+    assert_select "button.numbered-path", count: 2
+    assert_select ".numbered-path__number", count: 2 do |numbers|
+      assert_equal %w[ 20 101 ], numbers.map(&:text)
+    end
+    assert_select "button.exit-link", "North"
+    assert_select "button.exit-link", text: /Nestor/, count: 0
+  end
+
+  test "rooms behind numbered doors are left out of an Area's list" do
+    Exit.create!(source_room: rooms(:garden), destination_room: rooms(:tower), number: "1", name: "Tower flat")
+    get area_path(areas(:castle))
+    assert_select ".board__name", text: "Garden"
+    assert_select ".board__name", text: "Tower", count: 0
+  end
 end

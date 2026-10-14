@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_320001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_330001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -194,8 +194,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_320001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "direction"
+    t.string "number"
     t.index ["destination_room_id"], name: "index_exits_on_destination_room_id"
     t.index ["source_room_id", "name"], name: "index_exits_on_source_room_id_and_name", unique: true
+    t.index ["source_room_id", "number"], name: "index_exits_on_source_room_id_and_number", unique: true, where: "(number IS NOT NULL)"
     t.index ["source_room_id"], name: "index_exits_on_source_room_id"
   end
 
@@ -511,6 +513,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_320001) do
     t.datetime "updated_at", null: false
     t.bigint "area_id", null: false
     t.string "summary"
+    t.string "kind", default: "plain", null: false
     t.index ["area_id"], name: "index_rooms_on_area_id"
   end
 

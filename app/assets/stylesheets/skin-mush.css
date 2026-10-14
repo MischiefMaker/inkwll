@@ -76,3 +76,16 @@
 .skin-mush .site-header__title { color: var(--ansi-white); }
 .skin-mush .chapter-tab--current { box-shadow: none; border-color: var(--ansi-cyan); }
 .skin-mush .room-ways, .skin-mush .board, .skin-mush .menu__items { border-style: dashed; }
+
+/* Numbered Paths (apartments) as a plain MUSH-style door list:
+   green numbers, white names, highlighted like a command on hover. */
+.skin-mush .numbered-paths__title { color: var(--ansi-yellow); text-transform: uppercase; font-size: 0.9rem; }
+.skin-mush .numbered-path { border-bottom: none; color: var(--ansi-white); padding: 0.05rem 0.3rem; }
+.skin-mush .numbered-path__number { color: var(--ansi-green); }
+.skin-mush .numbered-path__number::before { content: "<"; }
+.skin-mush .numbered-path__number::after { content: ">"; }
+.skin-mush .numbered-path:hover { background: var(--ansi-green); color: #000; }
+.skin-mush .numbered-path:hover .numbered-path__number { color: #000; }
+.skin-mush .numbered-path--disabled, .skin-mush .numbered-path--disabled .numbered-path__number { color: var(--ansi-grey); }
+.skin-mush .numbered-path--disabled:hover { background: none; color: var(--ansi-grey); }
+.skin-mush .numbered-paths__filter { background: #000; color: var(--ansi-white); border: 1px solid var(--ansi-grey); }
