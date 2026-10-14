@@ -1,0 +1,30 @@
+<header class="site-header">
+  <%= link_to "Inkwll", root_path, class: "site-header__title" %>
+
+  <nav class="site-header__nav">
+    <%= link_to "Rooms", rooms_path %>
+    <%= link_to "My characters", characters_path %>
+    <%= link_to "OOC chat", ooc_messages_path %>
+    <% if current_account.admin? %>
+      <%= link_to "Build", new_admin_room_path %>
+    <% end %>
+  </nav>
+
+  <div class="site-header__account">
+    <% characters = current_account.characters.order(:name) %>
+    <% if characters.any? %>
+      <%= form_with url: active_character_path, method: :patch, class: "switcher",
+            data: { controller: "auto-submit" } do |form| %>
+        <%= form.label :character_id, "Playing as", class: "switcher__label" %>
+        <%= form.select :character_id,
+              options_from_collection_for_select(characters, :id, :name, current_character&.id),
+              { include_blank: current_character.nil? },
+              data: { action: "change->auto-submit#submit" } %>
+        <noscript><%= form.submit "Switch" %></noscript>
+      <% end %>
+    <% end %>
+
+    <span class="site-header__player"><%= current_account.display_name %></span>
+    <%= button_to "Log out", session_path, method: :delete, class: "button-link" %>
+  </div>
+</header>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Inkwll" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Inkwll">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%# When a page is refreshed live (e.g. someone enters the room), update it in place. %>
+    <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <% if current_account %>
+      <%= render "shared/header" %>
+      <div class="layout">
+        <main class="main">
+          <%= render "shared/flash" %>
+          <%= yield %>
+        </main>
+        <%= render "ooc_messages/sidebar" unless content_for?(:hide_ooc_sidebar) %>
+      </div>
+    <% else %>
+      <main class="main main--narrow">
+        <%= render "shared/flash" %>
+        <%= yield %>
+      </main>
+    <% end %>
+  </body>
+</html>

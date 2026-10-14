@@ -1,0 +1,15 @@
+# Alice plays Wren and Moth; Bob plays Sable.
+wren:
+  account: alice
+  room: commons
+  name: Wren
+
+moth:
+  account: alice
+  room: hall
+  name: Moth
+
+sable:
+  account: bob
+  room: commons
+  name: Sable

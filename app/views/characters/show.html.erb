@@ -1,0 +1,13 @@
+<% content_for :title, "#{@character.name} · Inkwll" %>
+
+<h1><%= @character.name %></h1>
+
+<p class="muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
+
+<% if @character.description.present? %>
+  <div class="prose"><%= simple_format @character.description %></div>
+<% end %>
+
+<% if @character.account == current_account %>
+  <p><%= link_to "Edit", edit_character_path(@character) %></p>
+<% end %>

@@ -1,0 +1,17 @@
+<% content_for :title, "Log in · Inkwll" %>
+
+<h1>Log in</h1>
+
+<%= form_with url: session_path, class: "form" do |form| %>
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", value: params[:username] %>
+  </div>
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72 %>
+  </div>
+  <%= form.submit "Log in", class: "button" %>
+<% end %>
+
+<p>New here? <%= link_to "Create an account", new_registration_path %>.</p>

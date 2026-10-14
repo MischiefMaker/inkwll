@@ -1,0 +1,14 @@
+commons_north:
+  source_room: commons
+  destination_room: hall
+  name: North
+
+hall_south:
+  source_room: hall
+  destination_room: commons
+  name: South
+
+commons_east:
+  source_room: commons
+  destination_room: garden
+  name: East
