@@ -6,7 +6,8 @@ class Characters::SheetsController < Characters::BaseController
   def update
     sheet = params.fetch(:sheet, {})
     @character.set_starting_sheet!(resonance: sheet[:resonance],
-      aspects: sheet.fetch(:aspects, {}).permit!.to_h, skills: sheet.fetch(:skills, {}).permit!.to_h)
+      aspects: sheet.fetch(:aspects, {}).permit(*Soul::Aspect.ids.map(&:to_s)).to_h,
+      skills: sheet.fetch(:skills, {}).permit(*Soul::Skill.ids.map(&:to_s)).to_h)
     redirect_to character_path(@character, tab: "soul"), notice: "Sheet saved."
   rescue Character::SoulSheet::SheetError => e
     redirect_to character_path(@character, tab: "soul"), alert: e.message
