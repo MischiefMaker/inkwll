@@ -39,7 +39,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Before SOUL, Inklings and Grimoire**
 
-4. Exactly which SOUL and Inklings tools storytellers get, and which details count as secret.
 5. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
 6. How much XP a finished scene gives, and whether there is a weekly cap.
 7. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
