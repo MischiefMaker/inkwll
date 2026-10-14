@@ -9,7 +9,12 @@
   <tbody class="table__body">
     <% @accounts.each do |account| %>
       <tr class="table__row">
-        <td class="table__cell"><%= account.display_name %></td>
+        <td class="table__cell"><%= account.display_name %>
+          <% if account.muted_until&.future? %>
+            <span class="badge account-muted">Muted for posting too fast</span>
+            <%= button_to "Lift", unmute_admin_account_path(account), class: "button-link" %>
+          <% end %>
+        </td>
         <td class="table__cell"><%= t("terms.staff_levels.#{account.staff_level}") %><%= " (#{term(:founder)})" if account.founder? %></td>
         <td class="table__cell">
           <%= safe_join(account.job_flags.map { |flag| t("terms.job_flags.#{flag}") + " " + t("terms.staff_levels.page") }, ", ") %>

@@ -2,25 +2,25 @@ require "test_helper"
 
 class AccountTest < ActiveSupport::TestCase
   test "the player name is also the login name, ignoring capitals" do
-    account = Account.create!(display_name: " NewPlayer ", email: "new@example.com", password: "secret123")
+    account = Account.create!(display_name: " NewPlayer ", email: "new@example.com", password: "Secret12345")
     assert_equal "NewPlayer", account.display_name
     assert_equal "newplayer", account.username
-    assert_equal account, Account.log_in("NEWPLAYER", "secret123")
+    assert_equal account, Account.log_in("NEWPLAYER", "Secret12345")
   end
 
   test "player names must be unique, ignoring capitals" do
-    account = Account.new(display_name: "ALICE", email: "other@example.com", password: "secret123")
+    account = Account.new(display_name: "ALICE", email: "other@example.com", password: "Secret12345")
     assert_not account.valid?
     assert_includes account.errors[:display_name], "is already taken"
   end
 
   test "player names can't have spaces" do
-    account = Account.new(display_name: "Two Words", email: "two@example.com", password: "secret123")
+    account = Account.new(display_name: "Two Words", email: "two@example.com", password: "Secret12345")
     assert_not account.valid?
   end
 
   test "email is required unless the game makes it optional" do
-    account = Account.new(display_name: "NoEmail", password: "secret123")
+    account = Account.new(display_name: "NoEmail", password: "Secret12345")
     assert_not account.valid?
 
     GameSetting.current.update!(email_required: false)
@@ -28,8 +28,8 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   test "emails must be unique and look like emails" do
-    assert_not Account.new(display_name: "Copy", email: "ALICE@example.com", password: "secret123").valid?
-    assert_not Account.new(display_name: "Typo", email: "not-an-email", password: "secret123").valid?
+    assert_not Account.new(display_name: "Copy", email: "ALICE@example.com", password: "Secret12345").valid?
+    assert_not Account.new(display_name: "Typo", email: "not-an-email", password: "Secret12345").valid?
   end
 
   test "Pages can only do the jobs they've been given" do
@@ -85,7 +85,7 @@ class AccountTest < ActiveSupport::TestCase
 
   test "email notifications need an email address" do
     GameSetting.current.update!(email_required: false)
-    account = Account.new(display_name: "NoEmail", password: "secret123", email_notifications: "when_away")
+    account = Account.new(display_name: "NoEmail", password: "Secret12345", email_notifications: "when_away")
     assert_not account.valid?
     assert_includes account.errors[:email], "is needed to get email notifications"
 

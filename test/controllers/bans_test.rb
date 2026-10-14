@@ -17,7 +17,7 @@ class BansTest < ActionDispatch::IntegrationTest
   test "an IP ban stops sign-ups from that address" do
     Ban.create!(ip_range: "127.0.0.0/16", reason: "Brigade", banned_by: accounts(:scribe))
     assert_no_difference "Account.count" do
-      post registration_path, params: { account: { display_name: "Troll", email: "t@example.com", password: "secret123", password_confirmation: "secret123" } }
+      post registration_path, params: { account: { display_name: "Troll", email: "t@example.com", password: "Secret12345", password_confirmation: "Secret12345" } }
     end
   end
 
@@ -37,7 +37,7 @@ class BansTest < ActionDispatch::IntegrationTest
     GameSetting.current.update!(block_vpns: true)
 
     assert_no_difference "Account.count" do
-      post registration_path, params: { account: { display_name: "Vpn", email: "v@example.com", password: "secret123", password_confirmation: "secret123" } }
+      post registration_path, params: { account: { display_name: "Vpn", email: "v@example.com", password: "Secret12345", password_confirmation: "Secret12345" } }
     end
     assert_match "VPN", flash[:alert]
   end

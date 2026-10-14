@@ -1,6 +1,8 @@
 # A picture in a character's gallery, with an optional caption. GIFs welcome.
 class GalleryImage < ApplicationRecord
   MAX_PER_CHARACTER = 30
+  # All of one player's characters together.
+  MAX_PER_PLAYER = 50
 
   belongs_to :character
   has_one_attached :image
@@ -23,5 +25,8 @@ class GalleryImage < ApplicationRecord
 
     def not_too_many
       errors.add(:base, "A gallery can hold up to #{MAX_PER_CHARACTER} pictures") if character && character.gallery_images.count >= MAX_PER_CHARACTER
+      if character && GalleryImage.joins(:character).where(characters: { account_id: character.account_id }).count >= MAX_PER_PLAYER
+        errors.add(:base, "Your characters can have up to #{MAX_PER_PLAYER} gallery pictures between them")
+      end
     end
 end

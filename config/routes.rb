@@ -82,7 +82,9 @@ Rails.application.routes.draw do
     resources :rooms, only: %i[ new create edit update ] do
       resources :exits, only: %i[ create destroy ]
     end
-    resources :accounts, only: %i[ index edit update ]
+    resources :accounts, only: %i[ index edit update ] do
+      post :unmute, on: :member
+    end
     resources :characters, only: :index do
       member do
         post :retire

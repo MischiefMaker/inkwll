@@ -13,9 +13,9 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     get edit_password_path(token)
     assert_response :success
 
-    put password_path(token), params: { password: "brandnew123", password_confirmation: "brandnew123" }
+    put password_path(token), params: { password: "Brandnew12345", password_confirmation: "Brandnew12345" }
     assert_redirected_to new_session_path
-    assert Account.log_in("bob", "brandnew123")
+    assert Account.log_in("bob", "Brandnew12345")
   end
 
   test "an unknown email gets the same answer and no email" do

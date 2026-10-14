@@ -28,7 +28,9 @@ class Account < ApplicationRecord
   has_one_attached :icon
   attribute :remove_icon, :boolean, default: false
   after_save { icon.purge_later if remove_icon && icon.attached? }
-  validates :password, length: { minimum: 8, maximum: 72 }, allow_nil: true
+  # At least 10 characters, with a number, a capital and a lower-case letter.
+  validates :password, length: { minimum: 10, maximum: 72 }, allow_nil: true
+  validate :password_is_strong_enough
   has_many :sessions, dependent: :destroy
   # Characters outlive their account: an account with characters can't be
   # deleted (decided 2026-10-14; deleted accounts keep their characters).
@@ -164,6 +166,12 @@ class Account < ApplicationRecord
   end
 
   private
+    def password_is_strong_enough
+      return if password.nil?
+      missing = { /\d/ => "a number", /[A-Z]/ => "a capital letter", /[a-z]/ => "a lower-case letter" }.reject { |pattern, _| password.match?(pattern) }.values
+      errors.add(:password, "needs #{missing.to_sentence}") if missing.any?
+    end
+
     def player_name_is_free
       return if username.blank?
       taken = Account.where(username: username).where.not(id: id).exists?

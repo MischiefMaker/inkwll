@@ -4,7 +4,7 @@
 # the server's command line.
 class Admin::AccountsController < Admin::BaseController
   require_job :manage_staff
-  before_action :set_account, only: %i[ edit update ]
+  before_action :set_account, only: %i[ edit update unmute ]
   before_action :require_manageable, only: %i[ edit update ]
 
   def index
@@ -12,6 +12,12 @@ class Admin::AccountsController < Admin::BaseController
   end
 
   def edit
+  end
+
+  # Lifts the short mute given to someone who kept hitting the posting limits.
+  def unmute
+    @account.update_column(:muted_until, nil)
+    redirect_back fallback_location: admin_accounts_path, notice: "#{@account.display_name} can post again."
   end
 
   def update

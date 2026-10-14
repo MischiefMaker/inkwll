@@ -1,5 +1,6 @@
 # A player editing their own player profile.
 class PlayerProfilesController < ApplicationController
+  limit_posting to: 20, within: 1.hour, only: :update, name: "uploads"
   def edit
     @player = current_account
   end

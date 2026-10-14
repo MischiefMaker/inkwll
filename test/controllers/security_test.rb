@@ -67,9 +67,43 @@ class SecurityTest < ActionDispatch::IntegrationTest
     assert ban.reload.in_force?
   end
 
-  test "passwords need at least 8 characters" do
-    account = Account.new(display_name: "Shorty", email: "s@example.com", password: "abc", password_confirmation: "abc")
-    assert_not account.valid?
-    assert account.errors[:password].any?
+  test "passwords need 10 characters, a number, a capital and a lower-case letter" do
+    { "Abc1" => /too short/, "abcdefghij1" => /capital/, "ABCDEFGHIJ1" => /lower-case/, "Abcdefghijk" => /number/ }.each do |password, problem|
+      account = Account.new(display_name: "Shorty", email: "s@example.com", password: password, password_confirmation: password)
+      assert_not account.valid?, password
+      assert_match problem, account.errors[:password].to_sentence
+    end
+    assert Account.new(display_name: "Strong", email: "st@example.com", password: "Lanterns2026").valid?
+  end
+
+  test "someone muted for posting too fast can't post until it ends or staff lift it" do
+    accounts(:alice).update_column(:muted_until, 5.minutes.from_now)
+    sign_in_as(accounts(:alice))
+    assert_no_difference -> { OocMessage.count } do
+      post ooc_messages_path, params: { ooc_message: { body: "hello" } }
+    end
+    assert_match(/muted/, flash[:alert])
+
+    sign_in_as(accounts(:bob))
+    post unmute_admin_account_path(accounts(:alice))
+    assert accounts(:alice).reload.muted_until.present?, "players can't lift mutes"
+
+    sign_in_as(accounts(:scribe))
+    post unmute_admin_account_path(accounts(:alice))
+    assert_nil accounts(:alice).reload.muted_until
+  end
+
+  test "one player's characters share a limit on gallery pictures" do
+    stub_const = GalleryImage::MAX_PER_PLAYER
+    GalleryImage.send(:remove_const, :MAX_PER_PLAYER)
+    GalleryImage.const_set(:MAX_PER_PLAYER, 1)
+    picture = -> { { io: file_fixture("pixel.png").open, filename: "pixel.png", content_type: "image/png" } }
+    characters(:wren).gallery_images.create!(image: picture.call)
+    extra = accounts(:alice).characters.create!(name: "Second").gallery_images.new(image: picture.call)
+    assert_not extra.valid?
+    assert_match(/between them/, extra.errors.full_messages.to_sentence)
+  ensure
+    GalleryImage.send(:remove_const, :MAX_PER_PLAYER)
+    GalleryImage.const_set(:MAX_PER_PLAYER, stub_const)
   end
 end

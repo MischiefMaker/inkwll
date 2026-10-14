@@ -1,6 +1,6 @@
 # Adding and removing pictures in a character's gallery.
 class Characters::GalleryImagesController < Characters::BaseController
-  limit_posting to: 20
+  limit_posting to: 20, within: 1.hour, name: "uploads"
 
   def create
     picture = @character.gallery_images.new(params.expect(gallery_image: [ :image, :caption ]))

@@ -1,5 +1,6 @@
 class CharactersController < ApplicationController
   limit_posting to: 5, within: 10.minutes
+  limit_posting to: 20, within: 1.hour, only: :update, name: "uploads"
   before_action :set_own_character, only: %i[ edit update ]
 
   def index
