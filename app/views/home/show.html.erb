@@ -34,6 +34,8 @@
   <p class="muted">No <%= term(:area, count: 2).downcase %> yet.</p>
 <% end %>
 
+<%= render "home/after_places" %>
+
 <section class="online-now">
   <h2 class="section-title">Online now</h2>
   <% if @online.any? %>
