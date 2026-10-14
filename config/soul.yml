@@ -66,3 +66,28 @@ shared:
       failure: -20
     # A result with less than this chance counts as extraordinary.
     extraordinary_below: 0.0001
+    # Players can ask the Chapter's Storyteller to set the difficulty and
+    # decide which Boons and Banes count.
+    storyteller_rolls: true
+
+  # Boons and Banes: qualities, possessions, connections or troubles that
+  # change rolls of the Skills they're tied to. A Boon rerolls low dice, a
+  # Bane rerolls high ones; the level says how many faces.
+  bnb:
+    levels:
+      minor: 1
+      major: 2
+      legendary: 3
+    # A character needs one Bane for every this many Boons, always.
+    boons_per_bane: 2
+    # The most Boons and Banes a starting sheet can have, by Resonance.
+    # "max" is the total; "major" and "legendary" cap those levels.
+    # Leave max empty for no limit.
+    starting_limits:
+      "-3": { boons: { max: 0, major: 0, legendary: 0 }, banes: { max: , major: 3, legendary: 3 } }
+      "-2": { boons: { max: 0, major: 0, legendary: 0 }, banes: { max: , major: 2, legendary: 2 } }
+      "-1": { boons: { max: 1, major: 0, legendary: 0 }, banes: { max: , major: 2, legendary: 1 } }
+      "0":  { boons: { max: 2, major: 1, legendary: 0 }, banes: { max: , major: 1, legendary: 0 } }
+      "1":  { boons: { max: 3, major: 2, legendary: 0 }, banes: { max: , major: 2, legendary: 1 } }
+      "2":  { boons: { max: 3, major: 3, legendary: 1 }, banes: { max: , major: 3, legendary: 2 } }
+      "3":  { boons: { max: 4, major: 3, legendary: 2 }, banes: { max: , major: 3, legendary: 3 } }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_150001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_160001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -380,6 +380,96 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_150001) do
     t.index ["key"], name: "index_soul_aspects_on_key", unique: true
   end
 
+  create_table "soul_audit_entries", force: :cascade do |t|
+    t.bigint "character_id"
+    t.bigint "actor_id"
+    t.string "action", null: false
+    t.string "summary", null: false
+    t.string "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_soul_audit_entries_on_actor_id"
+    t.index ["character_id"], name: "index_soul_audit_entries_on_character_id"
+  end
+
+  create_table "soul_bnb_requests", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "soul_bnb_id", null: false
+    t.string "level", default: "minor", null: false
+    t.integer "skill_ids", default: [], null: false, array: true
+    t.text "explanation"
+    t.string "status", default: "pending", null: false
+    t.string "staff_reason"
+    t.bigint "reviewed_by_id"
+    t.datetime "reviewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_bnb_requests_on_character_id"
+    t.index ["reviewed_by_id"], name: "index_soul_bnb_requests_on_reviewed_by_id"
+    t.index ["soul_bnb_id"], name: "index_soul_bnb_requests_on_soul_bnb_id"
+  end
+
+  create_table "soul_bnbs", force: :cascade do |t|
+    t.string "kind", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "skill_ids", default: [], null: false, array: true
+    t.boolean "starting", default: true, null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "soul_character_bnbs", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "soul_bnb_id", null: false
+    t.string "level", default: "minor", null: false
+    t.integer "skill_ids", default: [], null: false, array: true
+    t.text "explanation"
+    t.string "source", null: false
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_character_bnbs_on_character_id"
+    t.index ["soul_bnb_id"], name: "index_soul_character_bnbs_on_soul_bnb_id"
+  end
+
+  create_table "soul_culminations", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.string "status", default: "proposed", null: false
+    t.string "staff_reason"
+    t.bigint "reviewed_by_id"
+    t.datetime "reviewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_culminations_on_character_id"
+    t.index ["reviewed_by_id"], name: "index_soul_culminations_on_reviewed_by_id"
+  end
+
+  create_table "soul_history_entries", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.string "event", null: false
+    t.string "narrative", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_history_entries_on_character_id"
+  end
+
+  create_table "soul_pending_rolls", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "scene_id", null: false
+    t.bigint "soul_skill_id", null: false
+    t.string "difficulty_name", null: false
+    t.string "status", default: "waiting", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_pending_rolls_on_character_id"
+    t.index ["scene_id"], name: "index_soul_pending_rolls_on_scene_id"
+    t.index ["soul_skill_id"], name: "index_soul_pending_rolls_on_soul_skill_id"
+  end
+
   create_table "soul_ratings", force: :cascade do |t|
     t.bigint "character_id", null: false
     t.string "trait_type", null: false
@@ -409,10 +499,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_150001) do
     t.boolean "extraordinary", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "net_modifier", default: 0, null: false
+    t.jsonb "applied", default: [], null: false
+    t.bigint "storyteller_id"
     t.index ["character_id"], name: "index_soul_rolls_on_character_id"
     t.index ["pose_id"], name: "index_soul_rolls_on_pose_id"
     t.index ["scene_id"], name: "index_soul_rolls_on_scene_id"
     t.index ["soul_skill_id"], name: "index_soul_rolls_on_soul_skill_id"
+    t.index ["storyteller_id"], name: "index_soul_rolls_on_storyteller_id"
   end
 
   create_table "soul_skills", force: :cascade do |t|
@@ -497,8 +591,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_150001) do
   add_foreign_key "scenes", "rooms"
   add_foreign_key "scenes", "scene_participants", column: "current_turn_participant_id", on_delete: :nullify
   add_foreign_key "sessions", "accounts"
+  add_foreign_key "soul_audit_entries", "accounts", column: "actor_id"
+  add_foreign_key "soul_audit_entries", "characters", on_delete: :nullify
+  add_foreign_key "soul_bnb_requests", "accounts", column: "reviewed_by_id"
+  add_foreign_key "soul_bnb_requests", "characters"
+  add_foreign_key "soul_bnb_requests", "soul_bnbs"
+  add_foreign_key "soul_character_bnbs", "characters"
+  add_foreign_key "soul_character_bnbs", "soul_bnbs"
+  add_foreign_key "soul_culminations", "accounts", column: "reviewed_by_id"
+  add_foreign_key "soul_culminations", "characters"
+  add_foreign_key "soul_history_entries", "characters"
+  add_foreign_key "soul_pending_rolls", "characters"
+  add_foreign_key "soul_pending_rolls", "scenes"
+  add_foreign_key "soul_pending_rolls", "soul_skills"
   add_foreign_key "soul_ratings", "characters"
   add_foreign_key "soul_rolls", "characters"
+  add_foreign_key "soul_rolls", "characters", column: "storyteller_id", on_delete: :nullify
   add_foreign_key "soul_rolls", "poses"
   add_foreign_key "soul_rolls", "scenes"
   add_foreign_key "soul_rolls", "soul_skills", on_delete: :nullify
