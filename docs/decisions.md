@@ -20,7 +20,9 @@ Players can opt in to emails about new activity, using the email address on thei
 - **Only when I'm not logged in:** nothing while they're on the site.
 - **Only after I've been away a while:** one email once they've been away for a number of days they choose.
 
-Defaults picked by Claude: the emails cover the same events as the in-game alerts, so the two are built together in step 3. Several new Passages in the same Chapter are bundled into one email until the player visits, so a busy Chapter doesn't flood their inbox. Every email has a one-click link to turn them off. Sending email needs a mail-sending service, set up in step 3 rather than waiting for step 11.
+Defaults picked by Claude: the emails cover the same events as the in-game alerts, so the two are built together in step 3. Several new Passages in the same Chapter are bundled into one email until the player visits, so a busy Chapter doesn't flood their inbox. Every email has a one-click link to turn them off.
+
+The email includes the text of the Passages the player missed (owner, 2026-10-14), each with the character's name. Only Chapters the player can already read are included. Default picked by Claude: a long catch-up shows the 20 most recent missed Passages in full, then says how many more there are, with a link to read the rest in the Chapter. Sending email needs a mail-sending service, set up in step 3 rather than waiting for step 11.
 
 
 ## 2026-10-14: OOC chat folds away

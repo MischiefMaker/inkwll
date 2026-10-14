@@ -134,7 +134,9 @@ effectively three states.
 
 - Players can opt in to emails about new activity: every time, only when they
   aren't logged in, or only after they've been away for some days they choose.
-  Off by default. Details in `decisions.md`; built in step 3.
+  Off by default. Emails include the text of the missed Passages, from
+  Chapters the player can already read. Details in `decisions.md`; built in
+  step 3.
 
 ### OOC chat [Decided]
 
