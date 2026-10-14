@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: The "Where" list (in progress)
+
+A "Where" page (like a MUSH's `where` command) shows where characters are. Settled so far: a public (joinable) Chapter is shown with a link to it, and private or hidden Chapters are never shown. Still open: whether it shows the Setting a character stands in, their active Chapters, or both.
+
 ## 2026-10-14: Tabs for several Chapters at once
 
 When a character is in more than one Chapter, the roleplay view shows them as tabs so the player can switch quickly. Each tab should feel like being in that Chapter's Setting (its name, image and description, who is there).
