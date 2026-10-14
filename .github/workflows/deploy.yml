@@ -1,0 +1,46 @@
+# Puts the game on the droplet with Kamal. It only runs when started by
+# hand (Actions → Deploy → Run workflow), so nothing goes live by accident.
+#
+# Needs, under Settings → Secrets and variables → Actions:
+#   Secrets:   DEPLOY_SSH_KEY, SECRET_KEY_BASE, DATABASE_PASSWORD
+#   Variables: INKWLL_SERVER (the droplet's IP address)
+# See docs/deploying.md.
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      first_time:
+        description: "First deploy to a new droplet (runs kamal setup)"
+        type: boolean
+        default: false
+
+concurrency: deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      INKWLL_SERVER: ${{ vars.INKWLL_SERVER }}
+      INKWLL_SSH_KEY: /home/runner/.ssh/inkwll-deploy
+      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Add the droplet's key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
+          chmod 600 ~/.ssh/inkwll-deploy
+          ssh-keyscan -H "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Deploy
+        run: bin/kamal ${{ inputs.first_time && 'setup' || 'deploy' }}
