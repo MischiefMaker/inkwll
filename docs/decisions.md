@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: The first game stays setting-neutral for now
+
+Sample content (the default starting Setting, starter Skills, example Boons and Banes) stays generic. The owner can describe a setting later.
+
 ## 2026-10-14: Skins start as CSS
 
 A skin changes colors, fonts and extra CSS, set from the admin panel. Swappable page layouts can come later, once we know which pages need them.

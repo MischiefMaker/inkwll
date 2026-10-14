@@ -280,7 +280,7 @@ repo.
 ## 8. Open questions for the owner
 
 1. Project name: Inkwll (tentative).
-2. Setting and tone: not specified, so avoid baking in setting-specific content.
+2. Setting and tone: neutral for now (decided 2026-10-14), so avoid baking in setting-specific content.
 
 ## 9. Working agreements for Claude Code
 
