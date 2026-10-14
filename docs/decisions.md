@@ -16,6 +16,21 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 3 details picked while building
+
+Defaults picked by Claude while building Logs and safety, for the owner to check. Any of them can change.
+
+- **Finishing.** Any player in a Chapter can finish it. The others can undo that for 24 hours. A Chapter with no new Passage for 7 days counts as idle, and after 30 days the game finishes it itself (both numbers are game settings). Finished Chapters stay in the tabs for 24 hours.
+- **Archives.** Finished Open and Private Chapters are in the Archives, which can be filtered by Setting or character. A finished Hidden Chapter joins them only once every player in it has agreed.
+- **Reports.** Scribes and Wellkeepers handle reports; Pages don't. Once a Chapter has been reported, those staff can still read it after the report is resolved, so they can look back at it. Staff can hide a single Passage (the text is kept for staff) or lock a Chapter.
+- **Warnings and bans.** Staff can send a player a warning, which shows as a banner until it's read. Bans can cover an account, an IP address or a range, can end on a date or last until lifted, and log the player out at once.
+- **VPN block.** Off by default. The list of VPN addresses comes from the free X4BNet list and updates every night.
+- **Emails.** "Not on the site" means not seen for 10 minutes. Several new Passages in one Chapter make one email, and the next waits until the player has read it. Emails show the latest 20 missed Passages, then "and N more". @mentions of a character always email its player if they have emails on. The away-for-days digest goes out once a day at 5pm server time.
+- **Game news emails.** Staff announcements and application emails will be added when those features are built (steps 4 and later).
+- **Browser pop-ups** are set on the new Notifications page in the Menu. A Chapter doesn't pop up the first time the browser sees it, so logging in doesn't bring a flood of old news.
+- **Mail service.** Emails send once the chosen service's details are in Kamal secrets (`SMTP_ADDRESS`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, plus `MAIL_FROM` and `APP_HOST`). Until then, nothing is sent.
+- **Password reset** is built now, since email is ready. The link works for 15 minutes.
+
 ## 2026-10-14: Who plays which character is a game setting
 
 Each game decides whether a character's player is shown to everyone or only to staff (owner). Either way, anyone can send a Message "to the player of" a character, and in staff-only mode that doesn't reveal who the player is. Staff always see who plays what.

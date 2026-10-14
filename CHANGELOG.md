@@ -2,6 +2,20 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 3: Logs and safety
+
+- Players can finish a Chapter (and undo it for a day). Idle Chapters are
+  finished by the game after a month.
+- Finished Chapters go into the Archives as Manuscripts, which you can filter
+  by Setting or character. Hidden ones need everyone's agreement first.
+- Players can report a Passage or Chapter. Staff can then read it, hide a
+  Passage, lock the Chapter, warn the player, or ban an account or address.
+  Games can block known VPNs.
+- A new Notifications page lets players pick activity emails (with the missed
+  Passages included) and browser pop-ups. Every email has a "stop these
+  emails" link.
+- "Forgot your password?" on the log-in page emails a reset link.
+
 ## 2026-10-14 — Step 2: Chapters
 
 - Characters can start Chapters in the Setting they're standing in, and join

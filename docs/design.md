@@ -137,7 +137,7 @@ effectively three states.
   Players can also choose to be emailed only when it's their turn, in
   Chapters with more than two players.
   Off by default. Emails include the text of the missed Passages, from
-  Chapters the player can already read. Details in `decisions.md`; built in
+  Chapters the player can already read. Details in `decisions.md`. Built in
   step 3.
 
 ### Browser alerts [Decided]
@@ -324,6 +324,27 @@ words, and `config/locales/en.yml` maps one to the other.
   Private and Hidden Chapters never appear in either.
 - **Character icons** are uploaded on the character's edit page. Without one,
   the character's initial is shown.
+
+### Step 3: Logs and safety
+
+- **Finishing.** Any player can finish a Chapter; the others can undo it for
+  24 hours. Idle Chapters are finished by the game after the game's
+  auto-finish days. Finished Chapters are read-only Manuscripts.
+- **Archives** (in the Menu) list finished Manuscripts, filtered by Setting or
+  character. Open and Private ones are listed; Hidden ones only after every
+  player has agreed on the Chapter's page.
+- **Reporting.** Any Passage or Chapter can be reported. Scribes and
+  Wellkeepers see reports in the admin panel and can then read that one
+  Chapter, hide a Passage, lock the Chapter, warn the player or ban them.
+- **Bans** cover an account, an IP address or a range, for a time or until
+  lifted. An optional switch blocks known VPN addresses from logging in or
+  signing up; the list updates nightly.
+- **Notifications** (in the Menu): emails every time, only when away, or a
+  daily digest after some days away, optionally only on your turn; @mentions
+  always email. Every email has a one-click "stop these emails" link.
+  Browser pop-ups for every Passage, your turn, or after some minutes, while
+  a tab is open.
+- **Password reset** by email from the log-in page.
 
 ## 7. Reference: existing Inklings plugin
 

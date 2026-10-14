@@ -19,3 +19,6 @@ Done tasks stay in this folder as a record.
 | [0007: Turn order](0007-turn-order.md) | Review | No | 2. Scenes |
 | [0008: Tabs and unread markers](0008-tabs-and-unread.md) | Review | No | 2. Scenes |
 | [0009: Where list, arrivals and latest activity](0009-where-arrivals-activity.md) | Review | No | 2. Scenes |
+| [0010: Finishing Chapters and the Archives](0010-finishing-and-archives.md) | Review | No | 3. Logs and safety |
+| [0011: Reports, warnings and bans](0011-reports-and-bans.md) | Review | No | 3. Logs and safety |
+| [0012: Email and browser notifications](0012-notifications.md) | Review | No | 3. Logs and safety |
