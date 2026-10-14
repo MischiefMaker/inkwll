@@ -35,6 +35,10 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
 
+**To revisit later**
+
+- A themed word for Areas (kept as "Area" for now).
+
 ## When a step finishes
 
 1. Change its status to **Done** and the next one to **Now**.

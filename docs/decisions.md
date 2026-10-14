@@ -71,6 +71,7 @@ Quiet Chapters: after 7 days without a Passage a Chapter goes idle (it drops dow
 | scene | **Chapter** |
 | all finished logs | **Archives** |
 | one finished log | **Manuscript** |
+| area (group of rooms) | **Area** for now; the owner wants to revisit a themed word later |
 | pose | **Passage** |
 | exit | **Path** |
 
