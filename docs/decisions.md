@@ -37,7 +37,7 @@ Each game decides whether a character's player is shown to everyone or only to s
 
 When players are hidden, the reply to a "to the player of" Message comes back as "from the player of" that same character, so the replying player's account and other characters stay hidden too (owner). The whole conversation stays tied to that character.
 
-Default picked by Claude: new games start with players hidden (staff only), to serve the anti-clique aim. Built with Messages (step 3b) and profiles (step 4).
+New games start with players hidden (staff only), to serve the anti-clique aim (owner). Built with Messages (step 3b) and profiles (step 4).
 
 ---
 
