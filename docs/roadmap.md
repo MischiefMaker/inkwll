@@ -18,7 +18,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 7. IC clock | Game time and per-scene date overrides. | Later |
 | 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Later |
 | 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Later |
-| 10. Platform | Feature toggles screen, skins. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
+| 10. Platform | Feature toggles screen, CSS skins (colors, fonts, extra CSS) from the admin panel. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
 | 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and the mail service for password reset emails. | Later |
 
 ## Decisions still needed
@@ -35,7 +35,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Later**
 
-8. Skins: CSS-only themes, or also swappable page layouts.
 9. Setting and tone of the first game (the code stays setting-neutral either way).
 
 ## When a step finishes

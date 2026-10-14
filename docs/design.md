@@ -162,7 +162,8 @@ How they plug in [Proposed, owner agreed in principle]:
 
 - Start with a `features` settings table. Each module checks whether it is
   enabled.
-- Skins via CSS variables plus swappable view folders. (The stylesheet already
+- [Decided] Skins via CSS variables and extra CSS set in the admin panel;
+  swappable view folders later if needed. (The stylesheet already
   keeps colours and fonts in CSS variables; nothing else is built yet.)
 - Package modules as Rails engines later, once real plugin needs are known. Do
   not build a plugin system first.

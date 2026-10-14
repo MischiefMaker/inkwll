@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Skins start as CSS
+
+A skin changes colors, fonts and extra CSS, set from the admin panel. Swappable page layouts can come later, once we know which pages need them.
+
 ## 2026-10-14: Inklings and Grimoire keep their rules
 
 Both are rebuilt to work the way their AresMUSH versions do. The changes: Grimoire uses SOUL skills and rolls instead of FS3, and Inklings' unfinished approval-workflow rework is completed in the rebuild.
