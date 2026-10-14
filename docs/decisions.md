@@ -18,7 +18,9 @@ Still open: how this fits with "a character is always in exactly one Setting" wh
 
 The game has a wiki where staff and players can put whatever information they like (rules, setting lore, plots, guides). Pages are written in Markdown. Pages can pull in live game content, such as characters, Manuscripts and Settings, for example a list of every character or Manuscript with a given tag.
 
-Still open: who can edit, and where the wiki goes in the build order (see `roadmap.md`).
+Editing: any player can create and edit pages, and every page keeps its full history so changes can be undone. Staff can lock a page (such as the rules) so only staff can edit it.
+
+Build order: near the end, just before Platform, so everything it can pull in already exists.
 
 ## 2026-10-14: Images and text for descriptions
 

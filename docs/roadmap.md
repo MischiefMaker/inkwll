@@ -13,12 +13,12 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers; a tabbed view when a character is in several Chapters, each tab showing its Setting. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow, banning accounts and IP addresses, and an optional block on known VPNs. | Later |
 | 4. Character profiles and approval | A profile for every character with game-configured profile and application fields (background, set questions, images, an optional description), each marked public or private by the game. Each game decides whether a written description and/or image is required., and room for SOUL, Grimoire and Inklings sections. Submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
-| 4b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Placement not yet confirmed. | Later |
 | 5. SOUL basics | Character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes. | Later |
 | 6. SOUL extras | Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail. | Later |
 | 7. IC clock | Game time and per-scene date overrides. | Later |
 | 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Later |
 | 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Later |
+| 9b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Any player can edit, with full history; staff can lock pages. | Later |
 | 10. Platform | Feature toggles screen, CSS skins (colors, fonts, extra CSS) from the admin panel. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
 | 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and the mail service for password reset emails. | Later |
 
@@ -31,11 +31,6 @@ All open design questions were answered on 2026-10-14. New ones get added here a
 **Chapters**
 
 - Can a character be in a Chapter set somewhere other than the Setting they're standing in?
-
-**Wiki**
-
-- Who can create and edit wiki pages.
-- Where the wiki goes in the build order.
 
 **To revisit later**
 
