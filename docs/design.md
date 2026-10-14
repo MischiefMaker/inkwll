@@ -201,7 +201,8 @@ How they plug in [Proposed, owner agreed in principle]:
 
 - A game setting decides whether a character's player is shown to everyone
   or only to staff. With staff-only, players can still send a Message "to
-  the player of [character]" without learning who that is. New games start
+  the player of [character]" without learning who that is, and replies come
+  back as "the player of" that character. New games start
   with players hidden. See `decisions.md`.
 - As built so far, nothing shows who plays a character: profiles,
   mini-profiles and Chapters only show character names.
