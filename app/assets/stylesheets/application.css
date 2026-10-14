@@ -713,3 +713,62 @@ span.pose__icon { cursor: default; }
 .manuscript { padding: 0.5rem 0; border-bottom: 1px solid var(--color-border); }
 .manuscript__title { margin: 0; font-size: 1.1rem; }
 .manuscript__meta { margin: 0.2rem 0 0; font-family: var(--font-ui); font-size: 0.9rem; }
+
+/* Character profiles: tabs, fields, gallery, relationships */
+
+.profile-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: var(--space) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+}
+.profile-tabs__tab {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  text-decoration: none;
+}
+.profile-tabs__tab--current {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text);
+  margin-bottom: -1px;
+}
+
+.details-list { margin: 0 0 var(--space); }
+.profile-fields__row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) 1fr;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.details-list__term { color: var(--color-muted); font-family: var(--font-ui); }
+.details-list__value { margin: 0; }
+.details-list__value .prose p:first-child { margin-top: 0; }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: var(--space);
+}
+.gallery__item { margin: 0; }
+.gallery__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.gallery__caption { margin-top: 0.3rem; font-size: 0.9rem; }
+
+.relationships { list-style: none; margin: 0 0 var(--space); padding: 0; }
+.relationships__item { padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.relationships__who { display: flex; align-items: center; gap: 0.5rem; }
+.relationships__name { font-weight: bold; }
+.relationships__note { margin-left: 3rem; }
+.relationships__note p { margin: 0.3rem 0; }
+.relationships__remove { margin-left: 3rem; font-size: 0.85rem; }
