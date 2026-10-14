@@ -825,3 +825,16 @@ span.pose__icon { cursor: default; }
 .pose--retired .pose__icon, .pose--retired .pose__name { opacity: 0.55; filter: grayscale(1); }
 .character-profile--retired .character-icon { filter: grayscale(1); }
 .table__row--retired { color: var(--color-muted); }
+
+/* SOUL extras: Boons and Banes, Storyteller rolls, Culminations, history */
+.soul-bnbs__list, .soul-culminations__list, .soul-history__list, .soul-reviews { list-style: none; margin: 0 0 var(--space); padding: 0; }
+.soul-bnb, .soul-culmination, .soul-reviews__item { padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.soul-bnb__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; }
+.soul-bnb--boon .soul-bnb__kind { border-color: var(--color-accent); color: var(--color-accent); }
+.soul-bnb--resolved { opacity: 0.6; }
+.soul-bnb__staff, .soul-reviews__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; margin-top: 0.3rem; font-size: 0.9rem; }
+.soul-history__item { padding: 0.25rem 0; }
+.soul-audit { margin-top: var(--space); font-size: 0.9rem; }
+.pending-rolls { margin-bottom: var(--space); padding: 0.75rem var(--space); border: 1px dashed var(--color-accent); border-radius: var(--radius); background: var(--color-surface); }
+.pending-roll + .pending-roll { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--color-border); }
+.pending-roll__form { flex-direction: row; flex-wrap: wrap; align-items: flex-end; }

@@ -1,0 +1,38 @@
+<%# Rolls waiting for the Storyteller. The Storyteller picks the difficulty
+    and which Boons and Banes count; the player who asked can cancel. %>
+<% waiting = scene.pending_rolls.waiting.includes(:skill, character: { character_bnbs: :bnb }) %>
+<% if waiting.any? %>
+  <% storyteller = participant&.storyteller? %>
+  <section class="pending-rolls">
+    <h2 class="section-title pending-rolls__title">Rolls waiting for the <%= term(:storyteller) %></h2>
+    <% waiting.each do |pending| %>
+      <div class="pending-roll" id="<%= dom_id pending %>">
+        <p class="text pending-roll__what"><strong class="emphasis"><%= pending.character.name %></strong> wants to roll <%= pending.skill.name %> (asked for <%= pending.difficulty_name.humanize %>).</p>
+        <% if storyteller %>
+          <%= form_with url: scene_pending_roll_path(scene, pending), method: :patch, class: "form pending-roll__form" do |form| %>
+            <div class="field">
+              <%= form.label :difficulty, "Difficulty", for: "difficulty_#{pending.id}" %>
+              <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: pending.difficulty_name }, id: "difficulty_#{pending.id}" %>
+            </div>
+            <% entries = pending.character.active_bnbs %>
+            <% if entries.any? %>
+              <fieldset class="fieldset pending-roll__bnbs">
+                <legend class="fieldset__legend">Boons and Banes that count</legend>
+                <% entries.each do |entry| %>
+                  <label class="field--checkbox pending-roll__bnb">
+                    <%= check_box_tag "bnb_ids[]", entry.id, entry.affects?(pending.skill), id: "bnb_#{pending.id}_#{entry.id}" %>
+                    <%= entry.name %> (<%= entry.level.capitalize %> <%= entry.kind.capitalize %>)
+                  </label>
+                <% end %>
+              </fieldset>
+            <% end %>
+            <%= form.submit "Roll it", class: "button" %>
+          <% end %>
+        <% end %>
+        <% if storyteller || pending.character.account_id == current_account.id %>
+          <%= button_to "Cancel", scene_pending_roll_path(scene, pending), method: :delete, class: "button-link pending-roll__cancel" %>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
+<% end %>

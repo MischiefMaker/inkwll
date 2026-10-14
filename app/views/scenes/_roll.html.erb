@@ -10,7 +10,13 @@
       <%= form.label :difficulty %>
       <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, selected: "standard" %>
     </div>
+    <% if Soul::Rules.storyteller_rolls? && scene.storyteller_for(participant.character) %>
+      <div class="field field--checkbox roll-box__ask">
+        <%= form.check_box :ask_storyteller, {}, "1", "0" %>
+        <%= form.label :ask_storyteller, "Ask the #{term(:storyteller)} to judge it" %>
+      </div>
+    <% end %>
     <%= form.submit "Roll as #{participant.character.name}", class: "button button--quiet" %>
   <% end %>
-  <p class="hint roll-box__hint">Two d20s plus the Skill and a bonus from its Aspect. Doubles of 20 roll again and add; doubles of 1 roll again and subtract.</p>
+  <p class="hint roll-box__hint">Two d20s plus the Skill and a bonus from its Aspect. Your Boons and Banes for that Skill count too. Doubles of 20 roll again and add; doubles of 1 roll again and subtract.</p>
 </details>

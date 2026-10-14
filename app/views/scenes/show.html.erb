@@ -51,6 +51,7 @@
 
     <% if @scene.writable? %>
       <div class="scene__footer">
+        <%= render "scenes/pending_rolls", scene: @scene, participant: @participant if Soul.enabled? %>
         <%= render "scenes/turn_bar", scene: @scene, participant: @participant %>
         <% if @participant %>
           <%= render "scenes/composer", scene: @scene, participant: @participant %>
