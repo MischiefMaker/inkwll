@@ -16,6 +16,19 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 6b details picked while building (Rosters)
+
+Defaults picked by Claude, for the owner to check.
+
+- **Where it lives:** "Character directory" and "Roster" are in the Menu. The Roster page is the directory showing only roster characters. Admin has a new Roster tab (App staff), with a count of what's waiting.
+- **The idle checkbox** is on the character form under "If you stop playing", for every character (not only during the application). Idle means no Passage and no move for the game's roster idle days (90 by default, changeable in Game settings). The check runs once a day.
+- **A character on the roster** belongs to a built-in "Roster" account nobody can log in to, and counts as retired until someone takes it over. It leaves its unfinished Chapters and invitations when it goes on.
+- **Applying** is a short note, seen only by staff. A player can have one waiting application per character. When staff approve one, the others for that character are turned down automatically, and the new player gets an email if they asked for emails.
+- **"Message the player"** is hidden on roster characters, since nobody plays them.
+- **The new player's sheet:** if the SOUL sheet was never finished (for example a character staff made), the new player fills it in and presses "Finish my sheet". This also lets a player finish a sheet staff unlocked for them.
+- **Staff can put any active character on the roster** from Admin → Characters, as well as approving a player's request on the Roster page.
+- **Archiving an account** (Players and staff, for anyone you can edit): the player can't log in, is logged out everywhere, and their characters are retired, or go on the roster if they ticked the idle box. Archived accounts are greyed at the bottom of the list. The Delete button only shows to a Founder, and only for accounts that never had characters.
+
 ## 2026-10-14: Step 6 details picked while building (SOUL extras)
 
 Defaults picked by Claude, for the owner to check. Numbers follow the SOUL plugin.

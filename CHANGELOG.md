@@ -2,6 +2,17 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 6b: Rosters
+
+- A roster of characters other players can apply to take over. Staff pick
+  who gets each one, and the new player gets everything in character.
+- Players can tick "put on the roster if they go idle", or ask staff to put
+  a character on the roster now. Staff can also add new characters to it.
+- A character directory in the Menu lists everyone being played and the
+  roster, and can be filtered by public profile fields.
+- Accounts are archived instead of deleted. A Founder can delete an account
+  that never had characters.
+
 ## 2026-10-14 — Step 6: SOUL extras
 
 - Boons and Banes: staff keep a catalogue, players pick theirs on a starting

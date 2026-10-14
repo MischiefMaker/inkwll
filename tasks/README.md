@@ -25,5 +25,5 @@ Done tasks stay in this folder as a record.
 | [0013: Messages](0013-messages.md) | Review | No | 3b. Messages |
 | [0014: Character profiles and approval](0014-profiles-and-approval.md) | Review | No | 4. Character profiles and approval |
 | [0015: SOUL basics](0015-soul-basics.md) | Review | No | 5. SOUL basics |
-| [0016: Roster](0016-roster.md) | Doing | No | 6b. Rosters |
+| [0016: Roster](0016-roster.md) | Review | No | 6b. Rosters |
 | [0017: SOUL extras](0017-soul-extras.md) | Review | No | 6. SOUL extras |

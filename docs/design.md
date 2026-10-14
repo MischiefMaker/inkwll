@@ -375,6 +375,20 @@ words, and `config/locales/en.yml` maps one to the other.
   character pages.
 - The header count, emails, the digest and browser pop-ups cover Messages.
 
+### Step 6b: Rosters
+
+- **The roster** holds characters other players can apply to take over.
+  Characters go on it when idle (if their player ticked the box), when
+  their player asks and staff agree, when staff decide, or when an account
+  is archived and its player ticked the box. Staff can also add new
+  characters straight to it.
+- **Applying** is a short note to staff. Approving one hands the character
+  over with everything in character; nothing out of character comes with it.
+- **The character directory** (Menu) lists approved characters in play and
+  everyone on the roster, filtered by any public profile field.
+- **Accounts are archived, not deleted.** Archived players can't log in.
+  A Founder can delete an account that never had characters.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

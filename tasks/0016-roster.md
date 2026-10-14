@@ -1,6 +1,6 @@
 # 0016: Roster
 
-- **Status:** Doing
+- **Status:** Review
 - **Hand off?:** No
 - **Roadmap step:** 6b. Rosters
 - **Created:** 2026-10-14
@@ -25,5 +25,5 @@ Owner decisions are under "Characters are retired, never deleted" and "Rosters" 
 ## Done when
 
 - [x] The questions above are answered
-- [ ] Built, with tests passing
+- [x] Built, with tests passing
 - [ ] The owner has tried it
