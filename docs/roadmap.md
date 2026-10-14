@@ -22,7 +22,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 7. IC clock | The rest of game time (the basic game date comes in step 4) and per-scene date overrides. | Built, waiting for you to try it |
 | 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Inklings built, waiting for you to try it. Storyteller tools need your input. |
 | 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Built, waiting for you to try it |
-| 9b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Any player can edit, with full history; staff can lock pages. | Later |
+| 9b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Any player can edit, with full history; staff can lock pages. | Built, waiting for you to try it |
 | 10. Platform | Feature toggles screen, CSS skins (colors, fonts, extra CSS) from the admin panel. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
 | 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and choosing the mail service (the emails themselves are built in step 3). | Later |
 

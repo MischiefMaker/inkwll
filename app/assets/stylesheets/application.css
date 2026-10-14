@@ -962,3 +962,5 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .wiki-form__body { font-family: ui-monospace, monospace; }
 .wiki-form__help-list { margin: 0.4rem 0 0; padding-left: 1.2rem; }
 .wiki-form__help-list code { overflow-wrap: anywhere; }
+.wiki-body h2 { font-size: 1.4rem; }
+.wiki-body h3 { font-size: 1.15rem; }

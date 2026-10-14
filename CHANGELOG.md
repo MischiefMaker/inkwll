@@ -2,6 +2,13 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 9b: Wiki
+
+- A wiki in the Menu for rules, lore and plots. Anyone with an account can
+  write pages in Markdown, link them with [[Page name]], and pull in live
+  lists of characters, Manuscripts, Settings and pages. Every change is
+  kept, staff can lock pages, and staff can list pages in the Menu.
+
 ## 2026-10-14 — Step 9: Grimoire
 
 - Magic, for games that switch it on: branches tied to SOUL Skills, spells

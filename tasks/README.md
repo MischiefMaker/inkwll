@@ -31,3 +31,4 @@ Done tasks stay in this folder as a record.
 | [0019: IC clock](0019-ic-clock.md) | Review | No | 7. IC clock |
 | [0020: Inklings](0020-inklings.md) | Review | No | 8. Inklings and storyteller tools |
 | [0021: Grimoire](0021-grimoire.md) | Review | No | 9. Grimoire |
+| [0022: Wiki](0022-wiki.md) | Review | No | 9b. Wiki |

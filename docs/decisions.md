@@ -16,6 +16,20 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 9b details picked while building (Wiki)
+
+Defaults picked by Claude, for the owner to check:
+
+- **Who can read and write:** anyone with an account. Guests can't see the wiki.
+- **Markdown** is turned into pages by the commonmarker gem (no extra hosting). Raw HTML in a page is dropped and links are cleaned, so nobody can add scripts. Tables, strikethrough and pictures from a web address work.
+- **Linking pages:** `[[Page name]]` or `[[Page name|words to show]]`. A link to a page nobody has written yet offers to start it.
+- **Live lists:** a line on its own like `{{characters group="Ravens"}}`, `{{characters roster}}`, `{{character name="..."}}`, `{{manuscripts setting="..." label="..." limit=5}}`, `{{settings area="..."}}` or `{{pages tag="lore"}}`. Manuscripts only lists Chapters the reader is allowed to see.
+- **History:** every save is kept, with an optional "what did you change". Anyone who can edit a page can put an old version back, which is saved as a new version so it can be undone too.
+- **Locking:** any staff member can lock or unlock a page; then only staff can change it.
+- **The Menu:** "Wiki" is in the Menu. Staff give a page a "place in the Menu" number to list it there too (for example the rules).
+- **Deleting** a page and its history: Scribes and Wellkeepers only. Everyone else can blank a page, which history can undo.
+- **Tags** sort pages, and the wiki list filters by tag and searches titles and text.
+
 ## 2026-10-14: Step 9 details picked while building (Grimoire)
 
 Rebuilt from github.com/MischiefMaker/ares-grimoire-plugin on top of SOUL. Defaults picked by Claude, for the owner to check:
