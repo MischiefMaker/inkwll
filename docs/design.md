@@ -198,10 +198,21 @@ Items built in step 1 are marked ✅.
 
 The build order and the current step are kept in [`roadmap.md`](roadmap.md).
 
-## 6. How step 1 works (choices to confirm)
+## 6. How step 1 works
 
-These are the small choices made while building step 1. Each is easy to
-change; the owner should confirm or adjust them.
+These are the small choices made while building step 1. The owner reviewed
+them on 2026-10-14 (see `decisions.md`); the changes are roadmap step 1b and
+are not built yet:
+
+- [Decided] Login name and player name are the same.
+- [Decided] Only the highest staff level can delete characters.
+- [Decided] Character names may use spaces and special characters.
+- [Decided] The game ships with a default starting room.
+- [Decided] The exit form can create the return exit at the same time.
+- [Decided] Staff levels, set from an admin panel on the website, which
+  handles every admin task. The levels themselves are still open.
+
+How it works today:
 
 - **Login name vs. player name.** Accounts log in with a *username*
   (letters, numbers, underscores; capitals are ignored when logging in). A

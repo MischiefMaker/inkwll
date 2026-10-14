@@ -8,6 +8,17 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Step 1 choices reviewed
+
+1. **One name:** the login name and the player name are the same thing. Player names keep the current rules (letters, numbers, underscores).
+2. **Deleting characters:** only the highest level of admin can delete a character. Inkwll needs several staff levels.
+3. **Character names** stay unique across the whole game, and may include spaces and special characters. (Player names may not.)
+4. **Starting room:** keep the builder's "New characters start here" tick, and the game ships with a default starting room so there is always one.
+5. **Exits** stay one-way, but the exit form gets an easy way to create the matching return exit at the same time.
+6. **Looking vs. being there:** kept as built.
+7. **Remembered character rule:** kept as built.
+8. **Staff:** a staff member is a player account with a staff flag, set from an admin panel on the website rather than the command line. Every admin task should be doable from that panel, gated by staff level.
+
 ## 2026-10-14: Keeping turn-based scenes moving
 
 - Players can always pass their turn, and a storyteller can skip a player.
