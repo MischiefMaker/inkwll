@@ -74,6 +74,17 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.player-profile`, `.player-profile__header`, `.player-profile__about`, `.player-characters` | A player's profile |
 | `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest` | Player icons |
 
+## SOUL
+
+| Class | What it is |
+| --- | --- |
+| `.soul-sheet`, `.soul-sheet--open`, `.soul-sheet--locked` | The SOUL tab on a character |
+| `.soul-sheet__points`, `.soul-aspect`, `.soul-trait`, `.soul-trait--aspect`, `.soul-trait--skill`, `.soul-trait__input` | Setting the starting sheet |
+| `.soul-sheet__table`, `.soul-trait__rating`, `.soul-trait__bonus`, `.soul-trait__raise` | The locked sheet |
+| `.soul-xp`, `.soul-xp__summary`, `.soul-xp__ledger`, `.soul-xp__entry--award`, `--spend`, `--correction` | XP |
+| `.roll-box`, `.roll-box__form` | "Roll a Skill" in a Chapter |
+| `.pose--roll`, `.roll-details` | A roll result and its dice |
+
 ## Chapters
 
 | Class | What it is |

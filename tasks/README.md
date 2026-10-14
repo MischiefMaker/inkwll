@@ -24,3 +24,4 @@ Done tasks stay in this folder as a record.
 | [0012: Email and browser notifications](0012-notifications.md) | Review | No | 3. Logs and safety |
 | [0013: Messages](0013-messages.md) | Review | No | 3b. Messages |
 | [0014: Character profiles and approval](0014-profiles-and-approval.md) | Review | No | 4. Character profiles and approval |
+| [0015: SOUL basics](0015-soul-basics.md) | Review | No | 5. SOUL basics |

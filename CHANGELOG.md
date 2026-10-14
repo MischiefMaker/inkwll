@@ -2,6 +2,16 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 5: SOUL basics
+
+- Characters have a SOUL tab: Resonance, Aspects and Skills. Players set a
+  starting sheet with points, and it locks at approval.
+- XP arrives every week and from finished Chapters. Players spend it to
+  raise ratings, and staff can give or take XP.
+- A "Roll a Skill" box in Chapters rolls 2d20 plus the Skill and posts the
+  result for everyone.
+- Wellkeepers set the game's Aspects and Skills under SOUL in the admin panel.
+
 ## 2026-10-14 — Step 4: Profiles and approval
 
 - Character profiles have tabs: Profile, Application, Gallery, Relationships

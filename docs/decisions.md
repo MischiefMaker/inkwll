@@ -16,6 +16,19 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 5 details picked while building (SOUL basics)
+
+Defaults picked by Claude, for the owner to check. The numbers follow the SOUL plugin's defaults.
+
+- **Aspects and Skills** start as the plugin's set: Body (Strength, Speed, Stamina), Mind (Intelligence, Learning, Wit) and Spirit (Ceremonial Magic, Hedgecraft, Natural). Wellkeepers change them under SOUL in the admin panel. The other numbers (points, costs, difficulties) are in `config/soul.yml`, not on a screen yet.
+- **Who sees a sheet:** the character's player and staff. Other players only see roll results in Chapters.
+- **Starting sheet:** Resonance from -3 to +3. At Resonance 0 a character has 15 Skill points (highest starting Skill 7) and 5 Aspect points; each step of Resonance adds or removes 2 Skill points and 1 from the cap. The sheet locks when staff approve the character. In games without approval, the player presses "Finish my sheet".
+- **After locking,** each rating rises one step at a time by spending XP, with the cost shown on the button. Staff can unlock a sheet to fix it; unlocking goes back to the starting-point rules, so XP-bought ratings count against starting points until it's locked again.
+- **XP:** 1 a week to every approved character (Sundays at midnight), and 1 to each approved character who posted in a Chapter when it finishes (once per Chapter, even if it's reopened and finished again). Characters behind the median earn up to double on these until they catch up. Staff can give or take XP with a reason, and every change is listed on the sheet.
+- **Rolls:** a "Roll a Skill" box under the writing box in a Chapter. Pick a Skill and a difficulty (Standard 13 by default); the game posts the result as a Roll line that anyone can open to see the dice. Rolls don't take a turn, can't be edited or removed, count as activity (so they wake a paused Chapter), and stay in the Manuscript. Rolling happens only inside Chapters.
+- **Game setting:** "Use SOUL" is on by default. Turning it off hides sheets, XP and rolls without deleting anything.
+- Coming in step 6: Boons and Banes (they change rolls), GM-assisted rolls, Culminations, Narrative History and the staff audit trail.
+
 ## 2026-10-14: Step 4 details picked while building (profiles and approval)
 
 Defaults picked by Claude, for the owner to check:
