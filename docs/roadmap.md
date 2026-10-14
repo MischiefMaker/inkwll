@@ -25,9 +25,6 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
 
-**Now (before step 2 starts)**
-
-
 **Before step 2: Scenes**
 
 7. The 3-pose rule in small scenes (wait for fewer poses when there are only two or three players).
