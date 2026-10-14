@@ -19,6 +19,10 @@ scene is a **Chapter**, a pose is a **Passage**, and finished logs are
 **Manuscripts** in the **Archives**. This document and the code use the plain
 words.
 
+Look and feel: the owner's earlier forum skins are in `docs/design-references/`,
+with the patterns they share. Use them when shaping the front page, Area
+listings and the default skin.
+
 Layout [Decided]: the roleplay is front and centre, laid out more like a
 forum than AresMUSH. Rules, plots and other extras live in the menu.
 
