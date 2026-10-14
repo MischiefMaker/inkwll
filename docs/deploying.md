@@ -36,6 +36,9 @@ It needs these in the repository's **Settings → Secrets and variables → Acti
 | `SECRET_KEY_BASE` | Secret | The `SECRET_KEY_BASE` line's value from `deploy/secrets.env` |
 | `DATABASE_PASSWORD` | Secret | The `DATABASE_PASSWORD` line's value from `deploy/secrets.env` |
 
+To make a registered player the Founder on the live game, run the same
+workflow with their player name in "make Founder" (it doesn't deploy).
+
 GitHub keeps secrets hidden: nobody can read them back, and they never show
 in the code or the logs.
 
