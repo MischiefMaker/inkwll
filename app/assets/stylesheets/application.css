@@ -1084,3 +1084,23 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
   border: 1px solid var(--color-border); border-radius: var(--radius); }
 .look-fields .fieldset__legend { padding: 0 0.25rem; font-weight: 600; }
 .image-preview--icon { width: 4rem; height: 4rem; object-fit: cover; }
+
+/* A Setting's way around: its Paths and who's here, side by side in one box
+   right under the description. */
+
+.room-ways {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space) calc(var(--space) * 2);
+  margin: var(--space) 0;
+  padding: 0 var(--space) var(--space);
+  background: var(--color-surface) var(--box-image, none) center / cover;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.room-ways .section-title { margin-top: var(--space); }
+.room-ways .exit-link { font-size: 1.05rem; padding: 0.45rem 0.9rem; }
+
+@media (max-width: 600px) {
+  .room-ways { grid-template-columns: 1fr; gap: 0; }
+}

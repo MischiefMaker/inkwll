@@ -53,6 +53,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.board`, `.board__header`, `.board__title`, `.board__description`, `.board__rows`, `.board__row`, `.board__name`, `.board__icon`, `.board__summary` | The lists on an Area's page |
 | `.room`, `.description-image`, `.lede`, `.page-title__icon` | A Setting's or Area's page: its banner, short text and icon |
 | `--page-image`, `--box-image`, `--intro-image` | CSS variables holding the background pictures from Admin → Look (an Area's or Setting's own background sets `--page-image` on its page) |
+| `.room-ways` | The box holding a Setting's Paths and who is here |
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |

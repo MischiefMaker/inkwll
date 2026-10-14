@@ -1,5 +1,6 @@
-# "Travel here": moves the active character straight to a Setting they're
-# looking at, without walking the Paths.
+# Moves the active character straight to a Setting without walking the
+# Paths: the front page's Enter button (to an Area's entrance) and My places.
+# Setting pages no longer offer it, so players walk (owner, 2026-10-14).
 class TravelsController < ApplicationController
   before_action :require_character
 

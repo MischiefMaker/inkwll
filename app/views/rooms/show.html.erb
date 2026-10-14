@@ -23,48 +23,52 @@
         <p class="muted">
           You're looking in from afar. <%= current_character.name %> is in
           <%= link_to current_character.room.name, room_path(current_character.room) %>.
+          To come here, walk the <%= term(:exit, count: 2).downcase %> or Enter from the front page.
         </p>
-        <%= button_to "Travel here", room_travel_path(@room), class: "button" %>
       <% else %>
         <p class="muted"><%= link_to "Create a character", new_character_path %> to explore.</p>
       <% end %>
     </div>
   <% end %>
 
+  <%# The way around the grid: Paths out of here and who's standing here,
+      right under the description, before the Chapters. %>
+  <div class="room-ways">
+    <section class="room-paths">
+      <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
+      <% if @room.exits.any? %>
+        <ul class="exits">
+          <% @room.exits.each do |room_exit| %>
+            <li class="list__item">
+              <% if here %>
+                <%= button_to room_exit.name, exit_movement_path(room_exit), class: "exit-link",
+                      title: "Go to #{room_exit.destination_room.name}" %>
+              <% else %>
+                <span class="exit-link exit-link--disabled"><%= room_exit.name %></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>
+      <% end %>
+    </section>
+
+    <section class="room-here">
+      <h2 class="section-title">Here</h2>
+      <% if @room.characters.any? %>
+        <ul class="list list--inline">
+          <% @room.characters.each do |character| %>
+            <li class="list__item"><%= character_name_link(character) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="muted">Nobody is here.</p>
+      <% end %>
+    </section>
+  </div>
+
   <%= render "scenes/list", room: @room %>
-
-  <section class="room-paths">
-    <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
-    <% if @room.exits.any? %>
-      <ul class="exits">
-        <% @room.exits.each do |room_exit| %>
-          <li class="list__item">
-            <% if here %>
-              <%= button_to room_exit.name, exit_movement_path(room_exit), class: "exit-link",
-                    title: "Go to #{room_exit.destination_room.name}" %>
-            <% else %>
-              <span class="exit-link exit-link--disabled"><%= room_exit.name %></span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>
-    <% end %>
-  </section>
-
-  <section class="room-here">
-    <h2 class="section-title">Here</h2>
-    <% if @room.characters.any? %>
-      <ul class="list list--inline">
-        <% @room.characters.each do |character| %>
-          <li class="list__item"><%= character_name_link(character) %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p class="muted">Nobody is here.</p>
-    <% end %>
-  </section>
 
   <% if current_account.can?(:build) %>
     <p class="text"><%= link_to "Edit #{term(:room).downcase}", edit_admin_room_path(@room) %></p>
