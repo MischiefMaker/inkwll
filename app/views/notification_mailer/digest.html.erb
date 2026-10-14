@@ -1,0 +1,7 @@
+<h1 style="font-size:20px">What you've missed</h1>
+<% @entries.each do |participant, passages, more| %>
+  <h2 style="font-size:17px;margin-top:24px"><%= link_to participant.scene.title, scene_url(participant.scene) %></h2>
+  <p style="color:#666"><%= participant.scene.room.name %> · as <%= participant.character.name %><%= " · your turn" if participant.scene.turn_of?(participant) %></p>
+  <%= render "passages", passages: passages, more: more %>
+<% end %>
+<%= render "footer" %>

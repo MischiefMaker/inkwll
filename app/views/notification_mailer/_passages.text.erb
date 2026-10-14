@@ -1,0 +1,9 @@
+<% if more.positive? %>
+...and <%= pluralize(more, "earlier #{term(:pose).downcase}") %>.
+
+<% end %>
+<% passages.each do |pose| %>
+-- <%= pose.character.name %> --
+<%= pose.body %>
+
+<% end %>

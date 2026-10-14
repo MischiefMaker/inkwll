@@ -1,0 +1,9 @@
+What you've missed
+<% @entries.each do |participant, passages, more| %>
+
+== <%= participant.scene.title %> (<%= participant.scene.room.name %>, as <%= participant.character.name %><%= ", your turn" if participant.scene.turn_of?(participant) %>) ==
+<%= scene_url(participant.scene) %>
+
+<%= render "passages", passages: passages, more: more %>
+<% end %>
+<%= render "footer" %>

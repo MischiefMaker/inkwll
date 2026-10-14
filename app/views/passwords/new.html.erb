@@ -1,0 +1,13 @@
+<% content_for :title, "Forgot your password? · Inkwll" %>
+
+<h1>Forgot your password?</h1>
+
+<%= form_with url: passwords_path, class: "form" do |form| %>
+  <div class="field">
+    <%= form.label :email, "The email on your account" %>
+    <%= form.email_field :email, required: true, autofocus: true, autocomplete: "email" %>
+  </div>
+  <%= form.submit "Email me a reset link", class: "button" %>
+<% end %>
+
+<p>No email on your account? Ask a staff member for help. <%= link_to "Back to log in", new_session_path %>.</p>

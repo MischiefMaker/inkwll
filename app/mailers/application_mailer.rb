@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  # Set MAIL_FROM on the server, e.g. "Inkwll <hello@yourgame.com>".
+  default from: ENV.fetch("MAIL_FROM", "Inkwll <no-reply@example.com>")
   layout "mailer"
 end

@@ -1,0 +1,7 @@
+Hi <%= @account.display_name %>,
+
+Someone asked to reset your password. If it was you, pick a new password here (the link works for <%= distance_of_time_in_words(0, @account.password_reset_token_expires_in) %>):
+
+<%= edit_password_url(@account.password_reset_token) %>
+
+If it wasn't you, ignore this email and nothing will change.

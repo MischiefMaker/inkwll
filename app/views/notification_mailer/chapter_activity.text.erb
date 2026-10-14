@@ -1,0 +1,8 @@
+<%= @scene.title %>
+
+New <%= term(:pose, count: 2).downcase %> for <%= @participant.character.name %> in <%= @scene.room.name %>.
+
+<%= render "passages", passages: @passages, more: @more %>
+Open the <%= term(:scene).downcase %>: <%= scene_url(@scene) %>
+
+<%= render "footer" %>

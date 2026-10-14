@@ -115,6 +115,7 @@ module Scene::Turns
       update!(current_turn_participant: participant, turn_started_at: participant && Time.current,
         turn_warned_at: nil, turn_token: turn_token + 1)
       schedule_turn_timer
+      ActiveRecord.after_all_transactions_commit { Notifier.turn_given(participant) } if participant
     end
 
     def next_participant_after(participant)

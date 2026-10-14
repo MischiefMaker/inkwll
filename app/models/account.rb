@@ -11,11 +11,17 @@ class Account < ApplicationRecord
   # Jobs a Page can be given. Scribes and Wellkeepers can do all of them.
   JOB_FLAGS = %w[ build app ].freeze
 
-  # How often a player is emailed about new activity. The emails themselves
-  # are built in roadmap step 3; for now the choice is only stored.
+  # How often a player is emailed about new activity (see Notifier).
   # every_time: every time. when_away: only when not logged in.
   # after_days: only after being away for some days.
   EMAIL_NOTIFICATIONS = %w[ off every_time when_away after_days ].freeze
+
+  # When browser pop-ups appear: off, all (every new Passage), my_turn, or
+  # after_minutes (once something has sat unread for browser_notify_minutes).
+  BROWSER_NOTIFICATIONS = %w[ off all my_turn after_minutes ].freeze
+
+  # Changing the email address makes old "stop these emails" links stop working.
+  generates_token_for(:unsubscribe) { email }
 
   has_secure_password
   has_many :sessions, dependent: :destroy
@@ -41,6 +47,9 @@ class Account < ApplicationRecord
   validates :email, presence: true, if: -> { GameSetting.current.email_required? }
   validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :email_notifications, inclusion: { in: EMAIL_NOTIFICATIONS }
+  validates :browser_notifications, inclusion: { in: BROWSER_NOTIFICATIONS }
+  validates :email_after_days, numericality: { only_integer: true, in: 1..60 }
+  validates :browser_notify_minutes, numericality: { only_integer: true, in: 1..240 }
   validate :email_needed_for_notifications
   validate :job_flags_are_known
   validate :active_character_must_be_own
@@ -63,6 +72,16 @@ class Account < ApplicationRecord
 
   def remembered_character_for(context)
     remembered_characters.find_by(context: context)&.character
+  end
+
+  def wants_email?
+    email.present? && email_notifications != "off"
+  end
+
+  # With "only when it's my turn", a scene of three or more players with a
+  # turn order only emails this player when their turn comes up.
+  def only_turn_emails_for?(scene)
+    email_only_my_turn? && scene.turn_based? && scene.participants.size > 2
   end
 
   # Seen on the site in the last few minutes.

@@ -1,0 +1,6 @@
+It's <%= @participant.character.name %>'s turn in <%= @scene.title %>, <%= @scene.room.name %>.
+
+<%= render "passages", passages: @passages, more: @more %>
+Take your turn: <%= scene_url(@scene) %>
+
+<%= render "footer" %>

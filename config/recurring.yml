@@ -19,3 +19,6 @@ production:
   update_vpn_list:
     class: VpnListJob
     schedule: every day at 3am
+  email_digests:
+    class: DigestJob
+    schedule: every day at 5pm

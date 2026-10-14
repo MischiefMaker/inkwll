@@ -1,0 +1,64 @@
+<% content_for :title, "Notifications · Inkwll" %>
+
+<h1>Notifications</h1>
+
+<%= form_with model: @account, url: notification_settings_path, method: :patch, class: "form" do |form| %>
+  <%= render "shared/errors", record: @account %>
+
+  <fieldset class="field">
+    <legend>Emails</legend>
+    <p class="muted">About new <%= term(:pose, count: 2).downcase %> in your <%= term(:scene, count: 2).downcase %>, your turn coming up, and anyone @mentioning your character.</p>
+
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.email_field :email, autocomplete: "email" %>
+    </div>
+
+    <% { "off" => "Don't email me",
+         "every_time" => "Every time there's something new",
+         "when_away" => "Only when I'm not on the site",
+         "after_days" => "Only after I've been away for a while" }.each do |value, label| %>
+      <div class="field field--checkbox">
+        <%= form.radio_button :email_notifications, value %>
+        <%= form.label :email_notifications, label, value: value %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :email_after_days, "\"A while\" means this many days" %>
+      <%= form.number_field :email_after_days, in: 1..60 %>
+      <small>You'll get one email covering everything you've missed.</small>
+    </div>
+
+    <div class="field field--checkbox">
+      <%= form.check_box :email_only_my_turn %>
+      <%= form.label :email_only_my_turn, "Only when it's my turn" %>
+    </div>
+    <small>For <%= term(:scene, count: 2).downcase %> with more than two players that take turns. @mentions still email you.</small>
+  </fieldset>
+
+  <fieldset class="field" data-controller="browser-permission">
+    <legend>Browser pop-ups</legend>
+    <p class="muted">Shown by your browser while you have Inkwll open in a tab, even if you're looking at another one.</p>
+
+    <% { "off" => "No pop-ups",
+         "all" => "Every new #{term(:pose).downcase}",
+         "my_turn" => "Only when it's my turn",
+         "after_minutes" => "Only when something has waited a few minutes" }.each do |value, label| %>
+      <div class="field field--checkbox">
+        <%= form.radio_button :browser_notifications, value, data: { action: "browser-permission#ask" } %>
+        <%= form.label :browser_notifications, label, value: value %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :browser_notify_minutes, "\"A few minutes\" means" %>
+      <%= form.number_field :browser_notify_minutes, in: 1..240 %>
+      <small>minutes</small>
+    </div>
+
+    <p class="muted" data-browser-permission-target="status"></p>
+  </fieldset>
+
+  <%= form.submit "Save", class: "button" %>
+<% end %>

@@ -15,6 +15,24 @@ class SceneParticipant < ApplicationRecord
     scene.poses.where(kind: "passage").where("sequence > ?", last_read_sequence).where.not(character_id: character_id).count
   end
 
+  # The unread Passages to put in an email: by other players, and not removed
+  # or hidden by staff.
+  def unread_passages
+    scene.poses.passage.where("sequence > ?", last_read_sequence)
+      .where.not(character_id: character.account.characters.select(:id))
+      .where(removed_at: nil, hidden_by_staff_at: nil).includes(:character)
+  end
+
+  # Emails are bundled: after one email about this scene, the next waits
+  # until the player has read it.
+  def emailed_since_last_read?
+    notified_up_to > last_read_sequence
+  end
+
+  def mark_emailed!
+    update_column(:notified_up_to, scene.last_sequence)
+  end
+
   def mark_read!(up_to = scene.last_sequence)
     update_column(:last_read_sequence, up_to) if up_to > last_read_sequence
   end

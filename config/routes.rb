@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   resource :session, only: %i[ new create destroy ]
   resource :registration, only: %i[ new create ]
+  resources :passwords, param: :token, only: %i[ new create edit update ]
+  resource :notification_settings, only: %i[ edit update ]
+  # One-click "stop these emails" links. GET shows a button; POST (also what
+  # mail apps send) turns emails off.
+  get "unsubscribe/:token", to: "unsubscribes#show", as: :unsubscribe
+  post "unsubscribe/:token", to: "unsubscribes#create"
 
   resources :characters, except: :destroy
   resource :active_character, only: :update

@@ -1,0 +1,9 @@
+<% if more.positive? %>
+  <p style="color:#666">…and <%= pluralize(more, "earlier #{term(:pose).downcase}") %>.</p>
+<% end %>
+<% passages.each do |pose| %>
+  <div style="border-top:1px solid #ddd;padding:12px 0">
+    <p style="margin:0 0 6px"><strong><%= pose.character.name %></strong></p>
+    <%= simple_format pose.body, style: "margin:0 0 8px" %>
+  </div>
+<% end %>

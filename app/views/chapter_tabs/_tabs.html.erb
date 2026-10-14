@@ -8,12 +8,16 @@
 <turbo-frame id="chapter_tabs">
   <% if participations.any? %>
     <nav class="chapter-tabs" aria-label="Your <%= term(:scene, count: 2).downcase %>"
-         data-controller="chapter-tabs unread-title">
+         data-controller="chapter-tabs unread-title browser-notify"
+         data-browser-notify-level-value="<%= account.browser_notifications %>"
+         data-browser-notify-minutes-value="<%= account.browser_notify_minutes %>">
       <% participations.each do |participant| %>
         <% scene = participant.scene %>
         <% unread = participant.unread_count %>
         <% unread_total += unread %>
-        <%= link_to scene_path(scene), class: "chapter-tab", data: { turbo_frame: "_top", chapter_tabs_target: "tab", scene_id: scene.id } do %>
+        <%= link_to scene_path(scene), class: "chapter-tab", data: { turbo_frame: "_top", chapter_tabs_target: "tab", browser_notify_target: "tab", scene_id: scene.id,
+              title: scene.title, unread_count: unread, sequence: scene.last_sequence, turn: scene.turn_of?(participant) ? scene.turn_token : nil,
+              waiting_since: (account.browser_notifications == "after_minutes" && unread.positive?) ? participant.unread_passages.minimum(:created_at)&.iso8601 : nil } do %>
           <span class="chapter-tab__title"><%= scene.title %></span>
           <span class="chapter-tab__setting">
             <%= scene.room.name %><%= " · #{participant.character.name}" if several_characters %>

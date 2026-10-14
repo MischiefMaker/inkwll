@@ -1,0 +1,3 @@
+<p>Hi <%= @account.display_name %>,</p>
+<p>Someone asked to reset your password. If it was you, <%= link_to "pick a new password", edit_password_url(@account.password_reset_token) %>. The link works for <%= distance_of_time_in_words(0, @account.password_reset_token_expires_in) %>.</p>
+<p>If it wasn't you, ignore this email and nothing will change.</p>

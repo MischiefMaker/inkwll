@@ -14,6 +14,7 @@ class Pose < ApplicationRecord
   validates :character, presence: true, if: :passage?
 
   after_create_commit { scene.broadcast_change }
+  after_create_commit -> { Notifier.passage_posted(self) }, if: :passage?
   after_update_commit { scene.broadcast_change }
 
   def edit!(new_body)

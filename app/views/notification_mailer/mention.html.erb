@@ -1,0 +1,5 @@
+<h1 style="font-size:20px"><%= @pose.character.name %> mentioned you</h1>
+<p>In <%= @scene.title %>, <%= @scene.room.name %>.</p>
+<%= render "passages", passages: [ @pose ], more: 0 %>
+<p><%= link_to "Open the #{term(:scene).downcase}", scene_url(@scene) %></p>
+<%= render "footer" %>
