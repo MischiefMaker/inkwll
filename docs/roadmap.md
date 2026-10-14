@@ -1,6 +1,6 @@
 # Roadmap
 
-The order Inkwll gets built in. This order came from planning and is still **[Proposed]**: the owner can reorder it.
+The order Inkwll gets built in. The owner adopted this order on 2026-10-14 and can still reorder it.
 
 The owner reviews each step before the next one starts.
 
@@ -11,27 +11,14 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 1. Foundation | Accounts, characters with the switcher (remembering the last character per room and scene), rooms with exits and click-to-move, site-wide OOC chat. | Done |
 | 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow. | Later |
-| 4. IC clock | Game time and per-scene date overrides. | Later |
-| 5. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Later |
-| 6. Platform | Feature toggles screen, skins, plugin packaging. | Later |
-
-Step 1 left a few small choices for the owner to confirm; they are listed in `design.md` section 6.
-
-### Proposed new order [Proposed]
-
-Claude's suggestion for where SOUL, Grimoire, character approval and going live fit. Not settled until the owner says yes; the table above stays in charge until then.
-
-1. **Foundation** (done)
-2. **Scenes**
-3. **Logs and safety**
-4. **Character approval**: a character profile, submitting a character, staff approving it. SOUL needs this, because Resonance locks at approval.
-5. **SOUL basics**: character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes.
-6. **SOUL extras**: Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail.
-7. **IC clock**
-8. **Inklings and storyteller tools**
-9. **Grimoire**
-10. **Platform**: feature toggles screen, skins. Each system gets a simple on/off switch when it is built; this step adds the screen for it.
-11. **Going live**: deploy to the DigitalOcean server with Kamal, backups, and email if accounts get one.
+| 4. Character approval | A character profile, submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
+| 5. SOUL basics | Character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes. | Later |
+| 6. SOUL extras | Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail. | Later |
+| 7. IC clock | Game time and per-scene date overrides. | Later |
+| 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Later |
+| 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Later |
+| 10. Platform | Feature toggles screen, skins. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
+| 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and email if accounts get one. | Later |
 
 ## Decisions still needed
 
@@ -39,10 +26,17 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Now (before step 2 starts)**
 
-1. The roadmap order above, including where SOUL and Grimoire go.
-2. Do characters need staff approval before they can play?
 3. Should accounts have an email address, and is it required?
-4. The step 1 choices listed in `design.md` section 6.
+4. The step 1 choices (details in `design.md` section 6). Each is already built and easy to change:
+   - Players log in with a username, and show a separate player name in OOC chat.
+   - No password reset yet; staff reset passwords by hand (tied to question 3).
+   - Characters can't be deleted yet.
+   - Character names are unique across the whole game.
+   - New characters start in the room a builder marks as the starting room.
+   - Exits are one-way; a two-way passage is two exits.
+   - Anyone can look at any room page, but exits only work when your active character is there.
+   - The remembered-character rule for rooms.
+   - Staff are accounts with an admin flag, set from the command line.
 
 **Before step 2: Scenes**
 
@@ -59,6 +53,7 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 **Before SOUL, Inklings and Grimoire**
 
 11. Which SOUL pieces make the first version (see steps 5 and 6 above).
+16. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
 12. How much XP a finished scene gives, and whether there is a weekly cap.
 13. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
 

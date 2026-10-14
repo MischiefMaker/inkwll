@@ -8,6 +8,18 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Character approval is a game setting
+
+Each game chooses whether new characters need staff approval before they can pose in scenes. Unapproved characters can still move between rooms and use OOC chat. Inklings approvals stay a separate system either way.
+
+Still open: when approval is off, the moment SOUL locks Resonance.
+
+## 2026-10-14: Build order adopted
+
+The owner adopted the 11-step order in `roadmap.md`: Foundation, Scenes, Logs and safety, Character approval, SOUL basics, SOUL extras, IC clock, Inklings, Grimoire, Platform, Going live.
+
+Why: SOUL is the backbone, and Inklings rewards and Grimoire spells both depend on it.
+
 ## 2026-10-14: Hosting confirmed, plus nightly database backups
 
 After comparing Hetzner, Render, Fly.io, Heroku and DO App Platform, the owner kept one DigitalOcean droplet with Kamal. The owner already knows DigitalOcean, and none of the others was clearly cheaper or simpler. Render is the fallback if the owner later wants no server to look after.
