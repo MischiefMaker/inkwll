@@ -1,1 +1,2 @@
-<%= turbo_stream.replace "ooc_message_form", partial: "ooc_messages/form" %>
+<% problem = @ooc_message ? @ooc_message.errors.full_messages.to_sentence.presence : @guest_problem %>
+<%= turbo_stream.replace "ooc_message_form", partial: "ooc_messages/form", locals: { problem: problem } %>

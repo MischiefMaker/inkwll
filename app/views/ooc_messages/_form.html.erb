@@ -1,5 +1,23 @@
-<%= form_with model: OocMessage.new, id: "ooc_message_form", class: "ooc-form" do |form| %>
+<%# Guests also pick a name the first time. The "website" box is hidden from
+    people; only spam bots fill it in. %>
+<% problem = local_assigns[:problem] %>
+<%= form_with model: OocMessage.new, id: "ooc_message_form", class: "ooc-form#{" ooc-form--guest" unless current_account}" do |form| %>
+  <% if problem %>
+    <p class="ooc-form__problem" role="alert"><%= problem %></p>
+  <% end %>
+  <% unless current_account %>
+    <% if session[:guest_name] %>
+      <p class="ooc-form__guest muted">Chatting as <%= session[:guest_name] %> (guest).</p>
+    <% else %>
+      <%= text_field_tag :guest_name, params[:guest_name], placeholder: "Your name", required: true, maxlength: 20,
+            autocomplete: "nickname", "aria-label": "Your name", class: "ooc-form__name" %>
+    <% end %>
+    <div class="visually-hidden" aria-hidden="true">
+      <%= label_tag :website, "Leave this empty" %>
+      <%= text_field_tag :website, nil, tabindex: -1, autocomplete: "off" %>
+    </div>
+  <% end %>
   <%= form.text_field :body, placeholder: "Say something OOC…", autocomplete: "off", required: true, maxlength: 1000,
-        "aria-label": "OOC message" %>
+        "aria-label": "OOC message", value: (problem ? params.dig(:ooc_message, :body) : nil) %>
   <%= form.submit "Send", class: "button" %>
 <% end %>

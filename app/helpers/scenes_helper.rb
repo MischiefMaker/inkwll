@@ -12,10 +12,16 @@ module ScenesHelper
   # A player's tiny icon in the OOC Chat: their initial on a colour picked
   # from their name, so each player keeps the same colour. It's never a
   # character's icon, which could show who plays that character.
-  def player_icon(account)
-    hue = Zlib.crc32(account.username) % 360
-    tag.span account.display_name.first.upcase, class: "player-icon", aria: { hidden: true },
-      style: "background: hsl(#{hue} 45% 45%)"
+  # Guests get a plain grey one.
+  def player_icon(ooc_message)
+    if ooc_message.guest?
+      tag.span ooc_message.guest_name.first.upcase, class: "player-icon player-icon--guest", aria: { hidden: true }
+    else
+      account = ooc_message.account
+      hue = Zlib.crc32(account.username) % 360
+      tag.span account.display_name.first.upcase, class: "player-icon", aria: { hidden: true },
+        style: "background: hsl(#{hue} 45% 45%)"
+    end
   end
 
   # Who a post is shown as: the character, the NPC (with who played it), or

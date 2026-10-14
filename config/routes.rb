@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     end
     resources :warnings, only: %i[ new create ]
     resources :bans, only: %i[ index new create update ]
+    # Removes every OOC Chat message a guest sent from one address.
+    delete "guest_messages", to: "guest_messages#destroy", as: :guest_messages
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

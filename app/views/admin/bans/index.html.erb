@@ -22,6 +22,30 @@
   <p class="muted">Nobody is banned.</p>
 <% end %>
 
+<h2>Guests in the OOC Chat</h2>
+<% if @guests.any? %>
+  <p class="muted">People who chatted without logging in this week. Ban an address to stop them, and remove their messages if they were spam.</p>
+  <table class="table">
+    <thead><tr><th>Name</th><th>Address</th><th>Last message</th><th></th></tr></thead>
+    <tbody>
+      <% @guests.each do |ip, messages| %>
+        <tr>
+          <td><%= messages.map(&:guest_name).uniq.join(", ") %></td>
+          <td><%= ip %></td>
+          <td><%= truncate(messages.first.body, length: 80) %> <span class="muted">(<%= pluralize(messages.size, "message") %>, <%= time_ago_in_words(messages.first.created_at) %> ago)</span></td>
+          <td>
+            <%= link_to "Ban", new_admin_ban_path(ip: ip.to_s) %>
+            <%= button_to "Remove messages", admin_guest_messages_path(ip: ip.to_s), method: :delete, class: "button-link",
+                  form: { data: { turbo_confirm: "Remove all #{messages.size} of their messages from the OOC Chat?" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">No guests have chatted this week.</p>
+<% end %>
+
 <h2>VPN block</h2>
 <p class="muted">
   For when the game is being brigaded. Blocks logging in and signing up from known VPN and data-centre addresses,

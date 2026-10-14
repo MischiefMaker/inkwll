@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_090001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_100001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -136,13 +136,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_090001) do
     t.integer "idle_days", default: 7, null: false
     t.integer "auto_finish_days", default: 30, null: false
     t.boolean "block_vpns", default: false, null: false
+    t.boolean "guest_chat", default: true, null: false
   end
 
   create_table "ooc_messages", force: :cascade do |t|
-    t.bigint "account_id", null: false
+    t.bigint "account_id"
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "guest_name"
+    t.inet "ip_address"
     t.index ["account_id"], name: "index_ooc_messages_on_account_id"
   end
 

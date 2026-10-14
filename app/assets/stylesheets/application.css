@@ -16,8 +16,8 @@
   --color-notice: #e6f2e6;
   --color-alert: #f8e3e3;
 
-  --font-body: Georgia, "Times New Roman", serif;
-  --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-ui: Arial, Helvetica, sans-serif;
 
   --space: 1rem;
   --radius: 6px;
@@ -279,9 +279,14 @@ form.button_to { display: inline; }
   vertical-align: -0.15rem;
 }
 .ooc-message__author { font-weight: bold; }
+.ooc-message__author--guest { font-weight: normal; font-style: italic; }
+.player-icon--guest { background: var(--color-muted); }
 .ooc-message__time { color: var(--color-muted); font-size: 0.8rem; margin: 0 0.25rem; }
 
-.ooc-form { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.ooc-form { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.ooc-form__problem { flex-basis: 100%; margin: 0; color: #a33; font-family: var(--font-ui); font-size: 0.85rem; }
+.ooc-form__guest { flex-basis: 100%; margin: 0; font-family: var(--font-ui); font-size: 0.85rem; }
+.ooc-form input.ooc-form__name { flex: 0 1 9rem; min-width: 0; }
 .ooc-form input[type="text"] { flex: 1; min-width: 0; }
 
 /* Menu (extras that aren't the roleplay itself) */

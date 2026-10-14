@@ -2,8 +2,10 @@ module ApplicationCable
   class Connection < ActionCable::Connection::Base
     identified_by :current_account
 
+    # Guests connect too, so they see the OOC Chat live. They only ever get
+    # the stream names printed on the pages they can open.
     def connect
-      set_current_account || reject_unauthorized_connection
+      set_current_account
     end
 
     private

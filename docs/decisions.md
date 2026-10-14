@@ -16,6 +16,22 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Arial as the default font
+
+Arial is the default font everywhere, emails included, instead of Times New Roman (owner). Games can change it with CSS skins (step 10).
+
+## 2026-10-14: Guests in the OOC Chat
+
+People who aren't logged in can talk in the OOC Chat to ask questions, but they need a player account before they can make a character and submit an application. Spammers have to be kept out (owner).
+
+Defaults picked by Claude, built the same day:
+
+- Guests pick a name (not a player's name) that lasts for their visit, shown as "Name (guest)" with a grey icon.
+- Guests can't post links. They can't post until a few seconds after opening the chat, a hidden box catches bots that fill in every field, and they can send at most 5 messages a minute.
+- Bans and the VPN block apply to guests. The Bans page lists this week's guests by address, with buttons to ban them or remove their messages.
+- A game setting turns guest chat off. It's on by default.
+- The log-in page links to the chat: "Have a question first? Ask in the OOC Chat as a guest."
+
 ## 2026-10-14: More kinds of post in a Chapter
 
 Chapters need OOC lines inside them, plus other kinds of post such as Storyteller or scene-setting narration and NPCs (owner).

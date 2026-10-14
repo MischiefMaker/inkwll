@@ -6,10 +6,12 @@ class Admin::BansController < Admin::BaseController
   def index
     @bans = Ban.includes(:account, :banned_by).order(created_at: :desc)
     @settings = GameSetting.current
+    # Guests who chatted in the last week, newest first, one row per address.
+    @guests = OocMessage.from_guests.where(created_at: 1.week.ago..).order(created_at: :desc).group_by(&:ip_address)
   end
 
   def new
-    @ban = Ban.new(account_id: params[:account_id])
+    @ban = Ban.new(account_id: params[:account_id], ip_range: params[:ip])
   end
 
   def create
