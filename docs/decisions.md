@@ -8,6 +8,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Lurkers and storytellers
+
+- **Lurkers:** anyone can watch a joinable (open, public) scene live without posing. Private and hidden scenes have no lurkers.
+- **Storyteller flag:** storyteller status is its own flag on a player, separate from being staff, so staff can make trusted players storytellers. Only a flagged player (or staff) can take the storyteller role in a scene.
+- **SOUL storyteller tools are staff only:** GM-assisted rolls and the other SOUL storyteller tools are gated to staff, not to the storyteller flag.
+
 ## 2026-10-14: Email on accounts is required by default, games can relax it
 
 New accounts need an email address by default, used for password reset links. Each game can switch this to optional; players without an email then ask staff to reset their password. Sending email needs a mail-sending service, set up in the Going live step.

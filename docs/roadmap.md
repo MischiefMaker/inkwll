@@ -38,7 +38,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Before step 2: Scenes**
 
-5. Who can be a scene's storyteller, and can people watch without posing (lurkers)?
 6. Turn-based mode's escape hatches: a pass button, a storyteller override, and skipping someone who has gone quiet.
 7. The 3-pose rule in small scenes (wait for fewer poses when there are only two or three players).
 8. Can players edit or delete their own poses, and for how long?
@@ -51,7 +50,8 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 **Before SOUL, Inklings and Grimoire**
 
 11. Which SOUL pieces make the first version (see steps 5 and 6 above).
-16. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
+16. What a flagged (non-staff) storyteller can do in a scene: skip turns, change the pose order, use Inklings storyteller tools.
+17. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
 12. How much XP a finished scene gives, and whether there is a weekly cap.
 13. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
 
