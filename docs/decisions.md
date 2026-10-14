@@ -16,6 +16,19 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Security rules (owner)
+
+The owner answered the security review (`security/review.md` in the project files). All of these are built:
+
+1. **Uploads:** only logged-in players can upload; the open upload route is closed. Pictures stay image-only and up to 5 MB. Each player can upload at most 20 pictures an hour (icons and gallery). One icon per character, up to 30 gallery pictures per character and 50 across all of one player's characters.
+2. **HTTPS:** production forces HTTPS. The certificate comes from Kamal at the first deploy.
+3. **Changing email** needs the current password, and the old address is told.
+4. **Hidden Chapters** become public only when every player agrees, running or finished.
+5. **No editing or removing Passages** once staff lock a Chapter or it's finished.
+6. **Scribes' bans are limited:** no ranges wider than /16 (IPv4) or /32 (IPv6), never staff at or above them or the Founder, and they only lift bans from their own level or below.
+7. **Posting limits** on the OOC Chat, Passages, Messages, reports, invitations, rolls and new characters. Someone who hits a limit 3 times within 10 minutes is muted for 10 minutes. Staff see "Muted" on Players and staff and can lift it.
+8. **Passwords:** at least 10 characters, with a number, a capital letter and a lower-case letter. Existing passwords keep working until they're changed.
+
 ## 2026-10-14: Characters are retired, never deleted (owner)
 
 - Characters are never deleted. They are retired (idle) instead, and logs and the Archives still show them, greyed out. This replaces the earlier rule that only the highest admin can delete characters.

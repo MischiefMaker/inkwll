@@ -17,6 +17,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 5. SOUL basics | Character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes. | Built, waiting for you to try it |
 | 6. SOUL extras | Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail. | Later |
 | 6b. Rosters | A list of characters other players can apply to take over, with staff approval. Idle characters go back on the roster. Questions for the owner are in task 0016. | Next |
+| Security | The owner's security rules from the review: upload limits, HTTPS, email changes, hidden Chapters, staff locks, Scribe bans, posting limits with a cool-off, password rules. See "Security rules" in `decisions.md`. | Built, waiting for you to try it (HTTPS switches on at the first deploy) |
 | 7. IC clock | The rest of game time (the basic game date comes in step 4) and per-scene date overrides. | Later |
 | 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Later |
 | 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Later |

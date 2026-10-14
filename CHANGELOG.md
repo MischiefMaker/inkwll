@@ -2,6 +2,15 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Security rules
+
+- New passwords need 10 characters, with a number, a capital and a
+  lower-case letter.
+- Picture uploads are limited to 20 an hour, and 50 gallery pictures across
+  all of one player's characters.
+- Anyone who keeps hitting the posting limits is muted for 10 minutes. Staff
+  can lift it from Players and staff.
+
 ## 2026-10-14 — Retiring characters and faster cloud sessions
 
 - Characters are no longer deleted. Wellkeepers retire them instead, and
