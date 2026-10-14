@@ -124,6 +124,7 @@ Rails.application.routes.draw do
       member do
         post :unmute
         post :archive
+        post :reset_link
       end
     end
     resources :characters, only: %i[ index update ] do

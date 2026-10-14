@@ -944,6 +944,8 @@ span.pose__icon { cursor: default; }
 .directory__value-shown { font-size: 0.85rem; overflow-wrap: anywhere; }
 .table__row--archived { opacity: 0.6; }
 .account-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.account-password { margin-top: 2rem; }
+.account-password__link-field { width: 100%; font-family: monospace; font-size: 0.85rem; }
 
 /* --- Jcink add-ons: groups, passage details, labels, alerts, tracker ----- */
 .character-name--grouped { color: var(--group-colour); }

@@ -24,6 +24,10 @@ class Account < ApplicationRecord
   generates_token_for(:unsubscribe) { email }
 
   has_secure_password
+  # A reset link staff make for a player with no email (Players and staff >
+  # the player > Make a password reset link). It lasts a day, since staff have
+  # to pass it on, and stops working once the password changes.
+  generates_token_for(:staff_password_reset, expires_in: 1.day) { password_salt.last(10) }
   # The player's own picture, on their player profile and in the OOC Chat.
   has_one_attached :icon
   attribute :remove_icon, :boolean, default: false

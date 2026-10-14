@@ -6,10 +6,14 @@
 # Accounts are archived, not deleted: the player can't log in and their
 # characters are retired, or go on the roster if they asked for that. Only a
 # Founder can delete an account, and only one that never had characters.
+#
+# Staff can also make a password reset link for a player, mainly for games
+# where email is optional and the player has none to get one by.
 class Admin::AccountsController < Admin::BaseController
   require_job :manage_staff
-  before_action :set_account, only: %i[ edit update unmute archive destroy ]
-  before_action :require_manageable, only: %i[ edit update archive destroy ]
+  before_action :set_account, only: %i[ edit update unmute archive destroy reset_link ]
+  before_action :require_manageable, only: %i[ edit update archive destroy reset_link ]
+  limit_posting to: 10, within: 10.minutes, only: :reset_link
 
   def index
     @accounts = Account.where(system: false).order(:archived_at, staff_level: :desc, username: :asc)
@@ -34,6 +38,12 @@ class Admin::AccountsController < Admin::BaseController
   end
 
   def edit
+  end
+
+  # Shows the link on the page, once, for staff to send to the player.
+  def reset_link
+    @reset_link = edit_password_url(@account.generate_token_for(:staff_password_reset))
+    render :edit
   end
 
   # Lifts the short mute given to someone who kept hitting the posting limits.

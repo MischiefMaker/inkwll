@@ -5,8 +5,8 @@
 <%= form_with url: password_path(params[:token]), method: :put, class: "form" do |form| %>
   <div class="field">
     <%= form.label :password, "New password" %>
-    <%= form.password_field :password, required: true, autofocus: true, autocomplete: "new-password", minlength: 8, maxlength: 72 %>
-    <small class="hint">At least 8 characters.</small>
+    <%= form.password_field :password, required: true, autofocus: true, autocomplete: "new-password", minlength: 10, maxlength: 72 %>
+    <small class="hint">At least 10 characters, with a number, a capital and a lower-case letter.</small>
   </div>
   <div class="field">
     <%= form.label :password_confirmation, "New password again" %>

@@ -13,7 +13,7 @@
   <div class="field">
     <%= form.label :email %>
     <%= form.email_field :email, required: GameSetting.current.email_required?, autocomplete: "email" %>
-    <small class="hint">Used for password resets.<%= " Optional." unless GameSetting.current.email_required? %></small>
+    <small class="hint">Used for password resets.<%= " Optional, but without one only staff can reset your password." unless GameSetting.current.email_required? %></small>
   </div>
   <div class="field">
     <div class="field field--checkbox">
@@ -24,8 +24,8 @@
   </div>
   <div class="field">
     <%= form.label :password %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 8, maxlength: 72 %>
-    <small class="hint">At least 8 characters. A short sentence is easy to remember and hard to guess.</small>
+    <%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 10, maxlength: 72 %>
+    <small class="hint">At least 10 characters, with a number, a capital and a lower-case letter. A short sentence is easy to remember and hard to guess.</small>
   </div>
   <div class="field">
     <%= form.label :password_confirmation, "Password again" %>

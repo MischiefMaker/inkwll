@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Staff password reset links, for players with no email (owner asked, 2026-10-14; details picked by Claude)
+
+The "email required" game setting already existed (on by default). The owner asked for games to be able to make email optional, so the missing half was built: staff (Scribes and up, for players they can manage) open a player in **Players and staff** and press **Make a password reset link**. The link is shown once for staff to send privately (for example in Messages), works for one day, and stops working once used. The setting's hint now says what a player without email misses: resetting their own password and email notifications. Alerts and browser pop-ups still work.
+
 ## Guests can preview the grid (owner, 2026-10-14; details picked by Claude)
 
 Visitors who aren't logged in get **Preview** on the front page instead of Enter, so they can still look around. They're listed under a Setting's "Here" as **Guest**, or **3 Guests** for more than one (owner).

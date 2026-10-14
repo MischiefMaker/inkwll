@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Optional email and staff reset links
+
+- Games that make email optional (Game settings) now have a way back in
+  for players without one: staff open the player in Players and staff and
+  make a password reset link to send them. It works for a day.
+- The sign-up and new-password pages now give the real password rule
+  (10 characters, with a number, a capital and a lower-case letter).
+
 ## 2026-10-14 — Guests can preview
 
 - Visitors who aren't logged in can look around: the front page shows

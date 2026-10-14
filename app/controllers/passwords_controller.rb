@@ -1,6 +1,7 @@
 # "Forgot your password?": emails a link that lets the player pick a new one.
 # The link works for 15 minutes and only once (it stops working when the
-# password changes).
+# password changes). Staff can also make a link for a player who has no
+# email (Admin::AccountsController#reset_link); that one works for a day.
 class PasswordsController < ApplicationController
   allow_unauthenticated_access
   before_action :set_account_by_token, only: %i[ edit update ]
@@ -31,8 +32,10 @@ class PasswordsController < ApplicationController
 
   private
     def set_account_by_token
-      @account = Account.find_by_password_reset_token!(params[:token])
-    rescue ActiveSupport::MessageVerifier::InvalidSignature
-      redirect_to new_password_path, alert: "That reset link has expired or already been used. Please ask for a new one."
+      @account = Account.find_by_password_reset_token(params[:token]) ||
+        Account.find_by_token_for(:staff_password_reset, params[:token])
+      unless @account
+        redirect_to new_password_path, alert: "That reset link has expired or already been used. Please ask for a new one."
+      end
     end
 end

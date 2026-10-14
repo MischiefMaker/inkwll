@@ -31,6 +31,17 @@
   <%= form.submit "Save", class: "button" %>
 <% end %>
 
+<section class="account-password">
+  <h2 class="section-title">Password</h2>
+  <% if @reset_link %>
+    <p class="text">Send this link to <%= @account.display_name %> privately, for example in Messages. It lets them pick a new password, works for one day, and stops working once they've used it.</p>
+    <p class="account-password__link"><input type="text" class="account-password__link-field" value="<%= @reset_link %>" readonly aria-label="Password reset link"></p>
+  <% else %>
+    <p class="muted"><%= @account.email.present? ? "#{@account.display_name} can reset their own password from the log-in page, by email." : "#{@account.display_name} has no email, so they can't reset their own password." %> You can make a reset link to send them.</p>
+    <%= button_to "Make a password reset link", reset_link_admin_account_path(@account), class: "button button--quiet account-password__button", form: { data: { turbo: false } } %>
+  <% end %>
+</section>
+
 <% if current_account.can?(:ban) %>
   <section class="account-safety">
     <h2 class="section-title">Safety</h2>

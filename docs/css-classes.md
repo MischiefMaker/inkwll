@@ -108,6 +108,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.roster-admin`, `.roster-admin__item--application`, `--request`, `--character`, `.roster-admin__actions`, `.roster-admin__answers`, `.roster-admin__question`, `.roster-admin__answer` | Admin: the Roster page |
 | `.character-form__roster` | "If you stop playing" on the character form |
 | `.table__row--archived`, `.account-archived`, `.account-actions` | Archived accounts in Players and staff |
+| `.account-password`, `.account-password__link`, `.account-password__link-field`, `.account-password__button` | The Password section on a player's page in Players and staff |
 | `.character-name`, `.character-name--grouped`, `.character-group-<id>` | A character's name; grouped names take the group's colour from `--group-colour` |
 | `.pose__details`, `.mini-profile__details`, `.character-profile__group`, `.directory__group` | The group and chosen fields beside Passages and on profiles |
 | `.alert-bell`, `.alert-bell--unread`, `.alert-bell__number`, `.alerts`, `.alerts__item`, `.alerts__item--passage`, `--turn`, `--mention`, `--finished`, `--unread` | The alerts bell and the alerts list |
