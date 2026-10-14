@@ -16,6 +16,10 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Rosters (owner asked; reading picked by Claude)
+
+The owner asked for rosters. Read as both a canon roster (pre-made or canon characters staff list as open, reserved or taken, which players apply to take over through the usual approval) and a public character directory that includes the roster. Added as roadmap step 6b, after the SOUL extras. Waiting on the owner to confirm which kind they meant.
+
 ## 2026-10-14: Step 5 details picked while building (SOUL basics)
 
 Defaults picked by Claude, for the owner to check. The numbers follow the SOUL plugin's defaults.
