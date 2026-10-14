@@ -114,8 +114,9 @@ class Account < ApplicationRecord
     remembered_characters.find_by(context: context)&.character
   end
 
+  # Archived players are never emailed.
   def wants_email?
-    email.present? && email_notifications != "off"
+    email.present? && email_notifications != "off" && !archived?
   end
 
   # With "only when it's my turn", a scene of three or more players with a

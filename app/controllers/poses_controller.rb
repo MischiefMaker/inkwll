@@ -43,9 +43,9 @@ class PosesController < ApplicationController
       raise ActiveRecord::RecordNotFound unless @scene.readable_by?(current_account)
     end
 
-    # Players can only change their own Passages.
+    # Players can only change their own Passages. Rolls can't be changed.
     def set_own_pose
-      @pose = @scene.poses.where.not(kind: "system").where(character: current_account.characters).find(params[:id])
+      @pose = @scene.poses.where.not(kind: %w[ system roll ]).where(character: current_account.characters).find(params[:id])
     end
 
     # Nothing can be changed once a Chapter is finished or staff have locked it.

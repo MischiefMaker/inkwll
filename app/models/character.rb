@@ -57,8 +57,11 @@ class Character < ApplicationRecord
 
   def retired? = retired_at.present?
 
+  # Retiring leaves any unfinished Chapters, so they don't wait on a turn
+  # that can never be taken.
   def retire!
     transaction do
+      leave_open_scenes!
       update!(retired_at: Time.current)
       account.update!(active_character: nil) if account.active_character_id == id
     end
@@ -66,6 +69,12 @@ class Character < ApplicationRecord
 
   def unretire!
     update!(retired_at: nil)
+  end
+
+  def leave_open_scenes!
+    scene_participants.includes(:scene).each do |participant|
+      participant.scene.leave!(self) unless participant.scene.finished?
+    end
   end
 
   # --- Profile -----------------------------------------------------------------

@@ -72,6 +72,23 @@ class NotifierTest < ActiveSupport::TestCase
     assert_includes ActionMailer::Base.deliveries.last.subject, "mentioned you"
   end
 
+  test "@mentions only count when the whole name matches" do
+    Character.create!(account: accounts(:alice), name: "Sab", room: rooms(:commons))
+    assert_equal [ "Sable" ], Notifier.mentioned_characters(Pose.new(body: "Hi @sable, hi @Sablecloak.")).map(&:name)
+    assert_equal [ "Sab", "Sable" ], Notifier.mentioned_characters(Pose.new(body: "@Sab's eyes meet @Sable.")).map(&:name).sort
+  end
+
+  test "archived players get no emails" do
+    @bob.update!(email_notifications: "every_time")
+    @bob.update_column(:archived_at, Time.current)
+    perform_enqueued_jobs { @scene.post!(characters(:wren), "Wren lunges at @Sable.") }
+    assert_no_emails
+
+    @bob.update!(email_notifications: "after_days", email_after_days: 3, last_seen_at: 4.days.ago)
+    perform_enqueued_jobs { DigestJob.perform_now }
+    assert_no_emails
+  end
+
   test "the digest covers what an away player missed, once" do
     @bob.update!(email_notifications: "after_days", email_after_days: 3, last_seen_at: 4.days.ago)
     @scene.post!(characters(:wren), "Wren lunges.")

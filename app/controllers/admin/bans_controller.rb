@@ -16,6 +16,10 @@ class Admin::BansController < Admin::BaseController
 
   def create
     @ban = Ban.new(banned_by: current_account, **ban_params)
+    if params.dig(:ban, :expires_on).present? && @ban.expires_at.nil?
+      @ban.errors.add(:base, "The end date isn't a real date")
+      return render :new, status: :unprocessable_entity
+    end
     if params.dig(:ban, :player_name).present? && @ban.account.nil?
       @ban.errors.add(:base, "There's no player called \"#{params.dig(:ban, :player_name)}\"")
       return render :new, status: :unprocessable_entity
@@ -54,7 +58,7 @@ class Admin::BansController < Admin::BaseController
     def ban_params
       permitted = params.expect(ban: [ :player_name, :ip_range, :reason, :expires_on ])
       account = Account.find_by(username: permitted[:player_name].to_s.strip.downcase) if permitted[:player_name].present?
-      expires = Date.parse(permitted[:expires_on]).end_of_day if permitted[:expires_on].present?
+      expires = (Date.parse(permitted[:expires_on]).end_of_day rescue nil) if permitted[:expires_on].present?
       { account: account, ip_range: permitted[:ip_range].presence, reason: permitted[:reason], expires_at: expires }
     end
 end

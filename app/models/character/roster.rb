@@ -25,9 +25,7 @@ module Character::Roster
   def put_on_roster!(note: nil)
     transaction do
       old_account = account
-      scene_participants.includes(:scene).each do |participant|
-        participant.scene.leave!(self) unless participant.scene.finished?
-      end
+      leave_open_scenes!
       scene_invitations.delete_all
       RememberedCharacter.where(character: self).delete_all
       old_account.update!(active_character: nil) if old_account.active_character_id == id

@@ -6,7 +6,7 @@ class DigestJob < ApplicationJob
   queue_as :default
 
   def perform
-    Account.where(email_notifications: "after_days").where.not(email: nil).find_each do |account|
+    Account.where(email_notifications: "after_days", archived_at: nil).where.not(email: nil).find_each do |account|
       next if account.last_seen_at && account.last_seen_at > account.email_after_days.days.ago
 
       entries = SceneParticipant.joins(:scene).merge(Scene.open).where(character: account.characters).includes(:scene).filter_map do |participant|

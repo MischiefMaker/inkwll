@@ -2,6 +2,27 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Bug fixes from the code audit
+
+- A password reset link with the new password left blank no longer says
+  "Password changed" (it changed nothing) and logs the player out.
+- A ban with an end date that doesn't exist (31 February) shows an error
+  instead of an error page.
+- "@Wrenna" no longer also alerts the player of Wren: a mention has to
+  match the whole name.
+- Archived players no longer get activity or digest emails.
+- The numbered-rooms tool points out a line that doesn't start with a
+  door number instead of showing an error page.
+- Retiring a character (or archiving its player) takes it out of its
+  unfinished Chapters, so turns don't wait on someone who can't post.
+- The last character leaving a Chapter on their own turn is no longer
+  told it's their turn.
+- Nobody can be invited into a finished Chapter, so one player can't let
+  others read a Hidden Chapter without everyone agreeing.
+- Rolls can't be removed or edited, even by a hand-made request.
+- Messages can't be sent to the roster or to archived players, where
+  nobody would read them.
+
 ## 2026-10-14 — Getting started guides
 
 - A players' "Getting started" page gives new players their first five

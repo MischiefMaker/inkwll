@@ -47,4 +47,14 @@ class Scenes::ParticipationsControllerTest < ActionDispatch::IntegrationTest
     post scene_invitations_path(scenes(:tea)), params: { name: "sable" }
     assert scenes(:tea).invited?(characters(:sable))
   end
+
+  test "nobody can be invited into a finished Chapter" do
+    sign_in_as(accounts(:bob))
+    accounts(:bob).update!(active_character: characters(:sable))
+    scenes(:secret).finish!(by: characters(:sable))
+
+    post scene_invitations_path(scenes(:secret)), params: { name: "wren" }
+    assert_not scenes(:secret).reload.invited?(characters(:wren))
+    assert_not scenes(:secret).readable_by?(accounts(:alice))
+  end
 end

@@ -61,6 +61,21 @@ class MessagesTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
+  test "nobody can message the roster or an archived player" do
+    characters(:sable).put_on_roster!
+    sign_in_as(accounts(:alice))
+    assert_no_difference "Conversation.count" do
+      post conversations_path, params: { to: "Sable", subject: "Hi", body: "Hello" }
+      post conversations_path, params: { to: "The Roster", subject: "Hi", body: "Hello" }
+    end
+
+    accounts(:bob).update_column(:archived_at, Time.current)
+    assert_no_difference "Conversation.count" do
+      post conversations_path, params: { to: "Bob", subject: "Hi", body: "Hello" }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "new messages are emailed to players who asked for activity emails" do
     accounts(:bob).update!(email_notifications: "every_time")
     sign_in_as(accounts(:alice))

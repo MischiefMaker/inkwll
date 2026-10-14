@@ -69,4 +69,11 @@ class PosesControllerTest < ActionDispatch::IntegrationTest
     get scene_path(scenes(:duel))
     assert_select ".pose--npc .pose__name", text: "Squire"
   end
+
+  test "a roll can't be removed or edited, even by asking directly" do
+    roll = scenes(:duel).poses.create!(character: characters(:wren), kind: "roll", body: "Wren rolls.", sequence: 99)
+    delete scene_pose_path(scenes(:duel), roll)
+    assert_response :not_found
+    assert_not roll.reload.removed?
+  end
 end

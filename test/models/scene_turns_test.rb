@@ -53,6 +53,20 @@ class SceneTurnsTest < ActiveSupport::TestCase
     assert @scene.reload.turn_of?(@sable.reload)
   end
 
+  test "the last character leaving on their turn isn't told it's their turn" do
+    scene = scenes(:tea)
+    scene.update!(current_turn_participant: scene_participants(:tea_moth))
+    scene.leave!(characters(:moth))
+    assert_nil scene.reload.current_turn_participant
+    assert_equal 0, Alert.where(kind: "turn", account: accounts(:alice)).count
+  end
+
+  test "a retired character leaves its unfinished Chapters, so the turn moves on" do
+    characters(:wren).retire!
+    assert_nil @scene.participant_for(characters(:wren))
+    assert @scene.reload.turn_of?(@sable.reload)
+  end
+
   test "free-for-all has no turns" do
     @scene.update!(pose_mode: "free")
     assert_not @scene.turn_based?

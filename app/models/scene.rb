@@ -251,7 +251,11 @@ class Scene < ApplicationRecord
     raise ArgumentError, "This #{Term[:scene]} is finished." if finished?
 
     with_lock do
-      advance_turn! if current_turn_participant_id == participant.id
+      # Pass the turn on, but never back to the one leaving.
+      if current_turn_participant_id == participant.id
+        following = next_participant_after(participant)
+        give_turn_to!(following == participant ? nil : following)
+      end
       participant.destroy!
       participants.reset
       add_system_line!("#{character.name} leaves the #{Term[:scene]}.")

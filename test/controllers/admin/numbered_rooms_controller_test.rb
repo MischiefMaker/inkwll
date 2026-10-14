@@ -40,6 +40,14 @@ class Admin::NumberedRoomsControllerTest < ActionDispatch::IntegrationTest
     assert_match "101", flash[:alert]
   end
 
+  test "a line that doesn't start with a door number is pointed out, not a crash" do
+    sign_in_as(accounts(:builder))
+    assert_no_difference [ "Room.count", "Exit.count" ] do
+      post admin_room_numbered_rooms_path(rooms(:hall)), params: { lines: "100 Jaxon Marley\n#101 Nestor Nash" }
+    end
+    assert_match "#101 Nestor Nash", flash[:alert]
+  end
+
   test "a builder can set a Setting's type and give a Path a number" do
     sign_in_as(accounts(:builder))
     patch admin_room_path(rooms(:hall)), params: { room: { kind: "hotel" } }

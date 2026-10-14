@@ -102,8 +102,10 @@ module Notifier
   end
 
   # Characters named after an @ in the Passage, like "@Wren" or "@Mary-Jane O'Neil".
+  # The name has to end there, so "@Wrenna" doesn't also mention Wren.
   def mentioned_characters(pose)
-    return Character.none unless pose.body.include?("@")
+    return [] unless pose.body.include?("@")
     Character.where("strpos(lower(?), '@' || lower(name)) > 0", pose.body).includes(:account)
+      .select { |character| pose.body.match?(/@#{Regexp.escape(character.name)}(?![\p{L}\p{N}_])/i) }
   end
 end

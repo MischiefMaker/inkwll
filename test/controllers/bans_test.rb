@@ -50,4 +50,12 @@ class BansTest < ActionDispatch::IntegrationTest
     post admin_bans_path, params: { ban: { player_name: "wellkeeper", reason: "No" } }
     assert_nil Ban.for(account: accounts(:wellkeeper))
   end
+
+  test "a ban with a date that doesn't exist is turned back, not saved" do
+    sign_in_as(accounts(:scribe))
+    assert_no_difference "Ban.count" do
+      post admin_bans_path, params: { ban: { player_name: "bob", reason: "Spam", expires_on: "2027-02-31" } }
+    end
+    assert_response :unprocessable_entity
+  end
 end

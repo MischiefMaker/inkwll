@@ -29,4 +29,14 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     get edit_password_path("nonsense")
     assert_redirected_to new_password_path
   end
+
+  test "a blank new password is turned away, and the link still works" do
+    token = accounts(:bob).password_reset_token
+    session = accounts(:bob).sessions.create!
+
+    put password_path(token), params: { password: "", password_confirmation: "" }
+    assert_redirected_to edit_password_path(token)
+    assert Session.exists?(session.id)
+    assert_equal accounts(:bob), Account.find_by_password_reset_token(token)
+  end
 end

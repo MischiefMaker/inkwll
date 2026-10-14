@@ -22,6 +22,9 @@ class NumberedRooms
   def save
     errors.clear
     entries = parsed
+    unreadable = entries.select { |number, _| number.nil? }
+    unreadable.first(3).each { |_, line| errors.add(:base, "\"#{line}\" doesn't start with a door number.") }
+    return false if unreadable.any?
     errors.add(:base, "Add at least one line, like \"100 Jaxon Marley\".") if entries.empty?
     errors.add(:base, "Add up to #{MAX_LINES} at a time.") if entries.size > MAX_LINES
     return false if errors.any?
@@ -38,7 +41,7 @@ class NumberedRooms
     def parsed
       lines.lines.map(&:squish).reject(&:blank?).map do |line|
         match = LINE.match(line)
-        [ match[:number], match[:label].presence ]
+        match ? [ match[:number], match[:label].presence ] : [ nil, line ]
       end
     end
 

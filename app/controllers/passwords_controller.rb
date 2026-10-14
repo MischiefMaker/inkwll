@@ -21,8 +21,12 @@ class PasswordsController < ApplicationController
   def edit
   end
 
+  # A blank password would save nothing, so it's turned away rather than
+  # reported as changed.
   def update
-    if @account.update(params.permit(:password, :password_confirmation))
+    if params[:password].blank?
+      redirect_to edit_password_path(params[:token]), alert: "Pick a new password."
+    elsif @account.update(params.permit(:password, :password_confirmation))
       @account.sessions.destroy_all
       redirect_to new_session_path, notice: "Password changed. You can log in now."
     else

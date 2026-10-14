@@ -20,9 +20,12 @@ class Conversation < ApplicationRecord
   # player of a character by character name. Returns [account, character].
   def self.resolve(names, from:)
     names.to_s.split(",").map(&:squish).reject(&:blank?).uniq.map do |name|
-      if (account = Account.find_by(username: name.downcase))
+      if (account = Account.find_by(username: name.downcase, system: false))
+        raise UnknownName, "#{account.display_name} has left the game, so they can't get Messages." if account.archived?
         [ account, nil ]
       elsif (character = Character.where("lower(name) = ?", name.downcase).first)
+        # Nobody reads Messages sent to the roster or to an archived player.
+        raise UnknownName, "Nobody is playing #{character.name} right now." if character.account.system? || character.account.archived?
         [ character.account, (character unless GameSetting.current.players_public?) ]
       else
         raise UnknownName, "There's no player or character called \"#{name}\"."
