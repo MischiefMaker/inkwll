@@ -16,6 +16,15 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Storyteller tools (owner)
+
+Storytellers who aren't staff can use the GM roll tools, and they can suggest awards, which need staff approval (owner). This confirms the earlier "What Storytellers can do" entry.
+
+Built as a "Storyteller tools" box in any Chapter where you're the Storyteller:
+- **Call for a roll** from a player in the Chapter: it waits like a roll the player asked for, and the Storyteller picks the Boons and Banes that count and rolls it. Storytellers never judge their own characters' rolls.
+- **Players' Aspects and Skills:** the other players' ratings, and nothing else from their sheets.
+- **Suggest XP:** 1 to 10 XP for one of the other players, with a reason. It goes to Admin → SOUL requests, and nothing is given until App staff approve it. It also works after the Chapter is finished.
+
 ## 2026-10-14: New games start in Slate blue and gold (owner)
 
 New games start with the "Slate blue and gold" look. The ready-made looks, plain included, stay as templates the admin picks from when launching a new game (owner).
@@ -81,7 +90,7 @@ Rebuilt from github.com/MischiefMaker/ares-inklings-plugin, keeping its rules: d
 - **Rewards** (staff): XP, a new Boon or Bane, progressing one the character has, a Culmination, or a written note. They go through SOUL and its staff log, and show to the player only unless staff tick "everyone".
 - **Switch:** Game settings has "Use Inklings", on by default.
 - **Left for later:** the plugin's Secret and Goal drafts during character creation (games can add those as Application fields for now), bonus XP for Progress entries, search, asking staff to delete one, and email for Inkling activity.
-- **Storyteller tools** (also in step 8 of the roadmap) aren't built: they need the owner to say what Storytellers should be able to do.
+- **Storyteller tools** were built later the same day, once the owner said what they should be (see "Storyteller tools (owner)").
 
 ## 2026-10-14: Step 7 details picked while building (IC clock)
 

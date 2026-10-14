@@ -20,5 +20,5 @@ See "Step 8 details picked while building" in `docs/decisions.md`. Screenshots a
 ## Done when
 
 - [x] Inklings built, with tests passing
-- [ ] Storyteller tools decided and built
+- [x] Storyteller tools decided and built
 - [ ] The owner has tried it

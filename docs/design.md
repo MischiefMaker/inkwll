@@ -180,7 +180,8 @@ feature toggles, and the design leaves room for alternative plugins later.
 How they plug in [Proposed, owner agreed in principle]:
 
 - A SOUL roll is a Pose type ("roll") inside a scene. GM-assisted rolls use the
-  scene's storyteller role. (Built in step 5, without GM-assisted rolls yet.)
+  scene's storyteller role. (Built in step 5; GM-assisted rolls in step 6; calling rolls, seeing
+  players' Aspects and Skills, and suggesting XP for staff approval in step 8.)
 - Finishing a scene awards SOUL XP to its approved participants who posted in
   it. (Built in step 5; see "Step 5 details" in `decisions.md`.)
 - Grimoire spells use SOUL skills, and casting a spell is a SOUL roll.

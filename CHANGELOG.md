@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Storyteller tools
+
+- A Chapter's Storyteller can call for rolls from players, see the
+  players' Aspects and Skills, and suggest XP that staff approve.
+
 ## 2026-10-14 — Default look
 
 - New games start in Slate blue and gold, and the admin panel asks the
