@@ -12,6 +12,13 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Making the grid feel physical (step 2)
+
+- **Arrivals and departures:** when a character walks into or out of a Setting, its Chapters show a line such as "Mira arrives from the Great Hall."
+- **Start where you stand:** a new Chapter begins in the Setting the character is in, so players travel there first (Travel here makes that one click).
+- A compass layout of Paths was considered and left for later.
+
+
 ## 2026-10-14: Private messages
 
 Players need a way to message one another privately (owner). Placed as roadmap step 3b, after notifications exist in step 3.
