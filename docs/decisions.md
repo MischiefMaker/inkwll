@@ -8,6 +8,16 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Banning
+
+Staff need to be able to ban:
+
+- **Accounts:** a banned account can't log in, and none of its characters can play.
+- **IP addresses:** nobody can log in or sign up from a banned address.
+- **Known VPNs (optional):** a switch to block known VPN addresses, for when the game is being brigaded.
+
+Defaults picked by Claude: Scribes and Wellkeepers can ban (matching the earlier report decision); a ban can be permanent or end on a date; each ban records who made it and why; the VPN block is off unless staff switch it on.
+
 ## 2026-10-14: One install per game
 
 Each game is its own copy of Inkwll with its own database. The owner may run several of their own games at once, sharing one DigitalOcean server through Kamal. Inkwll does not host other people's games: anyone else who wants a game runs it on their own server.
