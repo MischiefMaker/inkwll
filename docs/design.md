@@ -389,6 +389,16 @@ words, and `config/locales/en.yml` maps one to the other.
 - **Accounts are archived, not deleted.** Archived players can't log in.
   A Founder can delete an account that never had characters.
 
+### Step 6c: Jcink add-ons
+
+- **Beside each Passage:** the character's group and the public profile
+  fields the game picked, also in the mini-profile.
+- **Character groups** colour names wherever characters are listed.
+- **My Chapters** lists each character's open Chapters for their player.
+- **The alerts bell** collects new Passages, turns, @mentions and finished
+  Chapters.
+- **Chapters** can have a subtitle and staff-defined labels.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

@@ -16,6 +16,16 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 6c details picked while building (Jcink add-ons)
+
+Defaults picked by Claude, for the owner to check.
+
+- **Beside Passages:** the character's group, plus any public profile field ticked "Show beside Passages" under Admin → Profile fields, shown in one short line next to the name and in the mini-profile pop-up. A birthday field shows as an age.
+- **Groups:** Wellkeepers make them under Admin → Character groups, each with a name colour. Players pick a group on the character form until their character is approved (always, in games without approval). After that, Wellkeepers change it in Admin → Characters. The colour shows on Passages, the mini-profile, the Here list, the profile and the directory, which can also filter by group.
+- **My Chapters** (in the Menu) is only for the player: each of their characters with every open Chapter, its Setting, whose turn it is, and who posted last and when.
+- **Alerts bell** (in the header): a new Passage in your Chapter, your turn, an @mention, and a Chapter you were in being finished. Several new Passages in one Chapter make one alert with a count. Opening the Chapter or the alerts list marks them read. Read alerts are deleted after 30 days. Messages keep their own count and don't use the bell. Alerts come whatever the email settings are.
+- **Subtitles and labels:** any Chapter can have a one-line subtitle. Wellkeepers define labels (for example content warnings) under Admin → Chapter labels; the players in a Chapter pick them when starting it or in its settings. Both show in the Setting's Chapter list and at the top of the Chapter.
+
 ## 2026-10-14: Step 6b details picked while building (Rosters)
 
 Defaults picked by Claude, for the owner to check.

@@ -79,6 +79,11 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.roster-admin`, `.roster-admin__item--application`, `--request`, `--character`, `.roster-admin__actions` | Admin: the Roster page |
 | `.character-form__roster` | "If you stop playing" on the character form |
 | `.table__row--archived`, `.account-archived`, `.account-actions` | Archived accounts in Players and staff |
+| `.character-name`, `.character-name--grouped`, `.character-group-<id>` | A character's name; grouped names take the group's colour from `--group-colour` |
+| `.pose__details`, `.mini-profile__details`, `.character-profile__group`, `.directory__group` | The group and chosen fields beside Passages and on profiles |
+| `.alert-bell`, `.alert-bell--unread`, `.alert-bell__number`, `.alerts`, `.alerts__item`, `.alerts__item--passage`, `--turn`, `--mention`, `--finished`, `--unread` | The alerts bell and the alerts list |
+| `.chapter-tracker`, `.chapter-tracker__character`, `.chapter-tracker__row`, `.chapter-tracker__row--my-turn`, `.chapter-tracker__subtitle` | My Chapters |
+| `.scene-list__subtitle`, `.scene__subtitle`, `.scene-labels`, `.scene-label`, `.scene-label--<id>`, `.scene-form__labels` | Chapter subtitles and labels |
 
 ## SOUL
 

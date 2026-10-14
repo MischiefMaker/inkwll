@@ -2,6 +2,16 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 6c: Ideas from Jcink boards
+
+- An alerts bell in the header for new Passages, your turn, @mentions and
+  finished Chapters.
+- "My Chapters" in the Menu lists each character's open Chapters, whose
+  turn it is and who posted last.
+- Chapters can have a subtitle and labels such as content warnings.
+- Character groups (houses, factions) colour their characters' names, and
+  games can show chosen profile fields beside Passages.
+
 ## 2026-10-14 — Step 6b: Rosters
 
 - A roster of characters other players can apply to take over. Staff pick
