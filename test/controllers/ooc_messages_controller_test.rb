@@ -10,6 +10,15 @@ class OocMessagesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".ooc-message__author", "Bob"
   end
 
+  test "the OOC sidebar has a button to fold it away" do
+    get root_path
+
+    assert_select "#ooc-sidebar[data-controller=collapsible-sidebar]" do
+      assert_select "button.ooc-sidebar__toggle[aria-controls=ooc-sidebar-body]"
+      assert_select "#ooc-sidebar-body .ooc-messages"
+    end
+  end
+
   test "posting a message saves it and broadcasts it to everyone" do
     assert_difference "OocMessage.count" do
       assert_turbo_stream_broadcasts :ooc_chat do

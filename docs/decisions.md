@@ -12,6 +12,10 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: OOC chat folds away
+
+The OOC chat sidebar can collapse into the right edge, leaving a slim "OOC" tab that brings it back. Default picked by Claude: it starts open, and each browser remembers whether the player left it open or folded.
+
 ## 2026-10-14: Character icons in Passages
 
 Each character has one icon, shown beside every one of their Passages. Extra images, including animated GIFs, belong on the character's profile, not in Passages. Kept simple on purpose.

@@ -11,6 +11,8 @@ Short, plain-language notes on what changed. Newest first.
   inside other Areas, and each Setting belongs to one.
 - Areas and Settings can have an image, a description, or both.
 - Extras (all Settings, OOC chat, admin panel) moved into a Menu.
+- The OOC chat can fold into the right edge and slide back out. Each browser
+  remembers whether you left it open.
 - One player name for logging in and for the OOC chat. Accounts now have an
   email address, required unless the game turns that off.
 - Character names can use spaces and special characters.

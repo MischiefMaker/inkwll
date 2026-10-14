@@ -80,7 +80,7 @@ h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr var(--sidebar-width);
+  grid-template-columns: 1fr auto;
   min-height: calc(100vh - 3.5rem);
 }
 
@@ -186,19 +186,53 @@ form.button_to { display: inline; }
 
 .ooc-sidebar {
   display: flex;
-  flex-direction: column;
   border-left: 1px solid var(--color-border);
   background: var(--color-surface);
-  padding: var(--space);
+  width: var(--sidebar-width);
   height: calc(100vh - 3.5rem);
   position: sticky;
   top: 0;
 }
 
+.ooc-sidebar__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: var(--space);
+}
+
 .ooc-sidebar__title { margin: 0 0 0.5rem; }
 
+/* The strip along the chat's left edge that folds it away and brings it back. */
+.ooc-sidebar__toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 1.75rem;
+  padding: 0.75rem 0;
+  border: none;
+  border-right: 1px solid var(--color-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.ooc-sidebar__toggle:hover { color: inherit; background: var(--color-border); }
+.ooc-sidebar__arrow { font-size: 1.25rem; line-height: 1; }
+.ooc-sidebar__tab-label { display: none; writing-mode: vertical-rl; font-weight: bold; letter-spacing: 0.1em; }
+
+.ooc-sidebar--collapsed { width: auto; }
+.ooc-sidebar--collapsed .ooc-sidebar__body { display: none; }
+.ooc-sidebar--collapsed .ooc-sidebar__toggle { border-right: none; }
+.ooc-sidebar--collapsed .ooc-sidebar__arrow { transform: rotate(180deg); }
+.ooc-sidebar--collapsed .ooc-sidebar__tab-label { display: block; }
+
 @media (max-width: 800px) {
-  .ooc-sidebar { border-left: none; border-top: 1px solid var(--color-border); height: 24rem; position: static; }
+  .ooc-sidebar { width: auto; border-left: none; border-top: 1px solid var(--color-border); height: 24rem; position: static; }
+  .ooc-sidebar--collapsed { height: auto; }
 }
 
 .ooc-page { display: flex; flex-direction: column; height: 70vh; }
