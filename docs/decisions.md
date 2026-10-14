@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Inklings and Grimoire keep their rules
+
+Both are rebuilt to work the way their AresMUSH versions do. The changes: Grimoire uses SOUL skills and rolls instead of FS3, and Inklings' unfinished approval-workflow rework is completed in the rebuild.
+
 ## 2026-10-14: XP follows SOUL's rules
 
 1 XP each week, plus 1 XP to every approved participant when a Chapter finishes, with no cap. Players who fall behind get SOUL's catch-up XP (double). SOUL's forum award is dropped because Inkwll has no forum. All the numbers are game settings.

@@ -37,10 +37,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 - Who can read which parts of a profile and application.
 
-**Before SOUL, Inklings and Grimoire**
-
-7. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
-
 **Later**
 
 8. Skins: CSS-only themes, or also swappable page layouts.
