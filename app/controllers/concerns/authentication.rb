@@ -81,7 +81,12 @@ module Authentication
     def start_new_session_for(account)
       account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
         Current.session = session
-        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+        cookie = { value: session.id, httponly: true, same_site: :lax }
+        # Browsers like Firefox won't keep a long-lived login cookie from a
+        # plain http site, so until the game has HTTPS the login lasts until
+        # the browser is closed.
+        cookie[:expires] = 20.years if request.ssl?
+        cookies.signed[:session_id] = cookie
       end
     end
 

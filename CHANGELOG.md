@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Logging in on the live game
+
+- Fixed signing up and logging in on the live game while it runs on plain
+  http. Until it has HTTPS, a login lasts until the browser is closed.
+
 ## 2026-10-14 — Audit follow-ups
 
 - Retired characters and characters on the roster no longer get weekly XP.

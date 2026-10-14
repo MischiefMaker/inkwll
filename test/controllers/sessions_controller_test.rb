@@ -13,6 +13,21 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert cookies[:session_id]
   end
 
+  test "the login cookie lasts until the browser closes over plain http" do
+    post session_path, params: { username: "alice", password: "password" }
+
+    login_cookie = Array(response.headers["Set-Cookie"]).flat_map(&:lines).find { |line| line.start_with?("session_id=") }
+    assert_no_match(/expires=/i, login_cookie)
+  end
+
+  test "the login cookie is long-lived over https" do
+    https!
+    post session_path, params: { username: "alice", password: "password" }
+
+    login_cookie = Array(response.headers["Set-Cookie"]).flat_map(&:lines).find { |line| line.start_with?("session_id=") }
+    assert_match(/expires=/i, login_cookie)
+  end
+
   test "create with invalid credentials" do
     post session_path, params: { username: "alice", password: "wrong" }
 

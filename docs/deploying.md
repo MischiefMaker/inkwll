@@ -39,6 +39,13 @@ It needs these in the repository's **Settings → Secrets and variables → Acti
 To make a registered player the Founder on the live game, run the same
 workflow with their player name in "make Founder" (it doesn't deploy).
 
+To see the live game's recent logs, run **Actions → Show logs**. It only
+reads; nothing on the droplet changes, so Claude runs it without asking.
+
+While the game runs on plain http (no domain yet), logging in lasts until
+the browser is closed: browsers such as Firefox won't keep a long-lived
+login cookie from an http site. With HTTPS, logins last as before.
+
 GitHub keeps secrets hidden: nobody can read them back, and they never show
 in the code or the logs.
 
