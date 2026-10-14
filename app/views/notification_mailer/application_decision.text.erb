@@ -1,0 +1,13 @@
+<% if @character.approved? %>
+Good news: staff approved <%= @character.name %>. They can join <%= term(:scene, count: 2).downcase %> now.
+<% else %>
+Staff returned <%= @character.name %>'s application with a note:
+
+<%= @character.review_note %>
+
+Make the changes, then submit again.
+<% end %>
+
+<%= character_url(@character) %>
+
+<%= render "footer" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_140002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,6 +45,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
     t.boolean "email_only_my_turn", default: false, null: false
     t.string "browser_notifications", default: "off", null: false
     t.integer "browser_notify_minutes", default: 5, null: false
+    t.text "about_me"
     t.index "lower((email)::text)", name: "index_accounts_on_lower_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["active_character_id"], name: "index_accounts_on_active_character_id"
     t.index ["username"], name: "index_accounts_on_username", unique: true
@@ -111,8 +112,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_active_at"
+    t.string "status", default: "approved", null: false
+    t.datetime "submitted_at"
+    t.datetime "reviewed_at"
+    t.bigint "reviewed_by_id"
+    t.text "review_note"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
+    t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"
     t.index ["room_id"], name: "index_characters_on_room_id"
   end
 
@@ -149,6 +156,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
     t.index ["source_room_id"], name: "index_exits_on_source_room_id"
   end
 
+  create_table "gallery_images", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.string "caption"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_gallery_images_on_character_id"
+  end
+
   create_table "game_settings", force: :cascade do |t|
     t.boolean "email_required", default: true, null: false
     t.boolean "approval_required", default: true, null: false
@@ -161,6 +177,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
     t.boolean "block_vpns", default: false, null: false
     t.boolean "guest_chat", default: true, null: false
     t.boolean "players_public", default: false, null: false
+    t.datetime "ic_anchor_at"
+    t.date "ic_anchor_date"
+    t.decimal "ic_days_per_day", precision: 6, scale: 2, default: "1.0", null: false
+    t.boolean "require_description", default: false, null: false
+    t.boolean "require_icon", default: false, null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -199,6 +220,42 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
     t.index ["character_id"], name: "index_poses_on_character_id"
     t.index ["scene_id", "sequence"], name: "index_poses_on_scene_id_and_sequence", unique: true
     t.index ["scene_id"], name: "index_poses_on_scene_id"
+  end
+
+  create_table "profile_fields", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "section", default: "demographics", null: false
+    t.string "field_type", default: "text", null: false
+    t.boolean "public", default: true, null: false
+    t.boolean "required", default: false, null: false
+    t.integer "position", default: 0, null: false
+    t.string "hint"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "profile_values", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "profile_field_id", null: false
+    t.text "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id", "profile_field_id"], name: "index_profile_values_on_character_id_and_profile_field_id", unique: true
+    t.index ["character_id"], name: "index_profile_values_on_character_id"
+    t.index ["profile_field_id"], name: "index_profile_values_on_profile_field_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "other_character_id"
+    t.string "other_name"
+    t.string "kind", default: "friend", null: false
+    t.text "note"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_relationships_on_character_id"
+    t.index ["other_character_id"], name: "index_relationships_on_other_character_id"
   end
 
   create_table "remembered_characters", force: :cascade do |t|
@@ -326,17 +383,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
   add_foreign_key "bans", "accounts"
   add_foreign_key "bans", "accounts", column: "banned_by_id"
   add_foreign_key "characters", "accounts"
+  add_foreign_key "characters", "accounts", column: "reviewed_by_id"
   add_foreign_key "characters", "rooms"
   add_foreign_key "conversation_members", "accounts"
   add_foreign_key "conversation_members", "characters", column: "via_character_id"
   add_foreign_key "conversation_members", "conversations"
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
+  add_foreign_key "gallery_images", "characters"
   add_foreign_key "messages", "accounts"
   add_foreign_key "messages", "conversations"
   add_foreign_key "ooc_messages", "accounts"
   add_foreign_key "poses", "characters"
   add_foreign_key "poses", "scenes"
+  add_foreign_key "profile_values", "characters"
+  add_foreign_key "profile_values", "profile_fields"
+  add_foreign_key "relationships", "characters"
+  add_foreign_key "relationships", "characters", column: "other_character_id"
   add_foreign_key "remembered_characters", "accounts"
   add_foreign_key "remembered_characters", "characters", on_delete: :cascade
   add_foreign_key "reports", "accounts"

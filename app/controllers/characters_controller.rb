@@ -6,8 +6,14 @@ class CharactersController < ApplicationController
     @characters = current_account.characters.includes(:room).order(:name)
   end
 
+  # Profiles of characters still waiting for approval are only shown to
+  # their player and staff.
   def show
-    @character = Character.find(params[:id])
+    @character = Character.includes(profile_values: :profile_field).find(params[:id])
+    @mine = @character.account_id == current_account.id
+    @staff_view = current_account.staff?
+    raise ActiveRecord::RecordNotFound unless @character.approved? || @mine || @staff_view
+    @tab = params[:tab].presence_in(%w[ profile application gallery relationships logs ]) || "profile"
   end
 
   def new
@@ -42,6 +48,6 @@ class CharactersController < ApplicationController
     end
 
     def character_params
-      params.expect(character: [ :name, :description, :icon, :remove_icon ])
+      params.expect(character: [ :name, :description, :icon, :remove_icon, profile: {} ])
     end
 end

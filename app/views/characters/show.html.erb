@@ -1,25 +1,34 @@
 <% content_for :title, "#{@character.name} · Inkwll" %>
+<% show_private = @mine || @staff_view %>
 
-<h1 class="character-heading"><%= character_icon(@character, size: :large) %> <%= @character.name %></h1>
+<article class="character-profile character-profile--<%= @character.status %>">
+  <header class="character-profile__header">
+    <%= character_icon(@character, size: :large) %>
+    <div class="character-profile__heading">
+      <h1 class="page-title character-profile__name"><%= @character.name %></h1>
+      <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
+      <div class="character-profile__actions">
+        <% if @mine %>
+          <%= link_to "Edit", edit_character_path(@character), class: "button button--quiet" %>
+        <% else %>
+          <%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %>
+        <% end %>
+      </div>
+    </div>
+  </header>
 
-<p class="muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
-<% if @character.account_id != current_account.id %>
-  <p class="character__message"><%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %></p>
-<% end %>
+  <% if @mine || @staff_view %>
+    <%= render "characters/application_status", character: @character %>
+  <% end %>
 
-<% if @character.description.present? %>
-  <div class="prose"><%= simple_format @character.description %></div>
-<% end %>
+  <nav class="profile-tabs" aria-label="Profile sections">
+    <% { "profile" => "Profile", "application" => "Application", "gallery" => "Gallery", "relationships" => "Relationships", "logs" => term(:log, count: 2) }.each do |tab, label| %>
+      <%= link_to label, character_path(@character, tab: tab), class: "profile-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
+            aria: { current: (@tab == tab ? "page" : nil) } %>
+    <% end %>
+  </nav>
 
-<% manuscripts = Scene.finished.visible_to(current_account).where(id: @character.scene_participants.select(:scene_id)).includes(:room, participants: :character).order(finished_at: :desc).limit(20) %>
-<% if manuscripts.any? %>
-  <section class="character-manuscripts">
-    <h2 class="section-title"><%= term(:log, count: 2) %></h2>
-    <%= render partial: "archives/manuscript", collection: manuscripts, as: :scene %>
-    <p class="text"><%= link_to "All of #{@character.name}'s #{term(:log, count: 2).downcase}", archives_path(character_id: @character.id) %></p>
+  <section class="character-profile__panel character-profile__panel--<%= @tab %>">
+    <%= render "characters/tabs/#{@tab}", character: @character, show_private: show_private %>
   </section>
-<% end %>
-
-<% if @character.account == current_account %>
-  <p class="text"><%= link_to "Edit", edit_character_path(@character) %></p>
-<% end %>
+</article>

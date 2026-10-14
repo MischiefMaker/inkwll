@@ -1,22 +1,53 @@
-<%= form_with model: character, class: "form" do |form| %>
+<%= form_with model: character, class: "form character-form" do |form| %>
   <%= render "shared/errors", record: character %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, required: true, autofocus: true %>
-  </div>
-  <div class="field">
-    <%= form.label :icon %>
-    <% if character.icon.attached? %>
-      <%= character_icon(character, size: :large) %>
-      <label class="field--checkbox"><%= form.check_box :remove_icon %> Remove this icon</label>
-    <% end %>
-    <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
-    <small class="hint">Shown beside every <%= term(:pose).downcase %>. A square picture works best. PNG, JPEG, GIF or WebP, up to 5 MB.</small>
-  </div>
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, rows: 8 %>
-  </div>
+  <fieldset class="fieldset character-form__basics">
+    <legend class="fieldset__legend">Basics</legend>
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name, required: true, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= form.label :icon %>
+      <% if character.icon.attached? %>
+        <%= character_icon(character, size: :large) %>
+        <label class="field--checkbox"><%= form.check_box :remove_icon %> Remove this icon</label>
+      <% end %>
+      <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+      <small class="hint">Shown beside every <%= term(:pose).downcase %>. A square picture works best. PNG, JPEG, GIF or WebP, up to 5 MB.<%= " Needed before you submit." if GameSetting.current.require_icon? %></small>
+    </div>
+    <div class="field">
+      <%= form.label :description %>
+      <%= form.text_area :description, rows: 8 %>
+      <small class="hint">How they look and come across.<%= " Needed before you submit." if GameSetting.current.require_description? %></small>
+    </div>
+  </fieldset>
+
+  <% { "demographics" => "Demographics", "application" => "Application" }.each do |section, heading| %>
+    <% fields = ProfileField.in_section(section) %>
+    <% next if fields.empty? %>
+    <fieldset class="fieldset character-form__<%= section %>">
+      <legend class="fieldset__legend"><%= heading %></legend>
+      <% fields.each do |field| %>
+        <% value = character.profile_value_for(field)&.value %>
+        <div class="field character-form__field character-form__field--<%= field.field_type %>">
+          <%= label_tag "character_profile_#{field.id}", field.name + (field.required? ? " *" : "") %>
+          <% name = "character[profile][#{field.id}]" %>
+          <% case field.field_type %>
+          <% when "long_text" %>
+            <%= text_area_tag name, value, id: "character_profile_#{field.id}", rows: 6 %>
+          <% when "birthday", "date" %>
+            <%= date_field_tag name, value, id: "character_profile_#{field.id}" %>
+          <% when "number" %>
+            <%= number_field_tag name, value, id: "character_profile_#{field.id}" %>
+          <% else %>
+            <%= text_field_tag name, value, id: "character_profile_#{field.id}", maxlength: 200 %>
+          <% end %>
+          <small class="hint"><%= field.hint %><%= " Only you and staff can see this." unless field.public? %></small>
+        </div>
+      <% end %>
+    </fieldset>
+  <% end %>
+
   <%= form.submit class: "button" %>
 <% end %>

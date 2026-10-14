@@ -1,0 +1,34 @@
+<% images = character.gallery_images.ordered.with_attached_image %>
+<% if images.any? %>
+  <div class="gallery">
+    <% images.each do |picture| %>
+      <figure class="gallery__item">
+        <%= link_to url_for(picture.image), class: "gallery__link", target: "_blank", rel: "noopener" do %>
+          <%= image_tag picture.image, alt: picture.caption.to_s, class: "gallery__image", loading: "lazy" %>
+        <% end %>
+        <% if picture.caption.present? %><figcaption class="gallery__caption"><%= picture.caption %></figcaption><% end %>
+        <% if character.account_id == current_account.id %>
+          <%= button_to "Remove", character_gallery_image_path(character, picture), method: :delete, class: "button-link gallery__remove",
+                form: { data: { turbo_confirm: "Remove this picture?" } } %>
+        <% end %>
+      </figure>
+    <% end %>
+  </div>
+<% else %>
+  <p class="muted">No pictures yet.</p>
+<% end %>
+
+<% if character.account_id == current_account.id && images.size < GalleryImage::MAX_PER_CHARACTER %>
+  <%= form_with model: GalleryImage.new, url: character_gallery_images_path(character), class: "form gallery__add" do |form| %>
+    <h2 class="section-title">Add a picture</h2>
+    <div class="field">
+      <%= form.file_field :image, required: true, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+      <small class="hint">PNG, JPEG, GIF or WebP, up to 5 MB. Up to <%= GalleryImage::MAX_PER_CHARACTER %> pictures.</small>
+    </div>
+    <div class="field">
+      <%= form.label :caption, "Caption (optional)" %>
+      <%= form.text_field :caption, maxlength: 200 %>
+    </div>
+    <%= form.submit "Add picture", class: "button" %>
+  <% end %>
+<% end %>

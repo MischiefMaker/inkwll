@@ -1,0 +1,25 @@
+<%# The filled-in fields of one section, as a list of name and value. %>
+<% rows = ProfileField.in_section(section).filter_map do |field|
+     next unless field.public? || show_private
+     value = character.profile_value_for(field)
+     [ field, value ] if value&.value.present?
+   end %>
+<% if rows.any? || local_assigns[:extra] %>
+  <dl class="details-list profile-fields profile-fields--<%= section %>">
+    <%= local_assigns[:extra] %>
+    <% rows.each do |field, value| %>
+      <div class="profile-fields__row profile-fields__row--<%= field.field_type %>">
+        <dt class="details-list__term"><%= field.name %><%= tag.span(" (private)", class: "muted profile-fields__private") unless field.public? %></dt>
+        <dd class="details-list__value">
+          <% if field.date? && (date = value.as_date) %>
+            <%= date.to_fs(:long) %>
+          <% elsif field.field_type == "long_text" %>
+            <div class="prose"><%= simple_format value.value %></div>
+          <% else %>
+            <%= value.value %>
+          <% end %>
+        </dd>
+      </div>
+    <% end %>
+  </dl>
+<% end %>

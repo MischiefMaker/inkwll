@@ -1,0 +1,10 @@
+<h1 style="font-size:20px"><%= @character.name %></h1>
+<% if @character.approved? %>
+  <p>Good news: staff approved <%= @character.name %>. They can join <%= term(:scene, count: 2).downcase %> now.</p>
+<% else %>
+  <p>Staff returned <%= @character.name %>'s application with a note:</p>
+  <%= simple_format @character.review_note.to_s, style: "border-left:3px solid #ddd;padding-left:10px" %>
+  <p>Make the changes, then submit again.</p>
+<% end %>
+<p><%= link_to "Open #{@character.name}'s profile", character_url(@character) %></p>
+<%= render "footer" %>

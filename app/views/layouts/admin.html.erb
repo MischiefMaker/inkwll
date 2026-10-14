@@ -8,6 +8,10 @@
     <% if current_account.can?(:manage_staff) %>
       <%= link_to "Players and staff", admin_accounts_path, class: ("is-current" if controller_name == "accounts") %>
     <% end %>
+    <% if current_account.can?(:review_apps) %>
+      <% waiting = Character.submitted.count %>
+      <%= link_to "Applications#{" (#{waiting})" if waiting.positive?}", admin_applications_path, class: ("is-current" if controller_name == "applications") %>
+    <% end %>
     <% if current_account.can?(:handle_reports) %>
       <% open_reports = Report.unresolved.count %>
       <%= link_to "Reports#{" (#{open_reports})" if open_reports.positive?}", admin_reports_path, class: ("is-current" if controller_name.in?(%w[ reports warnings ])) %>
@@ -19,6 +23,7 @@
       <%= link_to "Characters", admin_characters_path, class: ("is-current" if controller_name == "characters") %>
     <% end %>
     <% if current_account.can?(:change_game_settings) %>
+      <%= link_to "Profile fields", admin_profile_fields_path, class: ("is-current" if controller_name == "profile_fields") %>
       <%= link_to "Game settings", edit_admin_game_settings_path, class: ("is-current" if controller_name == "game_settings") %>
     <% end %>
   </nav>

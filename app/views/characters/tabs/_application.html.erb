@@ -1,0 +1,6 @@
+<% if ProfileField.in_section("application").any? %>
+  <%= render "characters/profile_fields", character: character, section: "application", show_private: show_private %>
+<% end %>
+<% if ProfileField.in_section("application").none? || character.profile_values.none? { |v| v.profile_field.section == "application" && v.value.present? } %>
+  <p class="muted">Nothing here yet.</p>
+<% end %>

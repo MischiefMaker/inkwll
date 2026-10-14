@@ -14,7 +14,29 @@
     <%= form.check_box :approval_required %>
     <%= form.label :approval_required, "Characters need staff approval before they can play" %>
   </div>
-  <p class="muted">Approval isn't built yet; this switch takes effect when it is.</p>
+  <p class="muted">Until approved, characters can explore but can't join <%= term(:scene, count: 2).downcase %>. Applications are under Applications in the admin panel.</p>
+
+  <div class="field field--checkbox">
+    <%= form.check_box :require_description %>
+    <%= form.label :require_description, "Characters need a written description before they're submitted" %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :require_icon %>
+    <%= form.label :require_icon, "Characters need an icon before they're submitted" %>
+  </div>
+  <p class="muted">The questions on profiles and applications are under Profile fields.</p>
+
+  <h2 class="section-title">Game date</h2>
+  <div class="field">
+    <%= form.label :ic_today, "Today's date in the game" %>
+    <%= form.date_field :ic_today, value: @game_setting.ic_today %>
+    <small class="hint">From now on it moves by itself. Characters' ages are worked out from their birthdays using it. Leave empty to use the real date.</small>
+  </div>
+  <div class="field">
+    <%= form.label :ic_days_per_day, "Game days that pass per real day" %>
+    <%= form.number_field :ic_days_per_day, min: 0.01, max: 365, step: 0.01 %>
+    <small class="hint">1 means game time runs at the same speed as real time; 3 means three game days pass every real day.</small>
+  </div>
 
   <div class="field field--checkbox">
     <%= form.check_box :players_public %>

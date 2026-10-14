@@ -1,0 +1,34 @@
+<% content_for :title, "#{@character.name} · Applications · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Applications", admin_applications_path %></p>
+<h1 class="character-heading"><%= character_icon(@character, size: :large) %> <%= @character.name %></h1>
+<p class="muted">Played by <%= @character.account.display_name %>. <%= @character.status.humanize %><%= ", submitted #{time_ago_in_words(@character.submitted_at)} ago" if @character.submitted_at %>.</p>
+
+<% extra = capture do %>
+  <% if (age = @character.age) %>
+    <div class="profile-fields__row"><dt class="details-list__term">Age</dt><dd class="details-list__value"><%= age %></dd></div>
+  <% end %>
+<% end %>
+<h2 class="section-title">Demographics</h2>
+<%= render "characters/profile_fields", character: @character, section: "demographics", show_private: true, extra: extra %>
+<% if @character.description.present? %>
+  <h2 class="section-title">Description</h2>
+  <div class="prose"><%= simple_format @character.description %></div>
+<% end %>
+<h2 class="section-title">Application</h2>
+<%= render "characters/profile_fields", character: @character, section: "application", show_private: true %>
+
+<% if @character.submitted? %>
+  <section class="application-review">
+    <h2 class="section-title">Decision</h2>
+    <%= button_to "Approve", admin_application_path(@character), method: :patch, params: { decision: "approve" }, class: "button" %>
+    <%= form_with url: admin_application_path(@character), method: :patch, class: "form application-review__return" do |form| %>
+      <%= hidden_field_tag :decision, "return" %>
+      <div class="field">
+        <%= form.label :note, "Or return it to the player, saying what to change" %>
+        <%= form.text_area :note, rows: 4, required: true %>
+      </div>
+      <%= form.submit "Return to player", class: "button button--quiet" %>
+    <% end %>
+  </section>
+<% end %>

@@ -16,6 +16,8 @@ class ScenesController < ApplicationController
     redirect_to @scene
   rescue ActiveRecord::RecordInvalid => e
     redirect_to room_path(current_character.room), alert: e.record.errors.full_messages.to_sentence
+  rescue ArgumentError => e
+    redirect_to room_path(current_character.room), alert: e.message
   end
 
   def edit

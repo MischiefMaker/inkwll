@@ -6,6 +6,16 @@ class Character < ApplicationRecord
   has_many :scenes, through: :scene_participants
   has_many :scene_invitations, dependent: :destroy
   has_many :poses, dependent: :nullify
+  has_many :profile_values, dependent: :delete_all
+  has_many :gallery_images, dependent: :destroy
+  has_many :relationships, dependent: :delete_all
+  has_many :relationships_with, class_name: "Relationship", foreign_key: :other_character_id, dependent: :nullify, inverse_of: :other_character
+  belongs_to :reviewed_by, class_name: "Account", optional: true
+
+  # Applications: a new character is a draft until its player submits it,
+  # then staff approve it or return it with a note. Games that don't need
+  # approval skip straight to approved.
+  enum :status, { draft: "draft", submitted: "submitted", approved: "approved", returned: "returned" }, validate: true
 
   # The small picture shown beside every one of this character's Passages.
   has_one_attached :icon
@@ -15,15 +25,73 @@ class Character < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 40 }, uniqueness: { case_sensitive: false }
   validate :icon_is_a_reasonable_picture
+  validates_associated :profile_values
 
   after_save { icon.purge_later if remove_icon && icon.attached? }
 
   before_validation :place_in_starting_room, on: :create
+  before_validation -> { self.status = "draft" if GameSetting.current.approval_required? }, on: :create
 
   after_commit :refresh_rooms, on: [ :create, :update ], if: :saved_change_to_room_id?
   after_update_commit :announce_move, if: :saved_change_to_room_id?
   # Moving counts as being active, for the Where list's idle times.
   before_update -> { self.last_active_at = Time.current }, if: :room_id_changed?
+
+  # Whether the character can take part in Chapters: approved, or the game
+  # doesn't need approval.
+  def can_play?
+    approved? || !GameSetting.current.approval_required?
+  end
+
+  # --- Profile -----------------------------------------------------------------
+
+  def profile_value_for(field)
+    profile_values.detect { |value| value.profile_field_id == field.id }
+  end
+
+  # Saves the profile fields from the edit form: { field_id => text }.
+  def profile=(values)
+    values.to_h.each do |field_id, text|
+      field = ProfileField.find_by(id: field_id) or next
+      value = profile_values.detect { |v| v.profile_field_id == field.id } || profile_values.build(profile_field: field)
+      value.value = text.to_s.strip.presence
+    end
+  end
+
+  def birthday
+    field = ProfileField.find_by(field_type: "birthday") or return
+    profile_value_for(field)&.as_date
+  end
+
+  def age
+    IcClock.age(birthday)
+  end
+
+  # --- Applications ------------------------------------------------------------
+
+  # What's still needed before the character can be submitted.
+  def missing_for_submission
+    settings = GameSetting.current
+    missing = ProfileField.where(required: true).ordered.reject { |field| profile_value_for(field)&.value.present? }.map(&:name)
+    missing << "a description" if settings.require_description? && description.blank?
+    missing << "an icon" if settings.require_icon? && !icon.attached?
+    missing
+  end
+
+  def submit!
+    return false unless (draft? || returned?) && missing_for_submission.empty?
+    update!(status: "submitted", submitted_at: Time.current)
+  end
+
+  def approve!(by:)
+    update!(status: "approved", reviewed_at: Time.current, reviewed_by: by, review_note: nil)
+    NotificationMailer.application_decision(self).deliver_later if account.wants_email?
+  end
+
+  def return!(by:, note:)
+    update!(status: "returned", reviewed_at: Time.current, reviewed_by: by, review_note: note.to_s.strip.presence)
+    NotificationMailer.application_decision(self).deliver_later if account.wants_email?
+  end
 
   # Moves the character through an exit in its current room.
   def move_through(exit)

@@ -50,7 +50,10 @@ class Scene < ApplicationRecord
   scope :by_activity, -> { order(Arel.sql("COALESCE(scenes.last_pose_at, scenes.created_at) DESC")) }
 
   # Starts a new scene in the room the character is standing in.
+  NOT_APPROVED = "needs staff approval before joining #{Term[:scene, count: 2].downcase}".freeze
+
   def self.start!(character:, storyteller: false, **attributes)
+    raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
     settings = GameSetting.current
     transaction do
       scene = create!(room: character.room, auto_skip: settings.auto_skip, turn_minutes: settings.turn_minutes, **attributes)
@@ -201,6 +204,7 @@ class Scene < ApplicationRecord
   end
 
   def join!(character)
+    raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
     raise ArgumentError, "#{character.name} can't join this #{Term[:scene]}." unless can_join?(character)
 
     with_lock do
@@ -228,6 +232,7 @@ class Scene < ApplicationRecord
   # kind is "passage", "npc" (with npc_name), "narration" or "ooc"; see Pose.
   def post!(character, body, kind: "passage", npc_name: nil)
     participant = participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
+    raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
     raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
     raise ArgumentError, "That kind of post isn't allowed here." unless postable_kinds(participant).include?(kind)
 

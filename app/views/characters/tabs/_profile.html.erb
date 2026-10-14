@@ -1,0 +1,19 @@
+<% extra = capture do %>
+  <div class="profile-fields__row profile-fields__row--name">
+    <dt class="details-list__term">Name</dt>
+    <dd class="details-list__value"><%= character.name %></dd>
+  </div>
+  <% if (age = character.age) %>
+    <div class="profile-fields__row profile-fields__row--age">
+      <dt class="details-list__term">Age</dt>
+      <dd class="details-list__value"><%= age %></dd>
+    </div>
+  <% end %>
+<% end %>
+<h2 class="section-title">Demographics</h2>
+<%= render "characters/profile_fields", character: character, section: "demographics", show_private: show_private, extra: extra %>
+
+<% if character.description.present? %>
+  <h2 class="section-title">Description</h2>
+  <div class="prose character-profile__description"><%= simple_format character.description %></div>
+<% end %>

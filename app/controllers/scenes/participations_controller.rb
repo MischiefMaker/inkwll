@@ -6,6 +6,9 @@ class Scenes::ParticipationsController < Scenes::BaseController
   # Joining from elsewhere walks the character over first ("Travel here and
   # join"), so characters are always where their new Chapter is.
   def create
+    unless current_character.can_play?
+      return redirect_to @scene, alert: "#{current_character.name} #{Scene::NOT_APPROVED}."
+    end
     unless @scene.can_join?(current_character)
       return redirect_to @scene, alert: "#{current_character.name} can't join this #{Term[:scene]}."
     end

@@ -25,6 +25,11 @@ class NotificationMailer < ApplicationMailer
     notify member.account, subject: "New message: #{@conversation.subject}"
   end
 
+  def application_decision(character)
+    @character = character
+    notify character.account, subject: character.approved? ? "#{character.name} has been approved" : "#{character.name} was returned with a note"
+  end
+
   # entries: [participant, passages, more] for each Chapter, and
   # conversations: [member, messages, more] for each Messages conversation.
   def digest(account, entries, conversations = [])

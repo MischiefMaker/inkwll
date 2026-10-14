@@ -25,7 +25,7 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
     get room_path(rooms(:commons))
     assert_select "a", text: /1 finished chapter in the Archives/
 
-    get character_path(characters(:wren))
+    get character_path(characters(:wren), tab: "logs")
     assert_select ".manuscript__title a", text: "Duel at Dawn"
   end
 

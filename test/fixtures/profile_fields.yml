@@ -1,0 +1,21 @@
+birthday:
+  name: Birthday
+  section: demographics
+  field_type: birthday
+  public: true
+  position: 1
+
+hometown:
+  name: Hometown
+  section: demographics
+  field_type: text
+  public: true
+  required: true
+  position: 2
+
+background:
+  name: Background
+  section: application
+  field_type: long_text
+  public: false
+  position: 1

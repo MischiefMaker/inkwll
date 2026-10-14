@@ -1,0 +1,9 @@
+<% manuscripts = Scene.finished.visible_to(current_account).where(id: character.scene_participants.select(:scene_id)).includes(:room, participants: :character).order(finished_at: :desc).limit(20) %>
+<% if manuscripts.any? %>
+  <div class="character-manuscripts">
+    <%= render partial: "archives/manuscript", collection: manuscripts, as: :scene %>
+    <p class="text"><%= link_to "All of #{character.name}'s #{term(:log, count: 2).downcase}", archives_path(character_id: character.id) %></p>
+  </div>
+<% else %>
+  <p class="muted">No finished <%= term(:scene, count: 2).downcase %> yet.</p>
+<% end %>

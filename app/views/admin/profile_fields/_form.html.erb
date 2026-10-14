@@ -1,0 +1,34 @@
+<%= form_with model: [ :admin, field ], class: "form profile-field-form" do |form| %>
+  <%= render "shared/errors", record: field %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 60 %>
+  </div>
+  <div class="field">
+    <%= form.label :section, "Where it goes" %>
+    <%= form.select :section, [ [ "Demographics (top of the profile)", "demographics" ], [ "Application tab", "application" ] ] %>
+  </div>
+  <div class="field">
+    <%= form.label :field_type, "Kind of answer" %>
+    <%= form.select :field_type, ProfileField::FIELD_TYPES.map { |key, label| [ label, key ] } %>
+  </div>
+  <div class="field">
+    <%= form.label :hint, "Help text (optional)" %>
+    <%= form.text_field :hint, maxlength: 300 %>
+  </div>
+  <% if field.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <div class="field field--checkbox">
+    <%= form.check_box :public %>
+    <%= form.label :public, "Everyone can see it (otherwise only the player and staff)" %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :required %>
+    <%= form.label :required, "Must be filled in before submitting" %>
+  </div>
+  <%= form.submit class: "button" %>
+<% end %>

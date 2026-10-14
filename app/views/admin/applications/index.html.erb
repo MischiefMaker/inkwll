@@ -1,0 +1,30 @@
+<% content_for :title, "Applications · Admin · Inkwll" %>
+
+<h1 class="page-title">Applications</h1>
+
+<h2 class="section-title">Waiting</h2>
+<% if @waiting.any? %>
+  <table class="table applications">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Character</th><th class="table__heading">Player</th><th class="table__heading">Submitted</th></tr></thead>
+    <tbody class="table__body">
+      <% @waiting.each do |character| %>
+        <tr class="table__row">
+          <td class="table__cell"><%= link_to character.name, admin_application_path(character) %></td>
+          <td class="table__cell"><%= character.account.display_name %></td>
+          <td class="table__cell"><%= time_ago_in_words(character.submitted_at) %> ago</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">Nothing waiting.</p>
+<% end %>
+
+<% if @recent.any? %>
+  <h2 class="section-title">Recently reviewed</h2>
+  <ul class="list applications__recent">
+    <% @recent.each do |character| %>
+      <li class="list__item"><%= link_to character.name, character %>: <%= character.approved? ? "approved" : "returned" %> by <%= character.reviewed_by&.display_name %>, <%= time_ago_in_words(character.reviewed_at) %> ago</li>
+    <% end %>
+  </ul>
+<% end %>

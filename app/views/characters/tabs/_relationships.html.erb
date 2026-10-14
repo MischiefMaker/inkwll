@@ -1,0 +1,47 @@
+<% relationships = character.relationships.ordered.includes(:other_character) %>
+<% if relationships.any? %>
+  <ul class="relationships">
+    <% relationships.each do |relationship| %>
+      <li class="relationships__item relationships__item--<%= relationship.kind %>">
+        <div class="relationships__who">
+          <% if relationship.other_character %>
+            <%= character_icon(relationship.other_character, size: :small) %>
+            <%= link_to relationship.other_character.name, relationship.other_character, class: "relationships__name" %>
+          <% else %>
+            <%= tag.span relationship.other_name.first.upcase, class: "character-icon character-icon--small character-icon--initial character-icon--npc", aria: { hidden: true } %>
+            <span class="relationships__name"><%= relationship.other_name %></span>
+          <% end %>
+          <span class="badge relationships__kind"><%= Relationship::KINDS[relationship.kind] %></span>
+        </div>
+        <% if relationship.note.present? %>
+          <div class="relationships__note prose"><%= simple_format relationship.note %></div>
+        <% end %>
+        <% if character.account_id == current_account.id %>
+          <%= button_to "Remove", character_relationship_path(character, relationship), method: :delete, class: "button-link relationships__remove" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No relationships yet.</p>
+<% end %>
+
+<% if character.account_id == current_account.id %>
+  <%= form_with model: Relationship.new, url: character_relationships_path(character), class: "form relationships__add" do |form| %>
+    <h2 class="section-title">Add a relationship</h2>
+    <div class="field">
+      <%= form.label :other_character_name, "With" %>
+      <%= form.text_field :other_character_name, required: true, maxlength: 60 %>
+      <small class="hint">A character's name links to their profile. Any other name (an NPC, someone offscreen) is fine too.</small>
+    </div>
+    <div class="field">
+      <%= form.label :kind %>
+      <%= form.select :kind, Relationship::KINDS.map { |key, label| [ label, key ] } %>
+    </div>
+    <div class="field">
+      <%= form.label :note, "Note (optional)" %>
+      <%= form.text_area :note, rows: 3 %>
+    </div>
+    <%= form.submit "Add relationship", class: "button" %>
+  <% end %>
+<% end %>

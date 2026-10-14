@@ -15,7 +15,13 @@ Rails.application.routes.draw do
   get "unsubscribe/:token", to: "unsubscribes#show", as: :unsubscribe
   post "unsubscribe/:token", to: "unsubscribes#create"
 
-  resources :characters, except: :destroy
+  resources :characters, except: :destroy do
+    scope module: :characters do
+      resources :gallery_images, only: %i[ create destroy ]
+      resources :relationships, only: %i[ create destroy ]
+      resource :submission, only: :create
+    end
+  end
   resource :active_character, only: :update
   resources :areas, only: :show
   resources :saved_places, only: :index, path: "my_places"
@@ -68,6 +74,8 @@ Rails.application.routes.draw do
     resources :accounts, only: %i[ index edit update ]
     resources :characters, only: %i[ index destroy ]
     resource :game_settings, only: %i[ edit update ]
+    resources :profile_fields, except: %i[ show new ]
+    resources :applications, only: %i[ index show update ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do
       resource :hiding, only: :create
