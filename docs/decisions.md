@@ -16,6 +16,12 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Who plays which character is a game setting
+
+Each game decides whether a character's player is shown to everyone or only to staff (owner). Either way, anyone can send a Message "to the player of" a character, and in staff-only mode that doesn't reveal who the player is. Staff always see who plays what.
+
+Default picked by Claude: new games start with players hidden (staff only), to serve the anti-clique aim. Built with Messages (step 3b) and profiles (step 4).
+
 ---
 
 ## 2026-10-14: Step 2 details picked while building
