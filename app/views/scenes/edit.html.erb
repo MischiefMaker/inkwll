@@ -1,0 +1,34 @@
+<% content_for :title, "#{term(:scene)} settings · Inkwll" %>
+
+<h1><%= @scene.title %>: settings</h1>
+
+<%= form_with model: @scene, class: "form" do |form| %>
+  <%= render "shared/errors", record: @scene %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, required: true, maxlength: 100 %>
+  </div>
+  <fieldset class="field">
+    <legend>Who can join</legend>
+    <% Scene.visibilities.each_key do |visibility| %>
+      <label class="field--checkbox"><%= form.radio_button :visibility, visibility %> <%= t("terms.scene_visibility.#{visibility}") %></label>
+    <% end %>
+  </fieldset>
+  <div class="field">
+    <%= form.label :pose_mode, "Turns" %>
+    <%= form.select :pose_mode, Scene.pose_modes.keys.map { |mode| [ pose_mode_label(mode), mode ] } %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :auto_skip %>
+    <%= form.label :auto_skip, "Auto-skip players who don't take their turn" %>
+  </div>
+  <div class="field">
+    <%= form.label :turn_minutes, "Minutes before the warning" %>
+    <%= form.number_field :turn_minutes, min: 1, max: 120 %>
+    <small>After the warning, the player has <%= Scene::Turns::WARNING_MINUTES %> more minutes to click "I'm here!".</small>
+  </div>
+  <div class="form--inline">
+    <%= form.submit "Save", class: "button" %>
+    <%= link_to "Cancel", scene_path(@scene) %>
+  </div>
+<% end %>

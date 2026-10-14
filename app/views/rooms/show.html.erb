@@ -23,6 +23,8 @@
     </div>
   <% end %>
 
+  <%= render "scenes/list", room: @room %>
+
   <section>
     <h2><%= term(:exit, count: 2) %></h2>
     <% if @room.exits.any? %>

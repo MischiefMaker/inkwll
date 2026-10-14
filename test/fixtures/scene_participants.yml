@@ -1,0 +1,21 @@
+duel_wren:
+  scene: duel
+  character: wren
+  position: 1
+  last_read_sequence: 1
+
+duel_sable:
+  scene: duel
+  character: sable
+  position: 2
+  last_read_sequence: 2
+
+secret_sable:
+  scene: secret
+  character: sable
+  position: 1
+
+tea_moth:
+  scene: tea
+  character: moth
+  position: 1

@@ -62,6 +62,16 @@ class Account < ApplicationRecord
     remembered_characters.find_by(context: context)&.character
   end
 
+  # May take the storyteller role in a scene: the Storyteller flag, or staff.
+  def may_storytell?
+    storyteller? || staff?
+  end
+
+  # Reloads this player's Chapter tabs on whatever page they have open.
+  def broadcast_chapter_tabs
+    Turbo::StreamsChannel.broadcast_replace_later_to [ self, :chapters ], target: "chapter_tabs", partial: "chapter_tabs/frame"
+  end
+
   # --- Staff -----------------------------------------------------------------
 
   def staff?

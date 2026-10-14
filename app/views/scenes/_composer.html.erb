@@ -1,0 +1,20 @@
+<%# Writing a Passage. Kept as-is while the page updates live (turbo
+    permanent), so a half-written Passage is never lost. Its id includes the
+    character, so switching characters gives a fresh box. %>
+<div id="composer_<%= scene.id %>_<%= participant.character_id %>" class="composer" data-turbo-permanent>
+  <%= form_with url: scene_poses_path(scene), scope: :pose, class: "form",
+        data: { controller: "composer", action: "turbo:submit-end->composer#reset keydown->composer#shortcut submit->composer#check" } do |form| %>
+    <%= hidden_field_tag :post_anyway, "0", data: { composer_target: "anyway" } %>
+    <%= form.label :body, "Write a #{term(:pose).downcase} as #{participant.character.name}", class: "composer__label" %>
+    <%= form.text_area :body, rows: 4, required: true, data: { composer_target: "body" } %>
+    <div class="composer__warning" hidden data-composer-target="warning">
+      <span data-composer-target="warningText"></span>
+      <button type="button" class="button" data-action="composer#postAnyway">Post anyway</button>
+      <button type="button" class="button-link" data-action="composer#cancel">Wait</button>
+    </div>
+    <div class="composer__actions">
+      <small class="muted">Ctrl+Enter to post.</small>
+      <%= form.submit "Post", class: "button" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<%# How a character who isn't in this Chapter gets in. Joining from another
+    Setting walks them over first. %>
+<div class="scene-join">
+  <% if current_character.nil? %>
+    <p class="muted"><%= link_to "Create a character", new_character_path %> to join.</p>
+  <% elsif scene.can_join?(current_character) %>
+    <% here = current_character.room_id == scene.room_id %>
+    <%= button_to here ? "Join as #{current_character.name}" : "Travel here and join as #{current_character.name}",
+          scene_participation_path(scene), class: "button" %>
+    <% if scene.visibility_joinable? %>
+      <p class="muted">You're watching. Join to post.</p>
+    <% end %>
+  <% elsif scene.visibility_joinable? %>
+    <p class="muted">You're watching.</p>
+  <% else %>
+    <p class="muted">Ask someone in it for an invitation.</p>
+  <% end %>
+</div>

@@ -1,0 +1,31 @@
+<%# The player's open Chapters as tabs, each showing its Setting, an unread
+    count and whether it's their turn. Reloads live (see chapter_tabs/_frame). %>
+<% participations = SceneParticipant.joins(:scene).where(character: account.characters)
+     .includes(:character, scene: :room).merge(Scene.by_activity) %>
+<% several_characters = participations.map(&:character_id).uniq.size > 1 %>
+<% unread_total = 0 %>
+<turbo-frame id="chapter_tabs">
+  <% if participations.any? %>
+    <nav class="chapter-tabs" aria-label="Your <%= term(:scene, count: 2).downcase %>"
+         data-controller="chapter-tabs unread-title">
+      <% participations.each do |participant| %>
+        <% scene = participant.scene %>
+        <% unread = participant.unread_count %>
+        <% unread_total += unread %>
+        <%= link_to scene_path(scene), class: "chapter-tab", data: { turbo_frame: "_top", chapter_tabs_target: "tab", scene_id: scene.id } do %>
+          <span class="chapter-tab__title"><%= scene.title %></span>
+          <span class="chapter-tab__setting">
+            <%= scene.room.name %><%= " · #{participant.character.name}" if several_characters %>
+          </span>
+          <% if scene.turn_of?(participant) %>
+            <span class="chapter-tab__turn">Your turn</span>
+          <% end %>
+          <% if unread.positive? %>
+            <span class="chapter-tab__unread" data-unread="<%= unread %>" title="<%= pluralize(unread, "new #{term(:pose).downcase}") %>"><%= unread %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+      <span hidden data-unread-title-target="total" data-total="<%= unread_total %>"></span>
+    </nav>
+  <% end %>
+</turbo-frame>

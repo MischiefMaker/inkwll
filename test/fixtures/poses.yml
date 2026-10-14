@@ -1,0 +1,11 @@
+duel_one:
+  scene: duel
+  character: wren
+  body: Wren draws her blade.
+  sequence: 1
+
+duel_two:
+  scene: duel
+  character: sable
+  body: Sable laughs and steps back.
+  sequence: 2

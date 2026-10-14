@@ -1,0 +1,40 @@
+<%# One Passage, or a line from the game such as "Wren joins the Chapter."
+    Clicking the icon or name opens the character's mini-profile. %>
+<% if pose.system? %>
+  <p class="pose pose--system" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>"><%= pose.body %></p>
+<% else %>
+  <% character = pose.character %>
+  <% mine = character && character.account_id == current_account.id %>
+  <article class="pose<%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
+    <% if character %>
+      <button type="button" class="pose__icon" popovertarget="mini-profile-<%= character.id %>" aria-label="About <%= character.name %>">
+        <%= character_icon(character) %>
+      </button>
+    <% else %>
+      <span class="pose__icon"><%= character_icon(nil) %></span>
+    <% end %>
+    <div class="pose__main">
+      <header class="pose__header">
+        <% if character %>
+          <button type="button" class="pose__name" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button>
+        <% else %>
+          <span class="pose__name muted">A departed character</span>
+        <% end %>
+        <time class="pose__time muted" datetime="<%= pose.created_at.iso8601 %>" title="<%= pose.created_at.utc.to_fs(:long) %> UTC"><%= time_ago_in_words(pose.created_at) %> ago</time>
+        <% if pose.edited? && !pose.removed? %><span class="pose__edited muted">(edited)</span><% end %>
+        <% if mine && !pose.removed? %>
+          <span class="pose__actions">
+            <%= link_to "Edit", edit_scene_pose_path(scene, pose) %>
+            <%= button_to "Remove", scene_pose_path(scene, pose), method: :delete, class: "button-link",
+                  form: { data: { turbo_confirm: "Remove this #{term(:pose).downcase}?" } } %>
+          </span>
+        <% end %>
+      </header>
+      <% if pose.removed? %>
+        <p class="muted pose__body"><%= term(:pose) %> removed.</p>
+      <% else %>
+        <div class="pose__body prose"><%= simple_format pose.body %></div>
+      <% end %>
+    </div>
+  </article>
+<% end %>

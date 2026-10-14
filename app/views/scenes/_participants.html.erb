@@ -1,0 +1,35 @@
+<%# Who's in the Chapter, in turn order, plus invitations. %>
+<section class="scene-people">
+  <ul class="scene-people__list">
+    <% scene.participants.each do |p| %>
+      <li class="scene-people__person<%= " scene-people__person--turn" if scene.turn_of?(p) %>">
+        <%= character_icon(p.character, size: :tiny) %>
+        <%= link_to p.character.name, p.character %>
+        <% if p.storyteller? %><span class="badge"><%= term(:storyteller) %></span><% end %>
+        <% if scene.turn_of?(p) %><span class="badge badge--turn">Turn</span><% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% if participant %>
+    <div class="scene-people__actions">
+      <% if current_account.may_storytell? %>
+        <%= button_to participant.storyteller? ? "Stop being #{term(:storyteller).downcase}" : "Be the #{term(:storyteller).downcase}",
+              scene_participation_path(scene), method: :patch, class: "button-link" %>
+      <% end %>
+      <%= button_to "Leave", scene_participation_path(scene), method: :delete, class: "button-link",
+            form: { data: { turbo_confirm: "#{participant.character.name} will leave #{scene.title}. Leave?" } } %>
+    </div>
+  <% end %>
+
+  <% if scene.participating?(current_account) && !scene.visibility_joinable? %>
+    <%= form_with url: scene_invitations_path(scene), class: "form form--inline scene-people__invite" do |form| %>
+      <%= form.label :name, "Invite a character", class: "visually-hidden" %>
+      <%= form.text_field :name, placeholder: "Character name", required: true %>
+      <%= form.submit "Invite", class: "button button--quiet" %>
+    <% end %>
+    <% if scene.invitations.any? %>
+      <p class="muted">Invited: <%= scene.invitations.map { |i| i.character.name }.to_sentence %></p>
+    <% end %>
+  <% end %>
+</section>

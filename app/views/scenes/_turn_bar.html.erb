@@ -1,0 +1,37 @@
+<%# Whose turn it is, with Pass, Skip and "I'm here!". The composer reads
+    data-out-of-turn to warn before posting out of turn. %>
+<% current = scene.current_turn_participant %>
+<% out_of_turn = participant.present? && scene.out_of_turn?(participant) %>
+<div class="turn-bar" id="turn-bar" data-out-of-turn="<%= out_of_turn %>" data-turn-name="<%= current&.character&.name %>">
+  <% if scene.effective_pose_mode == "free" %>
+    <span class="muted"><%= pose_mode_label("free") %>: post whenever you like.</span>
+  <% elsif scene.effective_pose_mode == "three_pose" %>
+    <% waiting = participant ? scene.poses_to_wait_for(participant) : 0 %>
+    <span class="muted">
+      <%= pose_mode_label("three_pose") %>:
+      <% if participant %>
+        <%= waiting.zero? ? "you can post now." : "wait for #{pluralize(waiting, "more #{term(:pose).downcase}")}." %>
+      <% else %>
+        each character waits for three others before posting again.
+      <% end %>
+    </span>
+  <% elsif current.nil? %>
+    <span class="muted">Anyone can start. Turns follow the order people joined.</span>
+  <% elsif scene.turn_of?(participant) %>
+    <% if scene.turn_warned_at %>
+      <strong class="turn-bar__warning">Still there? Your turn will be skipped soon.</strong>
+      <%= button_to "I'm here!", here_scene_turn_path(scene), class: "button" %>
+    <% else %>
+      <strong>It's your turn.</strong>
+    <% end %>
+    <%= button_to "Pass", pass_scene_turn_path(scene), class: "button button--quiet" %>
+  <% else %>
+    <span>It's <strong><%= current.character.name %></strong>'s turn<%= " (warned)" if scene.turn_warned_at %>.</span>
+    <% if participant&.storyteller? %>
+      <%= button_to "Skip #{current.character.name}", skip_scene_turn_path(scene), class: "button button--quiet" %>
+    <% end %>
+  <% end %>
+  <% if scene.auto_skip_running? %>
+    <span class="muted turn-bar__timer">Auto-skip after <%= pluralize(scene.turn_minutes, "minute") %>.</span>
+  <% end %>
+</div>

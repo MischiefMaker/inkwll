@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_060001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -100,6 +100,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_060001) do
     t.boolean "approval_required", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "auto_skip", default: true, null: false
+    t.integer "turn_minutes", default: 5, null: false
   end
 
   create_table "ooc_messages", force: :cascade do |t|
@@ -108,6 +110,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_060001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_ooc_messages_on_account_id"
+  end
+
+  create_table "poses", force: :cascade do |t|
+    t.bigint "scene_id", null: false
+    t.bigint "character_id"
+    t.string "kind", default: "passage", null: false
+    t.text "body", null: false
+    t.text "original_body"
+    t.integer "sequence", null: false
+    t.datetime "edited_at"
+    t.datetime "removed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_poses_on_character_id"
+    t.index ["scene_id", "sequence"], name: "index_poses_on_scene_id_and_sequence", unique: true
+    t.index ["scene_id"], name: "index_poses_on_scene_id"
   end
 
   create_table "remembered_characters", force: :cascade do |t|
@@ -132,6 +150,48 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_060001) do
     t.index ["area_id"], name: "index_rooms_on_area_id"
   end
 
+  create_table "scene_invitations", force: :cascade do |t|
+    t.bigint "scene_id", null: false
+    t.bigint "character_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_scene_invitations_on_character_id"
+    t.index ["scene_id", "character_id"], name: "index_scene_invitations_on_scene_id_and_character_id", unique: true
+    t.index ["scene_id"], name: "index_scene_invitations_on_scene_id"
+  end
+
+  create_table "scene_participants", force: :cascade do |t|
+    t.bigint "scene_id", null: false
+    t.bigint "character_id", null: false
+    t.string "role", default: "player", null: false
+    t.integer "position", null: false
+    t.integer "last_read_sequence", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_scene_participants_on_character_id"
+    t.index ["scene_id", "character_id"], name: "index_scene_participants_on_scene_id_and_character_id", unique: true
+    t.index ["scene_id"], name: "index_scene_participants_on_scene_id"
+  end
+
+  create_table "scenes", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.string "title", null: false
+    t.string "visibility", default: "joinable", null: false
+    t.string "pose_mode", default: "turns", null: false
+    t.boolean "auto_skip", default: true, null: false
+    t.integer "turn_minutes", default: 5, null: false
+    t.bigint "current_turn_participant_id"
+    t.datetime "turn_started_at"
+    t.datetime "turn_warned_at"
+    t.integer "turn_token", default: 0, null: false
+    t.integer "last_sequence", default: 0, null: false
+    t.datetime "last_pose_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"
+    t.index ["room_id"], name: "index_scenes_on_room_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "ip_address"
@@ -151,8 +211,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_060001) do
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
   add_foreign_key "ooc_messages", "accounts"
+  add_foreign_key "poses", "characters"
+  add_foreign_key "poses", "scenes"
   add_foreign_key "remembered_characters", "accounts"
   add_foreign_key "remembered_characters", "characters", on_delete: :cascade
   add_foreign_key "rooms", "areas"
+  add_foreign_key "scene_invitations", "characters"
+  add_foreign_key "scene_invitations", "scenes"
+  add_foreign_key "scene_participants", "characters"
+  add_foreign_key "scene_participants", "scenes"
+  add_foreign_key "scenes", "rooms"
+  add_foreign_key "scenes", "scene_participants", column: "current_turn_participant_id", on_delete: :nullify
   add_foreign_key "sessions", "accounts"
 end

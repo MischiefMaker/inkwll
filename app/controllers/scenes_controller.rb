@@ -1,0 +1,59 @@
+# Chapters (scenes): starting one where your character stands, reading one,
+# and changing its settings.
+class ScenesController < ApplicationController
+  before_action :require_character, only: :create
+  before_action :set_scene, only: %i[ show edit update ]
+  before_action :require_participant, only: %i[ edit update ]
+
+  def show
+    use_character_in_scene
+    @participant = @scene.participant_for(current_character)
+  end
+
+  def create
+    @scene = Scene.start!(character: current_character, storyteller: params.dig(:scene, :storyteller) == "1", **scene_params)
+    redirect_to @scene
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to room_path(current_character.room), alert: e.record.errors.full_messages.to_sentence
+  end
+
+  def edit
+  end
+
+  def update
+    if @scene.update(scene_params)
+      redirect_to @scene, notice: "Saved."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def set_scene
+      @scene = Scene.includes(participants: { character: [ :account, { icon_attachment: :blob } ] }).find(params[:id])
+      raise ActiveRecord::RecordNotFound unless @scene.visible_to?(current_account)
+    end
+
+    def require_participant
+      redirect_to @scene, alert: "Only characters in this #{Term[:scene]} can change it." unless @scene.participating?(current_account)
+    end
+
+    def scene_params
+      params.expect(scene: [ :title, :visibility, :pose_mode, :auto_skip, :turn_minutes ])
+    end
+
+    # Like Settings, a Chapter remembers which of the player's characters they
+    # last used in it. If the active character isn't in this Chapter but
+    # another of the player's characters is, switch to that one.
+    def use_character_in_scene
+      mine = @scene.participants_for(current_account).map(&:character)
+      return if mine.empty?
+
+      if mine.include?(current_character)
+        current_account.remember_character(current_character, @scene)
+      else
+        remembered = current_account.remembered_character_for(@scene)
+        current_account.update!(active_character: mine.include?(remembered) ? remembered : mine.first)
+      end
+    end
+end

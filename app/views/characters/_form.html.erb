@@ -6,6 +6,15 @@
     <%= form.text_field :name, required: true, autofocus: true %>
   </div>
   <div class="field">
+    <%= form.label :icon %>
+    <% if character.icon.attached? %>
+      <%= character_icon(character, size: :large) %>
+      <label class="field--checkbox"><%= form.check_box :remove_icon %> Remove this icon</label>
+    <% end %>
+    <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+    <small>Shown beside every <%= term(:pose).downcase %>. A square picture works best. PNG, JPEG, GIF or WebP, up to 5 MB.</small>
+  </div>
+  <div class="field">
     <%= form.label :description %>
     <%= form.text_area :description, rows: 8 %>
   </div>

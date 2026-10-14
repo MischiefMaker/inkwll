@@ -9,6 +9,8 @@ class RoomTest < ActiveSupport::TestCase
   end
 
   test "a game with no rooms gets a default starting room" do
+    Scene.update_all(current_turn_participant_id: nil)
+    [ Pose, SceneInvitation, SceneParticipant, Scene ].each(&:delete_all)
     Character.delete_all
     Exit.delete_all
     Room.delete_all

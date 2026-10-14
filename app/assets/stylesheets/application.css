@@ -432,3 +432,155 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
 
 .from-afar { margin: var(--space) 0; padding: 0.6rem var(--space); border: 1px dashed var(--color-border); border-radius: var(--radius); }
 .from-afar p { margin-top: 0; }
+
+/* Small labels */
+
+.badge {
+  display: inline-block;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  vertical-align: middle;
+}
+.badge--private, .badge--hidden { border-color: var(--color-accent); color: var(--color-accent); }
+.badge--turn { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-text); }
+
+.button--quiet { background: transparent; color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Character icons: a picture, or the first letter of the name */
+
+.character-icon { display: inline-block; flex: none; object-fit: cover; border-radius: var(--radius); background: var(--color-border); }
+.character-icon--tiny { width: 1.5rem; height: 1.5rem; }
+.character-icon--small { width: 3rem; height: 3rem; }
+.character-icon--large { width: 6rem; height: 6rem; }
+.character-icon--initial {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-accent); color: var(--color-accent-text);
+  font-family: var(--font-ui); font-weight: bold;
+}
+.character-icon--tiny.character-icon--initial { font-size: 0.75rem; }
+.character-icon--small.character-icon--initial { font-size: 1.25rem; }
+.character-icon--large.character-icon--initial { font-size: 2.5rem; }
+.character-heading { display: flex; align-items: center; gap: var(--space); }
+
+/* Chapter tabs, under the header on every page */
+
+.chapter-tabs {
+  display: flex; gap: 0.25rem; overflow-x: auto;
+  padding: 0.4rem calc(var(--space) * 2) 0;
+  background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+}
+.chapter-tab {
+  display: grid; grid-template-columns: auto auto; column-gap: 0.5rem; align-items: center;
+  padding: 0.35rem 0.75rem; min-width: 8rem; max-width: 16rem;
+  border: 1px solid var(--color-border); border-bottom: none; border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--color-bg); color: var(--color-text); text-decoration: none;
+}
+.chapter-tab:hover { border-color: var(--color-accent); }
+.chapter-tab--current { background: var(--color-surface); border-color: var(--color-accent); box-shadow: inset 0 3px 0 var(--color-accent); }
+.chapter-tab__title { font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chapter-tab__setting { grid-column: 1; font-size: 0.8rem; color: var(--color-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chapter-tab__turn { grid-column: 2; grid-row: 2; font-size: 0.75rem; color: var(--color-accent); font-weight: bold; }
+.chapter-tab__unread {
+  grid-column: 2; grid-row: 1; justify-self: end;
+  min-width: 1.25rem; padding: 0 0.35rem; border-radius: 999px;
+  background: var(--color-accent); color: var(--color-accent-text); font-size: 0.75rem; text-align: center;
+}
+
+/* Chapters listed in a Setting */
+
+.scene-list .list { list-style: none; padding: 0; }
+.scene-list__item { padding: 0.5rem 0; border-bottom: 1px solid var(--color-border); }
+.scene-list__item--idle { opacity: 0.7; }
+.scene-list__title { font-weight: bold; margin-right: 0.25rem; }
+.scene-list__meta { font-size: 0.9rem; }
+.new-scene { margin-top: var(--space); }
+.new-scene > summary { list-style: none; }
+.new-scene > summary::-webkit-details-marker { display: none; }
+.new-scene[open] > summary { margin-bottom: var(--space); }
+.new-scene fieldset { border: none; padding: 0; margin: 0; }
+.new-scene legend, .form legend { padding: 0; margin-bottom: 0.25rem; }
+
+/* A Chapter */
+
+.scene-setting {
+  display: flex; gap: var(--space); align-items: flex-start;
+  padding: 0.75rem; margin-bottom: var(--space);
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius);
+}
+.scene-setting__image { width: 9rem; height: 6rem; object-fit: cover; border-radius: var(--radius); flex: none; }
+.scene-setting__body { min-width: 0; }
+.scene-setting__body .breadcrumbs { margin: 0; }
+.scene-setting__name { margin: 0.1rem 0; font-size: 1.15rem; font-weight: bold; }
+.scene-setting__description summary { cursor: pointer; color: var(--color-muted); font-family: var(--font-ui); font-size: 0.9rem; }
+.scene-setting__here { margin: 0.25rem 0 0; font-size: 0.9rem; }
+
+.scene__header h1 { margin-bottom: 0.25rem; }
+.scene__meta { margin-top: 0; font-family: var(--font-ui); font-size: 0.9rem; }
+
+.scene-people { margin-bottom: var(--space); font-family: var(--font-ui); }
+.scene-people__list { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; list-style: none; padding: 0; margin: 0 0 0.5rem; }
+.scene-people__person { display: inline-flex; align-items: center; gap: 0.35rem; }
+.scene-people__person--turn { font-weight: bold; }
+.scene-people__actions { display: flex; gap: var(--space); font-size: 0.9rem; }
+.scene-people__invite { margin-top: 0.5rem; }
+
+.passages { border-top: 1px solid var(--color-border); }
+.passages__empty { padding: var(--space) 0; }
+
+.pose { display: flex; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); }
+.pose--removed .pose__icon { opacity: 0.4; }
+.pose__icon { flex: none; padding: 0; border: none; background: none; cursor: pointer; }
+.pose__main { min-width: 0; flex: 1; }
+.pose__header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-family: var(--font-ui); font-size: 0.9rem; }
+.pose__name { padding: 0; border: none; background: none; font: inherit; font-weight: bold; color: var(--color-accent); cursor: pointer; }
+.pose__actions { display: inline-flex; gap: 0.5rem; margin-left: auto; font-size: 0.85rem; }
+.pose__body { margin-top: 0.25rem; overflow-wrap: anywhere; }
+.pose__body p:first-child { margin-top: 0; }
+.pose__body p:last-child { margin-bottom: 0; }
+.pose--system {
+  display: block; margin: 0; padding: 0.4rem 0; border-bottom: 1px solid var(--color-border);
+  color: var(--color-muted); font-family: var(--font-ui); font-size: 0.85rem; font-style: italic; text-align: center;
+}
+
+.mini-profile {
+  max-width: 22rem; padding: var(--space); margin: auto;
+  border: 1px solid var(--color-border); border-radius: var(--radius);
+  background: var(--color-surface); color: var(--color-text);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.2);
+}
+.mini-profile:popover-open { display: flex; gap: var(--space); }
+.mini-profile__name { margin: 0; font-weight: bold; font-size: 1.1rem; }
+.mini-profile__body p { margin: 0.25rem 0; }
+
+/* The turn bar and the writing box stay at the bottom of the screen. */
+.scene__footer {
+  position: sticky; bottom: 0;
+  padding: 0.5rem 0 var(--space);
+  background: var(--color-bg); border-top: 1px solid var(--color-border);
+}
+.turn-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; margin-bottom: 0.5rem; font-family: var(--font-ui); font-size: 0.9rem; }
+.turn-bar__warning { color: #a33; }
+.turn-bar__timer { margin-left: auto; font-size: 0.8rem; }
+.composer .form { gap: 0.4rem; }
+.composer textarea { width: 100%; resize: vertical; font-family: var(--font-body); font-size: 1rem; }
+.composer__label { font-family: var(--font-ui); font-size: 0.85rem; color: var(--color-muted); }
+.composer__actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--space); }
+.composer__warning {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem; border-radius: var(--radius); background: var(--color-alert); font-family: var(--font-ui);
+}
+.composer__warning[hidden] { display: none; }
+.scene-join { padding-top: 0.25rem; }
+.scene-join p { margin: 0.4rem 0 0; }
+
+@media (max-width: 800px) {
+  .chapter-tabs { padding-inline: var(--space); }
+  .scene-setting__image { width: 5rem; height: 5rem; }
+}

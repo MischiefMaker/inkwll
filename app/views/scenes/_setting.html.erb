@@ -1,0 +1,26 @@
+<%# The Chapter's Setting, so each Chapter feels like being there: its name,
+    image, description and who is standing in it. %>
+<% room = scene.room %>
+<section class="scene-setting">
+  <% if room.image.attached? %>
+    <%= image_tag room.image, alt: "", class: "scene-setting__image" %>
+  <% end %>
+  <div class="scene-setting__body">
+    <%= render "areas/breadcrumbs", area: room.area, include_self: true %>
+    <p class="scene-setting__name"><%= link_to room.name, room_path(room) %></p>
+    <% if room.description.present? %>
+      <details class="scene-setting__description">
+        <summary>About this <%= term(:room).downcase %></summary>
+        <div class="prose"><%= simple_format room.description %></div>
+      </details>
+    <% end %>
+    <p class="muted scene-setting__here">
+      Here now:
+      <% if room.characters.any? %>
+        <%= safe_join(room.characters.map { |character| link_to character.name, character }, ", ") %>
+      <% else %>
+        nobody
+      <% end %>
+    </p>
+  </div>
+</section>

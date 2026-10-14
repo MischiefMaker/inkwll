@@ -1,0 +1,13 @@
+<%# A small pop-up about a character, opened from their icon or name on a
+    Passage. Profile fields join it in step 4. %>
+<div popover id="mini-profile-<%= character.id %>" class="mini-profile">
+  <%= character_icon(character, size: :large) %>
+  <div class="mini-profile__body">
+    <p class="mini-profile__name"><%= character.name %></p>
+    <p class="muted">In <%= link_to character.room.name, room_path(character.room) %></p>
+    <% if character.description.present? %>
+      <p><%= truncate(character.description, length: 200) %></p>
+    <% end %>
+    <p><%= link_to "View profile", character %></p>
+  </div>
+</div>

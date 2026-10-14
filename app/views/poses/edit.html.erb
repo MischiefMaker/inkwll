@@ -1,0 +1,16 @@
+<% content_for :title, "Edit #{term(:pose).downcase} · Inkwll" %>
+
+<h1>Edit <%= term(:pose).downcase %></h1>
+<p class="muted">In <%= link_to @scene.title, scene_path(@scene) %>. Edited <%= term(:pose, count: 2).downcase %> are marked as edited.</p>
+
+<%= form_with model: [ @scene, @pose ], class: "form" do |form| %>
+  <%= render "shared/errors", record: @pose %>
+  <div class="field">
+    <%= form.label :body, term(:pose) %>
+    <%= form.text_area :body, rows: 10, required: true, autofocus: true %>
+  </div>
+  <div class="form--inline">
+    <%= form.submit "Save", class: "button" %>
+    <%= link_to "Cancel", scene_path(@scene, anchor: dom_id(@pose)) %>
+  </div>
+<% end %>

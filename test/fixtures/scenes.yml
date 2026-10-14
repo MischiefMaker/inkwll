@@ -1,0 +1,25 @@
+# duel: an open Chapter in the Commons. Wren and Sable have each posted once,
+#   and it's Wren's turn again.
+# secret: a hidden Chapter in the Commons that only Sable is in.
+# tea: a private Chapter in the Hall that only Moth is in.
+duel:
+  room: commons
+  title: Duel at Dawn
+  visibility: joinable
+  pose_mode: turns
+  current_turn_participant: duel_wren
+  turn_started_at: <%= 1.minute.ago.to_fs(:db) %>
+  last_sequence: 2
+  last_pose_at: <%= 1.minute.ago.to_fs(:db) %>
+
+secret:
+  room: commons
+  title: A Quiet Word
+  visibility: hidden
+  last_sequence: 0
+
+tea:
+  room: hall
+  title: Afternoon Tea
+  visibility: private
+  last_sequence: 0

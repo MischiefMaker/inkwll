@@ -1,6 +1,6 @@
 <% content_for :title, "#{@character.name} · Inkwll" %>
 
-<h1><%= @character.name %></h1>
+<h1 class="character-heading"><%= character_icon(@character, size: :large) %> <%= @character.name %></h1>
 
 <p class="muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
 

@@ -15,3 +15,7 @@ Done tasks stay in this folder as a record.
 | [0003: Areas, default starting Setting, return Paths](0003-areas-default-starting-setting-return-paths.md) | Review | No | 1b. Step 1 changes |
 | [0004: One player name, email and game settings](0004-one-player-name-email-and-game-settings.md) | Review | No | 1b. Step 1 changes |
 | [0005: Staff levels and the admin panel](0005-staff-levels-and-the-admin-panel.md) | Review | No | 1b. Step 1 changes |
+| [0006: Chapters and live Passages](0006-chapters-and-live-passages.md) | Doing | No | 2. Scenes |
+| [0007: Turn order](0007-turn-order.md) | Doing | No | 2. Scenes |
+| [0008: Tabs and unread markers](0008-tabs-and-unread.md) | Doing | No | 2. Scenes |
+| [0009: Where list, arrivals and latest activity](0009-where-arrivals-activity.md) | Doing | No | 2. Scenes |

@@ -13,3 +13,14 @@ sable:
   account: bob
   room: commons
   name: Sable
+
+# Extra players for four-player scenes.
+finch:
+  account: builder
+  room: commons
+  name: Finch
+
+lark:
+  account: scribe
+  room: commons
+  name: Lark

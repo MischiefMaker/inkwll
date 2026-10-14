@@ -25,6 +25,8 @@
   <body>
     <% if current_account %>
       <%= render "shared/header" %>
+      <%= turbo_stream_from current_account, :chapters %>
+      <%= render "chapter_tabs/tabs", account: current_account %>
       <div class="layout">
         <main class="main">
           <%= render "shared/flash" %>

@@ -37,6 +37,16 @@ en:
       page: "Page"
       scribe: "Scribe"
       wellkeeper: "Wellkeeper"
+    # How a Chapter can be seen and joined.
+    scene_visibility:
+      joinable: "Open"
+      private: "Private"
+      hidden: "Hidden"
+    # How turns work in a Chapter.
+    pose_modes:
+      turns: "Take turns"
+      free: "Free-for-all"
+      three_pose: "3-Passage rule"
     founder: "Founder"
     storyteller: "Storyteller"
     job_flags:

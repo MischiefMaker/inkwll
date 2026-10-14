@@ -1,0 +1,55 @@
+<% content_for :title, "#{@scene.title} · Inkwll" %>
+<%# Re-renders live whenever the Chapter changes (new Passages, turns, people). %>
+<%= turbo_stream_from @scene %>
+
+<% readable = @scene.readable_by?(current_account) %>
+<article class="scene" data-controller="scene-reader"
+         data-scene-reader-url-value="<%= scene_reading_path(@scene) %>"
+         data-scene-reader-participating-value="<%= @scene.participating?(current_account) %>">
+  <%= render "scenes/setting", scene: @scene %>
+
+  <header class="scene__header">
+    <h1><%= @scene.title %></h1>
+    <p class="scene__meta muted">
+      <span class="badge badge--<%= @scene.visibility %>"><%= scene_visibility_label(@scene) %></span>
+      <%= scene_mode_summary(@scene) %>
+      <% if @scene.participating?(current_account) %>
+        · <%= link_to "#{term(:scene)} settings", edit_scene_path(@scene) %>
+      <% end %>
+    </p>
+  </header>
+
+  <%= render "scenes/participants", scene: @scene, participant: @participant %>
+
+  <% if readable %>
+    <% poses = @scene.poses.includes(character: [ :room, { icon_attachment: :blob } ]) %>
+    <div class="passages" id="passages" data-scene-reader-target="passages" data-controller="follow-bottom">
+      <% if poses.empty? %>
+        <p class="muted passages__empty">No <%= term(:pose, count: 2).downcase %> yet.</p>
+      <% end %>
+      <%= render partial: "poses/pose", collection: poses, locals: { scene: @scene } %>
+    </div>
+
+    <%# One pop-up mini-profile per character on the page. %>
+    <% (poses.filter_map(&:character) + @scene.characters).uniq.each do |character| %>
+      <%= render "characters/mini_profile", character: character %>
+    <% end %>
+
+    <div class="scene__footer">
+      <%= render "scenes/turn_bar", scene: @scene, participant: @participant %>
+      <% if @participant %>
+        <%= render "scenes/composer", scene: @scene, participant: @participant %>
+      <% else %>
+        <%= render "scenes/join", scene: @scene %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="from-afar">
+      <p class="muted">
+        This <%= term(:scene).downcase %> is <%= scene_visibility_label(@scene).downcase %>.
+        Only characters in it, or invited to it, can read it.
+      </p>
+      <%= render "scenes/join", scene: @scene %>
+    </div>
+  <% end %>
+</article>

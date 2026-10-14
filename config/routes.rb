@@ -13,6 +13,22 @@ Rails.application.routes.draw do
   end
   resources :ooc_messages, only: %i[ index create ]
 
+  # Scenes are shown to players as Chapters, and poses as Passages.
+  resources :scenes, only: %i[ show create edit update ] do
+    scope module: :scenes do
+      resource :participation, only: %i[ create update destroy ]
+      resources :invitations, only: :create
+      resource :reading, only: :update
+      resource :turn, only: [] do
+        post :pass
+        post :skip
+        post :here
+      end
+    end
+    resources :poses, only: %i[ create edit update destroy ]
+  end
+  resource :chapter_tabs, only: :show
+
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do
     root "dashboard#show"
