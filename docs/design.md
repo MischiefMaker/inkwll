@@ -197,6 +197,15 @@ How they plug in [Proposed, owner agreed in principle]:
 - Package modules as Rails engines later, once real plugin needs are known. Do
   not build a plugin system first.
 
+### Who plays which character [Proposed]
+
+- A game setting decides whether a character's player is shown to everyone
+  or only to staff. With staff-only, players can still send a Message "to
+  the player of [character]" without learning who that is. Waiting on the
+  owner (see `decisions.md`, "keep cliques to a minimum").
+- As built so far, nothing shows who plays a character: profiles,
+  mini-profiles and Chapters only show character names.
+
 ### Data model (draft) [Proposed]
 
 Items built in step 1 are marked ✅.

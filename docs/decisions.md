@@ -10,6 +10,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 Keep forum RP's easy navigation and many Chapters at once, but make the grid feel real and physical, like moving through space on a traditional MU. AresMUSH has lost much of that feeling and some games no longer build grids; Inkwll should not. When a design choice trades one against the other, protect the feeling of physical space.
 
+## Design aim: keep cliques to a minimum (owner, 2026-10-14)
+
+Old-school MUSHes kept cliques down partly because nobody knew who played which character. Inkwll should keep that spirit where it can, while still making it easy to reach a character's player out of character.
+
+Players who want a separate identity for an alt can make a second player account.
+
 ---
 
 ## 2026-10-14: Step 2 details picked while building

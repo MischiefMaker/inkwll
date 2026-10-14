@@ -35,6 +35,10 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
 
+**Who plays which character**
+
+- Whether each game can hide a character's player from other players (Proposed: a game setting, with Messages "to the player of" a character).
+
 **To revisit later**
 
 - A themed word for Areas (kept as "Area" for now).
