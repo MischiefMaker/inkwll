@@ -12,7 +12,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 1b. Step 1 changes | Player-facing words switch to Setting, Path, Chapter, Passage, Archives and Manuscript (one wording file). From the owner's review: one login/player name, an email field, character names with spaces and special characters, a default starting room, a "create the return exit too" option, staff levels (Founder flag, Wellkeepers, Scribes, Pages, Storytellers) and a first admin panel (setting staff, building, deleting characters for the top level), and the per-game settings for email and approval. | Now |
 | 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow. | Later |
-| 4. Character profiles and approval | A profile for every character with game-configured profile and application fields (background, set questions and so on), and room for SOUL, Grimoire and Inklings sections. Submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
+| 4. Character profiles and approval | A profile for every character with game-configured profile and application fields (background, set questions, images, an optional description), each marked public or private by the game, and room for SOUL, Grimoire and Inklings sections. Submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
 | 5. SOUL basics | Character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes. | Later |
 | 6. SOUL extras | Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail. | Later |
 | 7. IC clock | Game time and per-scene date overrides. | Later |
@@ -32,10 +32,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 - A 3-pose scene that drops below four players switches to turn-based.
 - Deleting a pose leaves a "pose removed" note.
 
-
-**Before step 4: Character profiles and approval**
-
-- Who can read which parts of a profile and application.
 
 **Later**
 

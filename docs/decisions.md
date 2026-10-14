@@ -28,7 +28,9 @@ In Chapters they run, Storytellers can call and rule GM-assisted rolls, see the 
 
 Each character has a profile where its information is stored and read. It holds the character's SOUL sheet, Grimoire spells and Inklings, plus profile and application fields each game configures (for example a background, or answers to set questions). Sections for SOUL, Grimoire and Inklings only appear when that system is switched on.
 
-Still open: who can read each part (see `roadmap.md`).
+Who can read what: each game marks every profile and application field public or private. Private fields are seen only by the player and staff. A text description is optional and each game can switch it on or off, because many games will use images instead, so profiles also need image fields.
+
+Note for the build: uploaded images are stored on the server's disk. The nightly database copy doesn't include them, so the deployment step must make sure images are backed up too (the droplet backups do cover them).
 
 ## 2026-10-14: What staff can do with a report
 
