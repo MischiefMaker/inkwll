@@ -188,6 +188,13 @@ How they plug in [Proposed, owner agreed in principle]:
 - Following the extensibility proposal, start with the `features` table, and
   do not build a plugin system first.
 
+### CSS classes for skinning [Decided]
+
+- Every element has a meaningful CSS class (`block`, `block__part`,
+  `block--kind`, in plain words), and each page's `<body>` has page classes,
+  so games can restyle anything. The reference for skinners is
+  `docs/css-classes.md`.
+
 ## 4. Proposals (confirm before relying on them)
 
 ### Extensibility [Proposed]

@@ -1,6 +1,6 @@
 <% content_for :title, "Create an account · Inkwll" %>
 
-<h1>Create an account</h1>
+<h1 class="page-title">Create an account</h1>
 
 <%= form_with model: @account, url: registration_path, class: "form" do |form| %>
   <%= render "shared/errors", record: @account %>
@@ -8,19 +8,19 @@
   <div class="field">
     <%= form.label :display_name, "Player name" %>
     <%= form.text_field :display_name, required: true, autofocus: true, autocomplete: "username" %>
-    <small>You log in with this, and it's shown in the OOC Chat. Not a character name. Letters, numbers and underscores.</small>
+    <small class="hint">You log in with this, and it's shown in the OOC Chat. Not a character name. Letters, numbers and underscores.</small>
   </div>
   <div class="field">
     <%= form.label :email %>
     <%= form.email_field :email, required: GameSetting.current.email_required?, autocomplete: "email" %>
-    <small>Used for password resets.<%= " Optional." unless GameSetting.current.email_required? %></small>
+    <small class="hint">Used for password resets.<%= " Optional." unless GameSetting.current.email_required? %></small>
   </div>
   <div class="field">
     <div class="field field--checkbox">
       <%= form.check_box :email_notifications, {}, "when_away", "off" %>
       <%= form.label :email_notifications, "Email me about new activity in my Chapters while I'm not logged in" %>
     </div>
-    <small>Needs an email address. You can change how often, or turn it off, later.</small>
+    <small class="hint">Needs an email address. You can change how often, or turn it off, later.</small>
   </div>
   <div class="field">
     <%= form.label :password %>
@@ -33,4 +33,4 @@
   <%= form.submit "Create account", class: "button" %>
 <% end %>
 
-<p>Already have an account? <%= link_to "Log in", new_session_path %>.</p>
+<p class="text">Already have an account? <%= link_to "Log in", new_session_path %>.</p>

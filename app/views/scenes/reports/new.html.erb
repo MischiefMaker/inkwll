@@ -1,7 +1,7 @@
 <% content_for :title, "Report · Inkwll" %>
 
-<h1>Report <%= @report.pose ? "a #{term(:pose).downcase}" : "this #{term(:scene).downcase}" %></h1>
-<p>In <%= link_to @scene.title, scene_path(@scene) %>.</p>
+<h1 class="page-title">Report <%= @report.pose ? "a #{term(:pose).downcase}" : "this #{term(:scene).downcase}" %></h1>
+<p class="text">In <%= link_to @scene.title, scene_path(@scene) %>.</p>
 <p class="notice-box">
   Staff will be able to read this whole <%= term(:scene).downcase %>, even if it's private or hidden, so they can look into your report.
   They can't read private or hidden <%= term(:scene, count: 2).downcase %> that haven't been reported.
@@ -9,7 +9,7 @@
 
 <% if @report.pose %>
   <blockquote class="report-quote">
-    <strong><%= @report.pose.character&.name %>:</strong> <%= truncate(@report.pose.body, length: 400) %>
+    <strong class="emphasis"><%= @report.pose.character&.name %>:</strong> <%= truncate(@report.pose.body, length: 400) %>
   </blockquote>
 <% end %>
 

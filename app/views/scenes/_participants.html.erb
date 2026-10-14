@@ -21,7 +21,7 @@
             form: { data: { turbo_confirm: "#{participant.character.name} will leave #{scene.title}. Leave?" } } %>
       <% unless scene.paused? %>
         <details class="scene-people__pause">
-          <summary>Pause</summary>
+          <summary class="disclosure__summary">Pause</summary>
           <%= form_with url: scene_pause_path(scene), class: "form form--inline" do |form| %>
             <%= form.label :note, "When you'll be back (optional)", class: "visually-hidden" %>
             <%= form.text_field :note, placeholder: "e.g. Back Saturday evening", maxlength: 100 %>

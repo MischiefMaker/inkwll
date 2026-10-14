@@ -1,6 +1,6 @@
 <% content_for :title, "Game settings · Inkwll" %>
 
-<h1>Game settings</h1>
+<h1 class="page-title">Game settings</h1>
 
 <%= form_with model: @game_setting, url: admin_game_settings_path, method: :patch, class: "form" do |form| %>
   <%= render "shared/errors", record: @game_setting %>
@@ -22,7 +22,7 @@
   </div>
   <p class="muted">So people can ask questions before signing up. Guests can't post links, and bans and the VPN block apply to them. Staff can ban a guest from the Bans page.</p>
 
-  <h2><%= term(:scene, count: 2) %></h2>
+  <h2 class="section-title"><%= term(:scene, count: 2) %></h2>
   <div class="field field--checkbox">
     <%= form.check_box :auto_skip %>
     <%= form.label :auto_skip, "New #{term(:scene, count: 2).downcase} auto-skip players who don't take their turn" %>
@@ -30,7 +30,7 @@
   <div class="field">
     <%= form.label :turn_minutes, "Minutes before the turn warning" %>
     <%= form.number_field :turn_minutes, min: 1, max: 120 %>
-    <small>Each <%= term(:scene).downcase %> can change both of these.</small>
+    <small class="hint">Each <%= term(:scene).downcase %> can change both of these.</small>
   </div>
   <div class="field">
     <%= form.label :idle_days, "Days without a #{term(:pose).downcase} before a #{term(:scene).downcase} counts as idle" %>

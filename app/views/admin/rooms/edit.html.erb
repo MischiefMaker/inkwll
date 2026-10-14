@@ -1,10 +1,10 @@
 <% content_for :title, "Edit #{@room.name} · Inkwll" %>
 
-<h1>Edit <%= link_to @room.name, room_path(@room) %></h1>
+<h1 class="page-title">Edit <%= link_to @room.name, room_path(@room) %></h1>
 
 <%= render "form", room: @room %>
 
-<h2><%= term(:exit, count: 2) %></h2>
+<h2 class="section-title"><%= term(:exit, count: 2) %></h2>
 <p class="muted">
   <%= term(:exit, count: 2) %> are one-way. Fill in "Return <%= term(:exit).downcase %>" to add the way back at the same time.
 </p>
@@ -12,8 +12,8 @@
 <% if @room.exits.any? %>
   <ul class="list">
     <% @room.exits.includes(:destination_room).each do |room_exit| %>
-      <li>
-        <strong><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
+      <li class="list__item">
+        <strong class="emphasis"><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
         <%= button_to "Remove", admin_room_exit_path(@room, room_exit), method: :delete, class: "button-link",
               form: { data: { turbo_confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?" } } %>
       </li>

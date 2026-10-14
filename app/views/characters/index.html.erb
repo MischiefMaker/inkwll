@@ -1,11 +1,11 @@
 <% content_for :title, "My characters · Inkwll" %>
 
-<h1>My characters</h1>
+<h1 class="page-title">My characters</h1>
 
 <% if @characters.any? %>
   <ul class="list">
     <% @characters.each do |character| %>
-      <li>
+      <li class="list__item">
         <%= link_to character.name, character %>
         <span class="muted">in <%= link_to character.room.name, room_path(character.room) %></span>
         <% if character == current_character %><span class="tag">active</span><% end %>
@@ -13,7 +13,7 @@
     <% end %>
   </ul>
 <% else %>
-  <p>You don't have any characters yet.</p>
+  <p class="text">You don't have any characters yet.</p>
 <% end %>
 
-<p><%= link_to "New character", new_character_path, class: "button" %></p>
+<p class="text"><%= link_to "New character", new_character_path, class: "button" %></p>

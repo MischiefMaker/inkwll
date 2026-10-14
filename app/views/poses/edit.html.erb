@@ -1,6 +1,6 @@
 <% content_for :title, "Edit #{term(:pose).downcase} · Inkwll" %>
 
-<h1>Edit <%= term(:pose).downcase %></h1>
+<h1 class="page-title">Edit <%= term(:pose).downcase %></h1>
 <p class="muted">In <%= link_to @scene.title, scene_path(@scene) %>. Edited <%= term(:pose, count: 2).downcase %> are marked as edited.</p>
 
 <%= form_with model: [ @scene, @pose ], class: "form" do |form| %>

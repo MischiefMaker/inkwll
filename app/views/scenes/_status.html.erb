@@ -2,7 +2,7 @@
     Chapters, each player's say on making the Manuscript public. %>
 <% if scene.paused? && !scene.finished? %>
   <div class="notice-box">
-    <p>Paused since <%= l(scene.paused_at.to_date, format: :long) %><%= ": #{scene.pause_note}" if scene.pause_note %>.
+    <p class="text">Paused since <%= l(scene.paused_at.to_date, format: :long) %><%= ": #{scene.pause_note}" if scene.pause_note %>.
       The turn timer is stopped, and it won't be finished for being quiet.</p>
     <% if participant && scene.writable? %>
       <%= button_to "Pick it back up", scene_pause_path(scene), method: :delete, class: "button button--quiet" %>
@@ -15,7 +15,7 @@
 <% end %>
 <% if scene.finished? %>
   <div class="notice-box">
-    <p>
+    <p class="text">
       Finished<%= " by #{scene.finished_by.name}" if scene.finished_by %> on <%= scene.finished_at.to_date.to_fs(:long) %>.
       It's in the <%= link_to term(:logs_collection), archives_path(room_id: scene.room_id) %> as a <%= term(:log).downcase %>.
     </p>
@@ -25,9 +25,9 @@
     <% end %>
     <% if scene.visibility_hidden? %>
       <% if scene.made_public_at %>
-        <p>Every player agreed to make this <%= term(:log).downcase %> public.</p>
+        <p class="text">Every player agreed to make this <%= term(:log).downcase %> public.</p>
       <% elsif scene.participating?(current_account) %>
-        <p>
+        <p class="text">
           This <%= term(:log).downcase %> stays private to its players unless all of them agree to make it public.
           Agreed so far: <%= scene.participants.count(&:public_consent_at) %> of <%= scene.participants.size %>.
         </p>

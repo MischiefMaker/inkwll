@@ -6,8 +6,8 @@
     <p class="mini-profile__name"><%= character.name %></p>
     <p class="muted">In <%= link_to character.room.name, room_path(character.room) %></p>
     <% if character.description.present? %>
-      <p><%= truncate(character.description, length: 200) %></p>
+      <p class="text"><%= truncate(character.description, length: 200) %></p>
     <% end %>
-    <p><%= link_to "View profile", character %></p>
+    <p class="text"><%= link_to "View profile", character %></p>
   </div>
 </div>

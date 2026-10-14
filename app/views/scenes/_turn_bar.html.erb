@@ -22,11 +22,11 @@
       <strong class="turn-bar__warning">Still there? Your turn will be skipped soon.</strong>
       <%= button_to "I'm here!", here_scene_turn_path(scene), class: "button" %>
     <% else %>
-      <strong>It's your turn.</strong>
+      <strong class="emphasis">It's your turn.</strong>
     <% end %>
     <%= button_to "Pass", pass_scene_turn_path(scene), class: "button button--quiet" %>
   <% else %>
-    <span>It's <strong><%= current.character.name %></strong>'s turn<%= " (warned)" if scene.turn_warned_at %>.</span>
+    <span class="turn-bar__text">It's <strong class="emphasis"><%= current.character.name %></strong>'s turn<%= " (warned)" if scene.turn_warned_at %>.</span>
     <% if participant&.storyteller? %>
       <%= button_to "Skip #{current.character.name}", skip_scene_turn_path(scene), class: "button button--quiet" %>
     <% end %>

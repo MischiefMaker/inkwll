@@ -1,19 +1,19 @@
 <% content_for :title, "Bans · Admin · Inkwll" %>
 
-<h1>Bans</h1>
-<p><%= link_to "New ban", new_admin_ban_path, class: "button" %></p>
+<h1 class="page-title">Bans</h1>
+<p class="text"><%= link_to "New ban", new_admin_ban_path, class: "button" %></p>
 
 <% if @bans.any? %>
   <table class="table">
-    <thead><tr><th>Who</th><th>Why</th><th>Until</th><th>By</th><th></th></tr></thead>
-    <tbody>
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Who</th><th class="table__heading">Why</th><th class="table__heading">Until</th><th class="table__heading">By</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
       <% @bans.each do |ban| %>
         <tr class="<%= "muted" unless ban.in_force? %>">
-          <td><%= ban.account&.display_name %><%= " · " if ban.account && ban.ip_range %><%= ban.ip_range %></td>
-          <td><%= ban.reason %></td>
-          <td><%= ban.lifted_at ? "Lifted" : (ban.expires_at ? ban.expires_at.to_date.to_fs(:long) : "Permanent") %></td>
-          <td><%= ban.banned_by.display_name %></td>
-          <td><% if ban.in_force? %><%= button_to "Lift", admin_ban_path(ban), method: :patch, class: "button-link" %><% end %></td>
+          <td class="table__cell"><%= ban.account&.display_name %><%= " · " if ban.account && ban.ip_range %><%= ban.ip_range %></td>
+          <td class="table__cell"><%= ban.reason %></td>
+          <td class="table__cell"><%= ban.lifted_at ? "Lifted" : (ban.expires_at ? ban.expires_at.to_date.to_fs(:long) : "Permanent") %></td>
+          <td class="table__cell"><%= ban.banned_by.display_name %></td>
+          <td class="table__cell"><% if ban.in_force? %><%= button_to "Lift", admin_ban_path(ban), method: :patch, class: "button-link" %><% end %></td>
         </tr>
       <% end %>
     </tbody>
@@ -22,18 +22,18 @@
   <p class="muted">Nobody is banned.</p>
 <% end %>
 
-<h2>Guests in the OOC Chat</h2>
+<h2 class="section-title">Guests in the OOC Chat</h2>
 <% if @guests.any? %>
   <p class="muted">People who chatted without logging in this week. Ban an address to stop them, and remove their messages if they were spam.</p>
   <table class="table">
-    <thead><tr><th>Name</th><th>Address</th><th>Last message</th><th></th></tr></thead>
-    <tbody>
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Name</th><th class="table__heading">Address</th><th class="table__heading">Last message</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
       <% @guests.each do |ip, messages| %>
-        <tr>
-          <td><%= messages.map(&:guest_name).uniq.join(", ") %></td>
-          <td><%= ip %></td>
-          <td><%= truncate(messages.first.body, length: 80) %> <span class="muted">(<%= pluralize(messages.size, "message") %>, <%= time_ago_in_words(messages.first.created_at) %> ago)</span></td>
-          <td>
+        <tr class="table__row">
+          <td class="table__cell"><%= messages.map(&:guest_name).uniq.join(", ") %></td>
+          <td class="table__cell"><%= ip %></td>
+          <td class="table__cell"><%= truncate(messages.first.body, length: 80) %> <span class="muted">(<%= pluralize(messages.size, "message") %>, <%= time_ago_in_words(messages.first.created_at) %> ago)</span></td>
+          <td class="table__cell">
             <%= link_to "Ban", new_admin_ban_path(ip: ip.to_s) %>
             <%= button_to "Remove messages", admin_guest_messages_path(ip: ip.to_s), method: :delete, class: "button-link",
                   form: { data: { turbo_confirm: "Remove all #{messages.size} of their messages from the OOC Chat?" } } %>
@@ -46,7 +46,7 @@
   <p class="muted">No guests have chatted this week.</p>
 <% end %>
 
-<h2>VPN block</h2>
+<h2 class="section-title">VPN block</h2>
 <p class="muted">
   For when the game is being brigaded. Blocks logging in and signing up from known VPN and data-centre addresses,
   using a free list that's downloaded once a day. Some honest players use VPNs too, so turn it off again afterwards.

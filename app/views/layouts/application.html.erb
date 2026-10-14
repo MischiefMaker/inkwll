@@ -22,7 +22,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="<%= body_classes %>">
     <% if current_account %>
       <%= render "shared/header" %>
       <%= turbo_stream_from current_account, :chapters %>

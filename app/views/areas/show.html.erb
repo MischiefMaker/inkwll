@@ -2,7 +2,7 @@
 
 <%= render "areas/breadcrumbs", area: @area %>
 
-<h1><%= @area.name %></h1>
+<h1 class="page-title"><%= @area.name %></h1>
 <%= render "shared/description", record: @area %>
 
 <% if @area.rooms.any? %>
@@ -28,5 +28,5 @@
 <% end %>
 
 <% if current_account.can?(:build) %>
-  <p><%= link_to "Edit #{term(:area).downcase}", edit_admin_area_path(@area) %></p>
+  <p class="text"><%= link_to "Edit #{term(:area).downcase}", edit_admin_area_path(@area) %></p>
 <% end %>

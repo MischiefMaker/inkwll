@@ -16,6 +16,14 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: CSS classes on everything
+
+Every element gets a CSS class so games can style things easily (owner). Classes follow `block`, `block__part` and `block--kind`, use plain words rather than themed ones, and are listed for skinners in `docs/css-classes.md`. Each page's `<body>` also gets page classes (such as `page-scenes-show`) and `is-logged-in`, `is-guest` or `is-staff`.
+
+## 2026-10-14: Any player can post as an NPC
+
+Any player in a Chapter can post as an NPC, labelled with who played it (owner, from a decision card). Built that way.
+
 ## 2026-10-14: Pausing a Chapter
 
 Players can pause a Chapter to pick it up another day, with an optional "back on" note. The turn timer stops, and the game won't finish it for being quiet while it's paused (owner).

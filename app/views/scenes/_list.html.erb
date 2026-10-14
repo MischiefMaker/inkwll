@@ -2,12 +2,12 @@
     Hidden Chapters only show to the players in them or invited to them. %>
 <% scenes = Scene.open.visible_to(current_account).where(room: room).by_activity.includes(participants: :character) %>
 <section class="scene-list">
-  <h2><%= term(:scene, count: 2) %></h2>
+  <h2 class="section-title"><%= term(:scene, count: 2) %></h2>
   <% if scenes.any? %>
     <ul class="list">
       <% scenes.each do |scene| %>
         <li class="scene-list__item<%= " scene-list__item--idle" if scene.idle? %>">
-          <div>
+          <div class="scene-list__heading">
             <%= link_to scene.title, scene_path(scene), class: "scene-list__title" %>
             <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_label(scene) %></span>
             <% if scene.paused? %><span class="badge">Paused</span><% elsif scene.idle? %><span class="badge">Idle</span><% end %>
@@ -25,7 +25,7 @@
 
   <% finished = Scene.finished.visible_to(current_account).where(room: room).count %>
   <% if finished.positive? %>
-    <p><%= link_to "#{pluralize(finished, "finished #{term(:scene).downcase}")} in the #{term(:logs_collection)}", archives_path(room_id: room.id) %></p>
+    <p class="text"><%= link_to "#{pluralize(finished, "finished #{term(:scene).downcase}")} in the #{term(:logs_collection)}", archives_path(room_id: room.id) %></p>
   <% end %>
 
   <% if current_character&.room_id == room.id %>
@@ -37,7 +37,7 @@
           <%= form.text_field :title, required: true, maxlength: 100 %>
         </div>
         <fieldset class="field">
-          <legend>Who can join</legend>
+          <legend class="fieldset__legend">Who can join</legend>
           <label class="field--checkbox"><%= form.radio_button :visibility, "joinable", checked: true %> <%= t("terms.scene_visibility.joinable") %>: anyone can watch and join.</label>
           <label class="field--checkbox"><%= form.radio_button :visibility, "private" %> <%= t("terms.scene_visibility.private") %>: others can see who's in it, but only invited characters can read or join.</label>
           <label class="field--checkbox"><%= form.radio_button :visibility, "hidden" %> <%= t("terms.scene_visibility.hidden") %>: only invited characters know it exists.</label>
@@ -45,7 +45,7 @@
         <div class="field">
           <%= form.label :pose_mode, "Turns" %>
           <%= form.select :pose_mode, Scene.pose_modes.keys.map { |mode| [ pose_mode_label(mode), mode ] } %>
-          <small>The <%= pose_mode_label("three_pose") %> needs four characters; until then everyone takes turns.</small>
+          <small class="hint">The <%= pose_mode_label("three_pose") %> needs four characters; until then everyone takes turns.</small>
         </div>
         <% if current_account.may_storytell? %>
           <label class="field--checkbox"><%= check_box_tag "scene[storyteller]", "1", false, id: "scene_storyteller" %> <%= current_character.name %> is the <%= term(:storyteller).downcase %></label>

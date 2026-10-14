@@ -17,6 +17,7 @@ The owner is comfortable with HTML and CSS but is not an experienced programmer.
 - Do not invent APIs or library behavior. If you are unsure how something works, say so.
 - Anything marked **[Proposed]** is not settled. Ask the owner before building on it.
 - Do not add services that need extra hosting (for example Redis).
+- Give every element you add a meaningful CSS class, so games can skin everything. Use the naming in `docs/css-classes.md` (`block`, `block__part`, `block--kind`), with plain words rather than the themed words players see, and add new classes to that file.
 
 ## Where things live
 
@@ -26,6 +27,7 @@ The owner is comfortable with HTML and CSS but is not an experienced programmer.
 | `docs/decisions.md` | Every decision the owner has made, newest first, with the date. |
 | `docs/roadmap.md` | The build order and which step is current. |
 | `docs/ai-handoff.md` | How the owner hands a task to another AI and brings the result back. |
+| `docs/css-classes.md` | The CSS classes games can use to skin the site. |
 | `tasks/` | One file per piece of work, plus the task board in `tasks/README.md`. |
 | `tasks/inbox/` | Answers from outside AIs, waiting to be reviewed. |
 | `CHANGELOG.md` | A short, plain-language list of what changed. |

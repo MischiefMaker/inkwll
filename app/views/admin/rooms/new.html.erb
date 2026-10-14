@@ -1,9 +1,9 @@
 <% content_for :title, "New #{term(:room).downcase} · Inkwll" %>
 
-<h1>New <%= term(:room).downcase %></h1>
+<h1 class="page-title">New <%= term(:room).downcase %></h1>
 
 <% if Area.none? %>
-  <p>Make an <%= link_to term(:area).downcase, new_admin_area_path %> first. Every <%= term(:room).downcase %> belongs to one.</p>
+  <p class="text">Make an <%= link_to term(:area).downcase, new_admin_area_path %> first. Every <%= term(:room).downcase %> belongs to one.</p>
 <% else %>
   <%= render "form", room: @room %>
 <% end %>

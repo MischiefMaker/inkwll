@@ -6,7 +6,7 @@
     <%= link_to "My characters", characters_path %>
     <%# Extras live in the menu so the roleplay stays front and centre. %>
     <details class="menu">
-      <summary>Menu</summary>
+      <summary class="disclosure__summary">Menu</summary>
       <div class="menu__items">
         <%= link_to "All #{term(:room, count: 2).downcase}", rooms_path %>
         <%= link_to "Where", where_path %>

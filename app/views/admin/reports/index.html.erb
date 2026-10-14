@@ -1,19 +1,19 @@
 <% content_for :title, "Reports · Admin · Inkwll" %>
 
-<h1>Reports</h1>
+<h1 class="page-title">Reports</h1>
 <p class="muted">Opening a report lets you read that one <%= term(:scene).downcase %>, even if it's private or hidden.</p>
 
-<h2>Open</h2>
+<h2 class="section-title">Open</h2>
 <% if @open.any? %>
   <table class="table">
-    <thead><tr><th><%= term(:scene) %></th><th>Reported by</th><th>When</th><th>Reason</th></tr></thead>
-    <tbody>
+    <thead class="table__head"><tr class="table__row"><th class="table__heading"><%= term(:scene) %></th><th class="table__heading">Reported by</th><th class="table__heading">When</th><th class="table__heading">Reason</th></tr></thead>
+    <tbody class="table__body">
       <% @open.each do |report| %>
-        <tr>
-          <td><%= link_to report.scene.title, admin_report_path(report) %><%= " (one #{term(:pose).downcase})" if report.pose %></td>
-          <td><%= report.account.display_name %></td>
-          <td><%= time_ago_in_words(report.created_at) %> ago</td>
-          <td><%= truncate(report.reason, length: 80) %></td>
+        <tr class="table__row">
+          <td class="table__cell"><%= link_to report.scene.title, admin_report_path(report) %><%= " (one #{term(:pose).downcase})" if report.pose %></td>
+          <td class="table__cell"><%= report.account.display_name %></td>
+          <td class="table__cell"><%= time_ago_in_words(report.created_at) %> ago</td>
+          <td class="table__cell"><%= truncate(report.reason, length: 80) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -23,10 +23,10 @@
 <% end %>
 
 <% if @resolved.any? %>
-  <h2>Closed</h2>
+  <h2 class="section-title">Closed</h2>
   <ul class="list">
     <% @resolved.each do |report| %>
-      <li>
+      <li class="list__item">
         <%= link_to report.scene.title, admin_report_path(report) %>
         <span class="muted">closed by <%= report.resolved_by&.display_name %>, <%= time_ago_in_words(report.resolved_at) %> ago<%= ": #{report.resolution}" if report.resolution %></span>
       </li>

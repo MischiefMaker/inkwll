@@ -1,6 +1,6 @@
 <% content_for :title, "New ban · Admin · Inkwll" %>
 
-<h1>New ban</h1>
+<h1 class="page-title">New ban</h1>
 <p class="muted">Ban a player, an IP address, or both. Their open sessions end straight away.</p>
 
 <%= form_with model: @ban, url: admin_bans_path, class: "form" do |form| %>
@@ -12,7 +12,7 @@
   <div class="field">
     <%= form.label :ip_range, "IP address or range (optional)" %>
     <%= form.text_field :ip_range, placeholder: "203.0.113.7 or 203.0.113.0/24" %>
-    <small>A player's recent addresses are on their page under Players and staff.</small>
+    <small class="hint">A player's recent addresses are on their page under Players and staff.</small>
   </div>
   <div class="field">
     <%= form.label :reason %>

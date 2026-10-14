@@ -55,7 +55,7 @@
         <% end %>
         <div class="pose__body prose"><%= simple_format pose.body %></div>
         <% if staff_view && pose.original_body %>
-          <details class="pose__original"><summary>Original, before editing (staff only)</summary><div class="prose"><%= simple_format pose.original_body %></div></details>
+          <details class="pose__original"><summary class="disclosure__summary">Original, before editing (staff only)</summary><div class="prose"><%= simple_format pose.original_body %></div></details>
         <% end %>
       <% end %>
       <% if staff_view && !pose.hidden_by_staff? %>

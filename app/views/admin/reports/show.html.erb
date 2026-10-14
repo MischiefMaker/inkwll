@@ -1,6 +1,6 @@
 <% content_for :title, "Report · Admin · Inkwll" %>
 
-<h1>Report: <%= @scene.title %></h1>
+<h1 class="page-title">Report: <%= @scene.title %></h1>
 <p class="muted">
   From <%= @report.account.display_name %>, <%= time_ago_in_words(@report.created_at) %> ago.
   <%= scene_visibility_label(@scene) %> <%= term(:scene).downcase %> in <%= @scene.room.name %>.
@@ -8,18 +8,18 @@
 <blockquote class="report-quote"><%= simple_format @report.reason %></blockquote>
 
 <% if @report.pose %>
-  <h2>The reported <%= term(:pose).downcase %></h2>
+  <h2 class="section-title">The reported <%= term(:pose).downcase %></h2>
   <blockquote class="report-quote">
-    <strong><%= @report.pose.character&.name %>:</strong>
+    <strong class="emphasis"><%= @report.pose.character&.name %>:</strong>
     <%= simple_format @report.pose.body %>
     <% if @report.pose.original_body %><p class="muted">Before editing: <%= @report.pose.original_body %></p><% end %>
   </blockquote>
 <% end %>
 
-<h2>What you can do</h2>
+<h2 class="section-title">What you can do</h2>
 <ul class="list">
-  <li><%= link_to "Read the whole #{term(:scene).downcase}", scene_path(@scene) %> (you can hide a <%= term(:pose).downcase %> from there)</li>
-  <li>
+  <li class="list__item"><%= link_to "Read the whole #{term(:scene).downcase}", scene_path(@scene) %> (you can hide a <%= term(:pose).downcase %> from there)</li>
+  <li class="list__item">
     <% if @scene.locked? %>
       <%= button_to "Unlock the #{term(:scene).downcase}", admin_scene_lock_path(@scene), method: :delete, class: "button-link" %>
     <% else %>
@@ -27,18 +27,18 @@
     <% end %>
   </li>
   <% @scene.participants.map { |p| p.character.account }.uniq.each do |player| %>
-    <li><%= link_to "Warn #{player.display_name}", new_admin_warning_path(account_id: player.id, report_id: @report.id) %></li>
+    <li class="list__item"><%= link_to "Warn #{player.display_name}", new_admin_warning_path(account_id: player.id, report_id: @report.id) %></li>
   <% end %>
   <% if current_account.can?(:ban) %>
-    <li><%= link_to "Ban a player", new_admin_ban_path %> <span class="muted">(Bans tab)</span></li>
+    <li class="list__item"><%= link_to "Ban a player", new_admin_ban_path %> <span class="muted">(Bans tab)</span></li>
   <% end %>
 </ul>
 
 <% if @report.warnings.any? %>
-  <h2>Warnings sent</h2>
+  <h2 class="section-title">Warnings sent</h2>
   <ul class="list">
     <% @report.warnings.includes(:account, :staff).each do |warning| %>
-      <li><%= warning.account.display_name %>, by <%= warning.staff.display_name %>: <%= warning.body %> <span class="muted"><%= warning.read_at ? "(read)" : "(not read yet)" %></span></li>
+      <li class="list__item"><%= warning.account.display_name %>, by <%= warning.staff.display_name %>: <%= warning.body %> <span class="muted"><%= warning.read_at ? "(read)" : "(not read yet)" %></span></li>
     <% end %>
   </ul>
 <% end %>

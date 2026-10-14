@@ -1,9 +1,9 @@
 <% content_for :title, "All #{term(:room, count: 2).downcase} · Inkwll" %>
 
-<h1>All <%= term(:room, count: 2).downcase %></h1>
+<h1 class="page-title">All <%= term(:room, count: 2).downcase %></h1>
 
 <ul class="list">
   <% @rooms.each do |room| %>
-    <li><%= link_to room.name, room_path(room) %> <span class="muted">in <%= room.area.name %></span></li>
+    <li class="list__item"><%= link_to room.name, room_path(room) %> <span class="muted">in <%= room.area.name %></span></li>
   <% end %>
 </ul>

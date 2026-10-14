@@ -1,6 +1,6 @@
 <% content_for :title, "Pick a new password · Inkwll" %>
 
-<h1>Pick a new password</h1>
+<h1 class="page-title">Pick a new password</h1>
 
 <%= form_with url: password_path(params[:token]), method: :put, class: "form" do |form| %>
   <div class="field">

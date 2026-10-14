@@ -1,6 +1,6 @@
 <% content_for :title, "Log in · Inkwll" %>
 
-<h1>Log in</h1>
+<h1 class="page-title">Log in</h1>
 
 <%= form_with url: session_path, class: "form" do |form| %>
   <div class="field">
@@ -14,8 +14,8 @@
   <%= form.submit "Log in", class: "button" %>
 <% end %>
 
-<p><%= link_to "Forgot your password?", new_password_path %></p>
-<p>New here? <%= link_to "Create an account", new_registration_path %>.</p>
+<p class="text"><%= link_to "Forgot your password?", new_password_path %></p>
+<p class="text">New here? <%= link_to "Create an account", new_registration_path %>.</p>
 <% if GameSetting.current.guest_chat? %>
-  <p>Have a question first? <%= link_to "Ask in the OOC Chat as a guest", ooc_messages_path %>.</p>
+  <p class="text">Have a question first? <%= link_to "Ask in the OOC Chat as a guest", ooc_messages_path %>.</p>
 <% end %>

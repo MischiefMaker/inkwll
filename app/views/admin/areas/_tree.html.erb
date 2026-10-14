@@ -1,15 +1,15 @@
 <%# Areas with their Settings, nested, each with edit links. %>
 <ul class="tree">
   <% areas.each do |area| %>
-    <li>
-      <strong><%= link_to area.name, area_path(area) %></strong>
+    <li class="list__item">
+      <strong class="emphasis"><%= link_to area.name, area_path(area) %></strong>
       <%= link_to "edit", edit_admin_area_path(area), class: "muted" %>
       · <%= link_to "add #{term(:area).downcase} inside", new_admin_area_path(parent_id: area.id), class: "muted" %>
       · <%= link_to "add #{term(:room).downcase}", new_admin_room_path(area_id: area.id), class: "muted" %>
       <% if area.rooms.any? || area.children.any? %>
         <ul class="tree">
           <% area.rooms.each do |room| %>
-            <li><%= link_to room.name, edit_admin_room_path(room) %><% if room.starting? %> <span class="tag">start</span><% end %></li>
+            <li class="list__item"><%= link_to room.name, edit_admin_room_path(room) %><% if room.starting? %> <span class="tag">start</span><% end %></li>
           <% end %>
         </ul>
         <%= render "admin/areas/tree", areas: area.children %>

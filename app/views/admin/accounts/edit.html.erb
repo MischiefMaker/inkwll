@@ -1,6 +1,6 @@
 <% content_for :title, "Edit #{@account.display_name} · Inkwll" %>
 
-<h1><%= @account.display_name %></h1>
+<h1 class="page-title"><%= @account.display_name %></h1>
 
 <%= form_with model: [ :admin, @account ], class: "form" do |form| %>
   <%= render "shared/errors", record: @account %>
@@ -12,8 +12,8 @@
   </div>
 
   <fieldset class="field">
-    <legend><%= t("terms.staff_levels.page") %> jobs</legend>
-    <small>Only matter for <%= t("terms.staff_levels.page").pluralize %>. <%= t("terms.staff_levels.scribe").pluralize %> and <%= t("terms.staff_levels.wellkeeper").pluralize %> can do every job.</small>
+    <legend class="fieldset__legend"><%= t("terms.staff_levels.page") %> jobs</legend>
+    <small class="hint">Only matter for <%= t("terms.staff_levels.page").pluralize %>. <%= t("terms.staff_levels.scribe").pluralize %> and <%= t("terms.staff_levels.wellkeeper").pluralize %> can do every job.</small>
     <%= hidden_field_tag "account[job_flags][]", "" %>
     <% Account::JOB_FLAGS.each do |flag| %>
       <label class="field--checkbox">
@@ -32,11 +32,11 @@
 <% end %>
 
 <% if current_account.can?(:ban) %>
-  <section>
-    <h2>Safety</h2>
+  <section class="account-safety">
+    <h2 class="section-title">Safety</h2>
     <% addresses = @account.sessions.where.not(ip_address: nil).order(created_at: :desc).limit(10).pluck(:ip_address).uniq %>
     <p class="muted">Recent IP addresses: <%= addresses.any? ? addresses.join(", ") : "none recorded" %></p>
-    <p>
+    <p class="text">
       <%= link_to "Ban #{@account.display_name}", new_admin_ban_path(account_id: @account.id) %> ·
       <%= link_to "Warn #{@account.display_name}", new_admin_warning_path(account_id: @account.id) %>
     </p>

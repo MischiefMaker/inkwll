@@ -27,7 +27,7 @@
                   ooc: "Out of character (brb, timing, questions). It doesn't take a turn." } %>
     <%= form.text_area :body, rows: 4, required: true, data: { composer_target: "body" } %>
     <div class="composer__warning" hidden data-composer-target="warning">
-      <span data-composer-target="warningText"></span>
+      <span class="composer__warning-text" data-composer-target="warningText"></span>
       <button type="button" class="button" data-action="composer#postAnyway">Post anyway</button>
       <button type="button" class="button-link" data-action="composer#cancel">Wait</button>
     </div>

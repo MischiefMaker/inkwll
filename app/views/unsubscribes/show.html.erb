@@ -1,11 +1,11 @@
 <% content_for :title, "Activity emails · Inkwll" %>
 
-<h1>Activity emails</h1>
+<h1 class="page-title">Activity emails</h1>
 
 <% if @done %>
-  <p>Done. <%= @account.display_name %> won't get any more activity emails.</p>
-  <p>You can turn them back on any time from your notification settings.</p>
+  <p class="text">Done. <%= @account.display_name %> won't get any more activity emails.</p>
+  <p class="text">You can turn them back on any time from your notification settings.</p>
 <% else %>
-  <p>Stop all activity emails for <%= @account.display_name %>?</p>
+  <p class="text">Stop all activity emails for <%= @account.display_name %>?</p>
   <%= button_to "Stop these emails", unsubscribe_path(params[:token]), class: "button" %>
 <% end %>

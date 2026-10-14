@@ -10,7 +10,7 @@
     <p class="scene-setting__name"><%= link_to room.name, room_path(room) %></p>
     <% if room.description.present? %>
       <details class="scene-setting__description">
-        <summary>About this <%= term(:room).downcase %></summary>
+        <summary class="disclosure__summary">About this <%= term(:room).downcase %></summary>
         <div class="prose"><%= simple_format room.description %></div>
       </details>
     <% end %>

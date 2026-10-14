@@ -1,6 +1,6 @@
 <% content_for :title, "Where · Inkwll" %>
 
-<h1>Where</h1>
+<h1 class="page-title">Where</h1>
 <p class="muted">Where everyone is standing, and the open <%= term(:scene, count: 2).downcase %> they're in.</p>
 
 <% @characters.group_by(&:room).sort_by { |room, _| room.name }.each do |room, characters| %>
@@ -8,10 +8,10 @@
     <% if room.area %>
       <p class="where-room__areas"><%= (room.area.ancestors + [ room.area ]).map(&:name).join(" › ") %></p>
     <% end %>
-    <h2><%= link_to room.name, room_path(room) %></h2>
+    <h2 class="section-title"><%= link_to room.name, room_path(room) %></h2>
     <ul class="list where-room__list">
       <% characters.each do |character| %>
-        <li>
+        <li class="list__item">
           <%= link_to character.name, character %>
           <% elsewhere = (@open_scenes[character.id] || []).map(&:scene) %>
           <% if elsewhere.any? %>

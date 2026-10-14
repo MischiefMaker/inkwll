@@ -1,8 +1,8 @@
 <% if record.errors.any? %>
   <div class="flash flash--alert">
-    <ul>
+    <ul class="list">
       <% record.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="list__item"><%= message %></li>
       <% end %>
     </ul>
   </div>

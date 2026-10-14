@@ -1,6 +1,6 @@
 <% content_for :title, "Warn a player · Admin · Inkwll" %>
 
-<h1>Warn <%= @warning.account&.display_name || "a player" %></h1>
+<h1 class="page-title">Warn <%= @warning.account&.display_name || "a player" %></h1>
 <p class="muted">They'll see this at the top of every page until they mark it as read.</p>
 
 <%= form_with model: @warning, url: admin_warnings_path, class: "form" do |form| %>

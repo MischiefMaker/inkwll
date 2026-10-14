@@ -14,7 +14,7 @@
       <% shortcuts = area.all_rooms %>
       <% if shortcuts.size > 1 %>
         <details class="shortcuts">
-          <summary aria-label="Shortcuts in <%= area.name %>"></summary>
+          <summary class="disclosure__summary" aria-label="Shortcuts in <%= area.name %>"></summary>
           <div class="shortcuts__items">
             <%= link_to "Overview of #{area.name}", area_path(area), class: "muted" %>
             <% shortcuts.each do |room| %>

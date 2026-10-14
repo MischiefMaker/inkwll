@@ -1,44 +1,44 @@
 <% content_for :title, "Admin panel · Inkwll" %>
 
-<h1>Admin panel</h1>
+<h1 class="page-title">Admin panel</h1>
 <p class="muted">
-  You are a <strong><%= t("terms.staff_levels.#{current_account.staff_level}") %></strong><%= " and a #{term(:founder)}" if current_account.founder? %>.
+  You are a <strong class="emphasis"><%= t("terms.staff_levels.#{current_account.staff_level}") %></strong><%= " and a #{term(:founder)}" if current_account.founder? %>.
   You only see the tabs your level allows.
 </p>
 
 <ul class="admin-sections">
   <% if current_account.can?(:build) %>
-    <li>
+    <li class="list__item">
       <%= link_to "Building", admin_areas_path %>
       <span class="muted">Create and edit <%= term(:area, count: 2).downcase %>, <%= term(:room, count: 2).downcase %> and <%= term(:exit, count: 2).downcase %>.</span>
     </li>
   <% end %>
   <% if current_account.can?(:manage_staff) %>
-    <li>
+    <li class="list__item">
       <%= link_to "Players and staff", admin_accounts_path %>
       <span class="muted">Set staff levels, <%= t("terms.staff_levels.page") %> jobs and <%= term(:storyteller) %> status.</span>
     </li>
   <% end %>
   <% if current_account.can?(:handle_reports) %>
-    <li>
+    <li class="list__item">
       <%= link_to "Reports", admin_reports_path %>
       <span class="muted">Read reported <%= term(:scene, count: 2).downcase %>, lock them, hide <%= term(:pose, count: 2).downcase %> and warn players.</span>
     </li>
   <% end %>
   <% if current_account.can?(:ban) %>
-    <li>
+    <li class="list__item">
       <%= link_to "Bans", admin_bans_path %>
       <span class="muted">Ban players and IP addresses, and block known VPNs.</span>
     </li>
   <% end %>
   <% if current_account.can?(:delete_characters) %>
-    <li>
+    <li class="list__item">
       <%= link_to "Characters", admin_characters_path %>
       <span class="muted">See every character, and delete one if needed.</span>
     </li>
   <% end %>
   <% if current_account.can?(:change_game_settings) %>
-    <li>
+    <li class="list__item">
       <%= link_to "Game settings", edit_admin_game_settings_path %>
       <span class="muted">Whether email and character approval are required.</span>
     </li>

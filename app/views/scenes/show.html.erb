@@ -9,7 +9,7 @@
   <%= render "scenes/setting", scene: @scene %>
 
   <header class="scene__header">
-    <h1><%= @scene.title %></h1>
+    <h1 class="page-title"><%= @scene.title %></h1>
     <p class="scene__meta muted">
       <span class="badge badge--<%= @scene.visibility %>"><%= scene_visibility_label(@scene) %></span>
       <%= scene_mode_summary(@scene) %>
