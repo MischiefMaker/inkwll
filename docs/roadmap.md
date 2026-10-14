@@ -30,7 +30,6 @@ All open design questions were answered on 2026-10-14. New ones get added here a
 **To revisit later**
 
 - A themed word for Areas (kept as "Area" for now).
-- How to run several games after the first release. Default: one install per game, each with its own database, with several sharing one DigitalOcean server through Kamal. The alternative is a single site hosting many games.
 
 ## When a step finishes
 

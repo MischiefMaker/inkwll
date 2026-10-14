@@ -8,6 +8,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: One install per game
+
+Each game is its own copy of Inkwll with its own database. The owner may run several of their own games at once, sharing one DigitalOcean server through Kamal. Inkwll does not host other people's games: anyone else who wants a game runs it on their own server.
+
+Why: the owner doesn't plan to host others, and separate installs keep each game's data and settings apart without building multi-game support into the code.
+
 ## 2026-10-14: Areas group Settings, and nest
 
 Settings are grouped into **Areas**, and Areas can nest inside each other as deep as a game likes. Example: Hogwarts (Area) holds Castle, Grounds and Forest (Areas); Castle holds its floors (Areas); each floor holds rooms such as the Entry Hall and Great Hall (Settings).
