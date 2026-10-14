@@ -80,7 +80,7 @@
         <%= form.submit "Start #{term(:scene).downcase}", class: "button" %>
       <% end %>
     </details>
-  <% else %>
+  <% elsif current_account %>
     <p class="muted">Travel here to start a <%= term(:scene).downcase %>.</p>
   <% end %>
 </section>

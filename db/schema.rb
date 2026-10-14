@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_340001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_400001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -339,6 +339,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_340001) do
     t.datetime "updated_at", null: false
     t.index ["branch_id"], name: "index_grimoire_spells_on_branch_id"
     t.index ["created_by_id"], name: "index_grimoire_spells_on_created_by_id"
+  end
+
+  create_table "guest_visits", force: :cascade do |t|
+    t.string "token", null: false
+    t.bigint "room_id", null: false
+    t.datetime "seen_at", null: false
+    t.index ["room_id"], name: "index_guest_visits_on_room_id"
+    t.index ["seen_at"], name: "index_guest_visits_on_seen_at"
+    t.index ["token"], name: "index_guest_visits_on_token", unique: true
   end
 
   create_table "inkling_entries", force: :cascade do |t|
@@ -876,6 +885,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_340001) do
   add_foreign_key "grimoire_proposals", "grimoire_spells", column: "spell_id", on_delete: :nullify
   add_foreign_key "grimoire_spells", "accounts", column: "created_by_id", on_delete: :nullify
   add_foreign_key "grimoire_spells", "grimoire_branches", column: "branch_id"
+  add_foreign_key "guest_visits", "rooms", on_delete: :cascade
   add_foreign_key "inkling_entries", "accounts", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", column: "private_to_id", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", on_delete: :nullify

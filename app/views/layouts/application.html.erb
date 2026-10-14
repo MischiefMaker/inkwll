@@ -40,6 +40,12 @@
         <%= yield :admin_menu %>
         <%= render "ooc_messages/sidebar" unless content_for?(:hide_ooc_sidebar) %>
       </div>
+    <% elsif @previewing %>
+      <%= render "shared/guest_header" %>
+      <main class="main main--preview">
+        <%= render "shared/flash" %>
+        <%= yield %>
+      </main>
     <% else %>
       <main class="main main--narrow">
         <%= render "shared/flash" %>

@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Guests can preview
+
+- Visitors who aren't logged in can look around: the front page shows
+  Preview instead of Enter, and they can open Areas and Settings and follow
+  the Paths. Log in and Sign up are at the top.
+- A Setting's "Here" list shows guests looking at it: "Guest", or
+  "3 Guests".
+
 ## 2026-10-14 — Enter and default Settings
 
 - Every Area on the front page has an Enter button, which moves your

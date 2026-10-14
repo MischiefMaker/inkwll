@@ -1,3 +1,4 @@
 <%# The slot after the Areas on the front page: the forum boards (ads,
     wanted ads, news), styled like the Areas. %>
-<%= render "home/forum_boards" %>
+<%# Boards need an account to read, so guests previewing don't see them. %>
+<%= render "home/forum_boards" if current_account %>

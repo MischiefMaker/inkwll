@@ -42,6 +42,7 @@ class Scene < ApplicationRecord
   # no character in and no invitation to. Hidden scenes made public by their
   # players, and reported scenes for staff who handle reports, count too.
   scope :visible_to, ->(account) {
+    return where.not(visibility: :hidden).or(where.not(made_public_at: nil)) unless account
     visible = where.not(visibility: :hidden).or(where(id: involving(account).select(:id))).or(where.not(made_public_at: nil))
     account.can?(:handle_reports) ? visible.or(where(id: Report.select(:scene_id))) : visible
   }

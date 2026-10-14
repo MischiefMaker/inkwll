@@ -63,6 +63,9 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.room-ways` | The box holding a Setting's Paths and who is here |
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |
+| `.room-here__guests`, `.where-now--guest`, `.from-afar__preview` | Guests previewing: the "Guest" / "3 Guests" line under Here, and the notes asking them to log in |
+| `.site-header--guest`, `.site-header__preview`, `.main--preview` | The top bar and page body for guests previewing |
+| `.place__preview`, `.exit-link--preview`, `.numbered-path--preview`, `.compass__point--preview`, `.compass__centre--preview` | The Preview button and Paths shown as plain links to guests |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
 
 ## Forum boards

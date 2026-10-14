@@ -10,6 +10,13 @@ module Authentication
     def allow_unauthenticated_access(**options)
       skip_before_action :require_authentication, **options
     end
+
+    # Pages visitors who aren't logged in can still look at ("Preview"):
+    # the front page, Areas and Settings. Logged-in players see them as usual.
+    def allow_previews(**options)
+      allow_unauthenticated_access(**options)
+      before_action :resume_session_for_preview, **options
+    end
   end
 
   private
@@ -42,6 +49,16 @@ module Authentication
 
     def ban_message(ban)
       "You're banned from this game #{ban.duration_in_words}. Reason: #{ban.reason}"
+    end
+
+    def resume_session_for_preview
+      if resume_session
+        end_banned_session
+      elsif (ban = Ban.for(account: nil, ip: request.remote_ip))
+        redirect_to new_session_path, alert: ban_message(ban)
+      else
+        @previewing = true
+      end
     end
 
     def resume_session

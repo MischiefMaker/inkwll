@@ -6,6 +6,16 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Guests can preview the grid (owner, 2026-10-14; details picked by Claude)
+
+Visitors who aren't logged in get **Preview** on the front page instead of Enter, so they can still look around. They're listed under a Setting's "Here" as **Guest**, or **3 Guests** for more than one (owner).
+
+Defaults picked by Claude, for the owner to check:
+
+- **What guests can see:** the front page, Area pages and Setting pages, with a small top bar ("Previewing as a guest", Log in, Sign up). Paths are links, so guests can walk around and look. They see the list of open (not hidden) Chapters in a Setting but need to log in to read one. Everything else (Chapters, profiles, the directory, the wiki, Boards) still asks them to log in, and the Boards section is left off the front page for them.
+- **Counting guests:** a guest counts in the last Setting they looked at, for 10 minutes. Search engines and link previews aren't counted. Others in the Setting see the count change live when a guest arrives.
+- **Banned addresses** can't preview; they're sent to the log-in page with the ban message.
+
 ## Enter, Look and an Area's default Setting (owner, 2026-10-14)
 
 - On the front page, every Area with Settings has an **Enter** button (no more "Look in"). Enter physically moves the character you're playing as to the Area's default Setting (owner). Players without a character are asked to make one first.

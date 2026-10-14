@@ -34,6 +34,8 @@
         no Settings yet can only be looked at. %>
     <% if entrance && current_character&.room&.area_id.in?([ area.id, *area.descendant_ids ]) %>
       <%= link_to "Return", room_path(current_character.room), class: "button place__enter" %>
+    <% elsif entrance && !current_account %>
+      <%= link_to "Preview", room_path(entrance), class: "button place__enter place__preview" %>
     <% elsif entrance %>
       <%= button_to "Enter", room_travel_path(entrance), class: "button place__enter", form_class: "place__enter-form" %>
     <% else %>

@@ -2,6 +2,7 @@
 # "Enter" takes the character to an Area's entrance Setting, and players walk
 # the Paths from there.
 class HomeController < ApplicationController
+  allow_previews
   def show
     @areas = Area.top_level.with_attached_image.with_attached_icon
     # The character each player seen in the last few minutes is playing.

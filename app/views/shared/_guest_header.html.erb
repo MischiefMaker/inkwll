@@ -1,0 +1,12 @@
+<%# The top bar for visitors who aren't logged in, while they preview the game. %>
+<header class="site-header site-header--guest">
+  <%= link_to game_name, root_path, class: "site-header__title" %>
+  <nav class="site-header__nav">
+    <%= link_to "Home", root_path %>
+  </nav>
+  <div class="site-header__account">
+    <span class="site-header__preview muted">Previewing as a guest</span>
+    <%= link_to "Log in", new_session_path %>
+    <%= link_to "Sign up", new_registration_path %>
+  </div>
+</header>

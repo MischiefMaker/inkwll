@@ -30,6 +30,6 @@
   <p class="muted">Nothing here yet.</p>
 <% end %>
 
-<% if current_account.can?(:build) %>
+<% if current_account&.can?(:build) %>
   <p class="text"><%= link_to "Edit #{term(:area).downcase}", edit_admin_area_path(@area) %></p>
 <% end %>

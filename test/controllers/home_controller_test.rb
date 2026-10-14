@@ -1,9 +1,13 @@
 require "test_helper"
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
-  test "logged out visitors are sent to log in" do
+  test "logged out visitors can preview the front page" do
     get root_path
-    assert_redirected_to new_session_path
+    assert_response :success
+    assert_select ".site-header--guest"
+    assert_select "a.place__preview", minimum: 1
+    assert_select ".place__enter-form", 0
+    assert_select ".forum-section", 0
   end
 
   test "shows the game's name and blurb" do

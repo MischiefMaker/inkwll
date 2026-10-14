@@ -6,20 +6,27 @@
   <%= render "areas/breadcrumbs", area: @room.area, include_self: true %>
   <% page_background(@room) %>
   <h1 class="page-title"><% if @room.icon.attached? %><%= image_tag @room.icon, alt: "", class: "page-title__icon" %><% end %><%= @room.name %></h1>
-  <div class="room__save">
-    <% if current_account.saved_places.exists?(room: @room) %>
-      <%= button_to "★ In My places", room_saved_place_path(@room), method: :delete, class: "button-link room__saved", title: "Remove from My places" %>
-    <% else %>
-      <%= button_to "☆ Save to My places", room_saved_place_path(@room), class: "button-link" %>
-    <% end %>
-  </div>
+  <% if current_account %>
+    <div class="room__save">
+      <% if current_account.saved_places.exists?(room: @room) %>
+        <%= button_to "★ In My places", room_saved_place_path(@room), method: :delete, class: "button-link room__saved", title: "Remove from My places" %>
+      <% else %>
+        <%= button_to "☆ Save to My places", room_saved_place_path(@room), class: "button-link" %>
+      <% end %>
+    </div>
+  <% end %>
 
   <%= render "shared/description", record: @room %>
 
   <% here = current_character&.room_id == @room.id %>
   <% unless here %>
     <div class="from-afar">
-      <% if current_character %>
+      <% if !current_account %>
+        <p class="muted from-afar__preview">
+          You're previewing as a guest: follow the <%= term(:exit, count: 2).downcase %> to look around.
+          <%= link_to "Log in", new_session_path %> or <%= link_to "sign up", new_registration_path %> to play.
+        </p>
+      <% elsif current_character %>
         <p class="muted">
           You're looking in from afar. <%= current_character.name %> is in
           <%= link_to current_character.room.name, room_path(current_character.room) %>.
@@ -58,10 +65,15 @@
 
     <section class="room-here">
       <h2 class="section-title">Here</h2>
-      <% if @room.characters.any? %>
+      <%# Visitors previewing without logging in show as "Guest" or "3 Guests". %>
+      <% guests = GuestVisit.count_in(@room) %>
+      <% if @room.characters.any? || guests.positive? %>
         <ul class="list list--inline">
           <% @room.characters.each do |character| %>
             <li class="list__item"><%= character_name_link(character) %></li>
+          <% end %>
+          <% if guests.positive? %>
+            <li class="list__item room-here__guests"><%= guests == 1 ? "Guest" : "#{guests} Guests" %></li>
           <% end %>
         </ul>
       <% else %>
@@ -72,7 +84,7 @@
 
   <%= render "scenes/list", room: @room %>
 
-  <% if current_account.can?(:build) %>
+  <% if current_account&.can?(:build) %>
     <p class="text"><%= link_to "Edit #{term(:room).downcase}", edit_admin_room_path(@room) %></p>
   <% end %>
 </article>

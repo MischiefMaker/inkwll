@@ -16,6 +16,9 @@
           <% if here %>
             <%= button_to exit_movement_path(room_exit), class: "numbered-path", form_class: "numbered-path__form",
                   title: "Go to #{room_exit.destination_room.name}" do %><%= label %><% end %>
+          <% elsif !current_account %>
+            <%= link_to room_path(room_exit.destination_room), class: "numbered-path numbered-path--preview",
+                  title: "Look at #{room_exit.destination_room.name}" do %><%= label %><% end %>
           <% else %>
             <span class="numbered-path numbered-path--disabled"><%= label %></span>
           <% end %>

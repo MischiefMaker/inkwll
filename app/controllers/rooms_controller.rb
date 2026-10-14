@@ -1,11 +1,18 @@
 class RoomsController < ApplicationController
+  allow_previews only: :show
+
   def index
     @rooms = Room.includes(:area).order(:name)
   end
 
   def show
     @room = Room.find(params[:id])
-    use_remembered_character
+    if current_account
+      use_remembered_character
+    else
+      session[:guest_token] ||= SecureRandom.hex(16)
+      GuestVisit.note!(token: session[:guest_token], room: @room, user_agent: request.user_agent)
+    end
   end
 
   private

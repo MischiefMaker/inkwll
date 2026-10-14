@@ -1225,3 +1225,8 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .compass__centre--out { font: inherit; font-size: 0.9rem; font-weight: bold; color: var(--color-accent); background: var(--color-surface); cursor: pointer; }
 .compass__centre--out:hover { background: var(--color-accent); color: var(--color-accent-text); }
 .room-paths__heading { margin: var(--space) 0 0.4rem; font-size: 0.95rem; }
+
+/* Previewing without logging in: the guest top bar and wider pages. */
+
+.main--preview { flex: 1; max-width: 60rem; margin: 0 auto; }
+.site-header__preview { font-size: 0.85rem; }
