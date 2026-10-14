@@ -1,0 +1,15 @@
+<% content_for :title, "History of #{@page.title} · Wiki · Inkwll" %>
+<div class="wiki-history">
+  <p class="muted wiki-page__crumbs"><%= link_to "Wiki", wiki_pages_path %> · <%= link_to @page.title, wiki_page_path(@page) %></p>
+  <h1 class="page-title">History of <%= @page.title %></h1>
+  <ol class="wiki-history__list">
+    <% @revisions.each_with_index do |revision, index| %>
+      <li class="wiki-history__item">
+        <%= link_to revision.created_at.to_fs(:long), wiki_page_revision_path(@page, revision), class: "wiki-history__when" %>
+        <span class="wiki-history__who"><%= revision.account&.display_name || "Someone" %></span>
+        <% if revision.summary %><span class="muted wiki-history__summary"><%= revision.summary %></span><% end %>
+        <% if index.zero? %><span class="tag wiki-history__current">Current</span><% end %>
+      </li>
+    <% end %>
+  </ol>
+</div>

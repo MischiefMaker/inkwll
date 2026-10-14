@@ -1,0 +1,38 @@
+<% content_for :title, "Wiki · Inkwll" %>
+
+<div class="wiki">
+  <div class="wiki__header">
+    <h1 class="page-title">Wiki<%= ": #{@tag}" if @tag %></h1>
+    <%= link_to "New page", new_wiki_page_path, class: "button wiki__new" %>
+  </div>
+
+  <%= form_with url: wiki_pages_path, method: :get, class: "form form--inline wiki__search" do |form| %>
+    <%= form.label :q, "Search the wiki", class: "visually-hidden" %>
+    <%= form.search_field :q, value: @query, placeholder: "Search…", maxlength: 100 %>
+    <%= hidden_field_tag :tag, @tag if @tag %>
+    <%= form.submit "Search", name: nil, class: "button button--quiet" %>
+    <% if @tag || @query %><%= link_to "Show all", wiki_pages_path %><% end %>
+  <% end %>
+
+  <% if @tags.any? %>
+    <p class="wiki__tags">
+      <% @tags.each do |tag| %>
+        <%= link_to tag, wiki_pages_path(tag: tag), class: "tag wiki__tag#{" wiki__tag--current" if tag == @tag}" %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% if @pages.any? %>
+    <ul class="wiki__list">
+      <% @pages.each do |page| %>
+        <li class="wiki__item">
+          <%= link_to page.title, wiki_page_path(page), class: "wiki__title" %>
+          <% if page.locked? %><span class="muted wiki__locked">Locked</span><% end %>
+          <span class="muted wiki__updated">updated <%= time_ago_in_words(page.updated_at) %> ago</span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="muted">No pages<%= " found" if @tag || @query %> yet.</p>
+  <% end %>
+</div>

@@ -1,0 +1,13 @@
+<%# {{pages}} or {{pages tag="lore"}}: a list of wiki pages. %>
+<% pages = WikiPage.order(:title) %>
+<% pages = pages.tagged(options[:tag]) if options[:tag].is_a?(String) %>
+<% pages = pages.limit(wiki_limit(options, default: 100)) %>
+<% if pages.any? %>
+  <ul class="wiki-pages-list">
+    <% pages.each do |page| %>
+      <li class="wiki-pages-list__item"><%= link_to page.title, wiki_page_path(page), class: "wiki-pages-list__title" %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No pages to show.</p>
+<% end %>

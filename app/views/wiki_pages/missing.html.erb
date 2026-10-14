@@ -1,0 +1,9 @@
+<% content_for :title, "Wiki · Inkwll" %>
+<% title = params[:slug].to_s.tr("-", " ").first(100).capitalize %>
+
+<div class="wiki-page wiki-page--missing">
+  <p class="muted wiki-page__crumbs"><%= link_to "Wiki", wiki_pages_path %></p>
+  <h1 class="page-title"><%= title %></h1>
+  <p class="text">Nobody has written this page yet.</p>
+  <%= link_to "Start it", new_wiki_page_path(title: title), class: "button" %>
+</div>

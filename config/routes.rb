@@ -94,6 +94,12 @@ Rails.application.routes.draw do
     end
   end
   get "roster", to: "directory#index", defaults: { roster: "1" }, as: :roster
+  resources :wiki_pages, path: "wiki", param: :slug do
+    scope module: :wiki_pages do
+      resources :revisions, only: %i[ index show update ]
+      resource :lock, only: %i[ create destroy ]
+    end
+  end
 
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do

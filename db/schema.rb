@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_230001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_240001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -733,6 +733,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_230001) do
     t.index ["range"], name: "index_vpn_ranges_on_range", opclass: :inet_ops, using: :gist
   end
 
+  create_table "wiki_pages", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.text "body", default: "", null: false
+    t.string "tags", default: [], null: false, array: true
+    t.datetime "locked_at"
+    t.integer "menu_position"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_wiki_pages_on_slug", unique: true
+    t.index ["tags"], name: "index_wiki_pages_on_tags", using: :gin
+    t.index ["updated_by_id"], name: "index_wiki_pages_on_updated_by_id"
+  end
+
+  create_table "wiki_revisions", force: :cascade do |t|
+    t.bigint "page_id", null: false
+    t.bigint "account_id"
+    t.string "title", null: false
+    t.text "body", default: "", null: false
+    t.string "summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_wiki_revisions_on_account_id"
+    t.index ["page_id"], name: "index_wiki_revisions_on_page_id"
+  end
+
   add_foreign_key "account_warnings", "accounts"
   add_foreign_key "account_warnings", "accounts", column: "staff_id"
   add_foreign_key "account_warnings", "reports"
@@ -829,4 +856,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_230001) do
   add_foreign_key "soul_skills", "soul_aspects"
   add_foreign_key "soul_xp_entries", "accounts", column: "actor_id"
   add_foreign_key "soul_xp_entries", "characters"
+  add_foreign_key "wiki_pages", "accounts", column: "updated_by_id", on_delete: :nullify
+  add_foreign_key "wiki_revisions", "accounts", on_delete: :nullify
+  add_foreign_key "wiki_revisions", "wiki_pages", column: "page_id", on_delete: :cascade
 end

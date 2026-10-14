@@ -1,0 +1,25 @@
+<%# {{characters}}, {{characters group="Ravens"}} or {{characters roster}} %>
+<% characters = Character.includes(:character_group, icon_attachment: :blob).order(:name) %>
+<% if options[:roster] %>
+  <% characters = characters.on_roster %>
+<% else %>
+  <% characters = characters.where(status: "approved", retired_at: nil) %>
+<% end %>
+<% if options[:group].is_a?(String) %>
+  <% characters = characters.where(character_group: CharacterGroup.where("name ILIKE ?", CharacterGroup.sanitize_sql_like(options[:group]))) %>
+<% end %>
+<% characters = characters.limit(wiki_limit(options, default: 100)) %>
+<% if characters.any? %>
+  <ul class="wiki-characters">
+    <% characters.each do |character| %>
+      <li class="wiki-characters__item">
+        <%= link_to character_path(character), class: "wiki-characters__link" do %>
+          <%= character_icon(character) %>
+          <%= tag.span character.name, **character_name_options(character, "wiki-characters__name") %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No characters to show.</p>
+<% end %>

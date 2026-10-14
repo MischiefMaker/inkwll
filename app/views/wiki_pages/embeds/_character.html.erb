@@ -1,0 +1,15 @@
+<%# {{character name="Mary-Jane O'Neil"}}: one character's card. %>
+<% character = Character.where("name ILIKE ?", Character.sanitize_sql_like(options[:name].to_s))
+     .where("(status = 'approved' AND retired_at IS NULL) OR on_roster_at IS NOT NULL").first if options[:name].is_a?(String) %>
+<% if character %>
+  <div class="wiki-character">
+    <%= link_to character_path(character), class: "wiki-character__link" do %>
+      <%= character_icon(character, size: :large) %>
+      <%= tag.span character.name, **character_name_options(character, "wiki-character__name") %>
+    <% end %>
+    <% if character.character_group %><span class="wiki-character__group muted"><%= character.character_group.name %></span><% end %>
+    <% if character.on_roster? %><span class="tag wiki-character__tag">On the roster</span><% end %>
+  </div>
+<% else %>
+  <p class="muted">No character called <%= options[:name] %>.</p>
+<% end %>

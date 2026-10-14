@@ -1,0 +1,18 @@
+<%# {{settings}} or {{settings area="Ravenhollow"}}: a list of rooms. %>
+<% rooms = Room.includes(:area).order(:name) %>
+<% if options[:area].is_a?(String) %>
+  <% rooms = rooms.where(area: Area.where("name ILIKE ?", Area.sanitize_sql_like(options[:area]))) %>
+<% end %>
+<% rooms = rooms.limit(wiki_limit(options, default: 100)) %>
+<% if rooms.any? %>
+  <ul class="wiki-settings">
+    <% rooms.each do |room| %>
+      <li class="wiki-settings__item">
+        <%= link_to room.name, room_path(room), class: "wiki-settings__name" %>
+        <span class="muted wiki-settings__area"><%= room.area.name %></span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No <%= term(:room, count: 2).downcase %> to show.</p>
+<% end %>

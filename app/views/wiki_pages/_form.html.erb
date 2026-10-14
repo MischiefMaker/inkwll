@@ -1,0 +1,44 @@
+<%= form_with model: @page, url: (@page.persisted? ? wiki_page_path(@page.slug_was) : wiki_pages_path), class: "form wiki-form" do |form| %>
+  <% if @page.errors.any? %>
+    <p class="flash flash--alert"><%= @page.errors.full_messages.to_sentence %></p>
+  <% end %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, required: true, maxlength: 100 %>
+  </div>
+  <div class="field">
+    <%= form.label :body, "Page" %>
+    <%= form.text_area :body, rows: 20, maxlength: 100_000, class: "wiki-form__body" %>
+    <details class="hint wiki-form__help">
+      <summary class="disclosure__summary">How to format a page</summary>
+      <ul class="wiki-form__help-list">
+        <li><code>## Heading</code>, <code>**bold**</code>, <code>*italic*</code>, <code>- list item</code>, <code>[link](https://…)</code></li>
+        <li><code>[[Page name]]</code> or <code>[[Page name|words to show]]</code> links to another wiki page.</li>
+        <li>On a line of its own, these show live lists from the game:
+          <code>{{characters}}</code>, <code>{{characters group="Ravens"}}</code>, <code>{{characters roster}}</code>,
+          <code>{{character name="Ash Ravenscroft"}}</code>,
+          <code>{{manuscripts setting="The Commons" label="Plot" limit=5}}</code>,
+          <code>{{settings area="Ravenhollow"}}</code>, <code>{{pages tag="lore"}}</code></li>
+      </ul>
+    </details>
+  </div>
+  <div class="field">
+    <%= form.label :tag_list, "Tags" %>
+    <%= form.text_field :tag_list, maxlength: 400, placeholder: "lore, rules" %>
+    <small class="hint">Separate tags with commas.</small>
+  </div>
+  <% if current_account.staff? %>
+    <div class="field">
+      <%= form.label :menu_position, "Place in the Menu (staff)" %>
+      <%= form.number_field :menu_position, min: 0, max: 999 %>
+      <small class="hint">Leave empty to keep it out of the Menu. Lower numbers come first.</small>
+    </div>
+  <% end %>
+  <% if @page.persisted? %>
+    <div class="field">
+      <%= label_tag :summary, "What did you change?" %>
+      <%= text_field_tag :summary, params[:summary], maxlength: 200, placeholder: "Optional" %>
+    </div>
+  <% end %>
+  <%= form.submit "Save page", class: "button" %>
+<% end %>

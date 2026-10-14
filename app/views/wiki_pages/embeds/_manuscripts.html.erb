@@ -1,0 +1,25 @@
+<%# {{manuscripts}}, {{manuscripts setting="The Commons" label="Plot" limit=5}} %>
+<% scenes = Scene.finished.visible_to(current_account).includes(:room, participants: :character).order(finished_at: :desc) %>
+<% if options[:setting].is_a?(String) %>
+  <% scenes = scenes.where(room: Room.where("name ILIKE ?", Room.sanitize_sql_like(options[:setting]))) %>
+<% end %>
+<% if options[:label].is_a?(String) %>
+  <% label = SceneLabel.where("name ILIKE ?", SceneLabel.sanitize_sql_like(options[:label])).first %>
+  <% scenes = label ? scenes.where("? = ANY(scenes.label_ids)", label.id) : scenes.none %>
+<% end %>
+<% scenes = scenes.limit(wiki_limit(options, default: 10)) %>
+<% if scenes.any? %>
+  <ul class="wiki-manuscripts">
+    <% scenes.each do |scene| %>
+      <li class="wiki-manuscripts__item">
+        <%= link_to scene.title, scene_path(scene), class: "wiki-manuscripts__title" %>
+        <span class="muted wiki-manuscripts__meta">
+          <%= scene.room.name %><% if scene.ic_when.present? %> · <%= scene.ic_when %><% end %>
+          · <%= scene.participants.map { |p| p.character.name }.to_sentence %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No <%= term(:log, count: 2).downcase %> to show.</p>
+<% end %>

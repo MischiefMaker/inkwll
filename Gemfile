@@ -64,3 +64,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "commonmarker", "~> 2.10"

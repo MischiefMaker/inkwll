@@ -1,0 +1,6 @@
+<% content_for :title, "Edit #{@page.title_was} · Wiki · Inkwll" %>
+<div class="wiki-edit">
+  <p class="muted wiki-page__crumbs"><%= link_to "Wiki", wiki_pages_path %> · <%= link_to @page.title_was, wiki_page_path(@page.slug_was) %></p>
+  <h1 class="page-title">Edit <%= @page.title_was %></h1>
+  <%= render "form" %>
+</div>
