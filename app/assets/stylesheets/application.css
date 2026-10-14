@@ -1103,6 +1103,7 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 
 @media (max-width: 600px) {
   .room-ways { grid-template-columns: 1fr; gap: 0; }
+}
 
 /* Forum boards (news, advertising, wanted ads). Their cards reuse the Area
    .place card styles; these are the extras and the board and thread pages. */
@@ -1110,6 +1111,7 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .forum-section { margin: 0 0 calc(var(--space) * 2); }
 .forum-section__title a { color: inherit; text-decoration: none; }
 .forum-board__title { color: inherit; text-decoration: none; }
+.forum-board__title:hover, .forum-section__title a:hover { text-decoration: underline; }
 .forum-board-page__rules { font-family: var(--font-ui); font-size: 0.9rem; }
 .forum-topics { width: 100%; }
 .forum-topic-row__title a { font-weight: bold; }
@@ -1131,5 +1133,5 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .forum-reply-form textarea { width: 100%; }
 
 @media (max-width: 600px) {
-  .forum-topic-row__latest { display: none; }
+  .forum-topic-row__latest, .forum-topics__latest-heading { display: none; }
 }
