@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Build several Settings at once
+
+- Building has a new "Build several settings" screen: add as many Settings
+  as you like with "Add another setting", then link them with Paths (one
+  way or both ways) to each other or to existing Settings, and save it all
+  in one go. If anything is wrong, nothing is saved and the form keeps
+  what you typed.
+
 ## 2026-10-14 — New starting map
 
 - A fresh game now starts with three Areas, City, Country and Forest,

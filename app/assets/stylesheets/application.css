@@ -385,6 +385,16 @@ section.board > .board__title { padding: 0.6rem var(--space); border-bottom: 1px
 
 fieldset.field { border: 1px solid var(--color-border); border-radius: var(--radius); padding: 0.5rem var(--space); }
 
+/* Admin: Build several Settings */
+
+.bulk-build__rooms, .bulk-build__paths { display: flex; flex-direction: column; gap: var(--space); }
+.bulk-build__room { display: flex; flex-direction: column; gap: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius); padding: 0.5rem var(--space) var(--space); margin: 0; }
+.bulk-build__room-number { font-weight: 600; padding: 0 0.25rem; }
+.bulk-build__room .bulk-build__remove { align-self: flex-start; }
+.bulk-build__path { padding-bottom: var(--space); border-bottom: 1px solid var(--color-border); }
+.bulk-build__path select { max-width: 14rem; }
+.bulk-build__path .bulk-build__remove { align-self: center; }
+
 /* Images on Areas and Settings */
 
 .description-image { margin: var(--space) 0; }

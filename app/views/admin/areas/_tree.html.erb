@@ -6,6 +6,7 @@
       <%= link_to "edit", edit_admin_area_path(area), class: "muted" %>
       · <%= link_to "add #{term(:area).downcase} inside", new_admin_area_path(parent_id: area.id), class: "muted" %>
       · <%= link_to "add #{term(:room).downcase}", new_admin_room_path(area_id: area.id), class: "muted" %>
+      · <%= link_to "add several", new_admin_bulk_build_path(area_id: area.id), class: "muted" %>
       <% if area.rooms.any? || area.children.any? %>
         <ul class="tree">
           <% area.rooms.each do |room| %>

@@ -107,6 +107,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#show"
     resources :areas, only: %i[ index new create edit update ]
+    resource :bulk_build, only: %i[ new create ], path: "build_several"
     resources :rooms, only: %i[ new create edit update ] do
       resources :exits, only: %i[ create destroy ]
     end

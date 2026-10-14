@@ -1,0 +1,14 @@
+<%# One new Setting on the "Build several" screen. row[:key] ties it to the Path menus. %>
+<fieldset class="fieldset bulk-build__room" data-key="<%= row[:key] %>">
+  <legend class="fieldset__legend bulk-build__room-number"><%= term(:room) %></legend>
+  <div class="field">
+    <%= label_tag "bulk_build_rooms_#{row[:key]}_name", "Name" %>
+    <%= text_field_tag "bulk_build[rooms][#{row[:key]}][name]", row[:name], id: "bulk_build_rooms_#{row[:key]}_name",
+          maxlength: 80, data: { action: "input->bulk-build#refresh" } %>
+  </div>
+  <div class="field">
+    <%= label_tag "bulk_build_rooms_#{row[:key]}_description", "Description" %>
+    <%= text_area_tag "bulk_build[rooms][#{row[:key]}][description]", row[:description], id: "bulk_build_rooms_#{row[:key]}_description", rows: 3 %>
+  </div>
+  <button type="button" class="button-link bulk-build__remove" data-action="bulk-build#remove">Remove this <%= term(:room).downcase %></button>
+</fieldset>

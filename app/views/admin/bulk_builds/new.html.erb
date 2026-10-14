@@ -1,0 +1,56 @@
+<% content_for :title, "Build several #{term(:room, count: 2).downcase} · Inkwll" %>
+
+<h1 class="page-title">Build several <%= term(:room, count: 2).downcase %></h1>
+
+<% if Area.none? %>
+  <p class="text">Make an <%= link_to term(:area).downcase, new_admin_area_path %> first. Every <%= term(:room).downcase %> belongs to one.</p>
+<% else %>
+  <p class="text">
+    Lay out a whole <%= term(:area).downcase %> at once: add as many <%= term(:room, count: 2).downcase %> as you need, then the
+    <%= term(:exit, count: 2).downcase %> between them. Nothing is saved until you press the button at the bottom.
+    Pictures can be added afterwards by editing each <%= term(:room).downcase %>.
+  </p>
+
+  <%= form_with url: admin_bulk_build_path, scope: :bulk_build, class: "form bulk-build",
+        data: { controller: "bulk-build", bulk_build_room_term_value: term(:room) } do |form| %>
+    <%= render "shared/errors", record: @bulk_build %>
+
+    <div class="field">
+      <%= form.label :area_id, "#{term(:area)} for the new #{term(:room, count: 2).downcase}" %>
+      <%= form.select :area_id, Area.nested_options, { selected: @bulk_build.area_id, prompt: "Choose one" }, required: true %>
+    </div>
+
+    <h2 class="section-title"><%= term(:room, count: 2) %></h2>
+    <div class="bulk-build__rooms" data-bulk-build-target="rooms">
+      <% @bulk_build.room_rows.each do |row| %>
+        <%= render "room_row", row: row %>
+      <% end %>
+    </div>
+    <p class="text">
+      <button type="button" class="button button--quiet bulk-build__add" data-action="bulk-build#addRoom">Add another <%= term(:room).downcase %></button>
+    </p>
+    <template data-bulk-build-target="roomTemplate">
+      <%= render "room_row", row: { key: "KEY" } %>
+    </template>
+
+    <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
+    <p class="muted">
+      Link the new <%= term(:room, count: 2).downcase %> to each other, or to ones that already exist.
+      <%= term(:exit, count: 2) %> are one-way. Fill in "Return <%= term(:exit).downcase %>" to add the way back at the same time.
+      Rows left empty are skipped.
+    </p>
+    <div class="bulk-build__paths" data-bulk-build-target="paths">
+      <% @bulk_build.path_rows.each do |row| %>
+        <%= render "path_row", row: row, room_rows: @bulk_build.room_rows %>
+      <% end %>
+    </div>
+    <p class="text">
+      <button type="button" class="button button--quiet bulk-build__add" data-action="bulk-build#addPath">Add another <%= term(:exit).downcase %></button>
+    </p>
+    <template data-bulk-build-target="pathTemplate">
+      <%= render "path_row", row: { key: "KEY" }, room_rows: [] %>
+    </template>
+
+    <%= form.submit "Create everything", class: "button bulk-build__submit" %>
+  <% end %>
+<% end %>

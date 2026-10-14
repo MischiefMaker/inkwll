@@ -3,7 +3,7 @@
   <nav class="admin-tabs" aria-label="Admin panel">
     <%= link_to "Overview", admin_root_path, class: ("is-current" if controller_name == "dashboard") %>
     <% if current_account.can?(:build) %>
-      <%= link_to "Building", admin_areas_path, class: ("is-current" if controller_name.in?(%w[ areas rooms exits ])) %>
+      <%= link_to "Building", admin_areas_path, class: ("is-current" if controller_name.in?(%w[ areas rooms exits bulk_builds ])) %>
     <% end %>
     <% if current_account.can?(:manage_staff) %>
       <%= link_to "Players and staff", admin_accounts_path, class: ("is-current" if controller_name == "accounts") %>

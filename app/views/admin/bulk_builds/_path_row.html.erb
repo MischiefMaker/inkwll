@@ -1,0 +1,23 @@
+<%# One new Path on the "Build several" screen. Its ends are either a new
+    Setting on this screen ("new-<key>") or an existing one (its id). %>
+<div class="form form--inline bulk-build__path" data-key="<%= row[:key] %>">
+  <div class="field">
+    <%= label_tag "bulk_build_paths_#{row[:key]}_from", "From" %>
+    <%= select_tag "bulk_build[paths][#{row[:key]}][from]", bulk_build_room_options(room_rows, row[:from]), id: "bulk_build_paths_#{row[:key]}_from",
+          class: "bulk-build__room-select" %>
+  </div>
+  <div class="field">
+    <%= label_tag "bulk_build_paths_#{row[:key]}_name", "#{term(:exit)} name" %>
+    <%= text_field_tag "bulk_build[paths][#{row[:key]}][name]", row[:name], id: "bulk_build_paths_#{row[:key]}_name", maxlength: 40, placeholder: "e.g. North" %>
+  </div>
+  <div class="field">
+    <%= label_tag "bulk_build_paths_#{row[:key]}_to", "Leads to" %>
+    <%= select_tag "bulk_build[paths][#{row[:key]}][to]", bulk_build_room_options(room_rows, row[:to]), id: "bulk_build_paths_#{row[:key]}_to",
+          class: "bulk-build__room-select" %>
+  </div>
+  <div class="field">
+    <%= label_tag "bulk_build_paths_#{row[:key]}_return_name", "Return #{term(:exit).downcase} (optional)" %>
+    <%= text_field_tag "bulk_build[paths][#{row[:key]}][return_name]", row[:return_name], id: "bulk_build_paths_#{row[:key]}_return_name", maxlength: 40, placeholder: "e.g. South" %>
+  </div>
+  <button type="button" class="button-link bulk-build__remove" data-action="bulk-build#remove">Remove</button>
+</div>
