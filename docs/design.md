@@ -189,6 +189,8 @@ Items built in step 1 are marked ✅.
   the previous pose and skips them 2 minutes later unless they click
   "I'm here!". Posting out of turn shows a warning with a "Post anyway"
   button.
+- [Decided] Players can edit their own poses until the scene finishes; edited
+  poses are marked, and staff can see the original.
 - [Decided] The 3-pose rule is only available in scenes with four or more
   players.
 - IC time: `ic_now = epoch + (real_now - anchor) * ratio`. A scene override

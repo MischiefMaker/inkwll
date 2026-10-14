@@ -25,9 +25,6 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
 
-**Before step 2: Scenes**
-
-8. Can players edit or delete their own poses, and for how long?
 
 **Before step 3: Logs and safety**
 

@@ -8,6 +8,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Players can edit their poses until the scene finishes
+
+A player can edit their own poses any time before the scene finishes. Edited poses show an "edited" mark. Staff can still see the original, so reports show what was really posted. Once the scene finishes, poses are locked.
+
+Default picked by Claude, not yet confirmed: deleting works the same way, and leaves a "pose removed" note in its place.
+
 ## 2026-10-14: The 3-pose rule needs four players
 
 A scene can only use the 3-pose rule when it has at least four players. Smaller scenes pick turn-based or free-for-all.
