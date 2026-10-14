@@ -40,14 +40,16 @@
       <%= link_to "Look", area_path(area), class: "button place__enter place__look" %>
     <% end %>
 
-    <details class="place__shortcuts">
-      <summary class="place__shortcuts-toggle">Shortcuts</summary>
-      <div class="place__shortcuts-list">
-        <%= link_to "Overview of #{area.name}", area_path(area) %>
-        <% area.all_rooms.listed.each do |room| %>
-          <%= link_to room.name, room_path(room) %>
-        <% end %>
-      </div>
-    </details>
+    <% if entrance %>
+      <details class="place__shortcuts">
+        <summary class="place__shortcuts-toggle">Shortcuts</summary>
+        <div class="place__shortcuts-list">
+          <%= link_to "Overview of #{area.name}", area_path(area) %>
+          <% area.all_rooms.listed.each do |room| %>
+            <%= link_to room.name, room_path(room) %>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
   </div>
 </article>
