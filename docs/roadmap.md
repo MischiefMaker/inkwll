@@ -23,26 +23,32 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 ## Decisions still needed
 
-In the order they block building. Each one moves to `decisions.md` once the owner answers.
+In the order they block building. Each one moves to `decisions.md` once the owner answers. Everything needed for steps 1b and 2 is settled.
 
+**Defaults Claude picked that the owner hasn't confirmed** (details in `decisions.md`)
+
+- The game sets the turn-order defaults, and a scene's creator can change them; the 5-minute timer is adjustable per scene.
+- Clicking "I'm here!" starts a fresh 5 minutes.
+- A 3-pose scene that drops below four players switches to turn-based.
+- Deleting a pose leaves a "pose removed" note.
 
 **Before step 3: Logs and safety**
 
-9. Who finishes a scene, and when does a quiet scene count as idle?
-10. What staff can do with a report (read the log, lock the scene, remove a pose, warn a player).
+1. Who finishes a scene, and when does a quiet scene count as idle?
+2. What staff can do with a report (read the log, lock the scene, remove a pose, warn a player).
 
 **Before SOUL, Inklings and Grimoire**
 
-11. Which SOUL pieces make the first version (see steps 5 and 6 above).
-16. Exactly which SOUL and Inklings tools storytellers get, and which details count as secret.
-17. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
-12. How much XP a finished scene gives, and whether there is a weekly cap.
-13. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
+3. Which SOUL pieces make the first version (see steps 5 and 6 above).
+4. Exactly which SOUL and Inklings tools storytellers get, and which details count as secret.
+5. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
+6. How much XP a finished scene gives, and whether there is a weekly cap.
+7. Whether Inklings and Grimoire keep their AresMUSH rules as they are, or change in the rebuild.
 
 **Later**
 
-14. Skins: CSS-only themes, or also swappable page layouts.
-15. Setting and tone of the first game (the code stays setting-neutral either way).
+8. Skins: CSS-only themes, or also swappable page layouts.
+9. Setting and tone of the first game (the code stays setting-neutral either way).
 
 ## When a step finishes
 
