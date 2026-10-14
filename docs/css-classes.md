@@ -5,7 +5,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 ## How the names work
 
 - **Blocks and parts:** `.pose` is a block, `.pose__name` is a part of it, and `.pose--ooc` is a kind of it. So `.pose--narration .pose__body` means "the text of a narration post".
-- **Colours, fonts and spacing** are CSS variables at the top of `app/assets/stylesheets/application.css` (`--font-body`, `--color-accent` and so on). Changing those restyles the whole site at once.
+- **Colours, fonts and spacing** are CSS variables at the top of `app/assets/stylesheets/application.css` (`--font-body`, `--font-heading`, `--color-accent` and so on; Admin → Look sets most of them). Changing those restyles the whole site at once.
 - **Every page** puts classes on `<body>`: `page-scenes` (any Chapter page), `page-scenes-show` (just the Chapter itself), `page-admin-bans`, and so on. They are made from the page's address in the code, `page-<section>-<action>`. Add `is-logged-in` or `is-guest`, plus `is-staff` for staff. Use them to style one page only, for example `.page-home-show .page-title`.
 - Class names use plain words (`scene`, `pose`, `room`) rather than the themed words players see (Chapter, Passage, Setting), so they stay the same if a game renames things.
 
@@ -97,6 +97,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.wiki-form`, `.wiki-form__body`, `.wiki-form__help` | Writing a page |
 | `.wiki-history`, `.wiki-history__item`, `.wiki-history__current` | A page's history |
 | `.menu__wiki-page` | A wiki page listed in the Menu |
+| `.features`, `.features__item` | Admin: Features |
+| `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
 | `.inklings-admin`, `.inklings-admin--waiting` | Admin: Inklings |
 | `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list` | The game's date, weather and who's online, on the front page |
 | `.scene__when`, `.scene-list__when`, `.manuscript__when`, `.chapter-tracker__when`, `.scene-form__when` | A Chapter's in-character date and time |

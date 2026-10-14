@@ -431,6 +431,13 @@ words, and `config/locales/en.yml` maps one to the other.
 - Staff lock pages and list them in the Menu. Scribes and Wellkeepers
   delete them. Details in `decisions.md`.
 
+### Step 10: Platform
+
+- Admin → Features holds every system's on/off switch.
+- Admin → Look sets colours, fonts and extra CSS, served as /skin.css after
+  the built-in stylesheet, with a few ready-made looks. Details in
+  `decisions.md`.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

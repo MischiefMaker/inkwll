@@ -2,6 +2,13 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 10: Platform
+
+- Admin → Features: switch SOUL, Inklings, Grimoire, the wiki and guest
+  chat on or off in one place.
+- Admin → Look: pick the game's colours (light and dark), fonts and extra
+  CSS, or start from one of three ready-made looks.
+
 ## 2026-10-14 — Step 9b: Wiki
 
 - A wiki in the Menu for rules, lore and plots. Anyone with an account can
