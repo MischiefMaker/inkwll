@@ -349,6 +349,20 @@ words, and `config/locales/en.yml` maps one to the other.
   a tab is open.
 - **Password reset** by email from the log-in page.
 
+### Patterns from old MUSH logs (reference)
+
+The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:
+
+- Room headers read "Room - Area - Region", sometimes with a short area code in front.
+- Exits have short aliases. Some rooms list sub-rooms apart from exits, and big buildings use a directory you pick a room from.
+- A saved-places list sends you to a favourite room after a short delay.
+- The who and where lists show location, area and idle time. Some characters can be set unfindable.
+- Arrive and leave messages show as people move.
+- Players agree who opens a scene, and the pose order nudges with "It is your turn."
+- OOC remarks are mixed into scenes: brb, pausing, agreeing when to resume, and "lasts" (a recap of the last poses for someone coming back).
+- Scenes are paused and picked up again across days.
+- There's a public channel, plus private pages and mail.
+
 ## 7. Reference: existing Inklings plugin
 
 Inklings currently exists as an AresMUSH contrib plugin (Ruby, Ohm/Redis-backed
