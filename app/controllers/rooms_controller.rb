@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   def index
-    @rooms = Room.order(:name)
+    @rooms = Room.includes(:area).order(:name)
   end
 
   def show

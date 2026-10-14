@@ -13,7 +13,7 @@ class Character < ApplicationRecord
 
   # Moves the character through an exit in its current room.
   def move_through(exit)
-    raise ArgumentError, "That exit is not in #{name}'s room." unless exit.source_room_id == room_id
+    raise ArgumentError, "That #{Term[:exit].downcase} is not in #{name}'s #{Term[:room].downcase}." unless exit.source_room_id == room_id
     update!(room: exit.destination_room)
   end
 

@@ -6,11 +6,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if account = Account.authenticate_by(params.permit(:username, :password))
+    if account = Account.log_in(params[:username], params[:password])
       start_new_session_for account
       redirect_to after_authentication_url
     else
-      redirect_to new_session_path, alert: "Wrong username or password."
+      redirect_to new_session_path, alert: "Wrong player name or password."
     end
   end
 

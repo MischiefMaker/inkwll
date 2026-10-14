@@ -4,7 +4,7 @@
 
 <%= form_with url: session_path, class: "form" do |form| %>
   <div class="field">
-    <%= form.label :username %>
+    <%= form.label :username, "Player name" %>
     <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", value: params[:username] %>
   </div>
   <div class="field">

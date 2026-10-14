@@ -2,7 +2,7 @@ require "test_helper"
 
 class CharactersControllerTest < ActionDispatch::IntegrationTest
   test "a player's first character becomes active" do
-    staff = accounts(:staff)
+    staff = accounts(:scribe)
     sign_in_as(staff)
 
     post characters_path, params: { character: { name: "Quill" } }

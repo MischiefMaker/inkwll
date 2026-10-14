@@ -2,12 +2,19 @@
   <%= link_to "Inkwll", root_path, class: "site-header__title" %>
 
   <nav class="site-header__nav">
-    <%= link_to "Rooms", rooms_path %>
+    <%= link_to "Home", root_path %>
     <%= link_to "My characters", characters_path %>
-    <%= link_to "OOC chat", ooc_messages_path %>
-    <% if current_account.admin? %>
-      <%= link_to "Build", new_admin_room_path %>
-    <% end %>
+    <%# Extras live in the menu so the roleplay stays front and centre. %>
+    <details class="menu">
+      <summary>Menu</summary>
+      <div class="menu__items">
+        <%= link_to "All #{term(:room, count: 2).downcase}", rooms_path %>
+        <%= link_to "OOC chat", ooc_messages_path %>
+        <% if current_account.staff? %>
+          <%= link_to "Admin panel", admin_root_path %>
+        <% end %>
+      </div>
+    </details>
   </nav>
 
   <div class="site-header__account">

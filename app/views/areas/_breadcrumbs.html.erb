@@ -1,0 +1,9 @@
+<nav class="breadcrumbs" aria-label="Where this is">
+  <%= link_to "Home", root_path %>
+  <% area.ancestors.each do |ancestor| %>
+    <span aria-hidden="true">›</span> <%= link_to ancestor.name, area_path(ancestor) %>
+  <% end %>
+  <% if local_assigns[:include_self] %>
+    <span aria-hidden="true">›</span> <%= link_to area.name, area_path(area) %>
+  <% end %>
+</nav>

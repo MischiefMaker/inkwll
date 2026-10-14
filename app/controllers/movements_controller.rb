@@ -10,7 +10,7 @@ class MovementsController < ApplicationController
       current_account.remember_character(current_character, current_character.room)
       redirect_to room_path(current_character.room)
     else
-      redirect_to room_path(current_character.room), alert: "#{current_character.name} isn't in the right room to use that exit."
+      redirect_to room_path(current_character.room), alert: "#{current_character.name} isn't in the right #{Term[:room].downcase} to use that #{Term[:exit].downcase}."
     end
   end
 end

@@ -1,0 +1,10 @@
+<%# Image upload for an Area or Setting, with a way to remove the current one. %>
+<div class="field">
+  <%= form.label :image, "Image (optional)" %>
+  <% if record.image.attached? %>
+    <%= image_tag record.image, class: "image-preview", alt: "" %>
+    <label class="field--checkbox"><%= form.check_box :remove_image %> Remove this image</label>
+  <% end %>
+  <%= form.file_field :image, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+  <small>Use an image, a description, or both. PNG, JPEG, GIF or WebP, up to 5 MB.</small>
+</div>

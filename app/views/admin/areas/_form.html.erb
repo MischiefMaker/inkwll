@@ -1,0 +1,23 @@
+<%= form_with model: [ :admin, area ], class: "form" do |form| %>
+  <%= render "shared/errors", record: area %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true %>
+  </div>
+  <div class="field">
+    <%= form.label :parent_id, "Inside" %>
+    <%= form.select :parent_id, Area.nested_options(except: area.persisted? ? area : nil), include_blank: "Nothing (shown on the front page)" %>
+  </div>
+  <div class="field">
+    <%= form.label :position, "Order" %>
+    <%= form.number_field :position %>
+    <small>Lower numbers are listed first.</small>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4 %>
+  </div>
+  <%= render "shared/image_field", form: form, record: form.object %>
+  <%= form.submit class: "button" %>
+<% end %>

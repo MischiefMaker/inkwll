@@ -1,0 +1,27 @@
+<% content_for :title, "Players and staff · Inkwll" %>
+
+<h1>Players and staff</h1>
+
+<table class="table">
+  <thead>
+    <tr><th>Player</th><th>Level</th><th>Jobs and flags</th><th></th></tr>
+  </thead>
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.display_name %></td>
+        <td><%= t("terms.staff_levels.#{account.staff_level}") %><%= " (#{term(:founder)})" if account.founder? %></td>
+        <td>
+          <%= safe_join(account.job_flags.map { |flag| t("terms.job_flags.#{flag}") + " " + t("terms.staff_levels.page") }, ", ") %>
+          <% if account.storyteller? %><span class="tag"><%= term(:storyteller) %></span><% end %>
+        </td>
+        <td><% if current_account.can_manage?(account) %><%= link_to "Edit", edit_admin_account_path(account) %><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p class="muted">
+  You can edit players below your own level. Only a <%= term(:founder) %> can make someone a
+  <%= t("terms.staff_levels.wellkeeper") %>, and the <%= term(:founder) %> flag is only set on the server.
+</p>

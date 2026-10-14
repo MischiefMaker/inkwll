@@ -1,0 +1,32 @@
+<% content_for :title, "#{@area.name} · Inkwll" %>
+
+<%= render "areas/breadcrumbs", area: @area %>
+
+<h1><%= @area.name %></h1>
+<%= render "shared/description", record: @area %>
+
+<% if @area.rooms.any? %>
+  <section class="board">
+    <h2 class="board__title"><%= term(:room, count: 2) %></h2>
+    <ul class="board__rows">
+      <% @area.rooms.includes(:characters).each do |room| %>
+        <li class="board__row">
+          <%= link_to room.name, room_path(room), class: "board__name" %>
+          <span class="muted">
+            <% if room.characters.any? %><%= pluralize(room.characters.size, "character") %> here<% end %>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>
+
+<%= render partial: "areas/card", collection: @area.children.includes(:children, rooms: :characters), as: :area %>
+
+<% if @area.rooms.none? && @area.children.none? %>
+  <p class="muted">Nothing here yet.</p>
+<% end %>
+
+<% if current_account.can?(:build) %>
+  <p><%= link_to "Edit #{term(:area).downcase}", edit_admin_area_path(@area) %></p>
+<% end %>

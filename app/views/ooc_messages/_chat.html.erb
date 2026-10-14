@@ -1,6 +1,6 @@
 <%# The site-wide OOC chat. New messages arrive live from the "ooc_chat" stream. %>
 <%= turbo_stream_from :ooc_chat %>
 <div id="ooc_messages" class="ooc-messages" data-controller="scroll-to-bottom">
-  <%= render OocMessage.recent.includes(:account).reverse %>
+  <%= render partial: "ooc_messages/ooc_message", collection: OocMessage.recent.includes(:account).reverse %>
 </div>
 <%= render "ooc_messages/form" %>

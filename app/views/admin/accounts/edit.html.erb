@@ -1,0 +1,32 @@
+<% content_for :title, "Edit #{@account.display_name} · Inkwll" %>
+
+<h1><%= @account.display_name %></h1>
+
+<%= form_with model: [ :admin, @account ], class: "form" do |form| %>
+  <%= render "shared/errors", record: @account %>
+
+  <div class="field">
+    <%= form.label :staff_level, "Staff level" %>
+    <%= form.select :staff_level,
+          current_account.assignable_staff_levels.map { |level| [ t("terms.staff_levels.#{level}"), level ] } %>
+  </div>
+
+  <fieldset class="field">
+    <legend><%= t("terms.staff_levels.page") %> jobs</legend>
+    <small>Only matter for <%= t("terms.staff_levels.page").pluralize %>. <%= t("terms.staff_levels.scribe").pluralize %> and <%= t("terms.staff_levels.wellkeeper").pluralize %> can do every job.</small>
+    <%= hidden_field_tag "account[job_flags][]", "" %>
+    <% Account::JOB_FLAGS.each do |flag| %>
+      <label class="field--checkbox">
+        <%= check_box_tag "account[job_flags][]", flag, @account.job_flags.include?(flag), id: "job_flag_#{flag}" %>
+        <%= t("terms.job_flags.#{flag}") %> <%= t("terms.staff_levels.page") %>
+      </label>
+    <% end %>
+  </fieldset>
+
+  <div class="field field--checkbox">
+    <%= form.check_box :storyteller %>
+    <%= form.label :storyteller, term(:storyteller) %>
+  </div>
+
+  <%= form.submit "Save", class: "button" %>
+<% end %>

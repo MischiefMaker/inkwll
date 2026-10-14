@@ -1,0 +1,9 @@
+<% content_for :title, "Building · Inkwll" %>
+
+<h1>Building</h1>
+<p>
+  <%= link_to "New #{term(:area).downcase}", new_admin_area_path, class: "button" %>
+  <%= link_to "New #{term(:room).downcase}", new_admin_room_path, class: "button" %>
+</p>
+
+<%= render "admin/areas/tree", areas: @areas %>

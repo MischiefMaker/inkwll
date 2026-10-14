@@ -1,9 +1,12 @@
 commons:
   name: The Commons
+  area: world
   starting: true
 
 hall:
   name: North Hall
+  area: world
 
 garden:
   name: Garden
+  area: castle

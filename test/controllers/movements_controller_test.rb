@@ -14,6 +14,6 @@ class MovementsControllerTest < ActionDispatch::IntegrationTest
     post exit_movement_path(exits(:hall_south))
 
     assert_equal rooms(:commons), characters(:wren).reload.room
-    assert_equal "Wren isn't in the right room to use that exit.", flash[:alert]
+    assert_equal "Wren isn't in the right setting to use that path.", flash[:alert]
   end
 end

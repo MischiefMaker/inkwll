@@ -1,0 +1,5 @@
+<% content_for :title, "New #{term(:area).downcase} · Inkwll" %>
+
+<h1>New <%= term(:area).downcase %></h1>
+
+<%= render "form", area: @area %>

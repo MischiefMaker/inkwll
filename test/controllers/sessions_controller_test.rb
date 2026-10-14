@@ -6,7 +6,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "create with valid credentials, ignoring capitals in the username" do
+  test "create with valid credentials, ignoring capitals in the player name" do
     post session_path, params: { username: "Alice", password: "password" }
 
     assert_redirected_to root_path

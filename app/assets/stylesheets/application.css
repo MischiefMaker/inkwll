@@ -84,7 +84,7 @@ h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
   min-height: calc(100vh - 3.5rem);
 }
 
-.main { padding: var(--space) calc(var(--space) * 2); max-width: 50rem; }
+.main { padding: var(--space) calc(var(--space) * 2); max-width: 60rem; width: 100%; }
 .main--narrow { margin: 0 auto; max-width: 26rem; }
 
 @media (max-width: 800px) {
@@ -107,7 +107,7 @@ h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
 .field--checkbox { flex-direction: row; align-items: center; gap: 0.5rem; }
 .field small { color: var(--color-muted); }
 
-input[type="text"], input[type="password"], textarea, select {
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], textarea, select {
   font: inherit;
   padding: 0.4rem 0.5rem;
   border: 1px solid var(--color-border);
@@ -216,3 +216,72 @@ form.button_to { display: inline; }
 
 .ooc-form { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
 .ooc-form input[type="text"] { flex: 1; min-width: 0; }
+
+/* Menu (extras that aren't the roleplay itself) */
+
+.menu { position: relative; }
+.menu summary { cursor: pointer; color: var(--color-accent); }
+.menu__items {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 12rem;
+  margin-top: 0.4rem;
+  padding: 0.6rem var(--space);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* Front page and Area pages: boards like a forum */
+
+.where-now { font-family: var(--font-ui); color: var(--color-muted); }
+
+.breadcrumbs { font-family: var(--font-ui); font-size: 0.9rem; color: var(--color-muted); }
+
+.board {
+  margin: var(--space) 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.board__header { padding: 0.6rem var(--space); border-bottom: 1px solid var(--color-border); }
+.board__title { margin: 0; font-size: 1.15rem; }
+section.board > .board__title { padding: 0.6rem var(--space); border-bottom: 1px solid var(--color-border); }
+.board__description { margin: 0.25rem 0 0; color: var(--color-muted); }
+.board__rows { list-style: none; margin: 0; padding: 0; }
+.board__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space);
+  padding: 0.5rem var(--space);
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+}
+.board__row:first-child { border-top: none; }
+.board__name { font-weight: 600; }
+.board__empty { padding: 0.5rem var(--space); margin: 0; }
+
+/* Admin panel */
+
+.admin-sections { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; font-family: var(--font-ui); }
+.admin-sections a { font-weight: 600; margin-right: 0.5rem; }
+
+.table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); }
+.table th, .table td { text-align: left; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--color-border); }
+
+.tree { padding-left: 1.2rem; font-family: var(--font-ui); }
+.tree li { margin: 0.25rem 0; }
+
+fieldset.field { border: 1px solid var(--color-border); border-radius: var(--radius); padding: 0.5rem var(--space); }
+
+/* Images on Areas and Settings */
+
+.description-image { margin: var(--space) 0; }
+.description-image img, .board__image { display: block; max-width: 100%; height: auto; border-radius: var(--radius); }
+.board__image { max-height: 12rem; margin-bottom: 0.5rem; }
+.image-preview { max-width: 12rem; height: auto; border-radius: var(--radius); }

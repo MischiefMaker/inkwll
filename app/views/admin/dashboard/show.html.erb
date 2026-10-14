@@ -1,0 +1,34 @@
+<% content_for :title, "Admin panel · Inkwll" %>
+
+<h1>Admin panel</h1>
+<p class="muted">
+  You are a <strong><%= t("terms.staff_levels.#{current_account.staff_level}") %></strong><%= " and a #{term(:founder)}" if current_account.founder? %>.
+  You only see the sections your level allows.
+</p>
+
+<ul class="admin-sections">
+  <% if current_account.can?(:build) %>
+    <li>
+      <%= link_to "Building", admin_areas_path %>
+      <span class="muted">Create and edit <%= term(:area, count: 2).downcase %>, <%= term(:room, count: 2).downcase %> and <%= term(:exit, count: 2).downcase %>.</span>
+    </li>
+  <% end %>
+  <% if current_account.can?(:manage_staff) %>
+    <li>
+      <%= link_to "Players and staff", admin_accounts_path %>
+      <span class="muted">Set staff levels, <%= t("terms.staff_levels.page") %> jobs and <%= term(:storyteller) %> status.</span>
+    </li>
+  <% end %>
+  <% if current_account.can?(:delete_characters) %>
+    <li>
+      <%= link_to "Characters", admin_characters_path %>
+      <span class="muted">See every character, and delete one if needed.</span>
+    </li>
+  <% end %>
+  <% if current_account.can?(:change_game_settings) %>
+    <li>
+      <%= link_to "Game settings", edit_admin_game_settings_path %>
+      <span class="muted">Whether email and character approval are required.</span>
+    </li>
+  <% end %>
+</ul>

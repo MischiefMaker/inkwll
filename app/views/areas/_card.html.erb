@@ -1,0 +1,34 @@
+<%# One Area as a board on the front page or inside another Area: its
+    Settings with who is there, and the Areas inside it. %>
+<section class="board">
+  <header class="board__header">
+    <% if area.image.attached? %>
+      <%= link_to image_tag(area.image, alt: area.name, class: "board__image"), area_path(area) %>
+    <% end %>
+    <h2 class="board__title"><%= link_to area.name, area_path(area) %></h2>
+    <% if area.description.present? %>
+      <p class="board__description"><%= area.description %></p>
+    <% end %>
+  </header>
+
+  <% if area.children.any? || area.rooms.any? %>
+    <ul class="board__rows">
+      <% area.children.each do |child| %>
+        <li class="board__row">
+          <%= link_to child.name, area_path(child), class: "board__name" %>
+          <span class="muted"><%= term(:area) %></span>
+        </li>
+      <% end %>
+      <% area.rooms.each do |room| %>
+        <li class="board__row">
+          <%= link_to room.name, room_path(room), class: "board__name" %>
+          <span class="muted">
+            <% if room.characters.any? %><%= pluralize(room.characters.size, "character") %> here<% end %>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="muted board__empty">Nothing here yet.</p>
+  <% end %>
+</section>

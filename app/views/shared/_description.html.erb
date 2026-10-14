@@ -1,0 +1,7 @@
+<%# Shows whatever a builder gave an Area or Setting: an image, text, or both. %>
+<% if record.image.attached? %>
+  <figure class="description-image"><%= image_tag record.image, alt: record.name %></figure>
+<% end %>
+<% if record.description.present? %>
+  <div class="prose"><%= simple_format record.description %></div>
+<% end %>

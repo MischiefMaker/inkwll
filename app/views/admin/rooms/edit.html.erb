@@ -4,8 +4,10 @@
 
 <%= render "form", room: @room %>
 
-<h2>Exits</h2>
-<p class="muted">Exits are one-way. To link two rooms both ways, add an exit in each room.</p>
+<h2><%= term(:exit, count: 2) %></h2>
+<p class="muted">
+  <%= term(:exit, count: 2) %> are one-way. Fill in "Return <%= term(:exit).downcase %>" to add the way back at the same time.
+</p>
 
 <% if @room.exits.any? %>
   <ul class="list">
@@ -13,7 +15,7 @@
       <li>
         <strong><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
         <%= button_to "Remove", admin_room_exit_path(@room, room_exit), method: :delete, class: "button-link",
-              form: { data: { turbo_confirm: "Remove the exit \"#{room_exit.name}\"?" } } %>
+              form: { data: { turbo_confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?" } } %>
       </li>
     <% end %>
   </ul>
@@ -21,12 +23,16 @@
 
 <%= form_with model: [ :admin, @room, Exit.new ], class: "form form--inline" do |form| %>
   <div class="field">
-    <%= form.label :name, "Exit name" %>
+    <%= form.label :name, "#{term(:exit)} name" %>
     <%= form.text_field :name, required: true, placeholder: "e.g. North" %>
   </div>
   <div class="field">
     <%= form.label :destination_room_id, "Leads to" %>
     <%= form.collection_select :destination_room_id, Room.where.not(id: @room.id).order(:name), :id, :name %>
   </div>
-  <%= form.submit "Add exit", class: "button" %>
+  <div class="field">
+    <%= label_tag "exit_return_name", "Return #{term(:exit).downcase} (optional)" %>
+    <%= text_field_tag "exit[return_name]", nil, id: "exit_return_name", placeholder: "e.g. South" %>
+  </div>
+  <%= form.submit "Add #{term(:exit).downcase}", class: "button" %>
 <% end %>

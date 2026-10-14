@@ -20,4 +20,9 @@ class CharacterTest < ActiveSupport::TestCase
   test "cannot use an exit from a different room" do
     assert_raises(ArgumentError) { characters(:wren).move_through(exits(:hall_south)) }
   end
+
+  test "character names can use spaces and special characters" do
+    character = accounts(:alice).characters.create!(name: "Mary-Jane O'Neil (the 2nd)")
+    assert_equal "Mary-Jane O'Neil (the 2nd)", character.name
+  end
 end

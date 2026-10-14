@@ -6,6 +6,10 @@
     <%= form.text_field :name, required: true %>
   </div>
   <div class="field">
+    <%= form.label :area_id, term(:area) %>
+    <%= form.select :area_id, Area.nested_options, {}, required: true %>
+  </div>
+  <div class="field">
     <%= form.label :description %>
     <%= form.text_area :description, rows: 8 %>
   </div>
@@ -13,5 +17,6 @@
     <%= form.check_box :starting %>
     <%= form.label :starting, "New characters start here" %>
   </div>
+  <%= render "shared/image_field", form: form, record: form.object %>
   <%= form.submit class: "button" %>
 <% end %>

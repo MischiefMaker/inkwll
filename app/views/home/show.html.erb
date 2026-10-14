@@ -1,0 +1,18 @@
+<% content_for :title, "Inkwll" %>
+
+<% if current_character %>
+  <p class="where-now">
+    <%= current_character.name %> is in
+    <%= link_to current_character.room.name, room_path(current_character.room) %>.
+  </p>
+<% else %>
+  <p class="where-now">
+    <%= link_to "Create a character", new_character_path %> to start playing.
+  </p>
+<% end %>
+
+<% if @areas.any? %>
+  <%= render partial: "areas/card", collection: @areas, as: :area %>
+<% else %>
+  <p class="muted">No <%= term(:area, count: 2).downcase %> yet.</p>
+<% end %>

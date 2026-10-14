@@ -3,14 +3,13 @@
 <%= turbo_stream_from @room %>
 
 <article class="room">
+  <%= render "areas/breadcrumbs", area: @room.area, include_self: true %>
   <h1><%= @room.name %></h1>
 
-  <% if @room.description.present? %>
-    <div class="prose"><%= simple_format @room.description %></div>
-  <% end %>
+  <%= render "shared/description", record: @room %>
 
   <section>
-    <h2>Exits</h2>
+    <h2><%= term(:exit, count: 2) %></h2>
     <% if @room.exits.any? %>
       <% here = current_character&.room_id == @room.id %>
       <ul class="exits">
@@ -36,7 +35,7 @@
         </p>
       <% end %>
     <% else %>
-      <p class="muted">There is no way out of here.</p>
+      <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>
     <% end %>
   </section>
 
@@ -53,7 +52,7 @@
     <% end %>
   </section>
 
-  <% if current_account.admin? %>
-    <p><%= link_to "Edit room", edit_admin_room_path(@room) %></p>
+  <% if current_account.can?(:build) %>
+    <p><%= link_to "Edit #{term(:room).downcase}", edit_admin_room_path(@room) %></p>
   <% end %>
 </article>

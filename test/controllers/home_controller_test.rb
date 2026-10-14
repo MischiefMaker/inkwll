@@ -6,15 +6,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
   end
 
-  test "goes to the active character's room" do
+  test "lists the top-level areas and says where the active character is" do
     sign_in_as(accounts(:alice))
     get root_path
-    assert_redirected_to room_path(rooms(:commons))
+
+    assert_response :success
+    assert_select ".board__title", "The World"
+    assert_select ".where-now a", "The Commons"
   end
 
   test "players without characters are asked to make one" do
-    sign_in_as(accounts(:staff))
+    sign_in_as(accounts(:scribe))
     get root_path
-    assert_redirected_to new_character_path
+    assert_select ".where-now a[href=?]", new_character_path
   end
 end

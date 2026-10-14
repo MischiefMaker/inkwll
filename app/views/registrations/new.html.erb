@@ -6,14 +6,14 @@
   <%= render "shared/errors", record: @account %>
 
   <div class="field">
-    <%= form.label :username %>
-    <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username" %>
-    <small>Used to log in. Letters, numbers and underscores.</small>
+    <%= form.label :display_name, "Player name" %>
+    <%= form.text_field :display_name, required: true, autofocus: true, autocomplete: "username" %>
+    <small>You log in with this, and it's shown in the OOC chat. Not a character name. Letters, numbers and underscores.</small>
   </div>
   <div class="field">
-    <%= form.label :display_name, "Player name" %>
-    <%= form.text_field :display_name, required: true %>
-    <small>Shown in the OOC chat. Not a character name.</small>
+    <%= form.label :email %>
+    <%= form.email_field :email, required: GameSetting.current.email_required?, autocomplete: "email" %>
+    <small>Used for password resets.<%= " Optional." unless GameSetting.current.email_required? %></small>
   </div>
   <div class="field">
     <%= form.label :password %>

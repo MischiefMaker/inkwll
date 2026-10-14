@@ -1,0 +1,5 @@
+<% content_for :title, "Edit #{@area.name} · Inkwll" %>
+
+<h1>Edit <%= link_to @area.name, area_path(@area) %></h1>
+
+<%= render "form", area: @area %>

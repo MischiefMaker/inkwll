@@ -4,16 +4,23 @@ Rails.application.routes.draw do
 
   resources :characters, except: :destroy
   resource :active_character, only: :update
+  resources :areas, only: :show
   resources :rooms, only: %i[ index show ]
   resources :exits, only: [] do
     resource :movement, only: :create
   end
   resources :ooc_messages, only: %i[ index create ]
 
+  # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do
+    root "dashboard#show"
+    resources :areas, only: %i[ index new create edit update ]
     resources :rooms, only: %i[ new create edit update ] do
       resources :exits, only: %i[ create destroy ]
     end
+    resources :accounts, only: %i[ index edit update ]
+    resources :characters, only: %i[ index destroy ]
+    resource :game_settings, only: %i[ edit update ]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

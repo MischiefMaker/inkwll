@@ -1,31 +1,44 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
+# The words players see.
 #
-# To use the locales, use `I18n.t`:
+# Inkwll's code uses plain words (room, exit, scene, pose, log, area). This
+# file decides what players actually read. A game can change any of these
+# words here without touching the code.
 #
-#     I18n.t "hello"
+# In a view, use the `term` helper:
 #
-# In views, this is aliased to just `t`:
+#     term(:room)            # => "Setting"
+#     term(:room, count: 2)  # => "Settings"
 #
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
+# YAML reads yes/no/on/off as true/false, so quote those if you ever need them.
 
 en:
-  hello: "Hello world"
+  terms:
+    area:
+      one: "Area"
+      other: "Areas"
+    room:
+      one: "Setting"
+      other: "Settings"
+    exit:
+      one: "Path"
+      other: "Paths"
+    scene:
+      one: "Chapter"
+      other: "Chapters"
+    pose:
+      one: "Passage"
+      other: "Passages"
+    log:
+      one: "Manuscript"
+      other: "Manuscripts"
+    logs_collection: "Archives"
+    staff_levels:
+      player: "Player"
+      page: "Page"
+      scribe: "Scribe"
+      wellkeeper: "Wellkeeper"
+    founder: "Founder"
+    storyteller: "Storyteller"
+    job_flags:
+      build: "Build"
+      app: "App"

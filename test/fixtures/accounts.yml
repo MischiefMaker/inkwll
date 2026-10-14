@@ -3,17 +3,44 @@
 alice:
   username: alice
   display_name: Alice
+  email: alice@example.com
   password_digest: <%= password_digest %>
   active_character: wren
 
 bob:
   username: bob
   display_name: Bob
+  email: bob@example.com
   password_digest: <%= password_digest %>
   active_character: sable
 
-staff:
-  username: staff
-  display_name: Staff
+# A Page with the Build job.
+builder:
+  username: builder
+  display_name: Builder
+  email: builder@example.com
   password_digest: <%= password_digest %>
-  admin: true
+  staff_level: page
+  job_flags: [ "build" ]
+
+scribe:
+  username: scribe
+  display_name: Scribe
+  email: scribe@example.com
+  password_digest: <%= password_digest %>
+  staff_level: scribe
+
+wellkeeper:
+  username: wellkeeper
+  display_name: Wellkeeper
+  email: wellkeeper@example.com
+  password_digest: <%= password_digest %>
+  staff_level: wellkeeper
+
+founder:
+  username: founder
+  display_name: Founder
+  email: founder@example.com
+  password_digest: <%= password_digest %>
+  staff_level: wellkeeper
+  founder: true

@@ -1,8 +1,6 @@
-# The front page sends players to wherever their active character is.
+# The front page: the game's top-level Areas, like the boards on a forum.
 class HomeController < ApplicationController
-  before_action :require_character
-
   def show
-    redirect_to room_path(current_character.room)
+    @areas = Area.top_level.includes(:children, rooms: :characters)
   end
 end

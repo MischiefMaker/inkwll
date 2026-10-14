@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @account = Account.new(params.expect(account: [ :username, :display_name, :password, :password_confirmation ]))
+    @account = Account.new(params.expect(account: [ :display_name, :email, :password, :password_confirmation ]))
     if @account.save
       start_new_session_for @account
       redirect_to new_character_path, notice: "Welcome! Now create your first character."

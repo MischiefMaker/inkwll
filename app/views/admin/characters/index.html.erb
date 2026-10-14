@@ -1,0 +1,22 @@
+<% content_for :title, "Characters · Inkwll" %>
+
+<h1>Characters</h1>
+
+<table class="table">
+  <thead>
+    <tr><th>Character</th><th>Player</th><th><%= term(:room) %></th><th></th></tr>
+  </thead>
+  <tbody>
+    <% @characters.each do |character| %>
+      <tr>
+        <td><%= link_to character.name, character %></td>
+        <td><%= character.account.display_name %></td>
+        <td><%= link_to character.room.name, room_path(character.room) %></td>
+        <td>
+          <%= button_to "Delete", admin_character_path(character), method: :delete, class: "button-link",
+                form: { data: { turbo_confirm: "Delete #{character.name} for good? This can't be undone." } } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
