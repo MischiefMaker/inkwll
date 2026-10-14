@@ -8,9 +8,11 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
-## 2026-10-14: Any player can finish a Chapter
+## 2026-10-14: Finishing Chapters
 
 Anyone in a Chapter can finish it, which locks its Passages and files it in the Archives as a Manuscript. The other players get a notice and can undo the finish within 24 hours.
+
+Quiet Chapters: after 7 days without a Passage a Chapter goes idle (it drops down the Setting's list but stays open, and a new Passage wakes it). After 30 days it finishes on its own. Both numbers are game settings.
 
 ## 2026-10-14: Themed names players see
 

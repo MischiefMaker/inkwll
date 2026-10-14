@@ -34,7 +34,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Before step 3: Logs and safety**
 
-1. When does a quiet Chapter count as idle, and does it ever finish on its own?
 2. What staff can do with a report (read the log, lock the scene, remove a pose, warn a player).
 
 **Before SOUL, Inklings and Grimoire**
