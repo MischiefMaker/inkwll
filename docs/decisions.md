@@ -15,7 +15,7 @@ Settings are grouped into **Areas**, and Areas can nest inside each other as dee
 - Characters are never "in" an Area, only in a Setting. You are in the Great Hall, not in the Castle or the First Floor.
 - The homepage shows the list of top-level Areas. Opening an Area shows the Areas and Settings inside it.
 
-Defaults picked by Claude, not yet confirmed: every Setting belongs to exactly one Area, and Paths can link Settings in different Areas.
+Defaults picked by Claude, confirmed by the owner on 2026-10-14: every Setting belongs to exactly one Area, and Paths can link Settings in different Areas.
 
 ## 2026-10-14: Layout puts the roleplay front and centre
 
@@ -81,13 +81,13 @@ Only the words players see change. The code keeps the plain words (room, scene, 
 
 A player can edit their own poses any time before the scene finishes. Edited poses show an "edited" mark. Staff can still see the original, so reports show what was really posted. Once the scene finishes, poses are locked.
 
-Default picked by Claude, not yet confirmed: deleting works the same way, and leaves a "pose removed" note in its place.
+Default picked by Claude, confirmed by the owner on 2026-10-14: deleting works the same way, and leaves a "pose removed" note in its place.
 
 ## 2026-10-14: The 3-pose rule needs four players
 
 A scene can only use the 3-pose rule when it has at least four players. Smaller scenes pick turn-based or free-for-all.
 
-Default picked by Claude, not yet confirmed: if a 3-pose scene drops below four players, it switches to turn-based until it has four again.
+Default picked by Claude, confirmed by the owner on 2026-10-14: if a 3-pose scene drops below four players, it switches to turn-based until it has four again.
 
 ## 2026-10-14: Staff levels
 
@@ -119,7 +119,7 @@ This replaces part of the earlier "Lurkers and storytellers" entry: storytellers
 - **Timer:** 5 minutes from the previous pose by default. When it runs out, the player whose turn it is gets a warning and 2 more minutes to click an "I'm here!" button. If they don't, their turn is skipped.
 - **Posting out of turn:** allowed, after a warning with a "Post anyway" button.
 
-Defaults picked by Claude, not yet confirmed: the game sets the default and each scene's creator can change it; the 5-minute timer is adjustable per scene; clicking "I'm here!" starts a fresh 5 minutes.
+Defaults picked by Claude, confirmed by the owner on 2026-10-14: the game sets the default and each scene's creator can change it; the 5-minute timer is adjustable per scene; clicking "I'm here!" starts a fresh 5 minutes.
 
 ## 2026-10-14: Lurkers and storytellers
 

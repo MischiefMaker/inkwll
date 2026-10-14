@@ -25,14 +25,6 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
 
-**Defaults Claude picked that the owner hasn't confirmed** (details in `decisions.md`)
-
-- The game sets the turn-order defaults, and a scene's creator can change them; the 5-minute timer is adjustable per scene.
-- Clicking "I'm here!" starts a fresh 5 minutes.
-- A 3-pose scene that drops below four players switches to turn-based.
-- Deleting a pose leaves a "pose removed" note.
-- Every Setting belongs to exactly one Area, and Paths can link Settings in different Areas.
-
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
 
 **To revisit later**
