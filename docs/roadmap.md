@@ -38,7 +38,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Before step 2: Scenes**
 
-6. Turn-based mode's escape hatches: a pass button, a storyteller override, and skipping someone who has gone quiet.
 7. The 3-pose rule in small scenes (wait for fewer poses when there are only two or three players).
 8. Can players edit or delete their own poses, and for how long?
 

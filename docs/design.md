@@ -181,9 +181,12 @@ Items built in step 1 are marked ✅.
 ### Technical rules [Proposed]
 
 - The server assigns pose sequence numbers (inside a database transaction) and
-  enforces turn order. The browser never decides whose turn it is.
-- Turn-based mode needs escape hatches: a "pass" button, a storyteller
-  override, and a way to skip an absent player.
+  tracks whose turn it is. The browser never decides whose turn it is.
+- [Decided] Turn-based mode: players can pass, storytellers can skip, and
+  auto-skip (on by default, can be turned off) warns a player 5 minutes after
+  the previous pose and skips them 2 minutes later unless they click
+  "I'm here!". Posting out of turn shows a warning with a "Post anyway"
+  button.
 - 3-pose rule in small scenes: use `min(3, participants - 1)` other poses,
   since two players could otherwise never pose.
 - IC time: `ic_now = epoch + (real_now - anchor) * ratio`. A scene override

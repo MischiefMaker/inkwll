@@ -8,6 +8,15 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Keeping turn-based scenes moving
+
+- Players can always pass their turn, and a storyteller can skip a player.
+- **Auto-skip** is on by default and can be turned off. With it off, only passing and storyteller skips move the turn on.
+- **Timer:** 5 minutes from the previous pose by default. When it runs out, the player whose turn it is gets a warning and 2 more minutes to click an "I'm here!" button. If they don't, their turn is skipped.
+- **Posting out of turn:** allowed, after a warning with a "Post anyway" button.
+
+Defaults picked by Claude, not yet confirmed: the game sets the default and each scene's creator can change it; the 5-minute timer is adjustable per scene; clicking "I'm here!" starts a fresh 5 minutes.
+
 ## 2026-10-14: Lurkers and storytellers
 
 - **Lurkers:** anyone can watch a joinable (open, public) scene live without posing. Private and hidden scenes have no lurkers.
