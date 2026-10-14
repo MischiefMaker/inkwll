@@ -155,6 +155,19 @@ class Scene < ApplicationRecord
     end
   end
 
+  # Visibilities from most open to most closed. Players can always make a
+  # scene more closed; opening it up needs everyone's agreement.
+  OPENNESS = %w[ joinable private hidden ].freeze
+
+  def closed_to_others?
+    visibility_hidden? || visibility_private?
+  end
+
+  # Whether one player alone may switch the scene to this visibility.
+  def may_switch_to?(visibility, from: self.visibility)
+    made_public_at.present? || OPENNESS.index(visibility.to_s).to_i >= OPENNESS.index(from.to_s).to_i
+  end
+
   def participant_for(character)
     participants.find { |p| p.character_id == character&.id }
   end
@@ -232,10 +245,10 @@ class Scene < ApplicationRecord
     end
   end
 
-  # A finished hidden scene becomes public only when every player agrees.
+  # A hidden or private scene becomes public only when every player agrees.
   def consent_to_public!(participant, agree: true)
     with_lock do
-      next false unless visibility_hidden? && made_public_at.nil?
+      next false unless closed_to_others? && made_public_at.nil?
 
       participant.update!(public_consent_at: agree ? Time.current : nil)
       update!(made_public_at: Time.current) if participants.reload.all?(&:public_consent_at)
@@ -422,11 +435,12 @@ class Scene < ApplicationRecord
   end
 
   private
-    # One player alone can't open up a Hidden scene: it becomes public only
-    # when every player agrees (consent_to_public!).
+    # One player alone can't open up a Hidden or Private scene: it becomes
+    # public only when every player agrees (consent_to_public!). Making it
+    # more closed is fine.
     def hidden_stays_hidden_without_agreement
-      if visibility_changed? && visibility_was == "hidden" && made_public_at.nil?
-        errors.add(:visibility, "can't change from Hidden unless every player agrees to make it public")
+      if visibility_changed? && !may_switch_to?(visibility, from: visibility_was)
+        errors.add(:visibility, "can't be opened up from #{visibility_was.humanize} unless every player agrees to make it public")
       end
     end
 

@@ -19,10 +19,16 @@ class WikiPagesController < ApplicationController
     @tags = WikiPage.pluck(:tags).flatten.tally.sort_by { |tag, count| [ -count, tag ] }.first(50).map(&:first)
   end
 
-  # A link to a page nobody has written yet offers to start it.
+  # A link to a page that was renamed goes to its new address. A link to a
+  # page nobody has written yet offers to start it.
   def show
     @page = WikiPage.find_by(slug: params[:slug])
-    render :missing, status: :not_found unless @page
+    return if @page
+    if (renamed = WikiPage.find_by_old_slug(params[:slug]))
+      redirect_to wiki_page_path(renamed), status: :moved_permanently
+    else
+      render :missing, status: :not_found
+    end
   end
 
   def new

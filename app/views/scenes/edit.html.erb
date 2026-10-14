@@ -33,12 +33,11 @@
   </fieldset>
   <fieldset class="field">
     <legend class="fieldset__legend">Who can join</legend>
-    <% locked_hidden = @scene.visibility_was == "hidden" && @scene.made_public_at.nil? %>
     <% Scene.visibilities.each_key do |visibility| %>
-      <label class="field--checkbox"><%= form.radio_button :visibility, visibility, disabled: locked_hidden && visibility != "hidden" %> <%= t("terms.scene_visibility.#{visibility}") %></label>
+      <label class="field--checkbox"><%= form.radio_button :visibility, visibility, disabled: !@scene.may_switch_to?(visibility, from: @scene.visibility_was) %> <%= t("terms.scene_visibility.#{visibility}") %></label>
     <% end %>
-    <% if locked_hidden %>
-      <small class="hint">A Hidden <%= term(:scene).downcase %> only opens up when every player agrees, below.</small>
+    <% if @scene.made_public_at.nil? && @scene.visibility_was != "joinable" %>
+      <small class="hint">A <%= t("terms.scene_visibility.#{@scene.visibility_was}") %> <%= term(:scene).downcase %> only opens up when every player agrees, below.</small>
     <% end %>
   </fieldset>
   <div class="field">
@@ -60,10 +59,10 @@
   </div>
 <% end %>
 
-<% if @scene.visibility_hidden? && @scene.made_public_at.nil? %>
+<% if @scene.closed_to_others? && @scene.made_public_at.nil? %>
   <section class="scene-consent">
     <h2 class="section-title">Making it public</h2>
-    <p class="text">This <%= term(:scene).downcase %> stays hidden unless every player agrees to make it public.
+    <p class="text">This <%= term(:scene).downcase %> stays <%= t("terms.scene_visibility.#{@scene.visibility}").downcase %> unless every player agrees to make it public.
       Agreed so far: <%= @scene.participants.count(&:public_consent_at) %> of <%= @scene.participants.size %>.</p>
     <% participant = @scene.participant_for(current_character) %>
     <% if participant&.public_consent_at %>

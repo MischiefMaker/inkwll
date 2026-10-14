@@ -101,6 +101,30 @@ class NotifierTest < ActiveSupport::TestCase
     assert_emails 1
   end
 
+  test "one digest failing doesn't stop the others" do
+    alice = accounts(:alice)
+    alice.update!(email_notifications: "after_days", email_after_days: 3, last_seen_at: 4.days.ago)
+    @bob.update!(email_notifications: "after_days", email_after_days: 3, last_seen_at: 4.days.ago)
+    @scene.post!(characters(:sable), "Sable parries.")
+    @scene.post!(characters(:wren), "Wren lunges.")
+
+    # The mail service refusing Alice's email.
+    refuser = Module.new do
+      def self.delivering_email(message)
+        raise Net::SMTPFatalError, "mail down" if message.to.include?("alice@example.com")
+      end
+    end
+    ActionMailer::Base.register_interceptor(refuser)
+    begin
+      DigestJob.perform_now
+    ensure
+      ActionMailer::Base.unregister_interceptor(refuser)
+    end
+
+    assert_equal [ [ "bob@example.com" ] ], ActionMailer::Base.deliveries.map(&:to)
+    assert_not scene_participants(:duel_wren).reload.emailed_since_last_read?
+  end
+
   test "no digest for a player seen recently" do
     @bob.update!(email_notifications: "after_days", email_after_days: 3, last_seen_at: 1.day.ago)
     @scene.post!(characters(:wren), "Wren lunges.")

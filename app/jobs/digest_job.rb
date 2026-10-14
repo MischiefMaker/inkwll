@@ -22,9 +22,20 @@ class DigestJob < ApplicationJob
       end
       next if entries.empty? && conversations.empty?
 
+      send_digest(account, entries, conversations)
+    end
+  end
+
+  private
+    # One player's email failing (say the mail service hiccups) is logged
+    # and skipped, so everyone after them still gets theirs. Nothing is
+    # marked as emailed, so they're tried again next time.
+    def send_digest(account, entries, conversations)
       NotificationMailer.digest(account, entries, conversations).deliver_now
       entries.each { |participant, _, _| participant.mark_emailed! }
       conversations.each { |member, _, _| member.update_column(:emailed_at, Time.current) }
+    rescue StandardError => e
+      Rails.logger.error "Digest email to account #{account.id} failed: #{e.class}: #{e.message}"
+      Rails.error.report(e, handled: true, context: { account_id: account.id })
     end
-  end
 end

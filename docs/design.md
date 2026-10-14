@@ -109,6 +109,9 @@ Two switches, *private* and *hidden*:
 Hidden implies private, so turning hidden on must force private on. There are
 effectively three states.
 
+One player alone can make a chat more closed, but not more open: a private or
+hidden chat only opens up once every player agrees (2026-10-14).
+
 ### Logs [Decided]
 
 - Finished chats remain attached to the room and linked to each participating

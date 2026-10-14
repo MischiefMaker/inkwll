@@ -6,6 +6,13 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Code audit follow-ups (owner, 2026-10-14)
+
+- **Weekly XP** goes only to approved characters being played. Retired characters and those on the roster get none, and don't count towards the catch-up median.
+- **Private Chapters** follow the Hidden rule: one player can't open one up (switch it to Open) alone. It becomes public once every player agrees, using the same "I agree to make it public" button. Making a Chapter more closed (Open to Private, Private to Hidden) is still fine.
+- **Renamed wiki pages** remember their old addresses, and old links redirect to the new one. A new page that takes an old address wins it.
+- **Daily digest emails:** if one player's email fails to send, the failure is logged and the others are still sent. The failed one is tried again next time.
+
 ## Long Chapters show their latest posts live (owner, 2026-10-14; number picked by Claude)
 
 An open Chapter's page shows only its latest 50 posts and updates live. Above them, "Read the whole chapter (N earlier posts)" opens every post on a page that doesn't update by itself, with a link back to the live page to post. Finished Chapters (Manuscripts) always show everything. This keeps long, busy Chapters quick on a small server. The number is `Scene::LIVE_PASSAGES`.

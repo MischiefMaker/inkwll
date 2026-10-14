@@ -169,10 +169,11 @@ module Character::SoulSheet
     end
 
   class_methods do
-    # The median XP earned by approved characters.
+    # The median XP earned by approved characters being played (not retired
+    # or on the roster).
     def median_xp_earned
       earned = Soul::XpEntry.award.group(:character_id).sum(:amount)
-      values = where(status: "approved").pluck(:id).map { |id| earned.fetch(id, 0) }.sort
+      values = active.where(status: "approved").pluck(:id).map { |id| earned.fetch(id, 0) }.sort
       return 0 if values.empty?
       mid = values.size / 2
       values.size.odd? ? values[mid] : (values[mid - 1] + values[mid]) / 2.0

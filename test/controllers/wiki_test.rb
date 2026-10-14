@@ -56,6 +56,24 @@ class WikiTest < ActionDispatch::IntegrationTest
     assert_select "a[href='#{new_wiki_page_path(title: "The old gods")}']"
   end
 
+  test "renaming a page keeps its old address working" do
+    sign_in_as(accounts(:alice))
+    page = create_page
+    patch wiki_page_path(page), params: { wiki_page: { title: "Table Manners" } }
+    patch wiki_page_path("table-manners"), params: { wiki_page: { title: "Good Manners" } }
+
+    get wiki_page_path("house-rules")
+    assert_redirected_to wiki_page_path("good-manners")
+    get wiki_page_path("table-manners")
+    assert_redirected_to wiki_page_path("good-manners")
+
+    # A new page can take an old address, and then wins it.
+    create_page(title: "House Rules", body: "New rules.")
+    get wiki_page_path("house-rules")
+    assert_response :success
+    assert_select ".wiki-body", text: /New rules/
+  end
+
   test "staff lock a page, then players can't change it" do
     sign_in_as(accounts(:alice))
     page = create_page

@@ -13,6 +13,14 @@ class WikiPage < ApplicationRecord
   validate :title_makes_a_slug
 
   before_validation { self.slug = self.class.slug_for(title) if title_changed? }
+  # Renaming a page changes its address. The old one is remembered, so old
+  # links and bookmarks still find the page (owner, 2026-10-14).
+  before_save :remember_old_slug, if: -> { persisted? && slug_changed? }
+
+  # The page at this address, or the page that used to be at it.
+  def self.find_by_old_slug(slug)
+    where("? = ANY(old_slugs)", slug).order(updated_at: :desc).first
+  end
 
   scope :in_menu, -> { where.not(menu_position: nil).order(:menu_position, :title) }
   scope :tagged, ->(tag) { where("? = ANY(tags)", tag.to_s.downcase) }
@@ -47,6 +55,10 @@ class WikiPage < ApplicationRecord
   end
 
   private
+    def remember_old_slug
+      self.old_slugs = (old_slugs | [ slug_was ]) - [ slug ]
+    end
+
     def title_makes_a_slug
       errors.add(:title, "needs some letters or numbers") if title.present? && slug.blank?
       errors.add(:title, "can't be just \"new\"") if slug == "new"

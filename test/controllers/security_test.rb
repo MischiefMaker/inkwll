@@ -33,6 +33,30 @@ class SecurityTest < ActionDispatch::IntegrationTest
     assert scenes(:secret).reload.made_public_at
   end
 
+  test "one player can't open up a Private Chapter, but can close it further" do
+    sign_in_as(accounts(:alice))
+    accounts(:alice).update!(active_character: characters(:moth))
+    patch scene_path(scenes(:tea)), params: { scene: { visibility: "joinable" } }
+    assert scenes(:tea).reload.visibility_private?
+
+    patch scene_path(scenes(:tea)), params: { scene: { visibility: "hidden" } }
+    assert scenes(:tea).reload.visibility_hidden?
+  end
+
+  test "a Private Chapter opens up once every player agrees" do
+    sign_in_as(accounts(:alice))
+    accounts(:alice).update!(active_character: characters(:moth))
+    get edit_scene_path(scenes(:tea))
+    assert_select "input[type=radio][value=joinable][disabled]"
+    assert_select ".scene-consent"
+
+    post scene_public_consent_path(scenes(:tea))
+    assert scenes(:tea).reload.made_public_at
+    assert scenes(:tea).readable_by?(accounts(:bob))
+    patch scene_path(scenes(:tea)), params: { scene: { visibility: "joinable" } }
+    assert scenes(:tea).reload.visibility_joinable?
+  end
+
   test "finished Chapters' settings can't be changed" do
     sign_in_as(accounts(:alice))
     scenes(:duel).finish!(by: characters(:wren))

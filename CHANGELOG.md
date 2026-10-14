@@ -2,6 +2,15 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Audit follow-ups
+
+- Retired characters and characters on the roster no longer get weekly XP.
+- A Private Chapter can't be opened up by one player alone. Like a Hidden
+  one, it becomes public once every player agrees.
+- Renaming a wiki page no longer breaks links to it: old addresses
+  redirect to the new one.
+- One failed digest email no longer stops everyone else's.
+
 ## 2026-10-14 — Long Chapters stay quick
 
 - An open Chapter shows its latest 50 posts, live. "Read the whole

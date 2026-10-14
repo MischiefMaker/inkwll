@@ -11,4 +11,13 @@ class WeeklyXpJobTest < ActiveJob::TestCase
     WeeklyXpJob.perform_now(sunday + 1.week)
     assert_equal 2, characters(:wren).xp_available
   end
+
+  test "retired and roster characters get no weekly XP" do
+    characters(:moth).retire!
+    characters(:sable).put_on_roster!
+    WeeklyXpJob.perform_now(Time.zone.parse("2026-10-18 00:00"))
+    assert_equal 1, characters(:wren).xp_available
+    assert_equal 0, characters(:moth).xp_available
+    assert_equal 0, characters(:sable).xp_available
+  end
 end
