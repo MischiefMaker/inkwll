@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_100001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_110001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -249,6 +249,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_100001) do
     t.bigint "finished_by_id"
     t.datetime "locked_at"
     t.datetime "made_public_at"
+    t.datetime "paused_at"
+    t.string "pause_note"
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"

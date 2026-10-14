@@ -44,7 +44,8 @@ class Scene < ApplicationRecord
   # Open scenes that aren't idle.
   scope :active, -> { open.where("COALESCE(scenes.last_pose_at, scenes.created_at) >= ?", idle_after.ago) }
   # Open scenes nobody has posted in for the game's auto-finish time.
-  scope :abandoned, -> { open.where("COALESCE(scenes.last_pose_at, scenes.created_at) < ?", GameSetting.current.auto_finish_days.days.ago) }
+  # Paused scenes are never abandoned.
+  scope :abandoned, -> { open.where(paused_at: nil).where("COALESCE(scenes.last_pose_at, scenes.created_at) < ?", GameSetting.current.auto_finish_days.days.ago) }
   scope :by_activity, -> { order(Arel.sql("COALESCE(scenes.last_pose_at, scenes.created_at) DESC")) }
 
   # Starts a new scene in the room the character is standing in.
@@ -83,6 +84,33 @@ class Scene < ApplicationRecord
   # Whether poses can still be posted, edited or removed.
   def writable?
     !finished? && !locked?
+  end
+
+  def paused?
+    paused_at.present?
+  end
+
+  # Players can pause a scene to pick it up another day, with an optional
+  # note such as "Back Saturday". The turn timer stops and the game won't
+  # finish it while it's paused. A new Passage picks it back up.
+  def pause!(by:, note: nil)
+    with_lock do
+      next false if paused? || !writable?
+      note = note.to_s.squish.first(100).presence
+      update!(paused_at: Time.current, pause_note: note, turn_token: turn_token + 1)
+      add_system_line!("#{by.name} paused this #{Term[:scene]}#{": #{note}" if note}.")
+      true
+    end
+  end
+
+  def resume!(by:)
+    with_lock do
+      next false unless paused?
+      update!(paused_at: nil, pause_note: nil, turn_started_at: current_turn_participant && Time.current, turn_warned_at: nil)
+      add_system_line!("#{by.name} picked this #{Term[:scene]} back up.")
+      schedule_turn_timer
+      true
+    end
   end
 
   def participant_for(character)
@@ -208,6 +236,7 @@ class Scene < ApplicationRecord
         raise ArgumentError, "Wait for #{waiting} more #{Term[:pose, count: waiting]} before posting again (the 3-#{Term[:pose]} rule)."
       end
 
+      resume!(by: character) if paused? && Pose::STORY_KINDS.include?(kind)
       pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"))
       after_pose_by(participant) if takes_turn
       pose

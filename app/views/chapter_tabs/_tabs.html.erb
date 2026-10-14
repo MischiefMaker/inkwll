@@ -24,6 +24,8 @@
           </span>
           <% if scene.finished? %>
             <span class="chapter-tab__turn">Finished</span>
+          <% elsif scene.paused? %>
+            <span class="chapter-tab__turn">Paused</span>
           <% elsif scene.turn_of?(participant) %>
             <span class="chapter-tab__turn">Your turn</span>
           <% end %>

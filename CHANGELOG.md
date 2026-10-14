@@ -17,6 +17,7 @@ Short, plain-language notes on what changed. Newest first.
 - "Forgot your password?" on the log-in page emails a reset link.
 - Chapters have OOC lines, narration and NPC Passages as well as ordinary
   Passages. OOC lines don't take a turn and stay out of the Manuscript.
+- Players can pause a Chapter, with a note saying when they'll be back.
 - Guests can chat in the OOC Chat without logging in, with spam protection.
 - Arial is now the default font, in emails too.
 - The OOC Chat has its new name, a coloured header bar and a tiny icon by

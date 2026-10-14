@@ -16,6 +16,16 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Pausing a Chapter
+
+Players can pause a Chapter to pick it up another day, with an optional "back on" note. The turn timer stops, and the game won't finish it for being quiet while it's paused (owner).
+
+Defaults picked by Claude: any player in the Chapter can pause it or pick it back up, and posting a Passage, NPC Passage or narration picks it back up automatically (an OOC line doesn't). Paused Chapters show "Paused" on their tab and in the Setting's list.
+
+## 2026-10-14: OOC remarks inside Chapters
+
+OOC remarks go in the Chapter itself as OOC lines, not in a separate side chat (owner, from a decision card). Built as described under "More kinds of post in a Chapter".
+
 ## 2026-10-14: Arial as the default font
 
 Arial is the default font everywhere, emails included, instead of Times New Roman (owner). Games can change it with CSS skins (step 10).

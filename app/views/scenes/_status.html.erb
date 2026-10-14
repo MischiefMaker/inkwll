@@ -1,5 +1,15 @@
 <%# Shown when a Chapter is finished or locked: undo, and for hidden
     Chapters, each player's say on making the Manuscript public. %>
+<% if scene.paused? && !scene.finished? %>
+  <div class="notice-box">
+    <p>Paused since <%= l(scene.paused_at.to_date, format: :long) %><%= ": #{scene.pause_note}" if scene.pause_note %>.
+      The turn timer is stopped, and it won't be finished for being quiet.</p>
+    <% if participant && scene.writable? %>
+      <%= button_to "Pick it back up", scene_pause_path(scene), method: :delete, class: "button button--quiet" %>
+      <span class="muted">Posting a <%= term(:pose).downcase %> picks it back up too.</span>
+    <% end %>
+  </div>
+<% end %>
 <% if scene.locked? %>
   <p class="notice-box">Staff have locked this <%= term(:scene).downcase %>. Nobody can post in it for now.</p>
 <% end %>

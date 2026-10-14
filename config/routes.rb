@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     scope module: :scenes do
       resource :participation, only: %i[ create update destroy ]
       resource :finish, only: %i[ create destroy ]
+      resource :pause, only: %i[ create destroy ]
       resource :public_consent, only: %i[ create destroy ]
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create

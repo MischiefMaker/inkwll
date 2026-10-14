@@ -55,7 +55,7 @@ module Scene::Turns
   end
 
   def auto_skip_running?
-    writable? && auto_skip? && turn_based? && current_turn_participant_id.present? && turn_started_at.present? && participants.size > 1
+    writable? && !paused? && auto_skip? && turn_based? && current_turn_participant_id.present? && turn_started_at.present? && participants.size > 1
   end
 
   def pass!(participant)

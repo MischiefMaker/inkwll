@@ -313,6 +313,9 @@ words, and `config/locales/en.yml` maps one to the other.
 - **Kinds of post.** Besides Passages, players can post an NPC's Passage
   (takes their turn), narration (Storyteller, or anyone without one; no
   turn) and OOC lines (no turn, not unread, left out of the Manuscript).
+- **Pausing.** Any player can pause a Chapter with an optional "back on"
+  note. That stops the turn timer and the auto-finish; a new Passage or
+  "Pick it back up" resumes it.
 - **Turns.** Turn order is the order people joined. The first Passage can come
   from anyone. Posting out of turn asks "Post anyway" first and doesn't move
   the turn. Pass, storyteller Skip, and auto-skip (warning after the

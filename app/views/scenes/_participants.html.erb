@@ -19,6 +19,16 @@
       <% end %>
       <%= button_to "Leave", scene_participation_path(scene), method: :delete, class: "button-link",
             form: { data: { turbo_confirm: "#{participant.character.name} will leave #{scene.title}. Leave?" } } %>
+      <% unless scene.paused? %>
+        <details class="scene-people__pause">
+          <summary>Pause</summary>
+          <%= form_with url: scene_pause_path(scene), class: "form form--inline" do |form| %>
+            <%= form.label :note, "When you'll be back (optional)", class: "visually-hidden" %>
+            <%= form.text_field :note, placeholder: "e.g. Back Saturday evening", maxlength: 100 %>
+            <%= form.submit "Pause #{term(:scene).downcase}", class: "button button--quiet" %>
+          <% end %>
+        </details>
+      <% end %>
       <%= button_to "Finish #{term(:scene).downcase}", scene_finish_path(scene), class: "button-link",
             form: { data: { turbo_confirm: "Finish #{scene.title}? Its #{term(:pose, count: 2).downcase} will be locked and it moves to the #{term(:logs_collection)}. The others can undo this for 24 hours." } } %>
     </div>

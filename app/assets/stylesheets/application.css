@@ -553,7 +553,10 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
 .scene-people__list { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; list-style: none; padding: 0; margin: 0 0 0.5rem; }
 .scene-people__person { display: inline-flex; align-items: center; gap: 0.35rem; }
 .scene-people__person--turn { font-weight: bold; }
-.scene-people__actions { display: flex; gap: var(--space); font-size: 0.9rem; }
+.scene-people__actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space); font-size: 0.9rem; }
+.scene-people__pause summary { cursor: pointer; color: var(--color-accent); }
+.scene-people__pause[open] { flex-basis: 100%; }
+.scene-people__pause .form { margin-top: 0.4rem; }
 .scene-people__invite { margin-top: 0.5rem; }
 
 .passages { border-top: 1px solid var(--color-border); }

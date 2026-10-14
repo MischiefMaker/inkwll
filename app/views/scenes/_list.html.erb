@@ -10,7 +10,7 @@
           <div>
             <%= link_to scene.title, scene_path(scene), class: "scene-list__title" %>
             <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_label(scene) %></span>
-            <% if scene.idle? %><span class="badge">Idle</span><% end %>
+            <% if scene.paused? %><span class="badge">Paused</span><% elsif scene.idle? %><span class="badge">Idle</span><% end %>
           </div>
           <div class="muted scene-list__meta">
             <%= scene.participants.map { |p| p.character.name }.to_sentence.presence || "Nobody yet" %>
