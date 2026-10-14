@@ -50,8 +50,8 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
 - A dropdown switches the active character.
 - The app remembers which character the player last used in each room and each
   scene, and applies it automatically.
-- Accounts may have an email address (optional), used for password reset
-  links. Without one, staff reset the password.
+- Accounts need an email address by default, used for password reset links.
+  Each game can make it optional; without one, staff reset the password.
 - Character approval is a per-game setting. When it is on, new characters
   cannot pose in scenes until staff approve them.
 

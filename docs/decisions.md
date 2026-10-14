@@ -8,9 +8,11 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
-## 2026-10-14: Email on accounts is optional
+## 2026-10-14: Email on accounts is required by default, games can relax it
 
-Players may add an email address to their account. It is used for password reset links. Players without one ask staff to reset their password. Sending email needs a mail-sending service, set up in the Going live step.
+New accounts need an email address by default, used for password reset links. Each game can switch this to optional; players without an email then ask staff to reset their password. Sending email needs a mail-sending service, set up in the Going live step.
+
+The owner first picked "optional", then changed it the same day.
 
 ## 2026-10-14: Character approval is a game setting
 
