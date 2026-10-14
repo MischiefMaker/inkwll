@@ -18,7 +18,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 8. Inklings and storyteller tools | Requests, plot tracking and storyteller tools, applying approved outcomes through SOUL. | Later |
 | 9. Grimoire | Magic branches tied to SOUL skills, learning spells with XP, casting as SOUL rolls, player spell proposals. | Later |
 | 10. Platform | Feature toggles screen, skins. Each system gets a simple on/off switch when it is built; this step adds the screen for it. | Later |
-| 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and email if accounts get one. | Later |
+| 11. Going live | Deploy to the DigitalOcean server with Kamal, backups, and the mail service for password reset emails. | Later |
 
 ## Decisions still needed
 
@@ -26,10 +26,8 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Now (before step 2 starts)**
 
-3. Should accounts have an email address, and is it required?
 4. The step 1 choices (details in `design.md` section 6). Each is already built and easy to change:
    - Players log in with a username, and show a separate player name in OOC chat.
-   - No password reset yet; staff reset passwords by hand (tied to question 3).
    - Characters can't be deleted yet.
    - Character names are unique across the whole game.
    - New characters start in the room a builder marks as the starting room.

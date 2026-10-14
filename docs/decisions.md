@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: Email on accounts is optional
+
+Players may add an email address to their account. It is used for password reset links. Players without one ask staff to reset their password. Sending email needs a mail-sending service, set up in the Going live step.
+
 ## 2026-10-14: Character approval is a game setting
 
 Each game chooses whether new characters need staff approval before they can pose in scenes. Unapproved characters can still move between rooms and use OOC chat. Inklings approvals stay a separate system either way.

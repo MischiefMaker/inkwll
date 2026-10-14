@@ -50,6 +50,8 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
 - A dropdown switches the active character.
 - The app remembers which character the player last used in each room and each
   scene, and applies it automatically.
+- Accounts may have an email address (optional), used for password reset
+  links. Without one, staff reset the password.
 - Character approval is a per-game setting. When it is on, new characters
   cannot pose in scenes until staff approve them.
 
@@ -245,7 +247,6 @@ repo.
 
 1. Project name: Inkwll (tentative).
 2. Setting and tone: not specified, so avoid baking in setting-specific content.
-3. Should accounts have an email address (for password resets and notices)?
 
 ## 9. Working agreements for Claude Code
 
