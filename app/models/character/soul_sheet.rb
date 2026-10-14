@@ -12,6 +12,7 @@ module Character::SoulSheet
   included do
     has_many :soul_ratings, class_name: "Soul::Rating", dependent: :delete_all
     has_many :xp_entries, class_name: "Soul::XpEntry", dependent: :delete_all
+    has_many :award_suggestions, class_name: "Soul::AwardSuggestion", dependent: :delete_all
     has_many :soul_rolls, class_name: "Soul::Roll", dependent: :delete_all
 
     validates :resonance, numericality: { only_integer: true }

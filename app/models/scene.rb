@@ -15,6 +15,7 @@ class Scene < ApplicationRecord
   has_many :invitations, class_name: "SceneInvitation", dependent: :destroy
   has_many :poses, -> { order(:sequence) }, dependent: :destroy, inverse_of: :scene
   has_many :pending_rolls, class_name: "Soul::PendingRoll", dependent: :delete_all
+  has_many :award_suggestions, class_name: "Soul::AwardSuggestion", dependent: :delete_all
 
   # joinable: anyone can watch and join. private: others can see it exists and
   # who is in it, but need an invitation to read or join. hidden: only its
@@ -328,6 +329,20 @@ class Scene < ApplicationRecord
 
     pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s)
     add_system_line!("#{character.name} asks the #{Term[:storyteller]} for a #{skill.name} roll.")
+    pending
+  end
+
+  # The Storyteller calls for a roll from a player. It waits like an asked-for
+  # roll, so the Storyteller then picks the Boons and Banes and rolls it.
+  def call_roll!(character, skill, difficulty_name, by:)
+    raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant_for(by)&.storyteller?
+    raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}." unless participant_for(character)
+    raise ArgumentError, "A #{Term[:storyteller]} doesn't judge their own player's rolls." if character.account_id == by.account_id
+    check_can_roll!(character)
+    raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.waiting.exists?(character: character)
+
+    pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s)
+    add_system_line!("The #{Term[:storyteller]} calls for a #{skill.name} roll from #{character.name}.")
     pending
   end
 

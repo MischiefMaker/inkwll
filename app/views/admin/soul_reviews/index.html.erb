@@ -49,3 +49,27 @@
 <% else %>
   <p class="text muted">Nothing waiting.</p>
 <% end %>
+
+<h2 class="section-title">XP suggested by a <%= term(:storyteller) %></h2>
+<% if @awards.any? %>
+  <ul class="soul-reviews">
+    <% @awards.each do |award| %>
+      <li class="soul-reviews__item soul-reviews__item--award">
+        <p class="text"><%= award.suggested_by.display_name %> suggests <strong class="emphasis"><%= award.amount %> XP</strong> for
+          <%= link_to award.character.name, character_path(award.character, tab: "soul") %> in <%= link_to award.scene.title, scene_path(award.scene) %>.</p>
+        <div class="prose soul-reviews__why"><%= simple_format award.reason %></div>
+        <div class="soul-reviews__actions">
+          <%= button_to "Approve", admin_soul_award_suggestion_path(award), method: :patch, params: { decision: "approve" }, class: "button" %>
+          <%= form_with url: admin_soul_award_suggestion_path(award), method: :patch, class: "form form--inline soul-reviews__deny" do |form| %>
+            <%= hidden_field_tag :decision, "deny" %>
+            <%= form.label :reason, "Reason", class: "visually-hidden" %>
+            <%= form.text_field :reason, placeholder: "Why not (optional)", maxlength: 250 %>
+            <%= form.submit "Turn down", class: "button button--quiet" %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text muted">Nothing waiting.</p>
+<% end %>

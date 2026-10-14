@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_270001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_280001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -591,6 +591,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_270001) do
     t.index ["character_id"], name: "index_soul_audit_entries_on_character_id"
   end
 
+  create_table "soul_award_suggestions", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "scene_id", null: false
+    t.bigint "suggested_by_id", null: false
+    t.integer "amount", null: false
+    t.text "reason", null: false
+    t.string "status", default: "pending", null: false
+    t.string "staff_reason"
+    t.bigint "reviewed_by_id"
+    t.datetime "reviewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_award_suggestions_on_character_id"
+    t.index ["reviewed_by_id"], name: "index_soul_award_suggestions_on_reviewed_by_id"
+    t.index ["scene_id"], name: "index_soul_award_suggestions_on_scene_id"
+    t.index ["suggested_by_id"], name: "index_soul_award_suggestions_on_suggested_by_id"
+  end
+
   create_table "soul_bnb_requests", force: :cascade do |t|
     t.bigint "character_id", null: false
     t.bigint "soul_bnb_id", null: false
@@ -848,6 +866,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_270001) do
   add_foreign_key "sessions", "accounts"
   add_foreign_key "soul_audit_entries", "accounts", column: "actor_id"
   add_foreign_key "soul_audit_entries", "characters", on_delete: :nullify
+  add_foreign_key "soul_award_suggestions", "accounts", column: "reviewed_by_id"
+  add_foreign_key "soul_award_suggestions", "accounts", column: "suggested_by_id"
+  add_foreign_key "soul_award_suggestions", "characters"
+  add_foreign_key "soul_award_suggestions", "scenes"
   add_foreign_key "soul_bnb_requests", "accounts", column: "reviewed_by_id"
   add_foreign_key "soul_bnb_requests", "characters"
   add_foreign_key "soul_bnb_requests", "soul_bnbs"

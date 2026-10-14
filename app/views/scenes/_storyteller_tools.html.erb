@@ -1,0 +1,59 @@
+<%# Tools for the Chapter's Storyteller: call for a roll, look at the
+    players' Aspects and Skills, and suggest XP for staff to approve. %>
+<% others = scene.participants.map(&:character).reject { |c| c.account_id == current_account.id } %>
+<% if others.any? %>
+  <details class="storyteller-tools">
+    <summary class="disclosure__summary storyteller-tools__summary"><%= term(:storyteller) %> tools</summary>
+
+    <% if scene.writable? %>
+      <section class="storyteller-tools__section storyteller-tools__call">
+        <h3 class="subsection-title">Call for a roll</h3>
+        <%= form_with url: scene_pending_rolls_path(scene), class: "form form--inline storyteller-tools__call-form" do |form| %>
+          <%= form.label :character_id, "Who", class: "visually-hidden", for: "call_character" %>
+          <%= form.select :character_id, others.map { |c| [ c.name, c.id ] }, {}, id: "call_character" %>
+          <%= form.label :skill_id, "Skill", class: "visually-hidden", for: "call_skill" %>
+          <%= form.select :skill_id, grouped_options_for_select(Soul::Aspect.ordered.includes(:skills).to_h { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }), {}, id: "call_skill" %>
+          <%= form.label :difficulty, "Difficulty", class: "visually-hidden", for: "call_difficulty" %>
+          <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: "standard" }, id: "call_difficulty" %>
+          <%= form.submit "Call for it", class: "button button--quiet" %>
+        <% end %>
+        <p class="hint">It waits above until you pick which Boons and Banes count and roll it.</p>
+      </section>
+    <% end %>
+
+    <section class="storyteller-tools__section storyteller-tools__sheets">
+      <h3 class="subsection-title">Players' Aspects and Skills</h3>
+      <% aspects = Soul::Aspect.ordered.includes(:skills) %>
+      <% others.each do |character| %>
+        <div class="storyteller-sheet">
+          <h4 class="storyteller-sheet__name"><%= character.name %></h4>
+          <dl class="storyteller-sheet__ratings">
+            <% aspects.each do |aspect| %>
+              <% skills = aspect.skills.select { |skill| character.rating_for(skill).positive? } %>
+              <dt class="storyteller-sheet__aspect"><%= aspect.name %> <%= character.rating_for(aspect) %></dt>
+              <dd class="storyteller-sheet__skills"><%= skills.map { |skill| "#{skill.name} #{character.rating_for(skill)}" }.join(", ").presence || "—" %></dd>
+            <% end %>
+          </dl>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="storyteller-tools__section storyteller-tools__award">
+      <h3 class="subsection-title">Suggest XP</h3>
+      <%= form_with url: scene_award_suggestions_path(scene), class: "form storyteller-tools__award-form" do |form| %>
+        <div class="form--inline storyteller-tools__award-who">
+          <%= form.label :character_id, "For", for: "award_character" %>
+          <%= form.select :character_id, others.map { |c| [ c.name, c.id ] }, {}, id: "award_character" %>
+          <%= form.label :amount, "XP", for: "award_amount" %>
+          <%= form.number_field :amount, min: 1, max: Soul::AwardSuggestion::MAX_AMOUNT, value: 1, id: "award_amount", class: "storyteller-tools__amount" %>
+        </div>
+        <div class="field">
+          <%= form.label :reason, "Why", for: "award_reason" %>
+          <%= form.text_field :reason, maxlength: 1_000, required: true, id: "award_reason", placeholder: "Brought the plot to a head" %>
+        </div>
+        <%= form.submit "Send to staff", class: "button button--quiet" %>
+      <% end %>
+      <p class="hint">Staff approve it before anyone gets the XP.</p>
+    </section>
+  </details>
+<% end %>

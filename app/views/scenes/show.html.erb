@@ -52,6 +52,9 @@
       <%= render "characters/mini_profile", character: character %>
     <% end %>
 
+    <% if !@scene.writable? && @participant&.storyteller? && Soul.enabled? %>
+      <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant %>
+    <% end %>
     <% if @scene.writable? %>
       <div class="scene__footer">
         <%= render "scenes/pending_rolls", scene: @scene, participant: @participant if Soul.enabled? %>
@@ -60,6 +63,7 @@
           <%= render "scenes/composer", scene: @scene, participant: @participant %>
           <%= render "scenes/roll", scene: @scene, participant: @participant if Soul.enabled? %>
           <%= render "scenes/cast", scene: @scene, participant: @participant if Grimoire.enabled? %>
+          <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant if Soul.enabled? && @participant.storyteller? %>
         <% else %>
           <%= render "scenes/join", scene: @scene %>
         <% end %>

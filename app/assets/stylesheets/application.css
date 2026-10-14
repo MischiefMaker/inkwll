@@ -980,3 +980,15 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .skin-form__css { font-family: ui-monospace, monospace; }
 .admin-setup { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; margin-bottom: var(--space); }
 .skin-preset__current { font-size: 0.75rem; }
+
+/* --- Storyteller tools ----------------------------------------------------- */
+.storyteller-tools { margin-top: var(--space); }
+.storyteller-tools__section { margin: 0.75rem 0; }
+.storyteller-tools__call-form, .storyteller-tools__award-who { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.storyteller-tools__call-form select { max-width: 100%; }
+.storyteller-tools__amount { width: 5rem; }
+.storyteller-sheet { padding: 0.4rem 0; border-bottom: 1px solid var(--color-border); }
+.storyteller-sheet__name { margin: 0 0 0.25rem; font-size: 1rem; }
+.storyteller-sheet__ratings { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0.15rem 0.75rem; margin: 0; font-size: 0.9rem; }
+.storyteller-sheet__aspect { font-weight: 600; }
+.storyteller-sheet__skills { margin: 0; }

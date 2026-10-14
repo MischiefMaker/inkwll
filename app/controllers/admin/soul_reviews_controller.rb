@@ -5,6 +5,7 @@ class Admin::SoulReviewsController < Admin::BaseController
   def index
     @requests = Soul::BnbRequest.pending.includes(:character, :bnb).order(:created_at)
     @culminations = Soul::Culmination.proposed.includes(:character).order(:created_at)
+    @awards = Soul::AwardSuggestion.pending.includes(:character, :scene, :suggested_by).order(:created_at)
   end
 
   # Approving or denying a Boon or Bane request.

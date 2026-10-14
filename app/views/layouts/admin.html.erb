@@ -22,7 +22,7 @@
       <% roster_waiting = RosterApplication.pending.count + Character.active.where.not(roster_requested_at: nil).count %>
       <%= link_to "Roster#{" (#{roster_waiting})" if roster_waiting.positive?}", admin_roster_path, class: ("is-current" if controller_name.in?(%w[ roster roster_applications roster_characters ])) %>
       <% if Soul.enabled? %>
-        <% soul_waiting = Soul::BnbRequest.pending.count + Soul::Culmination.proposed.count %>
+        <% soul_waiting = Soul::BnbRequest.pending.count + Soul::Culmination.proposed.count + Soul::AwardSuggestion.pending.count %>
         <%= link_to "SOUL requests#{" (#{soul_waiting})" if soul_waiting.positive?}", admin_soul_reviews_path, class: ("is-current" if controller_name == "soul_reviews") %>
         <%= link_to "Boons and Banes", admin_soul_bnbs_path, class: ("is-current" if controller_name == "soul_bnbs") %>
       <% end %>

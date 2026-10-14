@@ -59,7 +59,8 @@ Rails.application.routes.draw do
       resources :invitations, only: :create
       resources :rolls, only: :create
       resources :casts, only: :create
-      resources :pending_rolls, only: %i[ update destroy ]
+      resources :pending_rolls, only: %i[ create update destroy ]
+      resources :award_suggestions, only: :create
       resource :reading, only: :update
       resource :turn, only: [] do
         post :pass
@@ -132,6 +133,7 @@ Rails.application.routes.draw do
     resources :soul_skills, only: %i[ create edit update destroy ]
     resources :soul_bnbs, only: %i[ index create edit update ]
     resources :soul_reviews, only: %i[ index update ]
+    resources :soul_award_suggestions, only: :update
     resources :applications, only: %i[ index show update ]
     resource :roster, only: :show, controller: "roster"
     resources :roster_applications, only: :update
