@@ -2,12 +2,28 @@ import { Controller } from "@hotwired/stimulus"
 
 // The box for writing a Passage. Warns before posting out of turn, clears
 // itself after posting, and posts on Ctrl+Enter (Cmd+Enter on a Mac).
+// Players can also post as an NPC, narration or an OOC line; only Passages
+// and NPC Passages take a turn.
 export default class extends Controller {
-  static targets = ["body", "anyway", "warning", "warningText"]
+  static targets = ["body", "anyway", "warning", "warningText", "kind", "npc", "npcName", "label"]
+
+  get kind() {
+    return this.kindTargets.find(input => input.checked)?.value || "passage"
+  }
+
+  kindChanged() {
+    const npc = this.kind === "npc"
+    this.npcTarget.hidden = !npc
+    this.npcNameTarget.required = npc
+    this.labelTarget.textContent = this.labelTarget.dataset[this.kind]
+    this.element.closest(".composer").dataset.kind = this.kind
+    if (!["passage", "npc"].includes(this.kind)) this.cancel()
+  }
 
   // Whose turn it is comes from the turn bar, which updates live.
   check(event) {
     const turnBar = document.getElementById("turn-bar")
+    if (!["passage", "npc"].includes(this.kind)) return
     if (this.anywayTarget.value === "1" || turnBar?.dataset.outOfTurn !== "true") return
 
     event.preventDefault()
@@ -27,7 +43,14 @@ export default class extends Controller {
 
   reset(event) {
     this.anywayTarget.value = "0"
-    if (event.detail.success) this.bodyTarget.value = ""
+    if (event.detail.success) {
+      this.bodyTarget.value = ""
+      // Back to an ordinary Passage after an OOC line or narration.
+      if (["ooc", "narration"].includes(this.kind)) {
+        this.kindTargets.find(input => input.value === "passage").checked = true
+        this.kindChanged()
+      }
+    }
   }
 
   shortcut(event) {

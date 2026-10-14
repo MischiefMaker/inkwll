@@ -196,19 +196,30 @@ class Scene < ApplicationRecord
 
   # Posts a pose by one of the scene's characters. The server numbers every
   # pose, so the order never depends on whose browser was faster.
-  def post!(character, body)
+  # kind is "passage", "npc" (with npc_name), "narration" or "ooc"; see Pose.
+  def post!(character, body, kind: "passage", npc_name: nil)
     participant = participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
     raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
+    raise ArgumentError, "That kind of post isn't allowed here." unless postable_kinds(participant).include?(kind)
 
     with_lock do
-      if (waiting = poses_to_wait_for(participant)).positive?
+      takes_turn = Pose::TURN_KINDS.include?(kind)
+      if takes_turn && (waiting = poses_to_wait_for(participant)).positive?
         raise ArgumentError, "Wait for #{waiting} more #{Term[:pose, count: waiting]} before posting again (the 3-#{Term[:pose]} rule)."
       end
 
-      pose = add_pose!(character: character, kind: "passage", body: body)
-      after_pose_by(participant)
+      pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"))
+      after_pose_by(participant) if takes_turn
       pose
     end
+  end
+
+  # What a participant may post. Narration is for the Storyteller, or for
+  # anyone when the Chapter has none.
+  def postable_kinds(participant)
+    kinds = %w[ passage npc ooc ]
+    kinds << "narration" if participant.storyteller? || participants.none?(&:storyteller?)
+    kinds
   end
 
   # A line from the game itself, such as "Wren joins the Chapter."
@@ -229,7 +240,7 @@ class Scene < ApplicationRecord
     def add_pose!(**attributes)
       with_lock do
         increment!(:last_sequence, touch: false)
-        update_columns(last_pose_at: Time.current) if attributes[:kind] == "passage"
+        update_columns(last_pose_at: Time.current) if Pose::STORY_KINDS.include?(attributes[:kind])
         poses.create!(sequence: last_sequence, **attributes)
       end
     end

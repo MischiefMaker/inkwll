@@ -28,6 +28,15 @@
 
   <% if readable %>
     <% poses = @scene.poses.includes(character: [ :room, { icon_attachment: :blob } ]) %>
+    <%# A finished Chapter is a Manuscript, so OOC lines are left out unless asked for. %>
+    <% if @scene.finished? && @scene.poses.ooc.exists? %>
+      <% if params[:ooc] == "1" %>
+        <p class="muted passages__ooc-toggle">Showing OOC lines. <%= link_to "Hide them", scene_path(@scene) %></p>
+      <% else %>
+        <% poses = poses.where.not(kind: "ooc") %>
+        <p class="muted passages__ooc-toggle"><%= link_to "Show OOC lines", scene_path(@scene, ooc: 1) %></p>
+      <% end %>
+    <% end %>
     <div class="passages" id="passages" data-scene-reader-target="passages" data-controller="follow-bottom">
       <% if poses.empty? %>
         <p class="muted passages__empty">No <%= term(:pose, count: 2).downcase %> yet.</p>

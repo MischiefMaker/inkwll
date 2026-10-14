@@ -38,7 +38,7 @@ class Area < ApplicationRecord
   # With own_rooms_only, only Settings directly in this area count.
   def latest_public_pose(own_rooms_only: false)
     rooms = own_rooms_only ? self.rooms : all_rooms.unscope(:order)
-    Pose.passage.where(removed_at: nil).joins(:scene).merge(Scene.visibility_joinable)
+    Pose.story.where(removed_at: nil).joins(:scene).merge(Scene.visibility_joinable)
       .where(scenes: { room_id: rooms.select(:id) })
       .includes(:character, :scene).order(created_at: :desc).first
   end

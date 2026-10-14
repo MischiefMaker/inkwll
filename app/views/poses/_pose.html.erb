@@ -1,22 +1,36 @@
-<%# One Passage, or a line from the game such as "Wren joins the Chapter."
-    Clicking the icon or name opens the character's mini-profile. %>
+<%# One post in a Chapter: a Passage, an NPC's Passage, narration, an OOC
+    line, or a line from the game such as "Wren joins the Chapter."
+    Clicking a character's icon or name opens their mini-profile. %>
 <% if pose.system? %>
   <p class="pose pose--system" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>"><%= pose.body %></p>
 <% else %>
   <% character = pose.character %>
   <% mine = character && character.account_id == current_account.id %>
-  <article class="pose<%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
-    <% if character %>
+  <article class="pose pose--<%= pose.kind %><%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
+    <% if pose.npc? %>
+      <span class="pose__icon"><%= tag.span pose.npc_name.first.upcase, class: "character-icon character-icon--small character-icon--initial character-icon--npc", aria: { hidden: true } %></span>
+    <% elsif pose.passage? && character %>
       <button type="button" class="pose__icon" popovertarget="mini-profile-<%= character.id %>" aria-label="About <%= character.name %>">
         <%= character_icon(character) %>
       </button>
-    <% else %>
+    <% elsif pose.passage? %>
       <span class="pose__icon"><%= character_icon(nil) %></span>
     <% end %>
     <div class="pose__main">
       <header class="pose__header">
-        <% if character %>
+        <% if pose.ooc? %>
+          <span class="pose__tag">OOC</span>
+        <% elsif pose.narration? %>
+          <span class="pose__tag">Narration</span>
+        <% end %>
+        <% if pose.npc? %>
+          <span class="pose__name"><%= pose.npc_name %></span>
+          <span class="pose__played-by muted">NPC, played by
+            <% if character %><button type="button" class="button-link" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button><% else %>a departed character<% end %></span>
+        <% elsif character && pose.passage? %>
           <button type="button" class="pose__name" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button>
+        <% elsif character %>
+          <button type="button" class="pose__name pose__name--small" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button>
         <% else %>
           <span class="pose__name muted">A departed character</span>
         <% end %>

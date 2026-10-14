@@ -7,12 +7,14 @@ class PosesController < ApplicationController
   # Posting out of turn needs a second click ("Post anyway"); the page asks
   # first, and this double-checks in case the turn moved in the meantime.
   def create
+    attributes = params.expect(pose: [ :body, :kind, :npc_name ])
+    kind = attributes[:kind].presence || "passage"
     participant = @scene.participant_for(current_character)
-    if participant && @scene.out_of_turn?(participant) && params[:post_anyway] != "1"
+    if participant && Pose::TURN_KINDS.include?(kind) && @scene.out_of_turn?(participant) && params[:post_anyway] != "1"
       return redirect_to @scene, alert: "It's #{@scene.current_turn_participant.character.name}'s turn. Post again to post anyway."
     end
 
-    @scene.post!(current_character, params.expect(pose: [ :body ])[:body])
+    @scene.post!(current_character, attributes[:body], kind: kind, npc_name: attributes[:npc_name])
     redirect_to @scene
   rescue ArgumentError, ActiveRecord::RecordInvalid => e
     redirect_to @scene, alert: e.message
@@ -41,7 +43,7 @@ class PosesController < ApplicationController
 
     # Players can only change their own Passages.
     def set_own_pose
-      @pose = @scene.poses.passage.where(character: current_account.characters).find(params[:id])
+      @pose = @scene.poses.where.not(kind: "system").where(character: current_account.characters).find(params[:id])
     end
 
     def dom_id(record)

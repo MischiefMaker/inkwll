@@ -12,13 +12,13 @@ class SceneParticipant < ApplicationRecord
 
   # Passages by others this character hasn't seen yet.
   def unread_count
-    scene.poses.where(kind: "passage").where("sequence > ?", last_read_sequence).where.not(character_id: character_id).count
+    scene.poses.story.where("sequence > ?", last_read_sequence).where.not(character_id: character_id).count
   end
 
   # The unread Passages to put in an email: by other players, and not removed
   # or hidden by staff.
   def unread_passages
-    scene.poses.passage.where("sequence > ?", last_read_sequence)
+    scene.poses.story.where("sequence > ?", last_read_sequence)
       .where.not(character_id: character.account.characters.select(:id))
       .where(removed_at: nil, hidden_by_staff_at: nil).includes(:character)
   end

@@ -1,7 +1,7 @@
 # Activity emails, sent by Notifier and DigestJob. Each one carries an
 # unsubscribe link (and header) that turns emails off without logging in.
 class NotificationMailer < ApplicationMailer
-  helper :application
+  helper :application, :scenes
 
   def chapter_activity(participant, passages, more)
     @participant, @scene, @passages, @more = participant, participant.scene, passages, more

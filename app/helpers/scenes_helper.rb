@@ -18,6 +18,17 @@ module ScenesHelper
       style: "background: hsl(#{hue} 45% 45%)"
   end
 
+  # Who a post is shown as: the character, the NPC (with who played it), or
+  # the narrator.
+  def pose_byline(pose)
+    case pose.kind
+    when "npc" then "#{pose.npc_name} (NPC, played by #{pose.character&.name})"
+    when "narration" then "Narration by #{pose.character&.name}"
+    when "ooc" then "#{pose.character&.name} (OOC)"
+    else pose.character&.name.to_s
+    end
+  end
+
   def scene_visibility_label(scene)
     t("terms.scene_visibility.#{scene.visibility}")
   end

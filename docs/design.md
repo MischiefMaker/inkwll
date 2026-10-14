@@ -310,6 +310,9 @@ words, and `config/locales/en.yml` maps one to the other.
   character's icon and name. Clicking either opens a mini-profile. Players
   can edit (marked "edited", original kept) or remove ("Passage removed")
   their own Passages.
+- **Kinds of post.** Besides Passages, players can post an NPC's Passage
+  (takes their turn), narration (Storyteller, or anyone without one; no
+  turn) and OOC lines (no turn, not unread, left out of the Manuscript).
 - **Turns.** Turn order is the order people joined. The first Passage can come
   from anyone. Posting out of turn asks "Post anyway" first and doesn't move
   the turn. Pass, storyteller Skip, and auto-skip (warning after the

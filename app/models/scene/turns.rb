@@ -41,10 +41,10 @@ module Scene::Turns
   def poses_to_wait_for(participant)
     return 0 unless effective_pose_mode == "three_pose"
 
-    last_own = poses.where(kind: "passage", character_id: participant.character_id).maximum(:sequence)
+    last_own = poses.turn_taking.where(character_id: participant.character_id).maximum(:sequence)
     return 0 unless last_own
 
-    others_since = poses.where(kind: "passage").where("sequence > ?", last_own).where.not(character_id: participant.character_id).count
+    others_since = poses.turn_taking.where("sequence > ?", last_own).where.not(character_id: participant.character_id).count
     [ 3 - others_since, 0 ].max
   end
 

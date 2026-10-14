@@ -16,6 +16,18 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: More kinds of post in a Chapter
+
+Chapters need OOC lines inside them, plus other kinds of post such as Storyteller or scene-setting narration and NPCs (owner).
+
+Defaults picked by Claude, built the same day:
+
+- **OOC line:** anyone in the Chapter can post one. It's small and grey with an "OOC" tag, doesn't take a turn, doesn't count as unread or go in emails, and is left out of the Manuscript (a "Show OOC lines" link brings it back).
+- **Narration:** scene-setting text in a box with a coloured edge, in italics, with no icon. The Storyteller posts it, or anyone in a Chapter that has no Storyteller. It doesn't take a turn.
+- **NPC:** any player in the Chapter can post as an NPC by typing its name. It shows the NPC's name and initial, marked "NPC, played by" the character. It takes the poster's turn.
+- After an OOC line or narration, the box switches back to an ordinary Passage. After an NPC Passage it stays on NPC, with the name kept.
+- Dice rolls come with SOUL (step 5).
+
 ## 2026-10-14: Profile layout
 
 Fields are set by each game; these are the defaults (owner).

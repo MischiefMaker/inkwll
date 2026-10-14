@@ -51,4 +51,22 @@ class PosesControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
     assert_equal "Sable laughs and steps back.", poses(:duel_two).reload.body
   end
+
+  test "posting an OOC line out of turn needs no second click, and the Manuscript leaves it out" do
+    sign_in_as(accounts(:bob))
+    post scene_poses_path(scenes(:duel)), params: { pose: { body: "Back in five", kind: "ooc" } }
+    assert_equal "ooc", scenes(:duel).poses.last.kind
+
+    scenes(:duel).finish!(by: characters(:sable))
+    get scene_path(scenes(:duel))
+    assert_select ".pose--ooc", count: 0
+    get scene_path(scenes(:duel), ooc: 1)
+    assert_select ".pose--ooc .pose__body", text: /Back in five/
+  end
+
+  test "posting as an NPC" do
+    post scene_poses_path(scenes(:duel)), params: { pose: { body: "The squire runs off.", kind: "npc", npc_name: "Squire" } }
+    get scene_path(scenes(:duel))
+    assert_select ".pose--npc .pose__name", text: "Squire"
+  end
 end

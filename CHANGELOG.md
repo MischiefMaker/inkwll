@@ -15,6 +15,8 @@ Short, plain-language notes on what changed. Newest first.
   Passages included) and browser pop-ups. Every email has a "stop these
   emails" link.
 - "Forgot your password?" on the log-in page emails a reset link.
+- Chapters have OOC lines, narration and NPC Passages as well as ordinary
+  Passages. OOC lines don't take a turn and stay out of the Manuscript.
 - The OOC Chat has its new name, a coloured header bar and a tiny icon by
   each player. Chapters and the Where list show each Setting's Area names.
 
