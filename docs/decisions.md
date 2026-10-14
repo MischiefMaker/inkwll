@@ -25,6 +25,8 @@ Staff need to be able to ban:
 
 Defaults picked by Claude: Scribes and Wellkeepers can ban (matching the earlier report decision); a ban can be permanent or end on a date; each ban records who made it and why; the VPN block is off unless staff switch it on.
 
+VPN list: the game downloads a free, community-kept list of VPN and data-centre addresses once a day (no paid service). A paid lookup can be added later if brigades get past it.
+
 ## 2026-10-14: One install per game
 
 Each game is its own copy of Inkwll with its own database. The owner may run several of their own games at once, sharing one DigitalOcean server through Kamal. Inkwll does not host other people's games: anyone else who wants a game runs it on their own server.
