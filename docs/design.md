@@ -140,6 +140,12 @@ effectively three states.
   Chapters the player can already read. Details in `decisions.md`; built in
   step 3.
 
+### Browser alerts [Decided]
+
+- The tab title shows a count and the favicon gets a dot when there's
+  something new (step 2). Players can turn on optional browser notifications
+  (step 3). Details in `decisions.md`.
+
 ### OOC chat [Decided]
 
 - One persistent OOC chat, using player names (not character names), visible

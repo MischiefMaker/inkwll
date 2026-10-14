@@ -12,6 +12,16 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Alerts in the browser
+
+Like AresMUSH, Inkwll alerts players inside the browser as well as by email (owner):
+
+- **The browser tab changes** when there's something new: the tab title shows a count, such as "(3) Inkwll", and the small site icon (favicon) gets a dot. Built in step 2 with live Chapters, since it comes almost free with live updates.
+- **Browser notifications** (the pop-ups in the corner of the screen) are optional. A player turns them on, and the browser asks their permission once. Built in step 3 with the other alerts, using the same events as the emails.
+
+Default picked by Claude: browser notifications only arrive while the game is open in a tab, even a background one. Notifications with the site fully closed need extra setup and can come later if wanted.
+
+
 ## 2026-10-14: Email notifications for new activity
 
 Players can opt in to emails about new activity, using the email address on their account. Off until the player turns it on. Each player picks one level:
