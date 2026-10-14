@@ -12,6 +12,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 1b. Step 1 changes | A forum-like layout with the roleplay front and centre and extras in the menu, and nestable Areas that group Settings (the homepage lists the top-level Areas). Areas and Settings can have an image, text or both. Player-facing words switch to Setting, Path, Chapter, Passage, Archives and Manuscript (one wording file). From the owner's review: one login/player name, an email field, character names with spaces and special characters, a default starting room, a "create the return exit too" option, staff levels (Founder flag, Wellkeepers, Scribes, Pages, Storytellers) and a first admin panel (setting staff, building, deleting characters for the top level), and the per-game settings for email and approval. | Now |
 | 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers; a tabbed view when a character is in several Chapters, each tab showing its Setting; a Where list; latest activity on front-page boards (never private or hidden Chapters); a count in the browser tab and a dot on the favicon when there's something new; each Passage shows the character's name and icon, with a mini-profile pop-up or profile link. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow, banning accounts and IP addresses, and an optional block on known VPNs. Opt-in email notifications for new activity (every time, only when logged out, or after some days away, optionally only on your turn) that include the missed Passages, and optional browser notifications, plus the mail-sending service they need. | Later |
+| 3b. Private messages | Players can message one another privately, one-to-one or in small groups, with an unread count and the same email and browser alerts as Chapters. Who they're from and what they're called are still open (see below). | Later |
 | 4. Character profiles and approval | A profile for every character with game-configured profile and application fields (background, set questions, images, an optional description), each marked public or private by the game. Each game decides whether a written description and/or image is required. Every character has one icon shown beside their Passages; extra images and GIFs go on the profile. Room for SOUL, Grimoire and Inklings sections. Submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
 | 5. SOUL basics | Character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes. | Later |
 | 6. SOUL extras | Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail. | Later |
@@ -27,6 +28,11 @@ Status: **Now**, **Next**, **Later** or **Done**.
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
+
+**Private messages**
+
+- Whether messages are sent between characters or between players.
+- What players call them (not "Page", which is a staff level).
 
 **To revisit later**
 

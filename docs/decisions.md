@@ -12,6 +12,15 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Private messages
+
+Players need a way to message one another privately, like pages or PMs on AresMUSH and forums (owner). Placed as roadmap step 3b, after notifications exist in step 3.
+
+Defaults picked by Claude: a message can go to one person or a small group, replies stay in one conversation, and a new message counts as activity for email and browser alerts.
+
+Still open: whether messages are sent between characters or between players, and what to call them.
+
+
 ## 2026-10-14: Alerts in the browser
 
 Like AresMUSH, Inkwll alerts players inside the browser as well as by email (owner):
