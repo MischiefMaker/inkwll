@@ -10,3 +10,7 @@ hall:
 garden:
   name: Garden
   area: castle
+
+tower:
+  name: Tower
+  area: castle

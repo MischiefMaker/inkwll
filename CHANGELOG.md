@@ -16,8 +16,9 @@ Short, plain-language notes on what changed. Newest first.
 - Character names can use spaces and special characters.
 - Building a Path can add the return Path at the same time.
 - A game with no Settings gets a default starting Setting.
-- The front page shows just the top-level Areas. Opening one takes you to its
-  entrance Setting, and an arrow beside its name lists shortcuts inside.
+- The front page shows each top-level Area as a banner, with the Areas inside
+  it as boards. Opening a board takes you to its entrance Setting, and an
+  arrow beside its name lists shortcuts inside.
 - "Travel here" moves your character straight to a Setting you're looking at.
 - The admin panel has its own tabs.
 - Staff levels (Page, Scribe, Wellkeeper), the Founder flag, Page jobs and the

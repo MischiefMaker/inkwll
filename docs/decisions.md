@@ -12,6 +12,14 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Front page laid out like the owner's forums
+
+Each top-level Area is a banner (its image, or a styled heading), like a forum category. The Areas inside it are listed beneath as boards, each with an image, a short description, the ▾ shortcuts and its latest activity. An Area with nothing inside it shows as a single board. Clicking a board opens its entrance Setting.
+
+Latest activity must never show private or hidden Chapters.
+
+The other elements of the owner's skins (see `docs/design-references/`) are planned for the steps that build them: latest activity with Chapters, the strong-colour default skin in Platform, the reference nav bar as wiki links in the Menu, and the IC date, weather and who's online with the IC clock.
+
 ## 2026-10-14: Front page shows Areas, each with an entrance
 
 - The front page shows only the top-level Areas (image, name, description), not every Setting.

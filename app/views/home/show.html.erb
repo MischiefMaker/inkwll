@@ -12,9 +12,7 @@
 <% end %>
 
 <% if @areas.any? %>
-  <div class="area-cards">
-    <%= render partial: "home/area", collection: @areas %>
-  </div>
+  <%= render partial: "home/category", collection: @areas, as: :area %>
 <% else %>
   <p class="muted">No <%= term(:area, count: 2).downcase %> yet.</p>
 <% end %>

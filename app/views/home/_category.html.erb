@@ -1,0 +1,17 @@
+<%# A top-level Area as a banner, like a forum category, with the Areas
+    inside it listed beneath as boards. An Area with nothing inside it is
+    shown as a single board of its own. %>
+<section class="category">
+  <h2 class="category__banner<%= " category__banner--image" if area.image.attached? %>"
+      <% if area.image.attached? %>style="background-image: url('<%= url_for(area.image) %>')"<% end %>>
+    <span class="category__title"><%= area.name %></span>
+  </h2>
+  <% if area.description.present? %>
+    <p class="category__description"><%= area.description %></p>
+  <% end %>
+
+  <% boards = area.children.any? ? area.children.with_attached_image : [ area ] %>
+  <div class="boards">
+    <%= render partial: "home/board", collection: boards, as: :area %>
+  </div>
+</section>
