@@ -35,6 +35,7 @@ class Pose < ApplicationRecord
   validates :npc_name, presence: true, length: { maximum: 60 }, if: :npc?
 
   after_create_commit { scene.broadcast_change }
+  after_create_commit -> { character.update_column(:last_active_at, created_at) }, unless: :system?
   after_create_commit -> { Notifier.passage_posted(self) }, if: :story?
   after_update_commit { scene.broadcast_change }
 

@@ -1,0 +1,28 @@
+<% content_for :title, "My places · Inkwll" %>
+
+<h1 class="page-title">My places</h1>
+<p class="muted">Settings you've saved. Save one with the button on its page.</p>
+
+<% if @places.any? %>
+  <ul class="my-places">
+    <% @places.each do |place| %>
+      <% room = place.room %>
+      <li class="my-places__item">
+        <div class="my-places__name">
+          <span class="my-places__areas muted"><%= (room.area.ancestors + [ room.area ]).map(&:name).join(" › ") %></span>
+          <%= link_to room.name, room_path(room), class: "my-places__link" %>
+        </div>
+        <div class="my-places__actions">
+          <% if current_character && current_character.room_id != room.id %>
+            <%= button_to "Travel here", room_travel_path(room), class: "button button--quiet" %>
+          <% elsif current_character %>
+            <span class="muted my-places__here"><%= current_character.name %> is here</span>
+          <% end %>
+          <%= button_to "Remove", room_saved_place_path(room), method: :delete, class: "button-link" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text">Nothing saved yet.</p>
+<% end %>

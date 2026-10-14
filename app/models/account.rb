@@ -28,6 +28,7 @@ class Account < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :characters, dependent: :destroy
   has_many :remembered_characters, dependent: :delete_all
+  has_many :saved_places, dependent: :delete_all
   has_many :ooc_messages, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :account_warnings, dependent: :destroy

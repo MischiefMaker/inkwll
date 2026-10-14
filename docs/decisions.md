@@ -16,6 +16,14 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Ideas taken from the old MUSH logs
+
+Built from the patterns in the owner's old logs, with defaults picked by Claude:
+
+- **Paths in a Chapter:** a Chapter's Setting box lists the Setting's Paths as small buttons when your character is standing there, so you can walk out from a Chapter.
+- **My places:** a "Save to My places" button on every Setting, and a My places page in the Menu with Travel buttons. Saved places belong to the player, so all their characters share them. Travel is instant, without the old MUSH delay.
+- **Idle times on Where:** "active", "idle 25m", "idle 3h" or "idle 2d" next to each character, counted from the character's last post or move. It isn't the player's login time, so it doesn't link a player's characters together.
+
 ## 2026-10-14: Security review fixes
 
 Fixes from the security review (owner asked for them through the project chat). Defaults picked by Claude where the review left a choice:

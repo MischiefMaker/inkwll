@@ -5,6 +5,13 @@
 <article class="room">
   <%= render "areas/breadcrumbs", area: @room.area, include_self: true %>
   <h1 class="page-title"><%= @room.name %></h1>
+  <div class="room__save">
+    <% if current_account.saved_places.exists?(room: @room) %>
+      <%= button_to "★ In My places", room_saved_place_path(@room), method: :delete, class: "button-link room__saved", title: "Remove from My places" %>
+    <% else %>
+      <%= button_to "☆ Save to My places", room_saved_place_path(@room), class: "button-link" %>
+    <% end %>
+  </div>
 
   <%= render "shared/description", record: @room %>
 

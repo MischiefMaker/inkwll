@@ -35,6 +35,18 @@ module ScenesHelper
     end
   end
 
+  # How long since a character last posted or moved, MUSH-style: "active",
+  # "idle 25m", "idle 3h", "idle 2d". Nothing if they never have.
+  def idle_label(time)
+    return unless time
+    idle = Time.current - time
+    if idle < 10.minutes then "active"
+    elsif idle < 1.hour then "idle #{(idle / 60).floor}m"
+    elsif idle < 1.day then "idle #{(idle / 3600).floor}h"
+    else "idle #{(idle / 86_400).floor}d"
+    end
+  end
+
   def scene_visibility_label(scene)
     t("terms.scene_visibility.#{scene.visibility}")
   end

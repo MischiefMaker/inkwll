@@ -22,6 +22,8 @@ class Character < ApplicationRecord
 
   after_commit :refresh_rooms, on: [ :create, :update ], if: :saved_change_to_room_id?
   after_update_commit :announce_move, if: :saved_change_to_room_id?
+  # Moving counts as being active, for the Where list's idle times.
+  before_update -> { self.last_active_at = Time.current }, if: :room_id_changed?
 
   # Moves the character through an exit in its current room.
   def move_through(exit)

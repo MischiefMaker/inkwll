@@ -18,8 +18,10 @@ Rails.application.routes.draw do
   resources :characters, except: :destroy
   resource :active_character, only: :update
   resources :areas, only: :show
+  resources :saved_places, only: :index, path: "my_places"
   resources :rooms, only: %i[ index show ] do
     resource :travel, only: :create
+    resource :saved_place, only: %i[ create destroy ]
   end
   resources :exits, only: [] do
     resource :movement, only: :create

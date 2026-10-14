@@ -174,6 +174,15 @@ form.button_to { display: inline; }
   cursor: pointer;
 }
 
+.room__save { margin: -0.5rem 0 1rem; font-family: var(--font-ui); font-size: 0.85rem; }
+.my-places { list-style: none; padding: 0; }
+.my-places__item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.my-places__areas { display: block; font-family: var(--font-ui); font-size: 0.8rem; }
+.my-places__link { font-weight: bold; }
+.my-places__actions { display: flex; align-items: center; gap: var(--space); font-family: var(--font-ui); font-size: 0.9rem; }
+.scene-setting__paths { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.4rem; margin: 0.3rem 0; font-size: 0.85rem; }
+.scene-setting__path { display: inline; }
+.exit-link--small { padding: 0.1rem 0.5rem; font-size: 0.8rem; }
 .exit-link:hover { background: var(--color-accent); color: var(--color-accent-text); }
 .exit-link--disabled, .exit-link--disabled:hover {
   border-color: var(--color-border);
@@ -654,6 +663,7 @@ span.pose__icon { cursor: default; }
 /* The Where list */
 .where-room__areas { margin: 1rem 0 0; font-family: var(--font-ui); font-size: 0.8rem; color: var(--color-muted); }
 .where-room__areas + h2 { margin-top: 0; }
+.where-room__idle { font-family: var(--font-ui); font-size: 0.8rem; }
 .where-room h2 { font-size: 1.1rem; margin-bottom: 0.25rem; }
 .where-room__list { margin-top: 0; }
 .category__latest { margin: 0.25rem 0 0.5rem; font-family: var(--font-ui); font-size: 0.9rem; }

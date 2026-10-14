@@ -17,6 +17,8 @@ Short, plain-language notes on what changed. Newest first.
 - "Forgot your password?" on the log-in page emails a reset link.
 - Chapters have OOC lines, narration and NPC Passages as well as ordinary
   Passages. OOC lines don't take a turn and stay out of the Manuscript.
+- A Chapter's Setting box shows the Paths out. Settings can be saved to My
+  places for one-click travel, and the Where list shows idle times.
 - Security fixes: switched off an upload address that could fill the disk,
   forced HTTPS on the live site, required your password to change your email,
   made hidden Chapters need everyone's agreement to go public, blocked edits

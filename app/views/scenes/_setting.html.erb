@@ -14,6 +14,15 @@
         <div class="prose"><%= simple_format room.description %></div>
       </details>
     <% end %>
+    <% if current_character&.room_id == room.id && room.exits.any? %>
+      <div class="scene-setting__paths">
+        <span class="scene-setting__paths-label muted"><%= term(:exit, count: 2) %>:</span>
+        <% room.exits.each do |room_exit| %>
+          <%= button_to room_exit.name, exit_movement_path(room_exit), class: "exit-link exit-link--small",
+                title: "Walk to #{room_exit.destination_room.name}", form_class: "scene-setting__path" %>
+        <% end %>
+      </div>
+    <% end %>
     <p class="muted scene-setting__here">
       Here now:
       <% if room.characters.any? %>

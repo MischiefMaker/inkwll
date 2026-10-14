@@ -13,6 +13,9 @@
       <% characters.each do |character| %>
         <li class="list__item">
           <%= link_to character.name, character %>
+          <% if (label = idle_label(character.last_active_at)) %>
+            <span class="where-room__idle muted">(<%= label %>)</span>
+          <% end %>
           <% elsewhere = (@open_scenes[character.id] || []).map(&:scene) %>
           <% if elsewhere.any? %>
             <span class="muted">

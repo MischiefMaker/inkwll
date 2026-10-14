@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_110001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_120001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -110,6 +110,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_110001) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_active_at"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["room_id"], name: "index_characters_on_room_id"
@@ -205,6 +206,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_110001) do
     t.index ["area_id"], name: "index_rooms_on_area_id"
   end
 
+  create_table "saved_places", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "room_id"], name: "index_saved_places_on_account_id_and_room_id", unique: true
+    t.index ["account_id"], name: "index_saved_places_on_account_id"
+    t.index ["room_id"], name: "index_saved_places_on_room_id"
+  end
+
   create_table "scene_invitations", force: :cascade do |t|
     t.bigint "scene_id", null: false
     t.bigint "character_id", null: false
@@ -295,6 +306,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_110001) do
   add_foreign_key "reports", "poses"
   add_foreign_key "reports", "scenes"
   add_foreign_key "rooms", "areas"
+  add_foreign_key "saved_places", "accounts"
+  add_foreign_key "saved_places", "rooms"
   add_foreign_key "scene_invitations", "characters"
   add_foreign_key "scene_invitations", "scenes"
   add_foreign_key "scene_participants", "characters"
