@@ -8,6 +8,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: The 3-pose rule needs four players
+
+A scene can only use the 3-pose rule when it has at least four players. Smaller scenes pick turn-based or free-for-all.
+
+Default picked by Claude, not yet confirmed: if a 3-pose scene drops below four players, it switches to turn-based until it has four again.
+
 ## 2026-10-14: Staff levels
 
 Names (picked 2026-10-14 to fit the Inkwll theme): **Wellkeepers**, **Scribes**, **Pages**, and **Storytellers**. Staff job flags read as "Build Page", "App Page" and so on.

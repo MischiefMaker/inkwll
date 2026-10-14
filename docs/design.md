@@ -189,8 +189,8 @@ Items built in step 1 are marked ✅.
   the previous pose and skips them 2 minutes later unless they click
   "I'm here!". Posting out of turn shows a warning with a "Post anyway"
   button.
-- 3-pose rule in small scenes: use `min(3, participants - 1)` other poses,
-  since two players could otherwise never pose.
+- [Decided] The 3-pose rule is only available in scenes with four or more
+  players.
 - IC time: `ic_now = epoch + (real_now - anchor) * ratio`. A scene override
   stores its own date and changes only through a "propose time skip" that the
   other players accept.

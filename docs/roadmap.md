@@ -27,7 +27,6 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Before step 2: Scenes**
 
-7. The 3-pose rule in small scenes (wait for fewer poses when there are only two or three players).
 8. Can players edit or delete their own poses, and for how long?
 
 **Before step 3: Logs and safety**
