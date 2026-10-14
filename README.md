@@ -23,12 +23,12 @@ bin/rails db:prepare   # creates the database and adds the placeholder rooms
 bin/dev                # starts the site at http://localhost:3000
 ```
 
-Then sign up, create a character, and you'll appear in the starting room.
+Then sign up, create a character, and you'll appear in the starting Setting.
 
-To give an account staff powers (the **Build** menu for rooms and exits):
+To make your account the first Founder (top-level staff, with the admin panel):
 
 ```sh
-bin/rails "inkwll:make_admin[your_username]"
+bin/rails "inkwll:make_founder[YourPlayerName]"
 ```
 
 ## Checking your work

@@ -1,6 +1,6 @@
 # 0003: Areas, default starting Setting, return Paths
 
-- **Status:** Doing
+- **Status:** Review
 - **Hand off?:** No
 - **Roadmap step:** 1b. Step 1 changes
 - **Created:** 2026-10-14
@@ -15,7 +15,7 @@ See the 2026-10-14 entries in `docs/decisions.md`.
 
 ## Done when
 
-- [ ] Built, with tests passing
+- [x] Built, with tests passing
 - [ ] The owner has tried it
 
 ## Notes

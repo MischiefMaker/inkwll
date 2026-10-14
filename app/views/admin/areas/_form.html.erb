@@ -19,5 +19,5 @@
     <%= form.text_area :description, rows: 4 %>
   </div>
   <%= render "shared/image_field", form: form, record: form.object %>
-  <%= form.submit class: "button" %>
+  <%= form.submit area.persisted? ? "Save" : "Create #{term(:area).downcase}", class: "button" %>
 <% end %>

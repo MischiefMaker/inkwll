@@ -18,5 +18,5 @@
     <%= form.label :starting, "New characters start here" %>
   </div>
   <%= render "shared/image_field", form: form, record: form.object %>
-  <%= form.submit class: "button" %>
+  <%= form.submit room.persisted? ? "Save" : "Create #{term(:room).downcase}", class: "button" %>
 <% end %>

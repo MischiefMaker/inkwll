@@ -53,7 +53,7 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
 
 ### Accounts and characters [Decided]
 
-- One player account (username/password). Characters are sub-accounts with no
+- One player account (player name and password). Characters are sub-accounts with no
   separate login.
 - A dropdown switches the active character.
 - The app remembers which character the player last used in each room and each
@@ -218,38 +218,30 @@ Items built in step 1 are marked ✅.
 
 The build order and the current step are kept in [`roadmap.md`](roadmap.md).
 
-## 6. How step 1 works
+## 6. How steps 1 and 1b work
 
-These are the small choices made while building step 1. The owner reviewed
-them on 2026-10-14 (see `decisions.md`); the changes are roadmap step 1b and
-are not built yet:
+Players see themed words (Setting, Path, Area and so on); the code uses plain
+words, and `config/locales/en.yml` maps one to the other.
 
-- [Decided] Login name and player name are the same.
-- [Decided] Only the highest staff level can delete characters.
-- [Decided] Character names may use spaces and special characters.
-- [Decided] The game ships with a default starting room.
-- [Decided] The exit form can create the return exit at the same time.
-- [Decided] Staff levels, set from an admin panel on the website, which
-  handles every admin task. The levels themselves are still open.
-
-How it works today:
-
-- **Login name vs. player name.** Accounts log in with a *username*
-  (letters, numbers, underscores; capitals are ignored when logging in). A
-  separate *player name* is what other people see in the OOC chat.
-- **No password reset yet.** Rails' built-in reset works by email, and accounts
-  don't have an email address. Until that's decided, staff would reset a
-  password from the Rails console.
-- **Characters can't be deleted yet**, because deleting them will matter once
-  logs exist.
-- **Character names are unique** across the whole game (ignoring capitals).
-- **New characters appear in the starting room.** A builder ticks "New
-  characters start here" on one room. If none is ticked, the oldest room is
-  used.
-- **Exits are one-way.** A two-way passage is two exits, one in each room.
-- **Looking vs. being there.** Anyone can open any room page from the Rooms
-  list to look at it. Exit buttons only work when the active character is in
-  that room.
+- **One player name.** Players sign up with a player name (letters, numbers,
+  underscores) that is shown in the OOC chat and also used to log in,
+  ignoring capitals.
+- **Email.** Required at sign-up unless a Wellkeeper turns it off in Game
+  settings. Password reset emails come in the Going live step; until then
+  staff reset passwords by hand.
+- **Characters.** Names are unique across the game (ignoring capitals) and may
+  use spaces and special characters. Only Wellkeepers can delete a character,
+  from the admin panel.
+- **Areas.** Every room belongs to an Area, and Areas can nest. The front page
+  lists the top-level Areas like forum boards. Areas and rooms can have an
+  image, a text description, or both.
+- **Starting room.** A builder ticks "New characters start here" on one room.
+  If none is ticked, the oldest room is used, and a game with no rooms makes
+  a default one.
+- **Exits are one-way**, but the exit form can add the return exit at the
+  same time.
+- **Looking vs. being there.** Anyone can open any room page to look at it.
+  Exit buttons only work when the active character is in that room.
 - **Remembered character rule.** When you open a room page: if the character
   you last used there is still in that room, it becomes active automatically;
   otherwise, if your active character is in that room, it is remembered for
@@ -258,9 +250,11 @@ How it works today:
 - **Live updates.** The room page updates its "Here" list live when someone
   enters or leaves. OOC messages appear live for everyone, and the OOC panel
   stays put while you move between pages.
-- **Staff.** Accounts have an `admin` flag. Admins see a *Build* link for
-  creating and editing rooms and exits. To make someone an admin, run
-  `bin/rails "inkwll:make_admin[username]"`.
+- **Staff.** Accounts have a staff level (Page, Scribe, Wellkeeper), a Founder
+  flag, Page job flags (Build, App) and a Storyteller flag. The admin panel
+  (Menu → Admin panel) shows each staff member only the sections their level
+  allows. The first Founder is made on the server with
+  `bin/rails "inkwll:make_founder[PlayerName]"`.
 
 ## 7. Reference: existing Inklings plugin
 

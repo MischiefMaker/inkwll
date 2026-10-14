@@ -8,18 +8,18 @@ end
 
 commons = Room.find_or_create_by!(name: "The Commons") do |room|
   room.area = world
-  room.description = "A placeholder starting room. Edit it from the admin panel."
+  room.description = "A placeholder starting Setting. Edit it from the admin panel."
   room.starting = true
 end
 
 north = Room.find_or_create_by!(name: "North Hall") do |room|
   room.area = world
-  room.description = "A placeholder room to the north."
+  room.description = "A placeholder Setting to the north."
 end
 
 garden = Room.find_or_create_by!(name: "Garden") do |room|
   room.area = world
-  room.description = "A placeholder room to the east."
+  room.description = "A placeholder Setting to the east."
 end
 
 [
