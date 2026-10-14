@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: XP follows SOUL's rules
+
+1 XP each week, plus 1 XP to every approved participant when a Chapter finishes, with no cap. Players who fall behind get SOUL's catch-up XP (double). SOUL's forum award is dropped because Inkwll has no forum. All the numbers are game settings.
+
 ## 2026-10-14: What locks a character
 
 When a game uses approval, everything that normally locks (such as Resonance) locks when staff approve the character. When a game turns approval off, the player clicks a "Finalize character" button instead, after a warning, and the same things lock.
