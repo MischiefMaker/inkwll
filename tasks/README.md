@@ -30,3 +30,4 @@ Done tasks stay in this folder as a record.
 | [0018: Jcink add-ons](0018-jcink-add-ons.md) | Review | No | 6c. Jcink add-ons |
 | [0019: IC clock](0019-ic-clock.md) | Review | No | 7. IC clock |
 | [0020: Inklings](0020-inklings.md) | Review | No | 8. Inklings and storyteller tools |
+| [0021: Grimoire](0021-grimoire.md) | Review | No | 9. Grimoire |

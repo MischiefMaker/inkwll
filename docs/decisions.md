@@ -16,6 +16,18 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 9 details picked while building (Grimoire)
+
+Rebuilt from github.com/MischiefMaker/ares-grimoire-plugin on top of SOUL. Defaults picked by Claude, for the owner to check:
+
+- **Off by default.** Game settings has "Use Grimoire"; it also needs SOUL on. Admin → Grimoire appears once it's on.
+- **Branches** are set up in the admin panel rather than a file: a name, a description and the SOUL Skill used to learn and cast its spells. The game adds those Skills under SOUL (for example "Hedgecraft"). A branch with spells can't be deleted.
+- **Spells** have a branch, a name, a description, the Skill rating needed, and a SOUL difficulty to cast against. Staff retire spells rather than delete them, so characters keep what they learned.
+- **Learning** costs the needed rating times 1 XP (the plugin's default; changeable in `config/grimoire.yml`), from the Grimoire tab on the character, once the SOUL sheet is finished. It shows on the XP ledger and in Narrative History.
+- **Casting** is a "Cast a spell" box in Chapters, next to "Roll a Skill": a roll of the branch's Skill against the spell's difficulty, with Boons and Banes for that Skill counting. It posts like any roll.
+- **Proposals:** players propose a spell from the Grimoire tab; App staff approve (which creates the spell, editable afterwards) or reject with a reason. The player still learns it with XP.
+- **Who manages it:** App staff (Scribes, Wellkeepers, App Pages), the same as the Boons and Banes catalogue.
+
 ## 2026-10-14: Step 8 details picked while building (Inklings)
 
 Rebuilt from github.com/MischiefMaker/ares-inklings-plugin, keeping its rules: drafts are hidden from staff, sending to staff locks the Inkling, only approving or asking for changes unlocks it (a staff reply never does), approving a round isn't the end, and closing is. Defaults picked by Claude, for the owner to check:

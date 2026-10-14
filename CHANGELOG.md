@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 9: Grimoire
+
+- Magic, for games that switch it on: branches tied to SOUL Skills, spells
+  learned with XP and cast in Chapters as rolls, and spell proposals that
+  staff approve.
+
 ## 2026-10-14 — Step 8: Inklings
 
 - Inklings: threads about a character (goals, secrets, requests, hints)

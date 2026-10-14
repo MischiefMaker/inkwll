@@ -417,6 +417,12 @@ words, and `config/locales/en.yml` maps one to the other.
 - **Staff** start staff types for characters and grant rewards (XP, Boons
   and Banes, Culminations, notes) that go through SOUL.
 
+### Step 9: Grimoire
+
+- **Branches** of magic each use a SOUL Skill. **Spells** need a rating in
+  it to learn, cost XP, and are cast in Chapters as a roll of that Skill.
+- Players propose spells; staff approve them. Off unless a game turns it on.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:
