@@ -28,7 +28,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 Ideas the owner wants after the first release. Not built until the owner says so.
 
 - **Live private chat:** players chat privately in real time, shown as tabs inside the OOC sidebar. Builds on Messages (step 3b).
-- **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first.
+- **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
 
 ## Decisions still needed
 
