@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_300001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_310001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -278,6 +278,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_300001) do
     t.datetime "look_chosen_at"
     t.string "game_name"
     t.text "game_blurb"
+    t.string "skin_base"
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

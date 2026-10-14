@@ -52,6 +52,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.place__actions`, `.place__enter`, `.place__shortcuts`, `.place__shortcuts-toggle`, `.place__shortcuts-list` | Its Enter button and the tucked-away shortcuts |
 | `.board`, `.board__header`, `.board__title`, `.board__description`, `.board__rows`, `.board__row`, `.board__name`, `.board__icon`, `.board__summary` | The lists on an Area's page |
 | `.room`, `.description-image`, `.lede`, `.page-title__icon` | A Setting's or Area's page: its banner, short text and icon |
+| `.skin-mush` (on `<body>`), `--ansi-red`, `--ansi-green`, `--ansi-yellow`, `--ansi-blue`, `--ansi-magenta`, `--ansi-cyan`, `--ansi-white`, `--ansi-grey` | The Old-school MUSH look and its ANSI colours (each ready-made look adds `.skin-<name>` to `<body>`) |
 | `--page-image`, `--box-image`, `--intro-image` | CSS variables holding the background pictures from Admin → Look (an Area's or Setting's own background sets `--page-image` on its page) |
 | `.room-ways` | The box holding a Setting's Paths and who is here |
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |

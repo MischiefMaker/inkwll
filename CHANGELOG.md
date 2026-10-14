@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Old-school MUSH look
+
+- A new ready-made look in Admin, Look: "Old-school MUSH". White Courier
+  text on black, with ANSI colours for context: names in yellow, Paths in
+  green, OOC in magenta, links and buttons in cyan.
+
 ## 2026-10-14 — Forum boards
 
 - New forum-style Boards for things that work better than a Chapter:

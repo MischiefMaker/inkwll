@@ -35,6 +35,9 @@ module GameSetting::Skin
     "wild" => { name: "Slate blue and gold", dark_mode: false, font_heading: "Georgia, 'Times New Roman', serif",
       colours: { "bg" => "#e9edf2", "surface" => "#ffffff", "text" => "#1f2a36", "muted" => "#5c6b7a", "border" => "#c5ceda",
                  "accent" => "#3d5a80", "accent-text" => "#f6d36b", "notice" => "#e3efe3", "alert" => "#f5e1df" } },
+    "mush" => { name: "Old-school MUSH", dark_mode: false, font_body: "'Courier New', Courier, monospace", font_heading: "'Courier New', Courier, monospace",
+      colours: { "bg" => "#000000", "surface" => "#000000", "text" => "#f0f0f0", "muted" => "#a8a8a8", "border" => "#555555",
+                 "accent" => "#55ffff", "accent-text" => "#000000", "notice" => "#003300", "alert" => "#440000" } },
     "flag" => { name: "Black and white", dark_mode: false, font_heading: "Impact, 'Arial Black', sans-serif",
       colours: { "bg" => "#ffffff", "surface" => "#f2f2f2", "text" => "#111111", "muted" => "#5a5a5a", "border" => "#111111",
                  "accent" => "#111111", "accent-text" => "#ffffff", "notice" => "#e8e8e8", "alert" => "#f0dede" } }
@@ -82,6 +85,14 @@ module GameSetting::Skin
 
   def apply_preset(key)
     preset = PRESETS.fetch(key)
+    # A look with its own text font sets it; leaving that look puts the
+    # game's own text font back to the built-in one.
+    if preset.key?(:font_body)
+      self.font_body = preset[:font_body]
+    elsif skin_base && font_body == PRESETS.dig(skin_base, :font_body)
+      self.font_body = nil
+    end
+    self.skin_base = key
     self.skin_colours = preset[:colours]
     self.skin_dark_colours = preset[:dark_colours] || {}
     self.skin_dark_mode = preset[:dark_mode]
@@ -91,7 +102,7 @@ module GameSetting::Skin
   # Which ready-made look the colours match, if any.
   def current_preset
     PRESETS.find { |_, preset| changed_colours(preset[:colours], 1) == skin_colours && changed_colours(preset[:dark_colours] || {}, 2) == skin_dark_colours &&
-      preset[:dark_mode] == skin_dark_mode? && preset[:font_heading] == font_heading }&.first
+      preset[:dark_mode] == skin_dark_mode? && preset[:font_heading] == font_heading && (!preset.key?(:font_body) || preset[:font_body] == font_body) }&.first
   end
 
   def skinned?

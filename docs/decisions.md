@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## An old-school MUSH look (owner, 2026-10-14)
+
+A ready-made look in Admin, Look: white Courier text on black, with the classic ANSI colours for context (character names yellow, Paths green as <Path>, OOC magenta, links and buttons cyan, section titles yellow between blue -=[ ]=- marks). Its extra styling is in `app/assets/stylesheets/skin-mush.css`, and its colours are CSS variables (`--ansi-yellow` and so on) a game can change.
+
 ## A simpler, less forum-like look (owner, 2026-10-14)
 
 - The layout was feeling too much like a forum. The front page now shows the game's name, large, with a paragraph or two about the game under it (both set in Admin, Game settings).

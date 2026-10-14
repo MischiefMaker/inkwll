@@ -73,6 +73,26 @@ class PlatformTest < ActionDispatch::IntegrationTest
     assert_not GameSetting.current.reload.page_background.attached?
   end
 
+  test "the old-school MUSH look sets Courier and its ANSI styling, and leaving it puts the text font back" do
+    sign_in_as(accounts(:wellkeeper))
+    patch admin_skin_path, params: { preset: "mush" }
+    settings = GameSetting.current.reload
+    assert_equal "mush", settings.current_preset
+    assert_match "Courier", settings.font_body
+    get root_path
+    assert_select "body.skin-mush"
+
+    patch admin_skin_path, params: { game_setting: { skin_colours: { "accent" => "#00aaaa" } } }
+    get root_path
+    assert_select "body.skin-mush", message: "tweaking a colour keeps the MUSH styling"
+
+    patch admin_skin_path, params: { preset: "wild" }
+    assert_nil GameSetting.current.reload.font_body
+    get root_path
+    assert_select "body.skin-mush", count: 0
+    assert_select "body.skin-wild"
+  end
+
   test "fonts and colours can't break out of the stylesheet" do
     sign_in_as(accounts(:wellkeeper))
     patch admin_skin_path, params: { game_setting: { font_body: "Arial; } body { display: none" } }

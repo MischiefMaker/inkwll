@@ -1,0 +1,78 @@
+/*
+ * The "Old-school MUSH" ready-made look (owner, 2026-10-14): white Courier
+ * on black, square corners, and the 16 classic ANSI colours for context.
+ * Everything here only applies when <body> has the skin-mush class, which
+ * Admin → Look adds when a game picks this look. The colours and fonts
+ * themselves come from the look's settings, so they can still be changed.
+ *
+ * The ANSI colours, as variables a game can change in its extra CSS:
+ */
+
+.skin-mush {
+  --ansi-red: #ff5555;
+  --ansi-green: #55ff55;
+  --ansi-yellow: #ffff55;
+  --ansi-blue: #5555ff;
+  --ansi-magenta: #ff55ff;
+  --ansi-cyan: #55ffff;
+  --ansi-white: #ffffff;
+  --ansi-grey: #a8a8a8;
+  --radius: 0;
+  font-size: 15px;
+}
+
+/* No pictures, rounded corners or shadows: just text on black. */
+.skin-mush * { border-radius: 0 !important; box-shadow: none !important; text-shadow: none !important; }
+.skin-mush h1, .skin-mush h2, .skin-mush h3 { font-weight: bold; letter-spacing: 0; }
+
+/* Headings: bright white page titles with a rule under them, section titles
+   in yellow between dashes, like a MUSH header line. */
+.skin-mush .page-title { color: var(--ansi-white); border-bottom: 1px dashed var(--color-border); padding-bottom: 0.3rem; }
+.skin-mush .section-title { color: var(--ansi-yellow); font-size: 1rem; text-transform: uppercase; }
+.skin-mush .section-title::before { content: "-=[ "; color: var(--ansi-blue); }
+.skin-mush .section-title::after { content: " ]=-"; color: var(--ansi-blue); }
+
+/* Links in cyan; buttons look like [bracketed] commands. */
+.skin-mush a { color: var(--ansi-cyan); }
+.skin-mush .button, .skin-mush input[type="submit"].button {
+  background: transparent; color: var(--ansi-cyan); border: 1px solid var(--ansi-cyan);
+}
+.skin-mush .button:hover { background: var(--ansi-cyan); color: #000; }
+
+/* Character names in yellow, unless their group gives them a colour. */
+.skin-mush .character-name:not(.character-name--grouped),
+.skin-mush .pose__name { color: var(--ansi-yellow); }
+
+/* Paths in green, shown as <Path> like an exit list. */
+.skin-mush .exit-link { background: transparent; color: var(--ansi-green); border: none; padding: 0.2rem 0.4rem; }
+.skin-mush .exit-link::before { content: "<"; }
+.skin-mush .exit-link::after { content: ">"; }
+.skin-mush .exit-link:hover { background: var(--ansi-green); color: #000; }
+.skin-mush .exit-link--disabled { color: var(--ansi-grey); }
+
+/* OOC things in magenta, tagged <OOC>. */
+.skin-mush .ooc-sidebar__title { background: transparent; color: var(--ansi-magenta); border-bottom: 1px dashed var(--color-border); }
+.skin-mush .ooc-sidebar__title::before { content: "<OOC> "; }
+.skin-mush .ooc-message__author { color: var(--ansi-magenta); }
+.skin-mush .pose--ooc .pose__body { color: var(--ansi-magenta); }
+
+/* Narration and system lines in grey, rolls in red. */
+.skin-mush .pose--system { color: var(--ansi-grey); }
+.skin-mush .pose__roll { color: var(--ansi-red); }
+
+/* The game's name in bright white, its blurb in the normal text colour. */
+.skin-mush .game-intro__name { color: var(--ansi-white); text-transform: uppercase; }
+.skin-mush .game-intro__blurb { color: var(--color-text); }
+.skin-mush .game-time__date { color: var(--ansi-green); }
+
+/* Areas and boards on the front page: plain boxes drawn in dashes, names in
+   bright white, activity in grey. */
+.skin-mush .place { border: 1px dashed var(--color-border); }
+.skin-mush .place__name { color: var(--ansi-white); font-size: 1.15rem; }
+.skin-mush .place__activity { color: var(--ansi-grey); }
+
+/* Chapter tabs and the header: one dashed line, no fill. */
+.skin-mush .site-header, .skin-mush .chapter-tabs { border-bottom: 1px dashed var(--color-border); }
+.skin-mush .site-header__title { color: var(--ansi-white); }
+.skin-mush .chapter-tab--current { box-shadow: none; border-color: var(--ansi-cyan); }
+.skin-mush .room-ways, .skin-mush .board, .skin-mush .menu__items { border-style: dashed; }
