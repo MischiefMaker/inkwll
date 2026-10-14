@@ -11,6 +11,10 @@
     <% if current_account.can?(:review_apps) %>
       <% waiting = Character.submitted.count %>
       <%= link_to "Applications#{" (#{waiting})" if waiting.positive?}", admin_applications_path, class: ("is-current" if controller_name == "applications") %>
+      <% if Inkling.enabled? %>
+        <% inklings_waiting = Inkling.submitted.open.count %>
+        <%= link_to "Inklings#{" (#{inklings_waiting})" if inklings_waiting.positive?}", admin_inklings_path, class: ("is-current" if controller_name == "inklings") %>
+      <% end %>
       <% roster_waiting = RosterApplication.pending.count + Character.active.where.not(roster_requested_at: nil).count %>
       <%= link_to "Roster#{" (#{roster_waiting})" if roster_waiting.positive?}", admin_roster_path, class: ("is-current" if controller_name.in?(%w[ roster roster_applications roster_characters ])) %>
       <% if Soul.enabled? %>

@@ -1,0 +1,46 @@
+# Inkling types. Each game can change these.
+#   category: player (players start them), staff (only staff start them,
+#   for a character), or shared (either).
+# The descriptions come from the Inklings plugin for AresMUSH.
+shared:
+  types:
+    initiative:
+      category: player
+      name: Initiative
+      description: Something your character is actively doing that requires staff feedback - an action they're taking, something they're researching, or anything they're pursuing that touches the wider game world.
+    request:
+      category: player
+      name: Request
+      description: A request for staff assistance or plot.
+    pitch:
+      category: player
+      name: Pitch
+      description: A pitch for a scene, plot arc, or event you'd like to happen.
+    goal:
+      category: player
+      name: Goal
+      description: A long-term goal your character is working toward.
+    secret:
+      category: shared
+      name: Secret
+      description: An IC secret your character holds, shareable with other players.
+    progress:
+      category: player
+      name: Progress
+      description: A personal record of your character's development, important events, growth, discoveries, relationships, and ongoing history.
+    hint:
+      category: staff
+      name: Hint
+      description: A hint or guidance from staff about something.
+    vision:
+      category: staff
+      name: Vision
+      description: An in-character vision or supernatural experience.
+    nudge:
+      category: staff
+      name: Nudge
+      description: A gentle nudge from staff to encourage RP in a certain direction.
+    hook:
+      category: staff
+      name: Hook
+      description: A plot hook or opportunity from staff.

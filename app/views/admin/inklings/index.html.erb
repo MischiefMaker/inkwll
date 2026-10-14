@@ -1,0 +1,32 @@
+<% content_for :title, "Inklings · Admin · Inkwll" %>
+
+<h1 class="page-title">Inklings</h1>
+<p class="muted">Inklings players have sent to staff, and the ones staff started. Drafts never show here.
+  To start one for a character, use "Start an Inkling" on their profile.</p>
+
+<h2 class="section-title">Waiting for an answer</h2>
+<% if @waiting.any? %>
+  <ul class="list inklings-admin inklings-admin--waiting">
+    <% @waiting.each do |inkling| %>
+      <li class="list__item inklings-admin__item"><%= link_to inkling.title, inkling %>
+        <span class="tag inklings__type inklings__type--<%= inkling.kind %>"><%= inkling.type_name %></span>
+        <span class="muted"><%= inkling.character.name %>, sent <%= time_ago_in_words(inkling.submitted_at) %> ago</span></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text muted">Nothing waiting.</p>
+<% end %>
+
+<h2 class="section-title"><%= @status == "open" ? "Other open Inklings" : "Closed Inklings" %></h2>
+<p class="text"><%= link_to @status == "open" ? "Show closed ones" : "Show open ones", admin_inklings_path(status: (@status == "open" ? "closed" : nil)) %></p>
+<% if @inklings.any? %>
+  <ul class="list inklings-admin">
+    <% @inklings.each do |inkling| %>
+      <li class="list__item inklings-admin__item"><%= link_to inkling.title, inkling %>
+        <span class="tag inklings__type inklings__type--<%= inkling.kind %>"><%= inkling.type_name %></span>
+        <span class="muted"><%= inkling.character.name %> · <%= inkling_state_label(inkling) %> · <%= time_ago_in_words(inkling.last_entry_at || inkling.created_at) %> ago</span></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text muted">None.</p>
+<% end %>

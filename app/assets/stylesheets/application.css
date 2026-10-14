@@ -889,3 +889,32 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .chapter-tracker__when { display: block; font-size: 0.85rem; }
 .scene-form__when .form--inline { flex-wrap: wrap; }
 .online-now { margin-top: calc(var(--space) * 2); }
+
+/* --- Inklings ------------------------------------------------------------- */
+.inklings__actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.inklings__list, .inkling__entries { list-style: none; margin: 0; padding: 0; }
+.inklings__item { padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }
+.inklings__heading { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.inklings__title { font-weight: 600; }
+.inklings__item--unread .inklings__title { font-weight: 700; }
+.inklings__new { color: var(--color-accent); font-size: 0.85rem; font-weight: 600; }
+.inklings__meta { margin: 0.2rem 0 0; font-size: 0.9rem; }
+.inkling__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.inkling__status { margin: var(--space) 0; }
+.inkling__review { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 0.5rem; }
+.inkling__changes, .inkling__share-form, .inkling__edit-form { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.inkling__changes input[type=text], .inkling__share-form input[type=text], .inkling__edit-form input[type=text] { flex: 1 1 12rem; min-width: 0; max-width: 24rem; }
+.inkling-entry { padding: 0.7rem 0; border-bottom: 1px solid var(--color-border); }
+.inkling-entry__header { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: baseline; }
+.inkling-entry__author { font-weight: 600; }
+.inkling-entry__ref { margin-left: auto; font-size: 0.8rem; text-decoration: none; }
+.inkling-entry__system { margin: 0; font-size: 0.9rem; font-style: italic; display: flex; gap: 0.5rem; }
+.inkling-entry--private, .inkling-entry--gm, .inkling-entry--personal { border-left: 3px solid var(--color-border); padding-left: 0.6rem; }
+.inkling-entry--gm { border-left-color: var(--color-accent); }
+.inkling-entry--new .inkling-entry__author::after { content: " · new"; color: var(--color-accent); font-weight: 400; font-size: 0.85rem; }
+.inkling__kinds { display: flex; flex-direction: column; gap: 0.25rem; }
+.inkling__reward-details { flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+.inkling__reward-details select, .inkling__reward-details input { max-width: 100%; }
+.inkling__shares .button-link { margin-left: 0.5rem; }
+.inkling__close { margin-top: var(--space); }
+.inkling-new__types { display: flex; flex-direction: column; gap: 0.35rem; }

@@ -1,0 +1,39 @@
+<% content_for :title, "Start an Inkling · Inkwll" %>
+
+<div class="inkling-new">
+  <h1 class="page-title">Start an Inkling<%= " for #{@character.name}" %></h1>
+  <%= form_with model: @inkling, url: inklings_path, class: "form inkling-new__form" do |form| %>
+    <% mine = current_account.characters.active.where(status: "approved").order(:name) %>
+    <% if @character.account_id == current_account.id && mine.size > 1 %>
+      <div class="field">
+        <%= form.label :character_id, "Character" %>
+        <%= form.select :character_id, mine.map { |character| [ character.name, character.id ] }, selected: @character.id %>
+      </div>
+    <% else %>
+      <%= hidden_field_tag "inkling[character_id]", @character.id %>
+    <% end %>
+    <fieldset class="field inkling-new__types">
+      <legend class="fieldset__legend">Type</legend>
+      <% Inkling.types_for(current_account).each do |key, type| %>
+        <label class="field--checkbox inkling-new__type">
+          <%= form.radio_button :kind, key, required: true %>
+          <span><strong class="emphasis"><%= type["name"] %></strong><%= tag.span(" (staff)", class: "muted") if type["category"] == "staff" %>: <%= type["description"] %></span>
+        </label>
+      <% end %>
+    </fieldset>
+    <div class="field">
+      <%= form.label :title %>
+      <%= form.text_field :title, required: true, maxlength: 120 %>
+    </div>
+    <div class="field">
+      <%= form.label :body, "Opening entry" %>
+      <%= form.text_area :body, rows: 8, maxlength: 20_000 %>
+      <% if @character.account_id == current_account.id %>
+        <small class="hint">Only you see this until you share it or send it to staff.</small>
+      <% else %>
+        <small class="hint"><%= @character.name %>'s player sees this straight away.</small>
+      <% end %>
+    </div>
+    <%= form.submit "Start", class: "button" %>
+  <% end %>
+</div>

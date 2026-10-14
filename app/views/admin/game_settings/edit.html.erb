@@ -61,6 +61,11 @@
     <%= form.label :soul_enabled, "Use SOUL: character sheets, XP and rolls" %>
   </div>
   <p class="muted">When it's off, sheets, XP and the roll box are hidden, and no XP is given. Nothing is deleted. Aspects and Skills are under SOUL in the admin panel.</p>
+  <div class="field field--checkbox">
+    <%= form.check_box :inklings_enabled %>
+    <%= form.label :inklings_enabled, "Use Inklings: threads about characters that players send to staff" %>
+  </div>
+  <p class="muted">When it's off, Inklings are hidden. Nothing is deleted. The types are set in config/inklings.yml.</p>
 
   <h2 class="section-title"><%= term(:scene, count: 2) %></h2>
   <div class="field field--checkbox">

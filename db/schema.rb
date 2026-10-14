@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_210001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_220001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -92,9 +92,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_210001) do
     t.datetime "read_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "inkling_id"
     t.index ["account_id", "read_at"], name: "index_alerts_on_account_id_and_read_at"
     t.index ["account_id"], name: "index_alerts_on_account_id"
     t.index ["character_id"], name: "index_alerts_on_character_id"
+    t.index ["inkling_id"], name: "index_alerts_on_inkling_id"
     t.index ["pose_id"], name: "index_alerts_on_pose_id"
     t.index ["scene_id"], name: "index_alerts_on_scene_id"
   end
@@ -224,6 +226,68 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_210001) do
     t.boolean "soul_enabled", default: true, null: false
     t.integer "roster_idle_days", default: 90, null: false
     t.string "weather"
+    t.boolean "inklings_enabled", default: true, null: false
+  end
+
+  create_table "inkling_entries", force: :cascade do |t|
+    t.bigint "inkling_id", null: false
+    t.integer "sequence", null: false
+    t.bigint "account_id"
+    t.bigint "character_id"
+    t.bigint "private_to_id"
+    t.string "kind", default: "public", null: false
+    t.text "body", null: false
+    t.boolean "private", default: false, null: false
+    t.bigint "soul_roll_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_inkling_entries_on_account_id"
+    t.index ["character_id"], name: "index_inkling_entries_on_character_id"
+    t.index ["inkling_id", "sequence"], name: "index_inkling_entries_on_inkling_id_and_sequence", unique: true
+    t.index ["inkling_id"], name: "index_inkling_entries_on_inkling_id"
+    t.index ["private_to_id"], name: "index_inkling_entries_on_private_to_id"
+    t.index ["soul_roll_id"], name: "index_inkling_entries_on_soul_roll_id"
+  end
+
+  create_table "inkling_reads", force: :cascade do |t|
+    t.bigint "inkling_id", null: false
+    t.bigint "account_id", null: false
+    t.integer "last_read_sequence", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_inkling_reads_on_account_id"
+    t.index ["inkling_id", "account_id"], name: "index_inkling_reads_on_inkling_id_and_account_id", unique: true
+    t.index ["inkling_id"], name: "index_inkling_reads_on_inkling_id"
+  end
+
+  create_table "inkling_shares", force: :cascade do |t|
+    t.bigint "inkling_id", null: false
+    t.bigint "character_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_inkling_shares_on_character_id"
+    t.index ["inkling_id", "character_id"], name: "index_inkling_shares_on_inkling_id_and_character_id", unique: true
+    t.index ["inkling_id"], name: "index_inkling_shares_on_inkling_id"
+  end
+
+  create_table "inklings", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "creator_id", null: false
+    t.string "kind", null: false
+    t.string "title", null: false
+    t.string "status", default: "open", null: false
+    t.string "review_state", default: "draft", null: false
+    t.datetime "submitted_at"
+    t.datetime "staff_visible_at"
+    t.integer "last_sequence", default: 0, null: false
+    t.datetime "last_entry_at"
+    t.string "tags", default: [], null: false, array: true
+    t.integer "shared_group_ids", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_inklings_on_character_id"
+    t.index ["creator_id"], name: "index_inklings_on_creator_id"
+    t.index ["review_state"], name: "index_inklings_on_review_state"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -621,6 +685,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_210001) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alerts", "accounts", on_delete: :cascade
   add_foreign_key "alerts", "characters", on_delete: :cascade
+  add_foreign_key "alerts", "inklings", on_delete: :cascade
   add_foreign_key "alerts", "poses", on_delete: :nullify
   add_foreign_key "alerts", "scenes", on_delete: :cascade
   add_foreign_key "areas", "areas", column: "parent_id"
@@ -637,6 +702,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_210001) do
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
   add_foreign_key "gallery_images", "characters"
+  add_foreign_key "inkling_entries", "accounts", on_delete: :nullify
+  add_foreign_key "inkling_entries", "characters", column: "private_to_id", on_delete: :nullify
+  add_foreign_key "inkling_entries", "characters", on_delete: :nullify
+  add_foreign_key "inkling_entries", "inklings", on_delete: :cascade
+  add_foreign_key "inkling_entries", "soul_rolls", on_delete: :nullify
+  add_foreign_key "inkling_reads", "accounts", on_delete: :cascade
+  add_foreign_key "inkling_reads", "inklings", on_delete: :cascade
+  add_foreign_key "inkling_shares", "characters", on_delete: :cascade
+  add_foreign_key "inkling_shares", "inklings", on_delete: :cascade
+  add_foreign_key "inklings", "accounts", column: "creator_id"
+  add_foreign_key "inklings", "characters"
   add_foreign_key "messages", "accounts"
   add_foreign_key "messages", "conversations"
   add_foreign_key "ooc_messages", "accounts"

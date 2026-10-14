@@ -79,6 +79,17 @@ Rails.application.routes.draw do
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"
   resources :alerts, only: :index
+  resources :inklings, only: %i[ index new create show update ] do
+    scope module: :inklings do
+      resources :entries, only: :create
+      resources :rolls, only: :create
+      resource :submission, only: :create
+      resource :review, only: :create
+      resource :closing, only: %i[ create destroy ]
+      resources :shares, only: %i[ create destroy ]
+      resources :rewards, only: :create
+    end
+  end
   get "roster", to: "directory#index", defaults: { roster: "1" }, as: :roster
 
   # The admin panel. Each section checks the visitor's staff level.
@@ -112,6 +123,7 @@ Rails.application.routes.draw do
     resources :applications, only: %i[ index show update ]
     resource :roster, only: :show, controller: "roster"
     resources :roster_applications, only: :update
+    resources :inklings, only: :index
     resources :roster_characters, only: %i[ create update ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do

@@ -12,11 +12,17 @@
       <div class="character-profile__actions">
         <% if @mine %>
           <%= link_to "Edit", edit_character_path(@character), class: "button button--quiet" %>
+          <% if Inkling.enabled? && @character.approved? && !@character.retired? %>
+            <%= link_to "Start an Inkling", new_inkling_path(character_id: @character.id), class: "button button--quiet character-profile__inkling" %>
+          <% end %>
           <% unless @character.retired? || @character.roster_requested? %>
             <%= button_to "Ask staff to put on the roster", character_roster_request_path(@character), class: "button button--quiet character-profile__roster-request",
                   form: { data: { turbo_confirm: "Ask staff to give #{@character.name} up for someone else to play? If they agree, #{@character.name} stops being yours." } } %>
           <% end %>
         <% elsif !@character.on_roster? %>
+          <% if Inkling.enabled? && current_account.can?(:review_apps) && @character.approved? && !@character.retired? %>
+            <%= link_to "Start an Inkling for #{@character.name}", new_inkling_path(character_id: @character.id), class: "button button--quiet character-profile__inkling" %>
+          <% end %>
           <%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %>
         <% end %>
       </div>

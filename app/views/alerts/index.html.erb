@@ -8,6 +8,13 @@
         <% scene = alert.scene %>
         <li class="alerts__item alerts__item--<%= alert.kind %><%= " alerts__item--unread" if alert.unread? %>">
           <p class="text alerts__text">
+            <% if alert.kind == "inkling" %>
+              <% if alert.inkling %>
+                <%= alert.count > 1 ? "#{alert.count} new entries" : "Something new" %> in the Inkling <%= link_to alert.inkling.title, inkling_path(alert.inkling), class: "alerts__inkling" %>.
+              <% else %>
+                Something new in an Inkling that's gone.
+              <% end %>
+            <% end %>
             <% chapter = scene ? link_to(scene.title, scene_path(scene, anchor: alert.pose_id && "pose_#{alert.pose_id}"), class: "alerts__chapter") : "a #{term(:scene).downcase} that's gone" %>
             <% case alert.kind %>
             <% when "passage" %>

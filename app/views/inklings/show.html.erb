@@ -1,0 +1,206 @@
+<% content_for :title, "#{@inkling.title} · Inklings · Inkwll" %>
+<% owner = @inkling.owned_by?(current_account) %>
+<% staff = @inkling.staff_view?(current_account) %>
+<% writable = @inkling.writable_by?(current_account) %>
+
+<article class="inkling inkling--<%= @inkling.review_state %> inkling--<%= @inkling.status %>">
+  <p class="breadcrumbs"><%= link_to "Inklings", inklings_path %><% if staff %> · <%= link_to "All Inklings (staff)", admin_inklings_path %><% end %></p>
+  <header class="inkling__header">
+    <h1 class="page-title inkling__title"><%= @inkling.title %></h1>
+    <p class="inkling__meta muted">
+      <span class="tag inklings__type inklings__type--<%= @inkling.kind %>"><%= @inkling.type_name %></span>
+      <span class="badge inkling__state"><%= inkling_state_label(@inkling) %></span>
+      about <%= link_to @inkling.character.name, @inkling.character %> · #<%= @inkling.id %>
+      <% if @inkling.tags.any? %>· <span class="inkling__tags"><%= @inkling.tags.join(", ") %></span><% end %>
+    </p>
+    <% if owner || staff %>
+      <details class="inkling__edit">
+        <summary class="disclosure__summary">Rename or tag</summary>
+        <%= form_with model: @inkling, class: "form form--inline inkling__edit-form" do |form| %>
+          <%= form.label :title, class: "visually-hidden" %>
+          <%= form.text_field :title, maxlength: 120 %>
+          <%= form.label :tags, "Tags, separated by commas", class: "visually-hidden" %>
+          <%= form.text_field :tags, value: @inkling.tags.join(", "), placeholder: "Tags, separated by commas", maxlength: 300 %>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+      </details>
+    <% end %>
+  </header>
+
+  <div class="notice-box inkling__status">
+    <% if @inkling.closed? %>
+      <p class="text">Closed. Nothing more is planned for this.</p>
+      <% if staff %><%= button_to "Reopen", inkling_closing_path(@inkling), method: :delete, class: "button button--quiet" %><% end %>
+    <% elsif @inkling.submitted? %>
+      <p class="text"><strong class="emphasis">Waiting for staff.</strong> Sent <%= time_ago_in_words(@inkling.submitted_at) %> ago. It's locked until staff approve it or ask for changes; replies don't unlock it.</p>
+    <% elsif @inkling.staff_visible_at.nil? %>
+      <p class="text"><strong class="emphasis">Staff can't see this yet.</strong> Build it up as you like, then send it to staff when you want an answer.</p>
+    <% elsif @inkling.needs_changes? %>
+      <p class="text"><strong class="emphasis">Staff asked for changes.</strong> Add them below, then send it again.</p>
+    <% end %>
+    <% if owner && @inkling.open? && !@inkling.submitted? %>
+      <%= button_to "Send to staff", inkling_submission_path(@inkling), class: "button inkling__submit",
+            form: { data: { turbo_confirm: "Send this to staff? It locks until they answer." } } %>
+    <% end %>
+    <% if staff && @inkling.submitted? %>
+      <div class="inkling__review">
+        <%= button_to "Approve", inkling_review_path(@inkling), params: { decision: "approve" }, class: "button" %>
+        <%= form_with url: inkling_review_path(@inkling), class: "form form--inline inkling__changes" do |form| %>
+          <%= hidden_field_tag :decision, "changes" %>
+          <%= form.label :note, "What to change", class: "visually-hidden" %>
+          <%= form.text_field :note, placeholder: "What to change (the player sees this)", maxlength: 2_000 %>
+          <%= form.submit "Ask for changes", class: "button button--quiet" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <ol class="inkling__entries">
+    <% @entries.each do |entry| %>
+      <li class="inkling-entry inkling-entry--<%= entry.kind %><%= " inkling-entry--private" if entry.private? %><%= " inkling-entry--new" if entry.sequence > @last_read && !entry.mine?(current_account) %>" id="entry-<%= entry.sequence %>">
+        <% if entry.kind == "system" %>
+          <p class="inkling-entry__system muted"><%= entry.body %> <span class="inkling-entry__ref"><%= entry.reference %></span></p>
+        <% else %>
+          <header class="inkling-entry__header">
+            <span class="inkling-entry__author"><%= inkling_entry_author(entry) %></span>
+            <% if (label = inkling_entry_label(entry)) %><span class="tag inkling-entry__kind"><%= label %></span><% end %>
+            <time class="inkling-entry__time muted" datetime="<%= entry.created_at.iso8601 %>"><%= time_ago_in_words(entry.created_at) %> ago</time>
+            <a class="inkling-entry__ref muted" href="#entry-<%= entry.sequence %>"><%= entry.reference %></a>
+          </header>
+          <div class="prose inkling-entry__body"><%= simple_format entry.body %></div>
+          <% if entry.soul_roll %>
+            <details class="roll-details inkling-entry__roll">
+              <summary class="disclosure__summary roll-details__summary">How it was rolled</summary>
+              <p class="text roll-details__text">Dice: <%= entry.soul_roll.dice_text %>. <%= entry.soul_roll.skill_name %> <%= entry.soul_roll.skill_rating %>, plus <%= entry.soul_roll.aspect_bonus %> from its Aspect. Total <%= entry.soul_roll.result %> against <%= entry.soul_roll.difficulty %>.</p>
+            </details>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+  <div id="inkling-end"></div>
+
+  <% if writable || (owner && @inkling.open?) %>
+    <section class="inkling__write">
+      <h2 class="section-title">Add to it</h2>
+      <%= form_with url: inkling_entries_path(@inkling), class: "form inkling__write-form" do |form| %>
+        <%= form.label :body, "Entry", class: "visually-hidden" %>
+        <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000 %>
+        <fieldset class="field inkling__kinds">
+          <legend class="visually-hidden">Who sees it</legend>
+          <% if writable %>
+            <label class="field--checkbox"><%= radio_button_tag :kind, "public", true %> Everyone who can see this</label>
+            <label class="field--checkbox"><%= radio_button_tag :kind, "private" %> <%= staff ? "Private, for one character and staff:" : "Only me and staff" %></label>
+            <% if staff %>
+              <%= select_tag :private_to_id, options_for_select([ @inkling.character, *@inkling.shared_characters ].uniq.map { |c| [ c.name, c.id ] }), class: "inkling__private-to", aria: { label: "Private for" } %>
+              <label class="field--checkbox"><%= radio_button_tag :kind, "gm" %> Staff note (staff only)</label>
+            <% end %>
+          <% end %>
+          <label class="field--checkbox"><%= radio_button_tag :kind, "personal", !writable %> Personal note (only me, not even staff)</label>
+        </fieldset>
+        <% unless staff || owner || @inkling.staff_visible_at %>
+          <p class="hint">Staff won't see this until <%= @inkling.character.name %>'s player sends it to them.</p>
+        <% end %>
+        <%= form.submit "Add", class: "button" %>
+      <% end %>
+
+      <% if Soul.enabled? && writable && !staff %>
+        <details class="roll-box inkling__roll">
+          <summary class="disclosure__summary roll-box__summary">Roll a Skill</summary>
+          <%= form_with url: inkling_rolls_path(@inkling), class: "form roll-box__form" do |form| %>
+            <div class="field roll-box__field">
+              <%= form.label :skill_id, "Skill" %>
+              <%= form.select :skill_id, Soul::Aspect.ordered.includes(:skills).map { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }.to_h.then { |groups| grouped_options_for_select(groups) } %>
+            </div>
+            <div class="field roll-box__field">
+              <%= form.label :difficulty %>
+              <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, selected: "standard" %>
+            </div>
+            <div class="field field--checkbox">
+              <%= form.check_box :private, {}, "1", "0" %>
+              <%= form.label :private, "Only me and staff see the result" %>
+            </div>
+            <%= form.submit "Roll", class: "button button--quiet" %>
+          <% end %>
+        </details>
+      <% end %>
+    </section>
+  <% elsif @inkling.locked? && !staff %>
+    <p class="text muted inkling__locked">Locked while staff look at it.</p>
+  <% end %>
+
+  <% if owner || staff %>
+    <section class="inkling__sharing">
+      <h2 class="section-title">Shared with</h2>
+      <% groups = CharacterGroup.where(id: @inkling.shared_group_ids).ordered %>
+      <% if @inkling.shares.any? || groups.any? %>
+        <ul class="list inkling__shares">
+          <% @inkling.shares.includes(:character).each do |share| %>
+            <li class="list__item inkling__share"><%= link_to share.character.name, share.character %>
+              <%= button_to "Stop sharing", inkling_share_path(@inkling, share), method: :delete, class: "button-link" %></li>
+          <% end %>
+          <% groups.each do |group| %>
+            <li class="list__item inkling__share inkling__share--group">Everyone in <%= group.name %>
+              <%= button_to "Stop sharing", inkling_share_path(@inkling, "group-#{group.id}"), method: :delete, class: "button-link" %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text muted">Nobody else. Characters you share it with can read it and write in it, but not your private or personal entries.</p>
+      <% end %>
+      <%= form_with url: inkling_shares_path(@inkling), class: "form form--inline inkling__share-form" do |form| %>
+        <%= form.label :name, "Character's name", class: "visually-hidden" %>
+        <%= form.text_field :name, placeholder: "Character's name", maxlength: 100 %>
+        <%= form.submit "Share", class: "button button--quiet" %>
+      <% end %>
+      <% if (all_groups = CharacterGroup.ordered.where.not(id: @inkling.shared_group_ids)).any? %>
+        <%= form_with url: inkling_shares_path(@inkling), class: "form form--inline inkling__share-form" do |form| %>
+          <%= form.label :group_id, "Group", class: "visually-hidden" %>
+          <%= form.select :group_id, all_groups.map { |group| [ group.name, group.id ] } %>
+          <%= form.submit "Share with the group", class: "button button--quiet" %>
+        <% end %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if staff && @inkling.open? %>
+    <section class="inkling__rewards">
+      <h2 class="section-title">Reward</h2>
+      <%= form_with url: inkling_rewards_path(@inkling), class: "form inkling__reward-form" do |form| %>
+        <div class="field">
+          <%= form.label :reward_type, "Kind" %>
+          <% kinds = [ [ "A note", "note" ] ] %>
+          <% kinds = [ [ "XP", "xp" ], [ "A new Boon or Bane", "bnb" ], [ "Progress a Boon or Bane they have", "progress" ], [ "A Culmination", "culmination" ] ] + kinds if Soul.enabled? %>
+          <%= form.select :reward_type, kinds %>
+        </div>
+        <% if Soul.enabled? %>
+          <div class="form--inline inkling__reward-details">
+            <%= form.label :amount, "XP", class: "visually-hidden" %>
+            <%= form.number_field :amount, min: 1, max: 100, placeholder: "XP" %>
+            <%= form.label :bnb_id, "Boon or Bane", class: "visually-hidden" %>
+            <%= form.select :bnb_id, Soul::Bnb.active.order(:kind, :name).map { |bnb| [ "#{bnb.name} (#{bnb.kind.capitalize})", bnb.id ] }, include_blank: "New Boon or Bane…" %>
+            <%= form.label :level, "Level", class: "visually-hidden" %>
+            <%= form.select :level, Soul::Rules.bnb_levels.keys.map { |level| [ level.capitalize, level ] } %>
+            <%= form.label :character_bnb_id, "Their Boon or Bane", class: "visually-hidden" %>
+            <%= form.select :character_bnb_id, @inkling.character.character_bnbs.unresolved.includes(:bnb).map { |entry| [ "#{entry.name} (#{entry.level.capitalize})", entry.id ] }, include_blank: "Theirs to progress…" %>
+            <%= form.label :title, "Culmination title", class: "visually-hidden" %>
+            <%= form.text_field :title, placeholder: "Culmination title", maxlength: 120 %>
+          </div>
+        <% end %>
+        <div class="field">
+          <%= form.label :note, "Note (optional, or the reward itself for a note)" %>
+          <%= form.text_field :note, maxlength: 2_000 %>
+        </div>
+        <div class="field field--checkbox">
+          <%= form.check_box :visible_to_all, {}, "1", "0" %>
+          <%= form.label :visible_to_all, "Everyone who can see the Inkling sees the reward (otherwise only #{@inkling.character.name}'s player)" %>
+        </div>
+        <%= form.submit "Grant", class: "button button--quiet" %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if (owner || staff) && @inkling.open? %>
+    <%= button_to "Close this Inkling", inkling_closing_path(@inkling), class: "button button--quiet inkling__close",
+          form: { data: { turbo_confirm: "Close it? Use this when there's nothing more to do. Staff can reopen it." } } %>
+  <% end %>
+</article>

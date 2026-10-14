@@ -1,0 +1,34 @@
+<% content_for :title, "Inklings · Inkwll" %>
+
+<div class="inklings">
+  <h1 class="page-title">Inklings</h1>
+  <p class="text muted inklings__intro">Threads about your characters: goals, secrets, requests to staff, and hints from them.
+    Staff only see an Inkling once you send it to them.</p>
+  <p class="text inklings__actions">
+    <% if current_account.characters.active.where(status: "approved").any? %>
+      <%= link_to "Start an Inkling", new_inkling_path, class: "button" %>
+    <% end %>
+    <%= link_to @show_closed ? "Show open ones" : "Show closed ones", inklings_path(closed: (@show_closed ? nil : "1")), class: "inklings__toggle" %>
+  </p>
+
+  <% if @inklings.any? %>
+    <ul class="inklings__list">
+      <% @inklings.each do |inkling| %>
+        <% unread = inkling.last_sequence > @reads[inkling.id].to_i %>
+        <li class="inklings__item inklings__item--<%= inkling.review_state %><%= " inklings__item--unread" if unread %>">
+          <div class="inklings__heading">
+            <%= link_to inkling.title, inkling, class: "inklings__title" %>
+            <span class="tag inklings__type inklings__type--<%= inkling.kind %>"><%= inkling.type_name %></span>
+            <span class="badge inklings__state"><%= inkling_state_label(inkling) %></span>
+            <% if unread %><span class="inklings__new">New</span><% end %>
+          </div>
+          <p class="muted inklings__meta"><%= inkling.character.name %><%= " (shared with you)" unless inkling.owned_by?(current_account) %>
+            · <%= time_ago_in_words(inkling.last_entry_at || inkling.created_at) %> ago
+            <% if inkling.tags.any? %>· <%= inkling.tags.join(", ") %><% end %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">No <%= @show_closed ? "closed" : "open" %> Inklings.</p>
+  <% end %>
+</div>
