@@ -14,9 +14,11 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ## 2026-10-14: Character icons in Passages
 
-As on the owner's forums, every character has at least one icon, shown beside their Passages. Games can also allow extra images (including animated GIFs) that get pulled into Passages.
+Each character has one icon, shown beside every one of their Passages. Extra images, including animated GIFs, belong on the character's profile, not in Passages. Kept simple on purpose.
 
-Still open: how players use the extra images (see `roadmap.md`). Default picked by Claude: whether an icon is required is a game setting, on by default.
+Each Passage shows the character's name and small icon, with a pop-up mini-profile or at least a link to the full profile, like the mini-profile column on the owner's forums (see the thread screenshots in `docs/design-references/`). Built in step 2; the mini-profile fills out in step 4.
+
+Default picked by Claude: whether an icon is required is a game setting, on by default.
 
 ## 2026-10-14: Front page laid out like the owner's forums
 
