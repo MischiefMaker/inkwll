@@ -24,11 +24,16 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # HTTPS needs a domain name. Until the game has one it runs on the
+  # server's IP address over plain http, with INKWLL_HTTPS=false in
+  # config/deploy.yml (owner, 2026-10-14). Remove that line once there's a domain.
+  https = ENV.fetch("INKWLL_HTTPS", "true") != "false"
+
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  config.assume_ssl = https
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = https
 
   # Skip http-to-https redirect for the default health check endpoint.
   config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
@@ -58,7 +63,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Links in emails point at APP_HOST, e.g. "play.yourgame.com".
-  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: "https" }
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: https ? "https" : "http" }
 
   # The mail service is picked at launch. Its details go in Kamal secrets:
   # SMTP_ADDRESS, SMTP_PORT, SMTP_USERNAME and SMTP_PASSWORD. Until they're

@@ -88,6 +88,7 @@ production:
   primary: &primary_production
     <<: *default
     database: inkwll_production
+    host: <%= ENV["DB_HOST"] %>
     username: inkwll
     password: <%= ENV["INKWLL_DATABASE_PASSWORD"] %>
   cache:
