@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: What locks a character
+
+When a game uses approval, everything that normally locks (such as Resonance) locks when staff approve the character. When a game turns approval off, the player clicks a "Finalize character" button instead, after a warning, and the same things lock.
+
 ## 2026-10-14: What Storytellers can do
 
 In Chapters they run, Storytellers can call and rule GM-assisted rolls, see the Aspects and Skills of the players in that Chapter, and propose plot rewards, which staff must approve. They never see secret details: secret Boons and Banes, private Inklings, XP ledgers, Narrative History or the staff audit trail.
@@ -101,7 +105,7 @@ The owner first picked "optional", then changed it the same day.
 
 Each game chooses whether new characters need staff approval before they can pose in scenes. Unapproved characters can still move between rooms and use OOC chat. Inklings approvals stay a separate system either way.
 
-Still open: when approval is off, the moment SOUL locks Resonance.
+When approval is off, a "Finalize character" button does the locking (see "What locks a character").
 
 ## 2026-10-14: Build order adopted
 
