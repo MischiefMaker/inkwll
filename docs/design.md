@@ -130,6 +130,12 @@ effectively three states.
 - Within a chat, IC time passes only at the speed of the scene. The date stays
   as started unless the players agree to move it forward.
 
+### Email notifications [Decided]
+
+- Players can opt in to emails about new activity: every time, only when they
+  aren't logged in, or only after they've been away for some days they choose.
+  Off by default. Details in `decisions.md`; built in step 3.
+
 ### OOC chat [Decided]
 
 - One persistent OOC chat, using player names (not character names), visible
