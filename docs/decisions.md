@@ -20,6 +20,11 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Launching on the IP address, deployed from GitHub Actions (owner)
+
+- The game launches on the droplet's IP address with no domain for now (owner). That means plain http, so only testers until there's a domain. The droplet is the $6/month 1 GB one with backups on.
+- Deploys run from a "Deploy" workflow in GitHub Actions that only runs when started by hand (owner), because Claude's cloud environment can't open SSH connections. Its secrets live in the repository's Actions secrets. Claude asks the owner before each run. See `docs/deploying.md`.
+
 ## 2026-10-14: Storyteller tools (owner)
 
 Storytellers who aren't staff can use the GM roll tools, and they can suggest awards, which need staff approval (owner). This confirms the earlier "What Storytellers can do" entry.
