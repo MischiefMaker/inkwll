@@ -8,6 +8,12 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: A wiki, inspired by Wikidot
+
+The game has a wiki where staff and players can put whatever information they like (rules, setting lore, plots, guides). Pages are written in Markdown. Pages can pull in live game content, such as characters, Manuscripts and Settings, for example a list of every character or Manuscript with a given tag.
+
+Still open: who can edit, and where the wiki goes in the build order (see `roadmap.md`).
+
 ## 2026-10-14: Images and text for descriptions
 
 - **Areas and Settings** can be described with an image only, an image and text, or text only. Pages simply show whatever staff filled in.

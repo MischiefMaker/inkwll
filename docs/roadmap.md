@@ -13,6 +13,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 | 2. Scenes | Create, join and leave scenes; joinable, private and hidden; the three pose modes; live updates; unread markers. | Next (after you review step 1) |
 | 3. Logs and safety | Finishing scenes, room and character log pages, reporting, the hidden-to-public consent flow, banning accounts and IP addresses, and an optional block on known VPNs. | Later |
 | 4. Character profiles and approval | A profile for every character with game-configured profile and application fields (background, set questions, images, an optional description), each marked public or private by the game. Each game decides whether a written description and/or image is required., and room for SOUL, Grimoire and Inklings sections. Submitting a character, staff approving it. Each game chooses whether approval is required. | Later |
+| 4b. Wiki | Wikidot-style wiki in Markdown, with built-in ways to pull in characters, Manuscripts, Settings and so on (for example by tag). Rules, lore and plots live here, reached from the menu. Placement not yet confirmed. | Later |
 | 5. SOUL basics | Character sheet (Aspects, Skills, Resonance), XP ledger and spending, rolls as a pose type in scenes, XP for finished scenes. | Later |
 | 6. SOUL extras | Boons and Banes, Culminations, GM-assisted rolls, Narrative History and the staff audit trail. | Later |
 | 7. IC clock | Game time and per-scene date overrides. | Later |
@@ -26,6 +27,11 @@ Status: **Now**, **Next**, **Later** or **Done**.
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
+
+**Wiki**
+
+- Who can create and edit wiki pages.
+- Where the wiki goes in the build order.
 
 **To revisit later**
 
