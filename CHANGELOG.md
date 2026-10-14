@@ -2,6 +2,22 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 2: Chapters
+
+- Characters can start Chapters in the Setting they're standing in, and join
+  or leave them. Chapters can be Open, Private (invite only) or Hidden.
+- Passages appear live, with the character's icon and name. Clicking either
+  opens a small profile. You can edit or remove your own Passages.
+- Turns: take turns, free-for-all, or the 3-Passage rule. Pass your turn,
+  storytellers can skip someone, and players who go quiet get a warning and
+  are skipped after a few minutes unless they click "I'm here!".
+- Characters can upload an icon.
+- Your Chapters show as tabs on every page, with unread counts. The browser
+  tab shows a count and the site icon gets a dot when something's new.
+- Moving between Settings adds arrival and departure lines to Chapters there.
+- A Where page (in the Menu) shows where everyone is. Front-page boards show
+  their latest open Chapter.
+
 ## 2026-10-14 — Step 1b: Step 1 changes
 
 - Players now see themed words: Setting (room), Path (exit), Area, and later

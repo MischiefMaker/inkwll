@@ -244,7 +244,7 @@ Items built in step 1 are marked ✅.
 
 The build order and the current step are kept in [`roadmap.md`](roadmap.md).
 
-## 6. How steps 1 and 1b work
+## 6. How the built steps work
 
 Players see themed words (Setting, Path, Area and so on); the code uses plain
 words, and `config/locales/en.yml` maps one to the other.
@@ -281,6 +281,39 @@ words, and `config/locales/en.yml` maps one to the other.
   (Menu → Admin panel) shows each staff member only the sections their level
   allows. The first Founder is made on the server with
   `bin/rails "inkwll:make_founder[PlayerName]"`.
+
+### Step 2: Chapters
+
+- **Starting.** A Setting's page lists its Chapters (busiest first, idle ones
+  last) and has "Start a chapter here" when your active character stands
+  there. A Chapter is Open, Private or Hidden, and uses one of three turn
+  modes. Flagged Storytellers and staff can start as the storyteller, or take
+  or drop the role later.
+- **Joining.** Anyone can watch an Open Chapter. Joining walks your character
+  to the Chapter's Setting first ("Travel here and join"). Private and Hidden
+  Chapters need an invitation, which any character in them can send by name.
+  Only invited characters can read them.
+- **Passages** are numbered by the server, appear live, and show the
+  character's icon and name. Clicking either opens a mini-profile. Players
+  can edit (marked "edited", original kept) or remove ("Passage removed")
+  their own Passages.
+- **Turns.** Turn order is the order people joined. The first Passage can come
+  from anyone. Posting out of turn asks "Post anyway" first and doesn't move
+  the turn. Pass, storyteller Skip, and auto-skip (warning after the
+  Chapter's minutes, skip two minutes later unless "I'm here!") are run by
+  the server, with a background job for the timer. The 3-Passage rule works
+  like turns until there are four characters.
+- **Moving.** Walking or travelling adds "X leaves for …" and "X arrives from
+  …" lines to the non-idle Chapters in both Settings.
+- **Tabs and unread.** Every page shows the player's Chapters as tabs with
+  their Setting, unread count and "Your turn". The page tells the server what
+  has been read only while it is visible, so the browser tab can show "(3)"
+  and a dot on the site icon for Passages that arrived while you were away.
+- **Where** (in the Menu) lists every character by Setting, with the Open
+  Chapters they're in. Front-page boards show their latest Open Chapter.
+  Private and Hidden Chapters never appear in either.
+- **Character icons** are uploaded on the character's edit page. Without one,
+  the character's initial is shown.
 
 ## 7. Reference: existing Inklings plugin
 

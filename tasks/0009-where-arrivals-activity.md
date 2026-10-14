@@ -1,6 +1,6 @@
 # 0009: Where list, arrivals and latest activity
 
-- **Status:** Doing
+- **Status:** Review
 - **Hand off?:** No
 - **Roadmap step:** 2. Scenes
 - **Created:** 2026-10-14
@@ -15,7 +15,7 @@ See the 2026-10-14 entries in `docs/decisions.md` and the step 2 row in `docs/ro
 
 ## Done when
 
-- [ ] Built, with tests passing
+- [x] Built, with tests passing
 - [ ] The owner has tried it
 
 ## Notes

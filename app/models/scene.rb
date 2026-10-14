@@ -36,6 +36,8 @@ class Scene < ApplicationRecord
     where(id: SceneParticipant.where(character_id: characters).select(:scene_id))
       .or(where(id: SceneInvitation.where(character_id: characters).select(:scene_id)))
   }
+  # Scenes that aren't idle.
+  scope :active, -> { where("COALESCE(scenes.last_pose_at, scenes.created_at) >= ?", IDLE_AFTER.ago) }
   scope :by_activity, -> { order(Arel.sql("COALESCE(scenes.last_pose_at, scenes.created_at) DESC")) }
 
   # Starts a new scene in the room the character is standing in.

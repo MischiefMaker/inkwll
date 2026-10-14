@@ -33,6 +33,16 @@ class Area < ApplicationRecord
     Room.where(area_id: [ id, *descendant_ids ]).order(:name)
   end
 
+  # The newest Passage in an open Chapter anywhere inside this area, for the
+  # front page. Private and hidden Chapters never show here.
+  # With own_rooms_only, only Settings directly in this area count.
+  def latest_public_pose(own_rooms_only: false)
+    rooms = own_rooms_only ? self.rooms : all_rooms.unscope(:order)
+    Pose.passage.where(removed_at: nil).joins(:scene).merge(Scene.visibility_joinable)
+      .where(scenes: { room_id: rooms.select(:id) })
+      .includes(:character, :scene).order(created_at: :desc).first
+  end
+
   # The areas above this one, outermost first: [Hogwarts, Castle] for First Floor.
   def ancestors
     chain = []

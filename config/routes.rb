@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :poses, only: %i[ create edit update destroy ]
   end
   resource :chapter_tabs, only: :show
+  get "where", to: "where#show"
 
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do

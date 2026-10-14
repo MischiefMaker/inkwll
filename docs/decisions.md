@@ -12,6 +12,20 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Step 2 details picked while building
+
+Defaults picked by Claude while building Chapters. Any of them can change.
+
+- Posting out of turn (after "Post anyway") doesn't move the turn on; it stays with the player who was up.
+- Turn order is the order characters joined. The first Passage of a new Chapter can come from anyone.
+- Joining a Chapter from another Setting walks the character there first ("Travel here and join"), to match starting where you stand.
+- Private Chapters: only characters in them or invited can read them. Any character in a Private or Hidden Chapter can invite others by name.
+- Tabs show the Chapters of all the player's characters, labelled with the character when there's more than one.
+- Arrival and departure lines skip idle Chapters.
+- Characters without an icon show their first initial. Requiring an icon waits for character approval (step 4).
+- Settings that sit directly in a top-level Area (like a starting Setting) show their latest open Chapter under the Area's banner on the front page.
+
+
 ## 2026-10-14: Making the grid feel physical (step 2)
 
 - **Arrivals and departures:** when a character walks into or out of a Setting, its Chapters show a line such as "Mira arrives from the Great Hall."

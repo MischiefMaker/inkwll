@@ -21,6 +21,7 @@ class Character < ApplicationRecord
   before_validation :place_in_starting_room, on: :create
 
   after_commit :refresh_rooms, on: [ :create, :update ], if: :saved_change_to_room_id?
+  after_update_commit :announce_move, if: :saved_change_to_room_id?
 
   # Moves the character through an exit in its current room.
   def move_through(exit)
@@ -38,6 +39,14 @@ class Character < ApplicationRecord
 
     def place_in_starting_room
       self.room ||= Room.starting
+    end
+
+    # Makes moving feel physical: Chapters in the Setting the character left
+    # and the one they arrived in get a line about it. Idle Chapters don't.
+    def announce_move
+      from = Room.find(room_id_previous_change.first)
+      Scene.active.where(room: from).find_each { |scene| scene.add_system_line!("#{name} leaves for #{room.name}.") }
+      Scene.active.where(room: room).find_each { |scene| scene.add_system_line!("#{name} arrives from #{from.name}.") }
     end
 
     # Tells anyone viewing the old or new room to reload the list of who is here.

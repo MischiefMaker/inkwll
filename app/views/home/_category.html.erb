@@ -10,6 +10,16 @@
     <p class="category__description"><%= area.description %></p>
   <% end %>
 
+  <%# Settings directly in this Area (not in a board below) show their latest
+      activity here, from open Chapters only. %>
+  <% latest = area.children.any? && area.latest_public_pose(own_rooms_only: true) %>
+  <% if latest %>
+    <p class="category__latest muted">
+      Latest in <%= area.name %>: <%= link_to latest.scene.title, scene_path(latest.scene) %>
+      in <%= latest.scene.room.name %>, by <%= latest.character&.name || "a departed character" %>, <%= time_ago_in_words(latest.created_at) %> ago
+    </p>
+  <% end %>
+
   <% boards = area.children.any? ? area.children.with_attached_image : [ area ] %>
   <div class="boards">
     <%= render partial: "home/board", collection: boards, as: :area %>

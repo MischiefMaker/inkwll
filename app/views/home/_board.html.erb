@@ -28,8 +28,14 @@
       <p class="board-row__description"><%= area.description %></p>
     <% end %>
   </div>
-  <div class="board-row__activity muted">
-    <% here = Character.where(room_id: area.all_rooms.select(:id)).count %>
-    <%= here.zero? ? "Quiet" : pluralize(here, "character") + " here" %>
+  <%# Latest activity: only open Chapters, never private or hidden ones. %>
+  <div class="board-row__activity">
+    <% latest = area.latest_public_pose %>
+    <% if latest %>
+      <%= link_to latest.scene.title, scene_path(latest.scene), class: "board-row__latest" %>
+      <span class="muted">by <%= latest.character&.name || "a departed character" %>, <%= time_ago_in_words(latest.created_at) %> ago</span>
+    <% end %>
+    <% here = Character.where(room_id: area.all_rooms.unscope(:order).select(:id)).count %>
+    <span class="muted"><%= here.zero? ? (latest ? "" : "Quiet") : pluralize(here, "character") + " here" %></span>
   </div>
 </article>

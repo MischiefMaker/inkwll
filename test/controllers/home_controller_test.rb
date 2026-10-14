@@ -27,4 +27,25 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select ".where-now a[href=?]", new_character_path
   end
+
+  test "boards show their latest open Chapter, never a private or hidden one" do
+    party = Scene.create!(room: rooms(:garden), title: "Garden Party")
+    party.participants.create!(character: characters(:wren), position: 1)
+    party.post!(characters(:wren), "Wren pours the tea.")
+    secret = Scene.create!(room: rooms(:garden), title: "Behind the Hedge", visibility: "hidden")
+    secret.participants.create!(character: characters(:sable), position: 1)
+    secret.post!(characters(:sable), "Psst.")
+
+    sign_in_as(accounts(:alice))
+    get root_path
+
+    assert_select ".board-row__latest", text: "Garden Party"
+    assert_select ".board-row__latest", text: "Behind the Hedge", count: 0
+  end
+
+  test "Settings directly in a top-level Area show their latest open Chapter under its banner" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".category__latest a", text: "Duel at Dawn"
+  end
 end
