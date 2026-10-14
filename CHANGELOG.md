@@ -2,6 +2,18 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Step 4: Profiles and approval
+
+- Character profiles have tabs: Profile, Application, Gallery, Relationships
+  and Manuscripts. Staff choose the profile questions and whether each is
+  public or private.
+- Ages are worked out from a character's birthday and the game's own date,
+  which staff set in Game settings.
+- Games can require staff approval. New characters are drafts until a
+  player submits them and staff approve; until then they can explore but
+  not join Chapters.
+- Players have their own profile with an icon and About me.
+
 ## 2026-10-14 — Step 3: Logs and safety
 
 - Players can finish a Chapter (and undo it for a day). Idle Chapters are

@@ -81,7 +81,8 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
   clock), an Application tab, a gallery, relationships and public logs.
   Players have a simpler profile; see "Profile layout" in `decisions.md`.
 - Character approval is a per-game setting. When it is on, new characters
-  cannot pose in scenes until staff approve them.
+  cannot pose in scenes until staff approve them. They can still explore.
+  See "Step 4 details picked while building" in `decisions.md`.
 
 ### Presence [Decided]
 

@@ -16,6 +16,20 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 4 details picked while building (profiles and approval)
+
+Defaults picked by Claude, for the owner to check:
+
+- **Character profile tabs:** Profile (Demographics, the other public fields and the description), Application, Gallery, Relationships and Manuscripts. SOUL, Inklings and Grimoire tabs arrive with those steps.
+- **Starting fields:** Birthday, Hometown and Occupation (Demographics, public); Background and Personality (Application, private). Staff add, change, reorder or remove fields under Profile fields in the admin panel, and mark each one public or private and required or not.
+- **Private fields** are seen only by the character's player and staff.
+- **Game date:** staff set "today's date in the game" and how many game days pass per real day (1 by default). With no date set, the real date is used. Ages come from the birthday and this date.
+- **Approval:** off by default. When it's on, a new character starts as a draft and can explore and move around, but can't start, join or post in Chapters until staff approve. Players submit from the character's page once required fields are filled; staff approve or return it with a note, and the player gets an email either way. Characters that already existed count as approved.
+- **Drafts and characters waiting for approval** are only visible to their player and staff.
+- **Gallery:** up to 30 pictures per character, PNG, JPEG, GIF or WebP, up to 5 MB each, with an optional caption.
+- **Relationships:** simple notes. Each one names a character (linked to their profile) or anyone else, picks a kind (Family, Friend, Romance, Ally, Rival, Enemy, Acquaintance, Other) and has an optional note. They're one-sided: each player writes their own.
+- **Player profiles:** icon (their initial on a colour until they upload one), player name, staff level, About me, and a "Send a message" button. Their characters are listed only when the game shows who plays which character, though the player and staff always see the list. Reached from the player's name in the header, "My player profile" in the Menu, and names in the OOC Chat. Only logged-in players can see them.
+
 ## 2026-10-14: Step 3b details picked while building (Messages)
 
 Defaults picked by Claude, for the owner to check:

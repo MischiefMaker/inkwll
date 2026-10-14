@@ -61,6 +61,19 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.conversation`, `.conversation__members`, `.conversation__messages`, `.conversation__reply` | One conversation |
 | `.conversation-message`, `.conversation-message--mine`, `.conversation-message__sender`, `.conversation-message__time`, `.conversation-message__body` | One message |
 
+## Profiles
+
+| Class | What it is |
+| --- | --- |
+| `.character-profile`, `.character-profile__header`, `.character-profile__name`, `.character-profile__panel` | A character's profile page |
+| `.profile-tabs`, `.profile-tabs__tab`, `.profile-tabs__tab--current` | The tabs on a character's profile |
+| `.profile-fields`, `.profile-fields__row`, `.profile-fields__private`, `.details-list__term`, `.details-list__value` | Profile answers, such as Demographics |
+| `.application-status`, `.application-status--draft`, `--submitted`, `--returned` | The approval notice on a character |
+| `.gallery`, `.gallery__item`, `.gallery__image`, `.gallery__caption` | The picture gallery |
+| `.relationships`, `.relationships__item`, `.relationships__name`, `.relationships__kind`, `.relationships__note` | Relationships |
+| `.player-profile`, `.player-profile__header`, `.player-profile__about`, `.player-characters` | A player's profile |
+| `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest` | Player icons |
+
 ## Chapters
 
 | Class | What it is |
