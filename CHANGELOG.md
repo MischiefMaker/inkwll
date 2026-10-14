@@ -2,6 +2,15 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Project tracking
+
+- Added a decisions log, roadmap, task board and a guide for handing small
+  tasks to other AIs (`AGENTS.md`, `docs/`, `tasks/`).
+- Added the settled answers on SOUL, Inklings, Grimoire, hidden-scene access
+  and hosting to `docs/design.md`.
+- Fixed the automatic system-test check, which failed because the
+  `test/system` folder was missing.
+
 ## 2026-10-14 — Step 1: Foundation
 
 - Created the Rails 8.1 app (Hotwire + PostgreSQL). Stack confirmed by the owner.

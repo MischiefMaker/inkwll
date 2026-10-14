@@ -32,11 +32,16 @@ Inspired by AresMUSH, but web-first.
 
 ## 3. Decisions
 
+Each decision also has a dated entry in [`decisions.md`](decisions.md).
+
 ### Stack and hosting [Decided]
 
 - Ruby on Rails 8 + Hotwire (Turbo + Stimulus) + PostgreSQL.
 - Built and tested in the cloud (Claude Code on the web, GitHub Actions CI).
-- Will eventually be hosted on a server such as DigitalOcean.
+- Hosted on a single DigitalOcean droplet that runs the Rails app and
+  PostgreSQL together, deployed with Kamal (included with Rails 8). Avoid
+  adding Redis or other services that would need extra hosting. Building and
+  testing stays in the cloud until launch.
 
 ### Accounts and characters [Decided]
 
@@ -77,7 +82,8 @@ effectively three states.
 ### Moderation and reporting [Decided]
 
 - Built-in reporting tools.
-- If a private or hidden scene is reported, staff can see its log.
+- Admins cannot browse hidden scenes. A report on a hidden or private scene
+  gives staff access to that one scene's log, and nothing more.
 - This must be stated clearly in the UI when a chat is set private/hidden and in
   the report form.
 
@@ -100,12 +106,38 @@ effectively three states.
 - One persistent OOC chat, using player names (not character names), visible
   site-wide like a forum Cbox.
 
-### Inklings / Grimoire / SOUL [Decided in intent, details unknown]
+### Core systems: SOUL, Inklings, Grimoire [Decided]
 
-- The owner's Inklings, Grimoire, and SOUL systems are meant to sit at the core
-  of the game.
-- Special storyteller/GM tools will be delivered through Inklings.
-- Grimoire and SOUL have not been described yet. See open questions.
+SOUL, Inklings and Grimoire are the default systems. Each one is rebuilt for
+Inkwll, not ported from AresMUSH. Each can be switched on or off through the
+feature toggles, and the design leaves room for alternative plugins later.
+
+- **SOUL** is the backbone of the stats and character system. It replaces FS3
+  and covers configurable Aspects and Skills, optional Resonance (locked at
+  approval), an XP ledger, Boons and Banes, open-ended 2d20 rolls (including
+  GM-assisted rolls), Culminations, and a player-facing Narrative History with
+  a separate staff audit trail.
+  Reference: github.com/MischiefMaker/ares-soul-plugin
+- **Inklings** supports roleplay: threaded requests, plot tracking and
+  storyteller tools. Approved Inkling outcomes (XP, Boon/Bane progress,
+  Culminations) apply through SOUL.
+  Reference: github.com/MischiefMaker/ares-inklings-plugin
+- **Grimoire** supports magic, for games that need it. It has configurable
+  branches, each tied to a skill. Players learn spells with XP, cast them as
+  rolls in a scene, and propose new spells for staff approval.
+  Reference: github.com/MischiefMaker/ares-grimoire-plugin
+
+How they plug in [Proposed, owner agreed in principle]:
+
+- A SOUL roll is a Pose type ("roll") inside a scene. GM-assisted rolls use the
+  scene's storyteller role.
+- Finishing a scene awards SOUL XP to its approved participants.
+- Grimoire spells use SOUL skills, and casting a spell is a SOUL roll.
+- The rest of the app talks to "the character system" through a small
+  interface, so SOUL could be swapped out. Grimoire and Inklings must work
+  correctly when they are disabled.
+- Following the extensibility proposal, start with the `features` table, and
+  do not build a plugin system first.
 
 ## 4. Proposals (confirm before relying on them)
 
@@ -151,17 +183,9 @@ Items built in step 1 are marked ✅.
   other players accept.
 - Staff cannot browse hidden scenes. A report grants access to that one scene.
 
-## 5. Roadmap [Proposed]
+## 5. Roadmap
 
-1. ✅ **Foundation**: accounts, characters with switcher, rooms and exits,
-   site-wide OOC chat.
-2. **Scenes**: create, join, leave, the three visibility states, three pose
-   modes, live updates, unread markers.
-3. **Logs and safety**: finishing scenes, room and character log pages,
-   reporting, hidden-to-public consent flow.
-4. **IC clock**: game time and per-scene overrides.
-5. **Inklings** and storyteller tools.
-6. **Platform**: feature toggles UI, skins, plugin packaging.
+The build order and the current step are kept in [`roadmap.md`](roadmap.md).
 
 ## 6. How step 1 works (choices to confirm)
 
@@ -218,15 +242,13 @@ repo.
 ## 8. Open questions for the owner
 
 1. Project name: Inkwll (tentative).
-2. What are Grimoire and SOUL, and how should they integrate with the core?
-3. Can admin see hidden scenes? Current lean: no, except via a report.
-4. Hosting details: DigitalOcean is the likely target. Which kind (a plain
-   server/droplet or their App Platform) affects how the database and live
-   updates are set up.
-5. Setting and tone: not specified, so avoid baking in setting-specific content.
-6. Should accounts have an email address (for password resets and notices)?
+2. Setting and tone: not specified, so avoid baking in setting-specific content.
+3. Should accounts have an email address (for password resets and notices)?
+4. Where do SOUL and Grimoire fit in the roadmap?
 
 ## 9. Working agreements for Claude Code
+
+The full rules for any AI helper are in [`AGENTS.md`](../AGENTS.md).
 
 - Make small, targeted changes. Do not expand scope or restructure without
   being asked.

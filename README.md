@@ -4,6 +4,11 @@ A web-first roleplaying game that mixes forum RP and MUSH: characters move
 between rooms, and (soon) each room can hold several live, resumable scenes.
 
 - **Design and decisions:** [`docs/design.md`](docs/design.md)
+- **Decisions log:** [`docs/decisions.md`](docs/decisions.md)
+- **Roadmap:** [`docs/roadmap.md`](docs/roadmap.md)
+- **Task board:** [`tasks/README.md`](tasks/README.md)
+- **Rules for AI helpers:** [`AGENTS.md`](AGENTS.md), and
+  [`docs/ai-handoff.md`](docs/ai-handoff.md) for handing tasks to other AIs
 - **What changed recently:** [`CHANGELOG.md`](CHANGELOG.md)
 
 Built with Ruby on Rails 8, Hotwire (Turbo + Stimulus) and PostgreSQL.
@@ -34,7 +39,7 @@ bin/rubocop      # code style
 bin/brakeman     # security scan
 ```
 
-GitHub Actions runs all of these on every pull request.
+GitHub Actions runs all of these on every pull request and every push to main.
 
 ## Where things live
 
