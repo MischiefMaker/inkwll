@@ -5,6 +5,9 @@
 
 <% @characters.group_by(&:room).sort_by { |room, _| room.name }.each do |room, characters| %>
   <section class="where-room">
+    <% if room.area %>
+      <p class="where-room__areas"><%= (room.area.ancestors + [ room.area ]).map(&:name).join(" › ") %></p>
+    <% end %>
     <h2><%= link_to room.name, room_path(room) %></h2>
     <ul class="list where-room__list">
       <% characters.each do |character| %>

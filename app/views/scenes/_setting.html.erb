@@ -6,7 +6,7 @@
     <%= image_tag room.image, alt: "", class: "scene-setting__image" %>
   <% end %>
   <div class="scene-setting__body">
-    <%= render "areas/breadcrumbs", area: room.area, include_self: true %>
+    <%= render "areas/breadcrumbs", area: room.area, include_self: true, skip_home: true %>
     <p class="scene-setting__name"><%= link_to room.name, room_path(room) %></p>
     <% if room.description.present? %>
       <details class="scene-setting__description">

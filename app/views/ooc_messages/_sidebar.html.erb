@@ -1,13 +1,13 @@
 <%# Kept in place while moving between pages, so the chat never reloads. %>
 <aside id="ooc-sidebar" class="ooc-sidebar" data-turbo-permanent data-controller="collapsible-sidebar">
   <button type="button" class="ooc-sidebar__toggle" aria-controls="ooc-sidebar-body" aria-expanded="true"
-          title="Hide OOC chat" data-collapsible-sidebar-target="toggle" data-action="collapsible-sidebar#toggle">
+          title="Hide OOC Chat" data-collapsible-sidebar-target="toggle" data-action="collapsible-sidebar#toggle">
     <span class="ooc-sidebar__arrow" aria-hidden="true">›</span>
-    <span class="ooc-sidebar__tab-label">OOC</span>
+    <span class="ooc-sidebar__tab-label">OOC Chat</span>
     <span class="ooc-sidebar__count" data-collapsible-sidebar-target="count" hidden></span>
   </button>
   <div id="ooc-sidebar-body" class="ooc-sidebar__body">
-    <h2 class="ooc-sidebar__title">OOC</h2>
+    <h2 class="ooc-sidebar__title">OOC Chat</h2>
     <%= render "ooc_messages/chat" %>
   </div>
 </aside>

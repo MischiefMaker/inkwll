@@ -16,6 +16,31 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Profile layout
+
+Fields are set by each game; these are the defaults (owner).
+
+- **Player profiles:** the player's icon, player name, an "About me" box, and, when the game shows who plays which character, a list of their characters linking to each profile.
+- **Character profiles** are where everything about a character lives, and should still look good:
+  - **Demographics:** Name, Age, Birthday, Hometown, Occupation and so on. Age is worked out from the Birthday using the game's in-character clock.
+  - **Application:** a separate tab, holding whatever the game makes its application.
+  - **SOUL, Inklings and Grimoire** sections.
+  - **Gallery.**
+  - **Relationships.**
+  - **Logs:** the character's public Manuscripts.
+
+Default picked by Claude: since Age needs the in-character clock, a basic game date (offset and speed) is built with step 4, and the rest of the clock stays in step 7.
+
+## 2026-10-14: OOC Chat look
+
+Called "OOC Chat" everywhere. The header is a coloured bar that stays put while messages scroll, and each message has a very small icon for visual interest (owner).
+
+Default picked by Claude: the icon is the player's initial on a colour picked from their player name, never a character's icon, which could show who plays that character. It can become the player's own uploaded icon once player profiles exist (step 4).
+
+## 2026-10-14: Area names on Chapters and Where
+
+A Chapter shows its Area names in smaller text above the Setting's name, and the Where list shows each Setting's Areas the same way, without links (owner).
+
 ## 2026-10-14: Step 3 details picked while building
 
 Defaults picked by Claude while building Logs and safety, for the owner to check. Any of them can change.

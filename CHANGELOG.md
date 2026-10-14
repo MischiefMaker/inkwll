@@ -15,6 +15,8 @@ Short, plain-language notes on what changed. Newest first.
   Passages included) and browser pop-ups. Every email has a "stop these
   emails" link.
 - "Forgot your password?" on the log-in page emails a reset link.
+- The OOC Chat has its new name, a coloured header bar and a tiny icon by
+  each player. Chapters and the Where list show each Setting's Area names.
 
 ## 2026-10-14 — Step 2: Chapters
 

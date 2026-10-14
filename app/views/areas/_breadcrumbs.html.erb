@@ -1,9 +1,6 @@
 <nav class="breadcrumbs" aria-label="Where this is">
-  <%= link_to "Home", root_path %>
-  <% area.ancestors.each do |ancestor| %>
-    <span aria-hidden="true">›</span> <%= link_to ancestor.name, area_path(ancestor) %>
-  <% end %>
-  <% if local_assigns[:include_self] %>
-    <span aria-hidden="true">›</span> <%= link_to area.name, area_path(area) %>
-  <% end %>
+  <% crumbs = area.ancestors.map { |ancestor| link_to ancestor.name, area_path(ancestor) } %>
+  <% crumbs << link_to(area.name, area_path(area)) if local_assigns[:include_self] %>
+  <% crumbs.unshift(link_to("Home", root_path)) unless local_assigns[:skip_home] %>
+  <%= safe_join(crumbs, tag.span(" › ", aria: { hidden: true })) %>
 </nav>

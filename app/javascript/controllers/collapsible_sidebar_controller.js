@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Folds the OOC chat into the right edge and brings it back out.
+// Folds the OOC Chat into the right edge and brings it back out.
 // While it's folded, the tab counts messages the player hasn't seen.
 // Remembers both the choice and the last message seen in this browser.
 export default class extends Controller {
@@ -28,7 +28,7 @@ export default class extends Controller {
   apply(collapsed) {
     this.element.classList.toggle("ooc-sidebar--collapsed", collapsed)
     this.toggleTarget.setAttribute("aria-expanded", String(!collapsed))
-    this.toggleTarget.title = collapsed ? "Show OOC chat" : "Hide OOC chat"
+    this.toggleTarget.title = collapsed ? "Show OOC Chat" : "Hide OOC Chat"
   }
 
   // Shows the unread count while folded; while open, everything counts as seen.
@@ -45,7 +45,7 @@ export default class extends Controller {
   showCount(count) {
     this.countTarget.hidden = count === 0
     this.countTarget.textContent = count > 99 ? "99+" : String(count)
-    this.toggleTarget.setAttribute("aria-label", count ? `OOC chat, ${count} unread` : "OOC chat")
+    this.toggleTarget.setAttribute("aria-label", count ? `OOC Chat, ${count} unread` : "OOC Chat")
   }
 
   markSeen() {
