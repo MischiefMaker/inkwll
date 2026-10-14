@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_120001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_130001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -116,6 +116,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_120001) do
     t.index ["room_id"], name: "index_characters_on_room_id"
   end
 
+  create_table "conversation_members", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "via_character_id"
+    t.datetime "last_read_at"
+    t.datetime "emailed_at"
+    t.datetime "left_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_conversation_members_on_account_id"
+    t.index ["conversation_id", "account_id"], name: "index_conversation_members_on_conversation_id_and_account_id", unique: true
+    t.index ["conversation_id"], name: "index_conversation_members_on_conversation_id"
+    t.index ["via_character_id"], name: "index_conversation_members_on_via_character_id"
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.string "subject", null: false
+    t.datetime "last_message_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "exits", force: :cascade do |t|
     t.bigint "source_room_id", null: false
     t.bigint "destination_room_id", null: false
@@ -138,6 +160,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_120001) do
     t.integer "auto_finish_days", default: 30, null: false
     t.boolean "block_vpns", default: false, null: false
     t.boolean "guest_chat", default: true, null: false
+    t.boolean "players_public", default: false, null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "account_id"
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_messages_on_account_id"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
   end
 
   create_table "ooc_messages", force: :cascade do |t|
@@ -294,8 +327,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_120001) do
   add_foreign_key "bans", "accounts", column: "banned_by_id"
   add_foreign_key "characters", "accounts"
   add_foreign_key "characters", "rooms"
+  add_foreign_key "conversation_members", "accounts"
+  add_foreign_key "conversation_members", "characters", column: "via_character_id"
+  add_foreign_key "conversation_members", "conversations"
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
+  add_foreign_key "messages", "accounts"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "ooc_messages", "accounts"
   add_foreign_key "poses", "characters"
   add_foreign_key "poses", "scenes"

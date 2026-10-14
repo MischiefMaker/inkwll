@@ -59,6 +59,31 @@ module Notifier
     participant.mark_emailed!
   end
 
+  # A new Messages message: emailed like Chapter activity, one email per
+  # conversation until it's read. "Only after days away" players get it in
+  # their digest instead.
+  def message_posted(message)
+    message.conversation.active_members.each do |member|
+      account = member.account
+      next if account.id == message.account_id || !account.wants_email?
+
+      case account.email_notifications
+      when "every_time" then MessageEmailJob.perform_later(member)
+      when "when_away" then MessageEmailJob.set(wait: AWAY_DELAY).perform_later(member, away_only: true)
+      end
+    end
+  end
+
+  def email_conversation(member, away_only: false)
+    return if member.emailed_since_last_read? || !member.active? || (away_only && member.account.online?)
+
+    messages = member.unread_messages.to_a
+    return if messages.empty?
+
+    NotificationMailer.new_messages(member, messages.last(PASSAGES_PER_EMAIL), messages.size - PASSAGES_PER_EMAIL).deliver_later
+    member.update_column(:emailed_at, Time.current)
+  end
+
   # Characters named after an @ in the Passage, like "@Wren" or "@Mary-Jane O'Neil".
   def mentioned_characters(pose)
     return Character.none unless pose.body.include?("@")

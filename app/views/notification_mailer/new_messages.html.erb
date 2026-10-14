@@ -1,0 +1,13 @@
+<h1 style="font-size:20px"><%= @conversation.subject %></h1>
+<p>New in your Messages.</p>
+<% if @more.positive? %>
+  <p style="color:#666">…and <%= pluralize(@more, "earlier message") %>.</p>
+<% end %>
+<% @messages.each do |message| %>
+  <div style="border-top:1px solid #ddd;padding:12px 0">
+    <p style="margin:0 0 6px"><strong><%= message.sender_label %></strong></p>
+    <%= simple_format message.body, style: "margin:0 0 8px" %>
+  </div>
+<% end %>
+<p><%= link_to "Reply", conversation_url(@conversation) %></p>
+<%= render "footer" %>

@@ -17,6 +17,12 @@
   <p class="muted">Approval isn't built yet; this switch takes effect when it is.</p>
 
   <div class="field field--checkbox">
+    <%= form.check_box :players_public %>
+    <%= form.label :players_public, "Everyone can see who plays which character" %>
+  </div>
+  <p class="muted">When this is off, only staff can see it. Players can still message "the player of" a character, who stays anonymous.</p>
+
+  <div class="field field--checkbox">
     <%= form.check_box :guest_chat %>
     <%= form.label :guest_chat, "Guests can talk in the OOC Chat without logging in" %>
   </div>

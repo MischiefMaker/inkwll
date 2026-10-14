@@ -20,10 +20,19 @@ class NotificationMailer < ApplicationMailer
     notify account, subject: "#{pose.character.name} mentioned you in #{@scene.title}"
   end
 
-  # entries: [participant, passages, more] for each Chapter.
-  def digest(account, entries)
-    @entries = entries
-    notify account, subject: "What you've missed: #{entries.size} #{Term[:scene, count: entries.size].downcase}"
+  def new_messages(member, messages, more)
+    @member, @conversation, @messages, @more = member, member.conversation, messages, more
+    notify member.account, subject: "New message: #{@conversation.subject}"
+  end
+
+  # entries: [participant, passages, more] for each Chapter, and
+  # conversations: [member, messages, more] for each Messages conversation.
+  def digest(account, entries, conversations = [])
+    @entries, @conversations = entries, conversations
+    parts = []
+    parts << "#{entries.size} #{Term[:scene, count: entries.size].downcase}" if entries.any?
+    parts << "#{conversations.size} #{"conversation".pluralize(conversations.size)}" if conversations.any?
+    notify account, subject: "What you've missed: #{parts.to_sentence}"
   end
 
   private

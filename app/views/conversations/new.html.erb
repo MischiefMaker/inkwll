@@ -1,0 +1,24 @@
+<% content_for :title, "New message · Inkwll" %>
+
+<h1 class="page-title">New message</h1>
+
+<%= form_with url: conversations_path, class: "form" do |form| %>
+  <div class="field">
+    <%= form.label :to, "To" %>
+    <%= form.text_field :to, value: @to, required: true, placeholder: "Player names or character names, separated by commas" %>
+    <small class="hint">
+      Use a player name, or a character's name to message whoever plays them.
+      <% unless GameSetting.current.players_public? %>When you use a character's name, they're shown as "the player of" that character and stay anonymous.<% end %>
+      Up to <%= Conversation::MAX_RECIPIENTS %> people.
+    </small>
+  </div>
+  <div class="field">
+    <%= form.label :subject %>
+    <%= form.text_field :subject, value: params[:subject], required: true, maxlength: 120 %>
+  </div>
+  <div class="field">
+    <%= form.label :body, "Message" %>
+    <%= form.text_area :body, value: params[:body], rows: 6, required: true %>
+  </div>
+  <%= form.submit "Send", class: "button" %>
+<% end %>

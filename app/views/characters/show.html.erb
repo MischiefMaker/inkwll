@@ -3,6 +3,9 @@
 <h1 class="character-heading"><%= character_icon(@character, size: :large) %> <%= @character.name %></h1>
 
 <p class="muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
+<% if @character.account_id != current_account.id %>
+  <p class="character__message"><%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %></p>
+<% end %>
 
 <% if @character.description.present? %>
   <div class="prose"><%= simple_format @character.description %></div>

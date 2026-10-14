@@ -174,6 +174,22 @@ form.button_to { display: inline; }
   cursor: pointer;
 }
 
+.message-count--unread { font-weight: bold; }
+.message-count__number { display: inline-block; min-width: 1.2rem; padding: 0 0.3rem; border-radius: 999px; background: var(--color-accent); color: var(--color-accent-text); font-size: 0.75rem; text-align: center; text-decoration: none; }
+.conversations__header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space); }
+.conversations { list-style: none; padding: 0; }
+.conversations__item { padding: 0.7rem 0; border-bottom: 1px solid var(--color-border); }
+.conversations__item--unread .conversations__subject { font-weight: bold; }
+.conversations__meta { font-family: var(--font-ui); font-size: 0.85rem; margin-top: 0.2rem; }
+.conversation__members { font-family: var(--font-ui); }
+.conversation__messages { margin: var(--space) 0; }
+.conversation-message { padding: 0.7rem 0.9rem; margin-bottom: 0.6rem; border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-surface); }
+.conversation-message--mine { background: var(--color-bg); }
+.conversation-message__header { display: flex; gap: 0.5rem; align-items: baseline; font-family: var(--font-ui); font-size: 0.9rem; }
+.conversation-message__sender { font-weight: bold; }
+.conversation-message__body { margin-top: 0.3rem; }
+.conversation__actions { display: flex; justify-content: flex-end; }
+.conversation__leave { margin-top: var(--space); font-size: 0.85rem; }
 .room__save { margin: -0.5rem 0 1rem; font-family: var(--font-ui); font-size: 0.85rem; }
 .my-places { list-style: none; padding: 0; }
 .my-places__item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.6rem 0; border-bottom: 1px solid var(--color-border); }

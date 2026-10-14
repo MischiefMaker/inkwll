@@ -6,4 +6,14 @@ What you've missed
 
 <%= render "passages", passages: passages, more: more %>
 <% end %>
+<% @conversations.each do |member, messages, more| %>
+
+== Message: <%= member.conversation.subject %> ==
+<%= conversation_url(member.conversation) %>
+<% messages.each do |message| %>
+-- <%= message.sender_label %> --
+<%= message.body %>
+
+<% end %>
+<% end %>
 <%= render "footer" %>

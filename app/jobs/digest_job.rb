@@ -1,6 +1,7 @@
 # Runs once a day: players who chose "only after I've been away a while" and
 # have been away that many days get one email covering every Chapter with
-# Passages they haven't seen (and haven't been emailed about).
+# Passages they haven't seen, and every Messages conversation with something
+# new (and haven't been emailed about).
 class DigestJob < ApplicationJob
   queue_as :default
 
@@ -14,10 +15,16 @@ class DigestJob < ApplicationJob
         passages = participant.unread_passages.to_a
         [ participant, passages.last(Notifier::PASSAGES_PER_EMAIL), passages.size - Notifier::PASSAGES_PER_EMAIL ] if passages.any?
       end
-      next if entries.empty?
+      conversations = account.conversation_members.active.includes(:conversation).filter_map do |member|
+        next if member.emailed_since_last_read?
+        messages = member.unread_messages.to_a
+        [ member, messages.last(Notifier::PASSAGES_PER_EMAIL), messages.size - Notifier::PASSAGES_PER_EMAIL ] if messages.any?
+      end
+      next if entries.empty? && conversations.empty?
 
-      NotificationMailer.digest(account, entries).deliver_now
+      NotificationMailer.digest(account, entries, conversations).deliver_now
       entries.each { |participant, _, _| participant.mark_emailed! }
+      conversations.each { |member, _, _| member.update_column(:emailed_at, Time.current) }
     end
   end
 end

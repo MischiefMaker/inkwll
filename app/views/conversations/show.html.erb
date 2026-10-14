@@ -1,0 +1,37 @@
+<% content_for :title, "#{@conversation.subject} · Messages · Inkwll" %>
+<%= turbo_stream_from @conversation %>
+
+<article class="conversation">
+  <p class="breadcrumbs"><%= link_to "Messages", conversations_path %></p>
+  <h1 class="page-title"><%= @conversation.subject %></h1>
+  <p class="conversation__members muted">
+    With <%= @conversation.members.reject { |m| m == @member }.map { |m| m.label + (m.active? ? "" : " (left)") }.to_sentence %>.
+    <% if @member.via_character %>The others see you as "the player of <%= @member.via_character.name %>".<% end %>
+  </p>
+
+  <div class="conversation__messages">
+    <% @conversation.messages.includes(:account).each do |message| %>
+      <div class="conversation-message<%= " conversation-message--mine" if message.account_id == current_account.id %>" id="<%= dom_id message %>">
+        <div class="conversation-message__header">
+          <span class="conversation-message__sender"><%= message.account_id == current_account.id ? "You" : message.sender_label %></span>
+          <time class="conversation-message__time muted" datetime="<%= message.created_at.iso8601 %>"><%= time_ago_in_words(message.created_at) %> ago</time>
+        </div>
+        <div class="conversation-message__body prose"><%= simple_format message.body %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @member.active? %>
+    <%= form_with url: conversation_messages_path(@conversation), scope: :message, id: "reply", class: "form conversation__reply" do |form| %>
+      <%= form.label :body, "Reply", class: "visually-hidden" %>
+      <%= form.text_area :body, rows: 4, required: true, placeholder: "Write a reply…" %>
+      <div class="conversation__actions">
+        <%= form.submit "Send", class: "button" %>
+      </div>
+    <% end %>
+    <%= button_to "Leave this conversation", conversation_membership_path(@conversation), method: :delete, class: "button-link conversation__leave",
+          form: { data: { turbo_confirm: "Leave? You won't get new messages in it." } } %>
+  <% else %>
+    <p class="muted">You left this conversation.</p>
+  <% end %>
+</article>

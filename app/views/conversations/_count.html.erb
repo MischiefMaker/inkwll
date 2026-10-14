@@ -1,0 +1,9 @@
+<%# The Messages link in the header, with how many conversations have
+    something new. Replaced live when a message arrives. %>
+<% unread = account.unread_conversations_count %>
+<%= link_to conversations_path, id: "message_count", class: "message-count#{" message-count--unread" if unread.positive?}",
+      data: { controller: "message-notify", message_notify_count_value: unread,
+              message_notify_level_value: account.browser_notifications,
+              message_notify_latest_value: (account.conversation_members.active.joins(:conversation).maximum("conversations.last_message_at")&.to_i if unread.positive?) } do %>
+  Messages<% if unread.positive? %> <span class="message-count__number"><%= unread %></span><% end %>
+<% end %>

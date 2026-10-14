@@ -1,0 +1,14 @@
+<%= @conversation.subject %>
+
+New in your Messages.
+<% if @more.positive? %>
+...and <%= pluralize(@more, "earlier message") %>.
+<% end %>
+<% @messages.each do |message| %>
+-- <%= message.sender_label %> --
+<%= message.body %>
+
+<% end %>
+Reply: <%= conversation_url(@conversation) %>
+
+<%= render "footer" %>

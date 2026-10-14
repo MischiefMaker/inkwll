@@ -29,6 +29,7 @@ class Account < ApplicationRecord
   has_many :characters, dependent: :destroy
   has_many :remembered_characters, dependent: :delete_all
   has_many :saved_places, dependent: :delete_all
+  has_many :conversation_members, dependent: :destroy
   has_many :ooc_messages, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :account_warnings, dependent: :destroy
@@ -84,6 +85,18 @@ class Account < ApplicationRecord
   # turn order only emails this player when their turn comes up.
   def only_turn_emails_for?(scene)
     email_only_my_turn? && scene.turn_based? && scene.participants.size > 2
+  end
+
+  # Messages conversations with something new in them.
+  def unread_conversations_count
+    conversation_members.active.joins(:conversation)
+      .where("conversations.last_message_at > COALESCE(conversation_members.last_read_at, '-infinity')").count
+  end
+
+  # Updates the Messages count in the header on this player's open pages.
+  def broadcast_message_count
+    Turbo::StreamsChannel.broadcast_replace_later_to [ self, :chapters ], target: "message_count",
+      partial: "conversations/count", locals: { account: self }
   end
 
   # Seen on the site in the last few minutes.

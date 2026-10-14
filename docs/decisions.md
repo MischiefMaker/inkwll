@@ -16,6 +16,18 @@ Old-school MUSHes kept cliques down partly because nobody knew who played which 
 
 Players who want a separate identity for an alt can make a second player account.
 
+## 2026-10-14: Step 3b details picked while building (Messages)
+
+Defaults picked by Claude, for the owner to check:
+
+- **Addressing:** the To box takes player names or character names, separated by commas, up to 8 people. A character's name reaches whoever plays them.
+- **"The player of":** while the game hides players, someone reached through a character's name is shown to the others only as "The player of [character]", on every message they send in that conversation. If one message names two characters played by the same person, they're added once, under the first name.
+- **Game setting:** "Everyone can see who plays which character" is off by default, as decided. When it's on, a character's name simply adds their player by name.
+- **Reading:** only people in a conversation can open it; staff can't read Messages. Anyone can leave a conversation, and the others still see what they wrote.
+- **Alerts:** the header shows "Messages" with a count of conversations that have something new, updated live. New messages are emailed like Chapter activity (one email per conversation until it's read, and in the away-for-days digest), and pop up in the browser for players who chose every Passage or the minutes setting.
+- **Limits:** 10 new conversations and 20 replies a minute per player.
+- Not built yet: reporting a message to staff, and blocking a player. Both are worth adding before launch.
+
 ## 2026-10-14: Ideas taken from the old MUSH logs
 
 Built from the patterns in the owner's old logs, with defaults picked by Claude:

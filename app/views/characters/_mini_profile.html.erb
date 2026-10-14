@@ -8,6 +8,11 @@
     <% if character.description.present? %>
       <p class="text"><%= truncate(character.description, length: 200) %></p>
     <% end %>
-    <p class="text"><%= link_to "View profile", character %></p>
+    <p class="text mini-profile__links">
+      <%= link_to "View profile", character %>
+      <% if character.account_id != current_account&.id %>
+        · <%= link_to "Message the player", new_conversation_path(character_id: character.id) %>
+      <% end %>
+    </p>
   </div>
 </div>

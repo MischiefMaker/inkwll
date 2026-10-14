@@ -47,6 +47,13 @@ Rails.application.routes.draw do
     end
     resources :poses, only: %i[ create edit update destroy ]
   end
+  # Messages: out-of-character conversations between players.
+  resources :conversations, path: "messages", only: %i[ index new create show ] do
+    scope module: :conversations do
+      resources :messages, only: :create
+      resource :membership, only: :destroy
+    end
+  end
   resource :chapter_tabs, only: :show
   get "where", to: "where#show"
   get "archives", to: "archives#index"

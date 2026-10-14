@@ -52,6 +52,15 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.room-here`, `.where-now` | Who is standing here |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
 
+## Messages
+
+| Class | What it is |
+| --- | --- |
+| `.message-count`, `.message-count__number` | The Messages link in the header and its count |
+| `.conversations`, `.conversations__item`, `.conversations__item--unread`, `.conversations__subject`, `.conversations__meta` | The list of conversations |
+| `.conversation`, `.conversation__members`, `.conversation__messages`, `.conversation__reply` | One conversation |
+| `.conversation-message`, `.conversation-message--mine`, `.conversation-message__sender`, `.conversation-message__time`, `.conversation-message__body` | One message |
+
 ## Chapters
 
 | Class | What it is |

@@ -362,6 +362,16 @@ words, and `config/locales/en.yml` maps one to the other.
   a tab is open.
 - **Password reset** by email from the log-in page.
 
+### Step 3b: Messages
+
+- **Messages** (in the header) are out-of-character conversations between
+  players, one-to-one or up to 8 others, with replies in one conversation.
+- The To box takes player names or character names. While the game hides
+  players, someone reached by a character's name shows only as "The player
+  of" that character. "Message the player" links are on mini-profiles and
+  character pages.
+- The header count, emails, the digest and browser pop-ups cover Messages.
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

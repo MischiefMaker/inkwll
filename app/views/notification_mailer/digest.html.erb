@@ -4,4 +4,13 @@
   <p style="color:#666"><%= participant.scene.room.name %> · as <%= participant.character.name %><%= " · your turn" if participant.scene.turn_of?(participant) %></p>
   <%= render "passages", passages: passages, more: more %>
 <% end %>
+<% @conversations.each do |member, messages, more| %>
+  <h2 style="font-size:17px;margin-top:24px">Message: <%= link_to member.conversation.subject, conversation_url(member.conversation) %></h2>
+  <% messages.each do |message| %>
+    <div style="border-top:1px solid #ddd;padding:12px 0">
+      <p style="margin:0 0 6px"><strong><%= message.sender_label %></strong></p>
+      <%= simple_format message.body, style: "margin:0 0 8px" %>
+    </div>
+  <% end %>
+<% end %>
 <%= render "footer" %>

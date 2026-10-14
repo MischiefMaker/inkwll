@@ -1,0 +1,27 @@
+<% content_for :title, "Messages · Inkwll" %>
+
+<div class="conversations__header">
+  <h1 class="page-title">Messages</h1>
+  <%= link_to "New message", new_conversation_path, class: "button" %>
+</div>
+<p class="muted">Out-of-character messages between players.</p>
+
+<% if @members.any? %>
+  <ul class="conversations">
+    <% @members.each do |member| %>
+      <% conversation = member.conversation %>
+      <% others = conversation.members.reject { |m| m.account_id == current_account.id } %>
+      <li class="conversations__item<%= " conversations__item--unread" if member.unread? %>">
+        <%= link_to conversation.subject, conversation_path(conversation), class: "conversations__subject" %>
+        <% if member.unread? %><span class="badge badge--turn conversations__new">New</span><% end %>
+        <div class="conversations__meta muted">
+          With <%= others.map(&:label).to_sentence %>
+          · <%= time_ago_in_words(conversation.last_message_at || conversation.created_at) %> ago
+          <% if member.via_character %>· you're "the player of <%= member.via_character.name %>" here<% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text">No messages yet.</p>
+<% end %>

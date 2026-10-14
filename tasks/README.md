@@ -22,3 +22,4 @@ Done tasks stay in this folder as a record.
 | [0010: Finishing Chapters and the Archives](0010-finishing-and-archives.md) | Review | No | 3. Logs and safety |
 | [0011: Reports, warnings and bans](0011-reports-and-bans.md) | Review | No | 3. Logs and safety |
 | [0012: Email and browser notifications](0012-notifications.md) | Review | No | 3. Logs and safety |
+| [0013: Messages](0013-messages.md) | Review | No | 3b. Messages |
