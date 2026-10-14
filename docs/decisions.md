@@ -8,6 +8,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ---
 
+## 2026-10-14: What staff can do with a report
+
+Once a Chapter is reported, staff can read that Chapter, lock it, hide a Passage (the original is kept, never deleted) and send the player a warning. Suspending or banning a player is a separate admin-panel action for Scribes and Wellkeepers.
+
 ## 2026-10-14: Finishing Chapters
 
 Anyone in a Chapter can finish it, which locks its Passages and files it in the Archives as a Manuscript. The other players get a notice and can undo the finish within 24 hours.

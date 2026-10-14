@@ -194,6 +194,10 @@ Items built in step 1 are marked ✅.
   the previous pose and skips them 2 minutes later unless they click
   "I'm here!". Posting out of turn shows a warning with a "Post anyway"
   button.
+- [Decided] Any player can finish a scene (24-hour undo). Scenes go idle after
+  7 days without a pose and finish on their own after 30 (game settings).
+- [Decided] On a report, staff can read, lock the scene, hide a pose (original
+  kept) and warn the player.
 - [Decided] Players can edit their own poses until the scene finishes; edited
   poses are marked, and staff can see the original.
 - [Decided] The 3-pose rule is only available in scenes with four or more

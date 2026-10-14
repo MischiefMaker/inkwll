@@ -32,13 +32,9 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 - A 3-pose scene that drops below four players switches to turn-based.
 - Deleting a pose leaves a "pose removed" note.
 
-**Before step 3: Logs and safety**
-
-2. What staff can do with a report (read the log, lock the scene, remove a pose, warn a player).
 
 **Before SOUL, Inklings and Grimoire**
 
-3. Which SOUL pieces make the first version (see steps 5 and 6 above).
 4. Exactly which SOUL and Inklings tools storytellers get, and which details count as secret.
 5. When a game turns character approval off, when does Resonance lock (at creation, or at the first scene)?
 6. How much XP a finished scene gives, and whether there is a weekly cap.
