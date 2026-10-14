@@ -1,5 +1,6 @@
 world:
   name: The World
+  entrance_room: commons
 
 castle:
   name: Castle

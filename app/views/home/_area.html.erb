@@ -1,0 +1,28 @@
+<%# A top-level Area on the front page. The name opens its entrance Setting;
+    the arrow beside it lists shortcuts to everywhere inside. %>
+<% entrance = area.entrance %>
+<article class="area-card">
+  <% if area.image.attached? %>
+    <%= link_to image_tag(area.image, alt: area.name, class: "area-card__image"), entrance ? room_path(entrance) : area_path(area) %>
+  <% end %>
+  <div class="area-card__body">
+    <h2 class="area-card__title">
+      <%= link_to area.name, entrance ? room_path(entrance) : area_path(area) %>
+      <% shortcuts = area.all_rooms %>
+      <% if shortcuts.size > 1 %>
+        <details class="shortcuts">
+          <summary aria-label="Shortcuts in <%= area.name %>"></summary>
+          <div class="shortcuts__items">
+            <%= link_to "Overview of #{area.name}", area_path(area), class: "muted" %>
+            <% shortcuts.each do |room| %>
+              <%= link_to room.name, room_path(room) %>
+            <% end %>
+          </div>
+        </details>
+      <% end %>
+    </h2>
+    <% if area.description.present? %>
+      <p class="area-card__description"><%= area.description %></p>
+    <% end %>
+  </div>
+</article>

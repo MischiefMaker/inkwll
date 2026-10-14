@@ -5,14 +5,33 @@ class Area < ApplicationRecord
   include DescribedWithImage
 
   belongs_to :parent, class_name: "Area", optional: true
+  # The Setting players arrive at when they open this area.
+  belongs_to :entrance_room, class_name: "Room", optional: true
   has_many :children, -> { order(:position, :name) }, class_name: "Area", foreign_key: :parent_id,
     dependent: :restrict_with_error, inverse_of: :parent
   has_many :rooms, -> { order(:name) }, dependent: :restrict_with_error
 
   validates :name, presence: true, length: { maximum: 80 }
   validate :parent_is_not_inside_itself
+  validate :entrance_is_inside_this_area
 
   scope :top_level, -> { where(parent_id: nil).order(:position, :name) }
+
+  # Where players arrive when they open this area: its chosen entrance, or
+  # failing that its first Setting, or the entrance of the first area inside it.
+  def entrance
+    return entrance_room || rooms.first if entrance_room || rooms.any?
+    children.each do |child|
+      found = child.entrance
+      return found if found
+    end
+    nil
+  end
+
+  # Every Setting in this area and the areas inside it, for shortcut lists.
+  def all_rooms
+    Room.where(area_id: [ id, *descendant_ids ]).order(:name)
+  end
 
   # The areas above this one, outermost first: [Hogwarts, Castle] for First Floor.
   def ancestors
@@ -43,6 +62,13 @@ class Area < ApplicationRecord
   end
 
   private
+    def entrance_is_inside_this_area
+      return unless entrance_room
+      unless entrance_room.area_id == id || (persisted? && descendant_ids.include?(entrance_room.area_id))
+        errors.add(:entrance_room, "must be a #{Term[:room].downcase} inside this #{Term[:area].downcase}")
+      end
+    end
+
     def parent_is_not_inside_itself
       return unless parent_id && persisted?
       if parent_id == id || descendant_ids.include?(parent_id)

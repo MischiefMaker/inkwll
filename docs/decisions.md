@@ -12,6 +12,15 @@ Keep forum RP's easy navigation and many Chapters at once, but make the grid fee
 
 ---
 
+## 2026-10-14: Front page shows Areas, each with an entrance
+
+- The front page shows only the top-level Areas (image, name, description), not every Setting.
+- Each Area has an entrance Setting, chosen by builders (or its first Setting). Opening an Area takes you to its entrance, and players walk the Paths from there.
+- An arrow beside each Area's name drops down shortcuts to every Setting inside it, so getting somewhere is never too hard.
+- The admin panel has its own tabs.
+
+Why: encourage people to travel the connected grid for an old-school MUSH feel, without making it hard to reach where they're going. Still open: whether opening an Area or a shortcut moves your character there or only lets you look (see `roadmap.md`).
+
 ## 2026-10-14: The "Where" list
 
 A "Where" page (like a MUSH's `where` command) shows where characters are. Settled so far: a public (joinable) Chapter is shown with a link to it, and private or hidden Chapters are never shown. For each character it shows the Setting they stand in, plus each public Chapter they've posted in recently, linked (for example: Wren, Great Hall, also in "Duel at Dawn" in the Forest).

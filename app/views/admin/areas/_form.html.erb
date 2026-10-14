@@ -9,6 +9,13 @@
     <%= form.label :parent_id, "Inside" %>
     <%= form.select :parent_id, Area.nested_options(except: area.persisted? ? area : nil), include_blank: "Nothing (shown on the front page)" %>
   </div>
+  <% if area.persisted? %>
+    <div class="field">
+      <%= form.label :entrance_room_id, "Entrance" %>
+      <%= form.collection_select :entrance_room_id, area.all_rooms, :id, :name, include_blank: "The first #{term(:room).downcase} (alphabetically)" %>
+      <small>Where players arrive when they open this <%= term(:area).downcase %>. From there they walk the <%= term(:exit, count: 2).downcase %>.</small>
+    </div>
+  <% end %>
   <div class="field">
     <%= form.label :position, "Order" %>
     <%= form.number_field :position %>

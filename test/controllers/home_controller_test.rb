@@ -6,13 +6,20 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
   end
 
-  test "lists the top-level areas and says where the active character is" do
+  test "lists the top-level areas, each opening at its entrance" do
     sign_in_as(accounts(:alice))
     get root_path
 
     assert_response :success
-    assert_select ".board__title", "The World"
+    assert_select ".area-card__title > a[href=?]", room_path(rooms(:commons)), text: "The World"
+    assert_select ".area-card", count: 1
     assert_select ".where-now a", "The Commons"
+  end
+
+  test "the arrow beside an area lists shortcuts to its settings" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".shortcuts a", "Garden"
   end
 
   test "players without characters are asked to make one" do

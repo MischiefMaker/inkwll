@@ -28,7 +28,7 @@
       <div class="layout">
         <main class="main">
           <%= render "shared/flash" %>
-          <%= yield %>
+          <%= content_for?(:admin_content) ? yield(:admin_content) : yield %>
         </main>
         <%= render "ooc_messages/sidebar" unless content_for?(:hide_ooc_sidebar) %>
       </div>

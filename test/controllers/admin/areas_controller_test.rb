@@ -25,4 +25,21 @@ class Admin::AreasControllerTest < ActionDispatch::IntegrationTest
     get admin_areas_path
     assert_redirected_to root_path
   end
+
+  test "an area's entrance must be inside it" do
+    sign_in_as(accounts(:builder))
+
+    patch admin_area_path(areas(:castle)), params: { area: { entrance_room_id: rooms(:commons).id } }
+    assert_response :unprocessable_entity
+
+    patch admin_area_path(areas(:world)), params: { area: { entrance_room_id: rooms(:garden).id } }
+    assert_equal rooms(:garden), areas(:world).reload.entrance
+  end
+
+  test "the admin panel shows only the tabs a Page may use" do
+    sign_in_as(accounts(:builder))
+    get admin_root_path
+    assert_select ".admin-tabs a", text: "Building"
+    assert_select ".admin-tabs a", text: "Players and staff", count: 0
+  end
 end

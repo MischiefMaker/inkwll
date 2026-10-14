@@ -28,6 +28,10 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 All open design questions were answered on 2026-10-14. New ones get added here as they come up.
 
+**Travel**
+
+- Does opening an Area or a shortcut move your character there, or only let you look?
+
 **To revisit later**
 
 - A themed word for Areas (kept as "Area" for now).
