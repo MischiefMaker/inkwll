@@ -1,0 +1,32 @@
+<%# Shown when a Chapter is finished or locked: undo, and for hidden
+    Chapters, each player's say on making the Manuscript public. %>
+<% if scene.locked? %>
+  <p class="notice-box">Staff have locked this <%= term(:scene).downcase %>. Nobody can post in it for now.</p>
+<% end %>
+<% if scene.finished? %>
+  <div class="notice-box">
+    <p>
+      Finished<%= " by #{scene.finished_by.name}" if scene.finished_by %> on <%= scene.finished_at.to_date.to_fs(:long) %>.
+      It's in the <%= link_to term(:logs_collection), archives_path(room_id: scene.room_id) %> as a <%= term(:log).downcase %>.
+    </p>
+    <% if participant && scene.can_undo_finish? %>
+      <%= button_to "Undo finish", scene_finish_path(scene), method: :delete, class: "button button--quiet" %>
+      <span class="muted">Possible until <%= l(scene.finished_at + Scene::UNDO_FINISH_WITHIN, format: :short) %> UTC.</span>
+    <% end %>
+    <% if scene.visibility_hidden? %>
+      <% if scene.made_public_at %>
+        <p>Every player agreed to make this <%= term(:log).downcase %> public.</p>
+      <% elsif scene.participating?(current_account) %>
+        <p>
+          This <%= term(:log).downcase %> stays private to its players unless all of them agree to make it public.
+          Agreed so far: <%= scene.participants.count(&:public_consent_at) %> of <%= scene.participants.size %>.
+        </p>
+        <% if participant&.public_consent_at %>
+          <%= button_to "Take back my agreement", scene_public_consent_path(scene), method: :delete, class: "button-link" %>
+        <% elsif participant %>
+          <%= button_to "I agree to make it public", scene_public_consent_path(scene), class: "button button--quiet" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

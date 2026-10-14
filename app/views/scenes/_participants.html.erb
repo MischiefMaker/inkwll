@@ -11,7 +11,7 @@
     <% end %>
   </ul>
 
-  <% if participant %>
+  <% if participant && scene.writable? %>
     <div class="scene-people__actions">
       <% if current_account.may_storytell? %>
         <%= button_to participant.storyteller? ? "Stop being #{term(:storyteller).downcase}" : "Be the #{term(:storyteller).downcase}",
@@ -19,10 +19,12 @@
       <% end %>
       <%= button_to "Leave", scene_participation_path(scene), method: :delete, class: "button-link",
             form: { data: { turbo_confirm: "#{participant.character.name} will leave #{scene.title}. Leave?" } } %>
+      <%= button_to "Finish #{term(:scene).downcase}", scene_finish_path(scene), class: "button-link",
+            form: { data: { turbo_confirm: "Finish #{scene.title}? Its #{term(:pose, count: 2).downcase} will be locked and it moves to the #{term(:logs_collection)}. The others can undo this for 24 hours." } } %>
     </div>
   <% end %>
 
-  <% if scene.participating?(current_account) && !scene.visibility_joinable? %>
+  <% if scene.participating?(current_account) && !scene.visibility_joinable? && !scene.finished? %>
     <%= form_with url: scene_invitations_path(scene), class: "form form--inline scene-people__invite" do |form| %>
       <%= form.label :name, "Invite a character", class: "visually-hidden" %>
       <%= form.text_field :name, placeholder: "Character name", required: true %>

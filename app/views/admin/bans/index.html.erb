@@ -1,0 +1,34 @@
+<% content_for :title, "Bans · Admin · Inkwll" %>
+
+<h1>Bans</h1>
+<p><%= link_to "New ban", new_admin_ban_path, class: "button" %></p>
+
+<% if @bans.any? %>
+  <table class="table">
+    <thead><tr><th>Who</th><th>Why</th><th>Until</th><th>By</th><th></th></tr></thead>
+    <tbody>
+      <% @bans.each do |ban| %>
+        <tr class="<%= "muted" unless ban.in_force? %>">
+          <td><%= ban.account&.display_name %><%= " · " if ban.account && ban.ip_range %><%= ban.ip_range %></td>
+          <td><%= ban.reason %></td>
+          <td><%= ban.lifted_at ? "Lifted" : (ban.expires_at ? ban.expires_at.to_date.to_fs(:long) : "Permanent") %></td>
+          <td><%= ban.banned_by.display_name %></td>
+          <td><% if ban.in_force? %><%= button_to "Lift", admin_ban_path(ban), method: :patch, class: "button-link" %><% end %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">Nobody is banned.</p>
+<% end %>
+
+<h2>VPN block</h2>
+<p class="muted">
+  For when the game is being brigaded. Blocks logging in and signing up from known VPN and data-centre addresses,
+  using a free list that's downloaded once a day. Some honest players use VPNs too, so turn it off again afterwards.
+</p>
+<%= form_with url: admin_ban_path("vpn"), method: :patch, class: "form form--inline" do |form| %>
+  <label class="field--checkbox"><%= check_box_tag :block_vpns, "1", @settings.block_vpns? %> Block known VPNs</label>
+  <%= form.submit "Save", class: "button" %>
+<% end %>
+<p class="muted"><%= pluralize(VpnRange.count, "address range") %> on the list.</p>

@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   stale_when_importmap_changes
 
   helper_method :current_account, :current_character
+  before_action :note_last_seen
+
 
   private
     def current_account
@@ -15,6 +17,14 @@ class ApplicationController < ActionController::Base
 
     def current_character
       current_account&.active_character
+    end
+
+    # When the player was last on the site, for "only when I'm away" emails.
+    # Saved at most once a minute.
+    def note_last_seen
+      account = current_account
+      return unless account && (account.last_seen_at.nil? || account.last_seen_at < 1.minute.ago)
+      account.update_column(:last_seen_at, Time.current)
     end
 
     def require_character

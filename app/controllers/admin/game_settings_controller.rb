@@ -8,7 +8,10 @@ class Admin::GameSettingsController < Admin::BaseController
 
   def update
     @game_setting = GameSetting.current
-    @game_setting.update!(params.expect(game_setting: [ :email_required, :approval_required ]))
-    redirect_to edit_admin_game_settings_path, notice: "Game settings saved."
+    if @game_setting.update(params.expect(game_setting: [ :email_required, :approval_required, :auto_skip, :turn_minutes, :idle_days, :auto_finish_days ]))
+      redirect_to edit_admin_game_settings_path, notice: "Game settings saved."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 end

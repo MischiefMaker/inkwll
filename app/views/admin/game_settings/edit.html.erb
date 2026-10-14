@@ -3,6 +3,7 @@
 <h1>Game settings</h1>
 
 <%= form_with model: @game_setting, url: admin_game_settings_path, method: :patch, class: "form" do |form| %>
+  <%= render "shared/errors", record: @game_setting %>
   <div class="field field--checkbox">
     <%= form.check_box :email_required %>
     <%= form.label :email_required, "New accounts must give an email address" %>
@@ -14,6 +15,25 @@
     <%= form.label :approval_required, "Characters need staff approval before they can play" %>
   </div>
   <p class="muted">Approval isn't built yet; this switch takes effect when it is.</p>
+
+  <h2><%= term(:scene, count: 2) %></h2>
+  <div class="field field--checkbox">
+    <%= form.check_box :auto_skip %>
+    <%= form.label :auto_skip, "New #{term(:scene, count: 2).downcase} auto-skip players who don't take their turn" %>
+  </div>
+  <div class="field">
+    <%= form.label :turn_minutes, "Minutes before the turn warning" %>
+    <%= form.number_field :turn_minutes, min: 1, max: 120 %>
+    <small>Each <%= term(:scene).downcase %> can change both of these.</small>
+  </div>
+  <div class="field">
+    <%= form.label :idle_days, "Days without a #{term(:pose).downcase} before a #{term(:scene).downcase} counts as idle" %>
+    <%= form.number_field :idle_days, min: 1, max: 365 %>
+  </div>
+  <div class="field">
+    <%= form.label :auto_finish_days, "Days without a #{term(:pose).downcase} before a #{term(:scene).downcase} finishes on its own" %>
+    <%= form.number_field :auto_finish_days, min: 2, max: 3650 %>
+  </div>
 
   <%= form.submit "Save", class: "button" %>
 <% end %>

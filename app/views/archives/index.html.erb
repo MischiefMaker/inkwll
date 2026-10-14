@@ -1,0 +1,13 @@
+<% content_for :title, "#{term(:logs_collection)} · Inkwll" %>
+
+<h1><%= term(:logs_collection) %></h1>
+<p class="muted">
+  Finished <%= term(:scene, count: 2).downcase %>, newest first<%= ", in #{@room.name}" if @room %><%= ", with #{@character.name}" if @character %>.
+  <% if @room || @character %><%= link_to "Show all", archives_path %><% end %>
+</p>
+
+<% if @scenes.any? %>
+  <%= render partial: "archives/manuscript", collection: @scenes, as: :scene %>
+<% else %>
+  <p class="muted">No <%= term(:log, count: 2).downcase %> yet.</p>
+<% end %>

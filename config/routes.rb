@@ -12,11 +12,15 @@ Rails.application.routes.draw do
     resource :movement, only: :create
   end
   resources :ooc_messages, only: %i[ index create ]
+  resources :warnings, only: :update
 
   # Scenes are shown to players as Chapters, and poses as Passages.
   resources :scenes, only: %i[ show create edit update ] do
     scope module: :scenes do
       resource :participation, only: %i[ create update destroy ]
+      resource :finish, only: %i[ create destroy ]
+      resource :public_consent, only: %i[ create destroy ]
+      resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
       resource :reading, only: :update
       resource :turn, only: [] do
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
   end
   resource :chapter_tabs, only: :show
   get "where", to: "where#show"
+  get "archives", to: "archives#index"
 
   # The admin panel. Each section checks the visitor's staff level.
   namespace :admin do
@@ -40,6 +45,15 @@ Rails.application.routes.draw do
     resources :accounts, only: %i[ index edit update ]
     resources :characters, only: %i[ index destroy ]
     resource :game_settings, only: %i[ edit update ]
+    resources :reports, only: %i[ index show update ]
+    resources :poses, only: [] do
+      resource :hiding, only: :create
+    end
+    resources :scenes, only: [] do
+      resource :lock, only: %i[ create destroy ]
+    end
+    resources :warnings, only: %i[ new create ]
+    resources :bans, only: %i[ index new create update ]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

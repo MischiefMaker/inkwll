@@ -22,7 +22,7 @@
         <% end %>
         <time class="pose__time muted" datetime="<%= pose.created_at.iso8601 %>" title="<%= pose.created_at.utc.to_fs(:long) %> UTC"><%= time_ago_in_words(pose.created_at) %> ago</time>
         <% if pose.edited? && !pose.removed? %><span class="pose__edited muted">(edited)</span><% end %>
-        <% if mine && !pose.removed? %>
+        <% if mine && !pose.removed? && scene.writable? %>
           <span class="pose__actions">
             <%= link_to "Edit", edit_scene_pose_path(scene, pose) %>
             <%= button_to "Remove", scene_pose_path(scene, pose), method: :delete, class: "button-link",
@@ -30,10 +30,25 @@
           </span>
         <% end %>
       </header>
-      <% if pose.removed? %>
+      <% staff_view = scene.reported_to?(current_account) %>
+      <% if pose.hidden_by_staff? && !staff_view %>
+        <p class="muted pose__body">Hidden by staff.</p>
+      <% elsif pose.removed? && !staff_view %>
         <p class="muted pose__body"><%= term(:pose) %> removed.</p>
       <% else %>
+        <% if staff_view && (pose.hidden_by_staff? || pose.removed?) %>
+          <p class="pose__staff-note"><%= pose.hidden_by_staff? ? "Hidden by staff" : "Removed by its player" %> (only staff see this text)</p>
+        <% end %>
         <div class="pose__body prose"><%= simple_format pose.body %></div>
+        <% if staff_view && pose.original_body %>
+          <details class="pose__original"><summary>Original, before editing (staff only)</summary><div class="prose"><%= simple_format pose.original_body %></div></details>
+        <% end %>
+      <% end %>
+      <% if staff_view && !pose.hidden_by_staff? %>
+        <%= button_to "Hide (staff)", admin_pose_hiding_path(pose), class: "button-link pose__staff-action",
+              form: { data: { turbo_confirm: "Hide this #{term(:pose).downcase} from players? The text is kept." } } %>
+      <% elsif !mine %>
+        <%= link_to "Report", new_scene_report_path(scene, pose_id: pose.id), class: "pose__report" %>
       <% end %>
     </div>
   </article>

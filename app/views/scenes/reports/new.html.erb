@@ -1,0 +1,27 @@
+<% content_for :title, "Report · Inkwll" %>
+
+<h1>Report <%= @report.pose ? "a #{term(:pose).downcase}" : "this #{term(:scene).downcase}" %></h1>
+<p>In <%= link_to @scene.title, scene_path(@scene) %>.</p>
+<p class="notice-box">
+  Staff will be able to read this whole <%= term(:scene).downcase %>, even if it's private or hidden, so they can look into your report.
+  They can't read private or hidden <%= term(:scene, count: 2).downcase %> that haven't been reported.
+</p>
+
+<% if @report.pose %>
+  <blockquote class="report-quote">
+    <strong><%= @report.pose.character&.name %>:</strong> <%= truncate(@report.pose.body, length: 400) %>
+  </blockquote>
+<% end %>
+
+<%= form_with model: @report, url: scene_reports_path(@scene), class: "form" do |form| %>
+  <%= render "shared/errors", record: @report %>
+  <%= form.hidden_field :pose_id %>
+  <div class="field">
+    <%= form.label :reason, "What's wrong?" %>
+    <%= form.text_area :reason, rows: 6, required: true, autofocus: true %>
+  </div>
+  <div class="form--inline">
+    <%= form.submit "Send report", class: "button" %>
+    <%= link_to "Cancel", scene_path(@scene) %>
+  </div>
+<% end %>

@@ -8,6 +8,10 @@ class RegistrationsController < ApplicationController
   end
 
   def create
+    if (refusal = access_refusal_for)
+      return redirect_to new_registration_path, alert: refusal
+    end
+
     @account = Account.new(params.expect(account: [ :display_name, :email, :email_notifications, :password, :password_confirmation ]))
     if @account.save
       start_new_session_for @account

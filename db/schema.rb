@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_080001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "account_warnings", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "staff_id", null: false
+    t.bigint "report_id"
+    t.text "body", null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_warnings_on_account_id"
+    t.index ["report_id"], name: "index_account_warnings_on_report_id"
+    t.index ["staff_id"], name: "index_account_warnings_on_staff_id"
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "username", null: false
@@ -27,6 +40,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.boolean "storyteller", default: false, null: false
     t.string "job_flags", default: [], null: false, array: true
     t.string "email_notifications", default: "off", null: false
+    t.datetime "last_seen_at"
+    t.integer "email_after_days", default: 3, null: false
+    t.boolean "email_only_my_turn", default: false, null: false
+    t.string "browser_notifications", default: "off", null: false
+    t.integer "browser_notify_minutes", default: 5, null: false
     t.index "lower((email)::text)", name: "index_accounts_on_lower_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["active_character_id"], name: "index_accounts_on_active_character_id"
     t.index ["username"], name: "index_accounts_on_username", unique: true
@@ -72,6 +90,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.index ["parent_id"], name: "index_areas_on_parent_id"
   end
 
+  create_table "bans", force: :cascade do |t|
+    t.bigint "account_id"
+    t.cidr "ip_range"
+    t.text "reason", null: false
+    t.bigint "banned_by_id", null: false
+    t.datetime "expires_at"
+    t.datetime "lifted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_bans_on_account_id"
+    t.index ["banned_by_id"], name: "index_bans_on_banned_by_id"
+  end
+
   create_table "characters", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "room_id", null: false
@@ -102,6 +133,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.datetime "updated_at", null: false
     t.boolean "auto_skip", default: true, null: false
     t.integer "turn_minutes", default: 5, null: false
+    t.integer "idle_days", default: 7, null: false
+    t.integer "auto_finish_days", default: 30, null: false
+    t.boolean "block_vpns", default: false, null: false
   end
 
   create_table "ooc_messages", force: :cascade do |t|
@@ -123,6 +157,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.datetime "removed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "hidden_by_staff_at"
     t.index ["character_id"], name: "index_poses_on_character_id"
     t.index ["scene_id", "sequence"], name: "index_poses_on_scene_id_and_sequence", unique: true
     t.index ["scene_id"], name: "index_poses_on_scene_id"
@@ -138,6 +173,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.index ["account_id", "context_type", "context_id"], name: "index_remembered_characters_on_account_and_context", unique: true
     t.index ["account_id"], name: "index_remembered_characters_on_account_id"
     t.index ["character_id"], name: "index_remembered_characters_on_character_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "scene_id", null: false
+    t.bigint "pose_id"
+    t.bigint "account_id", null: false
+    t.text "reason", null: false
+    t.datetime "resolved_at"
+    t.bigint "resolved_by_id"
+    t.text "resolution"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_reports_on_account_id"
+    t.index ["pose_id"], name: "index_reports_on_pose_id"
+    t.index ["resolved_by_id"], name: "index_reports_on_resolved_by_id"
+    t.index ["scene_id"], name: "index_reports_on_scene_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -168,6 +219,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.integer "last_read_sequence", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "public_consent_at"
+    t.integer "notified_up_to", default: 0, null: false
     t.index ["character_id"], name: "index_scene_participants_on_character_id"
     t.index ["scene_id", "character_id"], name: "index_scene_participants_on_scene_id_and_character_id", unique: true
     t.index ["scene_id"], name: "index_scene_participants_on_scene_id"
@@ -188,6 +241,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.datetime "last_pose_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "finished_at"
+    t.bigint "finished_by_id"
+    t.datetime "locked_at"
+    t.datetime "made_public_at"
+    t.index ["finished_at"], name: "index_scenes_on_finished_at"
+    t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"
     t.index ["room_id"], name: "index_scenes_on_room_id"
   end
@@ -201,11 +260,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
     t.index ["account_id"], name: "index_sessions_on_account_id"
   end
 
+  create_table "vpn_ranges", force: :cascade do |t|
+    t.cidr "range", null: false
+    t.index ["range"], name: "index_vpn_ranges_on_range", opclass: :inet_ops, using: :gist
+  end
+
+  add_foreign_key "account_warnings", "accounts"
+  add_foreign_key "account_warnings", "accounts", column: "staff_id"
+  add_foreign_key "account_warnings", "reports"
   add_foreign_key "accounts", "characters", column: "active_character_id", on_delete: :nullify
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "areas", "areas", column: "parent_id"
   add_foreign_key "areas", "rooms", column: "entrance_room_id", on_delete: :nullify
+  add_foreign_key "bans", "accounts"
+  add_foreign_key "bans", "accounts", column: "banned_by_id"
   add_foreign_key "characters", "accounts"
   add_foreign_key "characters", "rooms"
   add_foreign_key "exits", "rooms", column: "destination_room_id"
@@ -215,11 +284,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_070001) do
   add_foreign_key "poses", "scenes"
   add_foreign_key "remembered_characters", "accounts"
   add_foreign_key "remembered_characters", "characters", on_delete: :cascade
+  add_foreign_key "reports", "accounts"
+  add_foreign_key "reports", "accounts", column: "resolved_by_id"
+  add_foreign_key "reports", "poses"
+  add_foreign_key "reports", "scenes"
   add_foreign_key "rooms", "areas"
   add_foreign_key "scene_invitations", "characters"
   add_foreign_key "scene_invitations", "scenes"
   add_foreign_key "scene_participants", "characters"
   add_foreign_key "scene_participants", "scenes"
+  add_foreign_key "scenes", "characters", column: "finished_by_id", on_delete: :nullify
   add_foreign_key "scenes", "rooms"
   add_foreign_key "scenes", "scene_participants", column: "current_turn_participant_id", on_delete: :nullify
   add_foreign_key "sessions", "accounts"

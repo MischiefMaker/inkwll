@@ -19,6 +19,29 @@ module Authentication
 
     def require_authentication
       resume_session || request_authentication
+      end_banned_session if Current.session
+    end
+
+    # A ban ends any session the player already has.
+    def end_banned_session
+      if (ban = Ban.for(account: Current.session.account, ip: request.remote_ip))
+        terminate_session
+        redirect_to new_session_path, alert: ban_message(ban)
+      end
+    end
+
+    # Bans, plus the optional block on known VPN addresses, keep people from
+    # logging in or signing up.
+    def access_refusal_for(account = nil)
+      if (ban = Ban.for(account: account, ip: request.remote_ip))
+        ban_message(ban)
+      elsif GameSetting.current.block_vpns? && VpnRange.covers?(request.remote_ip)
+        "This game doesn't allow logging in or signing up from a VPN right now. Please switch it off and try again."
+      end
+    end
+
+    def ban_message(ban)
+      "You're banned from this game #{ban.duration_in_words}. Reason: #{ban.reason}"
     end
 
     def resume_session

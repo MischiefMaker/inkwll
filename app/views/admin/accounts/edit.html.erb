@@ -30,3 +30,15 @@
 
   <%= form.submit "Save", class: "button" %>
 <% end %>
+
+<% if current_account.can?(:ban) %>
+  <section>
+    <h2>Safety</h2>
+    <% addresses = @account.sessions.where.not(ip_address: nil).order(created_at: :desc).limit(10).pluck(:ip_address).uniq %>
+    <p class="muted">Recent IP addresses: <%= addresses.any? ? addresses.join(", ") : "none recorded" %></p>
+    <p>
+      <%= link_to "Ban #{@account.display_name}", new_admin_ban_path(account_id: @account.id) %> ·
+      <%= link_to "Warn #{@account.display_name}", new_admin_warning_path(account_id: @account.id) %>
+    </p>
+  </section>
+<% end %>

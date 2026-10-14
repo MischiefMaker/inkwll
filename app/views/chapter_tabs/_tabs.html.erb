@@ -1,6 +1,7 @@
 <%# The player's open Chapters as tabs, each showing its Setting, an unread
     count and whether it's their turn. Reloads live (see chapter_tabs/_frame). %>
 <% participations = SceneParticipant.joins(:scene).where(character: account.characters)
+     .where("scenes.finished_at IS NULL OR scenes.finished_at > ?", Scene::UNDO_FINISH_WITHIN.ago)
      .includes(:character, scene: :room).merge(Scene.by_activity) %>
 <% several_characters = participations.map(&:character_id).uniq.size > 1 %>
 <% unread_total = 0 %>
@@ -17,7 +18,9 @@
           <span class="chapter-tab__setting">
             <%= scene.room.name %><%= " · #{participant.character.name}" if several_characters %>
           </span>
-          <% if scene.turn_of?(participant) %>
+          <% if scene.finished? %>
+            <span class="chapter-tab__turn">Finished</span>
+          <% elsif scene.turn_of?(participant) %>
             <span class="chapter-tab__turn">Your turn</span>
           <% end %>
           <% if unread.positive? %>

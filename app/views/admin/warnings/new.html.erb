@@ -1,0 +1,15 @@
+<% content_for :title, "Warn a player · Admin · Inkwll" %>
+
+<h1>Warn <%= @warning.account&.display_name || "a player" %></h1>
+<p class="muted">They'll see this at the top of every page until they mark it as read.</p>
+
+<%= form_with model: @warning, url: admin_warnings_path, class: "form" do |form| %>
+  <%= render "shared/errors", record: @warning %>
+  <%= form.hidden_field :account_id %>
+  <%= form.hidden_field :report_id %>
+  <div class="field">
+    <%= form.label :body, "Warning" %>
+    <%= form.text_area :body, rows: 5, required: true, autofocus: true %>
+  </div>
+  <%= form.submit "Send warning", class: "button" %>
+<% end %>

@@ -8,6 +8,13 @@
     <% if current_account.can?(:manage_staff) %>
       <%= link_to "Players and staff", admin_accounts_path, class: ("is-current" if controller_name == "accounts") %>
     <% end %>
+    <% if current_account.can?(:handle_reports) %>
+      <% open_reports = Report.unresolved.count %>
+      <%= link_to "Reports#{" (#{open_reports})" if open_reports.positive?}", admin_reports_path, class: ("is-current" if controller_name.in?(%w[ reports warnings ])) %>
+    <% end %>
+    <% if current_account.can?(:ban) %>
+      <%= link_to "Bans", admin_bans_path, class: ("is-current" if controller_name == "bans") %>
+    <% end %>
     <% if current_account.can?(:delete_characters) %>
       <%= link_to "Characters", admin_characters_path, class: ("is-current" if controller_name == "characters") %>
     <% end %>

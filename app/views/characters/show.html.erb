@@ -8,6 +8,15 @@
   <div class="prose"><%= simple_format @character.description %></div>
 <% end %>
 
+<% manuscripts = Scene.finished.visible_to(current_account).where(id: @character.scene_participants.select(:scene_id)).includes(:room, participants: :character).order(finished_at: :desc).limit(20) %>
+<% if manuscripts.any? %>
+  <section>
+    <h2><%= term(:log, count: 2) %></h2>
+    <%= render partial: "archives/manuscript", collection: manuscripts, as: :scene %>
+    <p><%= link_to "All of #{@character.name}'s #{term(:log, count: 2).downcase}", archives_path(character_id: @character.id) %></p>
+  </section>
+<% end %>
+
 <% if @character.account == current_account %>
   <p><%= link_to "Edit", edit_character_path(@character) %></p>
 <% end %>

@@ -4,11 +4,12 @@
 class Scene < ApplicationRecord
   include Turns
 
-  # A scene with no new pose for this long counts as idle: it drops down its
-  # room's list but stays open. (Becomes a game setting with finishing, step 3.)
-  IDLE_AFTER = 7.days
+  # Players can undo finishing a scene for this long.
+  UNDO_FINISH_WITHIN = 24.hours
 
   belongs_to :room
+  belongs_to :finished_by, class_name: "Character", optional: true
+  has_many :reports, dependent: :destroy
   has_many :participants, -> { order(:position) }, class_name: "SceneParticipant", dependent: :destroy, inverse_of: :scene
   has_many :characters, through: :participants
   has_many :invitations, class_name: "SceneInvitation", dependent: :destroy
@@ -26,9 +27,11 @@ class Scene < ApplicationRecord
   after_update_commit :broadcast_change
 
   # Scenes the account may know about: everything except hidden scenes it has
-  # no character in and no invitation to.
+  # no character in and no invitation to. Hidden scenes made public by their
+  # players, and reported scenes for staff who handle reports, count too.
   scope :visible_to, ->(account) {
-    where.not(visibility: :hidden).or(where(id: involving(account).select(:id)))
+    visible = where.not(visibility: :hidden).or(where(id: involving(account).select(:id))).or(where.not(made_public_at: nil))
+    account.can?(:handle_reports) ? visible.or(where(id: Report.select(:scene_id))) : visible
   }
   # Scenes the account has a character in, or an invitation to.
   scope :involving, ->(account) {
@@ -36,8 +39,12 @@ class Scene < ApplicationRecord
     where(id: SceneParticipant.where(character_id: characters).select(:scene_id))
       .or(where(id: SceneInvitation.where(character_id: characters).select(:scene_id)))
   }
-  # Scenes that aren't idle.
-  scope :active, -> { where("COALESCE(scenes.last_pose_at, scenes.created_at) >= ?", IDLE_AFTER.ago) }
+  scope :open, -> { where(finished_at: nil) }
+  scope :finished, -> { where.not(finished_at: nil) }
+  # Open scenes that aren't idle.
+  scope :active, -> { open.where("COALESCE(scenes.last_pose_at, scenes.created_at) >= ?", idle_after.ago) }
+  # Open scenes nobody has posted in for the game's auto-finish time.
+  scope :abandoned, -> { open.where("COALESCE(scenes.last_pose_at, scenes.created_at) < ?", GameSetting.current.auto_finish_days.days.ago) }
   scope :by_activity, -> { order(Arel.sql("COALESCE(scenes.last_pose_at, scenes.created_at) DESC")) }
 
   # Starts a new scene in the room the character is standing in.
@@ -55,8 +62,27 @@ class Scene < ApplicationRecord
     last_pose_at || created_at
   end
 
+  # A scene with no new pose for the game's idle time drops down its room's
+  # list but stays open; a new pose wakes it.
+  def self.idle_after
+    GameSetting.current.idle_days.days
+  end
+
   def idle?
-    last_activity_at < IDLE_AFTER.ago
+    !finished? && last_activity_at < Scene.idle_after.ago
+  end
+
+  def finished?
+    finished_at.present?
+  end
+
+  def locked?
+    locked_at.present?
+  end
+
+  # Whether poses can still be posted, edited or removed.
+  def writable?
+    !finished? && !locked?
   end
 
   def participant_for(character)
@@ -81,18 +107,68 @@ class Scene < ApplicationRecord
 
   # Whether the account knows this scene exists.
   def visible_to?(account)
-    !visibility_hidden? || participating?(account) || invited_account?(account)
+    !visibility_hidden? || made_public_at.present? || participating?(account) || invited_account?(account) || reported_to?(account)
   end
 
-  # Whether the account can read the scene's poses. Joinable scenes can be
-  # watched by anyone; private and hidden ones only by their characters and
-  # invited characters.
+  # Whether the account can read the scene's poses.
+  # - Joinable scenes can be watched by anyone.
+  # - Private scenes, while open, only by their characters and invited
+  #   characters. Once finished, their Manuscript is public.
+  # - Hidden scenes only by their characters (and invited ones), unless every
+  #   player agreed to make the finished Manuscript public.
+  # - Staff who handle reports can read a scene once it has been reported.
   def readable_by?(account)
-    visibility_joinable? || participating?(account) || invited_account?(account)
+    return true if visibility_joinable? || made_public_at.present? || (visibility_private? && finished?)
+    participating?(account) || invited_account?(account) || reported_to?(account)
+  end
+
+  # Staff can read a private or hidden scene only once someone reports it.
+  def reported_to?(account)
+    account.can?(:handle_reports) && reports.exists?
   end
 
   def can_join?(character)
-    character.present? && participant_for(character).nil? && (visibility_joinable? || invited?(character))
+    character.present? && !finished? && participant_for(character).nil? && (visibility_joinable? || invited?(character))
+  end
+
+  # Finishing locks the poses and files the scene in the Archives as a
+  # Manuscript. The other players can undo it for UNDO_FINISH_WITHIN.
+  # With no character, the game finished it after the auto-finish time.
+  def finish!(by: nil)
+    with_lock do
+      next false if finished?
+
+      add_system_line!(by ? "#{by.name} finished this #{Term[:scene]}." :
+        "This #{Term[:scene]} was finished after #{GameSetting.current.auto_finish_days} days without a new #{Term[:pose]}.")
+      update!(finished_at: Time.current, finished_by: by, current_turn_participant: nil,
+        turn_started_at: nil, turn_warned_at: nil, turn_token: turn_token + 1)
+      true
+    end
+  end
+
+  def can_undo_finish?
+    finished? && finished_at > UNDO_FINISH_WITHIN.ago
+  end
+
+  def reopen!(by:)
+    with_lock do
+      next false unless can_undo_finish? && participant_for(by)
+
+      update!(finished_at: nil, finished_by: nil)
+      add_system_line!("#{by.name} reopened this #{Term[:scene]}.")
+      true
+    end
+  end
+
+  # A finished hidden scene becomes public only when every player agrees.
+  def consent_to_public!(participant, agree: true)
+    with_lock do
+      next false unless finished? && visibility_hidden? && made_public_at.nil?
+
+      participant.update!(public_consent_at: agree ? Time.current : nil)
+      update!(made_public_at: Time.current) if participants.reload.all?(&:public_consent_at)
+      true
+    end
   end
 
   def join!(character)
@@ -107,6 +183,7 @@ class Scene < ApplicationRecord
 
   def leave!(character)
     participant = participant_for(character) or return
+    raise ArgumentError, "This #{Term[:scene]} is finished." if finished?
 
     with_lock do
       advance_turn! if current_turn_participant_id == participant.id
@@ -121,6 +198,7 @@ class Scene < ApplicationRecord
   # pose, so the order never depends on whose browser was faster.
   def post!(character, body)
     participant = participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
+    raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
 
     with_lock do
       if (waiting = poses_to_wait_for(participant)).positive?

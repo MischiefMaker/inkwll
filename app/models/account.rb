@@ -22,6 +22,9 @@ class Account < ApplicationRecord
   has_many :characters, dependent: :destroy
   has_many :remembered_characters, dependent: :delete_all
   has_many :ooc_messages, dependent: :destroy
+  has_many :reports, dependent: :destroy
+  has_many :account_warnings, dependent: :destroy
+  has_many :bans, dependent: :destroy
   belongs_to :active_character, class_name: "Character", optional: true
 
   enum :staff_level, STAFF_LEVELS, default: :player, validate: true
@@ -62,6 +65,11 @@ class Account < ApplicationRecord
     remembered_characters.find_by(context: context)&.character
   end
 
+  # Seen on the site in the last few minutes.
+  def online?
+    last_seen_at.present? && last_seen_at > 10.minutes.ago
+  end
+
   # May take the storyteller role in a scene: the Storyteller flag, or staff.
   def may_storytell?
     storyteller? || staff?
@@ -89,7 +97,7 @@ class Account < ApplicationRecord
     when :build, :review_apps
       flag = job == :build ? "build" : "app"
       scribe? || wellkeeper? || (page? && job_flags.include?(flag))
-    when :manage_staff then scribe? || wellkeeper?
+    when :manage_staff, :handle_reports, :ban then scribe? || wellkeeper?
     when :delete_characters, :change_game_settings then wellkeeper?
     else false
     end

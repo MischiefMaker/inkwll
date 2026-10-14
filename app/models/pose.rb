@@ -25,6 +25,15 @@ class Pose < ApplicationRecord
     update!(removed_at: Time.current)
   end
 
+  # Staff can hide a Passage after a report. The text is kept for staff.
+  def hide_by_staff!
+    update!(hidden_by_staff_at: Time.current)
+  end
+
+  def hidden_by_staff?
+    hidden_by_staff_at.present?
+  end
+
   def edited?
     edited_at.present?
   end

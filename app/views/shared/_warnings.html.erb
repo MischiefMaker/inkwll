@@ -1,0 +1,7 @@
+<%# Warnings from staff stay at the top of every page until read. %>
+<% current_account.account_warnings.unread.order(:created_at).each do |warning| %>
+  <div class="flash flash--alert staff-warning" role="alert">
+    <strong>A warning from staff:</strong> <%= warning.body %>
+    <%= button_to "I've read this", warning_path(warning), method: :patch, class: "button-link" %>
+  </div>
+<% end %>

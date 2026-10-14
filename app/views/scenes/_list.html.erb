@@ -1,6 +1,6 @@
 <%# The Chapters in a Setting, busiest first. Idle ones sink to the bottom.
     Hidden Chapters only show to the players in them or invited to them. %>
-<% scenes = Scene.visible_to(current_account).where(room: room).by_activity.includes(participants: :character) %>
+<% scenes = Scene.open.visible_to(current_account).where(room: room).by_activity.includes(participants: :character) %>
 <section class="scene-list">
   <h2><%= term(:scene, count: 2) %></h2>
   <% if scenes.any? %>
@@ -21,6 +21,11 @@
     </ul>
   <% else %>
     <p class="muted">No <%= term(:scene, count: 2).downcase %> here yet.</p>
+  <% end %>
+
+  <% finished = Scene.finished.visible_to(current_account).where(room: room).count %>
+  <% if finished.positive? %>
+    <p><%= link_to "#{pluralize(finished, "finished #{term(:scene).downcase}")} in the #{term(:logs_collection)}", archives_path(room_id: room.id) %></p>
   <% end %>
 
   <% if current_character&.room_id == room.id %>

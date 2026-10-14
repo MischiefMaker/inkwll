@@ -7,6 +7,9 @@ class SessionsController < ApplicationController
 
   def create
     if account = Account.log_in(params[:username], params[:password])
+      if (refusal = access_refusal_for(account))
+        return redirect_to new_session_path, alert: refusal
+      end
       start_new_session_for account
       redirect_to after_authentication_url
     else

@@ -29,7 +29,7 @@ module Scene::Turns
   end
 
   def turn_of?(participant)
-    turn_based? && participant.present? && current_turn_participant_id == participant.id
+    writable? && turn_based? && participant.present? && current_turn_participant_id == participant.id
   end
 
   # Posting now would be out of turn (allowed, but the player is warned first).
@@ -55,7 +55,7 @@ module Scene::Turns
   end
 
   def auto_skip_running?
-    auto_skip? && turn_based? && current_turn_participant_id.present? && turn_started_at.present? && participants.size > 1
+    writable? && auto_skip? && turn_based? && current_turn_participant_id.present? && turn_started_at.present? && participants.size > 1
   end
 
   def pass!(participant)
