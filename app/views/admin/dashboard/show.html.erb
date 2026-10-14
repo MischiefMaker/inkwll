@@ -3,7 +3,7 @@
 <h1 class="page-title">Admin panel</h1>
 <p class="muted">
   You are a <strong class="emphasis"><%= t("terms.staff_levels.#{current_account.staff_level}") %></strong><%= " and a #{term(:founder)}" if current_account.founder? %>.
-  You only see the tabs your level allows.
+  You only see the parts of the menu your level allows.
 </p>
 
 <% if current_account.can?(:change_game_settings) && !GameSetting.current.look_chosen_at %>

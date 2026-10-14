@@ -2,6 +2,15 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-14 — Admin menu
+
+- The admin panel's row of tabs is now a menu down the right-hand side,
+  grouped under headings (Waiting on staff, Game world, Players and
+  characters, Moderation, Game systems, Settings), like Jcink's admin CP.
+  On a phone it folds into one "Admin menu" button at the top.
+- The OOC Chat folds away when you go into the admin panel and comes
+  back as you left it when you go back to the game.
+
 ## 2026-10-14 — Build several Settings at once
 
 - Building has a new "Build several settings" screen: add as many Settings

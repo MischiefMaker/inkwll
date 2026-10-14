@@ -3,11 +3,19 @@ import { Controller } from "@hotwired/stimulus"
 // Folds the OOC Chat into the right edge and brings it back out.
 // While it's folded, the tab counts messages the player hasn't seen.
 // Remembers both the choice and the last message seen in this browser.
+// Admin pages fold it away on the way in, to make room for the admin
+// menu, and put it back as it was on the way out.
+
+// Whether the last page shown was an admin page (null before the first page).
+let onAdminPage = null
+
 export default class extends Controller {
   static targets = ["toggle", "count", "messages"]
 
   connect() {
-    this.apply(this.read("ooc-sidebar") === "collapsed")
+    this.followPage()
+    this.pageChanged = () => this.followPage()
+    document.addEventListener("turbo:load", this.pageChanged)
     if (this.read("ooc-last-seen") === null) this.markSeen()
     this.refresh()
     this.observer = new MutationObserver(() => this.refresh())
@@ -16,13 +24,29 @@ export default class extends Controller {
 
   disconnect() {
     this.observer.disconnect()
+    document.removeEventListener("turbo:load", this.pageChanged)
   }
 
   toggle() {
     const collapsed = !this.collapsed
     this.apply(collapsed)
-    this.write("ooc-sidebar", collapsed ? "collapsed" : "open")
+    // Opening or closing it on an admin page lasts until you leave the admin panel.
+    if (!onAdminPage) this.write("ooc-sidebar", collapsed ? "collapsed" : "open")
     this.refresh()
+  }
+
+  // The chat stays on screen between pages, so it watches for moving
+  // into or out of the admin panel.
+  followPage() {
+    const admin = this.isAdminPage()
+    if (admin === onAdminPage) return
+    onAdminPage = admin
+    this.apply(admin || this.read("ooc-sidebar") === "collapsed")
+    if (this.hasMessagesTarget) this.refresh()
+  }
+
+  isAdminPage() {
+    return document.body.classList.contains("is-admin")
   }
 
   apply(collapsed) {

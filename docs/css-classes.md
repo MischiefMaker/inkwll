@@ -6,7 +6,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 - **Blocks and parts:** `.pose` is a block, `.pose__name` is a part of it, and `.pose--ooc` is a kind of it. So `.pose--narration .pose__body` means "the text of a narration post".
 - **Colours, fonts and spacing** are CSS variables at the top of `app/assets/stylesheets/application.css` (`--font-body`, `--font-heading`, `--color-accent` and so on; Admin → Look sets most of them). Changing those restyles the whole site at once.
-- **Every page** puts classes on `<body>`: `page-scenes` (any Chapter page), `page-scenes-show` (just the Chapter itself), `page-admin-bans`, and so on. They are made from the page's address in the code, `page-<section>-<action>`. Add `is-logged-in` or `is-guest`, plus `is-staff` for staff. Use them to style one page only, for example `.page-home-show .page-title`.
+- **Every page** puts classes on `<body>`: `page-scenes` (any Chapter page), `page-scenes-show` (just the Chapter itself), `page-admin-bans`, and so on. They are made from the page's address in the code, `page-<section>-<action>`. Add `is-logged-in` or `is-guest`, plus `is-staff` for staff, and `is-admin` on every admin panel page. Use them to style one page only, for example `.page-home-show .page-title`.
 - Class names use plain words (`scene`, `pose`, `room`) rather than the themed words players see (Chapter, Passage, Setting), so they stay the same if a game renames things.
 
 ## Shared pieces
@@ -39,6 +39,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
 | `.layout`, `.main` | The page body and its main column |
 | `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed` | The OOC Chat sidebar |
+| `.layout--admin`, `.admin-menu`, `.admin-menu__button`, `.admin-menu__button-current`, `.admin-menu__body`, `.admin-menu__title`, `.admin-menu__group`, `.admin-menu__heading`, `.admin-menu__list`, `.admin-menu__item`, `.admin-menu__link`, `.admin-menu__link--overview`, `.admin-menu__label`, `.admin-menu__count`, `.is-current` | The admin panel's side menu (on phones it folds into `.admin-menu__button`) |
 | `.ooc-message`, `.ooc-message__author`, `.ooc-message__author--guest`, `.ooc-message__time`, `.ooc-message__body`, `.player-icon`, `.player-icon--guest` | OOC Chat messages |
 
 ## Front page, Areas and Settings

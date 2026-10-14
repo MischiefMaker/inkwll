@@ -36,10 +36,12 @@ class Admin::AreasControllerTest < ActionDispatch::IntegrationTest
     assert_equal rooms(:garden), areas(:world).reload.entrance
   end
 
-  test "the admin panel shows only the tabs a Page may use" do
+  test "the admin menu shows only the links a Page may use" do
     sign_in_as(accounts(:builder))
     get admin_root_path
-    assert_select ".admin-tabs a", text: "Building"
-    assert_select ".admin-tabs a", text: "Players and staff", count: 0
+    assert_select ".admin-menu a", text: "Building"
+    assert_select ".admin-menu a", text: "Players and staff", count: 0
+    assert_select ".admin-menu__heading", text: "Settings", count: 0
+    assert_select "body.is-admin"
   end
 end

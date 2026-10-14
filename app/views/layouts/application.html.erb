@@ -31,12 +31,13 @@
       <%= render "shared/header" %>
       <%= turbo_stream_from current_account, :chapters %>
       <%= render "chapter_tabs/tabs", account: current_account %>
-      <div class="layout">
+      <div class="layout<%= " layout--admin" if content_for?(:admin_menu) %>">
         <main class="main">
           <%= render "shared/flash" %>
           <%= render "shared/warnings" %>
           <%= content_for?(:admin_content) ? yield(:admin_content) : yield %>
         </main>
+        <%= yield :admin_menu %>
         <%= render "ooc_messages/sidebar" unless content_for?(:hide_ooc_sidebar) %>
       </div>
     <% else %>

@@ -12,6 +12,7 @@ module ApplicationHelper
     classes = [ page, "#{page}-#{action_name}" ]
     classes << (current_account ? "is-logged-in" : "is-guest")
     classes << "is-staff" if current_account&.staff?
+    classes << "is-admin" if controller_path.start_with?("admin/")
     classes.join(" ")
   end
 

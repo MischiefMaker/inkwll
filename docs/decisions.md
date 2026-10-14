@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Admin panel uses a side menu (owner, 2026-10-14)
+
+The admin panel had too many tabs. It now has a grouped menu down the right-hand side, like Jcink's admin CP, and the OOC Chat folds away while you're in the admin panel (it comes back as you left it when you return to the game). On phones the menu folds into one button at the top.
+
 ## Guiding principle (owner, 2026-10-14)
 
 Keep forum RP's easy navigation and many Chapters at once, but make the grid feel real and physical, like moving through space on a traditional MU. AresMUSH has lost much of that feeling and some games no longer build grids; Inkwll should not. When a design choice trades one against the other, protect the feeling of physical space.

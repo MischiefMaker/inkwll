@@ -1,52 +1,34 @@
-<%# Admin panel pages: the normal page, with the admin tabs above the content. %>
+<%# Admin panel pages: the normal page, with the admin menu down the right-hand side. %>
+<% content_for :admin_menu do %>
+  <% groups = admin_menu_groups %>
+  <% current = (groups.flat_map(&:last) + [ admin_menu_overview ]).find(&:current) %>
+  <%# Open on wide screens; on phones it folds into one button at the top (see admin_menu_controller.js). %>
+  <details class="admin-menu" open data-controller="admin-menu">
+    <summary class="admin-menu__button">
+      Admin menu<% if current %>: <span class="admin-menu__button-current"><%= current.label %></span><% end %>
+    </summary>
+    <nav class="admin-menu__body" aria-label="Admin panel">
+      <h2 class="admin-menu__title">Admin panel</h2>
+      <%= link_to admin_menu_overview.label, admin_menu_overview.path, class: [ "admin-menu__link", "admin-menu__link--overview", ("is-current" if admin_menu_overview.current) ], aria: { current: ("page" if admin_menu_overview.current) } %>
+      <% groups.each do |heading, links| %>
+        <section class="admin-menu__group">
+          <h3 class="admin-menu__heading"><%= heading %></h3>
+          <ul class="admin-menu__list">
+            <% links.each do |link| %>
+              <li class="admin-menu__item">
+                <%= link_to link.path, class: [ "admin-menu__link", ("is-current" if link.current) ], aria: { current: ("page" if link.current) } do %>
+                  <span class="admin-menu__label"><%= link.label %></span>
+                  <% if link.waiting.positive? %><span class="admin-menu__count" title="Waiting"><%= link.waiting %></span><% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+    </nav>
+  </details>
+<% end %>
 <% content_for :admin_content do %>
-  <nav class="admin-tabs" aria-label="Admin panel">
-    <%= link_to "Overview", admin_root_path, class: ("is-current" if controller_name == "dashboard") %>
-    <% if current_account.can?(:build) %>
-      <%= link_to "Building", admin_areas_path, class: ("is-current" if controller_name.in?(%w[ areas rooms exits bulk_builds ])) %>
-    <% end %>
-    <% if current_account.can?(:manage_staff) %>
-      <%= link_to "Players and staff", admin_accounts_path, class: ("is-current" if controller_name == "accounts") %>
-    <% end %>
-    <% if current_account.can?(:review_apps) %>
-      <% waiting = Character.submitted.count %>
-      <%= link_to "Applications#{" (#{waiting})" if waiting.positive?}", admin_applications_path, class: ("is-current" if controller_name == "applications") %>
-      <% if Grimoire.enabled? %>
-        <% spells_waiting = Grimoire::Proposal.pending.count %>
-        <%= link_to "Grimoire#{" (#{spells_waiting})" if spells_waiting.positive?}", admin_grimoire_path, class: ("is-current" if controller_name.start_with?("grimoire")) %>
-      <% end %>
-      <% if Inkling.enabled? %>
-        <% inklings_waiting = Inkling.submitted.open.count %>
-        <%= link_to "Inklings#{" (#{inklings_waiting})" if inklings_waiting.positive?}", admin_inklings_path, class: ("is-current" if controller_name == "inklings") %>
-      <% end %>
-      <% roster_waiting = RosterApplication.pending.count + Character.active.where.not(roster_requested_at: nil).count %>
-      <%= link_to "Roster#{" (#{roster_waiting})" if roster_waiting.positive?}", admin_roster_path, class: ("is-current" if controller_name.in?(%w[ roster roster_applications roster_characters ])) %>
-      <% if Soul.enabled? %>
-        <% soul_waiting = Soul::BnbRequest.pending.count + Soul::Culmination.proposed.count + Soul::AwardSuggestion.pending.count %>
-        <%= link_to "SOUL requests#{" (#{soul_waiting})" if soul_waiting.positive?}", admin_soul_reviews_path, class: ("is-current" if controller_name == "soul_reviews") %>
-        <%= link_to "Boons and Banes", admin_soul_bnbs_path, class: ("is-current" if controller_name == "soul_bnbs") %>
-      <% end %>
-    <% end %>
-    <% if current_account.can?(:handle_reports) %>
-      <% open_reports = Report.unresolved.count %>
-      <%= link_to "Reports#{" (#{open_reports})" if open_reports.positive?}", admin_reports_path, class: ("is-current" if controller_name.in?(%w[ reports warnings ])) %>
-    <% end %>
-    <% if current_account.can?(:ban) %>
-      <%= link_to "Bans", admin_bans_path, class: ("is-current" if controller_name == "bans") %>
-    <% end %>
-    <% if current_account.can?(:delete_characters) %>
-      <%= link_to "Characters", admin_characters_path, class: ("is-current" if controller_name == "characters") %>
-    <% end %>
-    <% if current_account.can?(:change_game_settings) %>
-      <%= link_to "Profile fields", admin_profile_fields_path, class: ("is-current" if controller_name == "profile_fields") %>
-      <%= link_to "Character groups", admin_character_groups_path, class: ("is-current" if controller_name == "character_groups") %>
-      <%= link_to "#{term(:scene)} labels", admin_scene_labels_path, class: ("is-current" if controller_name == "scene_labels") %>
-      <%= link_to "SOUL", admin_soul_path, class: ("is-current" if controller_name.in?(%w[ soul soul_aspects soul_skills ])) %>
-      <%= link_to "Features", edit_admin_features_path, class: ("is-current" if controller_name == "features") %>
-      <%= link_to "Look", edit_admin_skin_path, class: ("is-current" if controller_name == "skins") %>
-      <%= link_to "Game settings", edit_admin_game_settings_path, class: ("is-current" if controller_name == "game_settings") %>
-    <% end %>
-  </nav>
   <%= yield %>
 <% end %>
 <%= render template: "layouts/application" %>
