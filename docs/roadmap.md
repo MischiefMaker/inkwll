@@ -33,6 +33,8 @@ Ideas the owner wants after the first release. Not built until the owner says so
 - **Live private chat:** players chat privately in real time, shown as tabs inside the OOC sidebar. Builds on Messages (step 3b).
 - **Awards and profile comments** (from the Jcink shortlist, maybe later).
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.
+- **Crafting:** characters make items (owner, 2026-10-14). Details to be decided.
+- **Economy:** money or trade between characters (owner, 2026-10-14). Details to be decided.
 - **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
 
 ## Decisions still needed
