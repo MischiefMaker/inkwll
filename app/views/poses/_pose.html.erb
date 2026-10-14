@@ -22,6 +22,8 @@
           <span class="pose__tag">OOC</span>
         <% elsif pose.narration? %>
           <span class="pose__tag">Narration</span>
+        <% elsif pose.roll? %>
+          <span class="pose__tag">Roll</span>
         <% end %>
         <% if pose.npc? %>
           <span class="pose__name"><%= pose.npc_name %></span>
@@ -36,7 +38,7 @@
         <% end %>
         <time class="pose__time muted" datetime="<%= pose.created_at.iso8601 %>" title="<%= pose.created_at.utc.to_fs(:long) %> UTC"><%= time_ago_in_words(pose.created_at) %> ago</time>
         <% if pose.edited? && !pose.removed? %><span class="pose__edited muted">(edited)</span><% end %>
-        <% if mine && !pose.removed? && scene.writable? %>
+        <% if mine && !pose.removed? && !pose.roll? && scene.writable? %>
           <span class="pose__actions">
             <%= link_to "Edit", edit_scene_pose_path(scene, pose) %>
             <%= button_to "Remove", scene_pose_path(scene, pose), method: :delete, class: "button-link",
@@ -54,6 +56,12 @@
           <p class="pose__staff-note"><%= pose.hidden_by_staff? ? "Hidden by staff" : "Removed by its player" %> (only staff see this text)</p>
         <% end %>
         <div class="pose__body prose"><%= simple_format pose.body %></div>
+        <% if pose.roll? && (roll = pose.soul_roll) %>
+          <details class="pose__roll roll-details">
+            <summary class="disclosure__summary roll-details__summary">How it was rolled</summary>
+            <p class="text roll-details__text">Dice: <%= roll.dice_text %>. <%= roll.skill_name %> <%= roll.skill_rating %>, plus <%= roll.aspect_bonus %> from its Aspect. Total <%= roll.result %> against <%= roll.difficulty %>. The chance of this outcome was <%= number_to_percentage(roll.probability.to_f * 100, precision: 1, strip_insignificant_zeros: true) %>.</p>
+          </details>
+        <% end %>
         <% if staff_view && pose.original_body %>
           <details class="pose__original"><summary class="disclosure__summary">Original, before editing (staff only)</summary><div class="prose"><%= simple_format pose.original_body %></div></details>
         <% end %>

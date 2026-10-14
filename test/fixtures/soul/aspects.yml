@@ -1,0 +1,9 @@
+body:
+  key: body
+  name: Body
+  position: 1
+
+mind:
+  key: mind
+  name: Mind
+  position: 2

@@ -1,0 +1,22 @@
+<%= form_with model: skill, url: skill.persisted? ? admin_soul_skill_path(skill) : admin_soul_skills_path, scope: :soul_skill, class: "form soul-admin-form" do |form| %>
+  <%= render "shared/errors", record: skill %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 40 %>
+  </div>
+  <div class="field">
+    <%= form.label :soul_aspect_id, "Aspect" %>
+    <%= form.select :soul_aspect_id, Soul::Aspect.ordered.map { |a| [ a.name, a.id ] } %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "About (optional)" %>
+    <%= form.text_field :description, maxlength: 200 %>
+  </div>
+  <% if skill.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit skill.persisted? ? "Save" : "Add Skill", class: "button" %>
+<% end %>

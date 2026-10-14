@@ -7,6 +7,8 @@
 #   Chapter without one). It doesn't take a turn.
 # - ooc: an out-of-character remark (brb, timing). It doesn't take a turn,
 #   doesn't count as unread or in emails, and is left out of the Manuscript.
+# - roll: a SOUL roll, written by the game with the result. It doesn't take
+#   a turn and can't be edited.
 # - system: lines from the game, such as "Wren joins the Chapter.", with no
 #   character.
 #
@@ -16,12 +18,13 @@
 class Pose < ApplicationRecord
   belongs_to :scene, inverse_of: :poses
   belongs_to :character, optional: true
+  has_one :soul_roll, class_name: "Soul::Roll", dependent: :nullify
 
-  enum :kind, { passage: "passage", npc: "npc", narration: "narration", ooc: "ooc", system: "system" }, validate: true
+  enum :kind, { passage: "passage", npc: "npc", narration: "narration", ooc: "ooc", roll: "roll", system: "system" }, validate: true
 
   # Kinds that are part of the story: shown in Manuscripts, counted as unread
   # and sent in emails.
-  STORY_KINDS = %w[ passage npc narration ].freeze
+  STORY_KINDS = %w[ passage npc narration roll ].freeze
   # Kinds that take the poster's turn.
   TURN_KINDS = %w[ passage npc ].freeze
 
@@ -40,13 +43,13 @@ class Pose < ApplicationRecord
   after_update_commit { scene.broadcast_change }
 
   def edit!(new_body)
-    raise ActiveRecord::RecordInvalid, self unless scene.writable?
+    raise ActiveRecord::RecordInvalid, self unless scene.writable? && !roll?
     self.original_body ||= body
     update!(body: new_body, edited_at: Time.current)
   end
 
   def remove!
-    raise ActiveRecord::RecordInvalid, self unless scene.writable?
+    raise ActiveRecord::RecordInvalid, self unless scene.writable? && !roll?
     update!(removed_at: Time.current)
   end
 

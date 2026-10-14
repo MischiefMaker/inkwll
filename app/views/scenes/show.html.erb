@@ -27,7 +27,7 @@
   <%= render "scenes/participants", scene: @scene, participant: @participant %>
 
   <% if readable %>
-    <% poses = @scene.poses.includes(character: [ :room, { icon_attachment: :blob } ]) %>
+    <% poses = @scene.poses.includes(:soul_roll, character: [ :room, { icon_attachment: :blob } ]) %>
     <%# A finished Chapter is a Manuscript, so OOC lines are left out unless asked for. %>
     <% if @scene.finished? && @scene.poses.ooc.exists? %>
       <% if params[:ooc] == "1" %>
@@ -54,6 +54,7 @@
         <%= render "scenes/turn_bar", scene: @scene, participant: @participant %>
         <% if @participant %>
           <%= render "scenes/composer", scene: @scene, participant: @participant %>
+          <%= render "scenes/roll", scene: @scene, participant: @participant if Soul.enabled? %>
         <% else %>
           <%= render "scenes/join", scene: @scene %>
         <% end %>

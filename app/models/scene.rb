@@ -174,6 +174,7 @@ class Scene < ApplicationRecord
         "This #{Term[:scene]} was finished after #{GameSetting.current.auto_finish_days} days without a new #{Term[:pose]}.")
       update!(finished_at: Time.current, finished_by: by, current_turn_participant: nil,
         turn_started_at: nil, turn_warned_at: nil, turn_token: turn_token + 1)
+      ActiveRecord.after_all_transactions_commit { award_xp! }
       true
     end
   end
@@ -246,6 +247,37 @@ class Scene < ApplicationRecord
       pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"))
       after_pose_by(participant) if takes_turn
       pose
+    end
+  end
+
+  # A SOUL roll: the game posts the result as a "roll" pose. It doesn't
+  # take a turn.
+  def roll!(character, skill, difficulty_name)
+    raise ArgumentError, "Rolls are switched off in this game." unless Soul.enabled?
+    participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
+    raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
+    raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
+
+    roll = character.roll_skill(skill, difficulty_name)
+    with_lock do
+      resume!(by: character) if paused?
+      text = "#{character.name} rolls #{skill.name} against #{difficulty_name.to_s.humanize} (#{roll.difficulty}) and gets #{roll.result}. " \
+        "#{"Extraordinary! " if roll.extraordinary?}#{roll.degree_text}"
+      pose = add_pose!(character: character, kind: "roll", body: text)
+      roll.update!(scene: self, pose: pose)
+      pose
+    end
+  rescue Character::SoulSheet::SheetError => e
+    raise ArgumentError, e.message
+  end
+
+  # Finishing gives XP to each character who posted, once per Chapter.
+  def award_xp!
+    return unless Soul.enabled? && (amount = Soul::Rules.scene_award).positive?
+    posted = poses.story.pluck(:character_id).uniq
+    participants.includes(:character).map(&:character).each do |character|
+      next unless posted.include?(character.id) && character.can_play?
+      character.award_xp!(amount, source: "scene", key: "scene:#{id}:#{character.id}", catchup: true)
     end
   end
 

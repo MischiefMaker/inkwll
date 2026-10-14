@@ -1,0 +1,16 @@
+<%# Rolling a SOUL Skill. The game posts the result into the Chapter. %>
+<details class="roll-box">
+  <summary class="disclosure__summary roll-box__summary">Roll a Skill</summary>
+  <%= form_with url: scene_rolls_path(scene), class: "form roll-box__form" do |form| %>
+    <div class="field roll-box__field">
+      <%= form.label :skill_id, "Skill" %>
+      <%= form.select :skill_id, Soul::Aspect.ordered.includes(:skills).map { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }.to_h.then { |groups| grouped_options_for_select(groups) } %>
+    </div>
+    <div class="field roll-box__field">
+      <%= form.label :difficulty %>
+      <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, selected: "standard" %>
+    </div>
+    <%= form.submit "Roll as #{participant.character.name}", class: "button button--quiet" %>
+  <% end %>
+  <p class="hint roll-box__hint">Two d20s plus the Skill and a bonus from its Aspect. Doubles of 20 roll again and add; doubles of 1 roll again and subtract.</p>
+</details>

@@ -24,6 +24,7 @@
     <% end %>
     <% if current_account.can?(:change_game_settings) %>
       <%= link_to "Profile fields", admin_profile_fields_path, class: ("is-current" if controller_name == "profile_fields") %>
+      <%= link_to "SOUL", admin_soul_path, class: ("is-current" if controller_name.in?(%w[ soul soul_aspects soul_skills ])) %>
       <%= link_to "Game settings", edit_admin_game_settings_path, class: ("is-current" if controller_name == "game_settings") %>
     <% end %>
   </nav>

@@ -40,6 +40,7 @@ module ScenesHelper
     when "npc" then "#{pose.npc_name} (NPC, played by #{pose.character&.name})"
     when "narration" then "Narration by #{pose.character&.name}"
     when "ooc" then "#{pose.character&.name} (OOC)"
+    when "roll" then "Roll"
     else pose.character&.name.to_s
     end
   end

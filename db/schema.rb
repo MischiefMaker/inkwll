@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_14_140002) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_150001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -117,6 +117,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_140002) do
     t.datetime "reviewed_at"
     t.bigint "reviewed_by_id"
     t.text "review_note"
+    t.integer "resonance", default: 0, null: false
+    t.datetime "sheet_locked_at"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"
@@ -182,6 +184,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_140002) do
     t.decimal "ic_days_per_day", precision: 6, scale: 2, default: "1.0", null: false
     t.boolean "require_description", default: false, null: false
     t.boolean "require_icon", default: false, null: false
+    t.boolean "soul_enabled", default: true, null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -367,6 +370,83 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_140002) do
     t.index ["account_id"], name: "index_sessions_on_account_id"
   end
 
+  create_table "soul_aspects", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_soul_aspects_on_key", unique: true
+  end
+
+  create_table "soul_ratings", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.string "trait_type", null: false
+    t.bigint "trait_id", null: false
+    t.integer "rating", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id", "trait_type", "trait_id"], name: "index_soul_ratings_on_character_id_and_trait_type_and_trait_id", unique: true
+    t.index ["character_id"], name: "index_soul_ratings_on_character_id"
+    t.index ["trait_type", "trait_id"], name: "index_soul_ratings_on_trait"
+  end
+
+  create_table "soul_rolls", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "scene_id"
+    t.bigint "pose_id"
+    t.bigint "soul_skill_id"
+    t.string "skill_name", null: false
+    t.string "difficulty_name", null: false
+    t.integer "difficulty", null: false
+    t.integer "skill_rating", null: false
+    t.integer "aspect_bonus", null: false
+    t.jsonb "dice", default: {}, null: false
+    t.integer "result", null: false
+    t.string "degree", null: false
+    t.float "probability"
+    t.boolean "extraordinary", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_soul_rolls_on_character_id"
+    t.index ["pose_id"], name: "index_soul_rolls_on_pose_id"
+    t.index ["scene_id"], name: "index_soul_rolls_on_scene_id"
+    t.index ["soul_skill_id"], name: "index_soul_rolls_on_soul_skill_id"
+  end
+
+  create_table "soul_skills", force: :cascade do |t|
+    t.bigint "soul_aspect_id", null: false
+    t.string "key", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_soul_skills_on_key", unique: true
+    t.index ["soul_aspect_id"], name: "index_soul_skills_on_soul_aspect_id"
+  end
+
+  create_table "soul_xp_entries", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.string "kind", null: false
+    t.string "source"
+    t.integer "amount", null: false
+    t.integer "catchup_amount", default: 0, null: false
+    t.string "note"
+    t.string "idempotency_key"
+    t.bigint "actor_id"
+    t.string "trait_type"
+    t.bigint "trait_id"
+    t.integer "new_rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_soul_xp_entries_on_actor_id"
+    t.index ["character_id"], name: "index_soul_xp_entries_on_character_id"
+    t.index ["idempotency_key"], name: "index_soul_xp_entries_on_idempotency_key", unique: true
+    t.index ["trait_type", "trait_id"], name: "index_soul_xp_entries_on_trait"
+  end
+
   create_table "vpn_ranges", force: :cascade do |t|
     t.cidr "range", null: false
     t.index ["range"], name: "index_vpn_ranges_on_range", opclass: :inet_ops, using: :gist
@@ -417,4 +497,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_14_140002) do
   add_foreign_key "scenes", "rooms"
   add_foreign_key "scenes", "scene_participants", column: "current_turn_participant_id", on_delete: :nullify
   add_foreign_key "sessions", "accounts"
+  add_foreign_key "soul_ratings", "characters"
+  add_foreign_key "soul_rolls", "characters"
+  add_foreign_key "soul_rolls", "poses"
+  add_foreign_key "soul_rolls", "scenes"
+  add_foreign_key "soul_rolls", "soul_skills", on_delete: :nullify
+  add_foreign_key "soul_skills", "soul_aspects"
+  add_foreign_key "soul_xp_entries", "accounts", column: "actor_id"
+  add_foreign_key "soul_xp_entries", "characters"
 end

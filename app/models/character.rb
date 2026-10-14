@@ -1,5 +1,7 @@
 # An in-character identity owned by an account. Always located in exactly one room.
 class Character < ApplicationRecord
+  include SoulSheet
+
   belongs_to :account
   belongs_to :room
   has_many :scene_participants, dependent: :destroy
@@ -85,6 +87,7 @@ class Character < ApplicationRecord
 
   def approve!(by:)
     update!(status: "approved", reviewed_at: Time.current, reviewed_by: by, review_note: nil)
+    lock_sheet!
     NotificationMailer.application_decision(self).deliver_later if account.wants_email?
   end
 

@@ -1,0 +1,151 @@
+<%# The SOUL sheet: Resonance, Aspects and Skills, and XP. Seen by the
+    character's player and staff. While the sheet is open the player sets
+    starting ratings; once it's locked, ratings rise by spending XP. %>
+<% mine = character.account_id == current_account.id %>
+<% aspects = Soul::Aspect.ordered.includes(:skills) %>
+<% character.soul_ratings.load %>
+
+<div class="soul-sheet soul-sheet--<%= character.sheet_open? ? "open" : "locked" %>">
+  <% if character.sheet_open? && mine %>
+    <% allowances = Soul::Rules.resonance_range.to_h { |r| [ r, Soul::Rules.chargen_allowance(r) ] } %>
+    <p class="text soul-sheet__intro">Set <%= character.name %>'s starting sheet. You can change it as often as you like
+      <%= GameSetting.current.approval_required? ? "until staff approve #{character.name}." : "until you finish it." %>
+      After that, ratings rise by spending XP.</p>
+
+    <%= form_with url: character_sheet_path(character), method: :patch, scope: :sheet, class: "form soul-sheet__form",
+          data: { controller: "sheet-points", sheet_points_allowances_value: allowances.to_json } do |form| %>
+      <% if Soul::Rules.resonance_enabled? %>
+        <div class="field soul-sheet__resonance">
+          <%= form.label :resonance, "Resonance" %>
+          <%= form.select :resonance, Soul::Rules.resonance_range.map { |r| [ r.positive? ? "+#{r}" : r.to_s, r ] }, { selected: character.resonance },
+                data: { sheet_points_target: "resonance", action: "sheet-points#update" } %>
+          <small class="hint">How strongly <%= character.name %> is connected to this world. Higher Resonance gives more starting Skill points and a higher starting cap, but advancing later costs more XP. Lower is the reverse. Very high or very low Resonance may need a good reason.</small>
+        </div>
+      <% end %>
+
+      <p class="soul-sheet__points" aria-live="polite">
+        <span class="soul-sheet__points-item">Aspect points left: <strong class="emphasis" data-sheet-points-target="aspectsLeft"></strong></span>
+        <span class="soul-sheet__points-item">Skill points left: <strong class="emphasis" data-sheet-points-target="skillsLeft"></strong></span>
+        <span class="soul-sheet__points-item">Highest starting Skill: <strong class="emphasis" data-sheet-points-target="cap"></strong></span>
+      </p>
+
+      <div class="soul-sheet__aspects">
+        <% aspects.each do |aspect| %>
+          <fieldset class="fieldset soul-aspect">
+            <legend class="fieldset__legend soul-aspect__name"><%= aspect.name %></legend>
+            <% if aspect.description.present? %><small class="hint soul-aspect__about"><%= aspect.description %></small><% end %>
+            <div class="field soul-trait soul-trait--aspect">
+              <%= label_tag "sheet_aspects_#{aspect.id}", "#{aspect.name} rating", class: "soul-trait__name" %>
+              <%= number_field_tag "sheet[aspects][#{aspect.id}]", character.rating_for(aspect), id: "sheet_aspects_#{aspect.id}",
+                    min: 0, max: aspect.max_rating, class: "soul-trait__input", data: { sheet_points_target: "aspect", action: "sheet-points#update" } %>
+            </div>
+            <% aspect.skills.each do |skill| %>
+              <div class="field soul-trait soul-trait--skill">
+                <%= label_tag "sheet_skills_#{skill.id}", skill.name, class: "soul-trait__name", title: skill.description %>
+                <%= number_field_tag "sheet[skills][#{skill.id}]", character.rating_for(skill), id: "sheet_skills_#{skill.id}",
+                      min: 0, class: "soul-trait__input", data: { sheet_points_target: "skill", action: "sheet-points#update" } %>
+              </div>
+            <% end %>
+          </fieldset>
+        <% end %>
+      </div>
+      <%= form.submit "Save sheet", class: "button" %>
+    <% end %>
+
+    <% unless GameSetting.current.approval_required? %>
+      <%= button_to "Finish my sheet", character_sheet_lock_path(character), class: "button button--quiet soul-sheet__finish",
+            form: { data: { turbo_confirm: "Finish #{character.name}'s sheet? Resonance is then fixed, and ratings only rise by spending XP." } } %>
+    <% end %>
+  <% else %>
+    <% if character.sheet_open? %>
+      <p class="text muted soul-sheet__intro">The player is still setting up this sheet.</p>
+    <% end %>
+    <% if Soul::Rules.resonance_enabled? %>
+      <p class="text soul-sheet__resonance">Resonance: <strong class="emphasis"><%= character.resonance.positive? ? "+#{character.resonance}" : character.resonance %></strong></p>
+    <% end %>
+    <% can_spend = mine && !character.sheet_open? %>
+    <% available = character.xp_available %>
+    <table class="table soul-sheet__table">
+      <thead class="table__head">
+        <tr class="table__row">
+          <th class="table__heading">Aspect or Skill</th>
+          <th class="table__heading">Rating</th>
+          <th class="table__heading" title="Added to the dice when rolling this Skill">On rolls</th>
+          <% if can_spend %><th class="table__heading">Raise by 1</th><% end %>
+        </tr>
+      </thead>
+      <tbody class="table__body">
+        <% aspects.each do |aspect| %>
+          <% [ aspect, *aspect.skills ].each do |trait| %>
+            <% rating = character.rating_for(trait) %>
+            <tr class="table__row soul-trait soul-trait--<%= trait.aspect? ? "aspect" : "skill" %>">
+              <td class="table__cell soul-trait__name" title="<%= trait.description %>"><%= trait.name %></td>
+              <td class="table__cell soul-trait__rating"><%= rating %></td>
+              <td class="table__cell soul-trait__bonus muted"><%= trait.aspect? ? "+#{Soul::Rules.aspect_bonus(rating)} to its Skills" : "+#{character.roll_base(trait)}" %></td>
+              <% if can_spend %>
+                <td class="table__cell soul-trait__raise">
+                  <% if rating >= trait.max_rating %>
+                    <span class="muted">Highest</span>
+                  <% else %>
+                    <% cost = character.raise_cost(trait) %>
+                    <%= button_to "#{cost} XP", character_xp_spends_path(character, trait_type: trait.aspect? ? "aspect" : "skill", trait_id: trait.id),
+                          class: "button button--small", disabled: cost > available,
+                          title: "Raise #{trait.name} to #{rating + 1}", form: { data: { turbo_confirm: "Spend #{cost} XP to raise #{trait.name} to #{rating + 1}?" } } %>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <section class="soul-xp">
+    <h2 class="section-title">XP</h2>
+    <p class="soul-xp__summary">
+      <span class="soul-xp__item">Available: <strong class="emphasis"><%= character.xp_available %></strong></span>
+      <span class="soul-xp__item">Earned: <%= character.xp_earned + character.xp_catchup_earned %></span>
+      <span class="soul-xp__item">Spent: <%= character.xp_spent %></span>
+    </p>
+    <p class="hint">XP comes each week, and from every <%= term(:scene).downcase %> <%= character.name %> posts in once it's finished. Characters behind the rest earn extra until they catch up.</p>
+    <% entries = character.xp_entries.newest_first.includes(:trait).limit(20) %>
+    <% if entries.any? %>
+      <table class="table soul-xp__ledger">
+        <thead class="table__head"><tr class="table__row"><th class="table__heading">When</th><th class="table__heading">What</th><th class="table__heading">XP</th></tr></thead>
+        <tbody class="table__body">
+          <% entries.each do |entry| %>
+            <tr class="table__row soul-xp__entry soul-xp__entry--<%= entry.kind %>">
+              <td class="table__cell muted"><%= entry.created_at.to_date.to_fs(:long) %></td>
+              <td class="table__cell"><%= entry.description %><%= " (#{entry.catchup_amount} catch-up)" if entry.catchup_amount.positive? %><%= tag.span(" · #{entry.note}", class: "muted") if entry.note.present? %></td>
+              <td class="table__cell"><%= entry.total.positive? ? "+#{entry.total}" : entry.total %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+
+  <% if current_account.can?(:review_apps) %>
+    <section class="soul-staff">
+      <h2 class="section-title">Staff</h2>
+      <%= form_with url: character_xp_entries_path(character), class: "form soul-staff__xp" do |form| %>
+        <div class="field">
+          <%= form.label :amount, "XP to give (a minus number takes XP away)" %>
+          <%= form.number_field :amount, required: true %>
+        </div>
+        <div class="field">
+          <%= form.label :note, "Reason" %>
+          <%= form.text_field :note, required: true, maxlength: 200 %>
+        </div>
+        <%= form.submit "Save XP", class: "button button--quiet" %>
+      <% end %>
+      <% if character.sheet_open? %>
+        <%= button_to "Lock the sheet", character_sheet_lock_path(character), class: "button button--quiet" %>
+      <% else %>
+        <%= button_to "Unlock the sheet so the player can change it", character_sheet_lock_path(character), method: :delete, class: "button button--quiet",
+              form: { data: { turbo_confirm: "Unlock #{character.name}'s sheet? The player can then change Resonance and all ratings freely." } } %>
+      <% end %>
+    </section>
+  <% end %>
+</div>

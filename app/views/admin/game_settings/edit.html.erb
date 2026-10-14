@@ -50,6 +50,13 @@
   </div>
   <p class="muted">So people can ask questions before signing up. Guests can't post links, and bans and the VPN block apply to them. Staff can ban a guest from the Bans page.</p>
 
+  <h2 class="section-title">Systems</h2>
+  <div class="field field--checkbox">
+    <%= form.check_box :soul_enabled %>
+    <%= form.label :soul_enabled, "Use SOUL: character sheets, XP and rolls" %>
+  </div>
+  <p class="muted">When it's off, sheets, XP and the roll box are hidden, and no XP is given. Nothing is deleted. Aspects and Skills are under SOUL in the admin panel.</p>
+
   <h2 class="section-title"><%= term(:scene, count: 2) %></h2>
   <div class="field field--checkbox">
     <%= form.check_box :auto_skip %>

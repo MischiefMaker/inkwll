@@ -20,6 +20,10 @@ Rails.application.routes.draw do
       resources :gallery_images, only: %i[ create destroy ]
       resources :relationships, only: %i[ create destroy ]
       resource :submission, only: :create
+      resource :sheet, only: :update
+      resource :sheet_lock, only: %i[ create destroy ]
+      resources :xp_spends, only: :create
+      resources :xp_entries, only: :create
     end
   end
   resource :active_character, only: :update
@@ -46,6 +50,7 @@ Rails.application.routes.draw do
       resource :public_consent, only: %i[ create destroy ]
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
+      resources :rolls, only: :create
       resource :reading, only: :update
       resource :turn, only: [] do
         post :pass
@@ -77,6 +82,9 @@ Rails.application.routes.draw do
     resources :characters, only: %i[ index destroy ]
     resource :game_settings, only: %i[ edit update ]
     resources :profile_fields, except: %i[ show new ]
+    resource :soul, only: :show, controller: "soul"
+    resources :soul_aspects, only: %i[ create edit update destroy ]
+    resources :soul_skills, only: %i[ create edit update destroy ]
     resources :applications, only: %i[ index show update ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do

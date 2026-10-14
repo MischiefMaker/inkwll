@@ -1,0 +1,18 @@
+<%= form_with model: aspect, url: aspect.persisted? ? admin_soul_aspect_path(aspect) : admin_soul_aspects_path, scope: :soul_aspect, class: "form soul-admin-form" do |form| %>
+  <%= render "shared/errors", record: aspect %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 40 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "About (optional)" %>
+    <%= form.text_field :description, maxlength: 200 %>
+  </div>
+  <% if aspect.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit aspect.persisted? ? "Save" : "Add Aspect", class: "button" %>
+<% end %>

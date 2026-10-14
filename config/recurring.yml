@@ -22,3 +22,6 @@ production:
   email_digests:
     class: DigestJob
     schedule: every day at 5pm
+  weekly_xp:
+    class: WeeklyXpJob
+    schedule: every sunday at midnight

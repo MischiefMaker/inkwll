@@ -1,0 +1,11 @@
+strength:
+  key: strength
+  name: Strength
+  aspect: body
+  position: 1
+
+wit:
+  key: wit
+  name: Wit
+  aspect: mind
+  position: 1

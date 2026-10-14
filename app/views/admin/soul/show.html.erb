@@ -1,0 +1,47 @@
+<% content_for :title, "SOUL · Admin · Inkwll" %>
+
+<h1 class="page-title">SOUL</h1>
+<p class="text muted">The Aspects and Skills on every character's sheet. Each Skill belongs to one Aspect, and a character's Aspect rating adds a little to rolls of its Skills. The numbers for points, costs and difficulties are in <code class="code">config/soul.yml</code>.</p>
+
+<% @aspects.each do |aspect| %>
+  <section class="soul-admin__aspect">
+    <h2 class="section-title soul-admin__aspect-name">
+      <%= aspect.name %>
+      <span class="soul-admin__actions">
+        <%= link_to "Edit", edit_admin_soul_aspect_path(aspect), class: "button-link" %>
+        <% if aspect.skills.empty? %>
+          <%= button_to "Delete", admin_soul_aspect_path(aspect), method: :delete, class: "button-link", form: { data: { turbo_confirm: "Delete #{aspect.name}?" } } %>
+        <% end %>
+      </span>
+    </h2>
+    <% if aspect.description.present? %><p class="text muted"><%= aspect.description %></p><% end %>
+    <% if aspect.skills.any? %>
+      <table class="table soul-admin__skills">
+        <thead class="table__head"><tr class="table__row"><th class="table__heading">Skill</th><th class="table__heading">About</th><th class="table__heading"></th></tr></thead>
+        <tbody class="table__body">
+          <% aspect.skills.each do |skill| %>
+            <tr class="table__row">
+              <td class="table__cell"><%= skill.name %></td>
+              <td class="table__cell muted"><%= skill.description %></td>
+              <td class="table__cell">
+                <%= link_to "Edit", edit_admin_soul_skill_path(skill) %>
+                <%= button_to "Delete", admin_soul_skill_path(skill), method: :delete, class: "button-link",
+                      form: { data: { turbo_confirm: "Delete #{skill.name}? Every character's rating in it is deleted too." } } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text muted">No Skills yet.</p>
+    <% end %>
+  </section>
+<% end %>
+
+<% if @aspects.any? %>
+  <h2 class="section-title">Add a Skill</h2>
+  <%= render "admin/soul_skills/form", skill: @skill %>
+<% end %>
+
+<h2 class="section-title">Add an Aspect</h2>
+<%= render "admin/soul_aspects/form", aspect: @aspect %>
