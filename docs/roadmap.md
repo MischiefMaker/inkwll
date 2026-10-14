@@ -27,7 +27,7 @@ In the order they block building. Each one moves to `decisions.md` once the owne
 
 **Now (before step 2 starts)**
 
-4. Staff level names, and how a new top-level staff member is made (see "Staff levels" in `decisions.md`).
+4. How a new Wellkeeper (top-level staff) is made (see "Staff levels" in `decisions.md`).
 
 **Before step 2: Scenes**
 

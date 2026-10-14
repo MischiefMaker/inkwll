@@ -10,11 +10,11 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ## 2026-10-14: Staff levels
 
-Names are still to be picked; the owner wants names that fit the Inkwll / Inklings / SOUL theme (like "Wizard" fits a MUSH).
+Names (picked 2026-10-14 to fit the Inkwll theme): **Wellkeepers**, **Scribes**, **Pages**, and **Storytellers**. Staff job flags read as "Build Page", "App Page" and so on.
 
-1. **Top level** (like Head Wizards on a MUSH; there can be several). Can do almost anything, except make another top-level staff member. That takes a higher permission that is not a character, such as an extra password or a special flag on a top-level account.
-2. **Admin** (like Wizards). Can do almost everything the top level can, except fundamental changes to the game, such as deleting or renaming things.
-3. **Staff** (name to pick). Gets individual job flags, for example Build Staff (create and delete rooms and exits) and App Staff (review character applications and approve or deny them). More flags can be added later.
+1. **Wellkeeper**, the top level (like Head Wizards on a MUSH; there can be several). Can do almost anything, except make another top-level staff member. That takes a higher permission that is not a character, such as an extra password or a special flag on a top-level account.
+2. **Scribe**, admin (like Wizards). Can do almost everything a Wellkeeper can, except fundamental changes to the game, such as deleting or renaming things.
+3. **Page**, staff. Gets individual job flags, for example Build Page (create and delete rooms and exits) and App Page (review character applications and approve or deny them). More flags can be added later.
 4. **Storyteller.** A flag on a player, not really staff. Storytellers can run approved plots and use some SOUL and Inklings tools, but cannot see other players' secret details.
 
 This replaces part of the earlier "Lurkers and storytellers" entry: storytellers can use some SOUL tools, not none. Which tools count as "some" is decided when SOUL and Inklings are planned.
