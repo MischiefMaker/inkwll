@@ -27,7 +27,9 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
           chmod 600 ~/.ssh/inkwll-deploy
-          ssh-keyscan -H "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+          # Trust only the ed25519 host key; with every key type listed the
+          # SSH check sometimes failed with a host key mismatch.
+          ssh-keyscan -H -t ed25519 "$INKWLL_SERVER" >> ~/.ssh/known_hosts
 
       - name: Add swap on the droplet
         run: |
