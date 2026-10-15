@@ -5,7 +5,15 @@
     <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %><span class="site-header__label">Home</span><% end %>
     <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %><span class="site-header__label">My characters</span><% end %>
     <%= render "conversations/count", account: current_account %>
-    <%= render "alerts/count", account: current_account %>
+    <%# The bell opens the latest alerts in a small drop-down over the page. %>
+    <details class="alert-menu" data-controller="alert-menu" data-action="toggle->alert-menu#toggle click@document->alert-menu#closeOutside">
+      <summary class="alert-menu__summary"><%= render "alerts/count", account: current_account %></summary>
+      <div class="alert-menu__panel">
+        <turbo-frame id="alerts_panel" class="alert-menu__frame" data-alert-menu-target="frame" data-src="<%= alerts_path %>">
+          <p class="text muted">Loading…</p>
+        </turbo-frame>
+      </div>
+    </details>
     <%# Extras live in the menu so the roleplay stays front and centre. %>
     <details class="menu">
       <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %><span class="site-header__label">Menu</span></summary>

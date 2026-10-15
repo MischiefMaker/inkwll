@@ -1318,3 +1318,27 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .profile-fields__picture { display: block; max-width: 100%; max-height: 32rem; border-radius: var(--radius, 6px); }
 .profile-field-input__picture { display: block; max-width: 12rem; max-height: 12rem; margin-bottom: 0.4rem; border-radius: var(--radius, 6px); }
 .profile-field-input__remove { margin-bottom: 0.4rem; }
+
+/* The bell's alerts drop-down in the header. */
+.alert-menu { position: relative; display: inline-flex; align-items: center; }
+.alert-menu__summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; color: var(--color-accent); }
+.alert-menu__summary::-webkit-details-marker { display: none; }
+.alert-menu__panel {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  width: min(24rem, calc(100vw - 2rem));
+  max-height: 70vh;
+  overflow-y: auto;
+  margin-top: 0.4rem;
+  padding: 0.6rem var(--space);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+}
+.alert-menu__panel .page-title { font-size: 1.1rem; margin: 0 0 0.5rem; }
+.alert-menu__panel .alerts__list { margin: 0; padding: 0; }
+@media (max-width: 640px) {
+  .alert-menu__panel { position: fixed; top: auto; left: 1rem; right: 1rem; width: auto; }
+}

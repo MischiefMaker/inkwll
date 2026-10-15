@@ -1,5 +1,6 @@
 <% content_for :title, "Alerts · Inkwll" %>
 
+<turbo-frame id="alerts_panel" target="_top">
 <div class="alerts">
   <h1 class="page-title">Alerts</h1>
   <% if @alerts.any? %>
@@ -37,3 +38,4 @@
   <% end %>
   <p class="text muted alerts__settings"><%= link_to "Email and browser notifications", edit_notification_settings_path %></p>
 </div>
+</turbo-frame>

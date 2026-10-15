@@ -18,6 +18,8 @@ Short, plain-language notes on what changed. Newest first.
   Chapters under their player name. A Chapter they start as GM makes them its
   Storyteller. GM isn't a character: it never shows in Where, Here, the
   directory or character lists.
+- The alerts bell opens a small drop-down over the page instead of a new
+  page.
 - Online now on the front page lists players by player name; Where lists
   characters.
 - Profile fields can ask for a Picture, for games that show looks with an
