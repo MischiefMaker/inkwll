@@ -36,6 +36,27 @@ class PlatformTest < ActionDispatch::IntegrationTest
     assert_nil GameSetting.current.reload.custom_css
   end
 
+  test "the profile box goes at the top or the side, set in Look, and a Scribe can't change it" do
+    wren = characters(:wren)
+    sign_in_as(accounts(:scribe))
+    patch admin_skin_path, params: { game_setting: { profile_box: "side" } }
+    assert_equal "top", GameSetting.current.reload.profile_box
+
+    sign_in_as(accounts(:wellkeeper))
+    patch admin_skin_path, params: { game_setting: { profile_box: "side" } }
+    assert_equal "side", GameSetting.current.reload.profile_box
+    get character_path(wren)
+    assert_select "article.character-profile--box-side header.profile-box--side .profile-box__facts"
+
+    patch admin_skin_path, params: { game_setting: { profile_box: "sideways" } }
+    assert_response :unprocessable_entity
+    assert_equal "side", GameSetting.current.reload.profile_box
+
+    patch admin_skin_path, params: { game_setting: { profile_box: "top" } }
+    get character_path(wren)
+    assert_select "article.character-profile--box-top header.profile-box--top"
+  end
+
   test "colours, fonts and extra CSS make a stylesheet every page loads" do
     GameSetting.current.tap { |settings| settings.apply_preset("plain") }.save!
     sign_in_as(accounts(:wellkeeper))

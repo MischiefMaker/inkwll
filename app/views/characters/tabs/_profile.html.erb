@@ -1,14 +1,7 @@
-<% extra = capture do %>
-  <div class="profile-fields__row profile-fields__row--name">
-    <dt class="details-list__term">Name</dt>
-    <dd class="details-list__value"><%= character.name %></dd>
-  </div>
-  <% if (age = character.age) %>
-    <div class="profile-fields__row profile-fields__row--age">
-      <dt class="details-list__term">Age</dt>
-      <dd class="details-list__value"><%= age %></dd>
-    </div>
-  <% end %>
+<%# Short facts (age, birthday...) sit in the box at the top or side; long answers and pictures show here. %>
+<% long_answers = render("characters/profile_fields", character: character, section: "demographics", show_private: show_private, facts: false) %>
+<% if long_answers.present? %>
+  <%= long_answers %>
+<% else %>
+  <p class="muted profile-tab__empty">Nothing more to show here.</p>
 <% end %>
-<h2 class="section-title">Demographics</h2>
-<%= render "characters/profile_fields", character: character, section: "demographics", show_private: show_private, extra: extra %>

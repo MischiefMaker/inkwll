@@ -10,6 +10,9 @@ class GameSetting < ApplicationRecord
   after_save { icon.purge_later if remove_icon && icon.attached? }
   validate :icon_is_a_reasonable_picture
 
+  # Where a character's name, icon and demographics sit on their profile.
+  PROFILE_BOXES = %w[ top side ].freeze
+  validates :profile_box, inclusion: { in: PROFILE_BOXES }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }

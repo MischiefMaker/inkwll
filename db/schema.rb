@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_120001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_15_180001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -287,6 +287,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_120001) do
     t.text "game_blurb"
     t.string "skin_base"
     t.boolean "compass_enabled", default: false, null: false
+    t.string "profile_box", default: "top", null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

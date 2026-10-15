@@ -29,7 +29,7 @@ class Admin::SkinsController < Admin::BaseController
     def skin_params
       keys = GameSetting::Skin::COLOURS.keys
       pictures = GameSetting::Skin::PICTURES.keys.flat_map { |picture| [ picture.to_sym, :"remove_#{picture}" ] }
-      params.expect(game_setting: [ :skin_dark_mode, :font_body, :font_heading, :custom_css, *pictures,
+      params.expect(game_setting: [ :skin_dark_mode, :profile_box, :font_body, :font_heading, :custom_css, *pictures,
         skin_colours: keys, skin_dark_colours: keys ])
     end
 end

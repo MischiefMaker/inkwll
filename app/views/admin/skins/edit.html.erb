@@ -55,6 +55,13 @@
     <small class="hint">List a few fonts, separated by commas; visitors see the first one their device has. Leave empty to use the built-in fonts. To use a web font, load it in the extra CSS with @import, then name it here.</small>
   </div>
 
+  <h2 class="section-title">Character profiles</h2>
+  <div class="field">
+    <span class="field__label">Where the name, icon and details box goes</span>
+    <label class="field--checkbox"><%= form.radio_button :profile_box, "top" %> At the top, across the page (like AresMUSH).</label>
+    <label class="field--checkbox"><%= form.radio_button :profile_box, "side" %> At the side, like a wiki infobox or a forum post's author panel.</label>
+  </div>
+
   <h2 class="section-title">Pictures</h2>
   <% GameSetting::Skin::PICTURES.each do |picture, (_variable, label, hint)| %>
     <%= render "shared/image_field", form: form, record: @game_setting, picture: picture, label: label, hint: hint %>

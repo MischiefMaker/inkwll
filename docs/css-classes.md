@@ -146,6 +146,9 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.wiki-form__tabs`, `.wiki-form__tab` | The Edit / Preview tabs on the wiki page form (`.is-current` marks the open one) |
 | `.wiki-form__preview` | The box that shows the preview of a wiki page |
 | `.visibility-mark` | A small sign for who can see something. Kinds: `.visibility-mark--you-and-staff` (lock), `.visibility-mark--you-only` (open eye), `.visibility-mark--staff-only` (star). Its icon classes are `.icon--lock`, `.icon--eye` and `.icon--star` |
+| `.profile-box` | The box with a character's icon, name, details and buttons. `.profile-box--top` goes across the top, `.profile-box--side` down the side (Admin > Look). Parts: `.profile-box__portrait`, `.profile-box__heading`, `.profile-box__facts` (the short demographics), `.profile-box__actions` |
+| `.character-profile--box-top`, `.character-profile--box-side` | The whole character profile, set by where the box goes |
+| `.profile-tab__empty` | "Nothing more to show here." on a Profile tab with no long answers |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
 | `.storyteller-tools`, `.storyteller-tools__call`, `.storyteller-tools__sheets`, `.storyteller-tools__award`, `.storyteller-sheet`, `.storyteller-sheet__name`, `.storyteller-sheet__aspect`, `.storyteller-sheet__skills` | A Chapter's Storyteller tools |
 | `.soul-reviews__item--award` | Admin: XP a Storyteller suggested |

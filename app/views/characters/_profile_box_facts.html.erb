@@ -1,0 +1,12 @@
+<%# The short demographics (age, birthday...) in the profile box. Long answers and pictures show on the Profile tab. %>
+<div class="profile-box__facts">
+  <% age_row = capture do %>
+    <% if (age = character.age) %>
+      <div class="profile-fields__row profile-fields__row--age">
+        <dt class="details-list__term">Age</dt>
+        <dd class="details-list__value"><%= age %></dd>
+      </div>
+    <% end %>
+  <% end %>
+  <%= render "characters/profile_fields", character: character, section: "demographics", show_private: show_private, extra: age_row.presence, facts: true %>
+</div>

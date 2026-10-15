@@ -1,15 +1,17 @@
 <% content_for :title, "#{@character.name} · Inkwll" %>
 <% show_private = @mine || @staff_view %>
 
-<article class="character-profile character-profile--<%= @character.status %><%= " character-profile--retired" if @character.retired? %><%= " character-profile--on-roster" if @character.on_roster? %>">
-  <header class="character-profile__header">
-    <%= character_icon(@character, size: :large) %>
-    <div class="character-profile__heading">
+<% box_side = GameSetting.current.profile_box == "side" %>
+<article class="character-profile character-profile--box-<%= box_side ? "side" : "top" %> character-profile--<%= @character.status %><%= " character-profile--retired" if @character.retired? %><%= " character-profile--on-roster" if @character.on_roster? %>">
+  <header class="character-profile__header profile-box profile-box--<%= box_side ? "side" : "top" %>">
+    <div class="profile-box__portrait"><%= character_icon(@character, size: :large) %></div>
+    <div class="character-profile__heading profile-box__heading">
       <%= tag.h1 @character.name, **character_name_options(@character, "page-title character-profile__name") %>
       <% if @character.character_group %><p class="character-profile__group"><%= @character.character_group.name %></p><% end %>
       <% if @character.retired? && !@character.roster_kept? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
-      <div class="character-profile__actions">
+      <%= render "characters/profile_box_facts", character: @character, show_private: show_private %>
+      <div class="character-profile__actions profile-box__actions">
         <% if @mine %>
           <%= edit_icon_link(edit_character_path(@character)) %>
           <% if Inkling.enabled? && @character.approved? && !@character.retired? %>

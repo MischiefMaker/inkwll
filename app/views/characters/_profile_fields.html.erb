@@ -1,6 +1,9 @@
 <%# The filled-in fields of one section, as a list of name and value. %>
 <% rows = ProfileField.in_section(section).filter_map do |field|
      next unless field.public? || show_private
+     long = field.field_type.in?(%w[ long_text image ])
+     next if local_assigns[:facts] == true && long
+     next if local_assigns[:facts] == false && !long
      value = character.profile_value_for(field)
      [ field, value ] if value&.value.present?
    end %>
