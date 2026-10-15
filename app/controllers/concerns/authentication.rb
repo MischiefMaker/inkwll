@@ -84,10 +84,10 @@ module Authentication
       account.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
         Current.session = session
         cookie = { value: session.id, httponly: true, same_site: :lax }
-        # Browsers like Firefox won't keep a long-lived login cookie from a
-        # plain http site, so until the game has HTTPS the login lasts until
-        # the browser is closed. Over https it lasts a year: browsers cap
-        # cookies at about 400 days, so a longer one can be refused too.
+        # Over https the login lasts a year (browsers cap cookies at about
+        # 400 days, so a longer one can be refused). Browsers like Firefox
+        # won't keep a long-lived login cookie from a plain http site, so a
+        # game with no HTTPS gets one that lasts until the browser closes.
         cookie[:expires] = 1.year if request.ssl?
         cookies.signed[LOGIN_COOKIE] = cookie
       end
