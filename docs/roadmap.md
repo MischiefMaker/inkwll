@@ -57,6 +57,21 @@ From the RP platforms shortlist (`design/rp-platforms-shortlist.md` in the proje
 - **Event calendar with sign-ups:** an event at a Place and time; characters sign up, and a Chapter opens when it starts (idea 6).
 - **Group pages, ranks and an IC board:** readable by everyone, to avoid cliques (idea 10).
 
+Second batch from the same shortlist, picked by the owner on 2026-10-15. Notes only, not built:
+
+- **Random scene bounty:** each week a few random active characters are picked, and a Chapter with one of them earns bonus SOUL XP (idea 13).
+- **In-character letters and texts:** a new type of Passage, written messages from one character to others that show up inside Chapters. Combined with the AresMUSH Txt plugin's idea (idea 19).
+- **Need a ruling button:** a button on a Chapter that asks staff to rule on something, next to Storyteller wanted.
+- **Random character spotlight:** one character featured on the front page (idea 22).
+- **One-line "story so far" in the Archives list:** each Manuscript shows its summary line in the list (idea 23).
+- **Graveyard:** a Deceased status beside Retired, with its own page (idea 24).
+- **Shared NPC list:** NPCs anyone running a Chapter can use (idea 25).
+- **Looking for a scene nudge:** one quiet alert to players marked Looking for RP, rate-limited (idea 29).
+- **Scene prompt:** a "Give me an idea" button on the new Chapter form (idea 30).
+- **Census:** active characters per group, plus a staff note on which groups need players (idea 31).
+- **Birthdays this month:** a list of characters with birthdays this month (idea 38).
+- **Mutter:** a whisper Passage where everyone else sees only a partial line (idea 39).
+
 ## Decisions still needed
 
 In the order they block building. Each one moves to `decisions.md` once the owner answers.
