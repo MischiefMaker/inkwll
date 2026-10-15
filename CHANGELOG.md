@@ -34,6 +34,8 @@ Short, plain-language notes on what changed. Newest first.
 - Players without an icon picture get a pen-nib icon instead of their
   initial; guests get a grey one.
 - New favicon: a slate inkwell and quill on a gold circle.
+- On phones the top bar is two short rows: the game's name and your account,
+  then the links as icons only.
 
 ## 2026-10-15 — Area banners on Settings
 

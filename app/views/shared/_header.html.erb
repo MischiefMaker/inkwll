@@ -2,13 +2,13 @@
   <%= link_to game_name, root_path, class: "site-header__title" %>
 
   <nav class="site-header__nav">
-    <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %>Home<% end %>
-    <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %>My characters<% end %>
+    <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %><span class="site-header__label">Home</span><% end %>
+    <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %><span class="site-header__label">My characters</span><% end %>
     <%= render "conversations/count", account: current_account %>
     <%= render "alerts/count", account: current_account %>
     <%# Extras live in the menu so the roleplay stays front and centre. %>
     <details class="menu">
-      <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %>Menu</summary>
+      <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %><span class="site-header__label">Menu</span></summary>
       <div class="menu__items">
         <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting started<% end %>
         <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2).downcase %><% end %>
@@ -51,6 +51,6 @@
     <% end %>
 
     <%= link_to current_account.display_name, player_path(current_account.username), class: "site-header__player", title: "Your player profile" %>
-    <%= button_to "Log out", session_path, method: :delete, class: "button-link" %>
+    <%= button_to "Log out", session_path, method: :delete, class: "button-link site-header__log-out" %>
   </div>
 </header>

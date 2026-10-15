@@ -34,7 +34,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 | Class | What it is |
 | --- | --- |
-| `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.message-count__icon` | The bar along the top |
+| `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.site-header__label`, `.site-header__log-out`, `.message-count__icon` | The bar along the top (on phones `.site-header__label` is hidden, so the links show as icons only) |
 | `.menu`, `.menu__items`, `.menu__link`, `.menu__icon` | The Menu |
 | `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass` and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
 | `.banner-default` | The drawn banner (accent colour with ink lines) on an Area or Setting that has no banner picture. It also has `.place__banner` on front-page cards and `.description-image` on Area and Setting pages |

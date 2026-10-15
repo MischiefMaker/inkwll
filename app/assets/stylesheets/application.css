@@ -76,6 +76,20 @@ h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
 .switcher { display: flex; align-items: center; gap: 0.5rem; }
 .switcher__label { color: var(--color-muted); font-size: 0.9rem; }
 
+/* Phones: the game's name and account on one line, then the links as icons
+   only (their words stay for screen readers), so the bar is two short rows. */
+@media (max-width: 600px) {
+  .site-header { gap: 0.3rem 0.75rem; padding: 0.4rem 0.75rem; }
+  .site-header__title { font-size: 1.05rem; }
+  .site-header__account { order: 1; gap: 0.6rem; font-size: 0.9rem; }
+  .site-header__nav { order: 2; width: 100%; gap: 0.25rem 1.1rem; }
+  .site-header__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .site-header__icon, .message-count__icon, .alert-bell__icon { width: 22px; height: 22px; }
+  .switcher__label { display: none; }
+  .switcher select { max-width: 8rem; }
+  .site-header__preview { display: none; }
+}
+
 /* Layout: main content with the OOC chat beside it */
 
 .layout {
