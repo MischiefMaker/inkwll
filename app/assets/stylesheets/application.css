@@ -618,6 +618,11 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   padding-bottom: var(--space);
 }
 
+.admin-quick { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: var(--space) 0; }
+.admin-attention__list { margin: 0 0 var(--space); padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.5rem; }
+.admin-attention__link { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: 0.5rem var(--space); border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-surface); text-decoration: none; }
+.admin-attention__link:hover { border-color: var(--color-accent); }
+.admin-attention__count { min-width: 1.5rem; padding: 0.1rem 0.45rem; border-radius: 999px; background: var(--color-accent); color: var(--color-accent-text); font-size: 0.8rem; text-align: center; }
 .admin-menu__title {
   margin: 0;
   padding: 0.6rem var(--space);

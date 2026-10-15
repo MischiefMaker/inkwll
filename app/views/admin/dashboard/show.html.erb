@@ -14,6 +14,31 @@
   </div>
 <% end %>
 
+<nav class="admin-quick" aria-label="Quick actions">
+  <% admin_quick_actions.each do |label, path, kind| %>
+    <%= link_to label, path, class: "button admin-quick__button admin-quick__button--#{kind}" %>
+  <% end %>
+</nav>
+
+<section class="admin-attention" aria-labelledby="admin-attention-heading">
+  <h2 class="section-title admin-attention__heading" id="admin-attention-heading">Needs Attention</h2>
+  <% waiting = StaffWaiting.pending_for(current_account) %>
+  <% if waiting.any? %>
+    <ul class="admin-attention__list">
+      <% waiting.each do |item| %>
+        <li class="admin-attention__item admin-attention__item--<%= item.key %>">
+          <%= link_to staff_waiting_path(item.key), class: "admin-attention__link" do %>
+            <span class="admin-attention__label"><%= item.label %></span>
+            <span class="admin-attention__count"><%= item.count %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="muted admin-attention__empty">Nothing is waiting on you right now.</p>
+  <% end %>
+</section>
+
 <ul class="admin-sections">
   <% if current_account.can?(:build) %>
     <li class="list__item">

@@ -149,6 +149,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.profile-box` | The box with a character's icon, name, details and buttons. `.profile-box--top` goes across the top, `.profile-box--side` down the side (Admin > Look). Parts: `.profile-box__portrait`, `.profile-box__heading`, `.profile-box__facts` (the short demographics), `.profile-box__actions` |
 | `.character-profile--box-top`, `.character-profile--box-side` | The whole character profile, set by where the box goes |
 | `.profile-tab__empty` | "Nothing more to show here." on a Profile tab with no long answers |
+| `.admin-quick` | The row of quick-action buttons on the admin front page. Each is `.admin-quick__button` plus `.admin-quick__button--character`, `--place`, `--area`, `--wiki`, `--players`, `--characters`, `--applications`, `--reports`, `--bans` or `--settings` |
+| `.admin-attention` | The "Needs Attention" box on the admin front page: `.admin-attention__heading`, `.admin-attention__list`, `.admin-attention__item` (with `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`), `.admin-attention__link`, `.admin-attention__label`, `.admin-attention__count`, `.admin-attention__empty` |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
 | `.storyteller-tools`, `.storyteller-tools__call`, `.storyteller-tools__sheets`, `.storyteller-tools__award`, `.storyteller-sheet`, `.storyteller-sheet__name`, `.storyteller-sheet__aspect`, `.storyteller-sheet__skills` | A Chapter's Storyteller tools |
 | `.soul-reviews__item--award` | Admin: XP a Storyteller suggested |

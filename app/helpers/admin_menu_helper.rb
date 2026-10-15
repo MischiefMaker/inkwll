@@ -73,6 +73,25 @@ module AdminMenuHelper
     groups.reject { |_, links| links.empty? }.to_a
   end
 
+  # The buttons across the top of the admin front page: [label, path, css kind]
+  # for the quick jobs this staff member's level allows.
+  def admin_quick_actions
+    actions = []
+    actions << [ "New Character", new_character_path, "character" ]
+    if current_account.can?(:build)
+      actions << [ "New #{term(:room)}", new_admin_room_path, "place" ]
+      actions << [ "New #{term(:area)}", new_admin_area_path, "area" ]
+    end
+    actions << [ "New Wiki Page", new_wiki_page_path, "wiki" ] if WikiPage.enabled?
+    actions << [ "Player List", admin_accounts_path, "players" ] if current_account.can?(:manage_staff)
+    actions << [ "Character List", admin_characters_path, "characters" ] if current_account.can?(:delete_characters)
+    actions << [ "Applications", admin_applications_path, "applications" ] if current_account.can?(:review_apps)
+    actions << [ "Reports", admin_reports_path, "reports" ] if current_account.can?(:handle_reports)
+    actions << [ "Bans", admin_bans_path, "bans" ] if current_account.can?(:ban)
+    actions << [ "Game Settings", edit_admin_game_settings_path, "settings" ] if current_account.can?(:change_game_settings)
+    actions
+  end
+
   # Where each kind of waiting work (see StaffWaiting) is handled.
   def staff_waiting_path(key)
     case key
