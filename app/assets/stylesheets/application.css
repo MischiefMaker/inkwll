@@ -236,7 +236,8 @@ form.button_to { display: inline; }
   border-left: 1px solid var(--color-border);
   background: var(--color-surface);
   width: var(--sidebar-width);
-  height: calc(100vh - 3.5rem - var(--tabs-height, 0px));
+  /* The controller replaces this guess with the screen height minus the chat's real position. */
+  height: var(--ooc-sidebar-height, calc(100vh - 3.5rem - var(--tabs-height, 0px)));
   position: sticky;
   top: 0;
 }

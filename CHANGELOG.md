@@ -13,6 +13,7 @@ Short, plain-language notes on what changed. Newest first.
 - The admin front page has quick-action buttons across the top (New Character, New Place, Player List, Character List, Reports and more, only the ones your job allows) and a Needs Attention list of waiting work below them.
 - A character's name, icon and details sit in a box on their profile, at the top or at the side like a wiki infobox. Pick which in Admin → Look. Long answers and pictures stay on the Profile tab.
 - Each count at the bottom of the front page has an icon, and its label links to the list: Characters to the Directory, Chapters to Where, Archives to the Archives and Players to a new Players list (icons and names only, never who they play).
+- Fix: the OOC Chat is sized from its real position below the header, so it no longer scrolls or leaves a gap at the bottom.
 - The old list of links on the admin front page is gone; the buttons and the side menu replace it.
 - Fix: the admin side menu keeps one fixed height (the screen below the header) and sticks at the top as you scroll instead of growing; its last link can always be reached by scrolling inside it.
 - The front page ends with counts of Players, Characters, Chapters and Archives. Archived players, retired and roster characters, and private or hidden Chapters aren't counted.

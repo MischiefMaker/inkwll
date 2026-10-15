@@ -5,6 +5,8 @@ import { Controller } from "@hotwired/stimulus"
 // Remembers both the choice and the last message seen in this browser.
 // Admin pages fold it away on the way in, to make room for the admin
 // menu, and put it back as it was on the way out.
+// On a wide screen it is as tall as the space below the header and Chapter
+// tabs (measured, not guessed), and sticks to the top as you scroll.
 
 // Whether the last page shown was an admin page (null before the first page).
 let onAdminPage = null
@@ -14,8 +16,17 @@ export default class extends Controller {
 
   connect() {
     this.followPage()
-    this.pageChanged = () => this.followPage()
+    this.pageChanged = () => { this.followPage(); this.fit() }
     document.addEventListener("turbo:load", this.pageChanged)
+    this.phone = window.matchMedia("(max-width: 800px)")
+    this.resize = () => {
+      if (this.frame) return
+      this.frame = requestAnimationFrame(() => { this.frame = null; this.fit() })
+    }
+    window.addEventListener("resize", this.resize)
+    this.sizeObserver = new ResizeObserver(this.resize)
+    this.sizeObserver.observe(document.body)
+    this.fit()
     if (this.read("ooc-last-seen") === null) this.markSeen()
     this.refresh()
     this.observer = new MutationObserver(() => this.refresh())
@@ -24,7 +35,21 @@ export default class extends Controller {
 
   disconnect() {
     this.observer.disconnect()
+    this.sizeObserver?.disconnect()
+    window.removeEventListener("resize", this.resize)
+    if (this.frame) cancelAnimationFrame(this.frame)
     document.removeEventListener("turbo:load", this.pageChanged)
+  }
+
+  // Height = the screen below where the chat sits when the page is scrolled to
+  // the top: the top of the row it lives in, which doesn't move when it sticks.
+  fit() {
+    if (this.phone.matches || !this.element.parentElement) {
+      this.element.style.removeProperty("--ooc-sidebar-height")
+      return
+    }
+    const top = Math.max(0, this.element.parentElement.getBoundingClientRect().top + window.scrollY)
+    this.element.style.setProperty("--ooc-sidebar-height", `${Math.max(200, window.innerHeight - top)}px`)
   }
 
   toggle() {
