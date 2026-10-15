@@ -78,6 +78,11 @@ class GuestChatTest < ActionDispatch::IntegrationTest
     assert_select ".ooc-sidebar"
     assert_select ".guest-chat-hello"
 
+    # Guests previewing the game see it too: it's how the game welcomes them.
+    get root_path
+    assert_select ".site-header--guest"
+    assert_select ".ooc-sidebar"
+
     # The chat page shows the chat itself, so no second one beside it.
     get ooc_messages_path
     assert_select ".site-header--guest"

@@ -4,8 +4,8 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Testing tweaks
 
-- Headings use a plain sans-serif font in the Slate blue and gold and
-  Black and red looks, instead of Georgia/Times.
+- Headings use a plain sans-serif font in the default Slate blue and gold
+  look, instead of Georgia/Times.
 - The log in, sign up and OOC Chat pages keep the top bar for visitors, so
   they can get back to the front page. Visitors also see the OOC Chat
   beside every page (when the game allows guest chat), and the log in and
