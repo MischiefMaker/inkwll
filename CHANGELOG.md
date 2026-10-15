@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Menu tidy-ups
+
+- Wiki pages added to the Menu are indented so they look nested under Wiki.
+- The admin side menu is sized to the screen and stays in place as you scroll, like the OOC Chat.
+
 ## 2026-10-15 — Roster section in Admin → Characters
 
 - Admin → Characters is split into Approved and New (not approved yet), then Roster and Retired, and each section can be folded away.

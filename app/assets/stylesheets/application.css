@@ -404,6 +404,8 @@ a.ooc-message__author:hover { text-decoration: underline; }
 .site-header__link, .message-count { display: inline-flex; align-items: center; gap: 0.3rem; }
 .menu summary { display: flex; align-items: center; gap: 0.3rem; }
 .menu__icon { opacity: 0.85; }
+/* Wiki pages added to the Menu sit indented under Wiki, lined up with its text. */
+.menu__wiki-page { padding-left: calc(16px + 0.45rem); white-space: nowrap; }
 /* The tile drawn when an Area, Setting or board has no icon picture of its own. */
 .icon-tile { display: inline-flex; align-items: center; justify-content: center; background: var(--color-accent); color: var(--color-accent-text); }
 .board__name { display: inline-flex; align-items: center; }
@@ -576,15 +578,18 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   background: var(--color-surface);
   font-family: var(--font-ui);
   font-size: 0.95rem;
+  /* Sized to the screen and stuck in place, like the OOC Chat. */
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: calc(100vh - 3.5rem - var(--tabs-height, 0px));
 }
 
 /* The button only shows on phones, where the menu folds up. */
 .admin-menu__button { display: none; }
 
 .admin-menu__body {
-  position: sticky;
-  top: 0;
-  max-height: calc(100vh - 3.5rem);
+  height: 100%;
   overflow-y: auto;
   padding-bottom: var(--space);
 }
@@ -643,7 +648,7 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 
 @media (max-width: 800px) {
   .layout--admin { grid-template-columns: minmax(0, 1fr); }
-  .admin-menu { order: -1; width: auto; border-left: none; border-bottom: 1px solid var(--color-border); }
+  .admin-menu { order: -1; width: auto; position: static; height: auto; border-left: none; border-bottom: 1px solid var(--color-border); }
   .admin-menu__button {
     display: block;
     padding: 0.6rem var(--space);
@@ -656,7 +661,7 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   .admin-menu[open] .admin-menu__button::after { content: " ▴"; }
   .admin-menu__button-current { font-weight: normal; }
   .admin-menu__title { display: none; }
-  .admin-menu__body { position: static; max-height: none; }
+  .admin-menu__body { height: auto; overflow-y: visible; }
 }
 
 .from-afar { margin: var(--space) 0; padding: 0.6rem var(--space); border: 1px dashed var(--color-border); border-radius: var(--radius); }
