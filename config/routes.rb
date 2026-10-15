@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  # www.inkwll.com sends visitors on to inkwll.com (the game's APP_HOST), so
+  # there's one address and logins don't split between the two.
+  www_visit = ->(request) { ENV["APP_HOST"].present? && request.host == "www.#{ENV["APP_HOST"]}" }
+  constraints(www_visit) do
+    match "(*path)", via: :all, format: false,
+      to: redirect(status: 301) { |_params, request| request.url.sub("://www.", "://") }
+  end
+
   # Inkwll uploads images through its own forms, so Active Storage's
   # "upload straight to storage" addresses are switched off: they don't check
   # who's logged in or what the file is, and could be used to fill the disk.

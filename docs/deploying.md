@@ -16,9 +16,12 @@ the droplet in Docker.
 ## The droplet
 
 - Basic, Regular, 1 GB memory, Ubuntu 24.04, with DigitalOcean backups on.
-- Until the game has a domain name, it runs on the droplet's IP address over
-  plain http (`INKWLL_HTTPS: "false"` in `config/deploy.yml`). Passwords are
-  not encrypted on the way, so only invite testers until there's a domain.
+- The game answers at https://inkwll.com (www.inkwll.com sends visitors on
+  to it). The domain is registered at Namecheap; under Advanced DNS it has an
+  A record for `@` with the droplet's IP and a CNAME for `www` to inkwll.com.
+- kamal-proxy gets free HTTPS certificates from Let's Encrypt, so the DNS
+  must point at the droplet before a deploy. Another game sets its own domain
+  with `INKWLL_DOMAIN` (see `config/deploy.yml`).
 
 ## Deploying
 
@@ -42,9 +45,10 @@ workflow with their player name in "make Founder" (it doesn't deploy).
 To see the live game's recent logs, run **Actions → Show logs**. It only
 reads; nothing on the droplet changes, so Claude runs it without asking.
 
-While the game runs on plain http (no domain yet), logging in lasts until
-the browser is closed: browsers such as Firefox won't keep a long-lived
-login cookie from an http site. With HTTPS, logins last as before.
+Logins last a year over HTTPS. A game run on plain http (no domain, with
+`INKWLL_HTTPS: "false"`) gets logins that last until the browser is closed,
+because browsers such as Firefox won't keep a long-lived login cookie from
+an http site.
 
 GitHub keeps secrets hidden: nobody can read them back, and they never show
 in the code or the logs.
@@ -56,7 +60,6 @@ From a machine that can reach the droplet over SSH, the same deploy is:
 
 ## Still to do
 
-- A domain name, then HTTPS (see the comments in `config/deploy.yml`).
 - A mail service: its details go in `deploy/secrets.env` as SMTP_ADDRESS,
   SMTP_PORT, SMTP_USERNAME and SMTP_PASSWORD. Until then no emails are sent.
 - The nightly database backup to DigitalOcean Spaces (see `docs/decisions.md`).

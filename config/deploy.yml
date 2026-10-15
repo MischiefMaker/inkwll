@@ -11,14 +11,19 @@ servers:
   web:
     - <%= ENV.fetch("INKWLL_SERVER", "DROPLET_IP_GOES_HERE") %>
 
-# Until the game has a domain name, kamal-proxy answers on the IP address
-# over plain http. With a domain: add `host: play.example.com` and
-# `ssl: true` here, set APP_HOST below, and remove INKWLL_HTTPS.
 # The 1 GB droplet starts a new copy of the game slowly, so give it two
 # minutes to pass its health check instead of the default 30 seconds.
 deploy_timeout: 120
 
+# kamal-proxy answers for the game's domain (and its www. version) and gets
+# free HTTPS certificates for them from Let's Encrypt. The domain's DNS must
+# already point at the droplet when this deploys, or the certificates fail.
+# Plain http visits are sent on to https.
 proxy:
+  ssl: true
+  hosts:
+    - <%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
+    - www.<%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
   app_port: 80
   healthcheck:
     path: /up
@@ -41,7 +46,9 @@ env:
   clear:
     SOLID_QUEUE_IN_PUMA: true
     DB_HOST: inkwll-db
-    INKWLL_HTTPS: "false"
+    # The game's domain: links in emails use it, and www. visits are sent
+    # on to it.
+    APP_HOST: <%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
     # Fewer threads and one process suit the 1 GB droplet.
     RAILS_MAX_THREADS: 3
     WEB_CONCURRENCY: 1

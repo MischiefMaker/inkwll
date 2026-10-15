@@ -24,9 +24,8 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # HTTPS needs a domain name. Until the game has one it runs on the
-  # server's IP address over plain http, with INKWLL_HTTPS=false in
-  # config/deploy.yml (owner, 2026-10-14). Remove that line once there's a domain.
+  # HTTPS needs a domain name. A game running on just its server's IP
+  # address can switch it off with INKWLL_HTTPS=false in config/deploy.yml.
   https = ENV.fetch("INKWLL_HTTPS", "true") != "false"
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
@@ -92,10 +91,10 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Only answer for the game's own domain (APP_HOST), to block Host header
-  # tricks. The health check at /up answers anyway.
+  # Only answer for the game's own domain (APP_HOST) and its www. version,
+  # to block Host header tricks. The health check at /up answers anyway.
   if ENV["APP_HOST"].present?
-    config.hosts = [ ENV["APP_HOST"] ]
+    config.hosts = [ ENV["APP_HOST"], "www.#{ENV["APP_HOST"]}" ]
     config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   end
 end

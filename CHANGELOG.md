@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — inkwll.com
+
+- The game moves to https://inkwll.com with HTTPS. www.inkwll.com sends
+  visitors on to inkwll.com.
+- With HTTPS, logins last a year again instead of until the browser closes.
+
 ## 2026-10-15 — Menu tidy-ups
 
 - The wiki page form has Edit and Preview tabs; Preview shows how the page will look without saving.
