@@ -21,6 +21,9 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- Edit and Delete (and Remove) links across the site are now the pencil and
+  trashcan icons: Passages, Boards, the wiki, profile and SOUL screens, and
+  the admin lists.
 - Online now on the front page is a heading with a count, "Online now (3)",
   with a separate "See where everyone is" link. Players show as small cards
   with their icon and name, and the character they're playing in its group

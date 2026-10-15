@@ -36,6 +36,24 @@ module IconsHelper
       fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round")
   end
 
+  # The pencil that replaces "Edit" links, with the word kept for screen
+  # readers and as the hover title. Pass css: to add classes.
+  def edit_icon_link(path, label: "Edit", css: nil)
+    link_to path, class: [ "icon-action", "icon-action--edit", css ].compact.join(" "), title: label do
+      icon(:pencil, size: 16) + tag.span(label, class: "visually-hidden")
+    end
+  end
+
+  # The trashcan that replaces "Delete" and "Remove" buttons. confirm: asks
+  # first; form_class: goes on the surrounding form.
+  def delete_icon_button(path, label: "Delete", confirm: nil, css: nil, form_class: nil)
+    button_to path, method: :delete, title: label,
+      class: [ "button-link", "icon-action", "icon-action--delete", css ].compact.join(" "),
+      form: { class: [ "icon-action-form", form_class ].compact.join(" "), data: { turbo_confirm: confirm }.compact } do
+      icon(:trash, size: 16) + tag.span(label, class: "visually-hidden")
+    end
+  end
+
   # The default player icon: a pen nib on a round badge, coloured from the
   # look (gold and slate in Slate blue and gold). Guests get a grey one.
   NIB = '<circle class="nib-icon__back" cx="32" cy="32" r="32"/>' \

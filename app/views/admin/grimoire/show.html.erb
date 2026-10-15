@@ -34,7 +34,7 @@
   <% @branches.each do |branch| %>
     <section class="grimoire-admin__branch">
       <h2 class="section-title"><%= branch.name %> <span class="muted">(<%= branch.skill.name %>)</span>
-        <%= link_to "Edit", edit_admin_grimoire_branch_path(branch), class: "grimoire-admin__edit" %></h2>
+        <%= edit_icon_link(edit_admin_grimoire_branch_path(branch), css: "grimoire-admin__edit") %></h2>
       <% if branch.spells.any? %>
         <table class="table grimoire-admin__spells">
           <thead class="table__head"><tr class="table__row"><th class="table__heading">Spell</th><th class="table__heading">Needs</th><th class="table__heading">Difficulty</th><th class="table__heading">Known by</th><th class="table__heading"></th></tr></thead>
@@ -45,7 +45,7 @@
                 <td class="table__cell"><%= spell.minimum_rating %></td>
                 <td class="table__cell"><%= spell.difficulty_label %></td>
                 <td class="table__cell"><%= spell.learned_spells.size %></td>
-                <td class="table__cell"><%= link_to "Edit", edit_admin_grimoire_spell_path(spell) %></td>
+                <td class="table__cell"><%= edit_icon_link(edit_admin_grimoire_spell_path(spell)) %></td>
               </tr>
             <% end %>
           </tbody>

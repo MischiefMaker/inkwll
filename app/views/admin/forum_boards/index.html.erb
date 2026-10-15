@@ -20,9 +20,8 @@
           <td class="table__cell"><%= forum_poster_label(board.who_can_start) %></td>
           <td class="table__cell"><%= forum_poster_label(board.who_can_reply) %></td>
           <td class="table__cell">
-            <%= link_to "Edit", edit_admin_forum_board_path(board) %>
-            <%= button_to "Delete", admin_forum_board_path(board), method: :delete, class: "button-link",
-                  form: { data: { turbo_confirm: "Delete #{board.name} and every #{term(:forum_topic).downcase} on it? This can't be undone." } } %>
+            <%= edit_icon_link(edit_admin_forum_board_path(board)) %>
+            <%= delete_icon_button(admin_forum_board_path(board), label: "Delete", confirm: "Delete #{board.name} and every #{term(:forum_topic).downcase} on it? This can't be undone.") %>
           </td>
         </tr>
       <% end %>

@@ -1312,7 +1312,11 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .icon-action { color: var(--color-muted); display: inline-flex; align-items: center; padding: 0.15rem; }
 .icon-action:hover { color: var(--color-accent); }
 .bnb-catalogue__actions { white-space: nowrap; }
-.bnb-catalogue__actions .icon-action, .bnb-catalogue__delete-form { display: inline-flex; vertical-align: middle; margin-left: 0.25rem; }
+.icon-action-form, .bnb-catalogue__delete-form { display: inline-flex; vertical-align: middle; }
+.icon-action + .icon-action-form, .icon-action + .icon-action, .icon-action-form + .icon-action-form { margin-left: 0.25rem; }
+.bnb-catalogue__actions .icon-action { vertical-align: middle; }
+.icon-action { background: none; border: 0; cursor: pointer; line-height: 1; vertical-align: middle; }
+.icon-action--delete:hover { color: #c62828; }
 
 /* Picture answers on profiles and in the character form. */
 .profile-fields__picture { display: block; max-width: 100%; max-height: 32rem; border-radius: var(--radius, 6px); }

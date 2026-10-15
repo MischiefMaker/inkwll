@@ -11,7 +11,7 @@
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
       <div class="character-profile__actions">
         <% if @mine %>
-          <%= link_to "Edit", edit_character_path(@character), class: "button button--quiet" %>
+          <%= edit_icon_link(edit_character_path(@character)) %>
           <% if Inkling.enabled? && @character.approved? && !@character.retired? %>
             <%= link_to "Start an Inkling", new_inkling_path(character_id: @character.id), class: "button button--quiet character-profile__inkling" %>
           <% end %>

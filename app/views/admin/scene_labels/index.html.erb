@@ -12,9 +12,8 @@
           <td class="table__cell"><span class="scene-label scene-label--<%= label.id %>"><%= label.name %></span></td>
           <td class="table__cell"><%= label.description %></td>
           <td class="table__cell">
-            <%= link_to "Edit", edit_admin_scene_label_path(label) %>
-            <%= button_to "Delete", admin_scene_label_path(label), method: :delete, class: "button-link",
-                  form: { data: { turbo_confirm: "Delete #{label.name}? It comes off every #{term(:scene).downcase}." } } %>
+            <%= edit_icon_link(edit_admin_scene_label_path(label)) %>
+            <%= delete_icon_button(admin_scene_label_path(label), label: "Delete", confirm: "Delete #{label.name}? It comes off every #{term(:scene).downcase}.") %>
           </td>
         </tr>
       <% end %>

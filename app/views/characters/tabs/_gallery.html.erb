@@ -8,8 +8,7 @@
         <% end %>
         <% if picture.caption.present? %><figcaption class="gallery__caption"><%= picture.caption %></figcaption><% end %>
         <% if manages?(character) %>
-          <%= button_to "Remove", character_gallery_image_path(character, picture), method: :delete, class: "button-link gallery__remove",
-                form: { data: { turbo_confirm: "Remove this picture?" } } %>
+          <%= delete_icon_button(character_gallery_image_path(character, picture), label: "Remove", confirm: "Remove this picture?", css: "gallery__remove") %>
         <% end %>
       </figure>
     <% end %>

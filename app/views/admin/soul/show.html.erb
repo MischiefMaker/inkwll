@@ -8,9 +8,9 @@
     <h2 class="section-title soul-admin__aspect-name">
       <%= aspect.name %>
       <span class="soul-admin__actions">
-        <%= link_to "Edit", edit_admin_soul_aspect_path(aspect), class: "button-link" %>
+        <%= edit_icon_link(edit_admin_soul_aspect_path(aspect)) %>
         <% if aspect.skills.empty? %>
-          <%= button_to "Delete", admin_soul_aspect_path(aspect), method: :delete, class: "button-link", form: { data: { turbo_confirm: "Delete #{aspect.name}?" } } %>
+          <%= delete_icon_button(admin_soul_aspect_path(aspect), label: "Delete", confirm: "Delete #{aspect.name}?") %>
         <% end %>
       </span>
     </h2>
@@ -24,9 +24,8 @@
               <td class="table__cell"><%= skill.name %></td>
               <td class="table__cell muted"><%= skill.description %></td>
               <td class="table__cell">
-                <%= link_to "Edit", edit_admin_soul_skill_path(skill) %>
-                <%= button_to "Delete", admin_soul_skill_path(skill), method: :delete, class: "button-link",
-                      form: { data: { turbo_confirm: "Delete #{skill.name}? Every character's rating in it is deleted too." } } %>
+                <%= edit_icon_link(edit_admin_soul_skill_path(skill)) %>
+                <%= delete_icon_button(admin_soul_skill_path(skill), label: "Delete", confirm: "Delete #{skill.name}? Every character's rating in it is deleted too.") %>
               </td>
             </tr>
           <% end %>

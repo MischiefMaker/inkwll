@@ -41,9 +41,8 @@
         <% if pose.edited? && !pose.removed? %><span class="pose__edited muted">(edited)</span><% end %>
         <% if mine && !pose.removed? && !pose.roll? && scene.writable? %>
           <span class="pose__actions">
-            <%= link_to "Edit", edit_scene_pose_path(scene, pose) %>
-            <%= button_to "Remove", scene_pose_path(scene, pose), method: :delete, class: "button-link",
-                  form: { data: { turbo_confirm: "Remove this #{term(:pose).downcase}?" } } %>
+            <%= edit_icon_link(edit_scene_pose_path(scene, pose)) %>
+            <%= delete_icon_button(scene_pose_path(scene, pose), label: "Remove", confirm: "Remove this #{term(:pose).downcase}?") %>
           </span>
         <% end %>
       </header>

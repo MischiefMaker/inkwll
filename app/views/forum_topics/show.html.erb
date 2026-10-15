@@ -20,11 +20,10 @@
         <% if post.edited_at %><span class="forum-post__edited muted">(edited)</span><% end %>
         <span class="forum-post__actions">
           <% if post.editable_by?(current_account) %>
-            <%= link_to "Edit", edit_forum_topic_forum_post_path(@topic, post), class: "forum-post__action" %>
+            <%= edit_icon_link(edit_forum_topic_forum_post_path(@topic, post), css: "forum-post__action") %>
           <% end %>
           <% if ForumTopic.moderator?(current_account) && !(@page == 1 && post == @posts.first) %>
-            <%= button_to "Delete", forum_topic_forum_post_path(@topic, post), method: :delete, class: "button-link forum-post__action",
-                  form: { class: "forum-post__delete", data: { turbo_confirm: "Delete this post?" } } %>
+            <%= delete_icon_button(forum_topic_forum_post_path(@topic, post), label: "Delete", confirm: "Delete this post?", css: "forum-post__action", form_class: "forum-post__delete") %>
           <% end %>
         </span>
       </header>

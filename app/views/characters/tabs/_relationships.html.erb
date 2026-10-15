@@ -17,7 +17,7 @@
           <div class="relationships__note prose"><%= simple_format relationship.note %></div>
         <% end %>
         <% if manages?(character) %>
-          <%= button_to "Remove", character_relationship_path(character, relationship), method: :delete, class: "button-link relationships__remove" %>
+          <%= delete_icon_button(character_relationship_path(character, relationship), label: "Remove", css: "relationships__remove") %>
         <% end %>
       </li>
     <% end %>

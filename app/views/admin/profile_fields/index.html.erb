@@ -17,9 +17,8 @@
             <td class="table__cell"><%= field.public? ? "Everyone" : "Player and staff" %><%= tag.span(", beside #{term(:pose, count: 2).downcase}", class: "muted") if field.on_passages? && field.public? %></td>
             <td class="table__cell"><%= field.required? ? "Yes" : "No" %></td>
             <td class="table__cell">
-              <%= link_to "Edit", edit_admin_profile_field_path(field) %>
-              <%= button_to "Delete", admin_profile_field_path(field), method: :delete, class: "button-link",
-                    form: { data: { turbo_confirm: "Delete #{field.name}? What every character wrote in it is deleted too." } } %>
+              <%= edit_icon_link(edit_admin_profile_field_path(field)) %>
+              <%= delete_icon_button(admin_profile_field_path(field), label: "Delete", confirm: "Delete #{field.name}? What every character wrote in it is deleted too.") %>
             </td>
           </tr>
         <% end %>

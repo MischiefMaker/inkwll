@@ -25,8 +25,7 @@
               <% else %>
                 <%= button_to "Restore", character_bnb_path(character, entry), method: :patch, params: { change: "restore" }, class: "button-link" %>
               <% end %>
-              <%= button_to "Delete", character_bnb_path(character, entry), method: :delete, class: "button-link",
-                    form: { data: { turbo_confirm: "Delete #{entry.name} for good? Resolving keeps it on record instead." } } %>
+              <%= delete_icon_button(character_bnb_path(character, entry), label: "Delete", confirm: "Delete #{entry.name} for good? Resolving keeps it on record instead.") %>
             </div>
           <% elsif character.sheet_open? && entry.source == "starting" && manages?(character) %>
             <%= button_to "Drop", character_bnb_path(character, entry), method: :delete, class: "button-link soul-bnb__drop" %>

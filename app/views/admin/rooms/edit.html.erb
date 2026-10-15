@@ -20,8 +20,7 @@
         <% if room_exit.number %><span class="tag exit-number"><%= room_exit.number %></span><% end %>
         <% if room_exit.kind == "building" %><span class="tag exit-kind"><%= t("terms.exit_kind_names.building") %></span><% end %>
         <strong class="emphasis"><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
-        <%= button_to "Remove", admin_room_exit_path(@room, room_exit), method: :delete, class: "button-link",
-              form: { data: { turbo_confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?" } } %>
+        <%= delete_icon_button(admin_room_exit_path(@room, room_exit), label: "Remove", confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?") %>
       </li>
     <% end %>
   </ul>

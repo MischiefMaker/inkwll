@@ -5,7 +5,7 @@
   <div class="wiki-page__header">
     <h1 class="page-title wiki-page__title"><%= @page.title %></h1>
     <div class="wiki-page__actions">
-      <% if @page.editable_by?(current_account) %><%= link_to "Edit", edit_wiki_page_path(@page), class: "button button--quiet" %><% end %>
+      <% if @page.editable_by?(current_account) %><%= edit_icon_link(edit_wiki_page_path(@page)) %><% end %>
       <%= link_to "History", wiki_page_revisions_path(@page), class: "button button--quiet" %>
       <% if current_account&.staff? %>
         <% if @page.locked? %>
@@ -15,8 +15,7 @@
         <% end %>
       <% end %>
       <% if current_account&.can?(:manage_staff) %>
-        <%= button_to "Delete", wiki_page_path(@page), method: :delete, class: "button button--quiet wiki-page__delete",
-              form: { data: { turbo_confirm: "Delete this page and all its history?" } } %>
+        <%= delete_icon_button(wiki_page_path(@page), label: "Delete", confirm: "Delete this page and all its history?", css: "wiki-page__delete") %>
       <% end %>
     </div>
   </div>

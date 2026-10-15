@@ -14,9 +14,8 @@
             <% if group.description.present? %><span class="muted">: <%= group.description %></span><% end %></td>
           <td class="table__cell"><%= group.characters.count %></td>
           <td class="table__cell">
-            <%= link_to "Edit", edit_admin_character_group_path(group) %>
-            <%= button_to "Delete", admin_character_group_path(group), method: :delete, class: "button-link",
-                  form: { data: { turbo_confirm: "Delete #{group.name}? Its characters are left without a group." } } %>
+            <%= edit_icon_link(edit_admin_character_group_path(group)) %>
+            <%= delete_icon_button(admin_character_group_path(group), label: "Delete", confirm: "Delete #{group.name}? Its characters are left without a group.") %>
           </td>
         </tr>
       <% end %>
