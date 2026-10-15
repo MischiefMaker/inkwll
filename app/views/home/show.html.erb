@@ -2,7 +2,7 @@
 
 <% settings = GameSetting.current %>
 <header class="game-intro">
-  <h1 class="game-intro__name"><%= game_name %></h1>
+  <h1 class="game-intro__name"><%= game_icon(:large) %><span class="game-intro__title"><%= game_name %></span></h1>
   <% if settings.game_blurb %>
     <div class="game-intro__blurb"><%= simple_format settings.game_blurb %></div>
   <% end %>

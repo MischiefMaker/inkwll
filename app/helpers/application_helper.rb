@@ -10,6 +10,15 @@ module ApplicationHelper
     GameSetting.current.game_name || "Inkwll"
   end
 
+  # The game's icon: the one uploaded in Game settings, or the favicon's
+  # inkwell. "small" sits beside the name in the top bar, "large" in the
+  # front page header.
+  def game_icon(size)
+    icon = GameSetting.current.icon
+    classes = "game-icon game-icon--#{size}"
+    icon.attached? && icon.blob.persisted? ? image_tag(icon, alt: "", class: classes) : image_tag("/icon.svg", alt: "", class: "#{classes} game-icon--default")
+  end
+
   # The browser tab title. Pages end theirs with "· Inkwll"; the game's own
   # name replaces it.
   def page_title

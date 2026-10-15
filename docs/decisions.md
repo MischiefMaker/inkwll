@@ -9,6 +9,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 ## 2026-10-15: Age beside Passages, icons in menus (owner)
 
 - **Age separate from Birthday:** a Birthday profile field can show just the age ("Age: 27") beside a character's Passages.
+- **Game icon:** each game can upload its own, shown small beside the name at the top left and larger in the front page header. The default is the favicon's inkwell.
 - **Icons:** the front page's "[Character] is in [Place]" line and the Playing as menu show the character's icon, with the name in the Group colour.
 
 ## 2026-10-15: Roster section and retiring roster characters (owner)

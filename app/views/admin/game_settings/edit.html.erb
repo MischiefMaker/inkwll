@@ -10,6 +10,15 @@
     <%= form.text_field :game_name, maxlength: 80, placeholder: "Inkwll" %>
     <small class="hint">Shown large on the front page, at the top of every page and in the browser tab.</small>
   </div>
+  <div class="field game-settings__icon">
+    <%= form.label :icon, "Game icon" %>
+    <%= game_icon(:large) %>
+    <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+    <% if @game_setting.icon.attached? %>
+      <label class="field--checkbox"><%= form.check_box :remove_icon %> Go back to the default icon</label>
+    <% end %>
+    <small class="hint">Small beside the name at the top left, larger on the front page. A square picture works best (PNG, JPEG, GIF or WebP, up to 5 MB). Without one, the Inkwll inkwell is used.</small>
+  </div>
   <div class="field">
     <%= form.label :game_blurb, "About the game" %>
     <%= form.text_area :game_blurb, rows: 6, maxlength: 3_000 %>

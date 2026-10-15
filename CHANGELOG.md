@@ -11,6 +11,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Paths grouped by type
 
+- Games can have their own icon (Admin → Game settings): small beside the name at the top left, larger in the front page header. The default is the favicon's inkwell.
 - A Birthday profile field can show just the age ("Age: 27") beside Passages, with its own tick box in Admin → Profile fields.
 - Playing as is a menu showing each character's icon and Group colour.
 - The front page's "[Character] is in [Place]" line has a very small icon beside the name, in the Group colour.

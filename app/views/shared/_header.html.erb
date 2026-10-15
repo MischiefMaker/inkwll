@@ -1,5 +1,5 @@
 <header class="site-header">
-  <%= link_to game_name, root_path, class: "site-header__title" %>
+  <%= link_to root_path, class: "site-header__title" do %><%= game_icon(:small) %><span class="site-header__name"><%= game_name %></span><% end %>
 
   <nav class="site-header__nav">
     <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %><span class="site-header__label">Home</span><% end %>
