@@ -39,7 +39,7 @@ Ideas the owner wants after the first release. Not built until the owner says so
 - **Weather system:** a weather system for the game world (owner, 2026-10-15). Details to be decided. Note only, not built.
 - **Mass actions on the admin lists:** checkboxes on the admin Players and staff and Characters pages, to Roster, Archive or Retire many at once (owner, 2026-10-15). Note only, not built.
 - **Research: more RPG forum and hosting examples:** look at other roleplaying forums and game hosts (beyond Jcink, Wikidot and AresMUSH, which are already studied) for ideas to borrow (owner, 2026-10-15). Research task only, not started.
-- **Live private chat:** players chat privately in real time, shown as tabs inside the OOC sidebar. Builds on Messages (step 3b).
+- **Live private chat and pages:** players chat privately in real time, shown as tabs inside the OOC sidebar, and MUSH-style pages (instant direct messages between players) fit in here too. Builds on Messages (step 3b). Also private Storyteller asides inside a Chapter (owner, 2026-10-15, idea 7 of the RP platforms shortlist). Note only, not built.
 - **Awards and profile comments** (from the Jcink shortlist, maybe later).
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.
 - **Crafting:** characters make items (owner, 2026-10-14). Details to be decided.
@@ -47,6 +47,15 @@ Ideas the owner wants after the first release. Not built until the owner says so
 - **Mini map:** a small map of the Settings around you, beyond the compass's next step. Needs each Setting placed on a grid first (owner, 2026-10-14).
 - **IC or OOC Boards:** an admin setting on each Board for whether people post in character or out of character (owner, 2026-10-15). OOC posts show the player name, as now. IC posts let the poster choose which of their characters to post as, for IC boards or posting things as your character. Details to be decided.
 - **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
+
+From the RP platforms shortlist (`design/rp-platforms-shortlist.md` in the project files), picked by the owner on 2026-10-15. Notes only, not built:
+
+- **Looking for RP flag:** a per-character flag with short "I am" and "Looking for" tags, a mark in Here and Where, and a Looking for RP list (idea 1).
+- **The story so far:** an editable summary pinned to the top of a Chapter, also shown in the Place's Chapter list and in the Archives (idea 3).
+- **Storyteller wanted:** a tick on a Chapter that puts it on a list for Storytellers, so one can join (idea 4).
+- **World timeline:** staff mark a finished Chapter as a world event, and it goes on a Timeline page with its date, a summary and the characters who were there (idea 5).
+- **Event calendar with sign-ups:** an event at a Place and time; characters sign up, and a Chapter opens when it starts (idea 6).
+- **Group pages, ranks and an IC board:** readable by everyone, to avoid cliques (idea 10).
 
 ## Decisions still needed
 
