@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
+  # Staff log in here while the game is locked, and anyone can log out.
+  skip_before_action :enforce_game_lock
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_session_path, alert: "Try again later." }
 
   def new

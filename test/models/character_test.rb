@@ -43,12 +43,21 @@ class CharacterTest < ActiveSupport::TestCase
     assert_equal "secret", secrets.reload.inkling_kind
     assert_equal "progress", chosen.reload.inkling_kind, "a choice already made is kept"
     goal = Inkling.find_by!(character: wren, kind: "goal")
-    assert_equal "Goals", goal.title
+    assert_equal "Wren's First Goal", goal.title
     assert_equal wren.account, goal.creator
     assert_equal "Win the Ravens' trust.", goal.entries.first.body
     assert_not Inkling.exists?(character: moth, kind: "goal")
 
     assert_equal 0, Character.start_goal_inklings!
     assert_equal 1, Inkling.where(character: wren, kind: "goal").count
+  end
+
+  test "Inklings already titled with just the field name get the First Goal title" do
+    field = ProfileField.create!(name: "Goals", section: "application", field_type: "long_text", public: false, inkling_kind: "goal")
+    wren = characters(:wren)
+    old = Inkling.start!(character: wren, by: wren.account, kind: "goal", title: "Goals", body: "Win.")
+    assert_equal 1, Character.rename_application_inklings!
+    assert_equal "Wren's First Goal", old.reload.title
+    assert_equal 0, Character.rename_application_inklings!
   end
 end

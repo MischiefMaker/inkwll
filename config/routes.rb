@@ -149,6 +149,7 @@ Rails.application.routes.draw do
     end
     resource :game_settings, only: %i[ edit update ]
     resource :features, only: %i[ edit update ]
+    resource :game_lock, only: %i[ create destroy ]
     resource :skin, only: %i[ edit update ]
     resources :profile_fields, except: %i[ show new ]
     resources :character_groups, except: %i[ show new ]

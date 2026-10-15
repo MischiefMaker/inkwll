@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-16: Lock the Game and Inkling names (owner)
+
+- Wellkeepers have a red **Lock the Game** button on the admin page. While locked, guests and non-staff players see a "locked" page instead of the game; staff can still use everything. Log in, log out and password reset stay reachable.
+- Inklings pulled in from an application are titled "Name's First Goal" and "Name's First Secret". Inklings players start themselves keep their own titles.
+- Character profile tab groups are separate blocks stacked down the page, not one row.
+
 ## 2026-10-15: "Page" staff level renamed Steward (owner)
 
 - The lowest staff level, flagged staff (formerly "Page"), is called **Steward**, because "Page" was confusing next to web pages, wiki pages and character pages.

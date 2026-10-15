@@ -1,0 +1,13 @@
+<% content_for :title, "#{game_name} is locked" %>
+<section class="game-locked">
+  <%= game_icon(:large) %>
+  <h1 class="page-title game-locked__title"><%= game_name %> is locked</h1>
+  <p class="text game-locked__text">The game is closed to everyone but staff for now. Please check back a little later.</p>
+  <p class="game-locked__actions">
+    <% if current_account %>
+      <%= button_to "Log out", session_path, method: :delete, class: "button button--quiet game-locked__logout" %>
+    <% else %>
+      <%= link_to "Staff log in", new_session_path, class: "game-locked__login" %>
+    <% end %>
+  </p>
+</section>

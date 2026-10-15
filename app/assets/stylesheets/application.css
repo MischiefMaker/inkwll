@@ -630,6 +630,13 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 .game-stats__item { display: inline-flex; align-items: center; gap: 0.35rem; }
 .game-stats__link { color: inherit; }
 .game-stats__count { margin-left: 0.25rem; color: var(--color-text); font-weight: bold; }
+.button--danger { background: #b3202a; color: #fff; }
+.button--danger:hover { background: #8f1922; }
+.admin-lock { margin: var(--space) 0; }
+.admin-lock--locked { padding: var(--space); border: 1px solid #b3202a; border-radius: var(--radius); }
+.game-locked { text-align: center; padding: calc(var(--space) * 3) 0; }
+.game-locked__actions form { display: inline-block; }
+.game-lock-banner a { font-weight: bold; }
 .admin-menu__title {
   margin: 0;
   padding: 0.6rem var(--space);
@@ -1014,7 +1021,8 @@ span.pose__icon { cursor: default; }
   gap: 0.75rem;
 }
 .profile-tabs__group { display: flex; flex-shrink: 0; gap: 0.1rem; }
-.profile-tabs__group + .profile-tabs__group { padding-left: 0.75rem; border-left: 1px solid var(--color-border); }
+.profile-tab-blocks { margin: var(--space) 0; }
+.profile-tab-blocks .profile-tabs { margin: 0 0 0.5rem; }
 .profile-tabs__tab { padding: 0.4rem 0.6rem; white-space: nowrap; }
 
 .details-list { margin: 0 0 var(--space); }

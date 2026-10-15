@@ -3,6 +3,7 @@
 # the skin changes.
 class SkinsController < ApplicationController
   allow_unauthenticated_access
+  skip_before_action :enforce_game_lock
 
   def show
     settings = GameSetting.current

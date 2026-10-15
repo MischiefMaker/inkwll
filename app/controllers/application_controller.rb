@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_account, :current_character, :guest_chat_open?
   before_action :note_last_seen
+  # While the game is locked, only staff get in. Runs before the login check so
+  # guests see the locked page too.
+  before_action :enforce_game_lock, prepend: true
 
   # Hitting a posting limit this many times within MUTE_FOR mutes someone
   # for MUTE_FOR. Staff can see and lift mutes on the player's admin page.
@@ -42,9 +45,16 @@ class ApplicationController < ActionController::Base
     # OocMessagesController), just as opening the chat page does.
     def guest_chat_open?
       return @guest_chat_open if defined?(@guest_chat_open)
-      @guest_chat_open = GameSetting.current.guest_chat? && !Ban.for(account: nil, ip: request.remote_ip)
+      @guest_chat_open = GameSetting.current.guest_chat? && !GameSetting.current.locked? && !Ban.for(account: nil, ip: request.remote_ip)
       session[:guest_chat_opened_at] ||= Time.current.to_i if @guest_chat_open
       @guest_chat_open
+    end
+
+    def enforce_game_lock
+      return unless GameSetting.current.locked?
+      resume_session
+      return if Current.session&.account&.staff?
+      render "game_locks/show", layout: "locked", status: :service_unavailable
     end
 
     # When the player was last on the site, for "only when I'm away" emails.

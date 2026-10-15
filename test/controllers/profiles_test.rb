@@ -147,7 +147,8 @@ class ProfilesTest < ActionDispatch::IntegrationTest
       patch admin_application_path(character), params: { decision: "approve" }
     end
     goal = Inkling.find_by!(character: character, kind: "goal")
-    assert_equal "Goals", goal.title
+    assert_equal "Applicant's First Goal", goal.title
+    assert_equal "Applicant's First Secret", Inkling.find_by!(character: character, kind: "secret").title
     assert_equal accounts(:alice), goal.creator
     assert_equal "Become mayor.", goal.entries.first.body
     assert_nil goal.staff_visible_at, "staff don't see it until the player sends it"
@@ -196,6 +197,19 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_select ".character-chapters__item .visibility-mark--you-only .icon--eye"
   end
 
+  test "the Inklings tab lists Inklings shared with the character, and links to the Inklings page" do
+    wren = characters(:wren)
+    sable = characters(:sable)
+    shared = Inkling.start!(character: wren, by: wren.account, kind: "goal", title: "Our plan", body: "Together.")
+    InklingShare.create!(inkling: shared, character: sable)
+
+    sign_in_as(sable.account)
+    get character_path(sable, tab: "inklings")
+    assert_select ".character-inklings__title", text: "Our plan"
+    assert_select ".character-inklings__shared", text: /Wren/
+    assert_select "a.character-inklings__link[href='#{inklings_path}']"
+  end
+
   test "the Inklings tab shows to the player, and to staff only for Inklings sent to them" do
     wren = characters(:wren)
     draft = Inkling.start!(character: wren, by: accounts(:alice), kind: "goal", title: "Private plans", body: "Just mine.")
@@ -225,7 +239,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
   test "profile tabs come in three groups on one row" do
     sign_in_as(accounts(:alice))
     get character_path(characters(:wren))
-    assert_select ".profile-tabs .profile-tabs__group--profile .profile-tabs__tab", count: 4
+    assert_select ".profile-tabs--profile .profile-tabs__tab", count: 4
     assert_select ".profile-tabs__group--profile .profile-tabs__tab", text: "Image Gallery"
     assert_select ".profile-tabs__group--activity .profile-tabs__tab", text: /Manuscripts/
 

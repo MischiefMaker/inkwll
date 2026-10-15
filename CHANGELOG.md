@@ -2,6 +2,17 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Lock the Game, profile tabs
+
+- Wellkeepers get a red "Lock the Game" button on the admin page. While locked,
+  guests and non-staff players see a page saying the game is locked (they can
+  still log in or out); staff keep working and see a banner. "Unlock the Game"
+  undoes it.
+- Character profile tabs are now three separate blocks, one under the other:
+  Profile, then the private tabs, then Manuscripts and Active Chapters.
+- Inklings made from an application's Goals and Secrets are called "Lucia's
+  First Goal" and "Lucia's First Secret". Existing ones are renamed on deploy.
+
 ## 2026-10-15 — inkwll.com
 
 - The game moves to https://inkwll.com with HTTPS. www.inkwll.com sends
