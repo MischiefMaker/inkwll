@@ -12,7 +12,7 @@
   <div class="place__body">
     <h2 class="place__name">
       <%= place_icon(area, :compass, css: "place__icon") %>
-      <span class="place__title"><%= area.name %></span>
+      <%= link_to area.name, area_path(area), class: "place__title" %>
       <%= turn_quill(area.all_rooms.unscope(:order).pluck(:id)) %>
     </h2>
     <% blurb = area.summary || truncate(area.description.to_s.squish, length: 220, separator: " ").presence %>

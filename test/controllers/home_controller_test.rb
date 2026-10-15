@@ -26,6 +26,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
+    assert_select "a.place__title[href=?]", area_path(areas(:world)), text: "The World"
     assert_select ".place__title", "The World"
     assert_select ".place__title", text: "Castle", count: 0
     assert_select ".where-now a", "The Commons"
