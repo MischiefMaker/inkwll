@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Area banners on Settings (owner, 2026-10-15)
+
+- Each Setting shows its own Area's banner and short text (if it has them) at the top, above the Setting's name and description. It's the nearest Area only, not the ones above it. Areas with neither show nothing extra.
+
 ## OOC Chat moderation (owner, 2026-10-15)
 
 - **Players** can edit and delete their own OOC Chat messages; **staff** can edit and delete anyone's.

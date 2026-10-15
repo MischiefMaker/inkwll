@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Area banners on Settings
+
+- A Setting now shows its Area's banner and short text above its own name,
+  when the Area has them, so you can see where you've arrived.
+
 ## 2026-10-15 — OOC Chat moderation
 
 - Players can edit and delete their own OOC Chat messages. Staff can edit

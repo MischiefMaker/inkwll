@@ -492,6 +492,12 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
 /* Area and Setting pages */
 
 .lede { font-size: 1.1rem; color: var(--color-muted); }
+
+/* A Setting's Area, introduced above the Setting's name. */
+.area-intro { margin: 0.5rem 0 var(--space); }
+.area-intro__banner img { display: block; max-width: 100%; max-height: 14rem; width: 100%; object-fit: cover; border-radius: var(--radius); }
+.area-intro__summary { margin: 0.5rem 0 0; color: var(--color-muted); font-style: italic; }
+.area-intro__name { font-weight: bold; font-style: normal; color: inherit; }
 .page-title__icon { width: 2.2rem; height: 2.2rem; object-fit: cover; border-radius: var(--radius); margin-right: 0.6rem; vertical-align: middle; }
 .board__icon { width: 1.5rem; height: 1.5rem; object-fit: cover; border-radius: 3px; margin-right: 0.4rem; vertical-align: middle; }
 .board__summary { flex: 1; color: var(--color-muted); }

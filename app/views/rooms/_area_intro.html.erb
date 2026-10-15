@@ -1,0 +1,13 @@
+<%# The Setting's Area, introduced at the top: its banner and short text,
+    if the builder gave it any, so arriving somewhere (say, Central Square
+    by entering Midtown) still shows where you are (owner). %>
+<% if area && (area.image.attached? || area.summary.present?) %>
+  <section class="area-intro">
+    <% if area.image.attached? %>
+      <%= link_to area_path(area), class: "area-intro__banner" do %><%= image_tag area.image, alt: area.name %><% end %>
+    <% end %>
+    <% if area.summary.present? %>
+      <p class="area-intro__summary"><%= link_to area.name, area_path(area), class: "area-intro__name" %>: <%= area.summary %></p>
+    <% end %>
+  </section>
+<% end %>

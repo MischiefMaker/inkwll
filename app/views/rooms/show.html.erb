@@ -5,6 +5,7 @@
 <article class="room">
   <%= render "areas/breadcrumbs", area: @room.area, include_self: true %>
   <% page_background(@room) %>
+  <%= render "rooms/area_intro", area: @room.area %>
   <h1 class="page-title"><% if @room.icon.attached? %><%= image_tag @room.icon, alt: "", class: "page-title__icon" %><% end %><%= @room.name %></h1>
   <% if current_account %>
     <div class="room__save">

@@ -15,7 +15,7 @@ Owner, 2026-10-15, after testing the live game: "I think the Paths should be nam
 
 Right now `seed_paths` names Paths between Areas after the Area (for example "Midtown"), but they lead to the Area's first Setting (for example "Central Square"). Every starter Path is also a Street, so nothing shows under "Go in" or as numbered doors.
 
-The owner also noticed that Enter on an Area drops you into its default Setting without showing the Area's own text. They're not sure that's a problem ("maybe that's okay"). Leave it unless they decide otherwise.
+The owner also noticed that Enter on an Area drops you into its default Setting without showing the Area's own text. They're not sure that's a problem ("maybe that's okay"). Leave it unless they decide otherwise. Since then, Settings show their Area's banner and short text at the top, but the starter Areas have no short text (`summary`) yet: write some as part of this task.
 
 ## What to do
 

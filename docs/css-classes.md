@@ -176,3 +176,4 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.scene-list`, `.scene-list__title`, `.scene-list__meta` | A Setting's list of Chapters |
 | `.manuscript`, `.manuscript__title`, `.manuscript__meta` | A finished Chapter in the Archives |
 | `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc` | Character icons |
+| `.area-intro`, `.area-intro__banner`, `.area-intro__summary`, `.area-intro__name` | A Setting's Area (banner and short text) shown above the Setting's name |
