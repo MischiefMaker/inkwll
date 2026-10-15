@@ -40,10 +40,29 @@ module StarterContent
     [ "Goals", "application", "long_text", false, false, "What they want. Only you and staff can see this." ]
   ].freeze
 
+  # [from, to, name, what it means]. Written for a 0-10 scale; staff change it
+  # in Admin → SOUL.
+  RATING_GUIDE = [
+    [ 0, 0, "Untrained", "No real knowledge or practice." ],
+    [ 1, 2, "Novice", "A beginner or an amateur. Can manage easy things on a good day." ],
+    [ 3, 4, "Competent", "A typical trained adult. Reliable at everyday tasks." ],
+    [ 5, 6, "Skilled", "A professional, good enough to make a living from it. The top of what most people reach." ],
+    [ 7, 8, "Exceptional", "Among the best in a city or a field. Remarkable, but still human." ],
+    [ 9, 10, "Superhuman", "Beyond what ordinary people can do: legend, magic or something not quite mortal." ]
+  ].freeze
+
   def self.install!
+    install_rating_guide!
     install_soul!
     install_bnbs!
     install_profile_fields!
+  end
+
+  def self.install_rating_guide!
+    return if Soul::RatingGuide.exists?
+    RATING_GUIDE.each_with_index do |(low, high, name, description), position|
+      Soul::RatingGuide.create!(low: low, high: high, name: name, description: description, position: position)
+    end
   end
 
   def self.install_soul!

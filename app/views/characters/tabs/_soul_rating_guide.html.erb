@@ -1,0 +1,21 @@
+<%# The "i" icon on the SOUL sheet: a small pop-up saying what the ratings
+    mean (what's ordinary, what's superhuman). Staff write it in Admin → SOUL. %>
+<% guides = Soul::RatingGuide.ordered %>
+<% if guides.any? %>
+  <div class="rating-guide">
+    <button type="button" class="rating-guide__button" popovertarget="rating-guide-popover" title="What do the ratings mean?">
+      <%= icon(:info, size: 18) %><span class="rating-guide__label">What do the ratings mean?</span>
+    </button>
+    <div popover id="rating-guide-popover" class="rating-guide__popover">
+      <p class="rating-guide__title">What the ratings mean</p>
+      <dl class="rating-guide__list">
+        <% guides.each do |guide| %>
+          <div class="rating-guide__item">
+            <dt class="rating-guide__range"><%= guide.range_text %> <span class="rating-guide__name"><%= guide.name %></span></dt>
+            <% if guide.description.present? %><dd class="rating-guide__about muted"><%= guide.description %></dd><% end %>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+<% end %>

@@ -161,6 +161,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.soul-culminations`, `.soul-culmination`, `.soul-culmination--approved` (and the other statuses) | Culminations |
 | `.soul-history`, `.soul-history__item` | Narrative History |
 | `.soul-audit` | The staff log |
+| `.rating-guide`, `.rating-guide__button`, `.rating-guide__label`, `.rating-guide__popover`, `.rating-guide__title`, `.rating-guide__list`, `.rating-guide__item`, `.rating-guide__range`, `.rating-guide__name`, `.rating-guide__about`, `.soul-admin__guide`, `.soul-admin__guide-table`, `.soul-admin__guide-item`, `.soul-admin__guide-add` | The "i" pop-up on the SOUL sheet saying what ratings mean, and its admin editor |
 | `.soul-reviews`, `.soul-reviews__item`, `.bnb-catalogue`, `.bnb-catalogue__actions`, `.bnb-catalogue__edit`, `.bnb-catalogue__delete`, `.bnb-catalogue__delete-form`, `.icon-action`, `.icon-action--edit`, `.icon-action--delete`, `.icon-action-form` (pencil and trashcan buttons, via `edit_icon_link` and `delete_icon_button`) | Admin: SOUL requests and the Boons and Banes catalogue |
 | `.pose--roll`, `.roll-details` | A roll result and its dice |
 

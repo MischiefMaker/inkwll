@@ -13,6 +13,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - **Picture answers:** profile fields have a Picture kind of answer, for games that use images instead of text for descriptions.
 - **GM in Playing as:** staff and Storytellers can post and run Chapters as their player (named after the player, Storyteller in Chapters they start). GM is not physically anywhere: never in Where or Here, only listed in Chapters, as Storyteller.
 - **Settings are renamed Places** (owner picked it from Place, Locale, Location): "Setting" was confusing next to account settings, and Places matches My places.
+- **SOUL rating guide:** an "i" on the SOUL sheet opens a pop-up of what each rating range means (ordinary to superhuman). Staff set the ranges and wording in Admin → SOUL, not in a config file. Explanation only: it changes no rolls.
 - **Pencil and trashcan everywhere:** short Edit, Delete and Remove links and buttons are icons (the word stays for screen readers and on hover). Longer ones such as "Delete this thread" keep their words.
 - **Directory tabs:** All, one tab per character group, Roster, and Unapproved (staff only).
 - **Menu sections:** your own things together (My characters, Chapters, places, Inklings, player profile), then the world, then community and help, then staff.

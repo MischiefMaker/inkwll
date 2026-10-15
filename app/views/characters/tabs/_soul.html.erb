@@ -6,6 +6,7 @@
 <% character.soul_ratings.load %>
 
 <div class="soul-sheet soul-sheet--<%= character.sheet_open? ? "open" : "locked" %>">
+  <%= render "characters/tabs/soul_rating_guide" %>
   <% if character.sheet_open? && mine %>
     <% allowances = Soul::Rules.resonance_range.to_h { |r| [ r, Soul::Rules.chargen_allowance(r) ] } %>
     <p class="text soul-sheet__intro">Set <%= character.name %>'s starting sheet. You can change it as often as you like

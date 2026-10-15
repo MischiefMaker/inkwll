@@ -1,0 +1,21 @@
+<%= form_with model: guide, url: guide.persisted? ? admin_soul_rating_guide_path(guide) : admin_soul_rating_guides_path, scope: :soul_rating_guide, class: "form soul-admin-form" do |form| %>
+  <%= render "shared/errors", record: guide %>
+  <div class="field">
+    <%= form.label :low, "From rating" %>
+    <%= form.number_field :low, min: 0, required: true %>
+  </div>
+  <div class="field">
+    <%= form.label :high, "To rating" %>
+    <%= form.number_field :high, min: 0, required: true %>
+    <small class="hint">The same number as "from" for a single rating.</small>
+  </div>
+  <div class="field">
+    <%= form.label :name, "Called" %>
+    <%= form.text_field :name, required: true, maxlength: 40 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "What it means (optional)" %>
+    <%= form.text_area :description, rows: 3, maxlength: 500 %>
+  </div>
+  <%= form.submit guide.persisted? ? "Save" : "Add to the guide", class: "button" %>
+<% end %>

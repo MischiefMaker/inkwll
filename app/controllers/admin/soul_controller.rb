@@ -6,5 +6,7 @@ class Admin::SoulController < Admin::BaseController
     @aspects = Soul::Aspect.ordered.includes(:skills)
     @aspect = Soul::Aspect.new
     @skill = Soul::Skill.new
+    @guides = Soul::RatingGuide.ordered
+    @guide = Soul::RatingGuide.new
   end
 end

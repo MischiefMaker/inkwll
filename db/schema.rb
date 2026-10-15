@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_050001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_15_060001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -749,6 +749,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_050001) do
     t.index ["character_id"], name: "index_soul_pending_rolls_on_character_id"
     t.index ["scene_id"], name: "index_soul_pending_rolls_on_scene_id"
     t.index ["soul_skill_id"], name: "index_soul_pending_rolls_on_soul_skill_id"
+  end
+
+  create_table "soul_rating_guides", force: :cascade do |t|
+    t.integer "low", null: false
+    t.integer "high", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "soul_ratings", force: :cascade do |t|

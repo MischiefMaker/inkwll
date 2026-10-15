@@ -1,0 +1,5 @@
+<% content_for :title, "#{@record.name} · Rating guide · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "SOUL", admin_soul_path %></p>
+<h1 class="page-title">Edit <%= @record.name %></h1>
+<%= render "form", guide: @record %>

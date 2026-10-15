@@ -21,6 +21,10 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- The SOUL sheet has an "i" icon, "What do the ratings mean?", opening a
+  pop-up that says what's ordinary and what's superhuman. Staff write the
+  ranges in Admin → SOUL (new games start with six: Untrained to
+  Superhuman). It's explanation only and changes no rolls.
 - Edit and Delete (and Remove) links across the site are now the pencil and
   trashcan icons: Passages, Boards, the wiki, profile and SOUL screens, and
   the admin lists.

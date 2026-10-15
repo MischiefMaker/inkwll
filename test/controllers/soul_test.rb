@@ -118,4 +118,31 @@ class SoulControllersTest < ActionDispatch::IntegrationTest
     delete admin_soul_bnb_path(held)
     assert_not held.reload.active?
   end
+
+  test "staff write a guide to what the ratings mean, and the sheet shows it behind an i icon" do
+    sign_in_as(accounts(:alice))
+    get character_path(characters(:wren), tab: "soul")
+    assert_select ".rating-guide", count: 0
+
+    sign_in_as(accounts(:bob))
+    post admin_soul_rating_guides_path, params: { soul_rating_guide: { low: 9, high: 10, name: "Superhuman" } }
+    assert_equal 0, Soul::RatingGuide.count, "players can't write it"
+
+    sign_in_as(accounts(:wellkeeper))
+    post admin_soul_rating_guides_path, params: { soul_rating_guide: { low: 9, high: 10, name: "Superhuman", description: "Beyond ordinary people." } }
+    post admin_soul_rating_guides_path, params: { soul_rating_guide: { low: 7, high: 5, name: "Backwards" } }
+    assert_equal [ "Superhuman" ], Soul::RatingGuide.pluck(:name)
+    get admin_soul_path
+    assert_select ".soul-admin__guide-item", text: /9–10.*Superhuman/m
+
+    sign_in_as(accounts(:alice))
+    get character_path(characters(:wren), tab: "soul")
+    assert_select ".rating-guide__button"
+    assert_select ".rating-guide__popover .rating-guide__range", text: /9–10 Superhuman/
+    assert_select ".rating-guide__about", text: "Beyond ordinary people."
+
+    sign_in_as(accounts(:wellkeeper))
+    delete admin_soul_rating_guide_path(Soul::RatingGuide.first)
+    assert_equal 0, Soul::RatingGuide.count
+  end
 end

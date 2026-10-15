@@ -44,3 +44,30 @@
 
 <h2 class="section-title">Add an Aspect</h2>
 <%= render "admin/soul_aspects/form", aspect: @aspect %>
+
+<section class="soul-admin__guide" id="rating-guide">
+  <h2 class="section-title">What the ratings mean</h2>
+  <p class="text muted">Players see this guide behind the "i" icon on the SOUL sheet, so they know what's ordinary and what's superhuman. It's only an explanation: it doesn't change any rolls. Ratings run from 0 to <%= Soul::Rules.skill_max %>.</p>
+  <% if @guides.any? %>
+    <table class="table soul-admin__guide-table">
+      <thead class="table__head"><tr class="table__row"><th class="table__heading">Rating</th><th class="table__heading">Called</th><th class="table__heading">What it means</th><th class="table__heading"></th></tr></thead>
+      <tbody class="table__body">
+        <% @guides.each do |guide| %>
+          <tr class="table__row soul-admin__guide-item">
+            <td class="table__cell"><%= guide.range_text %></td>
+            <td class="table__cell"><strong class="emphasis"><%= guide.name %></strong></td>
+            <td class="table__cell muted"><%= guide.description %></td>
+            <td class="table__cell">
+              <%= edit_icon_link(edit_admin_soul_rating_guide_path(guide)) %>
+              <%= delete_icon_button(admin_soul_rating_guide_path(guide), label: "Delete", confirm: "Delete #{guide.name} from the guide?") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text muted">No guide yet, so players see no "i" icon. Add a line for each band of ratings.</p>
+  <% end %>
+  <h3 class="soul-admin__guide-add">Add a line</h3>
+  <%= render "admin/soul_rating_guides/form", guide: @guide %>
+</section>

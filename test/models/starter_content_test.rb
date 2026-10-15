@@ -5,11 +5,13 @@ class StarterContentTest < ActiveSupport::TestCase
     ProfileValue.delete_all
     ProfileField.delete_all
     Soul::Bnb.delete_all
+    Soul::RatingGuide.delete_all
 
     StarterContent.install!
     assert_equal 6, Soul::Bnb.boon.count
     assert_equal 6, Soul::Bnb.bane.count
     assert ProfileField.find_by(name: "Background").required?
+    assert Soul::RatingGuide.exists?(name: "Superhuman")
 
     assert_no_difference -> { Soul::Bnb.count + ProfileField.count } do
       StarterContent.install!
