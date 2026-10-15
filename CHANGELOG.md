@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 - The admin front page has quick-action buttons across the top (New Character, New Place, Player List, Character List, Reports and more, only the ones your job allows) and a Needs Attention list of waiting work below them.
 - A character's name, icon and details sit in a box on their profile, at the top or at the side like a wiki infobox. Pick which in Admin → Look. Long answers and pictures stay on the Profile tab.
+- The old list of links on the admin front page is gone; the buttons and the side menu replace it.
 - Fix: the admin side menu is sized from where it really sits on the page, so its last link can always be reached by scrolling the menu.
 - The front page ends with counts of Players, Characters, Chapters and Archives. Archived players, retired and roster characters, and private or hidden Chapters aren't counted.
 - The lowest staff level, "Page", is now called Steward (so "Build Page" and "App Page" become "Build Steward" and "App Steward"). Only the wording changed.

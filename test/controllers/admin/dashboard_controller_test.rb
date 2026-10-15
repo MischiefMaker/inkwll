@@ -30,4 +30,14 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
     get admin_root_path
     assert_redirected_to root_path
   end
+
+  test "the old link list is gone, and what it linked to is still in the side menu" do
+    sign_in_as(accounts(:wellkeeper))
+    get admin_root_path
+    assert_select ".admin-sections", count: 0
+    [ admin_areas_path, admin_accounts_path, admin_reports_path, admin_bans_path, admin_characters_path,
+      edit_admin_features_path, edit_admin_skin_path, edit_admin_game_settings_path ].each do |path|
+      assert_select ".admin-menu a[href='#{path}']"
+    end
+  end
 end
