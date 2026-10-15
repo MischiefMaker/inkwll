@@ -132,6 +132,25 @@ class JcinkAddOnsTest < ActionDispatch::IntegrationTest
     assert_select ".pose__details", text: /Ravens · Hometown: Ravenhollow/
   end
 
+  test "a Birthday field can show just the age beside Passages" do
+    field = profile_fields(:birthday)
+    field.update!(age_on_passages: true)
+    characters(:wren).profile_values.create!(profile_field: field, value: (IcClock.today - 27.years - 10.days).to_s)
+    scenes(:duel).post!(characters(:wren), "Wren bows.")
+
+    sign_in_as(accounts(:bob))
+    get scene_path(scenes(:duel))
+    assert_select ".pose__details", text: /Age: 27/
+    assert_select ".pose__details", text: /Birthday/, count: 0
+  end
+
+  test "showing the age only works on a Birthday field" do
+    field = profile_fields(:hometown)
+    field.age_on_passages = true
+    assert_not field.valid?
+    assert field.errors[:age_on_passages].any?
+  end
+
   test "a player picks a group before approval, but not after" do
     ravens = CharacterGroup.create!(name: "Ravens", colour: "#336699")
     GameSetting.current.update!(approval_required: true)

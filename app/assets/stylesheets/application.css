@@ -87,6 +87,7 @@ h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
   .site-header__icon, .message-count__icon, .alert-bell__icon { width: 22px; height: 22px; }
   .switcher__label { display: none; }
   .switcher select { max-width: 8rem; }
+  .switcher__options { right: auto; left: 0; }
   .site-header__preview { display: none; }
 }
 
@@ -413,6 +414,8 @@ a.ooc-message__author:hover { text-decoration: underline; }
 /* Area pages: the Settings and Areas inside, as lists */
 
 .where-now { font-family: var(--font-ui); color: var(--color-muted); }
+.where-now .character-icon { width: 1.2rem; height: 1.2rem; font-size: 0.7rem; vertical-align: -0.25em; margin-right: 0.15rem; }
+.where-now__name { font-weight: bold; }
 
 .breadcrumbs { font-family: var(--font-ui); font-size: 0.9rem; color: var(--color-muted); }
 
@@ -1392,6 +1395,20 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 @media (max-width: 640px) {
   .alert-menu__panel { position: fixed; top: auto; left: 1rem; right: 1rem; width: auto; }
 }
+
+/* Playing as: a drop-down showing each character's icon and Group colour. */
+.switcher__menu { position: relative; }
+.switcher__current { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; list-style: none; padding: 0.25rem 0.6rem; border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-bg); }
+.switcher__current::-webkit-details-marker { display: none; }
+.switcher__current::after { content: "▾"; color: var(--color-muted); font-size: 0.8rem; }
+.switcher__options { position: absolute; z-index: 20; right: 0; min-width: 100%; margin-top: 0.3rem; padding: 0.3rem; display: flex; flex-direction: column;
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); box-shadow: 0 6px 20px rgb(0 0 0 / 0.15); }
+.switcher__option { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.6rem; border: 0; border-radius: var(--radius); background: none; color: var(--color-text); font: inherit; text-align: left; white-space: nowrap; cursor: pointer; }
+.switcher__option:hover { background: var(--color-bg); }
+.switcher__option--current { font-weight: bold; }
+.switcher .character-icon--tiny, .switcher__icon { width: 1.3rem; height: 1.3rem; flex: none; }
+.switcher .character-icon--tiny.character-icon--initial { font-size: 0.7rem; }
+.switcher__name--nobody { color: var(--color-muted); }
 
 /* Section headings in the Menu: Mine, The world, Community and help, Staff. */
 .menu__heading { margin: 0.5rem 0 0; padding-top: 0.5rem; border-top: 1px solid var(--color-border); color: var(--color-muted); font-size: 0.75rem; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; }

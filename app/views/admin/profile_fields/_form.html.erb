@@ -30,6 +30,10 @@
     <%= form.check_box :on_passages %>
     <%= form.label :on_passages, "Show beside #{term(:pose, count: 2).downcase} (only if everyone can see it)" %>
   </div>
+  <div class="field field--checkbox profile-field-form__age-on-passages">
+    <%= form.check_box :age_on_passages %>
+    <%= form.label :age_on_passages, "Birthday fields only: show just the age (\"Age: 27\") beside #{term(:pose, count: 2).downcase}, without the birthday" %>
+  </div>
   <div class="field field--checkbox profile-field-form__player-can-edit">
     <%= form.check_box :player_can_edit %>
     <%= form.label :player_can_edit, "Player can edit after approval" %>

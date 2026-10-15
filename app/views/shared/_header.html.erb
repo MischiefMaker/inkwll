@@ -55,15 +55,34 @@
     <% characters = current_account.characters.active.order(:name) %>
     <% gm_option = current_account.may_storytell? %>
     <% if characters.any? || gm_option %>
-      <%= form_with url: active_character_path, method: :patch, class: "switcher",
-            data: { controller: "auto-submit" } do |form| %>
-        <%= form.label :character_id, "Playing as", class: "switcher__label" %>
-        <%= form.select :character_id,
-              options_from_collection_for_select(characters, :id, :name, current_character&.id) +
-                (gm_option ? tag.option("GM (#{current_account.display_name})", value: "gm", selected: current_character&.gm?, class: "switcher__gm") : "".html_safe),
-              { include_blank: current_character.nil? },
-              data: { action: "change->auto-submit#submit" } %>
-        <noscript><%= form.submit "Switch" %></noscript>
+      <%# A custom drop-down rather than a <select>, so each character shows
+          their icon and Group colour. Each entry is a button that sends its
+          character's id. %>
+      <%= form_with url: active_character_path, method: :patch, class: "switcher" do |form| %>
+        <span class="switcher__label">Playing as</span>
+        <details class="switcher__menu" data-controller="menu-dismiss" data-action="click@document->menu-dismiss#closeOutside">
+          <summary class="switcher__current">
+            <% if current_character&.gm? %>
+              <%= icon(:quill, size: 16, css: "switcher__icon") %><span class="switcher__name">GM</span>
+            <% elsif current_character %>
+              <%= character_icon(current_character, size: :tiny) %><%= tag.span current_character.name, **character_name_options(current_character, "switcher__name") %>
+            <% else %>
+              <span class="switcher__name switcher__name--nobody">Nobody</span>
+            <% end %>
+          </summary>
+          <div class="switcher__options">
+            <% characters.each do |character| %>
+              <%= button_tag type: "submit", name: "character_id", value: character.id, class: "switcher__option#{" switcher__option--current" if character.id == current_character&.id}" do %>
+                <%= character_icon(character, size: :tiny) %><%= tag.span character.name, **character_name_options(character, "switcher__name") %>
+              <% end %>
+            <% end %>
+            <% if gm_option %>
+              <%= button_tag type: "submit", name: "character_id", value: "gm", class: "switcher__option switcher__gm#{" switcher__option--current" if current_character&.gm?}" do %>
+                <%= icon(:quill, size: 16, css: "switcher__icon") %><span class="switcher__name">GM (<%= current_account.display_name %>)</span>
+              <% end %>
+            <% end %>
+          </div>
+        </details>
       <% end %>
     <% end %>
 

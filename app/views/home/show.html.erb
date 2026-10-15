@@ -16,7 +16,8 @@
 
   <% if current_character %>
     <p class="where-now">
-      <%= current_character.name %> is in
+      <%= character_icon(current_character, size: :tiny) %>
+      <%= tag.span current_character.name, **character_name_options(current_character, "where-now__name") %> is in
       <%= link_to current_character.room.name, room_path(current_character.room) %>.
     </p>
   <% elsif !current_account %>

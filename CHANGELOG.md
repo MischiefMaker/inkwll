@@ -11,6 +11,9 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Paths grouped by type
 
+- A Birthday profile field can show just the age ("Age: 27") beside Passages, with its own tick box in Admin → Profile fields.
+- Playing as is a menu showing each character's icon and Group colour.
+- The front page's "[Character] is in [Place]" line has a very small icon beside the name, in the Group colour.
 - The Chapters button is the same size as a tab while open, and folds down to a small "+ (3)".
 - A Place's Paths are broken out under headings: Streets first, then Buildings,
   Outdoor areas and Other places (by the type of Place each leads to).

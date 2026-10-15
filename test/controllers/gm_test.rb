@@ -4,7 +4,7 @@ class GmTest < ActionDispatch::IntegrationTest
   test "staff switch to GM, start a Chapter as Storyteller, and stay out of Where and Here" do
     sign_in_as(accounts(:scribe))
     get root_path
-    assert_select "option.switcher__gm"
+    assert_select "button.switcher__gm"
 
     patch active_character_path, params: { character_id: "gm" }
     gm = accounts(:scribe).reload.active_character
@@ -28,7 +28,7 @@ class GmTest < ActionDispatch::IntegrationTest
   test "players don't get the GM option" do
     sign_in_as(accounts(:alice))
     get root_path
-    assert_select "option.switcher__gm", count: 0
+    assert_select "button.switcher__gm", count: 0
     patch active_character_path, params: { character_id: "gm" }
     assert_not accounts(:alice).reload.active_character&.gm?
     assert_not accounts(:alice).characters.exists?(gm: true)

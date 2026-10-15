@@ -192,3 +192,6 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.manuscript`, `.manuscript__title`, `.manuscript__meta` | A finished Chapter in the Archives |
 | `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc`, `--gm` (GM posts with the player's picture) | Character icons |
 | `.area-intro`, `.area-intro__banner`, `.area-intro__summary`, `.area-intro__name` | A Setting's Area (banner and short text) shown above the Setting's name |
+| `.where-now__name` | The character's name in "[Character] is in [Place]" on the front page (Group colour, with a very small icon beside it) |
+| `.switcher__menu`, `.switcher__current`, `.switcher__options`, `.switcher__option`, `.switcher__option--current`, `.switcher__name`, `.switcher__name--nobody`, `.switcher__icon`, `.switcher__gm` | The Playing as menu in the header: each character with their icon and Group colour |
+| `.profile-field-form__age-on-passages` | The tick box for showing just the age beside Passages |

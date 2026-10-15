@@ -12,6 +12,7 @@ class ProfileField < ApplicationRecord
   validates :section, inclusion: { in: SECTIONS }
   validates :field_type, inclusion: { in: FIELD_TYPES.keys }
   validates :hint, length: { maximum: 300 }
+  validate :age_needs_a_birthday
   validate :pictures_stay_on_the_profile
   validate :inkling_kind_is_a_type_players_start
 
@@ -41,6 +42,10 @@ class ProfileField < ApplicationRecord
   end
 
   private
+    def age_needs_a_birthday
+      errors.add(:age_on_passages, "can only be used with a Birthday field") if age_on_passages? && field_type != "birthday"
+    end
+
     def inkling_kind_is_a_type_players_start
       return if inkling_kind.blank?
       errors.add(:inkling_kind, "isn't a type players can start") unless self.class.inkling_kinds.key?(inkling_kind)

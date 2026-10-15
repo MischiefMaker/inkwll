@@ -67,7 +67,7 @@ module ApplicationHelper
 
   # The public profile fields the game shows beside Passages.
   def passage_fields
-    @passage_fields ||= ProfileField.where(on_passages: true, public: true).ordered.to_a
+    @passage_fields ||= ProfileField.where(public: true).where("on_passages OR age_on_passages").ordered.to_a
   end
 
   # A few lines for a character's pop-up: their first public long-text
@@ -86,7 +86,12 @@ module ApplicationHelper
       value = character.profile_value_for(field)
       next if value&.value.blank?
       parts << case field.field_type
-      when "birthday" then (age = IcClock.age(value.as_date)) && "#{field.name}: age #{age}"
+      when "birthday"
+        age = IcClock.age(value.as_date)
+        # "Age" on its own when the field is set to show only the age.
+        if field.age_on_passages? && !field.on_passages? then age && "Age: #{age}"
+        else age && "#{field.name}: age #{age}"
+        end
       when "date" then value.as_date && "#{field.name}: #{value.as_date.to_fs(:long)}"
       else "#{field.name}: #{value.value.truncate(60)}"
       end
