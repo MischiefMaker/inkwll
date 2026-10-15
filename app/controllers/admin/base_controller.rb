@@ -13,6 +13,11 @@ class Admin::BaseController < ApplicationController
       deny_access unless current_account.staff?
     end
 
+    # For pages only the Founder may use, such as Wells.
+    def require_founder
+      deny_access unless current_account.founder?
+    end
+
     def deny_access
       redirect_to root_path, alert: "You don't have access to that."
     end

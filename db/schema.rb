@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_230001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_15_230002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -843,6 +843,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_230001) do
     t.index ["range"], name: "index_vpn_ranges_on_range", opclass: :inet_ops, using: :gist
   end
 
+  create_table "well_updates", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "version", null: false
+    t.string "request_id", null: false
+    t.string "status", default: "requested", null: false
+    t.string "conclusion"
+    t.bigint "run_id"
+    t.string "run_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_well_updates_on_account_id"
+  end
+
   create_table "wiki_pages", force: :cascade do |t|
     t.string "title", null: false
     t.string "slug", null: false
@@ -978,6 +991,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_230001) do
   add_foreign_key "soul_skills", "soul_aspects"
   add_foreign_key "soul_xp_entries", "accounts", column: "actor_id"
   add_foreign_key "soul_xp_entries", "characters"
+  add_foreign_key "well_updates", "accounts"
   add_foreign_key "wiki_pages", "accounts", column: "updated_by_id", on_delete: :nullify
   add_foreign_key "wiki_revisions", "accounts", on_delete: :nullify
   add_foreign_key "wiki_revisions", "wiki_pages", column: "page_id", on_delete: :cascade

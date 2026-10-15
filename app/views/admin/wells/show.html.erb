@@ -1,0 +1,72 @@
+<% content_for :title, "Wells · Admin · Inkwll" %>
+<% if @updates.any?(&:running?) %>
+  <% content_for :head do %><meta http-equiv="refresh" content="15"><% end %>
+<% end %>
+
+<h1 class="page-title">Wells</h1>
+<p class="muted">Only the <%= term(:founder) %> sees this page. Each Well is its own game with its own database. Updates are done by GitHub, and only versions Claude has marked ready can be installed. A database backup is made before every update.</p>
+
+<table class="table wells__list">
+  <thead class="table__head"><tr class="table__row"><th class="table__heading">Well</th><th class="table__heading">Address</th><th class="table__heading">Version</th></tr></thead>
+  <tbody class="table__body">
+    <tr class="table__row wells__well">
+      <td class="table__cell"><%= game_name %> <span class="muted">(this one)</span></td>
+      <td class="table__cell"><%= ENV.fetch("APP_HOST", request.host) %></td>
+      <td class="table__cell wells__version"><%= @current_version || "Not a marked version" %></td>
+    </tr>
+  </tbody>
+</table>
+<p class="muted wells__later">Starting new Wells, on this droplet or a new one, comes in a later step.</p>
+
+<h2 class="section-title">Versions</h2>
+<% if !@configured %>
+  <div class="wells__setup">
+    <p class="text">Updates need a GitHub key first. It can only start the Deploy workflow and read the code, nothing else.</p>
+    <ol class="wells__steps">
+      <li>On GitHub, open Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token.</li>
+      <li>Name it "Inkwll Wells", set it to expire in a year, and under Repository access pick Only select repositories and choose the inkwll repository.</li>
+      <li>Under Permissions, set Actions to Read and write and Contents to Read-only. Leave everything else as No access.</li>
+      <li>Copy the token. In the inkwll repository, open Settings → Secrets and variables → Actions → New repository secret, name it <code>WELLS_GITHUB_TOKEN</code> and paste it in.</li>
+      <li>The next deploy hands it to the game, and this page lists the versions.</li>
+    </ol>
+  </div>
+<% elsif @github_error %>
+  <p class="flash flash--alert wells__error"><%= @github_error %></p>
+<% elsif @releases.empty? %>
+  <p class="muted">No versions are marked ready yet.</p>
+<% else %>
+  <% current_index = @releases.index { |release| release.tag == @current_version } %>
+  <% busy = @updates.any?(&:running?) %>
+  <ul class="wells__releases">
+    <% @releases.each_with_index do |release, index| %>
+      <li class="wells__release<%= " wells__release--current" if index == current_index %>">
+        <h3 class="wells__release-name"><%= release.name %> <span class="muted">· <%= release.published_at&.to_date&.to_fs(:long) %></span></h3>
+        <% if release.notes.present? %><div class="wells__release-notes"><%= simple_format(release.notes) %></div><% end %>
+        <% if index == current_index %>
+          <p class="wells__release-current">Running now.</p>
+        <% elsif !busy %>
+          <% going_back = current_index && index > current_index %>
+          <%= button_to (going_back ? "Go back to #{release.tag}" : "Update to #{release.tag}"), admin_well_updates_path, params: { version: release.tag }, class: "button wells__install",
+                form: { data: { turbo_confirm: going_back ? "Go back to #{release.tag}? Database changes made by newer versions stay." : "Update the live game to #{release.tag}? A database backup is made first." } } %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @updates.any? %>
+  <h2 class="section-title">Recent updates</h2>
+  <table class="table wells__updates">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Version</th><th class="table__heading">Started</th><th class="table__heading">By</th><th class="table__heading">How it went</th></tr></thead>
+    <tbody class="table__body">
+      <% @updates.each do |update| %>
+        <tr class="table__row wells__update wells__update--<%= update.state_kind %>">
+          <td class="table__cell"><%= update.version %></td>
+          <td class="table__cell"><%= update.created_at.to_fs(:short) %></td>
+          <td class="table__cell"><%= update.account.display_name %></td>
+          <td class="table__cell"><%= update.state_label %><% if update.run_url.present? %> · <%= link_to "Log", update.run_url, target: "_blank", rel: "noopener" %><% end %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

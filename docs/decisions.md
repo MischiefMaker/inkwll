@@ -6,6 +6,14 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Launching and updating Wells (owner)
+
+- A Founder-only Admin → Wells page starts and updates Wells. Only the Founder flag sees it.
+- Its buttons ask GitHub to run the Deploy workflow; the game never runs Kamal itself. The game holds only a GitHub token that can run workflows and read the code; the droplet SSH key and the DigitalOcean token stay in GitHub's secrets.
+- Update offers only versions Claude has marked ready (GitHub Releases), never whatever is on main. Each update backs up the database first, and an earlier version can be put back.
+- inkwll.com's DNS moves to DigitalOcean so subdomains can be made automatically. The domain stays registered at Namecheap.
+- Built in four steps, each with the owner's go-ahead. Details in `docs/wells.md`.
+
 ## 2026-10-15: "Page" staff level renamed Steward (owner)
 
 - The lowest staff level, flagged staff (formerly "Page"), is called **Steward**, because "Page" was confusing next to web pages, wiki pages and character pages.

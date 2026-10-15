@@ -38,6 +38,14 @@ It needs these in the repository's **Settings → Secrets and variables → Acti
 | `DEPLOY_SSH_KEY` | Secret | The whole of `deploy/inkwll-deploy` from the project files |
 | `SECRET_KEY_BASE` | Secret | The `SECRET_KEY_BASE` line's value from `deploy/secrets.env` |
 | `DATABASE_PASSWORD` | Secret | The `DATABASE_PASSWORD` line's value from `deploy/secrets.env` |
+| `WELLS_GITHUB_TOKEN` | Secret | Optional. The token for the Founder's Wells page (see `docs/wells.md`) |
+
+Every deploy except the first backs up the database on the droplet first, to
+`/root/backups/before-update-<date>.sql.gz`. The newest ten are kept. If the
+backup fails, nothing is deployed.
+
+The Founder can also update from **Admin → Wells**, which runs this same
+workflow with a version marked ready. See `docs/wells.md`.
 
 To make a registered player the Founder on the live game, run the same
 workflow with their player name in "make Founder" (it doesn't deploy).
