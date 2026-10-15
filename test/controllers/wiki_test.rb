@@ -149,4 +149,19 @@ class WikiTest < ActionDispatch::IntegrationTest
       create_page(title: "New")
     end
   end
+
+  test "preview shows the page without saving or running scripts" do
+    sign_in_as(accounts(:alice))
+    assert_no_difference "WikiPage.count" do
+      post preview_wiki_pages_path, params: { body: "## Hello\n\n<script>alert(1)</script>" }
+    end
+    assert_response :success
+    assert_select "h2", text: "Hello"
+    assert_select "script", count: 0
+  end
+
+  test "guests are turned away from the preview" do
+    post preview_wiki_pages_path, params: { body: "## Hello" }
+    assert_redirected_to new_session_path
+  end
 end

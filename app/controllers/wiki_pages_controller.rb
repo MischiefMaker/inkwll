@@ -4,7 +4,7 @@ class WikiPagesController < ApplicationController
   include WikiRequired
   # Guests can read the wiki, but not edit it (owner).
   allow_previews only: %i[ index show ]
-  limit_posting to: 10, within: 10.minutes, only: %i[ create update ]
+  limit_posting to: 10, within: 10.minutes, only: %i[ create update preview ]
   before_action :set_page, only: %i[ edit update destroy ]
   before_action :require_editable, only: %i[ edit update ]
 
@@ -46,6 +46,12 @@ class WikiPagesController < ApplicationController
   end
 
   def edit
+  end
+
+  # Shows the page as it will look, without saving. Same rendering (and the
+  # same stripping of scripts) as a saved page.
+  def preview
+    render partial: "wiki_pages/preview", locals: { body: params[:body].to_s.first(100_000) }
   end
 
   def update

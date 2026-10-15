@@ -1,4 +1,4 @@
-<%= form_with model: @page, url: (@page.persisted? ? wiki_page_path(@page.slug_was) : wiki_pages_path), class: "form wiki-form" do |form| %>
+<%= form_with model: @page, url: (@page.persisted? ? wiki_page_path(@page.slug_was) : wiki_pages_path), class: "form wiki-form", data: { controller: "wiki-preview", wiki_preview_url_value: preview_wiki_pages_path } do |form| %>
   <% if @page.errors.any? %>
     <p class="flash flash--alert"><%= @page.errors.full_messages.to_sentence %></p>
   <% end %>
@@ -8,7 +8,12 @@
   </div>
   <div class="field">
     <%= form.label :body, "Page" %>
-    <%= form.text_area :body, rows: 20, maxlength: 100_000, class: "wiki-form__body" %>
+    <div class="wiki-form__tabs" role="tablist">
+      <button type="button" class="wiki-form__tab is-current" data-wiki-preview-target="editTab" data-action="wiki-preview#edit">Edit</button>
+      <button type="button" class="wiki-form__tab" data-wiki-preview-target="previewTab" data-action="wiki-preview#show">Preview</button>
+    </div>
+    <%= form.text_area :body, rows: 20, maxlength: 100_000, class: "wiki-form__body", data: { wiki_preview_target: "body" } %>
+    <div class="wiki-form__preview wiki-body" data-wiki-preview-target="preview" hidden></div>
     <details class="hint wiki-form__help">
       <summary class="disclosure__summary">How to format a page</summary>
       <ul class="wiki-form__help-list">

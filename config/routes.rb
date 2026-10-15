@@ -101,6 +101,7 @@ Rails.application.routes.draw do
   get "skin.css", to: "skins#show", as: :skin_stylesheet
   get "roster", to: "directory#index", defaults: { roster: "1" }, as: :roster
   resources :wiki_pages, path: "wiki", param: :slug do
+    collection { post :preview }
     scope module: :wiki_pages do
       resources :revisions, only: %i[ index show update ]
       resource :lock, only: %i[ create destroy ]
