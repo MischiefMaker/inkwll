@@ -606,15 +606,16 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   position: sticky;
   top: 0;
   align-self: start;
-  --admin-menu-height: calc(100vh - 3.5rem - var(--tabs-height, 0px));
-  min-height: var(--admin-menu-height);
+  /* The controller replaces this guess with the screen height minus the menu's real position. */
+  --admin-menu-fallback: calc(100vh - 3.5rem - var(--tabs-height, 0px));
+  min-height: var(--admin-menu-height, var(--admin-menu-fallback));
 }
 
 /* The button only shows on phones, where the menu folds up. */
 .admin-menu__button { display: none; }
 
 .admin-menu__body {
-  max-height: var(--admin-menu-height);
+  max-height: var(--admin-menu-height, var(--admin-menu-fallback));
   overflow-y: auto;
   padding-bottom: var(--space);
 }
