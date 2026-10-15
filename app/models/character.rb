@@ -173,12 +173,12 @@ class Character < ApplicationRecord
 
   # One-off catch-up for games that were already running: every approved
   # character with an answer to the Goals field gets a Goal Inkling from it,
-  # as newly approved characters do. Also sets the Goals field to start Goal
-  # Inklings from now on. Safe to run twice: a character that already has one
+  # as newly approved characters do. Also points the Goals and Secrets fields at
+  # their Inkling types, so new approvals start them too. Safe to run twice: a character that already has one
   # isn't given another. Returns how many were made.
   def self.start_goal_inklings!
+    ProfileField.start_inklings_from_goals_and_secrets!
     field = ProfileField.where("lower(name) = 'goals'").where(field_type: %w[ text long_text ]).ordered.first or return 0
-    field.update!(inkling_kind: "goal") if field.inkling_kind.blank?
     return 0 unless ProfileField.inkling_kinds.key?(field.inkling_kind)
     made = 0
     approved.played.includes(:account, :profile_values).find_each do |character|

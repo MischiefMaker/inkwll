@@ -37,6 +37,17 @@ class ProfileField < ApplicationRecord
   def starts_inkling? = inkling_kind.present?
 
   # The Inkling types a field can start: ones players start themselves.
+  # For games set up before Goals and Secrets started Inklings: points those
+  # two fields at their Inkling types if nobody has chosen one, so approving a
+  # character turns the answers into Inklings. Leaves any choice already made.
+  def self.start_inklings_from_goals_and_secrets!
+    { "goals" => "goal", "secrets" => "secret" }.each do |name, kind|
+      where("lower(name) = ?", name).where(field_type: %w[ text long_text ], inkling_kind: [ nil, "" ]).find_each do |field|
+        field.update!(inkling_kind: kind) if inkling_kinds.key?(kind)
+      end
+    end
+  end
+
   def self.inkling_kinds
     Inkling.types.reject { |_, type| type["category"] == "staff" }.transform_values { |type| type["name"] }
   end

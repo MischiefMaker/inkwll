@@ -35,8 +35,13 @@ class CharacterTest < ActiveSupport::TestCase
     moth.update!(status: "draft")
     moth.profile_values.create!(profile_field: field, value: "Not approved yet.")
 
+    secrets = ProfileField.create!(name: "Secrets", section: "application", field_type: "long_text", public: false, position: 1)
+    chosen = ProfileField.create!(name: "Goals", section: "demographics", field_type: "text", public: false, position: 2, inkling_kind: "progress")
+
     assert_equal 1, Character.start_goal_inklings!
     assert_equal "goal", field.reload.inkling_kind
+    assert_equal "secret", secrets.reload.inkling_kind
+    assert_equal "progress", chosen.reload.inkling_kind, "a choice already made is kept"
     goal = Inkling.find_by!(character: wren, kind: "goal")
     assert_equal "Goals", goal.title
     assert_equal wren.account, goal.creator
