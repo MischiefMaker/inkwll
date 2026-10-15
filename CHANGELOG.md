@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 - The admin front page has quick-action buttons across the top (New Character, New Place, Player List, Character List, Reports and more, only the ones your job allows) and a Needs Attention list of waiting work below them.
 - A character's name, icon and details sit in a box on their profile, at the top or at the side like a wiki infobox. Pick which in Admin → Look. Long answers and pictures stay on the Profile tab.
+- Wiki pages in the Menu have a small dot before them.
 - Small signs show who can see something: a lock (only you and staff), an open eye (only you) and a star (only staff). They're on the restricted profile tabs, private profile fields, private and hidden Chapters, and staff-only notes.
 - Email will be sent through Brevo; setup steps are in docs/email-setup.md.
 - The wiki page form has Edit and Preview tabs; Preview shows how the page will look without saving.

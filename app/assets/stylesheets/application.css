@@ -428,7 +428,8 @@ a.ooc-message__author:hover { text-decoration: underline; }
 .menu summary { display: flex; align-items: center; gap: 0.3rem; }
 .menu__icon { opacity: 0.85; }
 /* Wiki pages added to the Menu sit indented under Wiki, lined up with its text. */
-.menu__wiki-page { padding-left: calc(16px + 0.45rem); white-space: nowrap; }
+.menu__wiki-page { display: inline-flex; align-items: center; gap: 0.45rem; padding-left: calc(16px + 0.45rem); white-space: nowrap; }
+.menu__wiki-dot { flex-shrink: 0; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: currentColor; opacity: 0.6; }
 /* The tile drawn when an Area, Setting or board has no icon picture of its own. */
 .icon-tile { display: inline-flex; align-items: center; justify-content: center; background: var(--color-accent); color: var(--color-accent-text); }
 .board__name { display: inline-flex; align-items: center; }

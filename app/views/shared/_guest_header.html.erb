@@ -18,7 +18,7 @@
         <% if WikiPage.enabled? %>
           <%= link_to wiki_pages_path, class: "menu__link" do %><%= icon(:wiki, size: 16, css: "menu__icon") %>Wiki<% end %>
           <% WikiPage.in_menu.each do |page| %>
-            <%= link_to page.title, wiki_page_path(page), class: "menu__wiki-page" %>
+            <%= link_to wiki_page_path(page), class: "menu__wiki-page" do %><span class="menu__wiki-dot" aria-hidden="true"></span><%= page.title %><% end %>
           <% end %>
         <% end %>
       </div>
