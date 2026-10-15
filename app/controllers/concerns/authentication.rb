@@ -1,6 +1,10 @@
 module Authentication
   extend ActiveSupport::Concern
 
+  # Not "session_id": the owner's Firefox never sent a cookie with that
+  # name back, though it sent the game's other cookie (2026-10-15).
+  LOGIN_COOKIE = :inkwll_login
+
   included do
     before_action :require_authentication
     helper_method :authenticated?
@@ -66,10 +70,10 @@ module Authentication
     end
 
     def find_session_by_cookie
-      session = Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
+      session = Session.find_by(id: cookies.signed[LOGIN_COOKIE]) if cookies.signed[LOGIN_COOKIE]
       # Temporary, while logging in on the live game is being fixed: says
       # whether the browser sent the login cookie (never its value).
-      logger.info "Login cookie: #{cookies[:session_id].nil? ? "not sent" : (session ? "ok" : "not recognised")} (cookies sent: #{request.cookies.keys.join(", ").presence || "none"})"
+      logger.info "Login cookie: #{cookies[LOGIN_COOKIE].nil? ? "not sent" : (session ? "ok" : "not recognised")} (cookies sent: #{request.cookies.keys.join(", ").presence || "none"})"
       session
     end
 
@@ -91,12 +95,12 @@ module Authentication
         # the browser is closed. Over https it lasts a year: browsers cap
         # cookies at about 400 days, so a longer one can be refused too.
         cookie[:expires] = 1.year if request.ssl?
-        cookies.signed[:session_id] = cookie
+        cookies.signed[LOGIN_COOKIE] = cookie
       end
     end
 
     def terminate_session
       Current.session.destroy
-      cookies.delete(:session_id)
+      cookies.delete(LOGIN_COOKIE)
     end
 end

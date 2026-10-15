@@ -10,13 +10,13 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post session_path, params: { username: "Alice", password: "password" }
 
     assert_redirected_to root_path
-    assert cookies[:session_id]
+    assert cookies["inkwll_login"]
   end
 
   test "the login cookie lasts until the browser closes over plain http" do
     post session_path, params: { username: "alice", password: "password" }
 
-    login_cookie = Array(response.headers["Set-Cookie"]).flat_map(&:lines).find { |line| line.start_with?("session_id=") }
+    login_cookie = Array(response.headers["Set-Cookie"]).flat_map(&:lines).find { |line| line.start_with?("inkwll_login=") }
     assert_no_match(/expires=/i, login_cookie)
   end
 
@@ -24,7 +24,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     https!
     post session_path, params: { username: "alice", password: "password" }
 
-    login_cookie = Array(response.headers["Set-Cookie"]).flat_map(&:lines).find { |line| line.start_with?("session_id=") }
+    login_cookie = Array(response.headers["Set-Cookie"]).flat_map(&:lines).find { |line| line.start_with?("inkwll_login=") }
     assert_match(/expires=/i, login_cookie)
   end
 
@@ -32,7 +32,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post session_path, params: { username: "alice", password: "wrong" }
 
     assert_redirected_to new_session_path
-    assert_nil cookies[:session_id]
+    assert_nil cookies["inkwll_login"]
   end
 
   test "destroy" do
@@ -41,6 +41,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     delete session_path
 
     assert_redirected_to new_session_path
-    assert_empty cookies[:session_id]
+    assert_empty cookies["inkwll_login"]
   end
 end

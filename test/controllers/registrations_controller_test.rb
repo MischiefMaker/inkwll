@@ -7,7 +7,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to new_character_path
-    assert cookies[:session_id]
+    assert cookies["inkwll_login"]
   end
 
   test "players can opt in to email notifications when signing up" do

@@ -10,7 +10,7 @@ module ApplicationCable
 
     private
       def set_current_account
-        if session = Session.find_by(id: cookies.signed[:session_id])
+        if session = Session.find_by(id: cookies.signed[Authentication::LOGIN_COOKIE])
           self.current_account = session.account
         end
       end
