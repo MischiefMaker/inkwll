@@ -4,6 +4,7 @@
 # email (Admin::AccountsController#reset_link); that one works for a day.
 class PasswordsController < ApplicationController
   allow_unauthenticated_access
+  skip_before_action :enforce_game_lock # staff locked out can still reset a password
   before_action :set_account_by_token, only: %i[ edit update ]
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_password_path, alert: "Try again later." }
 

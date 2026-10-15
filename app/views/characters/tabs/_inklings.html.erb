@@ -1,6 +1,7 @@
 <%# This character's Inklings, for their player and for staff. Staff only see the ones the player has sent them
-    (never a draft); the player sees them all. %>
-<% inklings = Inkling.where(character: character).includes(:character).newest_first.select { |inkling| inkling.visible_to?(current_account) } %>
+    (never a draft); the player sees them all. Includes Inklings other characters have shared with this one. %>
+<p class="character-inklings__more"><%= link_to "All Inklings", inklings_path, class: "character-inklings__link" %></p>
+<% inklings = Inkling.where(id: Inkling.where(character: character).select(:id)).or(Inkling.where(id: InklingShare.where(character: character).select(:inkling_id))).includes(:character).newest_first.select { |inkling| inkling.visible_to?(current_account) } %>
 <% open_ones, closed_ones = inklings.partition(&:open?) %>
 <% if inklings.any? %>
   <% { "open" => open_ones, "closed" => closed_ones }.each do |state, list| %>
@@ -12,6 +13,7 @@
           <%= link_to inkling.title, inkling, class: "character-inklings__title" %>
           <span class="tag inklings__type inklings__type--<%= inkling.kind %>"><%= inkling.type_name %></span>
           <span class="badge inklings__state"><%= inkling_state_label(inkling) %></span>
+          <% if inkling.character_id != character.id %><span class="tag character-inklings__shared">Shared by <%= character_name_link(inkling.character) %></span><% end %>
           <span class="muted character-inklings__when"><%= time_ago_in_words(inkling.last_entry_at || inkling.created_at) %> ago</span>
         </li>
       <% end %>

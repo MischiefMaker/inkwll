@@ -73,6 +73,11 @@ Second batch from the same shortlist, picked by the owner on 2026-10-15. Notes o
 - **Birthdays this month:** a list of characters with birthdays this month (idea 38).
 - **Mutter:** a whisper Passage where everyone else sees only a partial line (idea 39).
 
+Third batch from the same shortlist, picked by the owner on 2026-10-15. Notes only, not built:
+
+- **Away notice:** "Away until (date)" shows on a player's Chapters next to whose turn it is, and clears itself on that date (idea 40, from Alveus).
+- **New player badge:** a "new" mark for a player's first two weeks, in the OOC Chat, Here and the directory (idea 44).
+
 ## Decisions still needed
 
 In the order they block building. Each one moves to `decisions.md` once the owner answers.

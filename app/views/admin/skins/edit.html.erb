@@ -62,6 +62,24 @@
     <label class="field--checkbox"><%= form.radio_button :profile_box, "side" %> At the side, like a wiki infobox or a forum post's author panel.</label>
   </div>
 
+  <h2 class="section-title"><%= term(:scene, count: 2) %></h2>
+  <div class="field chapter-look-field">
+    <span class="field__label">How a <%= term(:scene).downcase %> page looks</span>
+    <label class="field--checkbox"><%= form.radio_button :chapter_layout, "manuscript" %> Manuscript: reads like a page from a book, with a title page and the cast under the title.</label>
+    <label class="field--checkbox"><%= form.radio_button :chapter_layout, "forum" %> Forum: each <%= term(:pose).downcase %> is a post with the character's picture, group and details beside it.</label>
+    <label class="field--checkbox"><%= form.radio_button :chapter_layout, "chat" %> Chat: a simple list of posts with small icons.</label>
+  </div>
+  <div class="field chapter-look-field">
+    <span class="field__label">Manuscript: the cast under the title</span>
+    <label class="field--checkbox"><%= form.radio_button :chapter_cast_portraits, "large" %> Large: a card for each character, with their picture, group and details.</label>
+    <label class="field--checkbox"><%= form.radio_button :chapter_cast_portraits, "small" %> Small: a row of small pictures and names.</label>
+  </div>
+  <div class="field chapter-look-field">
+    <span class="field__label">Manuscript: the picture beside each <%= term(:pose).downcase %></span>
+    <label class="field--checkbox"><%= form.radio_button :chapter_passage_portraits, "large" %> Large: a tall picture with the name and group under it.</label>
+    <label class="field--checkbox"><%= form.radio_button :chapter_passage_portraits, "small" %> Small: a small round picture, with the name above the text.</label>
+  </div>
+
   <h2 class="section-title">Pictures</h2>
   <% GameSetting::Skin::PICTURES.each do |picture, (_variable, label, hint)| %>
     <%= render "shared/image_field", form: form, record: @game_setting, picture: picture, label: label, hint: hint %>

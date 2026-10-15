@@ -2,6 +2,25 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Lock the Game, profile tabs
+
+- Wellkeepers get a red "Lock the Game" button on the admin page. While locked,
+  guests and non-staff players see a page saying the game is locked (they can
+  still log in or out); staff keep working and see a banner. "Unlock the Game"
+  undoes it.
+- Character names are links to their profile, and player names links to theirs,
+  in more places: Chapter lists, wiki Manuscript lists, invited lists, the
+  who's-online list, forum and wiki "by" lines, pop-ups and admin tables.
+- Character profile tabs are now three separate blocks, one under the other:
+  Profile, then the private tabs, then Manuscripts and Active Chapters.
+- Inklings made from an application's Goals and Secrets are called "Lucia's
+  First Goal" and "Lucia's First Secret". Existing ones are renamed on deploy.
+
+## 2026-10-15 — Chapter layouts
+
+- Chapters have a new look, Manuscript: a serif page like a book, with the cast as cards under the title, small round pictures beside each Passage, narration centred, OOC as side notes and a ✦ ✦ ✦ break when half a day or more passes.
+- Admin → Look can switch to Forum (a portrait and details beside every Passage) or Chat (the old look), and set Manuscript's cast and Passage pictures to large or small.
+
 ## 2026-10-15 — Wells page
 
 - The Founder has a new Admin → Wells page (nobody else sees it). It shows which version the game runs and lists the versions Claude has marked ready, each with what changed. Update to a newer one, or Go back to an earlier one, with one button. GitHub does the work, and the page shows how it's going with a link to the log.

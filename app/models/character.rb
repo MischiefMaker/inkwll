@@ -166,9 +166,27 @@ class Character < ApplicationRecord
     ProfileField.where.not(inkling_kind: [ nil, "" ]).ordered.each do |field|
       text = profile_value_for(field)&.value.presence or next
       next unless ProfileField.inkling_kinds.key?(field.inkling_kind)
-      next if Inkling.exists?(character: self, kind: field.inkling_kind, title: field.name)
-      Inkling.start!(character: self, by: account, kind: field.inkling_kind, title: field.name, body: text)
+      next if Inkling.exists?(character: self, kind: field.inkling_kind, title: [ field.name, first_inkling_title(field) ])
+      Inkling.start!(character: self, by: account, kind: field.inkling_kind, title: first_inkling_title(field), body: text)
     end
+  end
+
+  # "Lucia's First Goal": the title of an Inkling made from an application answer.
+  def first_inkling_title(field)
+    "#{name}'s First #{field.name.singularize}"
+  end
+
+  # One-off: Inklings already made from an application answer were titled with
+  # just the field's name ("Goals"). Gives them the "Lucia's First Goal" title.
+  def self.rename_application_inklings!
+    renamed = 0
+    ProfileField.where.not(inkling_kind: [ nil, "" ]).find_each do |field|
+      Inkling.where(kind: field.inkling_kind, title: field.name).includes(:character).find_each do |inkling|
+        inkling.update_columns(title: inkling.character.first_inkling_title(field))
+        renamed += 1
+      end
+    end
+    renamed
   end
 
   # One-off catch-up for games that were already running: every approved
@@ -183,8 +201,8 @@ class Character < ApplicationRecord
     made = 0
     approved.played.includes(:account, :profile_values).find_each do |character|
       text = character.profile_value_for(field)&.value.presence or next
-      next if character.account.nil? || Inkling.exists?(character: character, kind: field.inkling_kind, title: field.name)
-      Inkling.start!(character: character, by: character.account, kind: field.inkling_kind, title: field.name, body: text)
+      next if character.account.nil? || Inkling.exists?(character: character, kind: field.inkling_kind, title: [ field.name, character.first_inkling_title(field) ])
+      Inkling.start!(character: character, by: character.account, kind: field.inkling_kind, title: character.first_inkling_title(field), body: text)
       made += 1
     end
     made

@@ -153,6 +153,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.admin-attention` | The "Needs Attention" box on the admin front page: `.admin-attention__heading`, `.admin-attention__list`, `.admin-attention__item` (with `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`), `.admin-attention__link`, `.admin-attention__label`, `.admin-attention__count`, `.admin-attention__empty` |
 | `.player-list` | The Players page: `.player-list__intro`, `.player-list__items`, `.player-list__item`, `.player-list__link`, `.player-list__name` |
 | `.game-stats` | The counts at the bottom of the front page. Each is `.game-stats__item` with `--players`, `--characters`, `--chapters` or `--archives`, holding `.game-stats__icon`, `.game-stats__label` (also `.game-stats__link` when it is a link) and `.game-stats__count` |
+| `.profile-tab-blocks` | Wraps the separate tab blocks on a character profile, one under the other |
+| `.profile-tabs--profile`, `--private`, `--activity` | One block of tabs on a character profile |
 | `.profile-tabs__group` | One group of tabs on a character profile: `--profile`, `--private` (SOUL, Inklings, Grimoire) and `--activity` (Manuscripts, Active Chapters) |
 | `.character-inklings` | The Inklings tab on a character profile: `.character-inklings__heading`, `__item`, `__title`, `__when`, `__empty` |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
@@ -192,6 +194,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | Class | What it is |
 | --- | --- |
 | `.scene`, `.scene__header`, `.scene__meta` | A Chapter page |
+| `.scene--layout-manuscript`, `.scene--layout-forum`, `.scene--layout-chat`, `.scene--cast-large`, `.scene--cast-small`, `.scene--portraits-large`, `.scene--portraits-small`, `.scene__kicker` | The Chapter layout chosen in Admin → Look, and the small "Chapter" line above the title in Manuscript |
+| `.cast-cards`, `.cast-card`, `.cast-card--turn`, `.cast-card__button`, `.cast-card__name`, `.cast-card__details`, `.cast-card__turn` | Manuscript's cards for the cast under the title, and whose turn it is |
 | `.scene-setting`, `.scene-setting__name`, `.scene-setting__description`, `.scene-setting__here` | The Setting box at the top |
 | `.scene-people`, `.scene-people__list`, `.scene-people__actions` | Who's in it, and Leave / Pause / Finish |
 | `.turn-bar`, `.turn-bar__text`, `.turn-bar__timer`, `.turn-bar__warning` | Whose turn it is |
@@ -200,6 +204,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.pose`, `.pose__icon`, `.pose__name`, `.pose__time`, `.pose__body`, `.pose__actions` | One post |
 | `.pose--passage`, `.pose--npc`, `.pose--narration`, `.pose--ooc`, `.pose--system` | Each kind of post |
 | `.pose__tag`, `.pose__played-by` | The OOC / Narration tag, and "NPC, played by" |
+| `.pose--with-author`, `.pose__author`, `.pose-break`, `.character-icon--portrait` | The picture-and-name column beside a Passage (Forum, or Manuscript with large pictures), the ✦ ✦ ✦ break after a long pause, and the tall portrait |
+| `.chapter-look-field` | The Chapter layout choices in Admin → Look |
 | `.composer`, `.composer__kinds`, `.composer__npc`, `.composer__warning` | The writing box |
 | `.mini-profile` | The pop-up when you click a character |
 | `.scene-list`, `.scene-list__title`, `.scene-list__meta` | A Setting's list of Chapters |
@@ -214,3 +220,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.turn-quill` | The twitching quill beside an Area, Setting, character or the "is in" line where it's your turn; a link to that Chapter |
 | `.my-characters__group`, `.my-characters__group--none`, `.my-characters__heading`, `.my-characters__list`, `.my-characters__item`, `.my-characters__name` | My Characters: a section per Group, each character with their icon and the quill when it's their turn |
 | `.character-chapters`, `.character-chapters__item` | The Active Chapters tab on a character profile (player and staff only) |
+| `.admin-lock`, `.admin-lock--locked`, `.button--danger` | The Lock / Unlock the Game section on the admin page, and the red button style |
+| `.game-locked`, `.game-locked__actions` | The page guests and non-staff players see while the game is locked |
+| `.game-lock-banner` | The note staff see on every page while the game is locked |
+| `.character-inklings__more`, `.character-inklings__link`, `.character-inklings__shared` | On a character's Inklings tab: the link to the Inklings page, and the mark on an Inkling shared with the character by another |

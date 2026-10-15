@@ -1,20 +1,48 @@
 <%# One post in a Chapter: a Passage, an NPC's Passage, narration, an OOC
     line, or a line from the game such as "Wren joins the Chapter."
     Clicking a character's icon or name opens their mini-profile. %>
+<% if local_assigns[:breaks]&.include?(pose.id) %>
+  <p class="pose-break" aria-hidden="true">✦ ✦ ✦</p>
+<% end %>
 <% if pose.system? %>
   <p class="pose pose--system" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>"><%= pose.body %></p>
 <% else %>
   <% character = pose.character %>
   <% mine = character && own?(character) %>
-  <article class="pose pose--<%= pose.kind %><%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %><%= " pose--retired" if character&.retired? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
-    <% if pose.npc? %>
-      <span class="pose__icon"><%= tag.span pose.npc_name.first.upcase, class: "character-icon character-icon--small character-icon--initial character-icon--npc", aria: { hidden: true } %></span>
-    <% elsif pose.passage? && character %>
-      <button type="button" class="pose__icon" popovertarget="mini-profile-<%= character.id %>" aria-label="About <%= character.name %>">
-        <%= character_icon(character) %>
-      </button>
-    <% elsif pose.passage? %>
-      <span class="pose__icon"><%= character_icon(nil) %></span>
+  <%# Forum, and Manuscript with large portraits, put the picture, name and
+      details in an author panel beside the text instead of the header. %>
+  <% panel = passage_author_panel? && (pose.passage? || pose.npc?) %>
+  <article class="pose pose--<%= pose.kind %><%= " pose--with-author" if panel %><%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %><%= " pose--retired" if character&.retired? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
+    <% icon_size = panel ? :portrait : :small %>
+    <% icon = capture do %>
+      <% if pose.npc? %>
+        <span class="pose__icon"><%= tag.span pose.npc_name.first.upcase, class: "character-icon character-icon--#{icon_size} character-icon--initial character-icon--npc", aria: { hidden: true } %></span>
+      <% elsif pose.passage? && character %>
+        <button type="button" class="pose__icon" popovertarget="mini-profile-<%= character.id %>" aria-label="About <%= character.name %>">
+          <%= character_icon(character, size: icon_size) %>
+        </button>
+      <% elsif pose.passage? %>
+        <span class="pose__icon"><%= character_icon(nil, size: icon_size) %></span>
+      <% end %>
+    <% end %>
+    <% name = capture do %>
+      <% if pose.npc? %>
+        <span class="pose__name"><%= pose.npc_name %></span>
+        <span class="pose__played-by muted">NPC, played by
+          <% if character %><button type="button" class="button-link" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button><% else %>a departed character<% end %></span>
+      <% elsif character && pose.passage? %>
+        <%= tag.button character.name, type: "button", popovertarget: "mini-profile-#{character.id}", **character_name_options(character, "pose__name") %>
+        <%= character_details(character, "pose__details muted") %>
+      <% elsif character %>
+        <%= tag.button character.name, type: "button", popovertarget: "mini-profile-#{character.id}", **character_name_options(character, "pose__name pose__name--small") %>
+      <% else %>
+        <span class="pose__name muted">A departed character</span>
+      <% end %>
+    <% end %>
+    <% if panel %>
+      <div class="pose__author"><%= icon %><%= name %></div>
+    <% else %>
+      <%= icon %>
     <% end %>
     <div class="pose__main">
       <header class="pose__header">
@@ -25,18 +53,7 @@
         <% elsif pose.roll? %>
           <span class="pose__tag">Roll</span>
         <% end %>
-        <% if pose.npc? %>
-          <span class="pose__name"><%= pose.npc_name %></span>
-          <span class="pose__played-by muted">NPC, played by
-            <% if character %><button type="button" class="button-link" popovertarget="mini-profile-<%= character.id %>"><%= character.name %></button><% else %>a departed character<% end %></span>
-        <% elsif character && pose.passage? %>
-          <%= tag.button character.name, type: "button", popovertarget: "mini-profile-#{character.id}", **character_name_options(character, "pose__name") %>
-          <%= character_details(character, "pose__details muted") %>
-        <% elsif character %>
-          <%= tag.button character.name, type: "button", popovertarget: "mini-profile-#{character.id}", **character_name_options(character, "pose__name pose__name--small") %>
-        <% else %>
-          <span class="pose__name muted">A departed character</span>
-        <% end %>
+        <%= name unless panel %>
         <time class="pose__time muted" datetime="<%= pose.created_at.iso8601 %>" title="<%= pose.created_at.utc.to_fs(:long) %> UTC"><%= time_ago_in_words(pose.created_at) %> ago</time>
         <% if pose.edited? && !pose.removed? %><span class="pose__edited muted">(edited)</span><% end %>
         <% if mine && !pose.removed? && !pose.roll? && scene.writable? %>

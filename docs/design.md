@@ -447,7 +447,8 @@ words, and `config/locales/en.yml` maps one to the other.
 
 - Admin → Features holds every system's on/off switch.
 - Admin → Look sets colours, fonts and extra CSS, served as /skin.css after
-  the built-in stylesheet, with a few ready-made looks. Details in
+  the built-in stylesheet, with a few ready-made looks, and the Chapter
+  layout (Manuscript, Forum or Chat). Details in
   `decisions.md`.
 
 ### Patterns from old MUSH logs (reference)

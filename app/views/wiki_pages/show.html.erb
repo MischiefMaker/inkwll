@@ -27,6 +27,6 @@
       <span class="wiki-page__tags"><% @page.tags.each do |tag| %><%= link_to tag, wiki_pages_path(tag: tag), class: "tag wiki__tag" %> <% end %></span>
     <% end %>
     <% if @page.locked? %><span class="wiki-page__locked">Locked: only staff can change this page.</span><% end %>
-    <span class="wiki-page__updated">Last changed <%= time_ago_in_words(@page.updated_at) %> ago<%= " by #{@page.updated_by.display_name}" if @page.updated_by %>.</span>
+    <span class="wiki-page__updated">Last changed <%= time_ago_in_words(@page.updated_at) %> ago<% if @page.updated_by %> by <%= forum_author(@page.updated_by) %><% end %>.</span>
   </footer>
 </article>

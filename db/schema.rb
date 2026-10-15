@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_230002) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -288,6 +288,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_230002) do
     t.string "skin_base"
     t.boolean "compass_enabled", default: false, null: false
     t.string "profile_box", default: "top", null: false
+    t.string "chapter_layout", default: "manuscript", null: false
+    t.string "chapter_cast_portraits", default: "large", null: false
+    t.string "chapter_passage_portraits", default: "small", null: false
+    t.boolean "locked", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

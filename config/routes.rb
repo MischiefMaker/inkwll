@@ -149,6 +149,7 @@ Rails.application.routes.draw do
     end
     resource :game_settings, only: %i[ edit update ]
     resource :features, only: %i[ edit update ]
+    resource :game_lock, only: %i[ create destroy ]
     resource :skin, only: %i[ edit update ]
     resource :wells, only: :show
     resources :well_updates, only: :create

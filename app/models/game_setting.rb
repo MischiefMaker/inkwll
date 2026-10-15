@@ -13,6 +13,15 @@ class GameSetting < ApplicationRecord
   # Where a character's name, icon and demographics sit on their profile.
   PROFILE_BOXES = %w[ top side ].freeze
   validates :profile_box, inclusion: { in: PROFILE_BOXES }
+
+  # How a Chapter page looks (owner, 2026-10-15). Chat is the original
+  # list of posts; Manuscript reads like a book page; Forum gives each
+  # Passage an author panel. Manuscript has two portrait sizes of its own:
+  # the cast under the title, and the portrait beside each Passage.
+  CHAPTER_LAYOUTS = %w[ manuscript chat forum ].freeze
+  PORTRAIT_SIZES = %w[ large small ].freeze
+  validates :chapter_layout, inclusion: { in: CHAPTER_LAYOUTS }
+  validates :chapter_cast_portraits, :chapter_passage_portraits, inclusion: { in: PORTRAIT_SIZES }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }

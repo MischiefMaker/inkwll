@@ -34,6 +34,9 @@
       <%= render "chapter_tabs/tabs", account: current_account %>
       <div class="layout<%= " layout--admin" if content_for?(:admin_menu) %>">
         <main class="main">
+          <% if GameSetting.current.locked? %>
+            <p class="flash flash--alert game-lock-banner">The game is locked: only staff can get in. <%= link_to "Unlock it", admin_root_path %></p>
+          <% end %>
           <%= render "shared/flash" %>
           <%= render "shared/warnings" %>
           <%= content_for?(:admin_content) ? yield(:admin_content) : yield %>

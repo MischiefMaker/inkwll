@@ -20,6 +20,20 @@
   <% end %>
 </nav>
 
+<% if current_account.can?(:change_game_settings) %>
+  <section class="admin-lock<%= " admin-lock--locked" if GameSetting.current.locked? %>">
+    <% if GameSetting.current.locked? %>
+      <p class="text admin-lock__status"><strong class="emphasis">The game is locked.</strong> Guests and players see a locked page; only staff can get in.</p>
+      <%= button_to "Unlock the Game", admin_game_lock_path, method: :delete, class: "button admin-lock__button admin-lock__button--unlock",
+            title: "Let guests and players back in." %>
+    <% else %>
+      <%= button_to "Lock the Game", admin_game_lock_path, method: :post, class: "button button--danger admin-lock__button admin-lock__button--lock",
+            title: "This will lock access to the game for guests and non-staff players. They will see a page saying the game is locked. Staff can still get in, and you can unlock it any time.",
+            form: { data: { turbo_confirm: "Lock the game? Guests and players will be locked out until you unlock it." } } %>
+    <% end %>
+  </section>
+<% end %>
+
 <section class="admin-attention" aria-labelledby="admin-attention-heading">
   <h2 class="section-title admin-attention__heading" id="admin-attention-heading">Needs Attention</h2>
   <% waiting = StaffWaiting.pending_for(current_account) %>

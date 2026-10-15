@@ -15,7 +15,7 @@
         <%= link_to scene.title, scene_path(scene), class: "wiki-manuscripts__title" %>
         <span class="muted wiki-manuscripts__meta">
           <%= scene.room.name %><% if scene.ic_when.present? %> · <%= scene.ic_when %><% end %>
-          · <%= scene.participants.map { |p| p.character.name }.to_sentence %>
+          · <%= character_names_sentence(scene.participants) %>
         </span>
       </li>
     <% end %>

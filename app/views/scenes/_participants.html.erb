@@ -41,7 +41,7 @@
       <%= form.submit "Invite", class: "button button--quiet" %>
     <% end %>
     <% if scene.invitations.any? %>
-      <p class="muted">Invited: <%= scene.invitations.map { |i| i.character.name }.to_sentence %></p>
+      <p class="muted">Invited: <%= character_names_sentence(scene.invitations) %></p>
     <% end %>
   <% end %>
 </section>
