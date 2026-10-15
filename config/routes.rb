@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   resource :active_character, only: :update
   resources :areas, only: :show
   resources :saved_places, only: :index, path: "my_places"
-  resources :players, only: :show, param: :name
+  resources :players, only: %i[ index show ], param: :name
   resource :player_profile, only: %i[ edit update ]
   resources :rooms, only: %i[ index show ] do
     resource :travel, only: :create

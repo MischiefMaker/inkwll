@@ -73,8 +73,7 @@
 <%# Counts only, like a forum's footer. See PublicStats for what is left out. %>
 <% stats = PublicStats.counts %>
 <section class="game-stats" aria-label="Game statistics">
-  <%# Players have no public list (it would give away who plays whom), so only staff who manage players get a link. %>
-  <% [ [ :players, "Players", :profile, (admin_accounts_path if current_account&.can?(:manage_staff)) ],
+  <% [ [ :players, "Players", :profile, players_path ],
        [ :characters, "Characters", :characters, directory_path ],
        [ :chapters, term(:scene, count: 2), :quill, where_path ],
        [ :archives, term(:logs_collection), :archive, archives_path ] ].each do |kind, label, icon_name, path| %>

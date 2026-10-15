@@ -1,0 +1,16 @@
+<% content_for :title, "Players · Inkwll" %>
+
+<div class="player-list">
+  <h1 class="page-title">Players</h1>
+  <p class="text muted player-list__intro">Everyone playing here. Open a player to read about them or send a Message. Who they play isn't listed here.</p>
+  <ul class="player-list__items">
+    <% @players.each do |player| %>
+      <li class="player-list__item">
+        <%= link_to player_path(player.username), class: "player-list__link" do %>
+          <%= player_avatar(player, size: :small) %>
+          <span class="player-list__name"><%= player.display_name %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
