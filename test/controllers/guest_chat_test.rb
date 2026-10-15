@@ -70,9 +70,13 @@ class GuestChatTest < ActionDispatch::IntegrationTest
   test "the log in and chat pages keep the guest top bar, and log in has the OOC Chat beside it" do
     get new_session_path
     assert_select ".site-header--guest a[href=?]", root_path
-    assert_select ".site-header--guest a[href=?]", ooc_messages_path
     assert_select ".site-header__preview", count: 0
     assert_select ".ooc-sidebar"
+    assert_select ".guest-chat-hello", text: /say hello in the OOC Chat/
+
+    get new_registration_path
+    assert_select ".ooc-sidebar"
+    assert_select ".guest-chat-hello"
 
     # The chat page shows the chat itself, so no second one beside it.
     get ooc_messages_path
@@ -85,6 +89,6 @@ class GuestChatTest < ActionDispatch::IntegrationTest
     get new_session_path
     assert_select ".site-header--guest"
     assert_select ".ooc-sidebar", count: 0
-    assert_select ".site-header--guest a[href=?]", ooc_messages_path, count: 0
+    assert_select ".guest-chat-hello", count: 0
   end
 end

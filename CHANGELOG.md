@@ -8,8 +8,8 @@ Short, plain-language notes on what changed. Newest first.
   Black and red looks, instead of Georgia/Times.
 - The log in, sign up and OOC Chat pages keep the top bar for visitors, so
   they can get back to the front page. Visitors also see the OOC Chat
-  beside the page (when the game allows guest chat), and an OOC Chat link
-  in the top bar.
+  beside every page (when the game allows guest chat), and the log in and
+  sign up pages invite them to say hello there.
 
 ## 2026-10-14 — Logging in on the live game
 

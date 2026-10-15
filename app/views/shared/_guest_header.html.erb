@@ -4,7 +4,6 @@
   <nav class="site-header__nav">
     <%= link_to "Home", root_path %>
     <%= link_to "Getting started", getting_started_path %>
-    <% if GameSetting.current.guest_chat? %><%= link_to "OOC Chat", ooc_messages_path, class: "site-header__ooc" %><% end %>
   </nav>
   <div class="site-header__account">
     <% if @previewing %><span class="site-header__preview muted">Previewing as a guest</span><% end %>

@@ -10,6 +10,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 - **Headings** use a sans-serif font, not Times/serif. The Slate blue and gold and Black and red looks now leave headings in the text font.
 - **Log in and the OOC Chat page** keep the front page's top bar and OOC Chat layout, so visitors can always navigate away.
+- **Guests see the OOC Chat beside every page** (when guest chat is on): it's how the game welcomes guests and answers their questions. Log in and sign up say "Feel free to say hello in the OOC Chat" instead of linking to a separate chat page.
 
 ## Code audit follow-ups (owner, 2026-10-14)
 

@@ -35,3 +35,6 @@
 <% end %>
 
 <p class="text">Already have an account? <%= link_to "Log in", new_session_path %>.</p>
+<% if guest_chat_open? %>
+  <p class="text guest-chat-hello">Have a question first? Feel free to say hello in the OOC Chat.</p>
+<% end %>
