@@ -10,6 +10,14 @@ module ApplicationHelper
     GameSetting.current.game_name || "Inkwll"
   end
 
+  # The twitching quill that says it's your turn in a Chapter in this
+  # Setting (or any Setting in the given list).
+  def turn_quill(room_ids)
+    return unless current_account
+    return unless (Array(room_ids) & current_account.turn_room_ids.to_a).any?
+    tag.span(icon(:quill, size: 16), class: "turn-quill", title: "Your turn")
+  end
+
   # The game's icon: the one uploaded in Game settings, or the favicon's
   # inkwell. "small" sits beside the name in the top bar, "large" in the
   # front page header.

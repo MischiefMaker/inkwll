@@ -11,6 +11,9 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Paths grouped by type
 
+- My Characters shows each character's icon, is split into sections by Group, and shows the quill when it's that character's turn.
+- The twitching quill also shows beside the front page's "[Character] is in [Place]" line, and beside any Area or Setting where it's your turn.
+- The front page header takes up less space (less padding above, around and below the name and blurb).
 - A Chapter tab shows the same twitching quill when it's your turn, top right above "Your turn".
 - Staff and Storytellers can pick GM in the Writing as switcher too (it warns first if GM isn't in the Chapter yet).
 - Games can have their own icon (Admin → Game settings): small beside the name at the top left, larger in the front page header. The default is the favicon's inkwell.

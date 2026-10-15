@@ -183,6 +183,23 @@ class Account < ApplicationRecord
     end
   end
 
+  # The open Chapters where it's one of this player's characters' turn.
+  def turns_waiting
+    @turns_waiting ||= SceneParticipant.joins(:scene).where(character: characters)
+      .where(scenes: { finished_at: nil, paused_at: nil }).includes(:scene)
+      .select { |participant| participant.scene.turn_of?(participant) }
+  end
+
+  # The Settings those Chapters are in, for the quill beside them.
+  def turn_room_ids
+    @turn_room_ids ||= turns_waiting.map { |participant| participant.scene.room_id }.to_set
+  end
+
+  # The characters whose turn it is, for the quill beside them.
+  def turn_character_ids
+    @turn_character_ids ||= turns_waiting.map(&:character_id).to_set
+  end
+
   def gm_name
     taken = Character.where.not(account_id: id).or(Character.where(account_id: id, gm: false)).where("lower(name) = ?", display_name.downcase).exists?
     taken ? "#{display_name} (GM)" : display_name

@@ -19,6 +19,7 @@
       <%= character_icon(current_character, size: :tiny) %>
       <%= tag.span current_character.name, **character_name_options(current_character, "where-now__name") %> is in
       <%= link_to current_character.room.name, room_path(current_character.room) %>.
+      <%= turn_quill(current_character.room_id) %>
     </p>
   <% elsif !current_account %>
     <p class="where-now where-now--guest">

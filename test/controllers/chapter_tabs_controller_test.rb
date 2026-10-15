@@ -65,4 +65,42 @@ class ChapterTabsControllerTest < ActionDispatch::IntegrationTest
     scenes(:duel).reopen!(by: characters(:wren))
     assert_not scene_participants(:duel_wren).reload.tab_closed?
   end
+
+  test "the quill shows beside the places where it's your turn" do
+    accounts(:alice).update!(active_character: characters(:wren))
+    sign_in_as(accounts(:alice))
+    commons = rooms(:commons)
+
+    get root_path
+    assert_select ".where-now .turn-quill"
+    assert_select ".place__name .turn-quill", minimum: 1
+
+    get rooms_path
+    assert_select ".room-index__room a[href=?] + .turn-quill", room_path(commons)
+
+    get area_path(commons.area)
+    assert_select ".board__row .turn-quill", minimum: 1
+
+    sign_in_as(accounts(:bob))
+    scenes(:duel).update_columns(paused_at: Time.current)
+    get rooms_path
+    assert_select ".turn-quill", count: 0
+  end
+
+  test "My Characters is sectioned by Group, with icons and the quill on the character whose turn it is" do
+    ravens = CharacterGroup.create!(name: "Ravens", colour: "#336699")
+    characters(:wren).update!(character_group: ravens)
+    sign_in_as(accounts(:alice))
+
+    get characters_path
+    assert_select ".my-characters__group .my-characters__heading", text: "Ravens"
+    assert_select ".my-characters__group--none .my-characters__heading", text: "No group"
+    assert_select ".my-characters__item .character-icon", minimum: 2
+    assert_select ".my-characters__item", text: /Wren/ do
+      assert_select ".turn-quill"
+    end
+    assert_select ".my-characters__item", text: /Moth/ do
+      assert_select ".turn-quill", count: 0
+    end
+  end
 end

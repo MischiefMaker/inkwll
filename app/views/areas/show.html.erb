@@ -13,7 +13,7 @@
     <ul class="board__rows">
       <% listed_rooms.includes(:characters).each do |room| %>
         <li class="board__row">
-          <%= link_to room_path(room), class: "board__name" do %><%= place_icon(room, :door, css: "board__icon") %><%= room.name %><% end %>
+          <%= link_to room_path(room), class: "board__name" do %><%= place_icon(room, :door, css: "board__icon") %><%= room.name %><% end %><%= turn_quill(room.id) %>
           <% if room.summary %><span class="board__summary"><%= room.summary %></span><% end %>
           <span class="muted">
             <% if room.characters.any? %><%= pluralize(room.characters.size, "character") %> here<% end %>

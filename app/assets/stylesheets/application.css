@@ -483,19 +483,19 @@ fieldset.field { border: 1px solid var(--color-border); border-radius: var(--rad
    with an Enter button. Shortcuts to Settings are tucked in a small fold. */
 
 .game-intro {
-  margin: calc(var(--space) * 1.5) 0 var(--space);
-  padding: calc(var(--space) * 2) var(--space);
+  margin: calc(var(--space) * 0.25) 0 calc(var(--space) * 0.5);
+  padding: var(--space);
   text-align: center;
   border-radius: var(--radius);
   background: var(--intro-image, none) center / cover;
 }
 .game-intro__name { margin: 0; font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: 0.02em; }
-.game-intro__blurb { max-width: 40rem; margin: 0.75rem auto 0; color: var(--color-muted); font-size: 1.05rem; }
-.game-intro__blurb p { margin: 0.5rem 0; }
+.game-intro__blurb { max-width: 40rem; margin: 0.4rem auto 0; color: var(--color-muted); font-size: 1.05rem; }
+.game-intro__blurb p { margin: 0.3rem 0; }
 .game-status { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1rem; text-align: center; }
-.game-status > p { margin: 0.25rem 0; }
+.game-status > p { margin: 0.1rem 0; }
 
-.places { display: flex; flex-direction: column; gap: var(--space); margin: var(--space) 0 calc(var(--space) * 2); }
+.places { display: flex; flex-direction: column; gap: var(--space); margin: calc(var(--space) * 0.5) 0 calc(var(--space) * 2); }
 .place {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -762,6 +762,15 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 .writing-as { margin-bottom: 0.5rem; }
 .writing-as__form { display: flex; align-items: center; gap: 0.5rem; }
 .writing-as__warning { margin-top: 0.5rem; }
+
+/* The twitching quill beside Areas and Settings where it's your turn. */
+.turn-quill { display: inline-flex; vertical-align: middle; margin-left: 0.35rem; color: var(--color-accent); animation: chapter-turn-nudge 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .turn-quill { animation: none; } }
+
+/* My Characters: a section per Group */
+.my-characters__group { margin-bottom: var(--space); }
+.my-characters__heading { border-bottom: 2px solid var(--group-colour, var(--color-border)); padding-bottom: 0.2rem; }
+.my-characters__item { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 
 /* Admin → Characters: sections that fold away */
 .admin-characters__section { margin-bottom: var(--space); }

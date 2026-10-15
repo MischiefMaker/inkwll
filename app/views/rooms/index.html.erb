@@ -7,7 +7,7 @@
     <h2 class="room-index__area"><%= link_to section[:area].name, area_path(section[:area]) %></h2>
     <ul class="list room-index__rooms">
       <% section[:rooms].each do |room| %>
-        <li class="list__item room-index__room"><%= link_to room.name, room_path(room) %></li>
+        <li class="list__item room-index__room"><%= link_to room.name, room_path(room) %><%= turn_quill(room.id) %></li>
       <% end %>
     </ul>
   </section>

@@ -1,17 +1,29 @@
-<% content_for :title, "My characters · Inkwll" %>
+<% content_for :title, "My Characters · Inkwll" %>
 
-<h1 class="page-title">My characters</h1>
+<h1 class="page-title">My Characters</h1>
 
 <% if @characters.any? %>
-  <ul class="list">
-    <% @characters.each do |character| %>
-      <li class="list__item">
-        <%= link_to character.name, character %>
-        <span class="muted">in <%= link_to character.room.name, room_path(character.room) %></span>
-        <% if character == current_character %><span class="tag">active</span><% end %>
-      </li>
-    <% end %>
-  </ul>
+  <%# One section per Group, with the characters in no Group last. %>
+  <% sections = @characters.group_by(&:character_group).sort_by { |group, _| [ group ? 0 : 1, group&.position.to_i, group&.name.to_s ] } %>
+  <% sections.each do |group, characters| %>
+    <section class="my-characters__group<%= " my-characters__group--none" unless group %>"<%= tag.attributes(style: "--group-colour: #{group.colour}") if group %>>
+      <h2 class="section-title my-characters__heading"><%= group&.name || "No group" %></h2>
+      <ul class="list my-characters__list">
+        <% characters.each do |character| %>
+          <li class="list__item my-characters__item">
+            <%= character_icon(character, size: :small) %>
+            <%= link_to character.name, character, **character_name_options(character, "my-characters__name") %>
+            <% if current_account.turn_character_ids.include?(character.id) %>
+              <span class="turn-quill" title="Your turn"><%= icon(:quill, size: 16) %></span>
+            <% end %>
+            <span class="muted">in <%= link_to character.room.name, room_path(character.room) %></span>
+            <% if character == current_character %><span class="tag">active</span><% end %>
+            <% if character.retired? %><span class="tag">retired</span><% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
 <% else %>
   <p class="text">You don't have any characters yet.</p>
 <% end %>

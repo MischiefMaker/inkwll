@@ -197,3 +197,5 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.profile-field-form__age-on-passages` | The tick box for showing just the age beside Passages |
 | `.game-icon`, `.game-icon--small`, `.game-icon--large`, `.game-icon--default`, `.site-header__name`, `.game-intro__title`, `.game-settings__icon` | The game's icon beside its name in the top bar (small) and the front page header (large) |
 | `.chapter-tab__badges`, `.chapter-tab__quill` | The top-right corner of a Chapter tab: the twitching quill when it's your turn, and the unread count |
+| `.turn-quill` | The twitching quill beside an Area, Setting or the "is in" line on the front page where it's your turn |
+| `.my-characters__group`, `.my-characters__group--none`, `.my-characters__heading`, `.my-characters__list`, `.my-characters__item`, `.my-characters__name` | My Characters: a section per Group, each character with their icon and the quill when it's their turn |
