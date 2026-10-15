@@ -21,6 +21,8 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- Switching to GM, or from GM back to a character, keeps you on the page you
+  are on instead of taking you to your character's place.
 - The SOUL sheet has an "i" icon, "What do the ratings mean?", opening a
   pop-up that says what's ordinary and what's superhuman. Staff write the
   ranges in Admin → SOUL (new games start with six: Untrained to

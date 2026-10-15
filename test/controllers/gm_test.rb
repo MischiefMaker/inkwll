@@ -33,4 +33,23 @@ class GmTest < ActionDispatch::IntegrationTest
     assert_not accounts(:alice).reload.active_character&.gm?
     assert_not accounts(:alice).characters.exists?(gm: true)
   end
+
+  test "switching to GM and back keeps you on the page you're on" do
+    sign_in_as(accounts(:scribe))
+    here = room_path(rooms(:commons))
+    garden = accounts(:scribe).characters.first
+    garden.update!(room: rooms(:commons))
+    accounts(:scribe).update!(active_character: garden)
+
+    get here
+    patch active_character_path, params: { character_id: "gm" }, headers: { "Referer" => "http://www.example.com#{here}" }
+    assert_redirected_to here
+    get here
+    assert accounts(:scribe).reload.active_character.gm?, "the page doesn't switch back to the character"
+
+    patch active_character_path, params: { character_id: garden.id }, headers: { "Referer" => "http://www.example.com#{here}" }
+    assert_redirected_to here
+    get here
+    assert_equal garden, accounts(:scribe).reload.active_character
+  end
 end
