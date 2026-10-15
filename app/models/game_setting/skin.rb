@@ -27,12 +27,13 @@ module GameSetting::Skin
   DEFAULT_PRESET = "wild"
 
   # Ready-made starting points, after the owner's earlier forum skins.
+  # Headings use the plain sans-serif text font unless a look needs its own (owner).
   PRESETS = {
     "plain" => { name: "Inkwll plain", colours: {}, dark_colours: {}, dark_mode: true, font_heading: nil },
-    "shadow" => { name: "Black and red", dark_mode: false, font_heading: "Georgia, 'Times New Roman', serif",
+    "shadow" => { name: "Black and red", dark_mode: false, font_heading: nil,
       colours: { "bg" => "#141414", "surface" => "#1f1f1f", "text" => "#e6e1dc", "muted" => "#a39b94", "border" => "#3a2a2a",
                  "accent" => "#b3202a", "accent-text" => "#ffffff", "notice" => "#22301f", "alert" => "#4a1c1f" } },
-    "wild" => { name: "Slate blue and gold", dark_mode: false, font_heading: "Georgia, 'Times New Roman', serif",
+    "wild" => { name: "Slate blue and gold", dark_mode: false, font_heading: nil,
       colours: { "bg" => "#e9edf2", "surface" => "#ffffff", "text" => "#1f2a36", "muted" => "#5c6b7a", "border" => "#c5ceda",
                  "accent" => "#3d5a80", "accent-text" => "#f6d36b", "notice" => "#e3efe3", "alert" => "#f5e1df" } },
     "mush" => { name: "Old-school MUSH", dark_mode: false, font_body: "'Courier New', Courier, monospace", font_heading: "'Courier New', Courier, monospace",

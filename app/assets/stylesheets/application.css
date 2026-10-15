@@ -321,6 +321,7 @@ a.ooc-message__author:hover { text-decoration: underline; }
 .ooc-form__problem { flex-basis: 100%; margin: 0; color: #a33; font-family: var(--font-ui); font-size: 0.85rem; }
 .ooc-form__guest { flex-basis: 100%; margin: 0; font-family: var(--font-ui); font-size: 0.85rem; }
 .ooc-form input.ooc-form__name { flex: 0 1 9rem; min-width: 0; }
+.ooc-sidebar .ooc-form input.ooc-form__name { flex-basis: 100%; }
 .ooc-form input[type="text"] { flex: 1; min-width: 0; }
 
 /* Menu (extras that aren't the roleplay itself) */

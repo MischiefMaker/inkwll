@@ -64,7 +64,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |
 | `.room-here__guests`, `.where-now--guest`, `.from-afar__preview` | Guests previewing: the "Guest" / "3 Guests" line under Here, and the notes asking them to log in |
-| `.site-header--guest`, `.site-header__preview`, `.main--preview` | The top bar and page body for guests previewing |
+| `.site-header--guest`, `.site-header__preview`, `.site-header__ooc`, `.layout--guest`, `.main--preview`, `.main--narrow` | The top bar and page body for visitors who aren't logged in (`.main--narrow` on log in and sign up) |
 | `.place__preview`, `.exit-link--preview`, `.numbered-path--preview`, `.compass__point--preview`, `.compass__centre--preview` | The Preview button and Paths shown as plain links to guests |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
 | `.guide`, `.guide__intro`, `.guide__heading`, `.guide__section`, `.guide__section--first-steps` (and `--places`, `--scenes`, `--characters`, `--talking`, `--staff`), `.guide__steps`, `.guide__step`, `.guide__join`, `.menu__guide` | The players' Getting started page and its Menu link |
