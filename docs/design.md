@@ -72,8 +72,8 @@ Each decision also has a dated entry in [`decisions.md`](decisions.md).
   scene, and applies it automatically.
 - Accounts need an email address by default, used for password reset links.
   Each game can make it optional; without one, staff reset the password.
-- Staff has three levels: Wellkeepers (top), Scribes (admin), and Pages with
-  job flags (such as Build Page and App Page). Only Wellkeepers with the
+- Staff has three levels: Wellkeepers (top), Scribes (admin), and Stewards with
+  job flags (such as Build Steward and App Steward). Only Wellkeepers with the
   Founder flag can make new Wellkeepers. Storyteller is a flag on a player, below staff. Only flagged
   players or staff can be a scene's storyteller. Storytellers get some SOUL and
   Inklings tools but never other players' secret details. See `decisions.md`.
@@ -308,8 +308,8 @@ words, and `config/locales/en.yml` maps one to the other.
 - **Live updates.** The room page updates its "Here" list live when someone
   enters or leaves. OOC messages appear live for everyone, and the OOC panel
   stays put while you move between pages.
-- **Staff.** Accounts have a staff level (Page, Scribe, Wellkeeper), a Founder
-  flag, Page job flags (Build, App) and a Storyteller flag. The admin panel
+- **Staff.** Accounts have a staff level (Steward, Scribe, Wellkeeper), a Founder
+  flag, Steward job flags (Build, App) and a Storyteller flag. The admin panel
   (Menu → Admin panel) shows each staff member only the sections their level
   allows. The first Founder is made on the server with
   `bin/rails "inkwll:make_founder[PlayerName]"`.
