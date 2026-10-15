@@ -20,19 +20,18 @@ module AdminMenuHelper
       "Settings" => []
     }
 
+    waiting = StaffWaiting.for(current_account).to_h { |item| [ item.key, item.count ] }
     if current_account.can?(:review_apps)
-      groups["Waiting on staff"] << admin_link("Applications", admin_applications_path, %w[ applications ], Character.submitted.count)
-      roster_waiting = RosterApplication.pending.count + Character.active.where.not(roster_requested_at: nil).count
-      groups["Waiting on staff"] << admin_link("Roster", admin_roster_path, %w[ roster roster_applications roster_characters ], roster_waiting)
+      groups["Waiting on staff"] << admin_link("Applications", admin_applications_path, %w[ applications ], waiting[:applications])
+      groups["Waiting on staff"] << admin_link("Roster", admin_roster_path, %w[ roster roster_applications roster_characters ], waiting[:roster])
       if Soul.enabled?
-        soul_waiting = Soul::BnbRequest.pending.count + Soul::Culmination.proposed.count + Soul::AwardSuggestion.pending.count
-        groups["Waiting on staff"] << admin_link("SOUL requests", admin_soul_reviews_path, %w[ soul_reviews ], soul_waiting)
+        groups["Waiting on staff"] << admin_link("SOUL requests", admin_soul_reviews_path, %w[ soul_reviews ], waiting[:soul])
       end
       if Inkling.enabled?
-        groups["Waiting on staff"] << admin_link("Inklings", admin_inklings_path, %w[ inklings ], Inkling.submitted.open.count)
+        groups["Waiting on staff"] << admin_link("Inklings", admin_inklings_path, %w[ inklings ], waiting[:inklings])
       end
       if Grimoire.enabled?
-        groups["Game systems"] << admin_link("Grimoire", admin_grimoire_path, %w[ grimoire grimoire_branches grimoire_spells grimoire_proposals ], Grimoire::Proposal.pending.count)
+        groups["Game systems"] << admin_link("Grimoire", admin_grimoire_path, %w[ grimoire grimoire_branches grimoire_spells grimoire_proposals ], waiting[:grimoire])
       end
       if Soul.enabled?
         groups["Game systems"] << admin_link("Boons and Banes", admin_soul_bnbs_path, %w[ soul_bnbs ])
@@ -40,7 +39,7 @@ module AdminMenuHelper
     end
 
     if current_account.can?(:handle_reports)
-      groups["Moderation"] << admin_link("Reports", admin_reports_path, %w[ reports warnings ], Report.unresolved.count)
+      groups["Moderation"] << admin_link("Reports", admin_reports_path, %w[ reports warnings ], waiting[:reports])
     end
     if current_account.can?(:ban)
       groups["Moderation"] << admin_link("Bans", admin_bans_path, %w[ bans ])
@@ -72,6 +71,18 @@ module AdminMenuHelper
     end
 
     groups.reject { |_, links| links.empty? }.to_a
+  end
+
+  # Where each kind of waiting work (see StaffWaiting) is handled.
+  def staff_waiting_path(key)
+    case key
+    when :applications then admin_applications_path
+    when :roster then admin_roster_path
+    when :soul then admin_soul_reviews_path
+    when :inklings then admin_inklings_path
+    when :grimoire then admin_grimoire_path
+    when :reports then admin_reports_path
+    end
   end
 
   private

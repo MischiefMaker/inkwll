@@ -44,6 +44,7 @@ class Character < ApplicationRecord
   before_validation -> { self.status = "draft" if GameSetting.current.approval_required? && !gm? }, on: :create
 
   after_commit :refresh_rooms, on: [ :create, :update ], if: :saved_change_to_room_id?
+  after_commit -> { StaffWaiting.refresh_bells! }, if: -> { saved_change_to_status? || saved_change_to_roster_requested_at? }
   after_update_commit :announce_move, if: -> { saved_change_to_room_id? && !gm? }
   # Moving counts as being active, for the Where list's idle times.
   before_update -> { self.last_active_at = Time.current }, if: :room_id_changed?

@@ -3,6 +3,21 @@
 <turbo-frame id="alerts_panel" target="_top">
 <div class="alerts">
   <h1 class="page-title">Alerts</h1>
+  <% staff_items = StaffWaiting.pending_for(current_account) %>
+  <% if staff_items.any? %>
+    <section class="alerts__staff">
+      <h2 class="alerts__staff-title">Waiting on staff</h2>
+      <ul class="alerts__staff-list">
+        <% staff_items.each do |item| %>
+          <li class="alerts__staff-item alerts__staff-item--<%= item.key %>">
+            <%= link_to staff_waiting_path(item.key), class: "alerts__staff-link", target: "_top" do %>
+              <span class="alerts__staff-count"><%= item.count %></span> <%= item.label %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
   <% if @alerts.any? %>
     <ul class="alerts__list">
       <% @alerts.each do |alert| %>

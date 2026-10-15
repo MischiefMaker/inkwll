@@ -21,6 +21,12 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- Staff see what's waiting on them in the bell: its number includes
+  applications, roster requests, SOUL requests, Inklings sent to staff,
+  spell proposals and reports (whichever their jobs allow), and the drop-down
+  lists each with a count and a link. The number updates live.
+- When staff review an application they can now open the SOUL sheet, Grimoire,
+  gallery and relationships in tabs, not just the profile answers.
 - Switching to GM, or from GM back to a character, keeps you on the page you
   are on instead of taking you to your character's place.
 - The SOUL sheet has an "i" icon, "What do the ratings mean?", opening a

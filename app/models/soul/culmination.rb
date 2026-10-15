@@ -1,6 +1,7 @@
 # A major milestone in a character's story, proposed by the player and
 # approved by staff.
 class Soul::Culmination < ApplicationRecord
+  include AffectsStaffQueue
   belongs_to :character
   belongs_to :reviewed_by, class_name: "Account", optional: true
 

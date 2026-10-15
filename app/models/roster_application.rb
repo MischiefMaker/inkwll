@@ -1,6 +1,7 @@
 # A player applying to take over a character on the roster. Staff approve
 # one; the others for the same character are turned down.
 class RosterApplication < ApplicationRecord
+  include AffectsStaffQueue
   belongs_to :character
   belongs_to :account
   belongs_to :reviewed_by, class_name: "Account", optional: true

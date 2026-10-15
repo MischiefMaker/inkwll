@@ -1,6 +1,7 @@
 # A Storyteller suggesting XP for a player in a Chapter they ran. Nothing is
 # given until staff approve it (owner, 2026-10-14).
 class Soul::AwardSuggestion < ApplicationRecord
+  include AffectsStaffQueue
   MAX_AMOUNT = 10
 
   belongs_to :character

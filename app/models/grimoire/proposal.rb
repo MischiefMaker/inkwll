@@ -1,6 +1,7 @@
 # A player's idea for a new spell, waiting for staff. Approving it makes
 # the spell (staff can adjust it first); the player still learns it with XP.
 class Grimoire::Proposal < ApplicationRecord
+  include AffectsStaffQueue
   belongs_to :character
   belongs_to :branch, class_name: "Grimoire::Branch"
   belongs_to :reviewed_by, class_name: "Account", optional: true

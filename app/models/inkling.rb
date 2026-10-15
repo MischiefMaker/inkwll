@@ -8,6 +8,7 @@
 # Approving a round isn't the end: the player can keep going and submit
 # again. Closing is the real "nothing more to do".
 class Inkling < ApplicationRecord
+  include AffectsStaffQueue
   include Visibility
   include Outcomes
 

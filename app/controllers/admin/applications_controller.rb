@@ -9,6 +9,11 @@ class Admin::ApplicationsController < Admin::BaseController
 
   def show
     @character = Character.includes(profile_values: :profile_field).find(params[:id])
+    @tabs = { "answers" => "Application" }
+    @tabs["soul"] = "SOUL" if Soul.enabled?
+    @tabs["grimoire"] = "Grimoire" if Grimoire.enabled?
+    @tabs.merge!("gallery" => "Gallery", "relationships" => "Relationships")
+    @tab = params[:tab].presence_in(@tabs.keys) || "answers"
   end
 
   def update

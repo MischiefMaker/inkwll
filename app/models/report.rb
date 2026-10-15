@@ -2,6 +2,7 @@
 # staff who handle reports read that one Chapter, even a private or hidden
 # one, and nothing else.
 class Report < ApplicationRecord
+  include AffectsStaffQueue
   belongs_to :scene
   belongs_to :pose, optional: true
   belongs_to :account

@@ -1375,3 +1375,9 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .rating-guide__range { font-weight: bold; }
 .rating-guide__name { font-weight: normal; }
 .rating-guide__about { margin: 0; font-size: 0.9rem; }
+
+/* What's waiting on staff, at the top of the alerts list. */
+.alerts__staff { margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--color-border); }
+.alerts__staff-title { margin: 0 0 0.4rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-muted); }
+.alerts__staff-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+.alerts__staff-count { display: inline-block; min-width: 1.4rem; padding: 0 0.35rem; border-radius: 999px; background: var(--color-accent); color: var(--color-accent-text); font-size: 0.8rem; text-align: center; }

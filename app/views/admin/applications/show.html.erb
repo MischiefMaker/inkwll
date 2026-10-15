@@ -4,15 +4,30 @@
 <h1 class="character-heading"><%= character_icon(@character, size: :large) %> <%= @character.name %></h1>
 <p class="muted">Played by <%= @character.account.display_name %>. <%= @character.status.humanize %><%= ", submitted #{time_ago_in_words(@character.submitted_at)} ago" if @character.submitted_at %>.</p>
 
-<% extra = capture do %>
-  <% if (age = @character.age) %>
-    <div class="profile-fields__row"><dt class="details-list__term">Age</dt><dd class="details-list__value"><%= age %></dd></div>
+<%# Everything a reviewer may need, as tabs: the answers, then the SOUL sheet,
+    Grimoire, gallery and relationships, all read-only here. %>
+<nav class="profile-tabs application-tabs" aria-label="Application sections">
+  <% @tabs.each do |tab, label| %>
+    <%= link_to label, admin_application_path(@character, tab: tab), class: "profile-tabs__tab application-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
+          aria: { current: (@tab == tab ? "page" : nil) } %>
   <% end %>
-<% end %>
-<h2 class="section-title">Demographics</h2>
-<%= render "characters/profile_fields", character: @character, section: "demographics", show_private: true, extra: extra %>
-<h2 class="section-title">Application</h2>
-<%= render "characters/profile_fields", character: @character, section: "application", show_private: true %>
+</nav>
+
+<section class="application-panel application-panel--<%= @tab %>">
+  <% if @tab == "answers" %>
+    <% extra = capture do %>
+      <% if (age = @character.age) %>
+        <div class="profile-fields__row"><dt class="details-list__term">Age</dt><dd class="details-list__value"><%= age %></dd></div>
+      <% end %>
+    <% end %>
+    <h2 class="section-title">Demographics</h2>
+    <%= render "characters/profile_fields", character: @character, section: "demographics", show_private: true, extra: extra %>
+    <h2 class="section-title">Application</h2>
+    <%= render "characters/profile_fields", character: @character, section: "application", show_private: true %>
+  <% else %>
+    <%= render "characters/tabs/#{@tab}", character: @character, show_private: true %>
+  <% end %>
+</section>
 
 <% if @character.submitted? %>
   <section class="application-review">

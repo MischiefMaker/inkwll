@@ -184,4 +184,22 @@ class JcinkAddOnsTest < ActionDispatch::IntegrationTest
     assert_select ".directory__name", text: "Newcomer"
     assert_select ".directory__name", text: "Wren", count: 0
   end
+
+  test "staff see what's waiting on them in the bell, and players don't" do
+    character = accounts(:alice).characters.create!(name: "Applicant", status: "draft")
+    character.update_columns(status: "submitted", submitted_at: Time.current)
+
+    sign_in_as(accounts(:scribe))
+    get root_path
+    assert_select "#alert_count .alert-bell__number", text: "1"
+    get alerts_path, headers: { "Turbo-Frame" => "alerts_panel" }
+    assert_select ".alerts__staff-item--applications", text: /1 Applications/
+    assert_select ".alerts__staff-link[href=?]", admin_applications_path
+
+    sign_in_as(accounts(:alice))
+    get alerts_path
+    assert_select ".alerts__staff", count: 0
+    get root_path
+    assert_select "#alert_count .alert-bell__number", count: 0
+  end
 end

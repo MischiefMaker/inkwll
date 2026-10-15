@@ -96,4 +96,24 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert field.errors[:on_passages].any?
     assert field.errors[:ask_on_roster].any?
   end
+
+  test "staff reviewing an application can open the SOUL sheet, gallery and relationships" do
+    character = accounts(:alice).characters.create!(name: "Applicant", status: "draft")
+    character.update!(profile: { profile_fields(:hometown).id => "York" })
+    character.submit!
+
+    sign_in_as(accounts(:scribe))
+    get admin_application_path(character)
+    assert_select ".application-tabs__tab", text: "SOUL"
+    assert_select ".application-tabs__tab", text: "Gallery"
+    assert_select ".application-tabs__tab", text: "Relationships"
+
+    %w[ soul gallery relationships ].each do |tab|
+      get admin_application_path(character, tab: tab)
+      assert_response :success
+      assert_select ".application-panel--#{tab}"
+      assert_select "form[action=?]", character_sheet_path(character), count: 0 if tab == "soul"
+    end
+    assert_select ".application-review", count: 1
+  end
 end
