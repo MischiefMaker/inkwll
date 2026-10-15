@@ -52,6 +52,15 @@ class Admin::CharactersControllerTest < ActionDispatch::IntegrationTest
     assert_not characters(:wren).roster_retired?
   end
 
+  test "characters are split into Approved and New sections that can fold" do
+    characters(:moth).update!(status: "draft")
+    sign_in_as(accounts(:wellkeeper))
+    get admin_characters_path
+    assert_select "details.admin-characters__approved[open] a", text: "Wren"
+    assert_select "details.admin-characters__new a", text: "Moth"
+    assert_select "details.admin-characters__approved a", text: "Moth", count: 0
+  end
+
   test "a Scribe can't retire characters" do
     sign_in_as(accounts(:scribe))
     post retire_admin_character_path(characters(:moth))

@@ -4,6 +4,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Roster section in Admin → Characters
 
+- Admin → Characters is split into Approved and New (not approved yet), then Roster and Retired, and each section can be folded away.
 - Roster characters have their own section above Retired. Retiring one takes it
   off the roster (applications for it are dropped); it shows under Retired with
   "Put back on the roster".

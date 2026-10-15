@@ -8,7 +8,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ## 2026-10-15: Roster section and retiring roster characters (owner)
 
-- **Admin → Characters:** roster characters are a separate section above Retired.
+- **Admin → Characters:** sections Approved, New (no approved character yet), Roster and Retired, each collapsible.
 - **Retiring a roster character** removes it from the roster. Staff can put it back.
 
 ## 2026-10-15: Paths grouped by Streets first (owner)

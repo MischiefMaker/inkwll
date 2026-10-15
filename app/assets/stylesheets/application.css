@@ -752,6 +752,10 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 .writing-as__form { display: flex; align-items: center; gap: 0.5rem; }
 .writing-as__warning { margin-top: 0.5rem; }
 
+/* Admin → Characters: sections that fold away */
+.admin-characters__section { margin-bottom: var(--space); }
+.admin-characters__summary { cursor: pointer; margin: 0 0 0.5rem; }
+
 /* Chapters listed in a Setting */
 
 .scene-list .list { list-style: none; padding: 0; }

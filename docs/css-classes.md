@@ -46,7 +46,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.chapter-tab__close`, `.chapter-tab__close-form` | The X on a finished Chapter's tab |
 | `.room-index`, `.room-index--depth-1`, `.room-index__area`, `.room-index__rooms`, `.room-index__room` | All Places, grouped by Area |
 | `.writing-as`, `.writing-as__form`, `.writing-as__label`, `.writing-as__warning`, `.writing-as__warning-text`, `.writing-as__join`, `.writing-as__keep` | The "Writing as" switcher above the Passage box and its warning |
-| `.admin-characters__active`, `.admin-characters__roster`, `.admin-characters__roster-table`, `.admin-characters__retired`, `.admin-characters__retired-table` | Admin → Characters: the working list and the retired section |
+| `.admin-characters__active`, `.admin-characters__section`, `.admin-characters__summary`, `.admin-characters__approved`, `.admin-characters__new`, `.admin-characters__roster`, `.admin-characters__roster-table`, `.admin-characters__retired`, `.admin-characters__retired-table` | Admin → Characters: the working list and the retired section |
 | `.directory__tag--played`, `.roster-apply__played` | The "Previously played" mark on roster characters |
 | `.character-form__locked-value`, `.profile-field-form__player-can-edit` | A profile answer locked after approval; the "Player can edit" tick box |
 | `.layout`, `.main` | The page body and its main column |

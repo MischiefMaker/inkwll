@@ -5,18 +5,12 @@
 
 <% roster, others = @characters.partition { |character| character.on_roster? || character.preparing_for_roster? } %>
 <% retired, active = others.partition(&:retired?) %>
-<%= render "table", characters: active, groups: @groups, css: "admin-characters__active" %>
-
-<% if roster.any? %>
-  <section class="admin-characters__roster">
-    <h2 class="section-title">Roster characters (<%= roster.size %>)</h2>
-    <%= render "table", characters: roster, groups: @groups, css: "admin-characters__roster-table" %>
-  </section>
-<% end %>
-
-<% if retired.any? %>
-  <section class="admin-characters__retired">
-    <h2 class="section-title">Retired characters (<%= retired.size %>)</h2>
-    <%= render "table", characters: retired, groups: @groups, css: "admin-characters__retired-table" %>
-  </section>
+<% approved, new_ones = active.partition(&:approved?) %>
+<%# Each section folds away with its heading. %>
+<% [ [ "approved", "Approved", approved ], [ "new", "New", new_ones ], [ "roster", "Roster characters", roster ], [ "retired", "Retired characters", retired ] ].each do |key, title, list| %>
+  <% next if list.empty? && key != "approved" %>
+  <details class="admin-characters__section admin-characters__<%= key == "approved" ? "active admin-characters__approved" : key %>" open>
+    <summary class="admin-characters__summary section-title"><%= title %> (<%= list.size %>)</summary>
+    <%= render "table", characters: list, groups: @groups, css: "admin-characters__#{key}-table" %>
+  </details>
 <% end %>
