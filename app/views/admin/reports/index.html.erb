@@ -11,7 +11,7 @@
       <% @open.each do |report| %>
         <tr class="table__row">
           <td class="table__cell"><%= link_to report.scene.title, admin_report_path(report) %><%= " (one #{term(:pose).downcase})" if report.pose %></td>
-          <td class="table__cell"><%= report.account.display_name %></td>
+          <td class="table__cell"><%= forum_author(report.account) %></td>
           <td class="table__cell"><%= time_ago_in_words(report.created_at) %> ago</td>
           <td class="table__cell"><%= truncate(report.reason, length: 80) %></td>
         </tr>

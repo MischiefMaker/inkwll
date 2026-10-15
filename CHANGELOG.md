@@ -8,6 +8,9 @@ Short, plain-language notes on what changed. Newest first.
   guests and non-staff players see a page saying the game is locked (they can
   still log in or out); staff keep working and see a banner. "Unlock the Game"
   undoes it.
+- Character names are links to their profile, and player names links to theirs,
+  in more places: Chapter lists, wiki Manuscript lists, invited lists, the
+  who's-online list, forum and wiki "by" lines, pop-ups and admin tables.
 - Character profile tabs are now three separate blocks, one under the other:
   Profile, then the private tabs, then Manuscripts and Active Chapters.
 - Inklings made from an application's Goals and Secrets are called "Lucia's

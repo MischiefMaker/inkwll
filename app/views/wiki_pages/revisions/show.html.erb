@@ -10,7 +10,7 @@
     <% end %>
   </div>
   <p class="muted wiki-page__revision-note">
-    The version saved <%= @revision.created_at.to_fs(:long) %> by <%= @revision.account&.display_name || "someone" %>.
+    The version saved <%= @revision.created_at.to_fs(:long) %> by <%= @revision.account ? forum_author(@revision.account) : "someone" %>.
   </p>
   <%= render_wiki(@revision.body) %>
 </article>

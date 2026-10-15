@@ -18,7 +18,7 @@
         </div>
         <div class="muted scene-list__meta">
           <%= link_to scene.room.name, room_path(scene.room) %> ·
-          <%= scene.participants.map { |p| p.character.name }.to_sentence %>
+          <%= character_names_sentence(scene.participants) %>
           · <%= time_ago_in_words(scene.last_activity_at) %> ago
         </div>
       </li>

@@ -13,7 +13,7 @@
           <%= link_to inkling.title, inkling, class: "character-inklings__title" %>
           <span class="tag inklings__type inklings__type--<%= inkling.kind %>"><%= inkling.type_name %></span>
           <span class="badge inklings__state"><%= inkling_state_label(inkling) %></span>
-          <% if inkling.character_id != character.id %><span class="tag character-inklings__shared">Shared by <%= inkling.character.name %></span><% end %>
+          <% if inkling.character_id != character.id %><span class="tag character-inklings__shared">Shared by <%= character_name_link(inkling.character) %></span><% end %>
           <span class="muted character-inklings__when"><%= time_ago_in_words(inkling.last_entry_at || inkling.created_at) %> ago</span>
         </li>
       <% end %>

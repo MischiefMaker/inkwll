@@ -3,6 +3,12 @@ require "test_helper"
 class ScenesControllerTest < ActionDispatch::IntegrationTest
   setup { sign_in_as(accounts(:alice)) }
 
+  test "the names beside a Chapter in the list link to the characters' profiles" do
+    get room_path(rooms(:commons))
+    assert_select ".scene-list__meta a[href='#{character_path(characters(:wren))}']", text: "Wren"
+    assert_select ".scene-list__meta a[href='#{character_path(characters(:sable))}']", text: "Sable"
+  end
+
   test "a Setting lists its Chapters and offers to start one there" do
     get room_path(rooms(:commons))
 

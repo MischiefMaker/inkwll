@@ -94,6 +94,20 @@ module ApplicationHelper
     link_to character.name, character_path(character), **character_name_options(character, extra_class)
   end
 
+  # Several characters' names as a linked "A, B and C" sentence. A character
+  # can come as a Participant (or anything with a #character).
+  def character_names_sentence(people, suffix: ->(_) { nil })
+    links = people.map do |person|
+      character = person.respond_to?(:character) ? person.character : person
+      safe_join([ character_name_link(character), suffix.call(person) ].compact, " ")
+    end
+    case links.size
+    when 0, 1 then safe_join(links)
+    when 2 then safe_join(links, " and ")
+    else safe_join([ safe_join(links[0..-2], ", "), links.last ], ", and ")
+    end
+  end
+
   # The public profile fields the game shows beside Passages.
   def passage_fields
     @passage_fields ||= ProfileField.where(public: true).where("on_passages OR age_on_passages").ordered.to_a

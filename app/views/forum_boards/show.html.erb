@@ -31,7 +31,7 @@
             <% if topic.pinned? %><span class="badge forum-topic-row__badge forum-topic-row__badge--pinned">Pinned</span><% end %>
             <% if topic.locked? %><span class="badge forum-topic-row__badge forum-topic-row__badge--locked">Locked</span><% end %>
             <%= link_to topic.title, forum_topic_path(topic) %>
-            <span class="muted forum-topic-row__starter">by <%= topic.account&.display_name || "a departed player" %></span>
+            <span class="muted forum-topic-row__starter">by <%= forum_author(topic.account) %></span>
           </td>
           <td class="table__cell forum-topic-row__replies"><%= [ topic.posts_count - 1, 0 ].max %></td>
           <td class="table__cell forum-topic-row__latest">
