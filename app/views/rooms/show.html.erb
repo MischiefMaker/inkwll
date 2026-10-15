@@ -45,19 +45,20 @@
   <div class="room-ways">
     <section class="room-paths">
       <h2 class="section-title"><%= term(:exit, count: 2) %></h2>
-      <%# Streets (with the compass), then buildings to go into. Numbered
+      <%# Streets (with the compass) first, then the rest by the type of Place. Numbered
           units get their own compact list below. %>
       <% all_exits = @room.exits.includes(:destination_room).to_a %>
       <% exits = Exit.in_compass_order(all_exits.reject(&:number)) %>
-      <% streets, buildings = %w[ street building ].map { |kind| exits.select { |e| e.kind == kind } } %>
+      <% streets = exits.select { |e| e.kind == "street" } %>
       <% if GameSetting.current.compass_enabled? && streets.any?(&:compass?) %>
         <%= render "rooms/compass", room: @room, exits: streets, here: here %>
       <% end %>
       <% if exits.any? %>
-        <% if streets.any? %><%= render "rooms/path_list", exits: streets, here: here, kind: "street" %><% end %>
-        <% if buildings.any? %>
-          <h3 class="room-paths__heading room-paths__heading--building"><%= t("terms.exit_kinds.building") %></h3>
-          <%= render "rooms/path_list", exits: buildings, here: here, kind: "building" %>
+        <% grouped = exits.group_by(&:path_group) %>
+        <% Exit::PATH_GROUPS.each do |group, heading| %>
+          <% next unless grouped[group]&.any? %>
+          <h3 class="room-paths__heading room-paths__heading--<%= group %>"><%= heading %></h3>
+          <%= render "rooms/path_list", exits: grouped[group], here: here, kind: group %>
         <% end %>
       <% elsif all_exits.none? %>
         <p class="muted">There are no <%= term(:exit, count: 2).downcase %> out of here.</p>

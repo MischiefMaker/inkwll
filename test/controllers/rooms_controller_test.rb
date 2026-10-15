@@ -81,4 +81,20 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".room-index__area a[href=?]", area_path(rooms(:commons).area)
     assert_select ".room-index .room-index__room a[href=?]", room_path(rooms(:commons))
   end
+
+  test "Paths are broken out into Streets first, then by the type of Place they lead to" do
+    commons = rooms(:commons)
+    rooms(:garden).update!(kind: "outdoor")
+    rooms(:tower).update!(kind: "building")
+    commons.exits.destroy_all
+    Exit.create!(source_room: commons, destination_room: rooms(:garden), name: "Garden gate", kind: "building")
+    Exit.create!(source_room: commons, destination_room: rooms(:tower), name: "Tower door", kind: "building")
+    Exit.create!(source_room: commons, destination_room: rooms(:hall), name: "High Street", kind: "street")
+
+    sign_in_as(accounts(:alice))
+    get room_path(commons)
+
+    headings = css_select(".room-paths__heading").map(&:text)
+    assert_equal [ "Streets", "Buildings", "Outdoor areas" ], headings
+  end
 end

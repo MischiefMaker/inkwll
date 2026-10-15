@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Paths grouped by Streets first (owner)
+
+- **Paths:** shown broken out with Streets first, then the other types (Buildings, Outdoor areas, Other places). Streets are what will make up the v2.0 mini-map; buildings and outdoor spaces generally sit on streets.
+
 ## 2026-10-15: Locked fields, Place types, tabs (owner)
 
 - **Player can edit:** each profile field has a "Player can edit after approval" setting. Unticked fields (Background by default) are locked for non-staff once the character is approved. Staff can always edit.

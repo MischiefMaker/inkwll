@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Paths grouped by type
+
+- A Place's Paths are broken out under headings: Streets first, then Buildings,
+  Outdoor areas and Other places (by the type of Place each leads to).
+
 ## 2026-10-15 — Locked fields, Place types, tabs and more
 
 - Profile fields have a "Player can edit after approval" tick box. Untick it

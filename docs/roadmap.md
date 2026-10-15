@@ -30,6 +30,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 Ideas the owner wants after the first release. Not built until the owner says so.
 
+- **Mini-map:** the Streets (Paths of type Street) make up a map; buildings and outdoor spaces sit on streets (owner, 2026-10-15). Note only, not built.
 - **Live private chat:** players chat privately in real time, shown as tabs inside the OOC sidebar. Builds on Messages (step 3b).
 - **Awards and profile comments** (from the Jcink shortlist, maybe later).
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.

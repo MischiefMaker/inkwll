@@ -19,6 +19,10 @@ class Exit < ApplicationRecord
   DIRECTIONS = COMPASS.merge("OUT" => "Out").freeze
   KINDS = %w[ street building unit ].freeze
 
+  # How a room's Paths are grouped: Streets first (they make up the map),
+  # then the rest by the type of Place they lead to.
+  PATH_GROUPS = { "street" => "Streets", "building" => "Buildings", "outdoor" => "Outdoor areas", "other" => "Other places" }.freeze
+
   belongs_to :source_room, class_name: "Room"
   belongs_to :destination_room, class_name: "Room"
 
@@ -33,6 +37,15 @@ class Exit < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 40 }, uniqueness: { scope: :source_room_id }
   validates :kind, inclusion: { in: KINDS }
+
+  def path_group
+    return "street" if kind == "street"
+    case destination_room.kind
+    when "apartments", "building" then "building"
+    when "outdoor" then "outdoor"
+    else "other"
+    end
+  end
   validates :direction, inclusion: { in: DIRECTIONS.keys }, uniqueness: { scope: :source_room_id }, allow_nil: true
   validates :number, length: { maximum: 10 }, format: { with: /\A[A-Za-z0-9.\-]+\z/, message: "can only use letters, numbers, dots and dashes" },
     uniqueness: { scope: :source_room_id }, allow_nil: true
