@@ -2,6 +2,16 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — OOC Chat moderation
+
+- Players can edit and delete their own OOC Chat messages. Staff can edit
+  and remove anyone's. Edited messages say "(edited)" (or "(edited by
+  staff)"), and deleted ones stay in place as "Deleted" or "Removed by
+  staff".
+- Staff who can ban can block someone (a player, or a guest's address)
+  from posting in the OOC Chat only, for a set time or for good, with
+  Block on one of their messages. They can still log in and play.
+
 ## 2026-10-15 — Testing tweaks
 
 - Headings use a plain sans-serif font in the default Slate blue and gold

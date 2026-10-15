@@ -1,7 +1,8 @@
 <% content_for :title, "New ban · Admin · Inkwll" %>
 
 <h1 class="page-title">New ban</h1>
-<p class="muted">Ban a player, an IP address, or both. Their open sessions end straight away.</p>
+<p class="muted">Ban a player, an IP address, or both. Their open sessions end straight away,
+  unless you only block them from the OOC Chat.</p>
 
 <%= form_with model: @ban, url: admin_bans_path, class: "form" do |form| %>
   <%= render "shared/errors", record: @ban %>
@@ -18,9 +19,13 @@
     <%= form.label :reason %>
     <%= form.text_area :reason, rows: 3, required: true %>
   </div>
+  <div class="field ban-form__chat-only">
+    <label class="field--checkbox"><%= form.check_box :chat_only %> Only block them from posting in the OOC Chat</label>
+    <small class="hint">They can still log in and play. They can read the chat but not post in it.</small>
+  </div>
   <div class="field">
     <%= form.label :expires_on, "Ends on (leave empty for permanent)" %>
     <%= form.date_field :expires_on %>
   </div>
-  <%= form.submit "Ban", class: "button" %>
+  <%= form.submit @ban.chat_only? ? "Block from OOC Chat" : "Ban", class: "button" %>
 <% end %>

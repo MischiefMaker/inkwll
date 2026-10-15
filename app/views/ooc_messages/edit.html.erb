@@ -1,0 +1,15 @@
+<% content_for :title, "Edit OOC message · #{game_name}" %>
+
+<h1 class="page-title">Edit OOC message</h1>
+<p class="muted">The message will say "(edited)".</p>
+
+<%= form_with model: @ooc_message, class: "form ooc-edit" do |form| %>
+  <%= render "shared/errors", record: @ooc_message %>
+  <%= hidden_field_tag :return_to, @return_to %>
+  <div class="field">
+    <%= form.label :body, "Message" %>
+    <%= form.text_area :body, rows: 3, maxlength: 1000, required: true %>
+  </div>
+  <%= form.submit "Save", class: "button" %>
+  <%= link_to "Cancel", @return_to || ooc_messages_path %>
+<% end %>

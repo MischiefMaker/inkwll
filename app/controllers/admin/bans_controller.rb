@@ -10,8 +10,14 @@ class Admin::BansController < Admin::BaseController
     @guests = OocMessage.from_guests.where(created_at: 1.week.ago..).order(created_at: :desc).group_by(&:ip_address)
   end
 
+  # "Block" on an OOC Chat message comes here with the message, to block its
+  # author (or a guest's address) from the chat.
   def new
     @ban = Ban.new(account_id: params[:account_id], ip_range: params[:ip])
+    if (message = OocMessage.find_by(id: params[:ooc_message_id]))
+      @ban.chat_only = true
+      message.guest? ? @ban.ip_range = message.ip_address.to_s : @ban.account = message.account
+    end
   end
 
   def create
@@ -30,8 +36,8 @@ class Admin::BansController < Admin::BaseController
     end
 
     if @ban.save
-      @ban.account&.sessions&.destroy_all
-      redirect_to admin_bans_path, notice: "Ban saved."
+      @ban.account&.sessions&.destroy_all unless @ban.chat_only?
+      redirect_to admin_bans_path, notice: @ban.chat_only? ? "Blocked from the OOC Chat." : "Ban saved."
     else
       render :new, status: :unprocessable_entity
     end
@@ -56,9 +62,10 @@ class Admin::BansController < Admin::BaseController
 
   private
     def ban_params
-      permitted = params.expect(ban: [ :player_name, :ip_range, :reason, :expires_on ])
+      permitted = params.expect(ban: [ :player_name, :ip_range, :reason, :expires_on, :chat_only ])
       account = Account.find_by(username: permitted[:player_name].to_s.strip.downcase) if permitted[:player_name].present?
       expires = (Date.parse(permitted[:expires_on]).end_of_day rescue nil) if permitted[:expires_on].present?
-      { account: account, ip_range: permitted[:ip_range].presence, reason: permitted[:reason], expires_at: expires }
+      { account: account, ip_range: permitted[:ip_range].presence, reason: permitted[:reason], expires_at: expires,
+        chat_only: permitted[:chat_only] == "1" }
     end
 end
