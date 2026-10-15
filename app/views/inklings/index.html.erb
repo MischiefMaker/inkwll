@@ -7,6 +7,9 @@
   <p class="text inklings__actions">
     <% if current_account.characters.active.where(status: "approved").any? %>
       <%= link_to "Start an Inkling", new_inkling_path, class: "button" %>
+    <% else %>
+      <span class="button button--disabled inklings__start-disabled" aria-disabled="true">Start an Inkling</span>
+      <span class="muted inklings__why-not">Each Inkling belongs to a character, so you can start one once a character of yours is approved.</span>
     <% end %>
     <%= link_to @show_closed ? "Show open ones" : "Show closed ones", inklings_path(closed: (@show_closed ? nil : "1")), class: "inklings__toggle" %>
   </p>

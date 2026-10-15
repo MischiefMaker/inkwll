@@ -48,6 +48,9 @@ module WikiHelper
     end
 
     def wiki_embed(name, options)
+      # Places were called Settings at first; both spellings work.
+      name = "settings" if name == "places"
+      options[:setting] ||= options[:place] if options.key?(:place)
       unless EMBEDS.include?(name)
         return tag.p("Unknown list: {{#{name}}}", class: "wiki-embed wiki-embed--unknown muted")
       end

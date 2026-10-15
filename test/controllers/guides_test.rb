@@ -6,7 +6,7 @@ class GuidesTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select ".guide .page-title", "Getting started"
     assert_select ".guide__section--first-steps .guide__step", 5
-    assert_select ".guide__section--places", /Settings/
+    assert_select ".guide__section--places", /Places/
     assert_select ".guide__join a[href=?]", new_registration_path
   end
 

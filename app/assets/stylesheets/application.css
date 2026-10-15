@@ -1342,3 +1342,11 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 @media (max-width: 640px) {
   .alert-menu__panel { position: fixed; top: auto; left: 1rem; right: 1rem; width: auto; }
 }
+
+/* Section headings in the Menu: Mine, The world, Community and help, Staff. */
+.menu__heading { margin: 0.5rem 0 0; padding-top: 0.5rem; border-top: 1px solid var(--color-border); color: var(--color-muted); font-size: 0.75rem; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; }
+.menu__heading:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* A button that can't be used yet, with a note beside it saying why. */
+.button--disabled { opacity: 0.45; cursor: not-allowed; }
+.inklings__why-not { display: block; margin-top: 0.4rem; font-size: 0.9rem; }

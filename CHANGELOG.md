@@ -18,6 +18,13 @@ Short, plain-language notes on what changed. Newest first.
   Chapters under their player name. A Chapter they start as GM makes them its
   Storyteller. GM isn't a character: it never shows in Where, Here, the
   directory or character lists.
+- Settings (rooms) are now called **Places** everywhere players see them,
+  so they aren't confused with account settings. The wiki's
+  `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- The Menu is grouped into sections: Mine, The world, Community and help,
+  and Staff.
+- The Inklings page always shows Start an Inkling, and says why it can't be
+  used yet when none of your characters is approved.
 - The alerts bell opens a small drop-down over the page instead of a new
   page.
 - Online now on the front page lists players by player name; Where lists

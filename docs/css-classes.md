@@ -35,7 +35,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | Class | What it is |
 | --- | --- |
 | `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.site-header__label`, `.site-header__log-out`, `.message-count__icon` | The bar along the top (on phones `.site-header__label` is hidden, so the links show as icons only) |
-| `.menu`, `.menu__items`, `.menu__link`, `.menu__icon` | The Menu |
+| `.menu`, `.menu__items`, `.menu__link`, `.menu__icon`, `.menu__heading` (and `--mine`, `--world`, `--community`, `--staff`) | The Menu |
 | `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass` and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
 | `.banner-default` | The drawn banner (accent colour with ink lines) on an Area or Setting that has no banner picture. It also has `.place__banner` on front-page cards and `.description-image` on Area and Setting pages |
 | `.nib-icon`, `.nib-icon__back`, `.nib-icon__nib`, `.nib-icon__slit`, `.nib-icon__hole`, `.player-icon--default` | The pen-nib player icon shown when a player has no icon picture (guests get a grey one) |
@@ -122,7 +122,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.alert-bell`, `.alert-bell--unread`, `.alert-bell__number`, `.alerts`, `.alerts__item`, `.alerts__item--passage`, `--turn`, `--mention`, `--finished`, `--unread` | The alerts bell and the alerts list |
 | `.alert-menu`, `.alert-menu__summary`, `.alert-menu__panel`, `.alert-menu__frame` | The bell's drop-down in the header |
 | `.chapter-tracker`, `.chapter-tracker__character`, `.chapter-tracker__row`, `.chapter-tracker__row--my-turn`, `.chapter-tracker__subtitle` | My Chapters |
-| `.inklings`, `.inklings__item`, `.inklings__item--unread`, `--draft`, `--submitted`, `--approved`, `--needs_changes`, `.inklings__type`, `.inklings__type--<type>` | The Inklings list |
+| `.inklings`, `.inklings__item`, `.inklings__item--unread`, `--draft`, `--submitted`, `--approved`, `--needs_changes`, `.inklings__type`, `.inklings__type--<type>`, `.inklings__start-disabled`, `.inklings__why-not`, `.button--disabled` | The Inklings list |
 | `.inkling`, `.inkling--submitted` (and the other states), `.inkling__status`, `.inkling__review`, `.inkling__write`, `.inkling__sharing`, `.inkling__rewards` | One Inkling |
 | `.inkling-entry`, `.inkling-entry--public`, `--private`, `--personal`, `--gm`, `--roll`, `--reward`, `--system`, `--new`, `.inkling-entry__ref` | Entries in an Inkling |
 | `.grimoire`, `.grimoire__branch`, `.grimoire-spell`, `.grimoire-spell--known`, `--out-of-reach`, `.grimoire__propose`, `.grimoire-proposal--pending` (and the other statuses) | The Grimoire tab on a character |

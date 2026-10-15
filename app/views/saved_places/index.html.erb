@@ -1,7 +1,7 @@
 <% content_for :title, "My places · Inkwll" %>
 
 <h1 class="page-title">My places</h1>
-<p class="muted">Settings you've saved. Save one with the button on its page.</p>
+<p class="muted"><%= term(:room, count: 2) %> you've saved. Save one with the button on its page.</p>
 
 <% if @places.any? %>
   <ul class="my-places">

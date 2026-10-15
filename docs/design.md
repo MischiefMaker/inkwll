@@ -14,7 +14,7 @@ Chapters at once, but make the grid feel real and physical, like moving
 through space on a traditional MU. When the two pull apart, protect the
 feeling of physical space.
 
-Players see themed words: a room is a **Setting**, an exit is a **Path**, a
+Players see themed words: a room is a **Place**, an exit is a **Path**, a
 scene is a **Chapter**, a pose is a **Passage**, and finished logs are
 **Manuscripts** in the **Archives**. This document and the code use the plain
 words.
