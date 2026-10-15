@@ -21,6 +21,10 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- A profile field can start an Inkling: when staff approve a character, its
+  Goals answer becomes a Goal Inkling and its Secrets answer a Secret one
+  (set per field in Admin → Profile fields). Staff don't see them until the
+  player sends them. Games get a starter Secrets field.
 - Staff see what's waiting on them in the bell: its number includes
   applications, roster requests, SOUL requests, Inklings sent to staff,
   spell proposals and reports (whichever their jobs allow), and the drop-down

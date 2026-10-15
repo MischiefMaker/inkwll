@@ -29,7 +29,7 @@ module StarterContent
     "Old Wound" => "An injury that never quite healed, and flares up at the worst times."
   }.freeze
 
-  # [name, section, field type, public, required, hint]
+  # [name, section, field type, public, required, hint, Inkling type it starts]
   PROFILE_FIELDS = [
     [ "Pronouns", "demographics", "text", true, false, nil ],
     [ "Birthday", "demographics", "birthday", true, false, nil ],
@@ -37,7 +37,8 @@ module StarterContent
     [ "Description", "demographics", "long_text", true, false, "How they look and come across." ],
     [ "Background", "application", "long_text", true, true, "Where they come from and what brought them here." ],
     [ "Personality", "application", "long_text", true, false, "How they think, act and get along with others." ],
-    [ "Goals", "application", "long_text", false, false, "What they want. Only you and staff can see this." ]
+    [ "Goals", "application", "long_text", false, false, "What they want. Only you and staff can see this.", "goal" ],
+    [ "Secrets", "application", "long_text", false, false, "Something they are hiding. Only you and staff can see this.", "secret" ]
   ].freeze
 
   # [from, to, name, what it means]. Written for a 0-10 scale; staff change it
@@ -81,8 +82,8 @@ module StarterContent
 
   def self.install_profile_fields!
     return if ProfileField.exists?
-    PROFILE_FIELDS.each_with_index do |(name, section, type, shown, required, hint), position|
-      ProfileField.create!(name: name, section: section, field_type: type, public: shown, required: required, hint: hint, position: position)
+    PROFILE_FIELDS.each_with_index do |(name, section, type, shown, required, hint, inkling_kind), position|
+      ProfileField.create!(name: name, section: section, field_type: type, public: shown, required: required, hint: hint, position: position, inkling_kind: inkling_kind)
     end
   end
 end

@@ -144,8 +144,23 @@ class Character < ApplicationRecord
 
   def approve!(by:)
     update!(status: "approved", reviewed_at: Time.current, reviewed_by: by, review_note: nil)
+    start_inklings_from_profile!
     lock_sheet!
     NotificationMailer.application_decision(self).deliver_later if account.wants_email?
+  end
+
+  # Answers to profile fields set to start an Inkling (such as Goals or
+  # Secrets) become Inklings of that type once the character is approved,
+  # started by the player. A character that already has one of that title
+  # isn't given a second.
+  def start_inklings_from_profile!
+    return unless Inkling.enabled?
+    ProfileField.where.not(inkling_kind: [ nil, "" ]).ordered.each do |field|
+      text = profile_value_for(field)&.value.presence or next
+      next unless ProfileField.inkling_kinds.key?(field.inkling_kind)
+      next if Inkling.exists?(character: self, kind: field.inkling_kind, title: field.name)
+      Inkling.start!(character: self, by: account, kind: field.inkling_kind, title: field.name, body: text)
+    end
   end
 
   def return!(by:, note:)

@@ -13,6 +13,7 @@ class ProfileField < ApplicationRecord
   validates :field_type, inclusion: { in: FIELD_TYPES.keys }
   validates :hint, length: { maximum: 300 }
   validate :pictures_stay_on_the_profile
+  validate :inkling_kind_is_a_type_players_start
 
   scope :ordered, -> { order(:position, :id) }
   scope :in_section, ->(section) { where(section: section).ordered }
@@ -26,7 +27,21 @@ class ProfileField < ApplicationRecord
     field_type == "image"
   end
 
+  # Whether an approved character's answer starts an Inkling.
+  def starts_inkling? = inkling_kind.present?
+
+  # The Inkling types a field can start: ones players start themselves.
+  def self.inkling_kinds
+    Inkling.types.reject { |_, type| type["category"] == "staff" }.transform_values { |type| type["name"] }
+  end
+
   private
+    def inkling_kind_is_a_type_players_start
+      return if inkling_kind.blank?
+      errors.add(:inkling_kind, "isn't a type players can start") unless self.class.inkling_kinds.key?(inkling_kind)
+      errors.add(:inkling_kind, "can't be used with a picture, date or number") unless field_type.in?(%w[ text long_text ])
+    end
+
     # A picture can't sit in the short line beside Passages, or be asked
     # in a roster application.
     def pictures_stay_on_the_profile

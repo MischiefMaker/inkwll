@@ -116,4 +116,34 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     end
     assert_select ".application-review", count: 1
   end
+
+  test "approving a character starts Goal and Secret Inklings from the matching answers" do
+    goals = ProfileField.create!(name: "Goals", section: "application", field_type: "long_text", public: false, inkling_kind: "goal")
+    secrets = ProfileField.create!(name: "Secrets", section: "application", field_type: "long_text", public: false, inkling_kind: "secret")
+    ProfileField.create!(name: "Quirk", section: "application", field_type: "text")
+    character = accounts(:alice).characters.create!(name: "Applicant", status: "draft")
+    character.update!(profile: { profile_fields(:hometown).id => "York", goals.id => "Become mayor.", secrets.id => "Is a spy." })
+    character.submit!
+
+    sign_in_as(accounts(:scribe))
+    assert_difference "Inkling.count", 2 do
+      patch admin_application_path(character), params: { decision: "approve" }
+    end
+    goal = Inkling.find_by!(character: character, kind: "goal")
+    assert_equal "Goals", goal.title
+    assert_equal accounts(:alice), goal.creator
+    assert_equal "Become mayor.", goal.entries.first.body
+    assert_nil goal.staff_visible_at, "staff don't see it until the player sends it"
+    assert Inkling.exists?(character: character, kind: "secret")
+
+    assert_no_difference "Inkling.count" do
+      character.start_inklings_from_profile!
+    end
+  end
+
+  test "a field can only start an Inkling of a type players start, from a text answer" do
+    assert_not ProfileField.new(name: "X", inkling_kind: "hint").valid?
+    assert_not ProfileField.new(name: "X", field_type: "date", inkling_kind: "goal").valid?
+    assert ProfileField.new(name: "X", field_type: "long_text", inkling_kind: "goal").valid?
+  end
 end

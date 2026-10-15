@@ -35,6 +35,11 @@
     <%= form.label :ask_on_roster, "Ask again when someone takes a character from the roster" %>
   </div>
   <small class="hint">The new player's answer replaces the old one. Use it for parts of the application they should redo, or add questions just for roster players.</small>
+  <div class="field profile-field-form__inkling">
+    <%= form.label :inkling_kind, "Start an Inkling from the answer" %>
+    <%= form.select :inkling_kind, ProfileField.inkling_kinds.map { |key, name| [ name, key ] }, include_blank: "No, just keep it on the profile" %>
+    <small class="hint">When staff approve a character, its answer here becomes an Inkling of this type, for the player to keep adding to. Works for short and long text answers.</small>
+  </div>
   <div class="field field--checkbox">
     <%= form.check_box :required %>
     <%= form.label :required, "Must be filled in before submitting" %>
