@@ -23,4 +23,18 @@ class StarterContentTest < ActiveSupport::TestCase
       StarterContent.install_soul!
     end
   end
+
+  test "the starter Boons and Banes come back only when no active ones are left" do
+    Soul::Bnb.delete_all
+    Soul::Bnb.create!(kind: "boon", name: "Mine", description: "x")
+    StarterContent.restore_bnbs!
+    assert_equal 1, Soul::Bnb.count, "a game with its own active ones is left alone"
+
+    Soul::Bnb.delete_all
+    StarterContent.restore_bnbs!
+    assert_equal 6, Soul::Bnb.where(kind: "boon").count
+    assert_equal 6, Soul::Bnb.where(kind: "bane").count
+    StarterContent.restore_bnbs!
+    assert_equal 12, Soul::Bnb.count, "and not twice"
+  end
 end

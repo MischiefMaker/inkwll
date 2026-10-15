@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-15 — Paths grouped by type
 
 - My Characters shows each character's icon, is split into sections by Group, and shows the quill when it's that character's turn.
+- The next deploy puts the starter Boons and Banes back once, if the game has no active ones left (the owner cleared their test entries).
 - The SOUL Skill "Natural" is now "Natural Magic".
 - Character profiles have an Active Chapters tab for their player and staff, listing the open Chapters they're in (with the quill when it's their turn). Hidden Chapters only show to the players in them.
 - Clicking an Area's name on the front page opens its overview page.

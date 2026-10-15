@@ -80,6 +80,17 @@ module StarterContent
     BANES.each { |name, description| Soul::Bnb.create!(kind: "bane", name: name, description: description) }
   end
 
+  # Puts the starter Boons and Banes back when a game has deleted or retired
+  # all of its own: names a game already has (even retired ones) are left alone.
+  def self.restore_bnbs!
+    return if Soul::Bnb.active.exists?
+    { "boon" => BOONS, "bane" => BANES }.each do |kind, entries|
+      entries.each do |name, description|
+        Soul::Bnb.create!(kind: kind, name: name, description: description) unless Soul::Bnb.exists?(kind: kind, name: name)
+      end
+    end
+  end
+
   def self.install_profile_fields!
     return if ProfileField.exists?
     PROFILE_FIELDS.each_with_index do |(name, section, type, shown, required, hint, inkling_kind), position|
