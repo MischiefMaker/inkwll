@@ -6,6 +6,11 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: "Page" staff level renamed Steward (owner)
+
+- The lowest staff level, flagged staff (formerly "Page"), is called **Steward**, because "Page" was confusing next to web pages, wiki pages and character pages.
+- Display-only: the code keeps its plain names and games can still rename it. Founder, Wellkeeper and Scribe are unchanged.
+
 ## 2026-10-15: Brevo sends the game's email (owner)
 
 - Password resets and notification emails go out through Brevo (free for 300 emails a day, plain SMTP). No mail server on the droplet: mail from it would mostly land in spam.
