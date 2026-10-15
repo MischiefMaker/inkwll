@@ -2,6 +2,17 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Testing tweaks
+
+- Headings use a plain sans-serif font in the default Slate blue and gold
+  look, instead of Georgia/Times.
+- The log in, sign up and OOC Chat pages keep the top bar for visitors, so
+  they can get back to the front page. Visitors also see the OOC Chat
+  beside every page (when the game allows guest chat), and the log in and
+  sign up pages invite them to say hello there.
+- On phones the OOC Chat drops down from a bar marked "OOC Chat" instead
+  of folding out from the side.
+
 ## 2026-10-14 — Logging in on the live game
 
 - Fixed signing up and logging in on the live game while it runs on plain

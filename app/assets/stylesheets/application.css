@@ -276,9 +276,22 @@ form.button_to { display: inline; }
 .ooc-sidebar--collapsed .ooc-sidebar__arrow { transform: rotate(180deg); }
 .ooc-sidebar--collapsed .ooc-sidebar__tab-label { display: block; }
 
+/* On phones the chat drops down from a bar across the top of it
+   ("v OOC Chat"), instead of folding out from the side. The bar's label
+   stands in for the title. */
 @media (max-width: 800px) {
-  .ooc-sidebar { width: auto; border-left: none; border-top: 1px solid var(--color-border); height: 24rem; position: static; }
+  .ooc-sidebar { flex-direction: column; width: auto; border-left: none; border-top: 1px solid var(--color-border); height: 28rem; position: static; }
   .ooc-sidebar--collapsed { height: auto; }
+  .ooc-sidebar__toggle { flex-direction: row; width: 100%; padding: 0.6rem var(--space); border-right: none; border-bottom: 1px solid var(--color-border);
+    background: var(--color-accent); color: var(--color-accent-text); font-family: var(--font-ui); font-size: 1rem; }
+  .ooc-sidebar__toggle:hover { background: var(--color-accent); color: var(--color-accent-text); opacity: 0.9; }
+  .ooc-sidebar__tab-label, .ooc-sidebar--collapsed .ooc-sidebar__tab-label { display: block; writing-mode: horizontal-tb; letter-spacing: 0.03em; }
+  .ooc-sidebar__arrow { transform: rotate(90deg); }
+  .ooc-sidebar--collapsed .ooc-sidebar__arrow { transform: none; }
+  .ooc-sidebar__count { background: var(--color-accent-text); color: var(--color-accent); }
+  .ooc-sidebar__title { display: none; }
+  .ooc-sidebar__body { min-height: 0; padding-top: 0.5rem; }
+  .ooc-sidebar--collapsed .ooc-sidebar__toggle { border-bottom: none; }
 }
 
 .ooc-page { display: flex; flex-direction: column; height: 70vh; }
@@ -321,6 +334,7 @@ a.ooc-message__author:hover { text-decoration: underline; }
 .ooc-form__problem { flex-basis: 100%; margin: 0; color: #a33; font-family: var(--font-ui); font-size: 0.85rem; }
 .ooc-form__guest { flex-basis: 100%; margin: 0; font-family: var(--font-ui); font-size: 0.85rem; }
 .ooc-form input.ooc-form__name { flex: 0 1 9rem; min-width: 0; }
+.ooc-sidebar .ooc-form input.ooc-form__name { flex-basis: 100%; }
 .ooc-form input[type="text"] { flex: 1; min-width: 0; }
 
 /* Menu (extras that aren't the roleplay itself) */

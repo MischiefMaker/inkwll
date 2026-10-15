@@ -66,4 +66,34 @@ class GuestChatTest < ActionDispatch::IntegrationTest
       delete admin_guest_messages_path(ip: "203.0.113.9")
     end
   end
+
+  test "the log in and chat pages keep the guest top bar, and log in has the OOC Chat beside it" do
+    get new_session_path
+    assert_select ".site-header--guest a[href=?]", root_path
+    assert_select ".site-header__preview", count: 0
+    assert_select ".ooc-sidebar"
+    assert_select ".guest-chat-hello", text: /say hello in the OOC Chat/
+
+    get new_registration_path
+    assert_select ".ooc-sidebar"
+    assert_select ".guest-chat-hello"
+
+    # Guests previewing the game see it too: it's how the game welcomes them.
+    get root_path
+    assert_select ".site-header--guest"
+    assert_select ".ooc-sidebar"
+
+    # The chat page shows the chat itself, so no second one beside it.
+    get ooc_messages_path
+    assert_select ".site-header--guest"
+    assert_select ".ooc-sidebar", count: 0
+  end
+
+  test "with guest chat off, guests see no OOC Chat beside the page" do
+    GameSetting.current.update!(guest_chat: false)
+    get new_session_path
+    assert_select ".site-header--guest"
+    assert_select ".ooc-sidebar", count: 0
+    assert_select ".guest-chat-hello", count: 0
+  end
 end

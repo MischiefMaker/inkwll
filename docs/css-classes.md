@@ -39,7 +39,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.switcher` | "Playing as" character picker |
 | `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
 | `.layout`, `.main` | The page body and its main column |
-| `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed` | The OOC Chat sidebar |
+| `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed`, `.ooc-sidebar__arrow`, `.ooc-sidebar__tab-label` | The OOC Chat sidebar (on phones, `.ooc-sidebar__toggle` is the drop-down bar across its top) |
 | `.layout--admin`, `.admin-menu`, `.admin-menu__button`, `.admin-menu__button-current`, `.admin-menu__body`, `.admin-menu__title`, `.admin-menu__group`, `.admin-menu__heading`, `.admin-menu__list`, `.admin-menu__item`, `.admin-menu__link`, `.admin-menu__link--overview`, `.admin-menu__label`, `.admin-menu__count`, `.is-current` | The admin panel's side menu (on phones it folds into `.admin-menu__button`) |
 | `.ooc-message`, `.ooc-message__author`, `.ooc-message__author--guest`, `.ooc-message__time`, `.ooc-message__body`, `.player-icon`, `.player-icon--guest` | OOC Chat messages |
 
@@ -64,7 +64,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.exits`, `.exit-link`, `.room-paths` | A Setting's Paths |
 | `.room-here`, `.where-now` | Who is standing here |
 | `.room-here__guests`, `.where-now--guest`, `.from-afar__preview` | Guests previewing: the "Guest" / "3 Guests" line under Here, and the notes asking them to log in |
-| `.site-header--guest`, `.site-header__preview`, `.main--preview` | The top bar and page body for guests previewing |
+| `.site-header--guest`, `.site-header__preview`, `.layout--guest`, `.main--preview`, `.main--narrow` | The top bar and page body for visitors who aren't logged in (`.main--narrow` on log in and sign up; `.guest-chat-hello` is the line there pointing guests to the OOC Chat) |
 | `.place__preview`, `.exit-link--preview`, `.numbered-path--preview`, `.compass__point--preview`, `.compass__centre--preview` | The Preview button and Paths shown as plain links to guests |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
 | `.guide`, `.guide__intro`, `.guide__heading`, `.guide__section`, `.guide__section--first-steps` (and `--places`, `--scenes`, `--characters`, `--talking`, `--staff`), `.guide__steps`, `.guide__step`, `.guide__join`, `.menu__guide` | The players' Getting started page and its Menu link |

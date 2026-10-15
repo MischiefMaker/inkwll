@@ -6,6 +6,13 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## Testing tweaks (owner, 2026-10-15)
+
+- **Headings** in the default look (Slate blue and gold) use a sans-serif font, not Georgia/Times.
+- **Log in and the OOC Chat page** keep the front page's top bar and OOC Chat layout, so visitors can always navigate away.
+- **Guests see the OOC Chat beside every page** (when guest chat is on): it's how the game welcomes guests and answers their questions. Log in and sign up say "Feel free to say hello in the OOC Chat" instead of linking to a separate chat page.
+- **Tweaks go on a branch** and ship with the next deploy of a major fix, not on their own.
+
 ## Code audit follow-ups (owner, 2026-10-14)
 
 - **Weekly XP** goes only to approved characters being played. Retired characters and those on the roster get none, and don't count towards the catch-up median.

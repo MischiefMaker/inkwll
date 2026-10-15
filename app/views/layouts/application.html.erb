@@ -40,17 +40,18 @@
         <%= yield :admin_menu %>
         <%= render "ooc_messages/sidebar" unless content_for?(:hide_ooc_sidebar) %>
       </div>
-    <% elsif @previewing %>
-      <%= render "shared/guest_header" %>
-      <main class="main main--preview">
-        <%= render "shared/flash" %>
-        <%= yield %>
-      </main>
     <% else %>
-      <main class="main main--narrow">
-        <%= render "shared/flash" %>
-        <%= yield %>
-      </main>
+      <%# Visitors who aren't logged in get the same top bar and OOC Chat on
+          every page (previews, logging in, signing up), so they can always
+          find their way back. %>
+      <%= render "shared/guest_header" %>
+      <div class="layout layout--guest">
+        <main class="main <%= @previewing ? "main--preview" : "main--narrow" %>">
+          <%= render "shared/flash" %>
+          <%= yield %>
+        </main>
+        <%= render "ooc_messages/sidebar" if guest_chat_open? && !content_for?(:hide_ooc_sidebar) %>
+      </div>
     <% end %>
   </body>
 </html>
