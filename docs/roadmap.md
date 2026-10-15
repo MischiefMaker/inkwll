@@ -37,6 +37,7 @@ Ideas the owner wants after the first release. Not built until the owner says so
 - **Chapter tabs position:** a game setting to show the Chapter tabs along the top (as now) or down the left side (owner, 2026-10-15). Note only, not built.
 - **Saving drafts as people write:** what a player is typing (Passages, wiki pages, posts, messages) is saved as a draft along the way, so nothing is lost if the page closes or reloads (owner, 2026-10-15). Note only, not built.
 - **Weather system:** a weather system for the game world (owner, 2026-10-15). Details to be decided. Note only, not built.
+- **Mass actions on the admin lists:** checkboxes on the admin Players and staff and Characters pages, to Roster, Archive or Retire many at once (owner, 2026-10-15). Note only, not built.
 - **Live private chat:** players chat privately in real time, shown as tabs inside the OOC sidebar. Builds on Messages (step 3b).
 - **Awards and profile comments** (from the Jcink shortlist, maybe later).
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.
