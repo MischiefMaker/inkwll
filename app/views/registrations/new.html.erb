@@ -2,8 +2,7 @@
 
 <h1 class="page-title">Create an account</h1>
 
-<%# A plain page load, not a Turbo fetch, so the browser always keeps the login cookie. %>
-<%= form_with model: @account, url: registration_path, class: "form", data: { turbo: false } do |form| %>
+<%= form_with model: @account, url: registration_path, class: "form" do |form| %>
   <%= render "shared/errors", record: @account %>
 
   <div class="field">

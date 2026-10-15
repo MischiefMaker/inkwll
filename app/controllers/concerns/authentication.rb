@@ -1,8 +1,6 @@
 module Authentication
   extend ActiveSupport::Concern
 
-  # Not "session_id": the owner's Firefox never sent a cookie with that
-  # name back, though it sent the game's other cookie (2026-10-15).
   LOGIN_COOKIE = :inkwll_login
 
   included do
@@ -70,11 +68,7 @@ module Authentication
     end
 
     def find_session_by_cookie
-      session = Session.find_by(id: cookies.signed[LOGIN_COOKIE]) if cookies.signed[LOGIN_COOKIE]
-      # Temporary, while logging in on the live game is being fixed: says
-      # whether the browser sent the login cookie (never its value).
-      logger.info "Login cookie: #{cookies[LOGIN_COOKIE].nil? ? "not sent" : (session ? "ok" : "not recognised")} (cookies sent: #{request.cookies.keys.join(", ").presence || "none"})"
-      session
+      Session.find_by(id: cookies.signed[LOGIN_COOKIE]) if cookies.signed[LOGIN_COOKIE]
     end
 
     def request_authentication
