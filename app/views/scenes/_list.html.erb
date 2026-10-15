@@ -16,7 +16,7 @@
           <% if scene.subtitle %><p class="scene-list__subtitle"><%= scene.subtitle %></p><% end %>
           <div class="muted scene-list__meta">
             <% if scene.ic_when.present? %><span class="scene-list__when"><%= scene.ic_when %></span> ·<% end %>
-            <%= scene.participants.map { |p| p.character.name }.to_sentence.presence || "Nobody yet" %>
+            <%= scene.participants.map { |p| p.storyteller? ? "#{p.character.name} (#{term(:storyteller)})" : p.character.name }.to_sentence.presence || "Nobody yet" %>
             · <%= time_ago_in_words(scene.last_activity_at) %> ago
           </div>
         </li>

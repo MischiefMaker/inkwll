@@ -6,7 +6,7 @@ class Admin::CharactersController < Admin::BaseController
   before_action :set_character, only: %i[ update retire unretire ]
 
   def index
-    @characters = Character.includes(:account, :room).order(:retired_at, :name)
+    @characters = Character.played.includes(:account, :room).order(:retired_at, :name)
     @groups = CharacterGroup.ordered
   end
 

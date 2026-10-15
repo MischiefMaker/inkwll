@@ -73,7 +73,7 @@ class Scene < ApplicationRecord
     transaction do
       scene = create!(room: character.room, auto_skip: settings.auto_skip, turn_minutes: settings.turn_minutes, **attributes)
       scene.participants.create!(character: character, position: 1,
-        role: storyteller && character.account.may_storytell? ? "storyteller" : "player")
+        role: (storyteller || character.gm?) && character.account.may_storytell? ? "storyteller" : "player")
       scene
     end
   end

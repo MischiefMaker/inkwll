@@ -5,7 +5,10 @@ class Character < ApplicationRecord
   include Roster
   include GrimoireBook
 
-  scope :active, -> { where(retired_at: nil) }
+  # Played characters that aren't retired. GM stand-ins (see Account#gm!)
+  # never count as characters in lists.
+  scope :active, -> { where(retired_at: nil, gm: false) }
+  scope :played, -> { where(gm: false) }
 
   belongs_to :account
   belongs_to :room
@@ -38,10 +41,10 @@ class Character < ApplicationRecord
   after_save { icon.purge_later if remove_icon && icon.attached? }
 
   before_validation :place_in_starting_room, on: :create
-  before_validation -> { self.status = "draft" if GameSetting.current.approval_required? }, on: :create
+  before_validation -> { self.status = "draft" if GameSetting.current.approval_required? && !gm? }, on: :create
 
   after_commit :refresh_rooms, on: [ :create, :update ], if: :saved_change_to_room_id?
-  after_update_commit :announce_move, if: :saved_change_to_room_id?
+  after_update_commit :announce_move, if: -> { saved_change_to_room_id? && !gm? }
   # Moving counts as being active, for the Where list's idle times.
   before_update -> { self.last_active_at = Time.current }, if: :room_id_changed?
 

@@ -38,12 +38,14 @@
 
   <div class="site-header__account">
     <% characters = current_account.characters.active.order(:name) %>
-    <% if characters.any? %>
+    <% gm_option = current_account.may_storytell? %>
+    <% if characters.any? || gm_option %>
       <%= form_with url: active_character_path, method: :patch, class: "switcher",
             data: { controller: "auto-submit" } do |form| %>
         <%= form.label :character_id, "Playing as", class: "switcher__label" %>
         <%= form.select :character_id,
-              options_from_collection_for_select(characters, :id, :name, current_character&.id),
+              options_from_collection_for_select(characters, :id, :name, current_character&.id) +
+                (gm_option ? tag.option("GM (#{current_account.display_name})", value: "gm", selected: current_character&.gm?, class: "switcher__gm") : "".html_safe),
               { include_blank: current_character.nil? },
               data: { action: "change->auto-submit#submit" } %>
         <noscript><%= form.submit "Switch" %></noscript>

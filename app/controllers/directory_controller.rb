@@ -9,7 +9,7 @@ class DirectoryController < ApplicationController
     @roster_only = params[:roster] == "1"
     @groups = CharacterGroup.ordered
     @group = @groups.find_by(id: params[:group])
-    characters = Character.includes(:character_group, icon_attachment: :blob).order(:name)
+    characters = Character.played.includes(:character_group, icon_attachment: :blob).order(:name)
     characters = characters.where(character_group: @group) if @group
     characters = @roster_only ? characters.on_roster :
       characters.where("(characters.status = 'approved' AND characters.retired_at IS NULL) OR characters.on_roster_at IS NOT NULL")

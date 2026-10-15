@@ -14,6 +14,10 @@ Short, plain-language notes on what changed. Newest first.
 - Character descriptions are now an ordinary profile field called
   Description, which games can rename, remove or make required. Existing
   descriptions were copied into it.
+- Staff and Storytellers can pick **GM** under Playing as, to post and run
+  Chapters under their player name. A Chapter they start as GM makes them its
+  Storyteller. GM isn't a character: it never shows in Where, Here, the
+  directory or character lists.
 - Online now on the front page lists players by player name; Where lists
   characters.
 - Profile fields can ask for a Picture, for games that show looks with an

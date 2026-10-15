@@ -40,7 +40,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.banner-default` | The drawn banner (accent colour with ink lines) on an Area or Setting that has no banner picture. It also has `.place__banner` on front-page cards and `.description-image` on Area and Setting pages |
 | `.nib-icon`, `.nib-icon__back`, `.nib-icon__nib`, `.nib-icon__slit`, `.nib-icon__hole`, `.player-icon--default` | The pen-nib player icon shown when a player has no icon picture (guests get a grey one) |
 | `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
-| `.switcher` | "Playing as" character picker |
+| `.switcher`, `.switcher__gm` (the GM choice) | "Playing as" character picker |
 | `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
 | `.layout`, `.main` | The page body and its main column |
 | `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed`, `.ooc-sidebar__arrow`, `.ooc-sidebar__tab-label` | The OOC Chat sidebar (on phones, `.ooc-sidebar__toggle` is the drop-down bar across its top) |
@@ -180,5 +180,5 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.mini-profile` | The pop-up when you click a character |
 | `.scene-list`, `.scene-list__title`, `.scene-list__meta` | A Setting's list of Chapters |
 | `.manuscript`, `.manuscript__title`, `.manuscript__meta` | A finished Chapter in the Archives |
-| `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc` | Character icons |
+| `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc`, `--gm` (GM posts with the player's picture) | Character icons |
 | `.area-intro`, `.area-intro__banner`, `.area-intro__summary`, `.area-intro__name` | A Setting's Area (banner and short text) shown above the Setting's name |

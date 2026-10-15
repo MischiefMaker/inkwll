@@ -4,6 +4,8 @@ module ScenesHelper
     classes = "character-icon character-icon--#{size}"
     if character&.icon&.attached?
       image_tag character.icon, alt: "", class: classes
+    elsif character&.gm? && character.account.icon.attached?
+      image_tag character.account.icon, alt: "", class: "#{classes} character-icon--gm"
     else
       tag.span (character&.name || "?").first.upcase, class: "#{classes} character-icon--initial", aria: { hidden: true }
     end

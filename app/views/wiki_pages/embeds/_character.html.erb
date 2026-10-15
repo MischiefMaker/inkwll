@@ -1,5 +1,5 @@
 <%# {{character name="Mary-Jane O'Neil"}}: one character's card. %>
-<% character = Character.where("name ILIKE ?", Character.sanitize_sql_like(options[:name].to_s))
+<% character = Character.played.where("name ILIKE ?", Character.sanitize_sql_like(options[:name].to_s))
      .where("(status = 'approved' AND retired_at IS NULL) OR on_roster_at IS NOT NULL").first if options[:name].is_a?(String) %>
 <% if character %>
   <div class="wiki-character">
