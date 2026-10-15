@@ -107,8 +107,9 @@ class RosterTest < ActionDispatch::IntegrationTest
     assert heir.preparing_for_roster?
 
     # Staff can edit it; players can't see it yet.
-    patch character_path(heir), params: { character: { description: "Raised by wolves." } }
-    assert_equal "Raised by wolves.", heir.reload.description
+    field = profile_fields(:hometown)
+    patch character_path(heir), params: { character: { profile: { field.id => "Raised by wolves." } } }
+    assert_equal "Raised by wolves.", heir.reload.profile_value_for(field).value
     get roster_path
     assert_select "a[href=?]", character_path(heir), count: 0
 
@@ -119,7 +120,7 @@ class RosterTest < ActionDispatch::IntegrationTest
     sign_in_as(accounts(:bob))
     get character_path(heir)
     assert_response :success
-    patch character_path(heir), params: { character: { description: "Mine now" } }
+    patch character_path(heir), params: { character: { name: "Mine now" } }
     assert_response :not_found
   end
 

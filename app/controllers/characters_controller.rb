@@ -57,7 +57,7 @@ class CharactersController < ApplicationController
     # Players pick a group until their character is approved; after that
     # only staff change it.
     def character_params
-      permitted = [ :name, :description, :icon, :remove_icon, :roster_when_idle, profile: {} ]
+      permitted = [ :name, :icon, :remove_icon, :roster_when_idle, profile: {}, remove_profile_pictures: [] ]
       permitted.unshift(:character_group_id) if @character.nil? || @character.group_choosable?
       params.expect(character: permitted).tap do |attributes|
         if attributes.key?(:character_group_id) && !CharacterGroup.exists?(id: attributes[:character_group_id].presence)

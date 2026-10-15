@@ -2,6 +2,21 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Starter SOUL, Boons and Banes, and profile fields
+
+- A new game comes with SOUL's Aspects and Skills from the SOUL plugin
+  (Body, Mind and Spirit, three Skills each), a starter catalogue of six
+  Boons and six Banes, and a few profile and Application fields. Games that
+  already set these up keep their own.
+- Staff can delete a Boon or Bane from Admin → Boons and Banes with the new
+  trashcan button. One that characters already have is retired instead.
+  Edit is now a pencil button.
+- Character descriptions are now an ordinary profile field called
+  Description, which games can rename, remove or make required. Existing
+  descriptions were copied into it.
+- Profile fields can ask for a Picture, for games that show looks with an
+  image instead of text.
+
 ## 2026-10-15 — Preparing roster characters
 
 - A character staff add to the roster from Admin → Roster is no longer shown

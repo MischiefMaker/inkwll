@@ -104,6 +104,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.character-profile`, `.character-profile__header`, `.character-profile__name`, `.character-profile__panel` | A character's profile page |
 | `.profile-tabs`, `.profile-tabs__tab`, `.profile-tabs__tab--current` | The tabs on a character's profile |
 | `.profile-fields`, `.profile-fields__row`, `.profile-fields__private`, `.details-list__term`, `.details-list__value` | Profile answers, such as Demographics |
+| `.profile-fields__picture`, `.profile-field-input__picture`, `.profile-field-input__remove` | Picture answers: on the profile, and the current picture in the character form |
 | `.application-status`, `.application-status--draft`, `--submitted`, `--returned` | The approval notice on a character |
 | `.gallery`, `.gallery__item`, `.gallery__image`, `.gallery__caption` | The picture gallery |
 | `.relationships`, `.relationships__item`, `.relationships__name`, `.relationships__kind`, `.relationships__note` | Relationships |
@@ -159,7 +160,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.soul-culminations`, `.soul-culmination`, `.soul-culmination--approved` (and the other statuses) | Culminations |
 | `.soul-history`, `.soul-history__item` | Narrative History |
 | `.soul-audit` | The staff log |
-| `.soul-reviews`, `.soul-reviews__item`, `.bnb-catalogue` | Admin: SOUL requests and the Boons and Banes catalogue |
+| `.soul-reviews`, `.soul-reviews__item`, `.bnb-catalogue`, `.bnb-catalogue__actions`, `.bnb-catalogue__edit`, `.bnb-catalogue__delete`, `.bnb-catalogue__delete-form`, `.icon-action` (pencil and trashcan buttons) | Admin: SOUL requests and the Boons and Banes catalogue |
 | `.pose--roll`, `.roll-details` | A roll result and its dice |
 
 ## Chapters

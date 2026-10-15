@@ -71,8 +71,8 @@ module Character::Roster
     # A pre-made or "wanted" character staff add for the roster. It stays
     # hidden from players until staff open it on the roster, so they can fill
     # in the profile, SOUL and background first (owner).
-    def create_for_roster!(name:, description: nil, roster_note: nil)
-      character = Account.roster_keeper.characters.create!(name: name, description: description)
+    def create_for_roster!(name:, roster_note: nil)
+      character = Account.roster_keeper.characters.create!(name: name)
       character.update!(retired_at: Time.current, roster_note: roster_note)
       character
     end

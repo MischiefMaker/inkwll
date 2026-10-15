@@ -12,8 +12,3 @@
 <% end %>
 <h2 class="section-title">Demographics</h2>
 <%= render "characters/profile_fields", character: character, section: "demographics", show_private: show_private, extra: extra %>
-
-<% if character.description.present? %>
-  <h2 class="section-title">Description</h2>
-  <div class="prose character-profile__description"><%= simple_format character.description %></div>
-<% end %>

@@ -30,10 +30,6 @@
   <p class="muted">Until approved, characters can explore but can't join <%= term(:scene, count: 2).downcase %>. Applications are under Applications in the admin panel.</p>
 
   <div class="field field--checkbox">
-    <%= form.check_box :require_description %>
-    <%= form.label :require_description, "Characters need a written description before they're submitted" %>
-  </div>
-  <div class="field field--checkbox">
     <%= form.check_box :require_icon %>
     <%= form.label :require_icon, "Characters need an icon before they're submitted" %>
   </div>

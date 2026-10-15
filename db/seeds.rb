@@ -249,6 +249,10 @@ seed_paths(clearing, "Old Road to the City", grand_avenue, "Forest Road")
   area.update!(entrance_room: room) if area.entrance_room.nil?
 end
 
+# SOUL's Aspects and Skills, starter Boons and Banes, and profile and
+# application fields, so character creation works straight away.
+StarterContent.install!
+
 # Where new characters start: an out-of-character reading room with Paths
 # into each Area (see Room.create_prologue!).
 Room.create_prologue!

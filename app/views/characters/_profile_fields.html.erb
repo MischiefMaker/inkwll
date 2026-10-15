@@ -11,7 +11,9 @@
       <div class="profile-fields__row profile-fields__row--<%= field.field_type %>">
         <dt class="details-list__term"><%= field.name %><%= tag.span(" (private)", class: "muted profile-fields__private") unless field.public? %></dt>
         <dd class="details-list__value">
-          <% if field.date? && (date = value.as_date) %>
+          <% if field.image? %>
+            <%= image_tag value.image, class: "profile-fields__picture", alt: "#{character.name}: #{field.name}" if value.image.attached? %>
+          <% elsif field.date? && (date = value.as_date) %>
             <%= date.to_fs(:long) %>
           <% elsif field.field_type == "long_text" %>
             <div class="prose"><%= simple_format value.value %></div>

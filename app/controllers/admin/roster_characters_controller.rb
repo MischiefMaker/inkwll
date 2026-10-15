@@ -6,7 +6,7 @@ class Admin::RosterCharactersController < Admin::BaseController
   limit_posting to: 20, within: 10.minutes, only: :create
 
   def create
-    attributes = params.expect(character: [ :name, :description, :roster_note ])
+    attributes = params.expect(character: [ :name, :roster_note ])
     character = Character.create_for_roster!(**attributes.to_h.symbolize_keys)
     redirect_to character_path(character),
       notice: "#{character.name} is ready to fill in. Players can't see them until you open them on the roster."

@@ -13,7 +13,11 @@
           <td class="table__cell"><%= bnb.kind.capitalize %></td>
           <td class="table__cell"><%= bnb.skills.map(&:name).to_sentence.presence || tag.span("Picked per character", class: "muted") %></td>
           <td class="table__cell"><%= bnb.starting? ? "Yes" : "No" %></td>
-          <td class="table__cell"><%= link_to "Edit", edit_admin_soul_bnb_path(bnb) %></td>
+          <td class="table__cell bnb-catalogue__actions">
+            <%= link_to edit_admin_soul_bnb_path(bnb), class: "icon-action bnb-catalogue__edit", title: "Edit" do %><%= icon(:pencil, size: 16) %><span class="visually-hidden">Edit <%= bnb.name %></span><% end %>
+            <%= button_to admin_soul_bnb_path(bnb), method: :delete, class: "button-link icon-action bnb-catalogue__delete", title: "Delete", form_class: "bnb-catalogue__delete-form",
+                  form: { data: { turbo_confirm: "Delete #{bnb.name}? If characters already have it, it is retired instead." } } do %><%= icon(:trash, size: 16) %><span class="visually-hidden">Delete <%= bnb.name %></span><% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

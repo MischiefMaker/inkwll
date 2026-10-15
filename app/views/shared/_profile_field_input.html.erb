@@ -4,6 +4,12 @@
   <%= text_area_tag name, value, id: id, rows: 6 %>
 <% when "birthday", "date" %>
   <%= date_field_tag name, value, id: id %>
+<% when "image" %>
+  <% if (picture = local_assigns[:picture])&.attached? && picture.blob.persisted? %>
+    <%= image_tag picture, class: "profile-field-input__picture", alt: "" %>
+    <label class="field--checkbox profile-field-input__remove"><%= check_box_tag "character[remove_profile_pictures][]", field.id, false, id: "#{id}_remove" %> Remove this picture</label>
+  <% end %>
+  <%= file_field_tag name, id: id, accept: "image/png,image/jpeg,image/gif,image/webp" %>
 <% when "number" %>
   <%= number_field_tag name, value, id: id %>
 <% else %>

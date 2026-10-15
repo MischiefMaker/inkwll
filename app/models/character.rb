@@ -84,12 +84,29 @@ class Character < ApplicationRecord
   end
 
   # Saves the profile fields from the edit form: { field_id => text }.
+  # Picture fields get an uploaded file; an empty one keeps the old picture.
   def profile=(values)
     values.to_h.each do |field_id, text|
       field = ProfileField.find_by(id: field_id) or next
-      value = profile_values.detect { |v| v.profile_field_id == field.id } || profile_values.build(profile_field: field)
-      value.value = text.to_s.strip.presence
+      if field.image?
+        next unless text.respond_to?(:original_filename)
+        profile_value_built_for(field).picture = text
+      else
+        profile_value_built_for(field).value = text.to_s.strip.presence
+      end
     end
+  end
+
+  # Picture fields ticked "Remove this picture" on the edit form.
+  def remove_profile_pictures=(field_ids)
+    ProfileField.where(id: Array(field_ids), field_type: "image").find_each do |field|
+      value = profile_value_for(field)
+      value.picture = nil if value && !value.attachment_changes["image"]
+    end
+  end
+
+  def profile_value_built_for(field)
+    profile_value_for(field) || profile_values.build(profile_field: field)
   end
 
   def birthday
@@ -112,7 +129,6 @@ class Character < ApplicationRecord
   def missing_for_submission
     settings = GameSetting.current
     missing = ProfileField.where(required: true).ordered.reject { |field| profile_value_for(field)&.value.present? }.map(&:name)
-    missing << "a description" if settings.require_description? && description.blank?
     missing << "an icon" if settings.require_icon? && !icon.attached?
     missing
   end

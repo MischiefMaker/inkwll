@@ -70,6 +70,13 @@ module ApplicationHelper
     @passage_fields ||= ProfileField.where(on_passages: true, public: true).ordered.to_a
   end
 
+  # A few lines for a character's pop-up: their first public long-text
+  # answer in Demographics, such as Description.
+  def mini_profile_blurb(character)
+    @mini_profile_field ||= ProfileField.where(section: "demographics", field_type: "long_text", public: true).ordered.first || false
+    @mini_profile_field && character.profile_value_for(@mini_profile_field)&.value.presence
+  end
+
   # The short line beside a character's Passages: their group and the
   # fields picked under Admin, Profile fields.
   def character_details(character, css_class)

@@ -104,10 +104,6 @@
       <%= form.text_field :name, required: true, maxlength: 60 %>
     </div>
     <div class="field">
-      <%= form.label :description %>
-      <%= form.text_area :description, rows: 4 %>
-    </div>
-    <div class="field">
       <%= form.label :roster_note, "Note for applicants" %>
       <%= form.text_area :roster_note, rows: 3, maxlength: 2_000 %>
       <small class="hint">Shown on the character's page, for example what kind of player you're looking for.</small>
