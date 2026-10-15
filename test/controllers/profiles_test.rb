@@ -195,4 +195,42 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_select ".profile-tabs__tab .visibility-mark--you-and-staff .icon--lock"
     assert_select ".character-chapters__item .visibility-mark--you-only .icon--eye"
   end
+
+  test "the Inklings tab shows to the player, and to staff only for Inklings sent to them" do
+    wren = characters(:wren)
+    draft = Inkling.start!(character: wren, by: accounts(:alice), kind: "goal", title: "Private plans", body: "Just mine.")
+    sent = Inkling.start!(character: wren, by: accounts(:alice), kind: "goal", title: "Sent plans", body: "For staff.")
+    sent.update!(staff_visible_at: Time.current, review_state: "submitted")
+
+    sign_in_as(accounts(:alice))
+    get character_path(wren, tab: "inklings")
+    assert_select ".profile-tabs__group--private .profile-tabs__tab", text: /Inklings/
+    assert_select ".character-inklings__title", text: "Private plans"
+    assert_select ".character-inklings__title", text: "Sent plans"
+
+    sign_in_as(accounts(:wellkeeper))
+    get character_path(wren, tab: "inklings")
+    assert_select ".profile-tabs__tab", text: /Inklings/
+    assert_select ".character-inklings__title", text: "Sent plans"
+    assert_select ".character-inklings__title", text: "Private plans", count: 0
+
+    sign_in_as(accounts(:bob))
+    get character_path(wren, tab: "inklings")
+    assert_select ".profile-tabs__tab", text: /Inklings/, count: 0
+    assert_select ".character-inklings", count: 0
+    assert_not_includes response.body, "Sent plans"
+    assert draft.persisted?
+  end
+
+  test "profile tabs come in three groups on one row" do
+    sign_in_as(accounts(:alice))
+    get character_path(characters(:wren))
+    assert_select ".profile-tabs .profile-tabs__group--profile .profile-tabs__tab", count: 4
+    assert_select ".profile-tabs__group--profile .profile-tabs__tab", text: "Image Gallery"
+    assert_select ".profile-tabs__group--activity .profile-tabs__tab", text: /Manuscripts/
+
+    delete session_path
+    get character_path(characters(:wren))
+    assert_select ".profile-tabs__group--private", count: 0
+  end
 end

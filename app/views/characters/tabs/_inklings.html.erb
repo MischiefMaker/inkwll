@@ -1,0 +1,23 @@
+<%# This character's Inklings, for their player and for staff. Staff only see the ones the player has sent them
+    (never a draft); the player sees them all. %>
+<% inklings = Inkling.where(character: character).includes(:character).newest_first.select { |inkling| inkling.visible_to?(current_account) } %>
+<% open_ones, closed_ones = inklings.partition(&:open?) %>
+<% if inklings.any? %>
+  <% { "open" => open_ones, "closed" => closed_ones }.each do |state, list| %>
+    <% next if list.empty? %>
+    <h2 class="section-title character-inklings__heading character-inklings__heading--<%= state %>"><%= state.capitalize %></h2>
+    <ul class="list character-inklings character-inklings--<%= state %>">
+      <% list.each do |inkling| %>
+        <li class="character-inklings__item character-inklings__item--<%= inkling.review_state %>">
+          <%= link_to inkling.title, inkling, class: "character-inklings__title" %>
+          <span class="tag inklings__type inklings__type--<%= inkling.kind %>"><%= inkling.type_name %></span>
+          <span class="badge inklings__state"><%= inkling_state_label(inkling) %></span>
+          <span class="muted character-inklings__when"><%= time_ago_in_words(inkling.last_entry_at || inkling.created_at) %> ago</span>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% else %>
+  <p class="muted character-inklings__empty">No Inklings to show for <%= character.name %>.
+    <% if @mine %>Start one from the Inklings page.<% else %>Staff only see an Inkling once its player sends it to them.<% end %></p>
+<% end %>

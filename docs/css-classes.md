@@ -153,6 +153,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.admin-attention` | The "Needs Attention" box on the admin front page: `.admin-attention__heading`, `.admin-attention__list`, `.admin-attention__item` (with `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`), `.admin-attention__link`, `.admin-attention__label`, `.admin-attention__count`, `.admin-attention__empty` |
 | `.player-list` | The Players page: `.player-list__intro`, `.player-list__items`, `.player-list__item`, `.player-list__link`, `.player-list__name` |
 | `.game-stats` | The counts at the bottom of the front page. Each is `.game-stats__item` with `--players`, `--characters`, `--chapters` or `--archives`, holding `.game-stats__icon`, `.game-stats__label` (also `.game-stats__link` when it is a link) and `.game-stats__count` |
+| `.profile-tabs__group` | One group of tabs on a character profile: `--profile`, `--private` (SOUL, Inklings, Grimoire) and `--activity` (Manuscripts, Active Chapters) |
+| `.character-inklings` | The Inklings tab on a character profile: `.character-inklings__heading`, `__item`, `__title`, `__when`, `__empty` |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
 | `.menu__wiki-dot` | The small filled dot before a wiki page in the Menu |
 | `.storyteller-tools`, `.storyteller-tools__call`, `.storyteller-tools__sheets`, `.storyteller-tools__award`, `.storyteller-sheet`, `.storyteller-sheet__name`, `.storyteller-sheet__aspect`, `.storyteller-sheet__skills` | A Chapter's Storyteller tools |

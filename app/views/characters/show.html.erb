@@ -36,15 +36,24 @@
   <% end %>
   <%= render "characters/roster_status", character: @character %>
 
+  <%# Three groups on one row: the profile itself, the player's private tabs, and what they have written. %>
   <nav class="profile-tabs" aria-label="Profile sections">
-    <% tabs = { "profile" => "Profile", "application" => "Application" } %>
-    <% tabs["soul"] = "SOUL" if Soul.enabled? && show_private %>
-    <% tabs["grimoire"] = "Grimoire" if Grimoire.enabled? && show_private %>
-    <% tabs.merge!("gallery" => "Gallery", "relationships" => "Relationships", "logs" => term(:log, count: 2))
-       tabs["chapters"] = "Active #{term(:scene, count: 2)}" if @mine || @staff_view %>
-    <% tabs.each do |tab, label| %>
-      <%= link_to character_path(@character, tab: tab), class: "profile-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
-            aria: { current: (@tab == tab ? "page" : nil) } do %><%= label %><%= visibility_mark(:you_and_staff) if %w[ soul grimoire chapters ].include?(tab) %><% end %>
+    <% private_tabs = {}
+       private_tabs["soul"] = "SOUL" if Soul.enabled? && show_private
+       private_tabs["inklings"] = "Inklings" if Inkling.enabled? && show_private
+       private_tabs["grimoire"] = "Grimoire" if Grimoire.enabled? && show_private
+       activity_tabs = { "logs" => term(:log, count: 2) }
+       activity_tabs["chapters"] = "Active #{term(:scene, count: 2)}" if @mine || @staff_view
+       groups = { "profile" => { "profile" => "Profile", "application" => "Application", "relationships" => "Relationships", "gallery" => "Image Gallery" },
+                  "private" => private_tabs, "activity" => activity_tabs } %>
+    <% groups.each do |group, tabs| %>
+      <% next if tabs.empty? %>
+      <div class="profile-tabs__group profile-tabs__group--<%= group %>">
+        <% tabs.each do |tab, label| %>
+          <%= link_to character_path(@character, tab: tab), class: "profile-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
+                aria: { current: (@tab == tab ? "page" : nil) } do %><%= label %><%= visibility_mark(:you_and_staff) if group == "private" || tab == "chapters" %><% end %>
+        <% end %>
+      </div>
     <% end %>
   </nav>
 

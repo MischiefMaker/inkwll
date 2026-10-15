@@ -1007,6 +1007,15 @@ span.pose__icon { cursor: default; }
   color: var(--color-text);
   margin-bottom: -1px;
 }
+.profile-tabs {
+  /* One row, never wrapping: the groups scroll sideways on a narrow screen. */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.75rem;
+}
+.profile-tabs__group { display: flex; flex-shrink: 0; gap: 0.1rem; }
+.profile-tabs__group + .profile-tabs__group { padding-left: 0.75rem; border-left: 1px solid var(--color-border); }
+.profile-tabs__tab { padding: 0.4rem 0.6rem; white-space: nowrap; }
 
 .details-list { margin: 0 0 var(--space); }
 .profile-fields__row {

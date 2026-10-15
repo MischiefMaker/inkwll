@@ -14,6 +14,7 @@ Short, plain-language notes on what changed. Newest first.
 - A character's name, icon and details sit in a box on their profile, at the top or at the side like a wiki infobox. Pick which in Admin → Look. Long answers and pictures stay on the Profile tab.
 - Each count at the bottom of the front page has an icon, and its label links to the list: Characters to the Directory, Chapters to Where, Archives to the Archives and Players to a new Players list (icons and names only, never who they play).
 - Fix: the OOC Chat is sized from its real position below the header, so it no longer scrolls or leaves a gap at the bottom.
+- Character profiles have an Inklings tab, only for their player and staff (staff see only Inklings the player sent them). The tabs are now in three groups on one row that never wraps: Profile, Application, Relationships, Image Gallery | SOUL, Inklings, Grimoire | Manuscripts, Active Chapters.
 - On the next deploy, every approved character's Goals answer from their application becomes a Goal Inkling for them (new approvals already did this). The same step makes sure the Goals and Secrets fields start Inklings when a character is approved. It won't make a second one if they have it.
 - The old list of links on the admin front page is gone; the buttons and the side menu replace it.
 - Fix: the admin side menu keeps one fixed height (the screen below the header) and sticks at the top as you scroll instead of growing; its last link can always be reached by scrolling inside it.
