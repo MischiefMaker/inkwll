@@ -21,6 +21,57 @@ jobs:
           npm i playwright >/dev/null
           npx playwright install --with-deps firefox chromium >/dev/null
 
+      - name: Forms that redirect (Enter and Post thread), in Firefox and Chromium
+        run: |
+          cd /tmp/probe
+          cat > forms.js <<'JS'
+          const { firefox, chromium } = require('playwright');
+          const base = `http://${process.env.INKWLL_SERVER}`;
+          const pw = 'Testing123A';
+          const here = (page) => page.url().replace(base, '') || '/';
+          (async () => {
+            for (const [name, type] of [['firefox', firefox], ['chromium', chromium]]) {
+              const player = `Probe${Date.now()}`;
+              const browser = await type.launch();
+              const page = await browser.newPage();
+              page.on('console', m => { if (['error', 'warning'].includes(m.type())) console.log(name, 'console', m.type(), m.text().slice(0, 200)); });
+              page.on('pageerror', e => console.log(name, 'page error:', String(e).slice(0, 200)));
+              page.on('response', r => { if (r.request().method() === 'POST') console.log(name, 'POST', r.status(), r.url().replace(base, ''), r.headers()['location'] ? '-> ' + r.headers()['location'].replace(base, '') : ''); });
+              await page.goto(base + '/registration/new');
+              await page.fill('#account_display_name', player);
+              await page.fill('#account_email', player.toLowerCase() + '@example.com');
+              await page.fill('#account_password', pw);
+              await page.fill('#account_password_confirmation', pw);
+              await page.click('form[action="/registration"] [type=submit]');
+              await page.waitForLoadState('networkidle');
+              await page.fill('#character_name', `Tester ${player.slice(-4)}`);
+              await page.click('form [type=submit]');
+              await page.waitForLoadState('networkidle');
+              console.log(name, 'character made, now at', here(page));
+              await page.goto(base + '/');
+              const enter = page.locator('.place__enter-form button').first();
+              console.log(name, 'Enter buttons on the front page:', await page.locator('.place__enter-form button').count());
+              const before = here(page);
+              await enter.click();
+              await page.waitForTimeout(4000);
+              console.log(name, 'Enter: before', before, '-> after 4s', here(page), '| title:', await page.title());
+              await page.goto(base + '/boards');
+              await page.locator('a', { hasText: 'Advertising' }).first().click();
+              await page.waitForLoadState('networkidle');
+              await page.locator('a', { hasText: /^Start a/ }).first().click();
+              await page.waitForLoadState('networkidle');
+              await page.fill('#forum_topic_title', 'Probe thread');
+              await page.fill('#forum_topic_body', 'Testing the Post thread button.');
+              const formUrl = here(page);
+              await page.locator('form.forum-topic-form [type=submit]').click();
+              await page.waitForTimeout(4000);
+              console.log(name, 'Post thread: before', formUrl, '-> after 4s', here(page), '| title:', await page.title());
+              await browser.close();
+            }
+          })().catch(e => { console.error(e); process.exit(1); });
+          JS
+          node forms.js
+
       - name: Sign up and log in
         run: |
           cd /tmp/probe
