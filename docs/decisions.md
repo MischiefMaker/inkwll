@@ -6,6 +6,14 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Natural Magic (owner)
+
+- The Spirit Skill "Natural" is renamed "Natural Magic" (starter set and existing games, unless staff already renamed it).
+
+## 2026-10-15: Active Chapters tab (owner)
+
+- A character's profile has an Active Chapters tab, shown only to their player and staff. Staff see only Chapters they may already see (hidden ones only when reported, as before).
+
 ## 2026-10-15: GM in Writing as (owner)
 
 - The Writing as switcher above the Passage box also offers GM to staff and Storytellers, with the same warning as other characters not yet in the Chapter. Joining as GM makes you Storyteller there.

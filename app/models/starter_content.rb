@@ -8,7 +8,7 @@ module StarterContent
   ASPECTS = {
     "Body" => [ "Physical capability and endurance", %w[ Strength Speed Stamina ] ],
     "Mind" => [ "Intellect, perception, and reason", %w[ Intelligence Learning Wit ] ],
-    "Spirit" => [ "Willpower, emotional depth, and the arcane", [ "Ceremonial Magic", "Hedgecraft", "Natural" ] ]
+    "Spirit" => [ "Willpower, emotional depth, and the arcane", [ "Ceremonial Magic", "Hedgecraft", "Natural Magic" ] ]
   }.freeze
 
   BOONS = {

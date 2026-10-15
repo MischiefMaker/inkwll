@@ -12,6 +12,8 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-15 — Paths grouped by type
 
 - My Characters shows each character's icon, is split into sections by Group, and shows the quill when it's that character's turn.
+- The SOUL Skill "Natural" is now "Natural Magic".
+- Character profiles have an Active Chapters tab for their player and staff, listing the open Chapters they're in (with the quill when it's their turn). Hidden Chapters only show to the players in them.
 - Clicking an Area's name on the front page opens its overview page.
 - Clicking a twitching quill beside a character, Area or Setting opens the Chapter where it's your turn (the tab and folded-button quills keep their own click).
 - The twitching quill also shows beside the front page's "[Character] is in [Place]" line, and beside any Area or Setting where it's your turn.

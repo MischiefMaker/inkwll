@@ -4,7 +4,7 @@ class CreateSoul < ActiveRecord::Migration[8.1]
   ASPECTS = [
     [ "body", "Body", "Physical capability and endurance", [ %w[ strength Strength ], %w[ speed Speed ], %w[ stamina Stamina ] ] ],
     [ "mind", "Mind", "Intellect, perception, and reason", [ %w[ intelligence Intelligence ], %w[ learning Learning ], %w[ wit Wit ] ] ],
-    [ "spirit", "Spirit", "Willpower, emotional depth, and the arcane", [ [ "ceremonial", "Ceremonial Magic" ], %w[ hedgecraft Hedgecraft ], %w[ natural Natural ] ] ]
+    [ "spirit", "Spirit", "Willpower, emotional depth, and the arcane", [ [ "ceremonial", "Ceremonial Magic" ], %w[ hedgecraft Hedgecraft ], [ "natural", "Natural Magic" ] ] ]
   ].freeze
 
   def change

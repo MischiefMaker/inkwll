@@ -163,4 +163,27 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_not ProfileField.new(name: "X", field_type: "date", inkling_kind: "goal").valid?
     assert ProfileField.new(name: "X", field_type: "long_text", inkling_kind: "goal").valid?
   end
+
+  test "the Active Chapters tab shows to the player and staff, listing open Chapters, but not hidden ones to staff" do
+    wren = characters(:wren)
+    hidden = Scene.start!(character: wren, room: wren.room, title: "Secret doings", visibility: "hidden", pose_mode: Scene.pose_modes.keys.first)
+
+    sign_in_as(accounts(:alice))
+    get character_path(wren, tab: "chapters")
+    assert_select ".profile-tabs__tab", text: /Active Chapters/
+    assert_select ".character-chapters__item a.scene-list__title", text: "Duel at Dawn"
+    assert_select ".character-chapters__item a.scene-list__title", text: "Secret doings"
+
+    sign_in_as(accounts(:wellkeeper))
+    get character_path(wren, tab: "chapters")
+    assert_select ".profile-tabs__tab", text: /Active Chapters/
+    assert_select ".character-chapters__item a.scene-list__title", text: "Duel at Dawn"
+    assert_select ".character-chapters__item a.scene-list__title", text: "Secret doings", count: 0
+
+    sign_in_as(accounts(:bob))
+    get character_path(wren, tab: "chapters")
+    assert_select ".profile-tabs__tab", text: /Active Chapters/, count: 0
+    assert_select ".character-chapters", count: 0
+    assert hidden.visibility_hidden?
+  end
 end

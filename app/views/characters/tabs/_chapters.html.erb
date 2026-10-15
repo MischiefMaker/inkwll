@@ -1,0 +1,29 @@
+<%# The open Chapters this character is in. Only their player and staff see
+    the tab, and only Chapters the viewer may know about: hidden ones show to
+    the players in them (and to staff once reported), never by browsing. %>
+<% scenes = Scene.open.visible_to(current_account).where(id: character.scene_participants.select(:scene_id))
+     .by_activity.includes(:room, participants: :character) %>
+<% if scenes.any? %>
+  <ul class="list character-chapters">
+    <% scenes.each do |scene| %>
+      <% participant = scene.participant_for(character) %>
+      <li class="scene-list__item character-chapters__item<%= " scene-list__item--idle" if scene.idle? %>">
+        <div class="scene-list__heading">
+          <%= link_to scene.title, scene_path(scene), class: "scene-list__title" %>
+          <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_label(scene) %></span>
+          <% if scene.paused? %><span class="badge">Paused</span><% elsif scene.idle? %><span class="badge">Idle</span><% end %>
+          <% if !scene.paused? && scene.turn_of?(participant) %>
+            <%= link_to scene_path(scene), class: "turn-quill", title: "Their turn", "aria-label": "Their turn in #{scene.title}" do %><%= icon(:quill, size: 16) %><% end %>
+          <% end %>
+        </div>
+        <div class="muted scene-list__meta">
+          <%= link_to scene.room.name, room_path(scene.room) %> ·
+          <%= scene.participants.map { |p| p.character.name }.to_sentence %>
+          · <%= time_ago_in_words(scene.last_activity_at) %> ago
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted"><%= character.name %> isn't in any open <%= term(:scene, count: 2).downcase %> right now.</p>
+<% end %>

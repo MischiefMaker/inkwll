@@ -199,3 +199,4 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.chapter-tab__badges`, `.chapter-tab__quill` | The top-right corner of a Chapter tab: the twitching quill when it's your turn, and the unread count |
 | `.turn-quill` | The twitching quill beside an Area, Setting, character or the "is in" line where it's your turn; a link to that Chapter |
 | `.my-characters__group`, `.my-characters__group--none`, `.my-characters__heading`, `.my-characters__list`, `.my-characters__item`, `.my-characters__name` | My Characters: a section per Group, each character with their icon and the quill when it's their turn |
+| `.character-chapters`, `.character-chapters__item` | The Active Chapters tab on a character profile (player and staff only) |

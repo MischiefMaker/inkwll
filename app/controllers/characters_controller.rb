@@ -18,6 +18,7 @@ class CharactersController < ApplicationController
     @staff_view = current_account&.staff? || false
     raise ActiveRecord::RecordNotFound unless @character.approved? || @mine || @staff_view
     tabs = %w[ profile application gallery relationships logs ]
+    tabs << "chapters" if @mine || @staff_view
     tabs << "soul" if Soul.enabled? && (@mine || @staff_view)
     tabs << "grimoire" if Grimoire.enabled? && (@mine || @staff_view)
     @tab = params[:tab].presence_in(tabs) || "profile"
