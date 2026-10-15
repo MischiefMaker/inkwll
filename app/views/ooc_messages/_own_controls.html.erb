@@ -1,0 +1,10 @@
+<%# Shows the Edit and Delete controls on this player's own OOC messages
+    (staff see them on every message through the body's is-staff class),
+    and never offers to Block yourself. %>
+<% if current_account %>
+  <% id = current_account.id.to_i %>
+  <style>
+    .ooc-message__actions[data-author="<%= id %>"] { display: inline-flex; }
+    .ooc-message__actions[data-author="<%= id %>"] .ooc-message__block { display: none; }
+  </style>
+<% end %>

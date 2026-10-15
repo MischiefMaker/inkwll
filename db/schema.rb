@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_15_010001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -123,6 +123,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_000001) do
     t.datetime "lifted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "chat_only", default: false, null: false
     t.index ["account_id"], name: "index_bans_on_account_id"
     t.index ["banned_by_id"], name: "index_bans_on_banned_by_id"
   end
@@ -428,7 +429,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_000001) do
     t.datetime "updated_at", null: false
     t.string "guest_name"
     t.inet "ip_address"
+    t.datetime "edited_at"
+    t.boolean "edited_by_staff", default: false, null: false
+    t.datetime "deleted_at"
+    t.bigint "removed_by_id"
     t.index ["account_id"], name: "index_ooc_messages_on_account_id"
+    t.index ["removed_by_id"], name: "index_ooc_messages_on_removed_by_id"
   end
 
   create_table "poses", force: :cascade do |t|
@@ -902,6 +908,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_000001) do
   add_foreign_key "messages", "accounts"
   add_foreign_key "messages", "conversations"
   add_foreign_key "ooc_messages", "accounts"
+  add_foreign_key "ooc_messages", "accounts", column: "removed_by_id", on_delete: :nullify
   add_foreign_key "poses", "characters"
   add_foreign_key "poses", "scenes"
   add_foreign_key "profile_values", "characters"

@@ -31,6 +31,7 @@ module ApplicationHelper
     classes = [ page, "#{page}-#{action_name}" ]
     classes << (current_account ? "is-logged-in" : "is-guest")
     classes << "is-staff" if current_account&.staff?
+    classes << "can-ban" if current_account&.can?(:ban)
     classes << "is-admin" if controller_path.start_with?("admin/")
     # The ready-made look the game started from, for looks with extra styling
     # of their own, such as skin-mush (app/assets/stylesheets/skin-mush.css).

@@ -1,4 +1,7 @@
-<div class="ooc-message" id="<%= dom_id ooc_message %>">
+<%# Everyone gets the same message (it's broadcast live), so the Edit, Delete
+    and Block controls are always there but hidden; the page shows them to
+    the author and to staff (see "ooc_messages/own_controls"). %>
+<div class="ooc-message<%= " ooc-message--deleted" if ooc_message.deleted? %>" id="<%= dom_id ooc_message %>">
   <%= player_icon(ooc_message) %>
   <% if ooc_message.guest? %>
     <span class="ooc-message__author ooc-message__author--guest"><%= ooc_message.author_name %></span>
@@ -6,5 +9,18 @@
     <%= link_to ooc_message.author_name, player_path(ooc_message.account.username), class: "ooc-message__author" %>
   <% end %>
   <time class="ooc-message__time" datetime="<%= ooc_message.created_at.iso8601 %>"><%= ooc_message.created_at.utc.strftime("%H:%M") %></time>
-  <span class="ooc-message__body"><%= ooc_message.body %></span>
+  <% if ooc_message.deleted? %>
+    <em class="ooc-message__body ooc-message__body--deleted"><%= ooc_message.removed_by_staff? ? "Removed by staff" : "Deleted" %></em>
+  <% else %>
+    <span class="ooc-message__body"><%= ooc_message.body %></span>
+    <% if ooc_message.edited_at %>
+      <span class="ooc-message__edited"><%= ooc_message.edited_by_staff? ? "(edited by staff)" : "(edited)" %></span>
+    <% end %>
+    <span class="ooc-message__actions" data-author="<%= ooc_message.account_id %>">
+      <%= link_to "Edit", edit_ooc_message_path(ooc_message), class: "ooc-message__action ooc-message__edit" %>
+      <%= button_to "Delete", ooc_message_path(ooc_message), method: :delete, class: "button-link ooc-message__action ooc-message__delete",
+            form_class: "ooc-message__delete-form", form: { data: { turbo_confirm: "Delete this message?" } } %>
+      <%= link_to "Block", new_admin_ban_path(ooc_message_id: ooc_message.id), class: "ooc-message__action ooc-message__block" %>
+    </span>
+  <% end %>
 </div>

@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## OOC Chat moderation (owner, 2026-10-15)
+
+- **Players** can edit and delete their own OOC Chat messages; **staff** can edit and delete anyone's.
+- Changes leave a note: "(edited)" (or "(edited by staff)"), and a deleted message shows as "Deleted" or "Removed by staff". The original words are kept in the database for staff's records.
+- **Staff can block someone from posting in the OOC Chat**, temporarily or permanently. Built as a chat-only ban on the Bans page (players by account, guests by address), so it's for staff who can ban (Scribes and Wellkeepers). Blocked players still log in, play and read the chat.
+
 ## Testing tweaks (owner, 2026-10-15)
 
 - **Headings** in the default look (Slate blue and gold) use a sans-serif font, not Georgia/Times.

@@ -8,12 +8,16 @@
 #   and an invisible "website" field must stay empty (bots fill everything in),
 # - can post at most 5 messages a minute,
 # - are turned away by bans on their address and by the VPN block.
+#
+# Players edit and delete their own messages, staff anyone's. Staff can also
+# block someone from posting here only, with a chat-only ban.
 class OocMessagesController < ApplicationController
   allow_unauthenticated_access only: %i[ index create ]
   before_action :resume_session
   before_action :end_banned_session, if: -> { Current.session }
   before_action :check_guest, unless: :current_account
-  limit_posting to: 10
+  before_action :set_changeable_message, only: %i[ edit update destroy ]
+  limit_posting to: 10, only: %i[ create update ]
   rate_limit to: 5, within: 1.minute, only: :create, name: "guests", unless: -> { current_account },
     with: -> { redirect_to ooc_messages_path, alert: "That's a lot of messages. Please wait a minute." }
 
@@ -24,17 +28,45 @@ class OocMessagesController < ApplicationController
   end
 
   def create
-    @ooc_message = current_account ? current_account.ooc_messages.new(message_params) : guest_message
-    @ooc_message.save if @ooc_message
+    if (block = Ban.for(account: current_account, ip: request.remote_ip, chat: true))
+      @problem = block.chat_message
+    else
+      @ooc_message = current_account ? current_account.ooc_messages.new(message_params) : guest_message
+      @ooc_message.save if @ooc_message
+    end
     # The new message reaches every open page (including this one) through the
     # live broadcast, so here we only need to reset the form.
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_back fallback_location: ooc_messages_path, alert: @ooc_message&.errors&.full_messages&.to_sentence.presence || @guest_problem }
+      format.html { redirect_back fallback_location: ooc_messages_path, alert: @ooc_message&.errors&.full_messages&.to_sentence.presence || @problem }
     end
   end
 
+  def edit
+    @return_to = url_from(request.referer)
+  end
+
+  def update
+    if @ooc_message.edit_by(current_account, message_params[:body])
+      redirect_to url_from(params[:return_to]) || ooc_messages_path, notice: "Message edited."
+    else
+      @return_to = url_from(params[:return_to])
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @ooc_message.delete_by(current_account)
+    redirect_back fallback_location: ooc_messages_path, notice: @ooc_message.removed_by_staff? ? "Message removed." : "Message deleted."
+  end
+
   private
+    # Only the author or staff, and not once it's deleted.
+    def set_changeable_message
+      @ooc_message = OocMessage.find(params[:id])
+      redirect_to ooc_messages_path, alert: "You can't change that message." unless @ooc_message.changeable_by?(current_account)
+    end
+
     def message_params
       params.expect(ooc_message: [ :body ])
     end
@@ -47,7 +79,7 @@ class OocMessagesController < ApplicationController
       end
     end
 
-    # Returns the new message, or nil with @guest_problem set.
+    # Returns the new message, or nil with @problem set.
     def guest_message
       opened_at = session[:guest_chat_opened_at]
       return guest_problem("Please wait a moment and try again.") if params[:website].present? || opened_at.nil? || Time.current.to_i - opened_at < GUEST_WAIT
@@ -64,7 +96,7 @@ class OocMessagesController < ApplicationController
     end
 
     def guest_problem(text)
-      @guest_problem = text
+      @problem = text
       nil
     end
 end

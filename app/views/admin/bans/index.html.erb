@@ -2,6 +2,7 @@
 
 <h1 class="page-title">Bans</h1>
 <p class="text"><%= link_to "New ban", new_admin_ban_path, class: "button" %></p>
+<p class="muted">To block someone from the OOC Chat only, use Block on one of their messages, or tick "Only block them from posting in the OOC Chat" on a new ban.</p>
 
 <% if @bans.any? %>
   <table class="table">
@@ -10,7 +11,7 @@
       <% @bans.each do |ban| %>
         <tr class="<%= "muted" unless ban.in_force? %>">
           <td class="table__cell"><%= ban.account&.display_name %><%= " · " if ban.account && ban.ip_range %><%= ban.ip_range %></td>
-          <td class="table__cell"><%= ban.reason %></td>
+          <td class="table__cell"><% if ban.chat_only? %><strong class="ban__chat-only">OOC Chat only.</strong> <% end %><%= ban.reason %></td>
           <td class="table__cell"><%= ban.lifted_at ? "Lifted" : (ban.expires_at ? ban.expires_at.to_date.to_fs(:long) : "Permanent") %></td>
           <td class="table__cell"><%= ban.banned_by.display_name %></td>
           <td class="table__cell"><% if ban.in_force? && ban.liftable_by?(current_account) %><%= button_to "Lift", admin_ban_path(ban), method: :patch, class: "button-link" %><% end %></td>

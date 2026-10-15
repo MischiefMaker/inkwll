@@ -23,6 +23,7 @@
     <% if (settings = GameSetting.current).skinned? %>
       <%= stylesheet_link_tag skin_stylesheet_path(v: settings.updated_at.to_i), "data-turbo-track": "reload" %>
     <% end %>
+    <%= render "ooc_messages/own_controls" %>
     <%= javascript_importmap_tags %>
   </head>
 

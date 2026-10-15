@@ -1,5 +1,6 @@
 # Keeps an account, or everyone at an IP address (or range), out of the game.
 # A ban can be permanent or end on a date, and staff can lift it early.
+# A chat-only ban just stops them posting in the OOC Chat (owner).
 class Ban < ApplicationRecord
   belongs_to :account, optional: true
   belongs_to :banned_by, class_name: "Account"
@@ -20,9 +21,9 @@ class Ban < ApplicationRecord
 
   # The ban in force for this account or IP address, if there is one. An IP
   # ban never applies to the Founder, or to staff at or above the level of
-  # whoever set it.
-  def self.for(account: nil, ip: nil)
-    bans = in_force
+  # whoever set it. Chat-only bans count only when asking about the chat.
+  def self.for(account: nil, ip: nil, chat: false)
+    bans = chat ? in_force : in_force.where(chat_only: false)
     by_account = account ? bans.where(account: account) : none
     by_ip = ip.present? ? bans.where("ip_range >>= ?::inet", ip.to_s) : none
     by_account.or(by_ip).includes(:banned_by).order(:created_at).detect { |ban| ban.account || !ban.protects?(account) }
@@ -46,6 +47,11 @@ class Ban < ApplicationRecord
 
   def lift!
     update!(lifted_at: Time.current)
+  end
+
+  # What the person is told when they try to post in the OOC Chat.
+  def chat_message
+    "You can't post in the OOC Chat #{duration_in_words}. Reason: #{reason}"
   end
 
   # "until 1 March 2027" or "permanently".

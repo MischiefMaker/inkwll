@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   resources :exits, only: [] do
     resource :movement, only: :create
   end
-  resources :ooc_messages, only: %i[ index create ]
+  resources :ooc_messages, only: %i[ index create edit update destroy ]
   resources :warnings, only: :update
 
   # Scenes are shown to players as Chapters, and poses as Passages.

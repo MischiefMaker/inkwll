@@ -42,6 +42,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed`, `.ooc-sidebar__arrow`, `.ooc-sidebar__tab-label` | The OOC Chat sidebar (on phones, `.ooc-sidebar__toggle` is the drop-down bar across its top) |
 | `.layout--admin`, `.admin-menu`, `.admin-menu__button`, `.admin-menu__button-current`, `.admin-menu__body`, `.admin-menu__title`, `.admin-menu__group`, `.admin-menu__heading`, `.admin-menu__list`, `.admin-menu__item`, `.admin-menu__link`, `.admin-menu__link--overview`, `.admin-menu__label`, `.admin-menu__count`, `.is-current` | The admin panel's side menu (on phones it folds into `.admin-menu__button`) |
 | `.ooc-message`, `.ooc-message__author`, `.ooc-message__author--guest`, `.ooc-message__time`, `.ooc-message__body`, `.player-icon`, `.player-icon--guest` | OOC Chat messages |
+| `.ooc-message--deleted`, `.ooc-message__body--deleted`, `.ooc-message__edited`, `.ooc-message__actions`, `.ooc-message__action`, `.ooc-message__edit`, `.ooc-message__delete`, `.ooc-message__delete-form`, `.ooc-message__block`, `.ooc-edit`, `.ban-form__chat-only`, `.ban__chat-only`, `.can-ban` (on `body`) | Editing, deleting and blocking in the OOC Chat |
 
 ## Front page, Areas and Settings
 
