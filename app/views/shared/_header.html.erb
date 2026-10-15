@@ -2,35 +2,35 @@
   <%= link_to game_name, root_path, class: "site-header__title" %>
 
   <nav class="site-header__nav">
-    <%= link_to "Home", root_path %>
-    <%= link_to "My characters", characters_path %>
+    <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %>Home<% end %>
+    <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %>My characters<% end %>
     <%= render "conversations/count", account: current_account %>
     <%= render "alerts/count", account: current_account %>
     <%# Extras live in the menu so the roleplay stays front and centre. %>
     <details class="menu">
-      <summary class="disclosure__summary">Menu</summary>
+      <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %>Menu</summary>
       <div class="menu__items">
-        <%= link_to "Getting started", getting_started_path, class: "menu__guide" %>
-        <%= link_to "All #{term(:room, count: 2).downcase}", rooms_path %>
-        <%= link_to "Where", where_path %>
-        <%= link_to "My #{term(:scene, count: 2)}", my_chapters_path %>
-        <% if Inkling.enabled? %><%= link_to "Inklings", inklings_path %><% end %>
-        <%= link_to "My places", saved_places_path %>
-        <%= link_to term(:logs_collection), archives_path %>
-        <%= link_to "Character directory", directory_path %>
-        <%= link_to "Roster", roster_path %>
-        <%= link_to term(:forum_board, count: 2), forum_boards_path %>
+        <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting started<% end %>
+        <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2).downcase %><% end %>
+        <%= link_to where_path, class: "menu__link" do %><%= icon(:pin, size: 16, css: "menu__icon") %>Where<% end %>
+        <%= link_to my_chapters_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>My <%= term(:scene, count: 2) %><% end %>
+        <% if Inkling.enabled? %><%= link_to inklings_path, class: "menu__link" do %><%= icon(:inkwell, size: 16, css: "menu__icon") %>Inklings<% end %><% end %>
+        <%= link_to saved_places_path, class: "menu__link" do %><%= icon(:bookmark, size: 16, css: "menu__icon") %>My places<% end %>
+        <%= link_to archives_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
+        <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character directory<% end %>
+        <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
+        <%= link_to forum_boards_path, class: "menu__link" do %><%= icon(:board, size: 16, css: "menu__icon") %><%= term(:forum_board, count: 2) %><% end %>
         <% if WikiPage.enabled? %>
-          <%= link_to "Wiki", wiki_pages_path %>
+          <%= link_to wiki_pages_path, class: "menu__link" do %><%= icon(:wiki, size: 16, css: "menu__icon") %>Wiki<% end %>
           <% WikiPage.in_menu.each do |page| %>
             <%= link_to page.title, wiki_page_path(page), class: "menu__wiki-page" %>
           <% end %>
         <% end %>
-        <%= link_to "OOC Chat", ooc_messages_path %>
-        <%= link_to "My player profile", player_path(current_account.username) %>
-        <%= link_to "Notifications", edit_notification_settings_path %>
+        <%= link_to ooc_messages_path, class: "menu__link" do %><%= icon(:chat, size: 16, css: "menu__icon") %>OOC Chat<% end %>
+        <%= link_to player_path(current_account.username), class: "menu__link" do %><%= icon(:profile, size: 16, css: "menu__icon") %>My player profile<% end %>
+        <%= link_to edit_notification_settings_path, class: "menu__link" do %><%= icon(:bell, size: 16, css: "menu__icon") %>Notifications<% end %>
         <% if current_account.staff? %>
-          <%= link_to "Admin panel", admin_root_path %>
+          <%= link_to admin_root_path, class: "menu__link" do %><%= icon(:shield, size: 16, css: "menu__icon") %>Admin panel<% end %>
         <% end %>
       </div>
     </details>

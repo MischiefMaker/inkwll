@@ -34,8 +34,10 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 | Class | What it is |
 | --- | --- |
-| `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player` | The bar along the top |
-| `.menu`, `.menu__items` | The Menu |
+| `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.message-count__icon` | The bar along the top |
+| `.menu`, `.menu__items`, `.menu__link`, `.menu__icon` | The Menu |
+| `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass` and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
+| `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
 | `.switcher` | "Playing as" character picker |
 | `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
 | `.layout`, `.main` | The page body and its main column |

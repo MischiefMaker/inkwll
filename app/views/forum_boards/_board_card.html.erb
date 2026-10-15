@@ -6,7 +6,7 @@
   <% end %>
   <div class="place__body forum-board__body">
     <h3 class="place__name forum-board__name">
-      <% if board.icon.attached? %><%= image_tag board.icon, alt: "", class: "place__icon forum-board__icon" %><% end %>
+      <%= place_icon(board, :board, css: "place__icon forum-board__icon") %>
       <%= link_to board.name, forum_board_path(board), class: "place__title forum-board__title" %>
     </h3>
     <% if board.description.present? %>

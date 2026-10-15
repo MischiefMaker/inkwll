@@ -5,5 +5,5 @@
       data: { controller: "message-notify", message_notify_count_value: unread,
               message_notify_level_value: account.browser_notifications,
               message_notify_latest_value: (account.conversation_members.active.joins(:conversation).maximum("conversations.last_message_at")&.to_i if unread.positive?) } do %>
-  Messages<% if unread.positive? %> <span class="message-count__number"><%= unread %></span><% end %>
+  <%= icon(:messages, css: "message-count__icon") %>Messages<% if unread.positive? %> <span class="message-count__number"><%= unread %></span><% end %>
 <% end %>

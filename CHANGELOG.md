@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Icons
+
+- The top bar and the Menu have small line icons next to each link.
+- Areas, Settings and boards without an icon picture show a drawn one
+  instead (a compass, a door, a speech bubble), in the look's colours.
+
 ## 2026-10-15 — Area banners on Settings
 
 - A Setting now shows its Area's banner and short text above its own name,
