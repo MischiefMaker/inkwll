@@ -13,10 +13,10 @@
          data-browser-notify-level-value="<%= account.browser_notifications %>"
          data-browser-notify-minutes-value="<%= account.browser_notify_minutes %>">
       <button type="button" class="chapter-tabs__toggle" data-action="chapter-tabs#toggle" data-chapter-tabs-target="toggle" aria-expanded="true">
-        <%= icon(:chevron_down, size: 14, css: "chapter-tabs__arrow") %>
-        <span class="chapter-tabs__toggle-label"><%= term(:scene, count: 2) %> (<%= participations.size %>)</span>
+        <span class="chapter-tabs__toggle-open"><%= icon(:chevron_down, size: 14, css: "chapter-tabs__arrow") %> <%= term(:scene, count: 2) %> (<%= participations.size %>)</span>
+        <span class="chapter-tabs__toggle-closed" title="Show your <%= term(:scene, count: 2).downcase %>">+ (<%= participations.size %>)</span>
         <% if turns_waiting.positive? %>
-          <span class="chapter-tabs__turn-flag" title="<%= pluralize(turns_waiting, "#{term(:scene).downcase}") %> waiting for you"><%= icon(:quill, size: 16) %> <span class="chapter-tabs__turn-count"><%= turns_waiting %></span></span>
+          <span class="chapter-tabs__turn-flag" title="<%= pluralize(turns_waiting, "#{term(:scene).downcase}") %> waiting for you"><%= icon(:quill, size: 16) %></span>
         <% end %>
       </button>
       <div class="chapter-tabs__list">

@@ -697,12 +697,20 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 }
 .chapter-tabs__list { display: flex; gap: 0.25rem; overflow-x: auto; flex: 1; min-width: 0; }
 .chapter-tabs--collapsed .chapter-tabs__list { display: none; }
-.chapter-tabs--collapsed { padding-bottom: 0.4rem; align-items: center; }
+.chapter-tabs--collapsed { padding-bottom: 0.25rem; padding-top: 0.25rem; align-items: center; }
 .chapter-tabs__toggle {
-  display: inline-flex; align-items: center; gap: 0.4rem; align-self: center; flex: none;
-  padding: 0.25rem 0.6rem; border: 1px solid var(--color-border); border-radius: var(--radius);
-  background: var(--color-bg); color: var(--color-text); font: inherit; font-size: 0.85rem; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; align-self: flex-end; flex: none;
+  padding: 0.35rem 0.75rem; min-width: 8rem; min-height: 3.5rem;
+  border: 1px solid var(--color-border); border-bottom: none; border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--color-bg); color: var(--color-text); font: inherit; font-weight: bold; cursor: pointer;
 }
+.chapter-tabs__toggle:hover { border-color: var(--color-accent); }
+.chapter-tabs__toggle-open { display: inline-flex; align-items: center; gap: 0.3rem; }
+.chapter-tabs__toggle-closed { display: none; }
+/* Folded away: just a small "+ (3)". */
+.chapter-tabs--collapsed .chapter-tabs__toggle { min-width: 0; min-height: 0; padding: 0.15rem 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius); font-size: 0.85rem; font-weight: normal; align-self: center; }
+.chapter-tabs--collapsed .chapter-tabs__toggle-open { display: none; }
+.chapter-tabs--collapsed .chapter-tabs__toggle-closed { display: inline; }
 .chapter-tabs__arrow { transition: transform 0.15s; }
 .chapter-tabs--collapsed .chapter-tabs__arrow { transform: rotate(-90deg); }
 /* Only worth showing while the tabs are folded away: who's waiting is on the tabs otherwise. */

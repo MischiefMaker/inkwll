@@ -42,7 +42,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
 | `.switcher`, `.switcher__gm` (the GM choice) | "Playing as" character picker |
 | `.chapter-tabs`, `.chapter-tabs--collapsed`, `.chapter-tabs__list`, `.chapter-tab-wrap`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
-| `.chapter-tabs__toggle`, `.chapter-tabs__toggle-label`, `.chapter-tabs__arrow`, `.chapter-tabs__turn-flag`, `.chapter-tabs__turn-count` | The button that folds the tabs away, and the wiggling quill shown while folded when it's your turn |
+| `.chapter-tabs__toggle`, `.chapter-tabs__toggle-open`, `.chapter-tabs__toggle-closed`, `.chapter-tabs__arrow`, `.chapter-tabs__turn-flag` | The button that folds the tabs away, and the wiggling quill shown while folded when it's your turn |
 | `.chapter-tab__close`, `.chapter-tab__close-form` | The X on a finished Chapter's tab |
 | `.room-index`, `.room-index--depth-1`, `.room-index__area`, `.room-index__rooms`, `.room-index__room` | All Places, grouped by Area |
 | `.writing-as`, `.writing-as__form`, `.writing-as__label`, `.writing-as__warning`, `.writing-as__warning-text`, `.writing-as__join`, `.writing-as__keep` | The "Writing as" switcher above the Passage box and its warning |

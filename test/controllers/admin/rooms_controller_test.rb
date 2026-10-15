@@ -85,6 +85,7 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "a building's way back is Out, and buildings are listed apart from streets" do
+    rooms(:hall).update!(kind: "building")
     sign_in_as(accounts(:builder))
     post admin_room_exits_path(rooms(:garden)), params: { exit: { kind: "building", name: "Greenhouse", destination_room_id: rooms(:hall).id, add_return: "1" } }
 
@@ -93,7 +94,7 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
 
     sign_in_as(accounts(:alice))
     get room_path(rooms(:garden))
-    assert_select ".room-paths__heading--building", "Go in"
+    assert_select ".room-paths__heading--building", "Buildings"
     assert_select ".exits--building .exit-link", text: "Greenhouse"
   end
 end

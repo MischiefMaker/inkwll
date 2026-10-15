@@ -4,6 +4,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Paths grouped by type
 
+- The Chapters button is the same size as a tab while open, and folds down to a small "+ (3)".
 - A Place's Paths are broken out under headings: Streets first, then Buildings,
   Outdoor areas and Other places (by the type of Place each leads to).
 
