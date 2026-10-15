@@ -35,6 +35,7 @@ The owner is comfortable with HTML and CSS but is not an experienced programmer.
 | `docs/decisions.md` | Every decision the owner has made, newest first, with the date. |
 | `docs/roadmap.md` | The build order and which step is current. |
 | `docs/ai-handoff.md` | How the owner hands a task to another AI and brings the result back. |
+| `docs/email-setup.md` | How to connect the game's email (Brevo). |
 | `docs/css-classes.md` | The CSS classes games can use to skin the site. |
 | `tasks/` | One file per piece of work, plus the task board in `tasks/README.md`. |
 | `tasks/inbox/` | Answers from outside AIs, waiting to be reviewed. |

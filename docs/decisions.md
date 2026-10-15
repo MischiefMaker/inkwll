@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Brevo sends the game's email (owner)
+
+- Password resets and notification emails go out through Brevo (free for 300 emails a day, plain SMTP). No mail server on the droplet: mail from it would mostly land in spam.
+- The game already reads SMTP_ADDRESS, SMTP_PORT, SMTP_USERNAME and SMTP_PASSWORD from Kamal secrets; nothing in the code changes. Setup steps are in `docs/email-setup.md`.
+- Namecheap already has one SPF record; Brevo's include is merged into it, never added as a second record.
+
 ## 2026-10-15: Natural Magic (owner)
 
 - The Spirit Skill "Natural" is renamed "Natural Magic" (starter set and existing games, unless staff already renamed it).

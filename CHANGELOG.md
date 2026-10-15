@@ -4,6 +4,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Menu tidy-ups
 
+- Email will be sent through Brevo; setup steps are in docs/email-setup.md.
 - The wiki page form has Edit and Preview tabs; Preview shows how the page will look without saving.
 - Wiki pages added to the Menu are indented so they look nested under Wiki.
 - The admin side menu is sized to the screen and stays in place as you scroll, like the OOC Chat.
