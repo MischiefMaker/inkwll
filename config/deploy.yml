@@ -14,6 +14,10 @@ servers:
 # Until the game has a domain name, kamal-proxy answers on the IP address
 # over plain http. With a domain: add `host: play.example.com` and
 # `ssl: true` here, set APP_HOST below, and remove INKWLL_HTTPS.
+# The 1 GB droplet starts a new copy of the game slowly, so give it two
+# minutes to pass its health check instead of the default 30 seconds.
+deploy_timeout: 120
+
 proxy:
   app_port: 80
   healthcheck:
