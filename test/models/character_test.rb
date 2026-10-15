@@ -25,4 +25,25 @@ class CharacterTest < ActiveSupport::TestCase
     character = accounts(:alice).characters.create!(name: "Mary-Jane O'Neil (the 2nd)")
     assert_equal "Mary-Jane O'Neil (the 2nd)", character.name
   end
+
+  test "the catch-up gives approved characters a Goal Inkling from their Goals answer, once" do
+    field = ProfileField.create!(name: "Goals", section: "application", field_type: "long_text", public: false, position: 0)
+    wren = characters(:wren)
+    wren.update!(status: "approved")
+    wren.profile_values.create!(profile_field: field, value: "Win the Ravens' trust.")
+    moth = characters(:moth)
+    moth.update!(status: "draft")
+    moth.profile_values.create!(profile_field: field, value: "Not approved yet.")
+
+    assert_equal 1, Character.start_goal_inklings!
+    assert_equal "goal", field.reload.inkling_kind
+    goal = Inkling.find_by!(character: wren, kind: "goal")
+    assert_equal "Goals", goal.title
+    assert_equal wren.account, goal.creator
+    assert_equal "Win the Ravens' trust.", goal.entries.first.body
+    assert_not Inkling.exists?(character: moth, kind: "goal")
+
+    assert_equal 0, Character.start_goal_inklings!
+    assert_equal 1, Inkling.where(character: wren, kind: "goal").count
+  end
 end
