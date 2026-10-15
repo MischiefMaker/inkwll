@@ -3,8 +3,16 @@
 <h1 class="page-title">Characters</h1>
 <p class="text muted">Characters are never deleted. Retiring one stops it being played and takes it off the Where list and out of <%= term(:room, count: 2) %>; its <%= term(:pose, count: 2).downcase %> and <%= term(:log, count: 2).downcase %> stay, greyed out.</p>
 
-<% retired, active = @characters.partition(&:retired?) %>
+<% roster, others = @characters.partition { |character| character.on_roster? || character.preparing_for_roster? } %>
+<% retired, active = others.partition(&:retired?) %>
 <%= render "table", characters: active, groups: @groups, css: "admin-characters__active" %>
+
+<% if roster.any? %>
+  <section class="admin-characters__roster">
+    <h2 class="section-title">Roster characters (<%= roster.size %>)</h2>
+    <%= render "table", characters: roster, groups: @groups, css: "admin-characters__roster-table" %>
+  </section>
+<% end %>
 
 <% if retired.any? %>
   <section class="admin-characters__retired">

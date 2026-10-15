@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Roster section in Admin → Characters
+
+- Roster characters have their own section above Retired. Retiring one takes it
+  off the roster (applications for it are dropped); it shows under Retired with
+  "Put back on the roster".
+
 ## 2026-10-15 — Paths grouped by type
 
 - The Chapters button is the same size as a tab while open, and folds down to a small "+ (3)".

@@ -25,10 +25,22 @@ module Character::Roster
 
   # A character staff added for the roster but haven't opened to applicants
   # yet, while they fill in the profile, SOUL and background (owner).
-  def preparing_for_roster? = roster_kept? && !on_roster?
+  def preparing_for_roster? = roster_kept? && !on_roster? && !roster_retired?
+
+  # Staff retired a roster character: nobody can apply for them any more.
+  def roster_retired? = roster_retired_at.present?
+
+  # Retiring a roster character takes them off the roster: applications are
+  # dropped and they stay retired until staff put them back.
+  def retire_from_roster!
+    transaction do
+      roster_applications.delete_all
+      update!(on_roster_at: nil, roster_retired_at: Time.current, retired_at: retired_at || Time.current)
+    end
+  end
 
   def open_on_roster!
-    update!(status: "approved", on_roster_at: Time.current)
+    update!(status: "approved", on_roster_at: Time.current, roster_retired_at: nil)
   end
   def roster_requested? = roster_requested_at.present?
 

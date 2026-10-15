@@ -25,6 +25,33 @@ class Admin::CharactersControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-characters__retired .admin-characters__retired-table a", text: "Moth"
   end
 
+  test "roster characters get their own section above Retired, and retiring one takes it off the roster" do
+    characters(:wren).put_on_roster!
+    characters(:moth).retire!
+    sign_in_as(accounts(:wellkeeper))
+
+    get admin_characters_path
+    assert_select ".admin-characters__roster .admin-characters__roster-table a", text: "Wren"
+    assert_select ".admin-characters__retired a", text: "Wren", count: 0
+    assert_select ".admin-characters__retired a", text: "Moth"
+    assert_operator response.body.index("admin-characters__roster"), :<, response.body.index("admin-characters__retired")
+
+    post retire_admin_character_path(characters(:wren))
+    wren = characters(:wren).reload
+    assert_not wren.on_roster?
+    assert wren.retired?
+    assert wren.roster_retired?
+    assert_not wren.preparing_for_roster?
+
+    get admin_characters_path
+    assert_select ".admin-characters__retired a", text: "Wren"
+    assert_select ".admin-characters__roster a", text: "Wren", count: 0
+
+    patch admin_roster_character_path(wren), params: { decision: "open" }
+    assert characters(:wren).reload.on_roster?
+    assert_not characters(:wren).roster_retired?
+  end
+
   test "a Scribe can't retire characters" do
     sign_in_as(accounts(:scribe))
     post retire_admin_character_path(characters(:moth))

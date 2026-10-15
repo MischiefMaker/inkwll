@@ -21,6 +21,10 @@
         <td class="table__cell">
           <% if character.on_roster? || character.preparing_for_roster? %>
             <%= link_to character.on_roster? ? "On the roster" : "Being prepared", admin_roster_path, class: "muted" %>
+            <%= button_to "Retire", retire_admin_character_path(character), class: "button-link",
+                  form: { data: { turbo_confirm: "Retire #{character.name}? They come off the roster, and any applications for them are dropped." } } %>
+          <% elsif character.roster_retired? %>
+            <%= button_to "Put back on the roster", admin_roster_character_path(character), method: :patch, params: { decision: "open" }, class: "button-link" %>
           <% elsif character.retired? %>
             <%= button_to "Bring back", unretire_admin_character_path(character), class: "button-link" %>
           <% else %>

@@ -6,6 +6,11 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Roster section and retiring roster characters (owner)
+
+- **Admin → Characters:** roster characters are a separate section above Retired.
+- **Retiring a roster character** removes it from the roster. Staff can put it back.
+
 ## 2026-10-15: Paths grouped by Streets first (owner)
 
 - **Paths:** shown broken out with Streets first, then the other types (Buildings, Outdoor areas, Other places). Streets are what will make up the v2.0 mini-map; buildings and outdoor spaces generally sit on streets.

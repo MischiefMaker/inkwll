@@ -64,6 +64,8 @@ class Character < ApplicationRecord
   # Retiring leaves any unfinished Chapters, so they don't wait on a turn
   # that can never be taken.
   def retire!
+    return retire_from_roster! if roster_kept?
+
     transaction do
       leave_open_scenes!
       update!(retired_at: Time.current)

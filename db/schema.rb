@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_080003) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_15_090001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -159,6 +159,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_080003) do
     t.datetime "roster_requested_at"
     t.bigint "character_group_id"
     t.boolean "gm", default: false, null: false
+    t.datetime "roster_retired_at"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["character_group_id"], name: "index_characters_on_character_group_id"

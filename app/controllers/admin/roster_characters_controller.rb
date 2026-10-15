@@ -17,7 +17,7 @@ class Admin::RosterCharactersController < Admin::BaseController
   def update
     if params[:decision] == "open"
       character = Character.find(params[:id])
-      return redirect_to admin_roster_path, alert: "#{character.name} isn't waiting to go on the roster." unless character.preparing_for_roster?
+      return redirect_to admin_roster_path, alert: "#{character.name} isn't waiting to go on the roster." unless character.preparing_for_roster? || character.roster_retired?
       character.open_on_roster!
       return redirect_to character_path(character), notice: "#{character.name} is on the roster. Players can apply now."
     end
