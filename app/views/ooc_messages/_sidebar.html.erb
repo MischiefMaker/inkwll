@@ -1,5 +1,6 @@
 <%# Kept in place while moving between pages, so the chat never reloads. %>
-<aside id="ooc-sidebar" class="ooc-sidebar" data-turbo-permanent data-controller="collapsible-sidebar">
+<%# Guests get a different id, so the chat box is rebuilt after they log in instead of still saying "Chatting as (guest)". %>
+<aside id="<%= current_account ? "ooc-sidebar" : "ooc-sidebar-guest" %>" class="ooc-sidebar" data-turbo-permanent data-controller="collapsible-sidebar">
   <button type="button" class="ooc-sidebar__toggle" aria-controls="ooc-sidebar-body" aria-expanded="true"
           title="Hide OOC Chat" data-collapsible-sidebar-target="toggle" data-action="collapsible-sidebar#toggle">
     <span class="ooc-sidebar__arrow" aria-hidden="true">›</span>

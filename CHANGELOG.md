@@ -24,6 +24,7 @@ Short, plain-language notes on what changed. Newest first.
 - Putting a character you're playing on the roster moves you to your next
   character instead of leaving "Playing as" blank.
 - Roster characters who've been played before say so.
+- After chatting as a guest and logging in, the OOC Chat box no longer still says you're chatting as the guest.
 
 ## 2026-10-15 — Starter SOUL, Boons and Banes, and profile fields
 
