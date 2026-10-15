@@ -764,6 +764,7 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 .writing-as__warning { margin-top: 0.5rem; }
 
 /* The twitching quill beside Areas and Settings where it's your turn. */
+a.turn-quill { text-decoration: none; }
 .turn-quill { display: inline-flex; vertical-align: middle; margin-left: 0.35rem; color: var(--color-accent); animation: chapter-turn-nudge 1.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .turn-quill { animation: none; } }
 

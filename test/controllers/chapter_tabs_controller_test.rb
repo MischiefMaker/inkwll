@@ -76,7 +76,7 @@ class ChapterTabsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".place__name .turn-quill", minimum: 1
 
     get rooms_path
-    assert_select ".room-index__room a[href=?] + .turn-quill", room_path(commons)
+    assert_select ".room-index__room a[href=?] + a.turn-quill[href=?]", room_path(commons), scene_path(scenes(:duel))
 
     get area_path(commons.area)
     assert_select ".board__row .turn-quill", minimum: 1
@@ -97,7 +97,7 @@ class ChapterTabsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".my-characters__group--none .my-characters__heading", text: "No group"
     assert_select ".my-characters__item .character-icon", minimum: 2
     assert_select ".my-characters__item", text: /Wren/ do
-      assert_select ".turn-quill"
+      assert_select "a.turn-quill[href=?]", scene_path(scenes(:duel))
     end
     assert_select ".my-characters__item", text: /Moth/ do
       assert_select ".turn-quill", count: 0

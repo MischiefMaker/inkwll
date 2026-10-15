@@ -190,14 +190,16 @@ class Account < ApplicationRecord
       .select { |participant| participant.scene.turn_of?(participant) }
   end
 
-  # The Settings those Chapters are in, for the quill beside them.
-  def turn_room_ids
-    @turn_room_ids ||= turns_waiting.map { |participant| participant.scene.room_id }.to_set
+  # The Chapter to open for the quill beside Settings: the first where it's
+  # your turn in any of the given Settings.
+  def turn_scene_in(room_ids)
+    ids = Array(room_ids)
+    turns_waiting.map(&:scene).find { |scene| ids.include?(scene.room_id) }
   end
 
-  # The characters whose turn it is, for the quill beside them.
-  def turn_character_ids
-    @turn_character_ids ||= turns_waiting.map(&:character_id).to_set
+  # The Chapter to open for the quill beside a character whose turn it is.
+  def turn_scene_for(character)
+    turns_waiting.find { |participant| participant.character_id == character.id }&.scene
   end
 
   def gm_name

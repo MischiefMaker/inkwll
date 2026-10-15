@@ -11,11 +11,23 @@ module ApplicationHelper
   end
 
   # The twitching quill that says it's your turn in a Chapter in this
-  # Setting (or any Setting in the given list).
+  # Setting (or any Setting in the given list). It links to that Chapter.
   def turn_quill(room_ids)
     return unless current_account
-    return unless (Array(room_ids) & current_account.turn_room_ids.to_a).any?
-    tag.span(icon(:quill, size: 16), class: "turn-quill", title: "Your turn")
+    turn_quill_link(current_account.turn_scene_in(room_ids))
+  end
+
+  # The same quill beside a character whose turn it is.
+  def turn_quill_for(character)
+    return unless current_account
+    turn_quill_link(current_account.turn_scene_for(character))
+  end
+
+  def turn_quill_link(scene)
+    return unless scene
+    link_to scene_path(scene), class: "turn-quill", title: "Your turn in #{scene.title}", "aria-label": "Your turn in #{scene.title}" do
+      icon(:quill, size: 16)
+    end
   end
 
   # The game's icon: the one uploaded in Game settings, or the favicon's

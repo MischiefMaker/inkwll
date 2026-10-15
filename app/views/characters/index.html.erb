@@ -13,9 +13,7 @@
           <li class="list__item my-characters__item">
             <%= character_icon(character, size: :small) %>
             <%= link_to character.name, character, **character_name_options(character, "my-characters__name") %>
-            <% if current_account.turn_character_ids.include?(character.id) %>
-              <span class="turn-quill" title="Your turn"><%= icon(:quill, size: 16) %></span>
-            <% end %>
+            <%= turn_quill_for(character) %>
             <span class="muted">in <%= link_to character.room.name, room_path(character.room) %></span>
             <% if character == current_character %><span class="tag">active</span><% end %>
             <% if character.retired? %><span class="tag">retired</span><% end %>

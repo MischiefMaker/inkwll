@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-15 — Paths grouped by type
 
 - My Characters shows each character's icon, is split into sections by Group, and shows the quill when it's that character's turn.
+- Clicking a twitching quill beside a character, Area or Setting opens the Chapter where it's your turn (the tab and folded-button quills keep their own click).
 - The twitching quill also shows beside the front page's "[Character] is in [Place]" line, and beside any Area or Setting where it's your turn.
 - The front page header takes up less space (less padding above, around and below the name and blurb).
 - A Chapter tab shows the same twitching quill when it's your turn, top right above "Your turn".
