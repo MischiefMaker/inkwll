@@ -36,6 +36,7 @@ Ideas the owner wants after the first release. Not built until the owner says so
 - **Crafting:** characters make items (owner, 2026-10-14). Details to be decided.
 - **Economy:** money or trade between characters (owner, 2026-10-14). Details to be decided.
 - **Mini map:** a small map of the Settings around you, beyond the compass's next step. Needs each Setting placed on a grid first (owner, 2026-10-14).
+- **IC or OOC Boards:** an admin setting on each Board for whether people post in character or out of character (owner, 2026-10-15). OOC posts show the player name, as now. IC posts let the poster choose which of their characters to post as, for IC boards or posting things as your character. Details to be decided.
 - **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
 
 ## Decisions still needed
