@@ -43,7 +43,11 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
           chmod 600 ~/.ssh/inkwll-deploy
-          ssh-keyscan -H "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+          # Trust only the droplet's ed25519 key. With every key type listed,
+          # deploys sometimes stopped with a host key mismatch.
+          ssh-keyscan -t rsa,ecdsa,ed25519 "$INKWLL_SERVER" > /tmp/host-keys 2>/dev/null
+          ssh-keygen -lf /tmp/host-keys | sed "s/$INKWLL_SERVER/droplet/"
+          ssh-keyscan -H -t ed25519 "$INKWLL_SERVER" >> ~/.ssh/known_hosts
 
       - uses: docker/setup-buildx-action@v3
 
