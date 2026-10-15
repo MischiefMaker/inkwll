@@ -39,6 +39,6 @@ class Scenes::ParticipationsController < Scenes::BaseController
     # yours than the one on screen.
     def switch_to_chosen_character
       return if params[:character_id].blank?
-      current_account.update!(active_character: current_account.characters.active.find(params[:character_id]))
+      current_account.update!(active_character: current_account.character_for_choice(params[:character_id]))
     end
 end

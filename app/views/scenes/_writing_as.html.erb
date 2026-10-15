@@ -1,23 +1,33 @@
 <%# Which of your characters writes in this Chapter. Picking one that isn't
-    in it yet shows a warning with the choice to join as them or carry on. %>
-<% mine = current_account.characters.active.order(:name) %>
-<% if mine.size > 1 %>
+    in it yet shows a warning with the choice to join as them or carry on.
+    Staff and Storytellers can also pick GM, their player posting as
+    Storyteller. %>
+<% mine = current_account.characters.active.order(:name).to_a %>
+<%# The GM stand-in is only made when someone first picks GM, not by looking. %>
+<% gm_offered = current_account.may_storytell? %>
+<% gm = current_account.characters.find_by(gm: true) %>
+<% choices = mine.map { |character| [ character.name, character.id, scene.participant_for(character) ] } %>
+<% choices << [ "GM (#{current_account.display_name})", "gm", gm && scene.participant_for(gm) ] if gm_offered %>
+<% if choices.size > 1 %>
   <div class="writing-as">
     <%= form_with url: scene_writing_as_path(scene), method: :patch, class: "switcher writing-as__form", data: { controller: "auto-submit" } do |form| %>
       <%= form.label :character_id, "Writing as", class: "switcher__label writing-as__label" %>
       <%= form.select :character_id,
-            options_for_select(mine.map { |character| [ scene.participant_for(character) ? character.name : "#{character.name} (not in this #{term(:scene).downcase})", character.id ] }, participant.character_id),
+            options_for_select(choices.map { |name, value, in_scene| [ in_scene ? name : "#{name} (not in this #{term(:scene).downcase})", value ] },
+              participant.character.gm? ? "gm" : participant.character_id),
             {}, data: { action: "change->auto-submit#submit" } %>
       <noscript><%= form.submit "Switch" %></noscript>
     <% end %>
 
-    <% other = mine.find_by(id: params[:join]) %>
-    <% if other && !scene.participant_for(other) %>
+    <% joining_gm = gm_offered && params[:join] == "gm" %>
+    <% other = joining_gm ? gm : mine.find { |character| character.id.to_s == params[:join] } %>
+    <% if (joining_gm || other) && !(other && scene.participant_for(other)) %>
+      <% other_name = joining_gm ? "GM" : other.name %>
       <div class="writing-as__warning composer__warning" role="alert">
-        <span class="writing-as__warning-text"><%= other.name %> isn't in this <%= term(:scene).downcase %>; <%= participant.character.name %> is.
-          Joining as <%= other.name %> puts a second character of yours in it<%= " and moves them to #{scene.room.name}" unless other.room_id == scene.room_id %>.</span>
-        <%= button_to "Join as #{other.name}", scene_participation_path(scene, character_id: other.id), class: "button writing-as__join" %>
-        <%= link_to "Keep writing as #{participant.character.name}", scene_path(scene), class: "button-link writing-as__keep" %>
+        <span class="writing-as__warning-text"><%= other_name %> isn't in this <%= term(:scene).downcase %>; <%= participant.character.gm? ? "GM" : participant.character.name %> is.
+          <% if joining_gm %>Joining as GM puts you in it as <%= term(:storyteller) %>, without showing you as being there.<% else %>Joining as <%= other.name %> puts a second character of yours in it<%= " and moves them to #{scene.room.name}" unless other.room_id == scene.room_id %>.<% end %></span>
+        <%= button_to "Join as #{other_name}", scene_participation_path(scene, character_id: joining_gm ? "gm" : other.id), class: "button writing-as__join" %>
+        <%= link_to "Keep writing as #{participant.character.gm? ? "GM" : participant.character.name}", scene_path(scene), class: "button-link writing-as__keep" %>
       </div>
     <% end %>
   </div>

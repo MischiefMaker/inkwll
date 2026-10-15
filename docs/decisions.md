@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: GM in Writing as (owner)
+
+- The Writing as switcher above the Passage box also offers GM to staff and Storytellers, with the same warning as other characters not yet in the Chapter. Joining as GM makes you Storyteller there.
+
 ## 2026-10-15: Age beside Passages, icons in menus (owner)
 
 - **Age separate from Birthday:** a Birthday profile field can show just the age ("Age: 27") beside a character's Passages.

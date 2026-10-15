@@ -262,7 +262,8 @@ class Scene < ApplicationRecord
     raise ArgumentError, "#{character.name} can't join this #{Term[:scene]}." unless can_join?(character)
 
     with_lock do
-      participants.create!(character: character, position: participants.maximum(:position).to_i + 1)
+      participants.create!(character: character, position: participants.maximum(:position).to_i + 1,
+        role: character.gm? ? "storyteller" : "player")
       invitations.where(character: character).delete_all
       add_system_line!("#{character.name} joins the #{Term[:scene]}.")
     end

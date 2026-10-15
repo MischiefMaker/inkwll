@@ -9,6 +9,7 @@ class ChapterTabsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".chapter-tab", text: /Duel at Dawn.*The Commons/m do
       assert_select ".chapter-tab__unread", text: "1"
       assert_select ".chapter-tab__turn", text: "Your turn"
+      assert_select ".chapter-tab__badges .chapter-tab__quill"
     end
   end
 

@@ -196,3 +196,4 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.switcher__menu`, `.switcher__current`, `.switcher__options`, `.switcher__option`, `.switcher__option--current`, `.switcher__name`, `.switcher__name--nobody`, `.switcher__icon`, `.switcher__gm` | The Playing as menu in the header: each character with their icon and Group colour |
 | `.profile-field-form__age-on-passages` | The tick box for showing just the age beside Passages |
 | `.game-icon`, `.game-icon--small`, `.game-icon--large`, `.game-icon--default`, `.site-header__name`, `.game-intro__title`, `.game-settings__icon` | The game's icon beside its name in the top bar (small) and the front page header (large) |
+| `.chapter-tab__badges`, `.chapter-tab__quill` | The top-right corner of a Chapter tab: the twitching quill when it's your turn, and the unread count |

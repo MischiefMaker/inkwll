@@ -172,6 +172,17 @@ class Account < ApplicationRecord
     characters.create!(gm: true, name: gm_name, status: "approved", room: active_character&.room || Room.starting)
   end
 
+  # The character a switcher choice names: one of this player's own, or "gm"
+  # (staff and Storytellers only). Anything else is not found.
+  def character_for_choice(choice)
+    if choice.to_s == "gm"
+      raise ActiveRecord::RecordNotFound unless may_storytell?
+      gm!
+    else
+      characters.active.find(choice)
+    end
+  end
+
   def gm_name
     taken = Character.where.not(account_id: id).or(Character.where(account_id: id, gm: false)).where("lower(name) = ?", display_name.downcase).exists?
     taken ? "#{display_name} (GM)" : display_name

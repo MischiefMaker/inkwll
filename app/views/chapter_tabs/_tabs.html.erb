@@ -39,8 +39,14 @@
           <% elsif scene.turn_of?(participant) %>
             <span class="chapter-tab__turn">Your turn</span>
           <% end %>
-          <% if unread.positive? %>
-            <span class="chapter-tab__unread" data-unread="<%= unread %>" title="<%= pluralize(unread, "new #{term(:pose).downcase}") %>"><%= unread %></span>
+          <% your_turn = !scene.finished? && !scene.paused? && scene.turn_of?(participant) %>
+          <% if your_turn || unread.positive? %>
+            <span class="chapter-tab__badges">
+              <% if your_turn %><span class="chapter-tab__quill" title="Your turn"><%= icon(:quill, size: 16) %></span><% end %>
+              <% if unread.positive? %>
+                <span class="chapter-tab__unread" data-unread="<%= unread %>" title="<%= pluralize(unread, "new #{term(:pose).downcase}") %>"><%= unread %></span>
+              <% end %>
+            </span>
           <% end %>
         <% end %>
         <% if scene.finished? %>

@@ -25,6 +25,44 @@ class GmTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", character_path(gm), count: 0
   end
 
+  test "Writing as offers GM to Storytellers, warns before joining as GM, and then switches to it" do
+    accounts(:alice).update!(storyteller: true)
+    accounts(:alice).update!(active_character: characters(:wren))
+    sign_in_as(accounts(:alice))
+    scene = scenes(:duel)
+
+    get scene_path(scene)
+    assert_select ".writing-as__form option", text: /GM \(.*\) \(not in this chapter\)/i
+    assert_equal 0, accounts(:alice).characters.where(gm: true).count, "looking doesn't make the GM stand-in"
+
+    patch scene_writing_as_path(scene), params: { character_id: "gm" }
+    assert_redirected_to scene_path(scene, join: "gm")
+    get scene_path(scene, join: "gm")
+    assert_select ".writing-as__warning", text: /GM isn't in this chapter/i
+
+    post scene_participation_path(scene, character_id: "gm")
+    gm = accounts(:alice).reload.active_character
+    assert gm.gm?
+    assert scene.reload.participant_for(gm).storyteller?
+
+    patch scene_writing_as_path(scene), params: { character_id: characters(:wren).id }
+    assert_equal characters(:wren), accounts(:alice).reload.active_character
+    patch scene_writing_as_path(scene), params: { character_id: "gm" }
+    assert_redirected_to scene_path(scene)
+    assert accounts(:alice).reload.active_character.gm?
+  end
+
+  test "players without the Storyteller flag can't write as GM" do
+    accounts(:alice).update!(active_character: characters(:wren))
+    sign_in_as(accounts(:alice))
+    get scene_path(scenes(:duel))
+    assert_select ".writing-as__form option", text: /GM/, count: 0
+    patch scene_writing_as_path(scenes(:duel)), params: { character_id: "gm" }
+    assert_response :not_found
+    post scene_participation_path(scenes(:duel), character_id: "gm")
+    assert_response :not_found
+  end
+
   test "players don't get the GM option" do
     sign_in_as(accounts(:alice))
     get root_path
