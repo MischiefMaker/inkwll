@@ -21,6 +21,10 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- Online now on the front page is a heading with a count, "Online now (3)",
+  with a separate "See where everyone is" link. Players show as small cards
+  with their icon and name, and the character they're playing in its group
+  colour (only if the game shows players publicly, or to staff).
 - The Character directory has tabs: All, one per character group, Roster,
   and (for staff) Unapproved.
 - The Menu is grouped into sections: Mine, The world, Community and help,

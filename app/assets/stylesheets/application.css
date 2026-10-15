@@ -1350,3 +1350,13 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 /* A button that can't be used yet, with a note beside it saying why. */
 .button--disabled { opacity: 0.45; cursor: not-allowed; }
 .inklings__why-not { display: block; margin-top: 0.4rem; font-size: 0.9rem; }
+
+/* Online now on the front page: players as small cards, no commas. */
+.player-icon--small { width: 2rem; height: 2rem; margin: 0; vertical-align: middle; }
+.online-now__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+.online-now__count { color: var(--color-muted); font-weight: normal; }
+.online-now__where { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-ui); font-size: 0.9rem; }
+.online-now__list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+.online-now__player { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; padding: 0.4rem 0.7rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.online-now__link { display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none; font-weight: bold; }
+.online-now__playing { padding-left: 2.45rem; font-size: 0.85rem; }

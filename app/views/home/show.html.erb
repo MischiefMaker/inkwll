@@ -41,10 +41,28 @@
 <%= render "home/after_places" %>
 
 <section class="online-now">
-  <h2 class="section-title">Online now</h2>
+  <div class="online-now__head">
+    <h2 class="section-title online-now__title">Online now <span class="online-now__count">(<%= @online.size %>)</span></h2>
+    <%= link_to where_path, class: "online-now__where" do %><%= icon(:pin, size: 16, css: "online-now__where-icon") %>See where everyone is<% end %>
+  </div>
   <% if @online.any? %>
-    <p class="text online-now__list"><%= safe_join(@online.map { |player| link_to player.display_name, player_path(player.username), class: "online-now__player" }, ", ") %>
-      · <%= link_to "Where everyone is", where_path %></p>
+    <%# Players, not characters. Who they're playing shows only when the game
+        makes players public, or to staff, so it never gives away an alt. %>
+    <% show_playing = GameSetting.current.players_public? || current_account&.staff? %>
+    <ul class="online-now__list">
+      <% @online.each do |player| %>
+        <% playing = player.active_character if show_playing && player.active_character && !player.active_character.gm? && !player.active_character.retired? %>
+        <li class="online-now__player">
+          <%= link_to player_path(player.username), class: "online-now__link" do %>
+            <%= player_avatar(player, size: :small) %>
+            <span class="online-now__name"><%= player.display_name %></span>
+          <% end %>
+          <% if playing %>
+            <%= tag.span playing.name, **character_name_options(playing, "online-now__playing") %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   <% else %>
     <p class="text muted">Nobody else is around right now.</p>
   <% end %>

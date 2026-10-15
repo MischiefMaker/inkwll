@@ -143,7 +143,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-preset__current`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
 | `.inklings-admin`, `.inklings-admin--waiting` | Admin: Inklings |
 | `.bulk-build`, `.bulk-build__rooms`, `.bulk-build__room`, `.bulk-build__room-number`, `.bulk-build__paths`, `.bulk-build__path`, `.bulk-build__room-select`, `.bulk-build__new-rooms`, `.bulk-build__add`, `.bulk-build__remove`, `.bulk-build__submit` | Admin: Build several Settings |
-| `.game-status`, `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list`, `.online-now__player` | The game's date, weather and who's online, on the front page |
+| `.game-status`, `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list`, `.online-now__player`, `.online-now__head`, `.online-now__title`, `.online-now__count`, `.online-now__where`, `.online-now__where-icon`, `.online-now__link`, `.online-now__name`, `.online-now__playing`, `.player-icon--small` | The game's date, weather and who's online, on the front page |
 | `.scene__when`, `.scene-list__when`, `.manuscript__when`, `.chapter-tracker__when`, `.scene-form__when` | A Chapter's in-character date and time |
 | `.scene-list__subtitle`, `.scene__subtitle`, `.scene-labels`, `.scene-label`, `.scene-label--<id>`, `.scene-form__labels` | Chapter subtitles and labels |
 
