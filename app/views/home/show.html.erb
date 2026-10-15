@@ -69,3 +69,14 @@
     <p class="text muted">Nobody else is around right now.</p>
   <% end %>
 </section>
+
+<%# Counts only, like a forum's footer. See PublicStats for what is left out. %>
+<% stats = PublicStats.counts %>
+<section class="game-stats" aria-label="Game statistics">
+  <% { players: "Players", characters: "Characters", chapters: term(:scene, count: 2), archives: term(:logs_collection) }.each do |kind, label| %>
+    <span class="game-stats__item game-stats__item--<%= kind %>">
+      <span class="game-stats__label"><%= label %></span>
+      <span class="game-stats__count"><%= number_with_delimiter(stats[kind]) %></span>
+    </span>
+  <% end %>
+</section>

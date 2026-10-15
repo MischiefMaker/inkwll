@@ -151,6 +151,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.profile-tab__empty` | "Nothing more to show here." on a Profile tab with no long answers |
 | `.admin-quick` | The row of quick-action buttons on the admin front page. Each is `.admin-quick__button` plus `.admin-quick__button--character`, `--place`, `--area`, `--wiki`, `--players`, `--characters`, `--applications`, `--reports`, `--bans` or `--settings` |
 | `.admin-attention` | The "Needs Attention" box on the admin front page: `.admin-attention__heading`, `.admin-attention__list`, `.admin-attention__item` (with `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`), `.admin-attention__link`, `.admin-attention__label`, `.admin-attention__count`, `.admin-attention__empty` |
+| `.game-stats` | The counts at the bottom of the front page. Each is `.game-stats__item` with `--players`, `--characters`, `--chapters` or `--archives`, holding `.game-stats__label` and `.game-stats__count` |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
 | `.menu__wiki-dot` | The small filled dot before a wiki page in the Menu |
 | `.storyteller-tools`, `.storyteller-tools__call`, `.storyteller-tools__sheets`, `.storyteller-tools__award`, `.storyteller-sheet`, `.storyteller-sheet__name`, `.storyteller-sheet__aspect`, `.storyteller-sheet__skills` | A Chapter's Storyteller tools |

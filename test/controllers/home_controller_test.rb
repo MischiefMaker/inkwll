@@ -98,4 +98,25 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".place__latest a", text: "Garden Party"
     assert_select ".place__latest a", text: "Behind the Hedge", count: 0
   end
+
+  test "the stats line counts only what is public" do
+    counts = PublicStats.counts
+    open_chapters = Scene.where(visibility: "joinable").count
+    assert_equal open_chapters, counts[:chapters]
+    assert_operator counts[:chapters], :<, Scene.count, "private and hidden Chapters are not counted"
+    assert_equal Account.where(system: false, archived_at: nil).count, counts[:players]
+
+    get root_path
+    assert_select ".game-stats__item--players .game-stats__count", text: counts[:players].to_s
+    assert_select ".game-stats__item--chapters .game-stats__label", text: "Chapters"
+    assert_select ".game-stats__item--archives .game-stats__label", text: "Archives"
+  end
+
+  test "archived players and their characters drop out of the counts" do
+    before = PublicStats.counts
+    accounts(:alice).archive!
+    after = PublicStats.counts
+    assert_equal before[:players] - 1, after[:players]
+    assert_operator after[:characters], :<, before[:characters]
+  end
 end
