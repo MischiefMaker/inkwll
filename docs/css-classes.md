@@ -112,7 +112,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest`, `--default` | Player icons |
 | `.character-profile--on-roster`, `.roster-status`, `.roster-status--on-roster`, `--requested`, `.roster-status__note`, `.roster-status__apply` | Roster notices on a character |
 | `.roster-apply`, `.roster-apply__form`, `.roster-apply__question`, `.roster-apply__resubmit` | Applying for (or claiming) a roster character |
-| `.directory`, `.directory__filter`, `.directory__list`, `.directory__item`, `.directory__item--roster`, `.directory__name`, `.directory__tag` | The character directory and the Roster page |
+| `.directory`, `.directory__filter`, `.directory__list`, `.directory__item`, `.directory__item--roster`, `.directory__name`, `.directory__tag`, `.directory__tag--status`, `.directory-tabs`, `.directory-tabs__tab` (and `--all`, `--group`, `--roster`, `--unapproved`, `--current`) | The character directory and the Roster page |
 | `.roster-admin`, `.roster-admin__item--application`, `--request`, `--character`, `.roster-admin__actions`, `.roster-admin__answers`, `.roster-admin__question`, `.roster-admin__answer` | Admin: the Roster page |
 | `.character-form__roster` | "If you stop playing" on the character form |
 | `.table__row--archived`, `.account-archived`, `.account-actions` | Archived accounts in Players and staff |

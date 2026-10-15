@@ -164,4 +164,24 @@ class JcinkAddOnsTest < ActionDispatch::IntegrationTest
     assert_select ".directory__name", text: "Wren"
     assert_select ".directory__name", text: "Sable", count: 0
   end
+
+  test "the directory has a tab per group, a Roster tab, and an Unapproved tab only staff see" do
+    CharacterGroup.create!(name: "Ravens", colour: "#336699")
+    draft = accounts(:bob).characters.create!(name: "Newcomer")
+    draft.update_columns(status: "submitted")
+
+    sign_in_as(accounts(:bob))
+    get directory_path
+    assert_select ".directory-tabs__tab--group", text: "Ravens"
+    assert_select ".directory-tabs__tab--roster"
+    assert_select ".directory-tabs__tab--unapproved", count: 0
+    get directory_path, params: { unapproved: 1 }
+    assert_select ".directory__name", text: "Newcomer", count: 0
+
+    sign_in_as(accounts(:scribe))
+    get directory_path, params: { unapproved: 1 }
+    assert_select ".directory-tabs__tab--unapproved.directory-tabs__tab--current"
+    assert_select ".directory__name", text: "Newcomer"
+    assert_select ".directory__name", text: "Wren", count: 0
+  end
 end

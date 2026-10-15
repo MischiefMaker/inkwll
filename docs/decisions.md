@@ -13,6 +13,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - **Picture answers:** profile fields have a Picture kind of answer, for games that use images instead of text for descriptions.
 - **GM in Playing as:** staff and Storytellers can post and run Chapters as their player (named after the player, Storyteller in Chapters they start). GM is not physically anywhere: never in Where or Here, only listed in Chapters, as Storyteller.
 - **Settings are renamed Places** (owner picked it from Place, Locale, Location): "Setting" was confusing next to account settings, and Places matches My places.
+- **Directory tabs:** All, one tab per character group, Roster, and Unapproved (staff only).
 - **Menu sections:** your own things together (My characters, Chapters, places, Inklings, player profile), then the world, then community and help, then staff.
 - **Alerts bell:** opens a small drop-down over the current page, not a whole new page.
 - **Online now lists players** (by player name); **Where lists characters**.

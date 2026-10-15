@@ -21,6 +21,8 @@ Short, plain-language notes on what changed. Newest first.
 - Settings (rooms) are now called **Places** everywhere players see them,
   so they aren't confused with account settings. The wiki's
   `{{settings}}` list is now `{{places}}` (the old spelling still works).
+- The Character directory has tabs: All, one per character group, Roster,
+  and (for staff) Unapproved.
 - The Menu is grouped into sections: Mine, The world, Community and help,
   and Staff.
 - The Inklings page always shows Start an Inkling, and says why it can't be
