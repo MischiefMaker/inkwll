@@ -1,0 +1,50 @@
+# Adds swap space (spare memory on the droplet's own disk) so the game can
+# start a new copy of itself during a deploy on the small 1 GB droplet.
+# Safe to run more than once: it does nothing if swap is already there.
+# Start it by hand (Actions → Add swap → Run workflow). See docs/deploying.md.
+name: Add swap
+
+on:
+  workflow_dispatch:
+    inputs:
+      size:
+        description: "Swap size in GB"
+        type: string
+        default: "2"
+
+jobs:
+  swap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      INKWLL_SERVER: ${{ vars.INKWLL_SERVER || secrets.INKWLL_SERVER }}
+      SIZE: ${{ inputs.size }}
+    steps:
+      - name: Add the droplet's key
+        run: |
+          if [ -z "$INKWLL_SERVER" ]; then echo "::error::Add the droplet's IP address as INKWLL_SERVER under Settings, Secrets and variables, Actions."; exit 1; fi
+          case "$SIZE" in ''|*[!0-9]*) echo "Size must be a whole number of GB."; exit 1;; esac
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
+          chmod 600 ~/.ssh/inkwll-deploy
+          ssh-keyscan -H "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+
+      - name: Add swap on the droplet
+        run: |
+          ssh -i ~/.ssh/inkwll-deploy "root@$INKWLL_SERVER" "SIZE=$SIZE bash -s" <<'REMOTE'
+          set -e
+          echo "Before:"; free -m; swapon --show || true
+          if [ -z "$(swapon --show --noheadings)" ]; then
+            fallocate -l "${SIZE}G" /swapfile || dd if=/dev/zero of=/swapfile bs=1M count=$((SIZE * 1024))
+            chmod 600 /swapfile
+            mkswap /swapfile
+            swapon /swapfile
+            grep -q '^/swapfile ' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
+            sysctl -w vm.swappiness=10
+            grep -q '^vm.swappiness' /etc/sysctl.conf || echo 'vm.swappiness=10' >> /etc/sysctl.conf
+          else
+            echo "Swap is already set up, nothing to do."
+          fi
+          echo "After:"; free -m; swapon --show
+          df -h / | tail -1
+          REMOTE
