@@ -46,6 +46,7 @@ jobs:
               await page.waitForLoadState('networkidle');
               await page.fill('#character_name', `Tester ${player.slice(-4)}`);
               await page.locator('#character_name').locator('xpath=ancestor::form').locator('[type=submit]').click();
+              await page.waitForURL(/\/characters\/\d+/);
               await page.waitForLoadState('networkidle');
               console.log(name, 'character made, now at', here(page));
               await page.goto(base + '/');
