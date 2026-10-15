@@ -57,6 +57,39 @@ class PlatformTest < ActionDispatch::IntegrationTest
     assert_select "article.character-profile--box-top header.profile-box--top"
   end
 
+  test "the Chapter layout is set in Look, Manuscript by default, and a Scribe can't change it" do
+    duel = scenes(:duel)
+    sign_in_as(accounts(:wellkeeper))
+    get scene_path(duel)
+    assert_select "article.scene.scene--layout-manuscript.scene--cast-large.scene--portraits-small"
+    assert_select ".cast-cards .cast-card__name", text: "Wren"
+    assert_select ".pose--with-author", count: 0
+
+    sign_in_as(accounts(:scribe))
+    patch admin_skin_path, params: { game_setting: { chapter_layout: "forum" } }
+    assert_equal "manuscript", GameSetting.current.reload.chapter_layout
+
+    sign_in_as(accounts(:wellkeeper))
+    patch admin_skin_path, params: { game_setting: { chapter_cast_portraits: "small", chapter_passage_portraits: "large" } }
+    get scene_path(duel)
+    assert_select "article.scene--cast-small.scene--portraits-large"
+    assert_select ".cast-cards", count: 0
+    assert_select ".pose--with-author .pose__author .pose__name", text: "Wren"
+
+    patch admin_skin_path, params: { game_setting: { chapter_layout: "forum" } }
+    get scene_path(duel)
+    assert_select "article.scene--layout-forum .pose--with-author .pose__author"
+
+    patch admin_skin_path, params: { game_setting: { chapter_layout: "chat" } }
+    get scene_path(duel)
+    assert_select "article.scene--layout-chat"
+    assert_select ".pose--with-author", count: 0
+
+    patch admin_skin_path, params: { game_setting: { chapter_layout: "scroll", chapter_passage_portraits: "huge" } }
+    assert_response :unprocessable_entity
+    assert_equal "chat", GameSetting.current.reload.chapter_layout
+  end
+
   test "colours, fonts and extra CSS make a stylesheet every page loads" do
     GameSetting.current.tap { |settings| settings.apply_preset("plain") }.save!
     sign_in_as(accounts(:wellkeeper))

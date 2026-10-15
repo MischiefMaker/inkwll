@@ -288,6 +288,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_000002) do
     t.string "skin_base"
     t.boolean "compass_enabled", default: false, null: false
     t.string "profile_box", default: "top", null: false
+    t.string "chapter_layout", default: "manuscript", null: false
+    t.string "chapter_cast_portraits", default: "large", null: false
+    t.string "chapter_passage_portraits", default: "small", null: false
     t.boolean "locked", default: false, null: false
   end
 

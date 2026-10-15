@@ -16,6 +16,11 @@ Short, plain-language notes on what changed. Newest first.
 - Inklings made from an application's Goals and Secrets are called "Lucia's
   First Goal" and "Lucia's First Secret". Existing ones are renamed on deploy.
 
+## 2026-10-15 — Chapter layouts
+
+- Chapters have a new look, Manuscript: a serif page like a book, with the cast as cards under the title, small round pictures beside each Passage, narration centred, OOC as side notes and a ✦ ✦ ✦ break when half a day or more passes.
+- Admin → Look can switch to Forum (a portrait and details beside every Passage) or Chat (the old look), and set Manuscript's cast and Passage pictures to large or small.
+
 ## 2026-10-15 — inkwll.com
 
 - The game moves to https://inkwll.com with HTTPS. www.inkwll.com sends

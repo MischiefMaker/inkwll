@@ -91,4 +91,40 @@ module ScenesHelper
       label
     end
   end
+
+  # The game's Chapter layout from Admin → Look: "manuscript", "forum" or "chat".
+  def chapter_layout
+    @chapter_layout ||= GameSetting.current.chapter_layout
+  end
+
+  # Classes on a Chapter page that pick its layout, for the stylesheet.
+  def chapter_layout_classes
+    setting = GameSetting.current
+    classes = [ "scene--layout-#{chapter_layout}" ]
+    if chapter_layout == "manuscript"
+      classes << "scene--cast-#{setting.chapter_cast_portraits}" << "scene--portraits-#{setting.chapter_passage_portraits}"
+    end
+    classes.join(" ")
+  end
+
+  # Manuscript with large cast portraits shows a card per character under the title.
+  def chapter_cast_cards?
+    chapter_layout == "manuscript" && GameSetting.current.chapter_cast_portraits == "large"
+  end
+
+  # Forum, and Manuscript with large portraits, put a picture, the name and
+  # details in a column beside each Passage.
+  def passage_author_panel?
+    return @passage_author_panel if defined?(@passage_author_panel)
+    @passage_author_panel = chapter_layout == "forum" ||
+      (chapter_layout == "manuscript" && GameSetting.current.chapter_passage_portraits == "large")
+  end
+
+  # Ids of the posts that come after a long pause, which Manuscript marks
+  # with a scene break (✦ ✦ ✦), the way a book marks a jump in time.
+  SCENE_BREAK_GAP = 12.hours
+  def scene_break_ids(poses)
+    return [] unless chapter_layout == "manuscript"
+    poses.to_a.each_cons(2).filter_map { |before, after| after.id if after.created_at - before.created_at >= SCENE_BREAK_GAP }
+  end
 end
