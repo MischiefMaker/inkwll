@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Preparing roster characters
+
+- A character staff add to the roster from Admin → Roster is no longer shown
+  as retired. Adding one takes staff to its profile to fill in, and players
+  can't see it until staff press "Open on the roster".
+- Staff who review applications can edit roster characters (Edit on the
+  profile and in Admin → Roster), including their SOUL sheet and gallery.
+
 ## 2026-10-15 — The Prologue
 
 - New characters start in The Prologue, an out-of-character reading room

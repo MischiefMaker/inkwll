@@ -51,7 +51,7 @@ class Characters::BnbsController < ApplicationController
       @character = Character.find(params[:character_id])
     end
 
-    def mine? = @character.account_id == current_account.id
+    def mine? = current_account.editable_characters.exists?(@character.id)
     def staff? = current_account.can?(:review_apps)
 
     def require_staff_job

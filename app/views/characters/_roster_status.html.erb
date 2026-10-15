@@ -1,6 +1,15 @@
 <%# Roster notices on a character's page: the roster note and "apply" for
     characters on the roster, or the request button for the player's own. %>
-<% if character.on_roster? %>
+<% if character.preparing_for_roster? %>
+  <div class="notice-box roster-status roster-status--preparing">
+    <p class="text"><strong class="emphasis">Being prepared for the roster.</strong> Only staff can see <%= character.name %> until
+      you open them on the roster. Fill in their profile, SOUL and background first.</p>
+    <% if current_account&.can?(:review_apps) %>
+      <%= button_to "Open on the roster", admin_roster_character_path(character), method: :patch, params: { decision: "open" }, class: "button roster-status__open",
+            form: { data: { turbo_confirm: "Open #{character.name} on the roster? Players will be able to see and apply for them." } } %>
+    <% end %>
+  </div>
+<% elsif character.on_roster? %>
   <div class="notice-box roster-status roster-status--on-roster">
     <p class="text"><strong class="emphasis">On the roster.</strong> <%= character.name %> is waiting for someone to play them.</p>
     <% if character.roster_note.present? %>

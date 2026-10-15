@@ -7,7 +7,7 @@
     <div class="character-profile__heading">
       <%= tag.h1 @character.name, **character_name_options(@character, "page-title character-profile__name") %>
       <% if @character.character_group %><p class="character-profile__group"><%= @character.character_group.name %></p><% end %>
-      <% if @character.retired? && !@character.on_roster? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
+      <% if @character.retired? && !@character.roster_kept? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
       <div class="character-profile__actions">
         <% if @mine %>

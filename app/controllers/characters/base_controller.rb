@@ -4,6 +4,6 @@ class Characters::BaseController < ApplicationController
 
   private
     def set_own_character
-      @character = current_account.characters.find(params[:character_id])
+      @character = current_account.editable_characters.find(params[:character_id])
     end
 end

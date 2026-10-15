@@ -32,6 +32,12 @@ module ApplicationHelper
     current_account.present? && record.account_id == current_account.id
   end
 
+  # Whether the logged-in player can manage this character: their own, or
+  # for staff who review applications, one kept for the roster.
+  def manages?(character)
+    own?(character) || (character.roster_kept? && current_account&.can?(:review_apps)) || false
+  end
+
   def body_classes
     page = "page-#{controller_path.tr("/", "-")}"
     classes = [ page, "#{page}-#{action_name}" ]

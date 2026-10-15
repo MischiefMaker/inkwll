@@ -13,7 +13,7 @@ class CharactersController < ApplicationController
   # their player and staff.
   def show
     @character = Character.includes(profile_values: :profile_field).find(params[:id])
-    @mine = current_account.present? && @character.account_id == current_account.id
+    @mine = current_account.present? && current_account.editable_characters.exists?(@character.id)
     @staff_view = current_account&.staff? || false
     raise ActiveRecord::RecordNotFound unless @character.approved? || @mine || @staff_view
     tabs = %w[ profile application gallery relationships logs ]
@@ -48,9 +48,10 @@ class CharactersController < ApplicationController
   end
 
   private
-    # Players can only edit their own characters.
+    # Players can only edit their own characters; staff can also edit roster
+    # characters.
     def set_own_character
-      @character = current_account.characters.find(params[:id])
+      @character = current_account.editable_characters.find(params[:id])
     end
 
     # Players pick a group until their character is approved; after that
