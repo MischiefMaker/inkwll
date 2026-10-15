@@ -10,6 +10,10 @@ on:
         description: "How many recent log lines to show"
         type: string
         default: "300"
+      version:
+        description: "Optional: an older version (commit) to read the logs of, for after a deploy"
+        type: string
+        default: ""
 
 jobs:
   logs:
@@ -21,6 +25,7 @@ jobs:
       SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       LINES: ${{ inputs.lines }}
+      VERSION: ${{ inputs.version }}
     steps:
       - uses: actions/checkout@v7
 
@@ -40,7 +45,9 @@ jobs:
           ssh-keyscan -H -t ed25519 "$INKWLL_SERVER" >> ~/.ssh/known_hosts
 
       - name: Game logs
-        run: bin/kamal app logs --lines "$LINES"
+        run: |
+          case "$VERSION" in *[!0-9a-f]*) echo "Version must be a commit id."; exit 1;; esac
+          if [ -n "$VERSION" ]; then bin/kamal app logs --version "$VERSION" --lines "$LINES"; else bin/kamal app logs --lines "$LINES"; fi
 
       - name: Proxy logs
-        run: bin/kamal proxy logs --lines 50
+        run: bin/kamal proxy logs --lines 400
