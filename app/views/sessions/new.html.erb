@@ -2,7 +2,8 @@
 
 <h1 class="page-title">Log in</h1>
 
-<%= form_with url: session_path, class: "form" do |form| %>
+<%# A plain page load, not a Turbo fetch, so the browser always keeps the login cookie. %>
+<%= form_with url: session_path, class: "form", data: { turbo: false } do |form| %>
   <div class="field">
     <%= form.label :username, "Player name" %>
     <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", value: params[:username] %>

@@ -69,7 +69,7 @@ module Authentication
       session = Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
       # Temporary, while logging in on the live game is being fixed: says
       # whether the browser sent the login cookie (never its value).
-      logger.info "Login cookie: #{cookies[:session_id].nil? ? "not sent" : (session ? "ok" : "not recognised")}"
+      logger.info "Login cookie: #{cookies[:session_id].nil? ? "not sent" : (session ? "ok" : "not recognised")} (cookies sent: #{request.cookies.keys.join(", ").presence || "none"})"
       session
     end
 
