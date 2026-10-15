@@ -7,7 +7,7 @@
           <%= image_tag picture.image, alt: picture.caption.to_s, class: "gallery__image", loading: "lazy" %>
         <% end %>
         <% if picture.caption.present? %><figcaption class="gallery__caption"><%= picture.caption %></figcaption><% end %>
-        <% if character.account_id == current_account.id %>
+        <% if own?(character) %>
           <%= button_to "Remove", character_gallery_image_path(character, picture), method: :delete, class: "button-link gallery__remove",
                 form: { data: { turbo_confirm: "Remove this picture?" } } %>
         <% end %>
@@ -18,7 +18,7 @@
   <p class="muted">No pictures yet.</p>
 <% end %>
 
-<% if character.account_id == current_account.id && images.size < GalleryImage::MAX_PER_CHARACTER %>
+<% if own?(character) && images.size < GalleryImage::MAX_PER_CHARACTER %>
   <%= form_with model: GalleryImage.new, url: character_gallery_images_path(character), class: "form gallery__add" do |form| %>
     <h2 class="section-title">Add a picture</h2>
     <div class="field">

@@ -11,7 +11,7 @@
     <% end %>
     <p class="text mini-profile__links">
       <%= link_to "View profile", character %>
-      <% if character.account_id != current_account&.id %>
+      <% if !own?(character) %>
         · <%= link_to "Message the player", new_conversation_path(character_id: character.id) %>
       <% end %>
     </p>

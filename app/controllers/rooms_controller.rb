@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  allow_previews only: :show
+  allow_previews only: %i[ index show ]
 
   def index
     @rooms = Room.includes(:area).order(:name)

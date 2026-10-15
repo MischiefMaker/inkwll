@@ -13,8 +13,10 @@ class ForumBoardsTest < ActionDispatch::IntegrationTest
     assert_select ".forum-board__title", "Advertising"
   end
 
-  test "guests are turned away" do
+  test "guests can read a board but not start threads" do
     get forum_board_path(@ads)
+    assert_response :success
+    post forum_board_forum_topics_path(@ads), params: { forum_topic: { title: "Spam", body: "Spam" } }
     assert_redirected_to new_session_path
   end
 

@@ -29,7 +29,7 @@
             <%= form.submit "Roll it", class: "button" %>
           <% end %>
         <% end %>
-        <% if storyteller || pending.character.account_id == current_account.id %>
+        <% if storyteller || own?(pending.character) %>
           <%= button_to "Cancel", scene_pending_roll_path(scene, pending), method: :delete, class: "button-link pending-roll__cancel" %>
         <% end %>
       </div>

@@ -37,7 +37,7 @@ class WikiPage < ApplicationRecord
   def to_param = slug
   def locked? = locked_at.present?
 
-  def editable_by?(account) = !locked? || account.staff?
+  def editable_by?(account) = account.present? && (!locked? || account.staff?)
 
   def tag_list=(text)
     self.tags = text.to_s.split(",").map { |tag| tag.squish.downcase.first(30) }.compact_blank.uniq.first(20)

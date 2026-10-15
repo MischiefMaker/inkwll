@@ -13,6 +13,11 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - **Areas, Settings and boards** without an icon picture get a drawn icon tile (compass, door, speech bubble). Areas and Settings without a banner picture get a plain drawn banner (owner: "I think" we should; open to dropping it).
 - Icons are line drawings in the code (`app/helpers/icons_helper.rb`), drawn like the header's bell. No outside icon sites.
 
+## What guests can read (owner, 2026-10-15)
+
+- Guests can **read** much more of the site: the Boards, the Wiki, Where, the character directory and Roster, character and player profiles, All Settings, the Archives and Chapters anyone may watch (open ones, finished private ones, and hidden ones made public). They can't post, edit, join or message; those send them to log in. Their own-pages (My characters, Messages, My Chapters) still need an account.
+- The guest top bar has a Menu with everything they can read, and the front page shows the Boards to guests.
+
 ## Area banners on Settings (owner, 2026-10-15)
 
 - Each Setting shows its own Area's banner and short text (if it has them) at the top, above the Setting's name and description. It's the nearest Area only, not the ones above it. Areas with neither show nothing extra.

@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — More for guests to read
+
+- Guests (not logged in) can now read the Boards, the Wiki, Where, the
+  character directory and Roster, character and player profiles, the
+  Archives and any Chapter a player could watch. They can't post, edit or
+  join anything. Their top bar has a Menu with all of these, and the front
+  page shows the Boards.
+
 ## 2026-10-15 — Icons
 
 - The top bar and the Menu have small line icons next to each link.

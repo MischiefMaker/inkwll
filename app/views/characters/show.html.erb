@@ -20,7 +20,7 @@
                   form: { data: { turbo_confirm: "Ask staff to give #{@character.name} up for someone else to play? If they agree, #{@character.name} stops being yours." } } %>
           <% end %>
         <% elsif !@character.on_roster? %>
-          <% if Inkling.enabled? && current_account.can?(:review_apps) && @character.approved? && !@character.retired? %>
+          <% if Inkling.enabled? && current_account&.can?(:review_apps) && @character.approved? && !@character.retired? %>
             <%= link_to "Start an Inkling for #{@character.name}", new_inkling_path(character_id: @character.id), class: "button button--quiet character-profile__inkling" %>
           <% end %>
           <%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %>

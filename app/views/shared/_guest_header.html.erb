@@ -2,8 +2,27 @@
 <header class="site-header site-header--guest">
   <%= link_to game_name, root_path, class: "site-header__title" %>
   <nav class="site-header__nav">
-    <%= link_to "Home", root_path %>
-    <%= link_to "Getting started", getting_started_path %>
+    <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %>Home<% end %>
+    <%# Everything guests can read (owner): the same Menu players have,
+        without the pages that need an account. %>
+    <details class="menu">
+      <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %>Menu</summary>
+      <div class="menu__items">
+        <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting started<% end %>
+        <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2).downcase %><% end %>
+        <%= link_to where_path, class: "menu__link" do %><%= icon(:pin, size: 16, css: "menu__icon") %>Where<% end %>
+        <%= link_to archives_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
+        <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character directory<% end %>
+        <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
+        <%= link_to forum_boards_path, class: "menu__link" do %><%= icon(:board, size: 16, css: "menu__icon") %><%= term(:forum_board, count: 2) %><% end %>
+        <% if WikiPage.enabled? %>
+          <%= link_to wiki_pages_path, class: "menu__link" do %><%= icon(:wiki, size: 16, css: "menu__icon") %>Wiki<% end %>
+          <% WikiPage.in_menu.each do |page| %>
+            <%= link_to page.title, wiki_page_path(page), class: "menu__wiki-page" %>
+          <% end %>
+        <% end %>
+      </div>
+    </details>
   </nav>
   <div class="site-header__account">
     <% if @previewing %><span class="site-header__preview muted">Previewing as a guest</span><% end %>

@@ -73,7 +73,7 @@
           <%= form.select :pose_mode, Scene.pose_modes.keys.map { |mode| [ pose_mode_label(mode), mode ] } %>
           <small class="hint">The <%= pose_mode_label("three_pose") %> needs four characters; until then everyone takes turns.</small>
         </div>
-        <% if current_account.may_storytell? %>
+        <% if current_account&.may_storytell? %>
           <label class="field--checkbox"><%= check_box_tag "scene[storyteller]", "1", false, id: "scene_storyteller" %> <%= current_character.name %> is the <%= term(:storyteller).downcase %></label>
         <% end %>
         <p class="muted">Starting as <%= current_character.name %>, in <%= room.name %>.</p>

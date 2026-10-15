@@ -2,6 +2,8 @@ class CharactersController < ApplicationController
   limit_posting to: 5, within: 10.minutes
   limit_posting to: 20, within: 1.hour, only: :update, name: "uploads"
   before_action :set_own_character, only: %i[ edit update ]
+  # Guests can read approved characters' profiles.
+  allow_previews only: :show
 
   def index
     @characters = current_account.characters.includes(:room).order(:name)
@@ -11,8 +13,8 @@ class CharactersController < ApplicationController
   # their player and staff.
   def show
     @character = Character.includes(profile_values: :profile_field).find(params[:id])
-    @mine = @character.account_id == current_account.id
-    @staff_view = current_account.staff?
+    @mine = current_account.present? && @character.account_id == current_account.id
+    @staff_view = current_account&.staff? || false
     raise ActiveRecord::RecordNotFound unless @character.approved? || @mine || @staff_view
     tabs = %w[ profile application gallery relationships logs ]
     tabs << "soul" if Soul.enabled? && (@mine || @staff_view)

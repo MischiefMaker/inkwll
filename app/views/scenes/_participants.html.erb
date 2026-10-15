@@ -13,7 +13,7 @@
 
   <% if participant && scene.writable? %>
     <div class="scene-people__actions">
-      <% if current_account.may_storytell? %>
+      <% if current_account&.may_storytell? %>
         <%= button_to participant.storyteller? ? "Stop being #{term(:storyteller).downcase}" : "Be the #{term(:storyteller).downcase}",
               scene_participation_path(scene), method: :patch, class: "button-link" %>
       <% end %>

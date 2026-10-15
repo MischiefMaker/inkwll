@@ -2,6 +2,8 @@
 # ones on the roster, filtered by a public profile field. /roster is the
 # same page showing only the roster.
 class DirectoryController < ApplicationController
+  allow_previews
+
   def index
     @fields = ProfileField.where(public: true).ordered
     @roster_only = params[:roster] == "1"

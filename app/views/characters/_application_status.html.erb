@@ -8,7 +8,7 @@
       <% else %>
         <p class="text"><strong class="emphasis">Not submitted yet.</strong> <%= character.name %> can explore, but can't join <%= term(:scene, count: 2).downcase %> until staff approve them.</p>
       <% end %>
-      <% if character.account_id == current_account.id %>
+      <% if own?(character) %>
         <% missing = character.missing_for_submission %>
         <% if missing.any? %>
           <p class="text application-status__missing">Still needed: <%= missing.to_sentence %>. <%= link_to "Edit", edit_character_path(character) %></p>
@@ -19,7 +19,7 @@
     <% when "submitted" %>
       <p class="text"><strong class="emphasis">Waiting for staff.</strong> Submitted <%= time_ago_in_words(character.submitted_at) %> ago.</p>
     <% end %>
-    <% if current_account.can?(:review_apps) && character.submitted? %>
+    <% if current_account&.can?(:review_apps) && character.submitted? %>
       <p class="text"><%= link_to "Review this application", admin_application_path(character) %></p>
     <% end %>
   </div>

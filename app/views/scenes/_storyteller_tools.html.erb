@@ -1,6 +1,6 @@
 <%# Tools for the Chapter's Storyteller: call for a roll, look at the
     players' Aspects and Skills, and suggest XP for staff to approve. %>
-<% others = scene.participants.map(&:character).reject { |c| c.account_id == current_account.id } %>
+<% others = scene.participants.map(&:character).reject { |c| own?(c) } %>
 <% if others.any? %>
   <details class="storyteller-tools">
     <summary class="disclosure__summary storyteller-tools__summary"><%= term(:storyteller) %> tools</summary>

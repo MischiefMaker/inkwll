@@ -16,7 +16,7 @@
       <%= link_to "#{GameSetting.current.roster_claim? ? "Claim" : "Apply to play"} #{character.name}", new_character_roster_application_path(character), class: "button roster-status__apply" %>
     <% end %>
   </div>
-<% elsif character.account_id == current_account.id && !character.retired? %>
+<% elsif own?(character) && !character.retired? %>
   <% if character.roster_requested? %>
     <div class="notice-box roster-status roster-status--requested">
       <p class="text">You asked staff to put <%= character.name %> on the roster.</p>

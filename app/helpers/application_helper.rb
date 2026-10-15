@@ -26,6 +26,12 @@ module ApplicationHelper
 
   # Classes on <body> so a skin can style one page or kind of visitor:
   # "page-scenes page-scenes-show is-logged-in", or "page-admin-bans ... is-staff".
+  # Whether the logged-in player plays this character (or owns this record).
+  # Guests own nothing, even characters with no player.
+  def own?(record)
+    current_account.present? && record.account_id == current_account.id
+  end
+
   def body_classes
     page = "page-#{controller_path.tr("/", "-")}"
     classes = [ page, "#{page}-#{action_name}" ]

@@ -43,8 +43,8 @@ class GuestPreviewTest < ActionDispatch::IntegrationTest
     assert_equal 0, GuestVisit.count_in(rooms(:commons))
   end
 
-  test "guests still can't open Chapters, the directory or boards" do
-    [ scene_path(Scene.first || Scene.create!(room: rooms(:commons), title: "Tea")), directory_path, forum_boards_path ].each do |path|
+  test "guests still can't open their own pages, like My characters or Messages" do
+    [ characters_path, conversations_path, my_chapters_path ].each do |path|
       get path, headers: BROWSER
       assert_redirected_to new_session_path
     end

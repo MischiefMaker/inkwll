@@ -1,12 +1,15 @@
 # Chapters (scenes): starting one where your character stands, reading one,
 # and changing its settings.
 class ScenesController < ApplicationController
+  # Guests can read the Chapters anyone may read, live or in the Archives.
+  allow_previews only: :show
   before_action :require_character, only: :create
   before_action :set_scene, only: %i[ show edit update ]
   before_action :require_participant, only: %i[ edit update ]
   before_action :require_writable, only: %i[ edit update ]
 
   def show
+    return unless current_account
     use_character_in_scene
     @participant = @scene.participant_for(current_character)
     Alert.read_for!(current_account, @scene)
