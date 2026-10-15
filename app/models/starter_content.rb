@@ -83,7 +83,7 @@ module StarterContent
   def self.install_profile_fields!
     return if ProfileField.exists?
     PROFILE_FIELDS.each_with_index do |(name, section, type, shown, required, hint, inkling_kind), position|
-      ProfileField.create!(name: name, section: section, field_type: type, public: shown, required: required, hint: hint, position: position, inkling_kind: inkling_kind)
+      ProfileField.create!(name: name, section: section, field_type: type, public: shown, required: required, hint: hint, position: position, inkling_kind: inkling_kind, player_can_edit: name != "Background")
     end
   end
 end

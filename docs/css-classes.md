@@ -41,7 +41,15 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.nib-icon`, `.nib-icon__back`, `.nib-icon__nib`, `.nib-icon__slit`, `.nib-icon__hole`, `.player-icon--default` | The pen-nib player icon shown when a player has no icon picture (guests get a grey one) |
 | `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
 | `.switcher`, `.switcher__gm` (the GM choice) | "Playing as" character picker |
-| `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
+| `.chapter-tabs`, `.chapter-tabs--collapsed`, `.chapter-tabs__list`, `.chapter-tab-wrap`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
+| `.chapter-tabs__toggle`, `.chapter-tabs__toggle-label`, `.chapter-tabs__arrow`, `.chapter-tabs__turn-flag`, `.chapter-tabs__turn-count` | The button that folds the tabs away, and the wiggling quill shown while folded when it's your turn |
+| `.chapter-tab__close`, `.chapter-tab__close-form` | The X on a finished Chapter's tab |
+| `.room-index`, `.room-index--depth-1`, `.room-index__area`, `.room-index__rooms`, `.room-index__room` | All Places, grouped by Area |
+| `.writing-as`, `.writing-as__form`, `.writing-as__label`, `.writing-as__warning`, `.writing-as__warning-text`, `.writing-as__join`, `.writing-as__keep` | The "Writing as" switcher above the Passage box and its warning |
+| `.admin-characters__active`, `.admin-characters__retired`, `.admin-characters__retired-table` | Admin → Characters: the working list and the retired section |
+| `.directory__tag--played`, `.roster-apply__played` | The "Previously played" mark on roster characters |
+| `.character-form__locked-value`, `.profile-field-form__player-can-edit` | A profile answer locked after approval; the "Player can edit" tick box |
+| `.place__body` | The text part of a front-page Area card (centred) |
 | `.layout`, `.main` | The page body and its main column |
 | `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed`, `.ooc-sidebar__arrow`, `.ooc-sidebar__tab-label` | The OOC Chat sidebar (on phones, `.ooc-sidebar__toggle` is the drop-down bar across its top) |
 | `.layout--admin`, `.admin-menu`, `.admin-menu__button`, `.admin-menu__button-current`, `.admin-menu__body`, `.admin-menu__title`, `.admin-menu__group`, `.admin-menu__heading`, `.admin-menu__list`, `.admin-menu__item`, `.admin-menu__link`, `.admin-menu__link--overview`, `.admin-menu__label`, `.admin-menu__count`, `.is-current` | The admin panel's side menu (on phones it folds into `.admin-menu__button`) |

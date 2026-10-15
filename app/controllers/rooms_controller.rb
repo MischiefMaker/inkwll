@@ -2,7 +2,17 @@ class RoomsController < ApplicationController
   allow_previews only: %i[ index show ]
 
   def index
-    @rooms = Room.includes(:area).order(:name)
+    # Every Place, grouped under its Area (Areas in the order of the front
+    # page, sub-Areas beneath their parent). Rooms behind a numbered door are
+    # reached from their building, so they aren't listed on their own.
+    rooms_by_area = Room.listed.order(:name).group_by(&:area_id)
+    @sections = []
+    walk = ->(area, depth) do
+      @sections << { area: area, depth: depth, rooms: rooms_by_area.fetch(area.id, []) }
+      area.children.each { |child| walk.call(child, depth + 1) }
+    end
+    Area.top_level.each { |area| walk.call(area, 0) }
+    @sections.reject! { |section| section[:rooms].empty? }
   end
 
   def show

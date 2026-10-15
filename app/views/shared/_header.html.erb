@@ -3,7 +3,7 @@
 
   <nav class="site-header__nav">
     <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %><span class="site-header__label">Home</span><% end %>
-    <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %><span class="site-header__label">My characters</span><% end %>
+    <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %><span class="site-header__label">My Characters</span><% end %>
     <%= render "conversations/count", account: current_account %>
     <%# The bell opens the latest alerts in a small drop-down over the page. %>
     <details class="alert-menu" data-controller="alert-menu" data-action="toggle->alert-menu#toggle click@document->alert-menu#closeOutside">
@@ -19,22 +19,22 @@
       <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %><span class="site-header__label">Menu</span></summary>
       <div class="menu__items">
         <p class="menu__heading menu__heading--mine">Mine</p>
-        <%= link_to characters_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>My characters<% end %>
+        <%= link_to characters_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>My Characters<% end %>
         <%= link_to my_chapters_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>My <%= term(:scene, count: 2) %><% end %>
-        <%= link_to saved_places_path, class: "menu__link" do %><%= icon(:bookmark, size: 16, css: "menu__icon") %>My places<% end %>
+        <%= link_to saved_places_path, class: "menu__link" do %><%= icon(:bookmark, size: 16, css: "menu__icon") %>My Places<% end %>
         <% if Inkling.enabled? %><%= link_to inklings_path, class: "menu__link" do %><%= icon(:inkwell, size: 16, css: "menu__icon") %>My Inklings<% end %><% end %>
-        <%= link_to player_path(current_account.username), class: "menu__link" do %><%= icon(:profile, size: 16, css: "menu__icon") %>My player profile<% end %>
+        <%= link_to player_path(current_account.username), class: "menu__link" do %><%= icon(:profile, size: 16, css: "menu__icon") %>My Profile<% end %>
         <%= link_to edit_notification_settings_path, class: "menu__link" do %><%= icon(:bell, size: 16, css: "menu__icon") %>Notifications<% end %>
 
         <p class="menu__heading menu__heading--world">The world</p>
-        <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2).downcase %><% end %>
+        <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2) %><% end %>
         <%= link_to where_path, class: "menu__link" do %><%= icon(:pin, size: 16, css: "menu__icon") %>Where<% end %>
-        <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character directory<% end %>
+        <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character Directory<% end %>
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
         <%= link_to archives_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
 
         <p class="menu__heading menu__heading--community">Community and help</p>
-        <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting started<% end %>
+        <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting Started<% end %>
         <%= link_to forum_boards_path, class: "menu__link" do %><%= icon(:board, size: 16, css: "menu__icon") %><%= term(:forum_board, count: 2) %><% end %>
         <% if WikiPage.enabled? %>
           <%= link_to wiki_pages_path, class: "menu__link" do %><%= icon(:wiki, size: 16, css: "menu__icon") %>Wiki<% end %>
@@ -45,7 +45,7 @@
         <%= link_to ooc_messages_path, class: "menu__link" do %><%= icon(:chat, size: 16, css: "menu__icon") %>OOC Chat<% end %>
         <% if current_account.staff? %>
           <p class="menu__heading menu__heading--staff">Staff</p>
-          <%= link_to admin_root_path, class: "menu__link" do %><%= icon(:shield, size: 16, css: "menu__icon") %>Admin panel<% end %>
+          <%= link_to admin_root_path, class: "menu__link" do %><%= icon(:shield, size: 16, css: "menu__icon") %>Admin Panel<% end %>
         <% end %>
       </div>
     </details>

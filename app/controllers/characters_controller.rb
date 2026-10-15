@@ -41,6 +41,7 @@ class CharactersController < ApplicationController
   end
 
   def update
+    @character.profile_editor = current_account
     if @character.update(character_params)
       redirect_to @character, notice: "Saved."
     else

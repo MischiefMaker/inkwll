@@ -30,6 +30,11 @@
     <%= form.check_box :on_passages %>
     <%= form.label :on_passages, "Show beside #{term(:pose, count: 2).downcase} (only if everyone can see it)" %>
   </div>
+  <div class="field field--checkbox profile-field-form__player-can-edit">
+    <%= form.check_box :player_can_edit %>
+    <%= form.label :player_can_edit, "Player can edit after approval" %>
+  </div>
+  <small class="hint">Untick for answers that shouldn't change once the character is approved, like Background. Staff can always edit.</small>
   <div class="field field--checkbox">
     <%= form.check_box :ask_on_roster %>
     <%= form.label :ask_on_roster, "Ask again when someone takes a character from the roster" %>

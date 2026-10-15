@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   resources :scenes, only: %i[ show create edit update ] do
     scope module: :scenes do
       resource :participation, only: %i[ create update destroy ]
+      resource :writing_as, only: :update, controller: "writing_as"
       resource :finish, only: %i[ create destroy ]
       resource :pause, only: %i[ create destroy ]
       resource :public_consent, only: %i[ create destroy ]
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
     end
   end
   resource :chapter_tabs, only: :show
+  delete "chapter_tabs/:participant_id", to: "chapter_tabs#close", as: :close_chapter_tab
   get "where", to: "where#show"
   get "getting-started", to: "guides#show", as: :getting_started
   get "how-it-works", to: redirect("/getting-started")

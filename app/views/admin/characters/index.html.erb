@@ -3,38 +3,12 @@
 <h1 class="page-title">Characters</h1>
 <p class="text muted">Characters are never deleted. Retiring one stops it being played and takes it off the Where list and out of <%= term(:room, count: 2) %>; its <%= term(:pose, count: 2).downcase %> and <%= term(:log, count: 2).downcase %> stay, greyed out.</p>
 
-<table class="table">
-  <thead class="table__head">
-    <tr class="table__row"><th class="table__heading">Character</th><th class="table__heading">Player</th><th class="table__heading"><%= term(:room) %></th><% if @groups.any? %><th class="table__heading">Group</th><% end %><th class="table__heading"></th></tr>
-  </thead>
-  <tbody class="table__body">
-    <% @characters.each do |character| %>
-      <tr class="table__row<%= " table__row--retired" if character.retired? %>">
-        <td class="table__cell"><%= link_to character.name, character %><%= tag.span(character.on_roster? ? " (on the roster)" : character.preparing_for_roster? ? " (being prepared for the roster)" : " (retired)", class: "muted") if character.retired? %></td>
-        <td class="table__cell"><%= character.account.display_name %></td>
-        <td class="table__cell"><%= link_to character.room.name, room_path(character.room) %></td>
-        <% if @groups.any? %>
-          <td class="table__cell">
-            <%= form_with model: character, url: admin_character_path(character), method: :patch, class: "form form--inline admin-characters__group", data: { controller: "auto-submit" } do |form| %>
-              <%= form.label :character_group_id, "Group for #{character.name}", class: "visually-hidden" %>
-              <%= form.select :character_group_id, @groups.map { |group| [ group.name, group.id ] }, { include_blank: "None" }, data: { action: "change->auto-submit#submit" } %>
-              <noscript><%= form.submit "Save", class: "button-link" %></noscript>
-            <% end %>
-          </td>
-        <% end %>
-        <td class="table__cell">
-          <% if character.on_roster? || character.preparing_for_roster? %>
-            <%= link_to character.on_roster? ? "On the roster" : "Being prepared", admin_roster_path, class: "muted" %>
-          <% elsif character.retired? %>
-            <%= button_to "Bring back", unretire_admin_character_path(character), class: "button-link" %>
-          <% else %>
-            <%= button_to "Retire", retire_admin_character_path(character), class: "button-link",
-                  form: { data: { turbo_confirm: "Retire #{character.name}? They can't be played until you bring them back." } } %>
-            <%= button_to "Put on the roster", admin_roster_character_path(character), method: :patch, class: "button-link",
-                  form: { data: { turbo_confirm: "Put #{character.name} on the roster? They stop being #{character.account.display_name}'s, and other players can apply to play them." } } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% retired, active = @characters.partition(&:retired?) %>
+<%= render "table", characters: active, groups: @groups, css: "admin-characters__active" %>
+
+<% if retired.any? %>
+  <section class="admin-characters__retired">
+    <h2 class="section-title">Retired characters (<%= retired.size %>)</h2>
+    <%= render "table", characters: retired, groups: @groups, css: "admin-characters__retired-table" %>
+  </section>
+<% end %>

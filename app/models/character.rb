@@ -67,7 +67,7 @@ class Character < ApplicationRecord
     transaction do
       leave_open_scenes!
       update!(retired_at: Time.current)
-      account.update!(active_character: nil) if account.active_character_id == id
+      account.step_away_from(self)
     end
   end
 
@@ -89,9 +89,14 @@ class Character < ApplicationRecord
 
   # Saves the profile fields from the edit form: { field_id => text }.
   # Picture fields get an uploaded file; an empty one keeps the old picture.
+  # Who is changing the profile, so locked fields can be refused. Left
+  # empty by code that isn't a person editing (seeds, roster take-overs).
+  attr_accessor :profile_editor
+
   def profile=(values)
     values.to_h.each do |field_id, text|
       field = ProfileField.find_by(id: field_id) or next
+      next if profile_editor && field.locked_for?(self, profile_editor)
       if field.image?
         next unless text.respond_to?(:original_filename)
         profile_value_built_for(field).picture = text
@@ -104,6 +109,7 @@ class Character < ApplicationRecord
   # Picture fields ticked "Remove this picture" on the edit form.
   def remove_profile_pictures=(field_ids)
     ProfileField.where(id: Array(field_ids), field_type: "image").find_each do |field|
+      next if profile_editor && field.locked_for?(self, profile_editor)
       value = profile_value_for(field)
       value.picture = nil if value && !value.attachment_changes["image"]
     end

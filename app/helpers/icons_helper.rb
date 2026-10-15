@@ -12,6 +12,8 @@ module IconsHelper
     guide: '<path d="M12 7v14"/><path d="M3 5h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6v13h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3H3z"/>',
     door: '<path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><path d="M14 12h.01"/>',
     pin: '<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+    chevron_down: '<path d="M6 9l6 6 6-6"/>',
+    close: '<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
     quill: '<path d="M20 3C12 4 7 9 5 19"/><path d="M20 3c-1 6-5 10-11 11"/><path d="M4 21l1-2"/>',
     inkwell: '<path d="M9 3h6"/><path d="M10 3v4c-4 .7-6 3-6 6v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6c0-3-2-5.3-6-6V3"/><path d="M4 15h16"/>',
     bookmark: '<path d="M6 3h12v18l-6-4-6 4z"/>',

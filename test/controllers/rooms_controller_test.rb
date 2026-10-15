@@ -59,7 +59,7 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
 
     get room_path(commons)
 
-    assert_select ".numbered-paths__title", /Apartments/
+    assert_select ".numbered-paths__title", /Units/
     assert_select "button.numbered-path", count: 2
     assert_select ".numbered-path__number", count: 2 do |numbers|
       assert_equal %w[ 20 101 ], numbers.map(&:text)
@@ -73,5 +73,12 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
     get area_path(areas(:castle))
     assert_select ".board__name", text: "Garden"
     assert_select ".board__name", text: "Tower", count: 0
+  end
+
+  test "All Places are grouped under their Area" do
+    sign_in_as(accounts(:alice))
+    get rooms_path
+    assert_select ".room-index__area a[href=?]", area_path(rooms(:commons).area)
+    assert_select ".room-index .room-index__room a[href=?]", room_path(rooms(:commons))
   end
 end

@@ -40,8 +40,17 @@
         <% value = profile_value&.value %>
         <div class="field character-form__field character-form__field--<%= field.field_type %>">
           <%= label_tag "character_profile_#{field.id}", field.name + (field.required? ? " *" : "") %>
+          <% if field.locked_for?(character, current_account) %>
+            <% if field.image? && profile_value&.image&.attached? %>
+              <%= image_tag profile_value.image, class: "profile-field-input__picture", alt: "" %>
+            <% else %>
+              <div class="text character-form__locked-value"><%= simple_format(value.presence || "Nothing yet") %></div>
+            <% end %>
+            <small class="hint">Locked once approved. Ask staff to change it.</small>
+          <% else %>
           <%= render "shared/profile_field_input", field: field, value: value, name: "character[profile][#{field.id}]", id: "character_profile_#{field.id}", picture: profile_value&.image %>
           <small class="hint"><%= field.hint %><%= " PNG, JPEG, GIF or WebP, up to 5 MB." if field.image? %><%= " Only you and staff can see this." unless field.public? %></small>
+          <% end %>
         </div>
       <% end %>
     </fieldset>

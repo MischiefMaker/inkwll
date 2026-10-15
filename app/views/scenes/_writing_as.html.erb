@@ -1,0 +1,24 @@
+<%# Which of your characters writes in this Chapter. Picking one that isn't
+    in it yet shows a warning with the choice to join as them or carry on. %>
+<% mine = current_account.characters.active.order(:name) %>
+<% if mine.size > 1 %>
+  <div class="writing-as">
+    <%= form_with url: scene_writing_as_path(scene), method: :patch, class: "switcher writing-as__form", data: { controller: "auto-submit" } do |form| %>
+      <%= form.label :character_id, "Writing as", class: "switcher__label writing-as__label" %>
+      <%= form.select :character_id,
+            options_for_select(mine.map { |character| [ scene.participant_for(character) ? character.name : "#{character.name} (not in this #{term(:scene).downcase})", character.id ] }, participant.character_id),
+            {}, data: { action: "change->auto-submit#submit" } %>
+      <noscript><%= form.submit "Switch" %></noscript>
+    <% end %>
+
+    <% other = mine.find_by(id: params[:join]) %>
+    <% if other && !scene.participant_for(other) %>
+      <div class="writing-as__warning composer__warning" role="alert">
+        <span class="writing-as__warning-text"><%= other.name %> isn't in this <%= term(:scene).downcase %>; <%= participant.character.name %> is.
+          Joining as <%= other.name %> puts a second character of yours in it<%= " and moves them to #{scene.room.name}" unless other.room_id == scene.room_id %>.</span>
+        <%= button_to "Join as #{other.name}", scene_participation_path(scene, character_id: other.id), class: "button writing-as__join" %>
+        <%= link_to "Keep writing as #{participant.character.name}", scene_path(scene), class: "button-link writing-as__keep" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

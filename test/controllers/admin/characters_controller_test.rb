@@ -16,6 +16,15 @@ class Admin::CharactersControllerTest < ActionDispatch::IntegrationTest
     assert_not moth.reload.retired?
   end
 
+  test "retired characters are listed in their own section at the bottom" do
+    characters(:moth).retire!
+    sign_in_as(accounts(:wellkeeper))
+    get admin_characters_path
+    assert_select ".admin-characters__active a", text: "Wren"
+    assert_select ".admin-characters__active a", text: "Moth", count: 0
+    assert_select ".admin-characters__retired .admin-characters__retired-table a", text: "Moth"
+  end
+
   test "a Scribe can't retire characters" do
     sign_in_as(accounts(:scribe))
     post retire_admin_character_path(characters(:moth))

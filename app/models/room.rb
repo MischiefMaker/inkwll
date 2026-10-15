@@ -9,16 +9,15 @@ class Room < ApplicationRecord
   has_many :characters, -> { active.order(:name) }, dependent: :restrict_with_error, inverse_of: :room
   has_many :saved_places, dependent: :delete_all
 
-  # Special Setting types. Each one names its numbered list of Paths and the
-  # rooms the "Add numbered rooms" tool makes ("Apartment 100"). Ordinary
-  # Settings can still have numbered Paths; their list is called "Doors".
+  # Special Place types. Each one names its numbered list of Paths and the
+  # rooms the "Add numbered rooms" tool makes ("Unit 100"). Ordinary
+  # Places can still have numbered Paths; their list is called "Doors".
   KINDS = {
-    "plain" => { label: "Ordinary", list: "Doors", unit: "Room" },
-    "apartments" => { label: "Apartment building", list: "Apartments", unit: "Apartment" },
-    "hotel" => { label: "Hotel or inn", list: "Rooms", unit: "Room" },
-    "dorms" => { label: "Dormitory", list: "Dorm rooms", unit: "Dorm room" },
-    "offices" => { label: "Office block", list: "Offices", unit: "Office" },
-    "street" => { label: "Street of houses", list: "Houses", unit: "House" }
+    "plain" => { label: "Nothing special", list: "Doors", unit: "Room" },
+    "apartments" => { label: "Building (with separate units)", list: "Units", unit: "Unit" },
+    "building" => { label: "Building (no units)", list: "Doors", unit: "Room" },
+    "street" => { label: "Street", list: "Places", unit: "Place" },
+    "outdoor" => { label: "Outdoor area (park, square...)", list: "Places", unit: "Place" }
   }.freeze
 
   validates :name, presence: true, length: { maximum: 80 }

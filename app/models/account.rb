@@ -111,6 +111,13 @@ class Account < ApplicationRecord
     remember_character(character, character.room)
   end
 
+  # When a character stops being playable (retired, put on the roster), the
+  # player carries on as their next character instead of as nobody.
+  def step_away_from(character)
+    return unless active_character_id == character.id
+    update!(active_character: characters.active.where.not(id: character.id).order(:name).first)
+  end
+
   # Remembers that this character was last used in the given place (a room or scene).
   def remember_character(character, context)
     remembered_characters.find_or_initialize_by(context: context).update!(character: character)

@@ -1,9 +1,14 @@
-<% content_for :title, "All #{term(:room, count: 2).downcase} · Inkwll" %>
+<% content_for :title, "All #{term(:room, count: 2)} · Inkwll" %>
 
-<h1 class="page-title">All <%= term(:room, count: 2).downcase %></h1>
+<h1 class="page-title">All <%= term(:room, count: 2) %></h1>
 
-<ul class="list">
-  <% @rooms.each do |room| %>
-    <li class="list__item"><%= link_to room.name, room_path(room) %> <span class="muted">in <%= room.area.name %></span></li>
-  <% end %>
-</ul>
+<% @sections.each do |section| %>
+  <section class="room-index room-index--depth-<%= section[:depth] %>">
+    <h2 class="room-index__area"><%= link_to section[:area].name, area_path(section[:area]) %></h2>
+    <ul class="list room-index__rooms">
+      <% section[:rooms].each do |room| %>
+        <li class="list__item room-index__room"><%= link_to room.name, room_path(room) %></li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

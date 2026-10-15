@@ -19,6 +19,10 @@ module Character::Roster
   # Kept by the Roster account: on the roster, or still being prepared.
   def roster_kept? = account_id.present? && account_id == Account.roster_keeper.id
 
+  # Whether the character has been played before: someone wrote Passages as
+  # them. Roster characters staff made fresh haven't.
+  def previously_played? = poses.exists?
+
   # A character staff added for the roster but haven't opened to applicants
   # yet, while they fill in the profile, SOUL and background (owner).
   def preparing_for_roster? = roster_kept? && !on_roster?
@@ -39,7 +43,7 @@ module Character::Roster
       leave_open_scenes!
       scene_invitations.delete_all
       RememberedCharacter.where(character: self).delete_all
-      old_account.update!(active_character: nil) if old_account.active_character_id == id
+      old_account.step_away_from(self)
       update!(account: Account.roster_keeper, on_roster_at: Time.current, retired_at: Time.current,
         roster_requested_at: nil, roster_when_idle: false, roster_note: note.presence || roster_note)
     end

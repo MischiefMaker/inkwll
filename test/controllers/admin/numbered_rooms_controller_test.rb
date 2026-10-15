@@ -22,10 +22,10 @@ class Admin::NumberedRoomsControllerTest < ActionDispatch::IntegrationTest
 
     door = rooms(:hall).exits.find_by!(number: "100")
     assert_equal "Jaxon Marley", door.name
-    assert_equal "Apartment 100", door.destination_room.name
+    assert_equal "Unit 100", door.destination_room.name
     assert_equal rooms(:hall).area, door.destination_room.area
     assert_equal "Nestor Nash", rooms(:hall).exits.find_by!(number: "101").name
-    assert_equal "Apartment 203", rooms(:hall).exits.find_by!(number: "203").name
+    assert_equal "Unit 203", rooms(:hall).exits.find_by!(number: "203").name
     assert_equal [ "Out" ], door.destination_room.exits.map(&:name)
     assert_equal rooms(:hall), door.destination_room.exits.first.destination_room
   end
@@ -50,8 +50,8 @@ class Admin::NumberedRoomsControllerTest < ActionDispatch::IntegrationTest
 
   test "a builder can set a Setting's type and give a Path a number" do
     sign_in_as(accounts(:builder))
-    patch admin_room_path(rooms(:hall)), params: { room: { kind: "hotel" } }
-    assert_equal "hotel", rooms(:hall).reload.kind
+    patch admin_room_path(rooms(:hall)), params: { room: { kind: "outdoor" } }
+    assert_equal "outdoor", rooms(:hall).reload.kind
 
     post admin_room_exits_path(rooms(:hall)), params: { exit: { number: "12", name: "Bridal suite", destination_room_id: rooms(:garden).id } }
     assert_equal "12", rooms(:hall).exits.find_by!(name: "Bridal suite").number

@@ -24,4 +24,44 @@ class ChapterTabsControllerTest < ActionDispatch::IntegrationTest
     assert_response :no_content
     assert_equal 2, scene_participants(:duel_wren).reload.last_read_sequence
   end
+
+  test "the tab bar can fold away, and flags a waiting turn" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".chapter-tabs__toggle"
+    assert_select ".chapter-tabs__turn-flag"
+  end
+
+  test "a finished Chapter's tab can be closed, and only by its own player" do
+    scenes(:duel).finish!(by: characters(:wren))
+    participant = scene_participants(:duel_wren)
+
+    sign_in_as(accounts(:bob))
+    delete close_chapter_tab_path(participant)
+    assert_response :not_found
+    assert_not participant.reload.tab_closed?
+
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".chapter-tab__close", count: 1
+    delete close_chapter_tab_path(participant)
+    assert participant.reload.tab_closed?
+    get root_path
+    assert_select ".chapter-tab", text: /Duel at Dawn/, count: 0
+  end
+
+  test "a Chapter that's still going has no close button and can't be closed" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".chapter-tab__close", count: 0
+    delete close_chapter_tab_path(scene_participants(:duel_wren))
+    assert_not scene_participants(:duel_wren).reload.tab_closed?
+  end
+
+  test "reopening a finished Chapter brings its tab back" do
+    scenes(:duel).finish!(by: characters(:wren))
+    scene_participants(:duel_wren).update!(tab_closed: true)
+    scenes(:duel).reopen!(by: characters(:wren))
+    assert_not scene_participants(:duel_wren).reload.tab_closed?
+  end
 end

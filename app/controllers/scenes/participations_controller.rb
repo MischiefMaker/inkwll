@@ -6,6 +6,7 @@ class Scenes::ParticipationsController < Scenes::BaseController
   # Joining from elsewhere walks the character over first ("Travel here and
   # join"), so characters are always where their new Chapter is.
   def create
+    switch_to_chosen_character
     unless current_character.can_play?
       return redirect_to @scene, alert: "#{current_character.name} #{Scene::NOT_APPROVED}."
     end
@@ -32,4 +33,12 @@ class Scenes::ParticipationsController < Scenes::BaseController
     @scene.leave!(current_character)
     redirect_to room_path(@scene.room), notice: "#{current_character.name} left #{@scene.title}."
   end
+
+  private
+    # The warning in "Writing as" offers to join as a different character of
+    # yours than the one on screen.
+    def switch_to_chosen_character
+      return if params[:character_id].blank?
+      current_account.update!(active_character: current_account.characters.active.find(params[:character_id]))
+    end
 end

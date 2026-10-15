@@ -11,8 +11,30 @@ class RosterTest < ActionDispatch::IntegrationTest
     assert wren.retired?
     assert_not wren.can_play?
     assert_equal Account.roster_keeper, wren.account
-    assert_nil accounts(:alice).reload.active_character
+    assert_equal characters(:moth), accounts(:alice).reload.active_character, "playing as moves on to the player's next character"
     assert wren.scene_participants.includes(:scene).none? { |participant| !participant.scene.finished? }
+  end
+
+  test "a player with no other character is left playing as nobody" do
+    characters(:moth).retire!
+    accounts(:alice).update!(active_character: characters(:wren))
+    characters(:wren).put_on_roster!
+    assert_nil accounts(:alice).reload.active_character
+  end
+
+  test "roster characters who've been played before say so" do
+    characters(:wren).put_on_roster!
+    fresh = Character.create_for_roster!(name: "Fresh Face")
+    fresh.open_on_roster!
+    sign_in_as(accounts(:bob))
+
+    get roster_path
+    assert_select ".directory__tag--played", count: 1
+
+    get new_character_roster_application_path(characters(:wren))
+    assert_select ".roster-apply__played"
+    get new_character_roster_application_path(fresh)
+    assert_select ".roster-apply__played", count: 0
   end
 
   test "nobody can log in as the Roster account" do

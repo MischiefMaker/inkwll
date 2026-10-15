@@ -48,6 +48,7 @@
           <% end %>
           <% if character.character_group %><span class="directory__group muted"><%= character.character_group.name %></span><% end %>
           <% if character.on_roster? %><span class="tag directory__tag">On the roster</span><% end %>
+          <% if character.on_roster? && character.previously_played? %><span class="tag directory__tag directory__tag--played">Previously played</span><% end %>
           <% if @unapproved %><span class="tag directory__tag directory__tag--status"><%= character.status.humanize %></span><% end %>
           <% if (value = @values[character.id]) %><span class="directory__value-shown muted"><%= @field.name %>: <%= value.value.truncate(80) %></span><% end %>
         </li>

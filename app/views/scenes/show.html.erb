@@ -76,6 +76,7 @@
         <%= render "scenes/pending_rolls", scene: @scene, participant: @participant if Soul.enabled? %>
         <%= render "scenes/turn_bar", scene: @scene, participant: @participant %>
         <% if @participant %>
+          <%= render "scenes/writing_as", scene: @scene, participant: @participant %>
           <%= render "scenes/composer", scene: @scene, participant: @participant %>
           <%= render "scenes/roll", scene: @scene, participant: @participant if Soul.enabled? %>
           <%= render "scenes/cast", scene: @scene, participant: @participant if Grimoire.enabled? %>

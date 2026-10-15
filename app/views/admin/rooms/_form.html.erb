@@ -12,7 +12,7 @@
   <div class="field room-kind">
     <%= form.label :kind, "Type of #{term(:room).downcase}" %>
     <%= form.select :kind, Room::KINDS.map { |key, kind| [ kind[:label], key ] } %>
-    <small class="hint">An apartment building, hotel and so on lists its numbered <%= term(:exit, count: 2).downcase %> compactly, under a heading like "Apartments".</small>
+    <small class="hint">A building with separate units, a street or a park lists its numbered <%= term(:exit, count: 2).downcase %> compactly, under a heading like "Units".</small>
   </div>
   <div class="field field--checkbox room-area-default">
     <%= form.check_box :area_default, checked: room.area_default? %>

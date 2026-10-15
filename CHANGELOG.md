@@ -2,6 +2,29 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Locked fields, Place types, tabs and more
+
+- Profile fields have a "Player can edit after approval" tick box. Untick it
+  (Background starts unticked) and a player can't change that answer once
+  their character is approved; they see it greyed out. Staff always can.
+- Place types are now: Nothing special, Building (with separate units),
+  Building (no units), Street and Outdoor area (park, square...). Hotels,
+  dormitories and office blocks became buildings with separate units. Their
+  numbered list is called "Units".
+- Menu entries use Title Case, and "My player profile" is now "My Profile".
+- The front page's Area cards are centred.
+- Chapter tabs can fold away (remembered in your browser). While folded, a
+  wiggling quill shows when it's your turn somewhere. A finished Chapter's tab
+  has an X to close it for good. The OOC Chat shrinks to fit under the tabs so
+  its box is always visible.
+- All Places is grouped by Area.
+- Writing a Passage: a "Writing as" switcher, which warns before it brings a
+  character who isn't in the Chapter into it.
+- Admin → Characters lists retired characters in their own section.
+- Putting a character you're playing on the roster moves you to your next
+  character instead of leaving "Playing as" blank.
+- Roster characters who've been played before say so.
+
 ## 2026-10-15 — Starter SOUL, Boons and Banes, and profile fields
 
 - A new game comes with SOUL's Aspects and Skills from the SOUL plugin

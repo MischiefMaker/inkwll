@@ -5,6 +5,9 @@
 
 <div class="roster-apply">
   <h1 class="page-title"><%= claim ? "Claim" : "Apply to play" %> <%= @character.name %></h1>
+  <% if @character.previously_played? %>
+    <p class="text roster-apply__played">Note: <%= @character.name %> has been played before, so they come with a history in <%= term(:log, count: 2).downcase %> and <%= term(:pose, count: 2).downcase %>.</p>
+  <% end %>
   <% if @character.roster_note.present? %>
     <div class="prose roster-apply__note"><%= simple_format @character.roster_note %></div>
   <% end %>

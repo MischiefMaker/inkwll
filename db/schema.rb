@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_15_070001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_15_080003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -469,6 +469,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_070001) do
     t.boolean "on_passages", default: false, null: false
     t.boolean "ask_on_roster", default: false, null: false
     t.string "inkling_kind"
+    t.boolean "player_can_edit", default: true, null: false
   end
 
   create_table "profile_values", force: :cascade do |t|
@@ -589,6 +590,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_15_070001) do
     t.datetime "updated_at", null: false
     t.datetime "public_consent_at"
     t.integer "notified_up_to", default: 0, null: false
+    t.boolean "tab_closed", default: false, null: false
     t.index ["character_id"], name: "index_scene_participants_on_character_id"
     t.index ["scene_id", "character_id"], name: "index_scene_participants_on_scene_id_and_character_id", unique: true
     t.index ["scene_id"], name: "index_scene_participants_on_scene_id"

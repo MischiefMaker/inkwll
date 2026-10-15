@@ -1,8 +1,8 @@
 # The builder's "Add numbered rooms" tool for apartment-style Settings. Each
 # line like "100 Jaxon Marley" (or "100 - Jaxon Marley") makes a new room
-# called "Apartment 100" in the same Area, a numbered Path to it labelled
+# called "Unit 100" in the same Area, a numbered Path to it labelled
 # "Jaxon Marley", and a Path back out. A line with just a number labels the
-# Path "Apartment 100". Either every line saves or none does.
+# Path "Unit 100". Either every line saves or none does.
 class NumberedRooms
   include ActiveModel::Model
 

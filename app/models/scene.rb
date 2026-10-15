@@ -240,6 +240,7 @@ class Scene < ApplicationRecord
       next false unless can_undo_finish? && participant_for(by)
 
       update!(finished_at: nil, finished_by: nil)
+      participants.update_all(tab_closed: false)
       add_system_line!("#{by.name} reopened this #{Term[:scene]}.")
       true
     end

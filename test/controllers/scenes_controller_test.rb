@@ -99,4 +99,40 @@ class ScenesControllerTest < ActionDispatch::IntegrationTest
     patch scene_pose_path(scene, pose), params: { pose: { body: "Wren draws." } }
     assert_redirected_to scene_path(scene, anchor: "pose_#{pose.id}", all: "1")
   end
+
+  test "the Passage box has a Writing as switcher that warns before bringing in a character who isn't in the Chapter" do
+    accounts(:alice).update!(active_character: characters(:wren))
+    get scene_path(scenes(:duel))
+    assert_select ".writing-as__form select option", text: /Moth \(not in this chapter\)/i
+    assert_select ".writing-as__warning", count: 0
+
+    patch scene_writing_as_path(scenes(:duel)), params: { character_id: characters(:moth).id }
+    assert_redirected_to scene_path(scenes(:duel), join: characters(:moth).id)
+    assert_equal characters(:wren), accounts(:alice).reload.active_character
+
+    get scene_path(scenes(:duel), join: characters(:moth).id)
+    assert_select ".writing-as__warning", text: /Moth isn't in this chapter/i
+    assert_select ".writing-as__join"
+
+    post scene_participation_path(scenes(:duel), character_id: characters(:moth).id)
+    assert scenes(:duel).participant_for(characters(:moth))
+    assert_equal characters(:moth), accounts(:alice).reload.active_character
+  end
+
+  test "Writing as switches straight to another character who is already in the Chapter" do
+    scenes(:duel).join!(characters(:moth))
+    accounts(:alice).update!(active_character: characters(:wren))
+    patch scene_writing_as_path(scenes(:duel)), params: { character_id: characters(:moth).id }
+    assert_redirected_to scene_path(scenes(:duel))
+    assert_equal characters(:moth), accounts(:alice).reload.active_character
+  end
+
+  test "you can't write as someone else's character" do
+    accounts(:alice).update!(active_character: characters(:wren))
+    patch scene_writing_as_path(scenes(:duel)), params: { character_id: characters(:sable).id }
+    assert_response :not_found
+    post scene_participation_path(scenes(:duel), character_id: characters(:sable).id)
+    assert_response :not_found
+    assert_equal characters(:wren), accounts(:alice).reload.active_character
+  end
 end

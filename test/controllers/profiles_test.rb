@@ -63,6 +63,23 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_equal "Leeds", character.reload.profile_value_for(profile_fields(:hometown)).value
   end
 
+  test "a locked field can't be changed by the player once approved, but staff can" do
+    character = characters(:wren)
+    field = profile_fields(:hometown)
+    character.update!(profile: { field.id => "York" })
+    field.update!(player_can_edit: false)
+
+    sign_in_as(accounts(:alice))
+    get edit_character_path(character)
+    assert_select ".character-form__locked-value", text: /York/
+    patch character_path(character), params: { character: { profile: { field.id => "Leeds" } } }
+    assert_equal "York", character.reload.profile_value_for(field).value
+
+    character.profile_editor = accounts(:wellkeeper)
+    character.update!(profile: { field.id => "Leeds" })
+    assert_equal "Leeds", character.reload.profile_value_for(field).value
+  end
+
   test "a Picture field takes an image on the character form and shows it on the profile" do
     field = ProfileField.create!(name: "Description", section: "demographics", field_type: "image")
     sign_in_as(accounts(:alice))

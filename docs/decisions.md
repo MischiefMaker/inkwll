@@ -6,6 +6,18 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Locked fields, Place types, tabs (owner)
+
+- **Player can edit:** each profile field has a "Player can edit after approval" setting. Unticked fields (Background by default) are locked for non-staff once the character is approved. Staff can always edit.
+- **Place types:** Nothing special, Building (with separate units), Building (no units), Street (any kind) and Outdoor area (parks, squares). Dormitory, hotel and office block are gone (existing ones became buildings with separate units). "Ordinary" is now "Nothing special".
+- **Menu:** entries use Title Case by default; "My player profile" is "My Profile".
+- **Front page:** the Area list is centred, for guests and players alike.
+- **Chapter tabs:** can be folded away, with an animated quill when folded and it's your turn. Finished Chapters' tabs can be closed with an X. The OOC Chat is shortened to fit under the tabs.
+- **All Places** is grouped by Area.
+- **Writing as:** the Passage box has a character switcher; picking a character who isn't in the Chapter warns first.
+- **Admin → Characters:** retired characters sit in a separate section at the bottom.
+- **Roster:** putting the character you are playing on the roster moves Playing as to your next character. Roster characters who were played before are marked.
+
 ## 2026-10-15: Starter content, Description and Picture fields (owner)
 
 - **Ship with defaults:** new games get SOUL's Aspects and Skills from ares-soul-plugin, plus a starter Boons and Banes catalogue and starter profile fields. The plugin has no Boons and Banes list, so Claude wrote the starter one.

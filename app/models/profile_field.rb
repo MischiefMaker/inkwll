@@ -27,6 +27,11 @@ class ProfileField < ApplicationRecord
     field_type == "image"
   end
 
+  # Whether this answer is locked for a player once their character is approved.
+  def locked_for?(character, editor)
+    !player_can_edit? && character.approved? && !editor&.staff?
+  end
+
   # Whether an approved character's answer starts an Inkling.
   def starts_inkling? = inkling_kind.present?
 
