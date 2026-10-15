@@ -119,4 +119,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_equal before[:players] - 1, after[:players]
     assert_operator after[:characters], :<, before[:characters]
   end
+
+  test "the stats labels link to their lists, with no public link to players" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".game-stats__item--characters a.game-stats__link[href='#{directory_path}']"
+    assert_select ".game-stats__item--chapters a.game-stats__link[href='#{where_path}']"
+    assert_select ".game-stats__item--archives a.game-stats__link[href='#{archives_path}']"
+    assert_select ".game-stats__item--players .icon"
+    assert_select ".game-stats__item--players a", count: 0
+
+    sign_in_as(accounts(:wellkeeper))
+    get root_path
+    assert_select ".game-stats__item--players a.game-stats__link[href='#{admin_accounts_path}']"
+  end
 end

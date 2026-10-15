@@ -73,9 +73,18 @@
 <%# Counts only, like a forum's footer. See PublicStats for what is left out. %>
 <% stats = PublicStats.counts %>
 <section class="game-stats" aria-label="Game statistics">
-  <% { players: "Players", characters: "Characters", chapters: term(:scene, count: 2), archives: term(:logs_collection) }.each do |kind, label| %>
+  <%# Players have no public list (it would give away who plays whom), so only staff who manage players get a link. %>
+  <% [ [ :players, "Players", :profile, (admin_accounts_path if current_account&.can?(:manage_staff)) ],
+       [ :characters, "Characters", :characters, directory_path ],
+       [ :chapters, term(:scene, count: 2), :quill, where_path ],
+       [ :archives, term(:logs_collection), :archive, archives_path ] ].each do |kind, label, icon_name, path| %>
     <span class="game-stats__item game-stats__item--<%= kind %>">
-      <span class="game-stats__label"><%= label %></span>
+      <%= icon(icon_name, size: 16, css: "game-stats__icon") %>
+      <% if path %>
+        <%= link_to label, path, class: "game-stats__label game-stats__link" %>
+      <% else %>
+        <span class="game-stats__label"><%= label %></span>
+      <% end %>
       <span class="game-stats__count"><%= number_with_delimiter(stats[kind]) %></span>
     </span>
   <% end %>
