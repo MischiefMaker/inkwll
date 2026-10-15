@@ -14,6 +14,8 @@ Short, plain-language notes on what changed. Newest first.
 - Character descriptions are now an ordinary profile field called
   Description, which games can rename, remove or make required. Existing
   descriptions were copied into it.
+- Online now on the front page lists players by player name; Where lists
+  characters.
 - Profile fields can ask for a Picture, for games that show looks with an
   image instead of text.
 

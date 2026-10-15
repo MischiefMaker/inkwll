@@ -43,7 +43,7 @@
 <section class="online-now">
   <h2 class="section-title">Online now</h2>
   <% if @online.any? %>
-    <p class="text online-now__list"><%= safe_join(@online.map { |character| character_name_link(character) }, ", ") %>
+    <p class="text online-now__list"><%= safe_join(@online.map { |player| link_to player.display_name, player_path(player.username), class: "online-now__player" }, ", ") %>
       · <%= link_to "Where everyone is", where_path %></p>
   <% else %>
     <p class="text muted">Nobody else is around right now.</p>

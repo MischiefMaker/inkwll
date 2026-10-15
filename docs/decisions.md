@@ -11,6 +11,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - **Ship with defaults:** new games get SOUL's Aspects and Skills from ares-soul-plugin, plus a starter Boons and Banes catalogue and starter profile fields. The plugin has no Boons and Banes list, so Claude wrote the starter one.
 - **Description is not built in:** it is an ordinary, optional profile field that games can rename, remove, require or make a Picture.
 - **Picture answers:** profile fields have a Picture kind of answer, for games that use images instead of text for descriptions.
+- **Online now lists players** (by player name); **Where lists characters**.
 - **Deleting Boons and Banes:** staff can delete catalogue entries (pencil and trashcan buttons). Entries characters hold are retired instead, so sheets keep them.
 
 ## 2026-10-15: Default icons, banners and favicon (owner)

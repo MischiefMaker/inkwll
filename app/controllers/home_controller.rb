@@ -5,8 +5,7 @@ class HomeController < ApplicationController
   allow_previews
   def show
     @areas = Area.top_level.with_attached_image.with_attached_icon
-    # The character each player seen in the last few minutes is playing.
-    @online = Character.active.where(id: Account.where(last_seen_at: 10.minutes.ago..).select(:active_character_id))
-      .includes(:character_group).order(:name)
+    # Players seen in the last few minutes. Where lists their characters.
+    @online = Account.where(last_seen_at: 10.minutes.ago..).where(system: false).order(:display_name)
   end
 end
