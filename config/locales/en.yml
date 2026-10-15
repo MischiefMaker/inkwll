@@ -6,8 +6,8 @@
 #
 # In a view, use the `term` helper:
 #
-#     term(:room)            # => "Setting"
-#     term(:room, count: 2)  # => "Settings"
+#     term(:room)            # => "Place"
+#     term(:room, count: 2)  # => "Places"
 #
 # YAML reads yes/no/on/off as true/false, so quote those if you ever need them.
 
@@ -17,8 +17,8 @@ en:
       one: "Area"
       other: "Areas"
     room:
-      one: "Setting"
-      other: "Settings"
+      one: "Place"
+      other: "Places"
     exit:
       one: "Path"
       other: "Paths"

@@ -176,4 +176,11 @@ class InklingsTest < ActionDispatch::IntegrationTest
     get inklings_path
     assert_response :not_found
   end
+
+  test "a player with no approved character is told why they can't start one yet" do
+    sign_in_as(accounts(:wellkeeper))
+    get inklings_path
+    assert_select ".inklings__start-disabled"
+    assert_select ".inklings__why-not"
+  end
 end

@@ -153,6 +153,23 @@ class Account < ApplicationRecord
     storyteller? || staff?
   end
 
+  # The GM stand-in staff and Storytellers pick as "GM" under Playing as, to
+  # post and run Chapters as their player. Made the first time it's needed,
+  # named after the player, and kept out of every character list.
+  def gm!
+    gm = characters.find_by(gm: true)
+    if gm
+      gm.update!(name: gm_name) unless gm.name == gm_name
+      return gm
+    end
+    characters.create!(gm: true, name: gm_name, status: "approved", room: active_character&.room || Room.starting)
+  end
+
+  def gm_name
+    taken = Character.where.not(account_id: id).or(Character.where(account_id: id, gm: false)).where("lower(name) = ?", display_name.downcase).exists?
+    taken ? "#{display_name} (GM)" : display_name
+  end
+
   # Reloads this player's Chapter tabs on whatever page they have open.
   # The alerts bell in the header, replaced live when an alert arrives.
   def broadcast_alert_count

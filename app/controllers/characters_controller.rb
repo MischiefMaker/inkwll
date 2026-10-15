@@ -6,13 +6,14 @@ class CharactersController < ApplicationController
   allow_previews only: :show
 
   def index
-    @characters = current_account.characters.includes(:room).order(:name)
+    @characters = current_account.characters.played.includes(:room).order(:name)
   end
 
   # Profiles of characters still waiting for approval are only shown to
   # their player and staff.
   def show
     @character = Character.includes(profile_values: :profile_field).find(params[:id])
+    return redirect_to player_path(@character.account.username) if @character.gm?
     @mine = current_account.present? && current_account.editable_characters.exists?(@character.id)
     @staff_view = current_account&.staff? || false
     raise ActiveRecord::RecordNotFound unless @character.approved? || @mine || @staff_view

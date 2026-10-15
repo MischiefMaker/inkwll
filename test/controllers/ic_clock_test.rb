@@ -45,7 +45,12 @@ class IcClockTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select ".game-time__date", text: "It is October 14, 1526."
     assert_select ".game-time__weather", text: "Rain over the hills"
-    assert_select ".online-now__list", text: /Sable/
+    assert_select ".online-now__title", text: /Online now \(1\)/
+    assert_select ".online-now__player .online-now__name", text: "Bob"
+    assert_select ".online-now__player .player-icon"
+    assert_select ".online-now__where[href=?]", where_path
+    # Who they're playing stays hidden from other players unless the game shows players.
+    assert_select ".online-now__playing", count: 0
   end
 
   test "only staff who change game settings set the weather" do

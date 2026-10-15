@@ -35,12 +35,12 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | Class | What it is |
 | --- | --- |
 | `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.site-header__label`, `.site-header__log-out`, `.message-count__icon` | The bar along the top (on phones `.site-header__label` is hidden, so the links show as icons only) |
-| `.menu`, `.menu__items`, `.menu__link`, `.menu__icon` | The Menu |
+| `.menu`, `.menu__items`, `.menu__link`, `.menu__icon`, `.menu__heading` (and `--mine`, `--world`, `--community`, `--staff`) | The Menu |
 | `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass` and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
 | `.banner-default` | The drawn banner (accent colour with ink lines) on an Area or Setting that has no banner picture. It also has `.place__banner` on front-page cards and `.description-image` on Area and Setting pages |
 | `.nib-icon`, `.nib-icon__back`, `.nib-icon__nib`, `.nib-icon__slit`, `.nib-icon__hole`, `.player-icon--default` | The pen-nib player icon shown when a player has no icon picture (guests get a grey one) |
 | `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
-| `.switcher` | "Playing as" character picker |
+| `.switcher`, `.switcher__gm` (the GM choice) | "Playing as" character picker |
 | `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
 | `.layout`, `.main` | The page body and its main column |
 | `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed`, `.ooc-sidebar__arrow`, `.ooc-sidebar__tab-label` | The OOC Chat sidebar (on phones, `.ooc-sidebar__toggle` is the drop-down bar across its top) |
@@ -112,7 +112,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest`, `--default` | Player icons |
 | `.character-profile--on-roster`, `.roster-status`, `.roster-status--on-roster`, `--requested`, `.roster-status__note`, `.roster-status__apply` | Roster notices on a character |
 | `.roster-apply`, `.roster-apply__form`, `.roster-apply__question`, `.roster-apply__resubmit` | Applying for (or claiming) a roster character |
-| `.directory`, `.directory__filter`, `.directory__list`, `.directory__item`, `.directory__item--roster`, `.directory__name`, `.directory__tag` | The character directory and the Roster page |
+| `.directory`, `.directory__filter`, `.directory__list`, `.directory__item`, `.directory__item--roster`, `.directory__name`, `.directory__tag`, `.directory__tag--status`, `.directory-tabs`, `.directory-tabs__tab` (and `--all`, `--group`, `--roster`, `--unapproved`, `--current`) | The character directory and the Roster page |
 | `.roster-admin`, `.roster-admin__item--application`, `--request`, `--character`, `.roster-admin__actions`, `.roster-admin__answers`, `.roster-admin__question`, `.roster-admin__answer` | Admin: the Roster page |
 | `.character-form__roster` | "If you stop playing" on the character form |
 | `.table__row--archived`, `.account-archived`, `.account-actions` | Archived accounts in Players and staff |
@@ -120,8 +120,9 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.character-name`, `.character-name--grouped`, `.character-group-<id>` | A character's name; grouped names take the group's colour from `--group-colour` |
 | `.pose__details`, `.mini-profile__details`, `.character-profile__group`, `.directory__group` | The group and chosen fields beside Passages and on profiles |
 | `.alert-bell`, `.alert-bell--unread`, `.alert-bell__number`, `.alerts`, `.alerts__item`, `.alerts__item--passage`, `--turn`, `--mention`, `--finished`, `--unread` | The alerts bell and the alerts list |
+| `.alert-menu`, `.alert-menu__summary`, `.alert-menu__panel`, `.alert-menu__frame` | The bell's drop-down in the header |
 | `.chapter-tracker`, `.chapter-tracker__character`, `.chapter-tracker__row`, `.chapter-tracker__row--my-turn`, `.chapter-tracker__subtitle` | My Chapters |
-| `.inklings`, `.inklings__item`, `.inklings__item--unread`, `--draft`, `--submitted`, `--approved`, `--needs_changes`, `.inklings__type`, `.inklings__type--<type>` | The Inklings list |
+| `.inklings`, `.inklings__item`, `.inklings__item--unread`, `--draft`, `--submitted`, `--approved`, `--needs_changes`, `.inklings__type`, `.inklings__type--<type>`, `.inklings__start-disabled`, `.inklings__why-not`, `.button--disabled` | The Inklings list |
 | `.inkling`, `.inkling--submitted` (and the other states), `.inkling__status`, `.inkling__review`, `.inkling__write`, `.inkling__sharing`, `.inkling__rewards` | One Inkling |
 | `.inkling-entry`, `.inkling-entry--public`, `--private`, `--personal`, `--gm`, `--roll`, `--reward`, `--system`, `--new`, `.inkling-entry__ref` | Entries in an Inkling |
 | `.grimoire`, `.grimoire__branch`, `.grimoire-spell`, `.grimoire-spell--known`, `--out-of-reach`, `.grimoire__propose`, `.grimoire-proposal--pending` (and the other statuses) | The Grimoire tab on a character |
@@ -142,7 +143,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-preset__current`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
 | `.inklings-admin`, `.inklings-admin--waiting` | Admin: Inklings |
 | `.bulk-build`, `.bulk-build__rooms`, `.bulk-build__room`, `.bulk-build__room-number`, `.bulk-build__paths`, `.bulk-build__path`, `.bulk-build__room-select`, `.bulk-build__new-rooms`, `.bulk-build__add`, `.bulk-build__remove`, `.bulk-build__submit` | Admin: Build several Settings |
-| `.game-status`, `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list` | The game's date, weather and who's online, on the front page |
+| `.game-status`, `.game-time`, `.game-time__date`, `.game-time__weather`, `.online-now`, `.online-now__list`, `.online-now__player`, `.online-now__head`, `.online-now__title`, `.online-now__count`, `.online-now__where`, `.online-now__where-icon`, `.online-now__link`, `.online-now__name`, `.online-now__playing`, `.player-icon--small` | The game's date, weather and who's online, on the front page |
 | `.scene__when`, `.scene-list__when`, `.manuscript__when`, `.chapter-tracker__when`, `.scene-form__when` | A Chapter's in-character date and time |
 | `.scene-list__subtitle`, `.scene__subtitle`, `.scene-labels`, `.scene-label`, `.scene-label--<id>`, `.scene-form__labels` | Chapter subtitles and labels |
 
@@ -180,5 +181,5 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.mini-profile` | The pop-up when you click a character |
 | `.scene-list`, `.scene-list__title`, `.scene-list__meta` | A Setting's list of Chapters |
 | `.manuscript`, `.manuscript__title`, `.manuscript__meta` | A finished Chapter in the Archives |
-| `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc` | Character icons |
+| `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc`, `--gm` (GM posts with the player's picture) | Character icons |
 | `.area-intro`, `.area-intro__banner`, `.area-intro__summary`, `.area-intro__name` | A Setting's Area (banner and short text) shown above the Setting's name |

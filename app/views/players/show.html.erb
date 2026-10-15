@@ -28,7 +28,7 @@
   <% if @show_characters %>
     <section class="player-profile__characters">
       <h2 class="section-title">Characters</h2>
-      <% characters = @player.characters.order(:name).select { |c| c.approved? || @player == current_account || current_account&.staff? } %>
+      <% characters = @player.characters.played.order(:name).select { |c| c.approved? || @player == current_account || current_account&.staff? } %>
       <% if characters.any? %>
         <ul class="player-characters">
           <% characters.each do |character| %>

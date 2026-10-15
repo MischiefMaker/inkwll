@@ -5,20 +5,36 @@
     <%= link_to root_path, class: "site-header__link site-header__home" do %><%= icon(:home, css: "site-header__icon") %><span class="site-header__label">Home</span><% end %>
     <%= link_to characters_path, class: "site-header__link site-header__characters" do %><%= icon(:characters, css: "site-header__icon") %><span class="site-header__label">My characters</span><% end %>
     <%= render "conversations/count", account: current_account %>
-    <%= render "alerts/count", account: current_account %>
+    <%# The bell opens the latest alerts in a small drop-down over the page. %>
+    <details class="alert-menu" data-controller="alert-menu" data-action="toggle->alert-menu#toggle click@document->alert-menu#closeOutside">
+      <summary class="alert-menu__summary"><%= render "alerts/count", account: current_account %></summary>
+      <div class="alert-menu__panel">
+        <turbo-frame id="alerts_panel" class="alert-menu__frame" data-alert-menu-target="frame" data-src="<%= alerts_path %>">
+          <p class="text muted">Loading…</p>
+        </turbo-frame>
+      </div>
+    </details>
     <%# Extras live in the menu so the roleplay stays front and centre. %>
     <details class="menu">
       <summary class="disclosure__summary"><%= icon(:menu, css: "site-header__icon") %><span class="site-header__label">Menu</span></summary>
       <div class="menu__items">
-        <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting started<% end %>
+        <p class="menu__heading menu__heading--mine">Mine</p>
+        <%= link_to characters_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>My characters<% end %>
+        <%= link_to my_chapters_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>My <%= term(:scene, count: 2) %><% end %>
+        <%= link_to saved_places_path, class: "menu__link" do %><%= icon(:bookmark, size: 16, css: "menu__icon") %>My places<% end %>
+        <% if Inkling.enabled? %><%= link_to inklings_path, class: "menu__link" do %><%= icon(:inkwell, size: 16, css: "menu__icon") %>My Inklings<% end %><% end %>
+        <%= link_to player_path(current_account.username), class: "menu__link" do %><%= icon(:profile, size: 16, css: "menu__icon") %>My player profile<% end %>
+        <%= link_to edit_notification_settings_path, class: "menu__link" do %><%= icon(:bell, size: 16, css: "menu__icon") %>Notifications<% end %>
+
+        <p class="menu__heading menu__heading--world">The world</p>
         <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2).downcase %><% end %>
         <%= link_to where_path, class: "menu__link" do %><%= icon(:pin, size: 16, css: "menu__icon") %>Where<% end %>
-        <%= link_to my_chapters_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>My <%= term(:scene, count: 2) %><% end %>
-        <% if Inkling.enabled? %><%= link_to inklings_path, class: "menu__link" do %><%= icon(:inkwell, size: 16, css: "menu__icon") %>Inklings<% end %><% end %>
-        <%= link_to saved_places_path, class: "menu__link" do %><%= icon(:bookmark, size: 16, css: "menu__icon") %>My places<% end %>
-        <%= link_to archives_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
         <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character directory<% end %>
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
+        <%= link_to archives_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
+
+        <p class="menu__heading menu__heading--community">Community and help</p>
+        <%= link_to getting_started_path, class: "menu__link menu__guide" do %><%= icon(:guide, size: 16, css: "menu__icon") %>Getting started<% end %>
         <%= link_to forum_boards_path, class: "menu__link" do %><%= icon(:board, size: 16, css: "menu__icon") %><%= term(:forum_board, count: 2) %><% end %>
         <% if WikiPage.enabled? %>
           <%= link_to wiki_pages_path, class: "menu__link" do %><%= icon(:wiki, size: 16, css: "menu__icon") %>Wiki<% end %>
@@ -27,9 +43,8 @@
           <% end %>
         <% end %>
         <%= link_to ooc_messages_path, class: "menu__link" do %><%= icon(:chat, size: 16, css: "menu__icon") %>OOC Chat<% end %>
-        <%= link_to player_path(current_account.username), class: "menu__link" do %><%= icon(:profile, size: 16, css: "menu__icon") %>My player profile<% end %>
-        <%= link_to edit_notification_settings_path, class: "menu__link" do %><%= icon(:bell, size: 16, css: "menu__icon") %>Notifications<% end %>
         <% if current_account.staff? %>
+          <p class="menu__heading menu__heading--staff">Staff</p>
           <%= link_to admin_root_path, class: "menu__link" do %><%= icon(:shield, size: 16, css: "menu__icon") %>Admin panel<% end %>
         <% end %>
       </div>
@@ -38,12 +53,14 @@
 
   <div class="site-header__account">
     <% characters = current_account.characters.active.order(:name) %>
-    <% if characters.any? %>
+    <% gm_option = current_account.may_storytell? %>
+    <% if characters.any? || gm_option %>
       <%= form_with url: active_character_path, method: :patch, class: "switcher",
             data: { controller: "auto-submit" } do |form| %>
         <%= form.label :character_id, "Playing as", class: "switcher__label" %>
         <%= form.select :character_id,
-              options_from_collection_for_select(characters, :id, :name, current_character&.id),
+              options_from_collection_for_select(characters, :id, :name, current_character&.id) +
+                (gm_option ? tag.option("GM (#{current_account.display_name})", value: "gm", selected: current_character&.gm?, class: "switcher__gm") : "".html_safe),
               { include_blank: current_character.nil? },
               data: { action: "change->auto-submit#submit" } %>
         <noscript><%= form.submit "Switch" %></noscript>
