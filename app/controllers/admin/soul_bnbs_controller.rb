@@ -1,7 +1,7 @@
 # The game's catalogue of Boons and Banes.
 class Admin::SoulBnbsController < Admin::BaseController
   require_job :review_apps
-  before_action :set_bnb, only: %i[ edit update ]
+  before_action :set_bnb, only: %i[ edit update destroy ]
 
   def index
     @bnbs = Soul::Bnb.ordered
@@ -30,6 +30,20 @@ class Admin::SoulBnbsController < Admin::BaseController
       redirect_to admin_soul_bnbs_path, notice: "Saved."
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # Deletes an entry no character holds. One that characters hold is
+  # retired instead, so their sheets keep it.
+  def destroy
+    if @bnb.character_bnbs.exists?
+      @bnb.update!(active: false)
+      Soul::AuditEntry.record!("catalogue_change", "Retired #{@bnb.label} from the catalogue", actor: current_account)
+      redirect_to admin_soul_bnbs_path, notice: "Characters already have #{@bnb.name}, so it was retired instead: nobody new can pick it, and their sheets keep it."
+    else
+      @bnb.destroy!
+      Soul::AuditEntry.record!("catalogue_remove", "Deleted #{@bnb.label} from the catalogue", actor: current_account)
+      redirect_to admin_soul_bnbs_path, notice: "#{@bnb.name} deleted."
     end
   end
 

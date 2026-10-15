@@ -6,12 +6,12 @@
     <%= tag.p character.name, **character_name_options(character, "mini-profile__name") %>
     <%= character_details(character, "mini-profile__details muted") %>
     <p class="muted">In <%= link_to character.room.name, room_path(character.room) %></p>
-    <% if character.description.present? %>
-      <p class="text"><%= truncate(character.description, length: 200) %></p>
+    <% if (blurb = mini_profile_blurb(character)) %>
+      <p class="text mini-profile__blurb"><%= truncate(blurb, length: 200) %></p>
     <% end %>
     <p class="text mini-profile__links">
       <%= link_to "View profile", character %>
-      <% if character.account_id != current_account&.id %>
+      <% if !own?(character) %>
         · <%= link_to "Message the player", new_conversation_path(character_id: character.id) %>
       <% end %>
     </p>

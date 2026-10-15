@@ -6,14 +6,22 @@ class Admin::RosterCharactersController < Admin::BaseController
   limit_posting to: 20, within: 10.minutes, only: :create
 
   def create
-    attributes = params.expect(character: [ :name, :description, :roster_note ])
+    attributes = params.expect(character: [ :name, :roster_note ])
     character = Character.create_for_roster!(**attributes.to_h.symbolize_keys)
-    redirect_to admin_roster_path, notice: "#{character.name} is on the roster."
+    redirect_to character_path(character),
+      notice: "#{character.name} is ready to fill in. Players can't see them until you open them on the roster."
   rescue ActiveRecord::RecordInvalid => e
     redirect_to admin_roster_path, alert: e.record.errors.full_messages.to_sentence
   end
 
   def update
+    if params[:decision] == "open"
+      character = Character.find(params[:id])
+      return redirect_to admin_roster_path, alert: "#{character.name} isn't waiting to go on the roster." unless character.preparing_for_roster?
+      character.open_on_roster!
+      return redirect_to character_path(character), notice: "#{character.name} is on the roster. Players can apply now."
+    end
+
     character = Character.active.find(params[:id])
     if params[:decision] == "decline"
       character.update!(roster_requested_at: nil)

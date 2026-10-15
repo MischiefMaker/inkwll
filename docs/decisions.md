@@ -6,6 +6,38 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Starter content, Description and Picture fields (owner)
+
+- **Ship with defaults:** new games get SOUL's Aspects and Skills from ares-soul-plugin, plus a starter Boons and Banes catalogue and starter profile fields. The plugin has no Boons and Banes list, so Claude wrote the starter one.
+- **Description is not built in:** it is an ordinary, optional profile field that games can rename, remove, require or make a Picture.
+- **Picture answers:** profile fields have a Picture kind of answer, for games that use images instead of text for descriptions.
+- **Deleting Boons and Banes:** staff can delete catalogue entries (pencil and trashcan buttons). Entries characters hold are retired instead, so sheets keep them.
+
+## 2026-10-15: Default icons, banners and favicon (owner)
+
+- **Favicon:** a slate inkwell and quill on a gold circle (option D of four).
+- **Players and guests** without an icon picture get a pen-nib icon on a round badge in the look's colours (gold and slate by default), instead of their initial. Guests get a grey one.
+- **Areas, Settings and boards** without an icon picture get a drawn icon tile (compass, door, speech bubble). Areas and Settings without a banner picture get a plain drawn banner (owner: "I think" we should; open to dropping it).
+- Icons are line drawings in the code (`app/helpers/icons_helper.rb`), drawn like the header's bell. No outside icon sites.
+
+## Preparing roster characters (owner, 2026-10-15)
+
+- Adding a roster character from Admin → Roster takes staff to its profile. It stays hidden from players ("Being prepared") until staff fill in SOUL, background and the rest and press **Open on the roster**.
+- Staff who review applications (Scribes, Wellkeepers, Pages with the app flag) can **edit** roster characters, both being prepared and on the roster.
+
+## The Prologue: an OOC starting Setting (owner, 2026-10-15)
+
+- New characters start in an out-of-character Setting instead of an IC one. Claude picked the name **The Prologue** (owner suggested "Waiting in the Wings" or something bookish), in a new top-level Area, **Out of Character**, listed last on the front page. One-way Paths named after each top-level Area's entrance Setting lead into the story. Rename or move it from Admin → Building; whichever Setting is ticked as the default starting one is where new characters begin.
+
+## What guests can read (owner, 2026-10-15)
+
+- Guests can **read** much more of the site: the Boards, the Wiki, Where, the character directory and Roster, character and player profiles, All Settings, the Archives and Chapters anyone may watch (open ones, finished private ones, and hidden ones made public). They can't post, edit, join or message; those send them to log in. Their own-pages (My characters, Messages, My Chapters) still need an account.
+- The guest top bar has a Menu with everything they can read, and the front page shows the Boards to guests.
+
+## Area banners on Settings (owner, 2026-10-15)
+
+- Each Setting shows its own Area's banner and short text (if it has them) at the top, above the Setting's name and description. It's the nearest Area only, not the ones above it. Areas with neither show nothing extra.
+
 ## OOC Chat moderation (owner, 2026-10-15)
 
 - **Players** can edit and delete their own OOC Chat messages; **staff** can edit and delete anyone's.
@@ -322,7 +354,7 @@ Defaults picked by Claude, for the owner to check:
 - **Drafts and characters waiting for approval** are only visible to their player and staff.
 - **Gallery:** up to 30 pictures per character, PNG, JPEG, GIF or WebP, up to 5 MB each, with an optional caption.
 - **Relationships:** simple notes. Each one names a character (linked to their profile) or anyone else, picks a kind (Family, Friend, Romance, Ally, Rival, Enemy, Acquaintance, Other) and has an optional note. They're one-sided: each player writes their own.
-- **Player profiles:** icon (their initial on a colour until they upload one), player name, staff level, About me, and a "Send a message" button. Their characters are listed only when the game shows who plays which character, though the player and staff always see the list. Reached from the player's name in the header, "My player profile" in the Menu, and names in the OOC Chat. Only logged-in players can see them.
+- **Player profiles:** icon (a pen nib until they upload one; was their initial on a colour before 2026-10-15), player name, staff level, About me, and a "Send a message" button. Their characters are listed only when the game shows who plays which character, though the player and staff always see the list. Reached from the player's name in the header, "My player profile" in the Menu, and names in the OOC Chat. Only logged-in players can see them.
 
 ## 2026-10-14: Step 3b details picked while building (Messages)
 

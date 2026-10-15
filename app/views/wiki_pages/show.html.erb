@@ -7,14 +7,14 @@
     <div class="wiki-page__actions">
       <% if @page.editable_by?(current_account) %><%= link_to "Edit", edit_wiki_page_path(@page), class: "button button--quiet" %><% end %>
       <%= link_to "History", wiki_page_revisions_path(@page), class: "button button--quiet" %>
-      <% if current_account.staff? %>
+      <% if current_account&.staff? %>
         <% if @page.locked? %>
           <%= button_to "Unlock", wiki_page_lock_path(@page), method: :delete, class: "button button--quiet" %>
         <% else %>
           <%= button_to "Lock", wiki_page_lock_path(@page), class: "button button--quiet" %>
         <% end %>
       <% end %>
-      <% if current_account.can?(:manage_staff) %>
+      <% if current_account&.can?(:manage_staff) %>
         <%= button_to "Delete", wiki_page_path(@page), method: :delete, class: "button button--quiet wiki-page__delete",
               form: { data: { turbo_confirm: "Delete this page and all its history?" } } %>
       <% end %>

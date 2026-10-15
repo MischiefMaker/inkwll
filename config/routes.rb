@@ -146,7 +146,7 @@ Rails.application.routes.draw do
     resource :soul, only: :show, controller: "soul"
     resources :soul_aspects, only: %i[ create edit update destroy ]
     resources :soul_skills, only: %i[ create edit update destroy ]
-    resources :soul_bnbs, only: %i[ index create edit update ]
+    resources :soul_bnbs, only: %i[ index create edit update destroy ]
     resources :soul_reviews, only: %i[ index update ]
     resources :soul_award_suggestions, only: :update
     resources :applications, only: %i[ index show update ]

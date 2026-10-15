@@ -15,6 +15,17 @@ module Character::Roster
   end
 
   def on_roster? = on_roster_at.present?
+
+  # Kept by the Roster account: on the roster, or still being prepared.
+  def roster_kept? = account_id.present? && account_id == Account.roster_keeper.id
+
+  # A character staff added for the roster but haven't opened to applicants
+  # yet, while they fill in the profile, SOUL and background (owner).
+  def preparing_for_roster? = roster_kept? && !on_roster?
+
+  def open_on_roster!
+    update!(status: "approved", on_roster_at: Time.current)
+  end
   def roster_requested? = roster_requested_at.present?
 
   # A player asking staff to put their character on the roster now.
@@ -57,10 +68,12 @@ module Character::Roster
         .find_each(&:put_on_roster!)
     end
 
-    # A pre-made or "wanted" character staff add straight to the roster.
-    def create_for_roster!(name:, description: nil, roster_note: nil)
-      character = Account.roster_keeper.characters.create!(name: name, description: description)
-      character.update!(status: "approved", on_roster_at: Time.current, retired_at: Time.current, roster_note: roster_note)
+    # A pre-made or "wanted" character staff add for the roster. It stays
+    # hidden from players until staff open it on the roster, so they can fill
+    # in the profile, SOUL and background first (owner).
+    def create_for_roster!(name:, roster_note: nil)
+      character = Account.roster_keeper.characters.create!(name: name)
+      character.update!(retired_at: Time.current, roster_note: roster_note)
       character
     end
   end

@@ -97,17 +97,44 @@ class RosterTest < ActionDispatch::IntegrationTest
     assert_not characters(:wren).reload.roster_requested?
   end
 
-  test "staff add a new character straight to the roster" do
+  test "staff add a roster character, fill it in, then open it on the roster" do
     sign_in_as(accounts(:scribe))
-    assert_difference "Character.on_roster.count" do
+    assert_no_difference "Character.on_roster.count" do
       post admin_roster_characters_path, params: { character: { name: "The Lost Heir", roster_note: "Wanted!" } }
     end
-    assert Character.find_by(name: "The Lost Heir").approved?
+    heir = Character.find_by(name: "The Lost Heir")
+    assert_redirected_to character_path(heir)
+    assert heir.preparing_for_roster?
+
+    # Staff can edit it; players can't see it yet.
+    field = profile_fields(:hometown)
+    patch character_path(heir), params: { character: { profile: { field.id => "Raised by wolves." } } }
+    assert_equal "Raised by wolves.", heir.reload.profile_value_for(field).value
+    get roster_path
+    assert_select "a[href=?]", character_path(heir), count: 0
+
+    patch admin_roster_character_path(heir), params: { decision: "open" }
+    assert heir.reload.on_roster?
+    assert heir.approved?
+
+    sign_in_as(accounts(:bob))
+    get character_path(heir)
+    assert_response :success
+    patch character_path(heir), params: { character: { name: "Mine now" } }
+    assert_response :not_found
+  end
+
+  test "players can't see a roster character still being prepared" do
+    heir = Character.create_for_roster!(name: "The Lost Heir")
+    sign_in_as(accounts(:bob))
+    get character_path(heir)
+    assert_response :not_found
   end
 
   test "the new player of a staff-made roster character finishes the sheet" do
     GameSetting.current.update!(approval_required: true)
     heir = Character.create_for_roster!(name: "The Lost Heir")
+    heir.open_on_roster!
     RosterApplication.create!(character: heir, account: accounts(:bob), note: "Me!").approve!(by: accounts(:scribe))
     assert heir.reload.sheet_open?
 

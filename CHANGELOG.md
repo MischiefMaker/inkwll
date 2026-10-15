@@ -2,6 +2,61 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — Starter SOUL, Boons and Banes, and profile fields
+
+- A new game comes with SOUL's Aspects and Skills from the SOUL plugin
+  (Body, Mind and Spirit, three Skills each), a starter catalogue of six
+  Boons and six Banes, and a few profile and Application fields. Games that
+  already set these up keep their own.
+- Staff can delete a Boon or Bane from Admin → Boons and Banes with the new
+  trashcan button. One that characters already have is retired instead.
+  Edit is now a pencil button.
+- Character descriptions are now an ordinary profile field called
+  Description, which games can rename, remove or make required. Existing
+  descriptions were copied into it.
+- Profile fields can ask for a Picture, for games that show looks with an
+  image instead of text.
+
+## 2026-10-15 — Preparing roster characters
+
+- A character staff add to the roster from Admin → Roster is no longer shown
+  as retired. Adding one takes staff to its profile to fill in, and players
+  can't see it until staff press "Open on the roster".
+- Staff who review applications can edit roster characters (Edit on the
+  profile and in Admin → Roster), including their SOUL sheet and gallery.
+
+## 2026-10-15 — The Prologue
+
+- New characters start in The Prologue, an out-of-character reading room
+  (in an "Out of Character" Area), instead of an in-character Setting. Its
+  Paths lead into each Area. Existing games get it on their next update;
+  characters already playing stay where they are.
+
+## 2026-10-15 — More for guests to read
+
+- Guests (not logged in) can now read the Boards, the Wiki, Where, the
+  character directory and Roster, character and player profiles, the
+  Archives and any Chapter a player could watch. They can't post, edit or
+  join anything. Their top bar has a Menu with all of these, and the front
+  page shows the Boards.
+
+## 2026-10-15 — Icons
+
+- The top bar and the Menu have small line icons next to each link.
+- Areas, Settings and boards without an icon picture show a drawn one
+  instead (a compass, a door, a speech bubble), in the look's colours.
+- Areas and Settings without a banner picture show a plain drawn banner.
+- Players without an icon picture get a pen-nib icon instead of their
+  initial; guests get a grey one.
+- New favicon: a slate inkwell and quill on a gold circle.
+- On phones the top bar is two short rows: the game's name and your account,
+  then the links as icons only.
+
+## 2026-10-15 — Area banners on Settings
+
+- A Setting now shows its Area's banner and short text above its own name,
+  when the Area has them, so you can see where you've arrived.
+
 ## 2026-10-15 — OOC Chat moderation
 
 - Players can edit and delete their own OOC Chat messages. Staff can edit

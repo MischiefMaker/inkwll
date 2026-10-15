@@ -28,7 +28,7 @@
               <%= button_to "Delete", character_bnb_path(character, entry), method: :delete, class: "button-link",
                     form: { data: { turbo_confirm: "Delete #{entry.name} for good? Resolving keeps it on record instead." } } %>
             </div>
-          <% elsif character.sheet_open? && entry.source == "starting" && character.account_id == current_account.id %>
+          <% elsif character.sheet_open? && entry.source == "starting" && manages?(character) %>
             <%= button_to "Drop", character_bnb_path(character, entry), method: :delete, class: "button-link soul-bnb__drop" %>
           <% end %>
         </li>
@@ -39,7 +39,7 @@
   <% end %>
   <p class="hint">A Boon rerolls the low dice on rolls of its Skills; a Bane rerolls the high ones. A character needs one Bane for every <%= Soul::Rules.boons_per_bane %> Boons.</p>
 
-  <% mine = character.account_id == current_account.id %>
+  <% mine = manages?(character) %>
   <% catalogue = Soul::Bnb.active.ordered %>
   <% if catalogue.any? && ((mine && character.sheet_open?) || staff || mine) %>
     <% picking = mine && character.sheet_open? %>

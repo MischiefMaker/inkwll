@@ -15,13 +15,13 @@
     <ul class="board__rows">
       <% area.children.each do |child| %>
         <li class="board__row">
-          <%= link_to child.name, area_path(child), class: "board__name" %>
+          <%= link_to area_path(child), class: "board__name" do %><%= place_icon(child, :compass, css: "board__icon") %><%= child.name %><% end %>
           <span class="muted"><%= term(:area) %></span>
         </li>
       <% end %>
       <% area.rooms.listed.each do |room| %>
         <li class="board__row">
-          <%= link_to room.name, room_path(room), class: "board__name" %>
+          <%= link_to room_path(room), class: "board__name" do %><%= place_icon(room, :door, css: "board__icon") %><%= room.name %><% end %>
           <span class="muted">
             <% if room.characters.any? %><%= pluralize(room.characters.size, "character") %> here<% end %>
           </span>

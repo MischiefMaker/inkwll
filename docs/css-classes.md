@@ -34,8 +34,12 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 | Class | What it is |
 | --- | --- |
-| `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player` | The bar along the top |
-| `.menu`, `.menu__items` | The Menu |
+| `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.site-header__label`, `.site-header__log-out`, `.message-count__icon` | The bar along the top (on phones `.site-header__label` is hidden, so the links show as icons only) |
+| `.menu`, `.menu__items`, `.menu__link`, `.menu__icon` | The Menu |
+| `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass` and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
+| `.banner-default` | The drawn banner (accent colour with ink lines) on an Area or Setting that has no banner picture. It also has `.place__banner` on front-page cards and `.description-image` on Area and Setting pages |
+| `.nib-icon`, `.nib-icon__back`, `.nib-icon__nib`, `.nib-icon__slit`, `.nib-icon__hole`, `.player-icon--default` | The pen-nib player icon shown when a player has no icon picture (guests get a grey one) |
+| `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
 | `.switcher` | "Playing as" character picker |
 | `.chapter-tabs`, `.chapter-tab`, `.chapter-tab--current`, `.chapter-tab__title`, `.chapter-tab__setting`, `.chapter-tab__turn`, `.chapter-tab__unread` | Your Chapter tabs |
 | `.layout`, `.main` | The page body and its main column |
@@ -100,11 +104,12 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.character-profile`, `.character-profile__header`, `.character-profile__name`, `.character-profile__panel` | A character's profile page |
 | `.profile-tabs`, `.profile-tabs__tab`, `.profile-tabs__tab--current` | The tabs on a character's profile |
 | `.profile-fields`, `.profile-fields__row`, `.profile-fields__private`, `.details-list__term`, `.details-list__value` | Profile answers, such as Demographics |
+| `.profile-fields__picture`, `.profile-field-input__picture`, `.profile-field-input__remove` | Picture answers: on the profile, and the current picture in the character form |
 | `.application-status`, `.application-status--draft`, `--submitted`, `--returned` | The approval notice on a character |
 | `.gallery`, `.gallery__item`, `.gallery__image`, `.gallery__caption` | The picture gallery |
 | `.relationships`, `.relationships__item`, `.relationships__name`, `.relationships__kind`, `.relationships__note` | Relationships |
 | `.player-profile`, `.player-profile__header`, `.player-profile__about`, `.player-characters` | A player's profile |
-| `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest` | Player icons |
+| `.player-icon`, `.player-icon--tiny`, `--large`, `--image`, `--guest`, `--default` | Player icons |
 | `.character-profile--on-roster`, `.roster-status`, `.roster-status--on-roster`, `--requested`, `.roster-status__note`, `.roster-status__apply` | Roster notices on a character |
 | `.roster-apply`, `.roster-apply__form`, `.roster-apply__question`, `.roster-apply__resubmit` | Applying for (or claiming) a roster character |
 | `.directory`, `.directory__filter`, `.directory__list`, `.directory__item`, `.directory__item--roster`, `.directory__name`, `.directory__tag` | The character directory and the Roster page |
@@ -155,7 +160,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.soul-culminations`, `.soul-culmination`, `.soul-culmination--approved` (and the other statuses) | Culminations |
 | `.soul-history`, `.soul-history__item` | Narrative History |
 | `.soul-audit` | The staff log |
-| `.soul-reviews`, `.soul-reviews__item`, `.bnb-catalogue` | Admin: SOUL requests and the Boons and Banes catalogue |
+| `.soul-reviews`, `.soul-reviews__item`, `.bnb-catalogue`, `.bnb-catalogue__actions`, `.bnb-catalogue__edit`, `.bnb-catalogue__delete`, `.bnb-catalogue__delete-form`, `.icon-action` (pencil and trashcan buttons) | Admin: SOUL requests and the Boons and Banes catalogue |
 | `.pose--roll`, `.roll-details` | A roll result and its dice |
 
 ## Chapters
@@ -176,3 +181,4 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.scene-list`, `.scene-list__title`, `.scene-list__meta` | A Setting's list of Chapters |
 | `.manuscript`, `.manuscript__title`, `.manuscript__meta` | A finished Chapter in the Archives |
 | `.character-icon`, `.character-icon--tiny`, `--small`, `--large`, `--initial`, `--npc` | Character icons |
+| `.area-intro`, `.area-intro__banner`, `.area-intro__summary`, `.area-intro__name` | A Setting's Area (banner and short text) shown above the Setting's name |

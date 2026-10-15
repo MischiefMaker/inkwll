@@ -1,5 +1,5 @@
 <%# Culminations, the Narrative History and (for staff) the audit trail. %>
-<% mine = character.account_id == current_account.id %>
+<% mine = manages?(character) %>
 <% staff = current_account.can?(:review_apps) %>
 <section class="soul-culminations">
   <h2 class="section-title">Culminations</h2>

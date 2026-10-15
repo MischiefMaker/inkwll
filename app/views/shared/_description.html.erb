@@ -1,8 +1,11 @@
 <%# Shows whatever a builder gave an Area or Setting: a banner, short text
     and long text, any or all. The background is set on the page itself
-    (see page_background in ApplicationHelper). %>
+    (see page_background in ApplicationHelper). Pass default_banner: true
+    to draw a plain banner when there's no picture. %>
 <% if record.image.attached? %>
   <figure class="description-image"><%= image_tag record.image, alt: record.name %></figure>
+<% elsif local_assigns[:default_banner] %>
+  <%= default_banner(css: "description-image") %>
 <% end %>
 <% if record.summary.present? %>
   <p class="lede"><%= record.summary %></p>

@@ -136,8 +136,10 @@ class WikiTest < ActionDispatch::IntegrationTest
     assert_select ".wiki__title", count: 1
   end
 
-  test "you need an account to read the wiki" do
+  test "guests can read the wiki but need an account to write" do
     get wiki_pages_path
+    assert_response :success
+    get new_wiki_page_path
     assert_redirected_to new_session_path
   end
 

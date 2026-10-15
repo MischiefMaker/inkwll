@@ -82,6 +82,12 @@ class Account < ApplicationRecord
 
   # The built-in account that holds characters on the roster. Its name has
   # a space, which player names can't, so no player can ever take it.
+  # The characters this account may edit: their own, and for staff who
+  # review applications, the ones kept for the roster.
+  def editable_characters
+    can?(:review_apps) ? Character.where(account: [ self, Account.roster_keeper ]) : characters
+  end
+
   def self.roster_keeper
     find_by(username: "the roster") || new(display_name: "The Roster", username: "the roster", system: true,
       password: SecureRandom.base58(24) + "Aa1").tap { |account| account.save!(validate: false) }

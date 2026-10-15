@@ -2,6 +2,8 @@
 # only staff can change. Every save keeps a revision (see RevisionsController).
 class WikiPagesController < ApplicationController
   include WikiRequired
+  # Guests can read the wiki, but not edit it (owner).
+  allow_previews only: %i[ index show ]
   limit_posting to: 10, within: 10.minutes, only: %i[ create update ]
   before_action :set_page, only: %i[ edit update destroy ]
   before_action :require_editable, only: %i[ edit update ]

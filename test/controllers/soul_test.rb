@@ -98,4 +98,24 @@ class SoulControllersTest < ActionDispatch::IntegrationTest
     delete admin_soul_aspect_path(soul_aspects(:body))
     assert Soul::Aspect.exists?(soul_aspects(:body).id), "an Aspect with Skills stays"
   end
+
+  test "staff delete an unused Boon, but one characters hold is retired instead" do
+    unused = Soul::Bnb.create!(kind: "boon", name: "Lucky")
+    held = Soul::Bnb.create!(kind: "bane", name: "Cursed")
+    Soul::CharacterBnb.insert!({ character_id: characters(:wren).id, soul_bnb_id: held.id, skill_ids: [ soul_skills(:strength).id ], source: "staff" })
+
+    sign_in_as(accounts(:bob))
+    delete admin_soul_bnb_path(unused)
+    assert Soul::Bnb.exists?(unused.id), "players can't delete"
+
+    sign_in_as(accounts(:wellkeeper))
+    get admin_soul_bnbs_path
+    assert_select ".bnb-catalogue__edit .icon--pencil"
+    assert_select ".bnb-catalogue__delete .icon--trash"
+
+    delete admin_soul_bnb_path(unused)
+    assert_not Soul::Bnb.exists?(unused.id)
+    delete admin_soul_bnb_path(held)
+    assert_not held.reload.active?
+  end
 end

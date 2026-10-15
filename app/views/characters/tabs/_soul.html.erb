@@ -1,7 +1,7 @@
 <%# The SOUL sheet: Resonance, Aspects and Skills, and XP. Seen by the
     character's player and staff. While the sheet is open the player sets
     starting ratings; once it's locked, ratings rise by spending XP. %>
-<% mine = character.account_id == current_account.id %>
+<% mine = manages?(character) %>
 <% aspects = Soul::Aspect.ordered.includes(:skills) %>
 <% character.soul_ratings.load %>
 

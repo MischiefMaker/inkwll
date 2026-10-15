@@ -2,6 +2,8 @@ class CharactersController < ApplicationController
   limit_posting to: 5, within: 10.minutes
   limit_posting to: 20, within: 1.hour, only: :update, name: "uploads"
   before_action :set_own_character, only: %i[ edit update ]
+  # Guests can read approved characters' profiles.
+  allow_previews only: :show
 
   def index
     @characters = current_account.characters.includes(:room).order(:name)
@@ -11,8 +13,8 @@ class CharactersController < ApplicationController
   # their player and staff.
   def show
     @character = Character.includes(profile_values: :profile_field).find(params[:id])
-    @mine = @character.account_id == current_account.id
-    @staff_view = current_account.staff?
+    @mine = current_account.present? && current_account.editable_characters.exists?(@character.id)
+    @staff_view = current_account&.staff? || false
     raise ActiveRecord::RecordNotFound unless @character.approved? || @mine || @staff_view
     tabs = %w[ profile application gallery relationships logs ]
     tabs << "soul" if Soul.enabled? && (@mine || @staff_view)
@@ -46,15 +48,16 @@ class CharactersController < ApplicationController
   end
 
   private
-    # Players can only edit their own characters.
+    # Players can only edit their own characters; staff can also edit roster
+    # characters.
     def set_own_character
-      @character = current_account.characters.find(params[:id])
+      @character = current_account.editable_characters.find(params[:id])
     end
 
     # Players pick a group until their character is approved; after that
     # only staff change it.
     def character_params
-      permitted = [ :name, :description, :icon, :remove_icon, :roster_when_idle, profile: {} ]
+      permitted = [ :name, :icon, :remove_icon, :roster_when_idle, profile: {}, remove_profile_pictures: [] ]
       permitted.unshift(:character_group_id) if @character.nil? || @character.group_choosable?
       params.expect(character: permitted).tap do |attributes|
         if attributes.key?(:character_group_id) && !CharacterGroup.exists?(id: attributes[:character_group_id].presence)

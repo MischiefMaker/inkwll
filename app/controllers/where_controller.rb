@@ -2,6 +2,8 @@
 # character is standing in, and the open Chapters they're taking part in.
 # Private and hidden Chapters never show here.
 class WhereController < ApplicationController
+  allow_previews
+
   def show
     @characters = Character.active.includes(:room).order(:name)
     @open_scenes = SceneParticipant.joins(:scene).merge(Scene.visibility_joinable).merge(Scene.active)

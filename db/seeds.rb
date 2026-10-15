@@ -66,7 +66,7 @@ ashcombe = seed_room(uptown, "The Ashcombe Hotel", <<~TEXT)
   A long mahogany front desk stretches across the far wall, a bell and a ledger waiting at one end and a clerk with a practised smile at the other. Off to one side, a pair of glass doors opens onto a hushed little bar, and the revolving doors at the front lead back out onto Grand Avenue.
 TEXT
 
-central_square = seed_room(midtown, "Central Square", <<~TEXT, starting: true)
+central_square = seed_room(midtown, "Central Square", <<~TEXT)
   Everything in the city seems to pass through Central Square sooner or later. A great stone fountain sits at its centre, its basin glinting with coins tossed in by the hopeful and the bored, and benches circle it for those with time to spare. Pigeons hold court on the steps of the old clock tower, entirely unbothered by the crowds hurrying around them, and a newspaper stand on the corner shouts the day's headlines to anyone who will listen.
 
   Streets branch off in every direction: uphill toward the quieter, richer avenues of Uptown, and down toward the noise and bustle of Downtown. On the eastern side of the square, a warm glow spills from the windows of the Lamplight Café.
@@ -248,6 +248,14 @@ seed_paths(clearing, "Old Road to the City", grand_avenue, "Forest Road")
 }.each do |area, room|
   area.update!(entrance_room: room) if area.entrance_room.nil?
 end
+
+# SOUL's Aspects and Skills, starter Boons and Banes, and profile and
+# application fields, so character creation works straight away.
+StarterContent.install!
+
+# Where new characters start: an out-of-character reading room with Paths
+# into each Area (see Room.create_prologue!).
+Room.create_prologue!
 
 # ---------------------------------------------------------------------------
 # Forum boards, listed on the front page after the Areas. Change them, or who

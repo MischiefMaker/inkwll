@@ -33,3 +33,4 @@ Done tasks stay in this folder as a record.
 | [0021: Grimoire](0021-grimoire.md) | Review | No | 9. Grimoire |
 | [0022: Wiki](0022-wiki.md) | Review | No | 9b. Wiki |
 | [0023: Platform](0023-platform.md) | Review | No | 10. Platform |
+| [0024: Review the starter world's Paths](0024-review-starter-paths.md) | Open | No | 11. Going live |

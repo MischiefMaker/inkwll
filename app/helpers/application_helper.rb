@@ -26,6 +26,18 @@ module ApplicationHelper
 
   # Classes on <body> so a skin can style one page or kind of visitor:
   # "page-scenes page-scenes-show is-logged-in", or "page-admin-bans ... is-staff".
+  # Whether the logged-in player plays this character (or owns this record).
+  # Guests own nothing, even characters with no player.
+  def own?(record)
+    current_account.present? && record.account_id == current_account.id
+  end
+
+  # Whether the logged-in player can manage this character: their own, or
+  # for staff who review applications, one kept for the roster.
+  def manages?(character)
+    own?(character) || (character.roster_kept? && current_account&.can?(:review_apps)) || false
+  end
+
   def body_classes
     page = "page-#{controller_path.tr("/", "-")}"
     classes = [ page, "#{page}-#{action_name}" ]
@@ -56,6 +68,13 @@ module ApplicationHelper
   # The public profile fields the game shows beside Passages.
   def passage_fields
     @passage_fields ||= ProfileField.where(on_passages: true, public: true).ordered.to_a
+  end
+
+  # A few lines for a character's pop-up: their first public long-text
+  # answer in Demographics, such as Description.
+  def mini_profile_blurb(character)
+    @mini_profile_field ||= ProfileField.where(section: "demographics", field_type: "long_text", public: true).ordered.first || false
+    @mini_profile_field && character.profile_value_for(@mini_profile_field)&.value.presence
   end
 
   # The short line beside a character's Passages: their group and the

@@ -7,5 +7,6 @@ class Admin::RosterController < Admin::BaseController
     @applications = RosterApplication.pending.includes(:character, :account).order(:created_at)
     @requests = Character.active.where.not(roster_requested_at: nil).includes(:account).order(:roster_requested_at)
     @roster = Character.on_roster.includes(:roster_applications).order(:name)
+    @preparing = Account.roster_keeper.characters.where(on_roster_at: nil).order(:name)
   end
 end

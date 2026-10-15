@@ -46,8 +46,10 @@ class PlayerProfilesTest < ActionDispatch::IntegrationTest
     assert accounts(:bob).reload.icon.attached?
   end
 
-  test "guests can't see player profiles" do
+  test "guests can read player profiles, but not change them" do
     get player_path(accounts(:alice).username)
+    assert_response :success
+    get edit_player_profile_path
     assert_redirected_to new_session_path
   end
 end

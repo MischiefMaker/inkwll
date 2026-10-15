@@ -177,7 +177,7 @@ class Scene < ApplicationRecord
   end
 
   def participating?(account)
-    participants_for(account).any?
+    account.present? && participants_for(account).any?
   end
 
   def invited?(character)
@@ -185,7 +185,7 @@ class Scene < ApplicationRecord
   end
 
   def invited_account?(account)
-    invitations.any? { |i| i.character.account_id == account.id }
+    account.present? && invitations.any? { |i| i.character.account_id == account.id }
   end
 
   # Whether the account knows this scene exists.
@@ -207,7 +207,7 @@ class Scene < ApplicationRecord
 
   # Staff can read a private or hidden scene only once someone reports it.
   def reported_to?(account)
-    account.can?(:handle_reports) && reports.exists?
+    account.present? && account.can?(:handle_reports) && reports.exists?
   end
 
   def can_join?(character)

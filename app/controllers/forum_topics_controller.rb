@@ -2,6 +2,7 @@
 # starter can change its title; moderators (Scribes and Wellkeepers) can also
 # pin, lock and delete it.
 class ForumTopicsController < ApplicationController
+  allow_previews only: :show
   limit_posting to: 5, within: 10.minutes, only: :create
   before_action :set_board, only: %i[ new create ]
   before_action :require_starter, only: %i[ new create ]

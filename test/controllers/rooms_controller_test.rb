@@ -6,6 +6,16 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@alice)
   end
 
+  test "a Setting shows its Area's short text above its name, when the Area has some" do
+    get room_path(rooms(:commons))
+    assert_select ".area-intro", count: 0
+
+    areas(:world).update!(summary: "Where everything begins.")
+    get room_path(rooms(:commons))
+    assert_select ".area-intro__summary", text: /Where everything begins/
+    assert_select ".area-intro + h1.page-title"
+  end
+
   test "shows the room, its exits and who is here" do
     get room_path(rooms(:commons))
 

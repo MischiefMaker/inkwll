@@ -1,6 +1,6 @@
 <%# Grimoire: the spells a character knows, the ones they can learn, and
     proposing a new one. Only the player and staff see this tab. %>
-<% mine = character.account_id == current_account.id %>
+<% mine = manages?(character) %>
 <% known = character.learned_spells.includes(spell: { branch: :skill }).sort_by { |learned| learned.spell.name } %>
 <% branches = Grimoire::Branch.ordered.includes(:skill) %>
 

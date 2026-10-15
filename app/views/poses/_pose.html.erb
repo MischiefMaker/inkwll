@@ -5,7 +5,7 @@
   <p class="pose pose--system" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>"><%= pose.body %></p>
 <% else %>
   <% character = pose.character %>
-  <% mine = character && character.account_id == current_account.id %>
+  <% mine = character && own?(character) %>
   <article class="pose pose--<%= pose.kind %><%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %><%= " pose--retired" if character&.retired? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
     <% if pose.npc? %>
       <span class="pose__icon"><%= tag.span pose.npc_name.first.upcase, class: "character-icon character-icon--small character-icon--initial character-icon--npc", aria: { hidden: true } %></span>

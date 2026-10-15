@@ -1,6 +1,7 @@
 # The Archives: every finished Chapter (Manuscript) the player may read,
 # newest first, optionally for one Setting or one character.
 class ArchivesController < ApplicationController
+  allow_previews
   LIMIT = 100
 
   def index

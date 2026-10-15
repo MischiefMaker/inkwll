@@ -7,7 +7,7 @@
     <div class="character-profile__heading">
       <%= tag.h1 @character.name, **character_name_options(@character, "page-title character-profile__name") %>
       <% if @character.character_group %><p class="character-profile__group"><%= @character.character_group.name %></p><% end %>
-      <% if @character.retired? && !@character.on_roster? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
+      <% if @character.retired? && !@character.roster_kept? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
       <div class="character-profile__actions">
         <% if @mine %>
@@ -20,7 +20,7 @@
                   form: { data: { turbo_confirm: "Ask staff to give #{@character.name} up for someone else to play? If they agree, #{@character.name} stops being yours." } } %>
           <% end %>
         <% elsif !@character.on_roster? %>
-          <% if Inkling.enabled? && current_account.can?(:review_apps) && @character.approved? && !@character.retired? %>
+          <% if Inkling.enabled? && current_account&.can?(:review_apps) && @character.approved? && !@character.retired? %>
             <%= link_to "Start an Inkling for #{@character.name}", new_inkling_path(character_id: @character.id), class: "button button--quiet character-profile__inkling" %>
           <% end %>
           <%= link_to "Message the player of #{@character.name}", new_conversation_path(character_id: @character.id), class: "button button--quiet" %>
