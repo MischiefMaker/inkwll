@@ -18,7 +18,7 @@ Short, plain-language notes on what changed. Newest first.
   dormitories and office blocks became buildings with separate units. Their
   numbered list is called "Units".
 - Menu entries use Title Case, and "My player profile" is now "My Profile".
-- The front page's Area cards are centred.
+- The front page's column of Area and Board cards is centred beside the OOC Chat (text stays left-aligned).
 - Chapter tabs can fold away (remembered in your browser). While folded, a
   wiggling quill shows when it's your turn somewhere. A finished Chapter's tab
   has an X to close it for good. The OOC Chat shrinks to fit under the tabs so

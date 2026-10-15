@@ -49,7 +49,6 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.admin-characters__active`, `.admin-characters__retired`, `.admin-characters__retired-table` | Admin → Characters: the working list and the retired section |
 | `.directory__tag--played`, `.roster-apply__played` | The "Previously played" mark on roster characters |
 | `.character-form__locked-value`, `.profile-field-form__player-can-edit` | A profile answer locked after approval; the "Player can edit" tick box |
-| `.place__body` | The text part of a front-page Area card (centred) |
 | `.layout`, `.main` | The page body and its main column |
 | `.ooc-sidebar`, `.ooc-sidebar__title`, `.ooc-sidebar__toggle`, `.ooc-sidebar__count`, `.ooc-sidebar--collapsed`, `.ooc-sidebar__arrow`, `.ooc-sidebar__tab-label` | The OOC Chat sidebar (on phones, `.ooc-sidebar__toggle` is the drop-down bar across its top) |
 | `.layout--admin`, `.admin-menu`, `.admin-menu__button`, `.admin-menu__button-current`, `.admin-menu__body`, `.admin-menu__title`, `.admin-menu__group`, `.admin-menu__heading`, `.admin-menu__list`, `.admin-menu__item`, `.admin-menu__link`, `.admin-menu__link--overview`, `.admin-menu__label`, `.admin-menu__count`, `.is-current` | The admin panel's side menu (on phones it folds into `.admin-menu__button`) |
