@@ -7,6 +7,10 @@ Short, plain-language notes on what changed. Newest first.
 - The top bar and the Menu have small line icons next to each link.
 - Areas, Settings and boards without an icon picture show a drawn one
   instead (a compass, a door, a speech bubble), in the look's colours.
+- Areas and Settings without a banner picture show a plain drawn banner.
+- Players without an icon picture get a pen-nib icon instead of their
+  initial; guests get a grey one.
+- New favicon: a slate inkwell and quill on a gold circle.
 
 ## 2026-10-15 — Area banners on Settings
 

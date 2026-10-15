@@ -318,7 +318,15 @@ form.button_to { display: inline; }
 }
 .ooc-message__author { font-weight: bold; }
 .ooc-message__author--guest { font-weight: normal; font-style: italic; }
-.player-icon--guest { background: var(--color-muted); }
+.player-icon--default { border-radius: 50%; }
+.nib-icon__back { fill: var(--color-accent-text); }
+.nib-icon__nib { fill: var(--color-accent); }
+.nib-icon__slit { stroke: var(--color-accent-text); }
+.nib-icon__hole { fill: var(--color-accent-text); }
+.player-icon--guest .nib-icon__back { fill: var(--color-muted); }
+.player-icon--guest .nib-icon__nib { fill: var(--color-surface); }
+.player-icon--guest .nib-icon__slit { stroke: var(--color-muted); }
+.player-icon--guest .nib-icon__hole { fill: var(--color-muted); }
 .player-icon--image { object-fit: cover; }
 .player-icon--large { width: 6rem; height: 6rem; margin: 0; border-radius: var(--radius); font-size: 2.5rem; vertical-align: middle; }
 a.ooc-message__author { color: inherit; text-decoration: none; }
@@ -378,6 +386,13 @@ a.ooc-message__author:hover { text-decoration: underline; }
 .icon-tile { display: inline-flex; align-items: center; justify-content: center; background: var(--color-accent); color: var(--color-accent-text); }
 .board__name { display: inline-flex; align-items: center; }
 .board__icon.icon-tile .icon { width: 0.95rem; height: 0.95rem; }
+
+/* The banner drawn when an Area or Setting has no banner picture: the look's
+   accent colour with gold ink lines and drops (Slate blue and gold). */
+.banner-default { position: relative; height: 5rem; background: var(--color-accent); overflow: hidden; }
+.banner-default::before { content: ""; position: absolute; inset: 0; background: var(--color-accent-text); opacity: 0.45;
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='80' viewBox='0 0 240 80'><g fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'><path d='M0 22 C40 2 80 42 120 22 S200 2 240 22'/><path d='M0 54 C40 34 80 74 120 54 S200 34 240 54' opacity='.6'/></g><g fill='%23000'><path d='M60 37c-2 3-3 5-3 6.5a3 3 0 0 0 6 0c0-1.5-1-3.5-3-6.5z'/><path d='M180 68c-2 3-3 5-3 6.5a3 3 0 0 0 6 0c0-1.5-1-3.5-3-6.5z' opacity='.6'/></g></svg>") repeat center / 240px 80px; mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='80' viewBox='0 0 240 80'><g fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'><path d='M0 22 C40 2 80 42 120 22 S200 2 240 22'/><path d='M0 54 C40 34 80 74 120 54 S200 34 240 54' opacity='.6'/></g><g fill='%23000'><path d='M60 37c-2 3-3 5-3 6.5a3 3 0 0 0 6 0c0-1.5-1-3.5-3-6.5z'/><path d='M180 68c-2 3-3 5-3 6.5a3 3 0 0 0 6 0c0-1.5-1-3.5-3-6.5z' opacity='.6'/></g></svg>") repeat center / 240px 80px; }
+.description-image.banner-default { border-radius: var(--radius); }
 
 /* Area pages: the Settings and Areas inside, as lists */
 
@@ -1276,3 +1291,5 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 
 .main--preview { flex: 1; max-width: 60rem; margin: 0 auto; }
 .site-header__preview { font-size: 0.85rem; }
+.page-title__icon.icon-tile { display: inline-flex; }
+.page-title__icon.icon-tile .icon { width: 1.3rem; height: 1.3rem; }

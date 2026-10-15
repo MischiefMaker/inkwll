@@ -6,7 +6,7 @@
   <%= render "areas/breadcrumbs", area: @room.area, include_self: true %>
   <% page_background(@room) %>
   <%= render "rooms/area_intro", area: @room.area %>
-  <h1 class="page-title"><% if @room.icon.attached? %><%= image_tag @room.icon, alt: "", class: "page-title__icon" %><% end %><%= @room.name %></h1>
+  <h1 class="page-title"><%= place_icon(@room, :door, css: "page-title__icon") %><%= @room.name %></h1>
   <% if current_account %>
     <div class="room__save">
       <% if current_account.saved_places.exists?(room: @room) %>
@@ -17,7 +17,8 @@
     </div>
   <% end %>
 
-  <%= render "shared/description", record: @room %>
+  <%# No drawn banner when the Area's own banner is already shown above. %>
+  <%= render "shared/description", record: @room, default_banner: !@room.area&.image&.attached? %>
 
   <% here = current_character&.room_id == @room.id %>
   <% unless here %>

@@ -3,9 +3,11 @@
     straight to each Setting are tucked away at the bottom, on purpose; each
     opens the Setting, where "Travel here" moves the character. %>
 <% entrance = area.entrance %>
-<article class="place<%= " place--banner" if area.image.attached? %>" id="<%= dom_id(area, :place) %>">
+<article class="place place--banner" id="<%= dom_id(area, :place) %>">
   <% if area.image.attached? %>
     <%= image_tag area.image, alt: "", class: "place__banner" %>
+  <% else %>
+    <%= default_banner(css: "place__banner") %>
   <% end %>
   <div class="place__body">
     <h2 class="place__name">

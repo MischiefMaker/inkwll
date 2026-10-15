@@ -34,6 +34,22 @@ module IconsHelper
       fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round")
   end
 
+  # The default player icon: a pen nib on a round badge, coloured from the
+  # look (gold and slate in Slate blue and gold). Guests get a grey one.
+  NIB = '<circle class="nib-icon__back" cx="32" cy="32" r="32"/>' \
+    '<g transform="rotate(35 32 32)"><path class="nib-icon__nib" d="M32 56 L19 33 C19 23 24 15 32 9 C40 15 45 23 45 33 Z"/>' \
+    '<path class="nib-icon__slit" d="M32 54 V35" stroke-width="2.5" stroke-linecap="round"/>' \
+    '<circle class="nib-icon__hole" cx="32" cy="31" r="3.5"/></g>'.freeze
+
+  def nib_icon(css:)
+    tag.svg(NIB.html_safe, class: "nib-icon #{css}", viewBox: "0 0 64 64", "aria-hidden": "true")
+  end
+
+  # A plain drawn banner for an Area or Setting with no banner picture.
+  def default_banner(css:)
+    tag.div(class: "#{css} banner-default", "aria-hidden": "true")
+  end
+
   # A place's own icon picture if it has one, or a drawn icon in a small tile
   # so every Area, Setting and board has something there by default.
   def place_icon(record, default, css:)

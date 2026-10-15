@@ -6,6 +6,13 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-15: Default icons, banners and favicon (owner)
+
+- **Favicon:** a slate inkwell and quill on a gold circle (option D of four).
+- **Players and guests** without an icon picture get a pen-nib icon on a round badge in the look's colours (gold and slate by default), instead of their initial. Guests get a grey one.
+- **Areas, Settings and boards** without an icon picture get a drawn icon tile (compass, door, speech bubble). Areas and Settings without a banner picture get a plain drawn banner (owner: "I think" we should; open to dropping it).
+- Icons are line drawings in the code (`app/helpers/icons_helper.rb`), drawn like the header's bell. No outside icon sites.
+
 ## Area banners on Settings (owner, 2026-10-15)
 
 - Each Setting shows its own Area's banner and short text (if it has them) at the top, above the Setting's name and description. It's the nearest Area only, not the ones above it. Areas with neither show nothing extra.
@@ -326,7 +333,7 @@ Defaults picked by Claude, for the owner to check:
 - **Drafts and characters waiting for approval** are only visible to their player and staff.
 - **Gallery:** up to 30 pictures per character, PNG, JPEG, GIF or WebP, up to 5 MB each, with an optional caption.
 - **Relationships:** simple notes. Each one names a character (linked to their profile) or anyone else, picks a kind (Family, Friend, Romance, Ally, Rival, Enemy, Acquaintance, Other) and has an optional note. They're one-sided: each player writes their own.
-- **Player profiles:** icon (their initial on a colour until they upload one), player name, staff level, About me, and a "Send a message" button. Their characters are listed only when the game shows who plays which character, though the player and staff always see the list. Reached from the player's name in the header, "My player profile" in the Menu, and names in the OOC Chat. Only logged-in players can see them.
+- **Player profiles:** icon (a pen nib until they upload one; was their initial on a colour before 2026-10-15), player name, staff level, About me, and a "Send a message" button. Their characters are listed only when the game shows who plays which character, though the player and staff always see the list. Reached from the player's name in the header, "My player profile" in the Menu, and names in the OOC Chat. Only logged-in players can see them.
 
 ## 2026-10-14: Step 3b details picked while building (Messages)
 
