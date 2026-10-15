@@ -582,14 +582,15 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   position: sticky;
   top: 0;
   align-self: start;
-  height: calc(100vh - 3.5rem - var(--tabs-height, 0px));
+  --admin-menu-height: calc(100vh - 3.5rem - var(--tabs-height, 0px));
+  min-height: var(--admin-menu-height);
 }
 
 /* The button only shows on phones, where the menu folds up. */
 .admin-menu__button { display: none; }
 
 .admin-menu__body {
-  height: 100%;
+  max-height: var(--admin-menu-height);
   overflow-y: auto;
   padding-bottom: var(--space);
 }
@@ -648,7 +649,7 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 
 @media (max-width: 800px) {
   .layout--admin { grid-template-columns: minmax(0, 1fr); }
-  .admin-menu { order: -1; width: auto; position: static; height: auto; border-left: none; border-bottom: 1px solid var(--color-border); }
+  .admin-menu { order: -1; width: auto; position: static; min-height: 0; border-left: none; border-bottom: 1px solid var(--color-border); }
   .admin-menu__button {
     display: block;
     padding: 0.6rem var(--space);
@@ -661,7 +662,7 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   .admin-menu[open] .admin-menu__button::after { content: " ▴"; }
   .admin-menu__button-current { font-weight: normal; }
   .admin-menu__title { display: none; }
-  .admin-menu__body { height: auto; overflow-y: visible; }
+  .admin-menu__body { max-height: none; overflow-y: visible; }
 }
 
 .from-afar { margin: var(--space) 0; padding: 0.6rem var(--space); border: 1px dashed var(--color-border); border-radius: var(--radius); }
