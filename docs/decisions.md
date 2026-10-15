@@ -13,6 +13,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - **Areas, Settings and boards** without an icon picture get a drawn icon tile (compass, door, speech bubble). Areas and Settings without a banner picture get a plain drawn banner (owner: "I think" we should; open to dropping it).
 - Icons are line drawings in the code (`app/helpers/icons_helper.rb`), drawn like the header's bell. No outside icon sites.
 
+## The Prologue: an OOC starting Setting (owner, 2026-10-15)
+
+- New characters start in an out-of-character Setting instead of an IC one. Claude picked the name **The Prologue** (owner suggested "Waiting in the Wings" or something bookish), in a new top-level Area, **Out of Character**, listed last on the front page. One-way Paths named after each top-level Area's entrance Setting lead into the story. Rename or move it from Admin → Building; whichever Setting is ticked as the default starting one is where new characters begin.
+
 ## What guests can read (owner, 2026-10-15)
 
 - Guests can **read** much more of the site: the Boards, the Wiki, Where, the character directory and Roster, character and player profiles, All Settings, the Archives and Chapters anyone may watch (open ones, finished private ones, and hidden ones made public). They can't post, edit, join or message; those send them to log in. Their own-pages (My characters, Messages, My Chapters) still need an account.

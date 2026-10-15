@@ -2,6 +2,13 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-15 — The Prologue
+
+- New characters start in The Prologue, an out-of-character reading room
+  (in an "Out of Character" Area), instead of an in-character Setting. Its
+  Paths lead into each Area. Existing games get it on their next update;
+  characters already playing stay where they are.
+
 ## 2026-10-15 — More for guests to read
 
 - Guests (not logged in) can now read the Boards, the Wiki, Where, the

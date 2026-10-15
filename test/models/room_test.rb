@@ -24,4 +24,15 @@ class RoomTest < ActiveSupport::TestCase
     duplicate = rooms(:commons).exits.new(name: "North", destination_room: rooms(:garden))
     assert_not duplicate.valid?
   end
+
+  test "The Prologue becomes the starting Setting, with Paths into each Area" do
+    prologue = Room.create_prologue!
+    assert_equal prologue, Room.starting
+    assert_equal "Out of Character", prologue.area.name
+    assert_includes prologue.exits.map(&:destination_room), areas(:world).entrance
+    assert_equal prologue, Room.create_prologue!, "making it twice finds the first one"
+
+    character = accounts(:alice).characters.create!(name: "Newcomer")
+    assert_equal prologue, character.room
+  end
 end

@@ -71,6 +71,32 @@ class Room < ApplicationRecord
     kind_details[:unit]
   end
 
+  # The out-of-character Setting new characters start in, before they step
+  # into the story (owner). Made by the seeds for a new game, and once for
+  # games that already existed. One-way Paths lead to the entrance of each
+  # top-level Area, named after the Setting they lead to.
+  PROLOGUE = "The Prologue"
+
+  def self.create_prologue!
+    return find_by(name: PROLOGUE) if exists?(name: PROLOGUE)
+    transaction do
+      area = Area.find_or_create_by!(name: "Out of Character") do |a|
+        a.position = Area.top_level.maximum(:position).to_i + 1
+        a.summary = "Outside the story, where new characters wait to step onto the page."
+        a.description = "A quiet corner outside the story. New characters wait here before stepping onto the page."
+      end
+      entrances = Area.top_level.where.not(id: area.id).filter_map(&:entrance).uniq
+      prologue = create!(area: area, name: PROLOGUE, starting: true, description: <<~TEXT.strip)
+        Every story starts somewhere, and yours starts here: a hushed reading room between the covers, all lamplight and turned-down pages, where new characters wait before stepping into the tale.
+
+        Nothing here is in character. Look around, read the Getting started guide, say hello in the OOC Chat, and when you're ready, take one of the Paths below into the story.
+      TEXT
+      area.update!(entrance_room: prologue)
+      entrances.each { |room| prologue.exits.create!(destination_room: room, name: room.name.first(40)) }
+      prologue
+    end
+  end
+
   def self.create_default_starting_room!
     area = Area.order(:id).first || Area.create!(name: "The World")
     create!(area: area, name: "The Commons", starting: true,
