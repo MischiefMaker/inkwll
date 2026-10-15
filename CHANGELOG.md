@@ -10,6 +10,8 @@ Short, plain-language notes on what changed. Newest first.
   they can get back to the front page. Visitors also see the OOC Chat
   beside every page (when the game allows guest chat), and the log in and
   sign up pages invite them to say hello there.
+- On phones the OOC Chat drops down from a bar marked "OOC Chat" instead
+  of folding out from the side.
 
 ## 2026-10-14 — Logging in on the live game
 
