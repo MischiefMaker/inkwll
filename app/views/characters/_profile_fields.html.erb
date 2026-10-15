@@ -9,7 +9,7 @@
     <%= local_assigns[:extra] %>
     <% rows.each do |field, value| %>
       <div class="profile-fields__row profile-fields__row--<%= field.field_type %>">
-        <dt class="details-list__term"><%= field.name %><%= tag.span(" (private)", class: "muted profile-fields__private") unless field.public? %></dt>
+        <dt class="details-list__term"><%= field.name %><%= tag.span(visibility_mark(:you_and_staff), class: "profile-fields__private") unless field.public? %></dt>
         <dd class="details-list__value">
           <% if field.image? %>
             <%= image_tag value.image, class: "profile-fields__picture", alt: "#{character.name}: #{field.name}" if value.image.attached? %>

@@ -61,6 +61,12 @@ module ScenesHelper
     t("terms.scene_visibility.#{scene.visibility}")
   end
 
+  # The lock or eye shown beside a private or hidden Chapter's badge.
+  def scene_visibility_mark(scene)
+    return if scene.visibility_joinable?
+    visibility_mark(scene.visibility_hidden? ? :you_only : :you_and_staff, label: scene_visibility_label(scene))
+  end
+
   def pose_mode_label(mode)
     t("terms.pose_modes.#{mode}")
   end

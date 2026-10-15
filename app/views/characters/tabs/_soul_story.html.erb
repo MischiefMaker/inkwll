@@ -58,7 +58,7 @@
 
 <% if staff %>
   <details class="soul-audit">
-    <summary class="disclosure__summary">Staff log (only staff see this)</summary>
+    <summary class="disclosure__summary"><%= visibility_mark(:staff_only) %> Staff log (only staff see this)</summary>
     <% audit = Soul::AuditEntry.where(character: character).newest_first.includes(:actor).limit(50) %>
     <% if audit.any? %>
       <table class="table soul-audit__table">

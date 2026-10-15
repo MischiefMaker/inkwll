@@ -23,6 +23,9 @@ module IconsHelper
     wiki: '<path d="M5 4a1 1 0 0 1 1-1h13v15H6a1 1 0 0 0-1 1z"/><path d="M5 19a2 2 0 0 0 2 2h12v-3"/><path d="M9 7h6"/>',
     chat: '<path d="M3 5h12v9H8l-5 4z"/><path d="M15 9h6v9l-4-3h-6v-1"/>',
     profile: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5 17c.5-2 2-3 4-3s3.5 1 4 3"/><path d="M15 10h3"/><path d="M15 14h3"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/>',
     compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
@@ -37,6 +40,21 @@ module IconsHelper
     classes = [ "icon", "icon--#{name.to_s.dasherize}", css ].compact.join(" ")
     tag.svg(drawing.html_safe, class: classes, viewBox: "0 0 24 24", width: size, height: size, "aria-hidden": "true",
       fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round")
+  end
+
+  # Small signs for who can see something: a lock (only you and staff), an
+  # open eye (only you) and a star (only staff). Pass label: to say it in
+  # other words, for example for a private Chapter.
+  VISIBILITY_MARKS = {
+    you_and_staff: [ :lock, "Only you and staff can see this" ],
+    you_only: [ :eye, "Only you can see this" ],
+    staff_only: [ :star, "Only staff can see this" ]
+  }.freeze
+
+  def visibility_mark(kind, label: nil, size: 14)
+    icon_name, default_label = VISIBILITY_MARKS.fetch(kind.to_sym)
+    label ||= default_label
+    tag.span(icon(icon_name, size: size), class: "visibility-mark visibility-mark--#{kind.to_s.dasherize}", title: label, role: "img", "aria-label": label)
   end
 
   # The pencil that replaces "Edit" links, with the word kept for screen

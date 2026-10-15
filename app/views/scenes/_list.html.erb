@@ -9,7 +9,7 @@
         <li class="scene-list__item<%= " scene-list__item--idle" if scene.idle? %>">
           <div class="scene-list__heading">
             <%= link_to scene.title, scene_path(scene), class: "scene-list__title" %>
-            <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_label(scene) %></span>
+            <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_mark(scene) %><%= scene_visibility_label(scene) %></span>
             <% if scene.paused? %><span class="badge">Paused</span><% elsif scene.idle? %><span class="badge">Idle</span><% end %>
             <%= scene_labels(scene) %>
           </div>

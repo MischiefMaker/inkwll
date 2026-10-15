@@ -145,6 +145,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.wiki-history`, `.wiki-history__item`, `.wiki-history__current` | A page's history |
 | `.wiki-form__tabs`, `.wiki-form__tab` | The Edit / Preview tabs on the wiki page form (`.is-current` marks the open one) |
 | `.wiki-form__preview` | The box that shows the preview of a wiki page |
+| `.visibility-mark` | A small sign for who can see something. Kinds: `.visibility-mark--you-and-staff` (lock), `.visibility-mark--you-only` (open eye), `.visibility-mark--staff-only` (star). Its icon classes are `.icon--lock`, `.icon--eye` and `.icon--star` |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
 | `.storyteller-tools`, `.storyteller-tools__call`, `.storyteller-tools__sheets`, `.storyteller-tools__award`, `.storyteller-sheet`, `.storyteller-sheet__name`, `.storyteller-sheet__aspect`, `.storyteller-sheet__skills` | A Chapter's Storyteller tools |
 | `.soul-reviews__item--award` | Admin: XP a Storyteller suggested |

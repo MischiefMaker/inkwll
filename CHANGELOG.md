@@ -10,6 +10,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-15 — Menu tidy-ups
 
+- Small signs show who can see something: a lock (only you and staff), an open eye (only you) and a star (only staff). They're on the restricted profile tabs, private profile fields, private and hidden Chapters, and staff-only notes.
 - Email will be sent through Brevo; setup steps are in docs/email-setup.md.
 - The wiki page form has Edit and Preview tabs; Preview shows how the page will look without saving.
 - Wiki pages added to the Menu are indented so they look nested under Wiki.

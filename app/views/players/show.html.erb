@@ -42,7 +42,7 @@
         <p class="muted">No characters yet.</p>
       <% end %>
       <% unless GameSetting.current.players_public? %>
-        <p class="muted player-profile__private-note">Only you and staff can see this list.</p>
+        <p class="muted player-profile__private-note"><%= visibility_mark(:you_and_staff) %> Only you and staff can see this list.</p>
       <% end %>
     </section>
   <% end %>

@@ -41,8 +41,8 @@
     <% tabs.merge!("gallery" => "Gallery", "relationships" => "Relationships", "logs" => term(:log, count: 2))
        tabs["chapters"] = "Active #{term(:scene, count: 2)}" if @mine || @staff_view %>
     <% tabs.each do |tab, label| %>
-      <%= link_to label, character_path(@character, tab: tab), class: "profile-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
-            aria: { current: (@tab == tab ? "page" : nil) } %>
+      <%= link_to character_path(@character, tab: tab), class: "profile-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
+            aria: { current: (@tab == tab ? "page" : nil) } do %><%= label %><%= visibility_mark(:you_and_staff) if %w[ soul grimoire chapters ].include?(tab) %><% end %>
     <% end %>
   </nav>
 

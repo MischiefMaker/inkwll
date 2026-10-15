@@ -186,4 +186,13 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_select ".character-chapters", count: 0
     assert hidden.visibility_hidden?
   end
+
+  test "restricted tabs and hidden Chapters carry visibility signs" do
+    wren = characters(:wren)
+    Scene.start!(character: wren, room: wren.room, title: "Secret doings", visibility: "hidden", pose_mode: Scene.pose_modes.keys.first)
+    sign_in_as(accounts(:alice))
+    get character_path(wren, tab: "chapters")
+    assert_select ".profile-tabs__tab .visibility-mark--you-and-staff .icon--lock"
+    assert_select ".character-chapters__item .visibility-mark--you-only .icon--eye"
+  end
 end

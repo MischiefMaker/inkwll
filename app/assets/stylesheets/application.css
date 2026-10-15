@@ -680,6 +680,8 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
   color: var(--color-muted);
   vertical-align: middle;
 }
+.visibility-mark { display: inline-flex; align-items: center; margin: 0 0.25rem; vertical-align: middle; opacity: 0.8; cursor: help; }
+.badge .visibility-mark { margin: 0 0.25rem 0 0; }
 .badge--private, .badge--hidden { border-color: var(--color-accent); color: var(--color-accent); }
 .badge--turn { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-text); }
 
