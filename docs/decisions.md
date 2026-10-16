@@ -12,6 +12,13 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - Inklings pulled in from an application are titled "Name's First Goal" and "Name's First Secret". Inklings players start themselves keep their own titles.
 - Character profile tab groups are separate blocks stacked down the page, not one row.
 
+## 2026-10-15: Chapter layouts (owner)
+
+- Each game picks how a Chapter page looks in Admin → Look: **Manuscript** (the default; reads like a page from a book), **Forum** (each Passage is a post with a portrait, name and details beside it) or **Chat** (the earlier look).
+- Paragraphs don't start with the character's name, because poses don't always begin with it. The name sits above the Passage or under the portrait.
+- Manuscript has two separate settings: the cast under the title (large cards or small row) and the picture beside each Passage (large or small). Defaults: large cast, small picture.
+- Why: so Chapters look less like AresMUSH scenes. Mockups in the "RP forum and host research" thread.
+
 ## 2026-10-15: "Page" staff level renamed Steward (owner)
 
 - The lowest staff level, flagged staff (formerly "Page"), is called **Steward**, because "Page" was confusing next to web pages, wiki pages and character pages.

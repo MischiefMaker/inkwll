@@ -1,0 +1,17 @@
+<%# Manuscript with large cast portraits: a card for each character in the
+    Chapter, under the title. Clicking one opens their mini-profile. The gold
+    border marks whose turn it is. %>
+<% if scene.participants.any? %>
+  <ul class="cast-cards">
+    <% scene.participants.each do |p| %>
+      <li class="cast-card<%= " cast-card--turn" if scene.turn_of?(p) %>">
+        <button type="button" class="cast-card__button" popovertarget="mini-profile-<%= p.character.id %>" aria-label="About <%= p.character.name %>">
+          <%= character_icon(p.character, size: :portrait) %>
+          <%= tag.span p.character.name, **character_name_options(p.character, "cast-card__name") %>
+          <%= character_details(p.character, "cast-card__details muted") %>
+          <% if scene.turn_of?(p) %><span class="cast-card__turn">Turn</span><% end %>
+        </button>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

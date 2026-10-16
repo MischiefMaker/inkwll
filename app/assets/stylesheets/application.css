@@ -1528,3 +1528,104 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .alerts__staff-title { margin: 0 0 0.4rem; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-muted); }
 .alerts__staff-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
 .alerts__staff-count { display: inline-block; min-width: 1.4rem; padding: 0 0.35rem; border-radius: 999px; background: var(--color-accent); color: var(--color-accent-text); font-size: 0.8rem; text-align: center; }
+
+/* Chapter layouts, picked in Admin → Look (owner, 2026-10-15). Chat is the
+   plain list above. Manuscript reads like a page from a book; Forum gives
+   each Passage an author panel. The story text uses --font-story, so a skin
+   can change it on its own. */
+.scene { --font-story: var(--font-body); }
+.scene__kicker { display: none; }
+.pose-break { margin: 1.5rem 0; text-align: center; letter-spacing: 1em; color: var(--color-accent); }
+.character-icon--portrait { width: 6.5rem; height: 8rem; }
+.character-icon--portrait.character-icon--initial { font-size: 2.5rem; }
+.pose__author { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; width: 8rem; flex: none; text-align: center; font-family: var(--font-ui); font-size: 0.85rem; overflow-wrap: anywhere; }
+.pose__author .pose__icon { margin-bottom: 0.3rem; }
+.pose__author .pose__details { font-size: 0.75rem; }
+.pose__author .pose__played-by { font-size: 0.75rem; }
+
+/* Manuscript */
+.scene--layout-manuscript { --font-story: Georgia, "Times New Roman", serif; }
+.scene--layout-manuscript .scene__header { text-align: center; margin: var(--space) 0; }
+.scene--layout-manuscript .scene__kicker { display: block; margin: 0; font-family: var(--font-story); font-variant: small-caps; letter-spacing: 0.2em; color: var(--color-muted); }
+.scene--layout-manuscript .scene__header .page-title { font-family: var(--font-heading, var(--font-story)); font-weight: normal; font-size: 2.2rem; }
+.scene--layout-manuscript .scene__subtitle { font-family: var(--font-story); font-style: italic; color: var(--color-muted); }
+.scene--layout-manuscript .scene-people__list,
+.scene--layout-manuscript .scene-people__actions { justify-content: center; }
+.scene--layout-manuscript .scene-people .character-icon { border-radius: 50%; }
+.scene--layout-manuscript.scene--cast-large .scene-people__list { display: none; }
+.scene--layout-manuscript .passages {
+  max-width: 46rem; margin: 0 auto; padding: 1.5rem 2rem;
+  border: 1px solid var(--color-border); border-radius: var(--radius);
+  background: var(--color-surface);
+}
+.scene--layout-manuscript .pose { border-bottom: none; padding: 0.6rem 0; }
+.scene--layout-manuscript .pose__body { font-family: var(--font-story); font-size: 1.08rem; line-height: 1.75; }
+.scene--layout-manuscript .pose__time { margin-left: auto; font-size: 0.75rem; opacity: 0.7; }
+.scene--layout-manuscript .pose__actions { margin-left: 0; }
+.scene--layout-manuscript .pose > .pose__icon { align-self: flex-start; margin-top: 1.5rem; }
+.scene--layout-manuscript.scene--portraits-small .pose__icon .character-icon { width: 2.25rem; height: 2.25rem; border-radius: 50%; font-size: 1rem; }
+.scene--layout-manuscript .pose--narration { padding: 0.75rem 2rem; margin: 0.75rem 0; border: none; background: none; text-align: center; }
+.scene--layout-manuscript .pose--narration .pose__header { justify-content: center; }
+.scene--layout-manuscript .pose--narration .pose__tag,
+.scene--layout-manuscript .pose--narration .pose__name,
+.scene--layout-manuscript .pose--narration .pose__time { display: none; }
+.scene--layout-manuscript .pose--ooc { margin-left: 3rem; padding: 0.2rem 0 0.2rem 0.75rem; border-left: 3px solid var(--color-border); }
+.scene--layout-manuscript .pose--ooc .pose__body { font-family: var(--font-ui); font-size: 0.85rem; line-height: 1.5; }
+.scene--layout-manuscript .pose--system { border-bottom: none; }
+.scene--layout-manuscript .pose__report { font-family: var(--font-ui); font-size: 0.75rem; }
+/* Edit, Remove and Report show when you point at a Passage (always on touch screens). */
+@media (hover: hover) {
+  .scene--layout-manuscript .pose__actions,
+  .scene--layout-manuscript .pose__report { opacity: 0; transition: opacity 0.15s; }
+  .scene--layout-manuscript .pose:hover .pose__actions, .scene--layout-manuscript .pose:focus-within .pose__actions,
+  .scene--layout-manuscript .pose:hover .pose__report, .scene--layout-manuscript .pose:focus-within .pose__report { opacity: 1; }
+}
+
+/* Manuscript: the cast as cards under the title. */
+.cast-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; list-style: none; padding: 0; margin: var(--space) 0 0; }
+.cast-card { width: 10rem; }
+.cast-card__button {
+  display: flex; flex-direction: column; align-items: center; gap: 0.25rem; width: 100%; height: 100%;
+  padding: 0.75rem 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius);
+  background: var(--color-surface); color: var(--color-text); font-family: var(--font-ui); font-size: 0.85rem; cursor: pointer;
+}
+.cast-card__button .character-icon { margin-bottom: 0.3rem; }
+.cast-card__name { font-weight: bold; }
+.cast-card__name:not(.character-name--grouped) { color: var(--color-accent); }
+.cast-card__details { font-size: 0.75rem; }
+.cast-card--turn .cast-card__button { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+.cast-card__turn { margin-top: 0.2rem; padding: 0 0.5rem; border-radius: 999px; background: var(--color-accent); color: var(--color-accent-text); font-size: 0.7rem; font-weight: bold; }
+
+/* Forum */
+.scene--layout-forum { --font-story: Georgia, "Times New Roman", serif; }
+.scene--layout-forum .scene__header { padding: var(--space) 1.25rem; border-radius: var(--radius) var(--radius) 0 0; background: var(--color-accent); color: var(--color-accent-text); }
+.scene--layout-forum .scene__header .page-title { color: inherit; }
+.scene--layout-forum .scene__header .muted,
+.scene--layout-forum .scene__header a { color: inherit; opacity: 0.85; }
+.scene--layout-forum .scene__header .badge { background: var(--color-surface); color: var(--color-text); border-color: transparent; opacity: 1; }
+.scene--layout-forum .scene__subtitle { font-style: italic; }
+.scene--layout-forum .passages { border-top: none; }
+.scene--layout-forum .pose { padding: 0; border: 1px solid var(--color-border); border-top: none; background: var(--color-surface); }
+.scene--layout-forum .pose--with-author { gap: 0; }
+.scene--layout-forum .pose__author { width: 10rem; padding: var(--space) 0.75rem; background: var(--color-bg); border-right: 1px solid var(--color-border); }
+.scene--layout-forum .pose__main { padding: 0.75rem 1.25rem; }
+.scene--layout-forum .pose:not(.pose--with-author) .pose__icon { padding: 0.75rem 0 0 0.75rem; }
+.scene--layout-forum .pose__header { padding-bottom: 0.4rem; margin-bottom: 0.5rem; border-bottom: 1px dashed var(--color-border); }
+.scene--layout-forum .pose__time { margin-right: auto; }
+.scene--layout-forum .pose__body { font-family: var(--font-story); font-size: 1.05rem; line-height: 1.7; }
+.scene--layout-forum .pose--narration { margin: 0; border-left: 1px solid var(--color-border); background: var(--color-accent); color: var(--color-accent-text); text-align: center; }
+.scene--layout-forum .pose--narration .pose__header { display: none; }
+.scene--layout-forum .pose--ooc .pose__main { padding: 0.4rem 1.25rem; }
+.scene--layout-forum .pose--system { padding: 0.4rem; border: 1px solid var(--color-border); border-top: none; background: var(--color-bg); }
+
+@media (max-width: 600px) {
+  .scene--layout-manuscript .passages { padding: 0.75rem; }
+  .scene--layout-manuscript .pose--ooc { margin-left: 1rem; }
+  .cast-card { width: calc(50% - 0.5rem); }
+  .character-icon--portrait { width: 4rem; height: 5rem; }
+  .character-icon--portrait.character-icon--initial { font-size: 1.75rem; }
+  .pose--with-author { flex-direction: column; }
+  .pose__author { flex-direction: row; flex-wrap: wrap; width: auto; gap: 0.25rem 0.75rem; text-align: left; }
+  .pose__author .pose__icon { margin-bottom: 0; }
+  .scene--layout-forum .pose__author { width: auto; border-right: none; border-bottom: 1px solid var(--color-border); }
+}

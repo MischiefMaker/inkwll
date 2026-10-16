@@ -7,12 +7,13 @@
 <%= turbo_stream_from @scene unless whole && !@scene.finished? %>
 
 <% readable = @scene.readable_by?(current_account) %>
-<article class="scene" data-controller="scene-reader"
+<article class="scene <%= chapter_layout_classes %>" data-controller="scene-reader"
          data-scene-reader-url-value="<%= scene_reading_path(@scene) %>"
          data-scene-reader-participating-value="<%= @scene.participating?(current_account) %>">
   <%= render "scenes/setting", scene: @scene %>
 
   <header class="scene__header">
+    <p class="scene__kicker"><%= term(:scene) %></p>
     <h1 class="page-title"><%= @scene.title %></h1>
     <% if @scene.subtitle %><p class="scene__subtitle"><%= @scene.subtitle %></p><% end %>
     <p class="scene__meta muted">
@@ -27,6 +28,7 @@
         · <%= link_to "Report", new_scene_report_path(@scene) %>
       <% end %>
     </p>
+    <%= render "scenes/cast_cards", scene: @scene if readable && chapter_cast_cards? %>
   </header>
 
   <%= render "scenes/status", scene: @scene, participant: @participant %>
@@ -58,7 +60,7 @@
       <% if poses.empty? %>
         <p class="muted passages__empty">No <%= term(:pose, count: 2).downcase %> yet.</p>
       <% end %>
-      <%= render partial: "poses/pose", collection: poses, locals: { scene: @scene } %>
+      <%= render partial: "poses/pose", collection: poses, locals: { scene: @scene, breaks: scene_break_ids(poses) } %>
     </div>
 
     <%# One pop-up mini-profile per character on the page. %>

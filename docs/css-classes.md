@@ -193,6 +193,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | Class | What it is |
 | --- | --- |
 | `.scene`, `.scene__header`, `.scene__meta` | A Chapter page |
+| `.scene--layout-manuscript`, `.scene--layout-forum`, `.scene--layout-chat`, `.scene--cast-large`, `.scene--cast-small`, `.scene--portraits-large`, `.scene--portraits-small`, `.scene__kicker` | The Chapter layout chosen in Admin → Look, and the small "Chapter" line above the title in Manuscript |
+| `.cast-cards`, `.cast-card`, `.cast-card--turn`, `.cast-card__button`, `.cast-card__name`, `.cast-card__details`, `.cast-card__turn` | Manuscript's cards for the cast under the title, and whose turn it is |
 | `.scene-setting`, `.scene-setting__name`, `.scene-setting__description`, `.scene-setting__here` | The Setting box at the top |
 | `.scene-people`, `.scene-people__list`, `.scene-people__actions` | Who's in it, and Leave / Pause / Finish |
 | `.turn-bar`, `.turn-bar__text`, `.turn-bar__timer`, `.turn-bar__warning` | Whose turn it is |
@@ -201,6 +203,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.pose`, `.pose__icon`, `.pose__name`, `.pose__time`, `.pose__body`, `.pose__actions` | One post |
 | `.pose--passage`, `.pose--npc`, `.pose--narration`, `.pose--ooc`, `.pose--system` | Each kind of post |
 | `.pose__tag`, `.pose__played-by` | The OOC / Narration tag, and "NPC, played by" |
+| `.pose--with-author`, `.pose__author`, `.pose-break`, `.character-icon--portrait` | The picture-and-name column beside a Passage (Forum, or Manuscript with large pictures), the ✦ ✦ ✦ break after a long pause, and the tall portrait |
+| `.chapter-look-field` | The Chapter layout choices in Admin → Look |
 | `.composer`, `.composer__kinds`, `.composer__npc`, `.composer__warning` | The writing box |
 | `.mini-profile` | The pop-up when you click a character |
 | `.scene-list`, `.scene-list__title`, `.scene-list__meta` | A Setting's list of Chapters |
