@@ -2,6 +2,15 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.7
+  commit: d88ab9d536c7ef7fbbea2b0733fbd9682fc03ff2
+  date: 2026-10-16
+  notes: |
+    - Admins can delete empty Areas and Places.
+    - Import a world: removing unlisted Places moves their characters to The Prologue and their Chapters to The Well of Lost Plots, then deletes them.
+    - Wiki bullets that name a character Group take that Group's colour.
+    Going back to v1.6 is safe.
+
 - version: v1.6
   commit: 8153c3dbd486241228ff24127d81bf65bf9540f0
   date: 2026-10-16
