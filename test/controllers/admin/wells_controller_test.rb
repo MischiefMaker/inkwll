@@ -62,6 +62,7 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".version-footer", text: "Inkwll v1.0"
     assert_select ".wells__release--current", text: /Running now/
     assert_select "button.wells__install", text: "Update to v1.1"
+    assert_select ".wells__status", text: /Update available. See Versions below./
     assert_select ".wells__older .wells__release", text: /First version/
     assert_select ".wells__older button", count: 0
   end
@@ -77,6 +78,7 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     ENV["INKWLL_VERSION"] = "v1.2"
     get admin_wells_path
     assert_select ".wells__release-current", text: /up to date/
+    assert_select ".wells__status", text: "Up-to-Date!"
     assert_select ".wells__older .wells__release", count: 2
     assert_select "button.wells__install", count: 0
   end

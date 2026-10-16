@@ -21,7 +21,13 @@
       <td class="table__cell"><%= game_name %> <span class="muted">(this one)</span></td>
       <td class="table__cell"><%= ENV.fetch("APP_HOST", request.host) %></td>
       <td class="table__cell wells__version"><%= inkwll_version_name || "Unknown" %></td>
-      <td class="table__cell muted">Update it under Versions below.</td>
+      <td class="table__cell wells__status">
+        <% if @releases.empty? || @releases.first.tag == @current_version %>
+          <strong class="wells__status--current">Up-to-Date!</strong>
+        <% else %>
+          <strong class="wells__status--available">Update available.</strong> See Versions below.
+        <% end %>
+      </td>
     </tr>
     <% @wells.each do |well| %>
       <tr class="table__row wells__well wells__well--<%= well.status %>">
