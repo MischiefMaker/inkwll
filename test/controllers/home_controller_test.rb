@@ -124,7 +124,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(accounts(:alice))
     get root_path
     assert_select ".game-stats__item--characters a.game-stats__link[href='#{directory_path}']"
-    assert_select ".game-stats__item--chapters a.game-stats__link[href='#{where_path}']"
+    assert_select ".game-stats__item--chapters a.game-stats__link[href='#{scenes_path}']"
     assert_select ".game-stats__item--archives a.game-stats__link[href='#{archives_path}']"
     assert_select ".game-stats__item--players .icon"
     assert_select ".game-stats__item--players a.game-stats__link[href='#{players_path}']"

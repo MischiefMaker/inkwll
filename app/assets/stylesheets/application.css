@@ -1749,3 +1749,29 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 
 /* The Inkwll version at the bottom middle of every page. */
 .version-footer { margin: 2rem 0 0.5rem; text-align: center; font-size: 0.7rem; color: var(--color-muted); }
+
+/* All Chapters: banded rows with the people in them, and a wider page */
+.main:has(.chapter-index-page) { max-width: 82rem; }
+.chapter-index { list-style: none; margin: var(--space) 0; padding: 0; border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; }
+.chapter-index__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr) minmax(11rem, 0.8fr);
+  gap: 0.5rem 1.25rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: var(--color-bg);
+}
+.chapter-index__item + .chapter-index__item { border-top: 1px solid var(--color-border); }
+.chapter-index__item:nth-child(even) { background: var(--color-surface); }
+.chapter-index__item--private, .chapter-index__item--hidden { border-left: 4px solid var(--color-border); }
+.chapter-index__item--joinable { border-left: 4px solid var(--color-accent); }
+.chapter-index__heading { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; }
+.chapter-index__title { font-family: var(--font-ui); font-size: 1.35rem; font-weight: bold; line-height: 1.2; }
+.chapter-index__title--closed { color: var(--color-muted); }
+.chapter-index__where { margin: 0.15rem 0 0; font-family: var(--font-ui); font-size: 0.9rem; }
+.chapter-index__people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-family: var(--font-ui); }
+.chapter-index__person { display: inline-flex; align-items: center; gap: 0.35rem; }
+.chapter-index__status { display: flex; flex-direction: column; gap: 0.15rem; font-family: var(--font-ui); font-size: 0.9rem; }
+@media (max-width: 800px) {
+  .chapter-index__item { grid-template-columns: 1fr; }
+}
