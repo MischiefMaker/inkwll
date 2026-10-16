@@ -31,7 +31,7 @@ en:
     log:
       one: "Manuscript"
       other: "Manuscripts"
-    logs_collection: "Archives"
+    logs_collection: "Bookshelf"
     # Kinds of Path, as headings on a Setting's page. Rename them freely.
     exit_kinds:
       street: "Streets"

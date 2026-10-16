@@ -109,7 +109,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select ".game-stats__item--players .game-stats__count", text: counts[:players].to_s
     assert_select ".game-stats__item--chapters .game-stats__label", text: "Chapters"
-    assert_select ".game-stats__item--archives .game-stats__label", text: "Archives"
+    assert_select ".game-stats__item--archives .game-stats__label", text: "Bookshelf"
   end
 
   test "archived players and their characters drop out of the counts" do

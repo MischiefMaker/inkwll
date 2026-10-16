@@ -23,7 +23,7 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
 
   test "Settings and characters link to their Manuscripts" do
     get room_path(rooms(:commons))
-    assert_select "a", text: /1 finished chapter in the Archives/
+    assert_select "a", text: /1 finished chapter in the Bookshelf/
 
     get character_path(characters(:wren), tab: "logs")
     assert_select ".manuscript__title a", text: "Duel at Dawn"

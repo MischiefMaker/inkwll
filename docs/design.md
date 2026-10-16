@@ -16,7 +16,7 @@ feeling of physical space.
 
 Players see themed words: a room is a **Place**, an exit is a **Path**, a
 scene is a **Chapter**, a pose is a **Passage**, and finished logs are
-**Manuscripts** in the **Archives**. This document and the code use the plain
+**Manuscripts** on the **Bookshelf**. This document and the code use the plain
 words.
 
 Look and feel: the owner's earlier forum skins are in `docs/design-references/`,
@@ -358,7 +358,7 @@ words, and `config/locales/en.yml` maps one to the other.
 - **Finishing.** Any player can finish a Chapter; the others can undo it for
   24 hours. Idle Chapters are finished by the game after the game's
   auto-finish days. Finished Chapters are read-only Manuscripts.
-- **Archives** (in the Menu) list finished Manuscripts, filtered by Setting or
+- **Bookshelf** (formerly Archives; in the Menu) list finished Manuscripts, filtered by Setting or
   character. Open and Private ones are listed; Hidden ones only after every
   player has agreed on the Chapter's page.
 - **Reporting.** Any Passage or Chapter can be reported. Scribes and
