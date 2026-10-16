@@ -172,6 +172,19 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes Well.new(account: accounts(:founder), domain: "x.inkwll.com", setup_code: "abc").setup_url, "email="
   end
 
+  test "I'll import a world pack adds import to the sign-up link and shows an import link once claimed" do
+    sign_in_as(accounts(:founder))
+    post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall", import_world: "1" }, confirm_name: "Moonfall" }
+    well = Well.find_by!(slug: "moonfall")
+    assert well.import_world?
+    assert_includes well.setup_url, "import=1"
+    assert_not_includes Well.new(account: accounts(:founder), domain: "x.inkwll.com", setup_code: "abc").setup_url, "import="
+
+    well.update!(status: "live", version: "v1.1", founder_claimed_at: Time.current)
+    get admin_wells_path
+    assert_select ".wells__import-link a[href=?]", "https://moonfall.inkwll.com/admin/world_import"
+  end
+
   test "the first sign-up link disappears once the Well has a Founder" do
     well = Well.create!(name: "Moonfall", slug: "moonfall", domain: "moonfall.inkwll.com", status: "live", version: "v1.1", account: accounts(:founder))
     sign_in_as(accounts(:founder))

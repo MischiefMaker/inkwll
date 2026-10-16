@@ -6,6 +6,10 @@ Short, plain-language notes on what changed. Newest first.
 
 - Cinzel and "Cinzel Decorative" (carved Roman capitals) and "Cormorant Garamond" (graceful book type) now come with Inkwll and can be named in Admin → Look, for Draganic's old look.
 
+## 2026-10-16 — Import a world when starting a Well
+
+- Start a new Well has an "I'll import a world pack" box. After you sign up on the new Well you land straight on Import a world, and the Wells page keeps an "Import a world" link for each Well that has a Founder.
+
 ## 2026-10-16 — Three more web fonts
 
 - Montez (flowing script), "Cormorant SC" (elegant small capitals) and "Old Standard TT" (old-fashioned book type) now come with Inkwll and can be named in Admin → Look, for Falls the Shadow's old forum look.

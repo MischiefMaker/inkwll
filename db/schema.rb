@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_070001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_080001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -907,6 +907,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_070001) do
     t.datetime "updated_at", null: false
     t.boolean "copy_founder", default: false, null: false
     t.datetime "founder_claimed_at"
+    t.boolean "import_world", default: false, null: false
     t.index ["account_id"], name: "index_wells_on_account_id"
     t.index ["domain"], name: "index_wells_on_domain", unique: true
     t.index ["slug"], name: "index_wells_on_slug", unique: true

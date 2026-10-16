@@ -6,6 +6,7 @@
   <% if @setup_code %>
     <p class="flash flash--notice registration__founder">You're setting up this Well: this account will be its <%= term(:founder) %>.</p>
     <%= hidden_field_tag :setup, @setup_code %>
+    <%= hidden_field_tag :import, params[:import] if params[:import] == "1" %>
   <% end %>
   <%= render "shared/errors", record: @account %>
 

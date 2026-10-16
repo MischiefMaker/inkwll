@@ -32,8 +32,12 @@ class Well < ApplicationRecord
   def setup_url
     query = { setup: setup_code }
     query.merge!(name: account.display_name, email: account.email) if copy_founder?
+    query[:import] = 1 if import_world?
     "https://#{domain}/registration/new?#{query.to_query}"
   end
+
+  # Where the Founder of this Well uploads a world pack (see WorldPack).
+  def import_url = "https://#{domain}/admin/world_import"
 
   # The first sign-up link is shown while the Well is running and has no
   # Founder yet.

@@ -41,6 +41,11 @@
           <% end %>
         </td>
       </tr>
+      <% if well.founder_claimed_at? && well.status == "live" %>
+        <tr class="table__row wells__import-link">
+          <td class="table__cell muted" colspan="4"><%= link_to "Import a world into #{well.name}", well.import_url, target: "_blank", rel: "noopener" %> (sign in there as its <%= term(:founder) %>)</td>
+        </tr>
+      <% end %>
       <% if well.setup_link_open? %>
         <tr class="table__row wells__setup-link">
           <td class="table__cell muted" colspan="4">First sign-up link for <%= well.name %> (that player becomes its <%= term(:founder) %>; it stops working once it has one): <code><%= well.setup_url %></code></td>
@@ -146,6 +151,10 @@
       <div class="field field--checkbox">
         <%= form.check_box :copy_founder %>
         <%= form.label :copy_founder, "Make me its #{term(:founder)} too (its sign-up link opens with my name and email filled in; I just choose a password for it)" %>
+      </div>
+      <div class="field field--checkbox">
+        <%= form.check_box :import_world %>
+        <%= form.label :import_world, "I'll import a world pack into it (after you sign up there, you go straight to Import a world; the pack is uploaded on that Well, never through GitHub)" %>
       </div>
       <div class="field">
         <%= label_tag :confirm_name, "Type the name again to confirm" %>

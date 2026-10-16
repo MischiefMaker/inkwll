@@ -22,7 +22,11 @@ class RegistrationsController < ApplicationController
     end
     if @account.save
       start_new_session_for @account
-      redirect_to new_character_path, notice: "Welcome! Now create your first character."
+      if @setup_code && params[:import] == "1"
+        redirect_to admin_world_import_path, notice: "Welcome! Choose the world pack to import. You can make your first character afterwards."
+      else
+        redirect_to new_character_path, notice: "Welcome! Now create your first character."
+      end
     else
       render :new, status: :unprocessable_entity
     end

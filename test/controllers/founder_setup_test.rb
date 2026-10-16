@@ -23,6 +23,15 @@ class FounderSetupTest < ActionDispatch::IntegrationTest
     assert_not Account.find_by!(display_name: "Secondone").founder?
   end
 
+  test "import=1 sends the new Founder to Import a world, and only with the code" do
+    Account.where(founder: true).update_all(founder: false)
+    post registration_path, params: { setup: "abc123abc123abc123", import: "1", account: { display_name: "Importer", email: "i@example.com", password: "Password123", password_confirmation: "Password123" } }
+    assert_redirected_to admin_world_import_path
+
+    post registration_path, params: { setup: "wrong", import: "1", account: { display_name: "Plain", email: "p@example.com", password: "Password123", password_confirmation: "Password123" } }
+    assert_redirected_to new_character_path
+  end
+
   test "the setup link can open with the Founder's name and email filled in, but only with the code" do
     Account.where(founder: true).update_all(founder: false)
     get new_registration_path(setup: "abc123abc123abc123", name: "Beaker", email: "b@example.com")
