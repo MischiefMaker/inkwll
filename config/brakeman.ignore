@@ -1,0 +1,39 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "5383c2acabec73465d6c9a43438a0670ada655bee00afe0da47169ab3795ef29",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/admin/applications/show.html.erb",
+      "line": 28,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => \"characters/tabs/#{(params[:tab].presence_in({ \"answers\" => \"Application\", \"soul\" => \"SOUL\", \"grimoire\" => \"Grimoire\", \"gallery\" => \"Gallery\", \"relationships\" => \"Relationships\" }.keys) or \"answers\")}\", { :character => Character.includes(:profile_values => :profile_field).find(params[:id]), :show_private => true })",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::ApplicationsController",
+          "method": "show",
+          "line": 17,
+          "file": "app/controllers/admin/applications_controller.rb",
+          "rendered": {
+            "name": "admin/applications/show",
+            "file": "app/views/admin/applications/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/applications/show"
+      },
+      "user_input": "params[:tab].presence_in({ \"answers\" => \"Application\", \"soul\" => \"SOUL\", \"grimoire\" => \"Grimoire\", \"gallery\" => \"Gallery\", \"relationships\" => \"Relationships\" }.keys)",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "False positive: @tab is chosen from the fixed @tabs list by presence_in in Admin::ApplicationsController#show, never taken straight from the request."
+    }
+  ],
+  "brakeman_version": "8.1.0"
+}

@@ -1,7 +1,12 @@
-# Tries signing up and logging in on the live game with a real Firefox and
-# Chromium, and prints what each browser does with the cookies. It makes one
-# throwaway player on the live game each time (named Probe plus numbers), which
-# an admin can archive. Start it by hand (Actions → Probe login → Run workflow).
+# Tries signing up and logging in with a real Firefox and Chromium, and prints
+# what each browser does with the cookies and the forms that redirect.
+#
+# It never touches the live game. It starts a throwaway copy of the game
+# inside this run (same production settings, its own empty database with the
+# starter map), makes its Probe players there with a new random password,
+# and everything is thrown away when the run ends. The scripts live in
+# script/probe/ and refuse to run against anything but this local copy.
+# Start it by hand (Actions → Probe login → Run workflow).
 name: Probe login
 
 on:
@@ -10,107 +15,67 @@ on:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: inkwll
+          POSTGRES_PASSWORD: probe-copy-only
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+
     env:
-      INKWLL_SERVER: ${{ vars.INKWLL_SERVER || secrets.INKWLL_SERVER }}
+      RAILS_ENV: production
+      DB_HOST: localhost
+      INKWLL_DATABASE_PASSWORD: probe-copy-only
+      INKWLL_HTTPS: "false"
+      PROBE_URL: http://127.0.0.1:3000
+
     steps:
-      - name: Install the browsers
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev libvips
+
+      - uses: actions/checkout@v7
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Make this run's secrets
         run: |
-          mkdir -p /tmp/probe && cd /tmp/probe
+          key=$(openssl rand -hex 64)
+          pw="$(openssl rand -base64 48 | tr -dc 'A-Za-z0-9' | head -c 32)Aa1"
+          echo "::add-mask::$key"
+          echo "::add-mask::$pw"
+          echo "SECRET_KEY_BASE=$key" >> "$GITHUB_ENV"
+          echo "PROBE_PASSWORD=$pw" >> "$GITHUB_ENV"
+
+      - name: Start a throwaway copy of the game
+        run: |
+          bin/rails db:prepare db:seed
+          bin/rails assets:precompile
+          SOLID_QUEUE_IN_PUMA=true bin/rails server -p 3000 -b 127.0.0.1 > /tmp/game.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf "$PROBE_URL/up" >/dev/null && exit 0; sleep 2; done
+          echo "The copy of the game didn't start:"; cat /tmp/game.log; exit 1
+
+      - name: Install the browsers
+        working-directory: script/probe
+        run: |
           npm init -y >/dev/null
           npm i playwright >/dev/null
           npx playwright install --with-deps firefox chromium >/dev/null
 
       - name: Forms that redirect (Enter and Post thread), in Firefox and Chromium
-        run: |
-          cd /tmp/probe
-          cat > forms.js <<'JS'
-          const { firefox, chromium } = require('playwright');
-          const base = `http://${process.env.INKWLL_SERVER}`;
-          const pw = 'Testing123A';
-          const here = (page) => page.url().replace(base, '') || '/';
-          (async () => {
-            for (const [name, type] of [['firefox', firefox], ['chromium', chromium]]) {
-              const player = `Probe${Date.now()}`;
-              const browser = await type.launch();
-              const page = await browser.newPage();
-              page.on('console', m => { if (['error', 'warning'].includes(m.type())) console.log(name, 'console', m.type(), m.text().slice(0, 200)); });
-              page.on('pageerror', e => console.log(name, 'page error:', String(e).slice(0, 200)));
-              page.on('response', r => { if (r.request().method() === 'POST') console.log(name, 'POST', r.status(), r.url().replace(base, ''), r.headers()['location'] ? '-> ' + r.headers()['location'].replace(base, '') : ''); });
-              await page.goto(base + '/registration/new');
-              await page.fill('#account_display_name', player);
-              await page.fill('#account_email', player.toLowerCase() + '@example.com');
-              await page.fill('#account_password', pw);
-              await page.fill('#account_password_confirmation', pw);
-              await page.click('form[action="/registration"] [type=submit]');
-              await page.waitForLoadState('networkidle');
-              await page.fill('#character_name', `Tester ${player.slice(-4)}`);
-              await page.locator('#character_name').locator('xpath=ancestor::form').locator('[type=submit]').click();
-              await page.waitForURL(/\/characters\/\d+/);
-              await page.waitForLoadState('networkidle');
-              console.log(name, 'character made, now at', here(page));
-              await page.goto(base + '/');
-              const enter = page.locator('.place__enter-form button').first();
-              console.log(name, 'Enter buttons on the front page:', await page.locator('.place__enter-form button').count());
-              const before = here(page);
-              await enter.click();
-              await page.waitForTimeout(4000);
-              console.log(name, 'Enter: before', before, '-> after 4s', here(page), '| title:', await page.title());
-              await page.goto(base + '/boards');
-              await page.locator('a', { hasText: 'Advertising' }).first().click();
-              await page.waitForLoadState('networkidle');
-              await page.locator('a', { hasText: /^Start a/ }).first().click();
-              await page.waitForLoadState('networkidle');
-              await page.fill('#forum_topic_title', 'Probe thread');
-              await page.fill('#forum_topic_body', 'Testing the Post thread button.');
-              const formUrl = here(page);
-              await page.locator('form.forum-topic-form [type=submit]').click();
-              await page.waitForTimeout(4000);
-              console.log(name, 'Post thread: before', formUrl, '-> after 4s', here(page), '| title:', await page.title());
-              await browser.close();
-            }
-          })().catch(e => { console.error(e); process.exit(1); });
-          JS
-          node forms.js
+        working-directory: script/probe
+        run: node forms.js
 
       - name: Sign up and log in
-        run: |
-          cd /tmp/probe
-          cat > probe.js <<'JS'
-          const { firefox, chromium } = require('playwright');
-          const base = `http://${process.env.INKWLL_SERVER}`;
-          const pw = 'Testing123A';
-          (async () => {
-            for (const [name, type] of [['firefox', firefox], ['chromium', chromium]]) {
-              const player = `Probe${Date.now()}`;
-              const browser = await type.launch();
-              const page = await browser.newPage();
-              page.on('response', async r => {
-                if (r.request().method() === 'POST') {
-                  const h = await r.headersArray();
-                  console.log(name, 'POST', r.status(), r.url().replace(base, ''), 'set-cookie names:',
-                    h.filter(x => x.name.toLowerCase() === 'set-cookie').map(x => x.value.split('=')[0]).join(', ') || 'none');
-                }
-              });
-              await page.goto(base + '/registration/new');
-              await page.fill('#account_display_name', player);
-              await page.fill('#account_email', player.toLowerCase() + '@example.com');
-              await page.fill('#account_password', pw);
-              await page.fill('#account_password_confirmation', pw);
-              await page.click('form[action="/registration"] [type=submit]');
-              await page.waitForLoadState('networkidle');
-              console.log(name, 'after sign up:', page.url().replace(base, ''), '| cookies:', (await page.context().cookies()).map(c => c.name).join(', '));
-              await page.context().clearCookies();
-              await page.goto(base + '/session/new');
-              await page.fill('[name=username]', player);
-              await page.fill('[name=password]', pw);
-              await page.click('form[action="/session"] [type=submit]');
-              await page.waitForLoadState('networkidle');
-              const text = await page.locator('body').innerText();
-              console.log(name, 'after log in:', page.url().replace(base, ''), '| cookies:', (await page.context().cookies()).map(c => c.name).join(', '));
-              console.log(name, 'logged in?', text.includes('Log out') ? 'YES' : 'NO (still a guest)');
-              await browser.close();
-            }
-          })().catch(e => { console.error(e); process.exit(1); });
-          JS
-          node probe.js
+        working-directory: script/probe
+        run: node login.js
+
+      - name: Game log, if something failed
+        if: failure()
+        run: tail -n 200 /tmp/game.log

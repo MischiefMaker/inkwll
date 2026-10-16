@@ -4,7 +4,7 @@ Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b 
 
 ## How updates work now (step 12a)
 
-- **Admin → Wells** is only for the Founder. It shows this Well's version and the versions marked ready, newest first, each with its notes. "Update to" and "Go back to" buttons ask GitHub to run the Deploy workflow with that version. The page refreshes itself while an update runs and links to the log.
+- **Admin → Wells** is only for the Founder. It shows this Well's version and the versions marked ready in `config/versions.yml`, newest first, each with its notes. "Update to" and "Go back to" buttons ask GitHub to run the Deploy workflow with that version. The page refreshes itself while an update runs and links to the log.
 - **One update at a time.** The page refuses a second one while one is running, and refuses any version that isn't marked ready.
 - **Backups:** the Deploy workflow dumps the database to `/root/backups` on the droplet before every deploy (except the first), keeps the newest ten, and stops if the dump fails. The off-server nightly copy to DigitalOcean Spaces is still to do (see `deploying.md`).
 - **Going back** rebuilds the earlier version. Database changes made by newer versions stay, so a version's notes say when going back past it is unsafe.
@@ -12,7 +12,9 @@ Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b 
 
 ### Marking a version ready (Claude)
 
-When a commit on main has passed the tests and run on inkwll.com, Claude runs **Actions → Mark version ready** with the version name (v1.0, v1.1 and so on), the commit, and a few plain lines on what changed, saying if going back past it is unsafe. The workflow makes a GitHub Release (and its tag), and the Wells page lists it. Claude's cloud environment can't push tags directly, which is why this goes through a workflow.
+When a commit on main has passed the tests and run on inkwll.com, Claude adds it to the top of `config/versions.yml` on main: the version name (v1.0, v1.1 and so on), the full commit id, the date, and a few plain lines on what changed, saying if going back past it is unsafe. The Wells page reads that file from GitHub, so the new version shows up without a deploy. The Deploy workflow looks the version up in the same file and deploys that commit.
+
+(GitHub Releases were tried first, but this repository doesn't let workflows or Claude's cloud environment create tags.)
 
 ---
 
