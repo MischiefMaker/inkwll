@@ -52,6 +52,8 @@ class Admin::WellsController < Admin::BaseController
 
       @updates.select(&:running?).each { |update| update.refresh!(github) }
       WellUpdate.start_next!(github)
+      @wells = Well.listed.to_a
+      @wells.each(&:check_founder!)
       @updates = WellUpdate.recent.includes(:account, :well).to_a
       @wells = Well.listed.to_a
       @releases = github.releases

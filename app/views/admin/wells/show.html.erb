@@ -41,7 +41,7 @@
           <% end %>
         </td>
       </tr>
-      <% if well.status == "live" %>
+      <% if well.setup_link_open? %>
         <tr class="table__row wells__setup-link">
           <td class="table__cell muted" colspan="4">First sign-up link for <%= well.name %> (that player becomes its <%= term(:founder) %>; it stops working once it has one): <code><%= well.setup_url %></code></td>
         </tr>
