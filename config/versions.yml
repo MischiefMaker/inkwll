@@ -2,6 +2,13 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.8
+  commit: af86c59e238b55d43067625a5ed7a7b32ee45a52
+  date: 2026-10-16
+  notes: |
+    - Starting a new Well has an "I'll import a world pack" box. After you sign up on the new Well you go straight to Import a world.
+    - Fonts for Draganic (Cinzel, Cinzel Decorative, Cormorant Garamond).
+    - Needs a database change (adds one column on the Wells list); going back past this version is safe.
 - version: v1.7
   commit: d88ab9d536c7ef7fbbea2b0733fbd9682fc03ff2
   date: 2026-10-16
