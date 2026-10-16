@@ -21,23 +21,34 @@ module Inkwll
       found
     end
 
-    # Archives each Probe player (they can't log in, their characters are
-    # retired) and deletes their forum threads, forum posts and OOC messages.
+    # Removes each Probe player completely: their forum threads and posts, OOC
+    # messages, Messages, Passages, Chapters only their characters were in,
+    # characters, and the account itself. Nothing is archived or kept.
     def self.clean_up(out)
       found = report(out)
       found.each do |account|
         Account.transaction do
+          account.update_columns(active_character_id: nil)
           ForumTopic.where(account: account).destroy_all
           ForumPost.where(account: account).destroy_all
           account.ooc_messages.destroy_all
-          account.archive! unless account.archived?
-          # Archived players can't log in, but the old password was public,
-          # so replace it anyway.
-          account.update_columns(password_digest: BCrypt::Password.create(SecureRandom.base58(32)))
+          Conversation.where(id: account.conversation_members.select(:conversation_id)).destroy_all
+          account.characters.each { |character| remove_character(character) }
+          account.reload.destroy!
         end
-        out.puts "Cleaned up #{account.display_name}."
+        out.puts "Removed #{account.display_name}."
       end
+      out.puts "Removed #{found.size} Probe #{found.size == 1 ? "player" : "players"}." if found.any?
       found
     end
+
+    def self.remove_character(character)
+      Pose.where(character: character).destroy_all
+      alone = Scene.joins(:participants).group("scenes.id")
+        .having("BOOL_AND(scene_participants.character_id = ?)", character.id).where(id: character.scene_participants.select(:scene_id))
+      alone.to_a.each(&:destroy!)
+      character.reload.destroy!
+    end
+    private_class_method :remove_character
   end
 end

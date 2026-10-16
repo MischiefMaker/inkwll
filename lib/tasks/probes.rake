@@ -2,8 +2,8 @@
 # lib/inkwll/probes.rb and docs/deploying.md.
 #
 #   bin/rails inkwll:probes:list       shows them and what they made
-#   bin/rails inkwll:probes:clean_up   archives them and deletes their forum
-#                                      threads, forum posts and OOC messages
+#   bin/rails inkwll:probes:clean_up   removes them completely: forum posts,
+#                                      OOC messages, Passages, characters, account
 namespace :inkwll do
   namespace :probes do
     desc "List leftover Probe players and what they made"
@@ -11,7 +11,7 @@ namespace :inkwll do
       Inkwll::Probes.report($stdout)
     end
 
-    desc "Archive leftover Probe players and delete their forum threads, posts and OOC messages"
+    desc "Remove leftover Probe players and everything they made"
     task clean_up: :environment do
       Inkwll::Probes.clean_up($stdout)
     end

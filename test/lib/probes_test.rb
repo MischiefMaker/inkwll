@@ -21,17 +21,24 @@ class ProbesTest < ActiveSupport::TestCase
     assert_not_includes Inkwll::Probes.accounts, lookalike
   end
 
-  test "cleaning up archives Probe players, replaces the shared password and removes what they posted" do
+  test "cleaning up removes Probe players and everything they made" do
+    @character.define_singleton_method(:can_play?) { true }
+    scene = Scene.start!(character: @character, title: "Probe chapter")
+    scene.post!(@character, "A probe passage.")
+    other = scenes(:duel)
+    other.participants.create!(character: @character, position: 9)
+    other.poses.create!(sequence: 99, character: @character, kind: "passage", body: "Probe in a real Chapter.")
     Inkwll::Probes.clean_up(StringIO.new)
 
-    assert @probe.reload.archived?
-    assert_nil Account.log_in(@probe.display_name, "Testing123A")
-    assert_not @probe.authenticate("Testing123A")
-    assert @character.reload.retired_at.present?
+    assert_not Account.exists?(@probe.id)
+    assert_not Character.exists?(@character.id)
+    assert_not Scene.exists?(scene.id), "Chapters only the probe was in go too"
+    assert_not Pose.where("body LIKE ?", "%probe%").exists?
     assert_not ForumTopic.exists?(@topic.id)
     assert_not ForumPost.exists?(@reply.id)
-    assert_equal 0, @probe.ooc_messages.count
+    assert_equal 0, OocMessage.where(body: "Probe says hi").count
     assert ForumTopic.exists?(title: "Real thread"), "other players' threads stay"
+    assert Scene.exists?(other.id), "real Chapters stay"
   end
 
   test "the list changes nothing" do

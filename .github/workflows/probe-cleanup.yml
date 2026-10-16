@@ -1,7 +1,7 @@
 # Finds the throwaway "Probe" players that the old browser check made on the
 # live game (named Probe plus numbers, with an @example.com email) and, if
-# asked, archives them and deletes their forum threads, forum posts and OOC
-# messages. Their shared password is replaced too. Real players are never
+# asked, removes them completely: forum threads and posts, OOC messages,
+# Messages, Passages, characters and the accounts. Real players are never
 # matched. Start it by hand (Actions → Clean up probe players → Run workflow):
 # first with "Clean up" unticked to see the list, then ticked to clean up.
 # See docs/deploying.md.

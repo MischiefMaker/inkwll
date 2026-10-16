@@ -17,8 +17,9 @@ Short, plain-language notes on what changed. Newest first.
 - The browser sign-up and login check no longer touches the live game. It runs
   on a throwaway copy inside the check, with a new random password each time.
   Tests stop it from being pointed at the live game or given a fixed password.
-- New "Clean up probe players" action lists and clears the "Probe" players,
-  forum thread and posts the old check left on the live game.
+- New "Clean up probe players" action lists and removes the "Probe" players
+  the old check left on the live game, with their characters, Passages, forum
+  threads and posts, OOC messages and Messages.
 - The game now sends a Content Security Policy, so browsers refuse scripts that
   don't come from the game itself and other sites can't frame it. Checked by
   walking about 160 pages as a guest and as a Founder: nothing was blocked,

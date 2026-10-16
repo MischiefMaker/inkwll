@@ -79,9 +79,9 @@ is written into a workflow or script.
 Never test sign-up on the live game: every account made there stays. An
 earlier version did, with a shared password, and left "Probe" players and a
 forum thread behind. To find and clear them, run **Actions → Clean up probe
-players** first with "Clean up" unticked (lists them), then ticked (archives
-them, removes their forum threads, posts and OOC messages, and replaces the
-shared password). It only matches names like `Probe1760000000000` with an
+players** first with "Clean up" unticked (lists them), then ticked (removes
+them completely: their forum threads and posts, OOC messages, Messages, Passages,
+characters and the account itself). It only matches names like `Probe1760000000000` with an
 `@example.com` email.
 
 ## Content Security Policy
