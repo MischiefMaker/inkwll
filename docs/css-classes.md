@@ -128,7 +128,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.character-name`, `.character-name--grouped`, `.character-group-<id>` | A character's name; grouped names take the group's colour from `--group-colour` |
 | `.pose__details`, `.mini-profile__details`, `.character-profile__group`, `.directory__group` | The group and chosen fields beside Passages and on profiles |
 | `.alert-bell`, `.alert-bell--unread`, `.alert-bell__number`, `.alerts`, `.alerts__item`, `.alerts__item--passage`, `--turn`, `--mention`, `--finished`, `--unread` | The alerts bell and the alerts list |
-| `.alerts__staff`, `.alerts__staff-title`, `.alerts__staff-list`, `.alerts__staff-item` (and `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`), `.alerts__staff-link`, `.alerts__staff-count` | What is waiting on staff, at the top of the bell's list |
+| `.alerts__staff`, `.alerts__staff-title`, `.alerts__staff-list`, `.alerts__staff-item` (and `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`, `--update` for the Founder's "Update available"), `.alerts__staff-link`, `.alerts__staff-count` | What is waiting on staff, at the top of the bell's list |
 | `.alert-menu`, `.alert-menu__summary`, `.alert-menu__panel`, `.alert-menu__frame` | The bell's drop-down in the header |
 | `.chapter-tracker`, `.chapter-tracker__character`, `.chapter-tracker__row`, `.chapter-tracker__row--my-turn`, `.chapter-tracker__subtitle` | My Chapters |
 | `.inklings`, `.inklings__item`, `.inklings__item--unread`, `--draft`, `--submitted`, `--approved`, `--needs_changes`, `.inklings__type`, `.inklings__type--<type>`, `.inklings__start-disabled`, `.inklings__why-not`, `.button--disabled` | The Inklings list |
