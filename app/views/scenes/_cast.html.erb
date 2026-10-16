@@ -1,8 +1,8 @@
 <%# Casting a learned spell. The game posts the roll into the Chapter. %>
 <% spells = participant.character.spells.includes(branch: :skill).order(:name) %>
-<% if spells.any? %>
-  <details class="roll-box cast-box">
-    <summary class="disclosure__summary roll-box__summary">Cast a spell</summary>
+<details class="roll-box cast-box">
+  <summary class="disclosure__summary roll-box__summary">Cast a spell</summary>
+  <% if spells.any? %>
     <%= form_with url: scene_casts_path(scene), class: "form roll-box__form cast-box__form" do |form| %>
       <div class="field roll-box__field">
         <%= form.label :spell_id, "Spell" %>
@@ -10,5 +10,7 @@
       </div>
       <%= form.submit "Cast as #{participant.character.name}", class: "button button--quiet" %>
     <% end %>
-  </details>
-<% end %>
+  <% else %>
+    <p class="hint cast-box__empty"><%= participant.character.name %> hasn't learned any spells yet. <%= link_to "Learn spells", character_path(participant.character, tab: "grimoire") %> on the Grimoire page of their profile.</p>
+  <% end %>
+</details>

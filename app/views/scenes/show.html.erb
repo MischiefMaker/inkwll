@@ -104,6 +104,7 @@
         <div class="scene__tools">
           <%= render "scenes/roll", scene: @scene, participant: @participant if posting && Soul.enabled? %>
           <%= render "scenes/cast", scene: @scene, participant: @participant if posting && Grimoire.enabled? %>
+          <%= render "scenes/inkling_link", scene: @scene, participant: @participant if posting && Inkling.enabled? && !@participant.character.gm? %>
           <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant if story_tools %>
         </div>
       <% end %>

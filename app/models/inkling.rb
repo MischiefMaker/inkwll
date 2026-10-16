@@ -20,6 +20,8 @@ class Inkling < ApplicationRecord
   has_many :shares, class_name: "InklingShare", dependent: :delete_all
   has_many :shared_characters, through: :shares, source: :character
   has_many :reads, class_name: "InklingRead", dependent: :delete_all
+  has_many :scene_links, class_name: "InklingSceneLink", dependent: :delete_all
+  has_many :linked_scenes, through: :scene_links, source: :scene
 
   enum :status, { open: "open", closed: "closed" }, validate: true
   enum :review_state, REVIEW_STATES.index_by(&:itself), validate: true

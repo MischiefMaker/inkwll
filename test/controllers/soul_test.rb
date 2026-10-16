@@ -80,7 +80,7 @@ class SoulControllersTest < ActionDispatch::IntegrationTest
     post scene_rolls_path(scenes(:duel)), params: { skill_id: soul_skills(:strength).id, difficulty: "hard" }
     assert_response :not_found
     get scene_path(scenes(:duel))
-    assert_select ".roll-box", count: 0
+    assert_select ".roll-box:not(.inkling-link-box)", count: 0
     get character_path(characters(:wren), tab: "soul")
     assert_select ".soul-sheet", count: 0
   end

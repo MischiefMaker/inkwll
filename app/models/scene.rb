@@ -16,6 +16,7 @@ class Scene < ApplicationRecord
   has_many :participants, -> { order(:position) }, class_name: "SceneParticipant", dependent: :destroy, inverse_of: :scene
   has_many :characters, through: :participants
   has_many :invitations, class_name: "SceneInvitation", dependent: :destroy
+  has_many :inkling_links, class_name: "InklingSceneLink", dependent: :delete_all
   has_many :poses, -> { order(:sequence) }, dependent: :destroy, inverse_of: :scene
   has_many :pending_rolls, class_name: "Soul::PendingRoll", dependent: :delete_all
   has_many :award_suggestions, class_name: "Soul::AwardSuggestion", dependent: :delete_all

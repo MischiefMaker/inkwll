@@ -27,6 +27,12 @@
     <% end %>
   </header>
 
+  <% linked_scenes = @inkling.linked_scenes.select { |scene| scene.visible_to?(current_account) } %>
+  <% if linked_scenes.any? %>
+    <p class="muted inkling__chapters">Linked to:
+      <%= safe_join(linked_scenes.map { |scene| link_to(scene.title, scene_path(scene), class: "inkling__chapter") }, ", ") %></p>
+  <% end %>
+
   <div class="notice-box inkling__status">
     <% if @inkling.closed? %>
       <p class="text">Closed. Nothing more is planned for this.</p>

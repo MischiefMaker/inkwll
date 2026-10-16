@@ -227,3 +227,6 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 | `.profile-layout`, `.profile-menu`, `.profile-menu__group` (`--basics`, `--system`, `--writing`), `.profile-menu__heading`, `.profile-menu__list`, `.profile-menu__item`, `.profile-menu__link`, `.profile-menu__link--current` | A character profile's menu down the left (Basics: Profile, Application, Relationships, Image Gallery; System: SOUL, Inklings, Grimoire; Writing: Manuscripts, Active Chapters) with the chosen page beside it |
 | `.roll-box__private` | The "Only me and staff see the result" checkbox in an Inkling's Roll a Skill |
+| `.inkling-link-box`, `.inkling-link-box__linked`, `.inkling-link-box__item`, `.inkling-link-box__title`, `.inkling-link-box__unlink`, `.inkling-link-box__form`, `.inkling-link-box__new`, `.inkling-link-box__hint` | "Start or link an Inkling" in a Chapter's tools: the linked Inklings, the picker and the new-Inkling form |
+| `.cast-box__empty` | The note in "Cast a spell" when the character hasn't learned any spells |
+| `.inkling__chapters`, `.inkling__chapter` | The "Linked to:" line on an Inkling listing the Chapters it is linked to |

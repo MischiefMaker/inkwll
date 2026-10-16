@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_011800) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -387,6 +387,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_011800) do
     t.index ["account_id"], name: "index_inkling_reads_on_account_id"
     t.index ["inkling_id", "account_id"], name: "index_inkling_reads_on_inkling_id_and_account_id", unique: true
     t.index ["inkling_id"], name: "index_inkling_reads_on_inkling_id"
+  end
+
+  create_table "inkling_scene_links", force: :cascade do |t|
+    t.bigint "inkling_id", null: false
+    t.bigint "scene_id", null: false
+    t.bigint "linked_by_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inkling_id", "scene_id"], name: "index_inkling_scene_links_on_inkling_id_and_scene_id", unique: true
+    t.index ["inkling_id"], name: "index_inkling_scene_links_on_inkling_id"
+    t.index ["linked_by_id"], name: "index_inkling_scene_links_on_linked_by_id"
+    t.index ["scene_id"], name: "index_inkling_scene_links_on_scene_id"
   end
 
   create_table "inkling_shares", force: :cascade do |t|
@@ -937,6 +949,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_011800) do
   add_foreign_key "inkling_entries", "soul_rolls", on_delete: :nullify
   add_foreign_key "inkling_reads", "accounts", on_delete: :cascade
   add_foreign_key "inkling_reads", "inklings", on_delete: :cascade
+  add_foreign_key "inkling_scene_links", "accounts", column: "linked_by_id"
+  add_foreign_key "inkling_scene_links", "inklings"
+  add_foreign_key "inkling_scene_links", "scenes"
   add_foreign_key "inkling_shares", "characters", on_delete: :cascade
   add_foreign_key "inkling_shares", "inklings", on_delete: :cascade
   add_foreign_key "inklings", "accounts", column: "creator_id"

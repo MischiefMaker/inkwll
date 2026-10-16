@@ -1,0 +1,36 @@
+<%# Start an Inkling from this Chapter, or link one the character already has. Only the player sees what is linked. %>
+<% character = participant.character %>
+<% linked = scene.inkling_links.includes(:inkling).select { |link| link.inkling.character_id == character.id } %>
+<% linkable = Inkling.where(character: character, status: "open").where.not(id: linked.map(&:inkling_id)).newest_first %>
+<details class="roll-box inkling-link-box">
+  <summary class="disclosure__summary roll-box__summary">Start or link an Inkling</summary>
+  <% if linked.any? %>
+    <ul class="inkling-link-box__linked">
+      <% linked.each do |link| %>
+        <li class="inkling-link-box__item">
+          <%= link_to link.inkling.title, inkling_path(link.inkling), class: "inkling-link-box__title" %>
+          <%= button_to "Unlink", scene_inkling_link_path(scene, link), method: :delete, class: "button-link inkling-link-box__unlink" %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if linkable.any? %>
+    <%= form_with url: scene_inkling_links_path(scene), class: "form roll-box__form inkling-link-box__form" do |form| %>
+      <div class="field roll-box__field">
+        <%= form.label :inkling_id, "Link one of #{character.name}'s Inklings" %>
+        <%= form.select :inkling_id, linkable.map { |inkling| [ "#{inkling.title} (#{inkling.type_name})", inkling.id ] } %>
+      </div>
+      <%= form.submit "Link", class: "button button--quiet" %>
+    <% end %>
+  <% end %>
+  <%= form_with url: scene_inkling_links_path(scene), class: "form inkling-link-box__new" do |form| %>
+    <div class="field"><%= form.label :kind, "Start a new one" %>
+      <%= form.select :kind, Inkling.types_for(current_account).map { |key, type| [ type["name"], key ] } %></div>
+    <div class="field"><%= form.label :title, "Title", class: "visually-hidden" %>
+      <%= form.text_field :title, placeholder: "Title", maxlength: 120, required: true %></div>
+    <div class="field"><%= form.label :body, "First note", class: "visually-hidden" %>
+      <%= form.text_area :body, placeholder: "What is this about?", rows: 3, required: true %></div>
+    <%= form.submit "Start and link", class: "button button--quiet" %>
+  <% end %>
+  <p class="hint inkling-link-box__hint">Only you and staff (once you send it) can see an Inkling. Others in the <%= term(:scene).downcase %> can't see the link.</p>
+</details>

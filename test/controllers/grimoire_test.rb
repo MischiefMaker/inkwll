@@ -35,6 +35,15 @@ class GrimoireTest < ActionDispatch::IntegrationTest
     assert_not @wren.knows_spell?(@spell)
   end
 
+  test "the Cast a spell box shows on a Chapter even before any spell is learned" do
+    sign_in_as(accounts(:alice))
+    get scene_path(scenes(:duel))
+    assert_select ".cast-box__empty"
+    @wren.learn_spell!(@spell)
+    get scene_path(scenes(:duel))
+    assert_select ".cast-box__form"
+  end
+
   test "casting a learned spell posts a roll in the Chapter" do
     @wren.learn_spell!(@spell)
     sign_in_as(accounts(:alice))
