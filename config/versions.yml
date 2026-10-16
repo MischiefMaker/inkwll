@@ -2,6 +2,15 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.3
+  commit: d016671859966680b78813f083abfb81328a7de9
+  date: 2026-10-16
+  notes: |
+    - The Wells page offers only the newest version for updating; older ones are listed as notes. This game's row says Up-to-Date! or Update available.
+    - New Wells: the first sign-up link now makes that player its Founder (it didn't before), and a new Well shows the name you gave it.
+    - "Make me its Founder too" when starting a Well opens its sign-up link with your name and email filled in.
+    Going back to v1.2 is safe.
+
 - version: v1.2
   commit: dbbed3dc592e3204082205d7ed7d533fc43823da
   date: 2026-10-16
