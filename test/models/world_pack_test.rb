@@ -79,19 +79,34 @@ class WorldPackTest < ActiveSupport::TestCase
     assert prologue.exits.exists?(destination_room: Room.find_by!(name: "Foyer"))
   end
 
-  test "removing what the pack leaves out keeps The Prologue and busy places" do
+  test "removing what the pack leaves out keeps The Prologue and Places with Chapters" do
     prologue = Room.create_prologue!
     garden, tower, castle = rooms(:garden).id, rooms(:tower).id, areas(:castle).id
     pack.import!(by: accounts(:founder), remove_unlisted: true)
 
     assert Room.exists?(prologue.id)
-    assert Room.exists?(rooms(:commons).id), "characters are in The Commons"
-    assert Room.exists?(rooms(:hall).id), "characters are in North Hall"
+    assert Room.exists?(rooms(:commons).id), "The Commons has Chapters"
+    assert Room.exists?(rooms(:hall).id), "North Hall has Chapters"
     assert_not Room.exists?(garden)
     assert_not Room.exists?(tower)
     assert Area.exists?(areas(:world).id), "it still holds places that stay"
     assert_not Area.exists?(castle)
     assert Room.exists?(name: "Foyer")
+  end
+
+  test "characters in a Place that is removed move to The Prologue" do
+    prologue = Room.create_prologue!
+    character = Character.where(room: rooms(:commons)).first
+    character.update_columns(room_id: rooms(:garden).id)
+    garden = rooms(:garden).id
+
+    change = pack.preview(remove_unlisted: true).find { |c| c.name == "Garden" }
+    assert_equal "remove", change.action
+    assert_match "moves to The Prologue", change.note
+
+    pack.import!(by: accounts(:founder), remove_unlisted: true)
+    assert_not Room.exists?(garden)
+    assert_equal prologue, character.reload.room
   end
 
   test "the preview lists what would be removed and what stays" do

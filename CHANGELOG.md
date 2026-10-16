@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Import a world: characters move to The Prologue
+
+- With "Also remove what isn't in the pack" ticked, a Place with characters in it no longer stays behind: the characters are moved to The Prologue and the Place is removed. Places with Chapters still stay, so no story is lost. The preview says how many characters will move.
+
 ## 2026-10-16 — Import a world
 
 - New Founder-only **Admin → Import a world** page. Upload a world pack (a file holding Areas, Places, Paths, wiki pages, boards, the front page text and the game's look) and it shows everything it would add, change or remove before anything happens. Importing the same pack again changes nothing. There's an option to also remove Areas, Places and Paths the pack leaves out; The Prologue and any Place with characters or Chapters in it always stay. Details in docs/world-packs.md.

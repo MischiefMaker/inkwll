@@ -14,7 +14,8 @@
 # Importing only adds and updates: things are matched by name, so running
 # the same pack twice changes nothing the second time. With remove_unlisted,
 # Areas, Places and Paths the pack doesn't mention are taken away too, except
-# The Prologue and any Place with characters or Chapters in it. Wiki pages,
+# The Prologue and any Place with Chapters in it; characters in a Place
+# that goes are moved to The Prologue. Wiki pages,
 # boards and characters are never removed. The format is in
 # docs/world-packs.md.
 class WorldPack
@@ -68,7 +69,7 @@ class WorldPack
     wiki_pages.each { |w| changes << Change.new("Wiki page", w["title"], WikiPage.exists?(slug: WikiPage.slug_for(w["title"])) ? "change" : "add", nil) }
     boards.each { |b| changes << Change.new("Board", b["name"], board_for(b) ? "change" : "add", (b["was"] if b["was"].present? && !ForumBoard.exists?(name: b["name"]))) }
     if remove_unlisted
-      removals.each { |kind, record, note| changes << Change.new(kind, record.name, note ? "keep" : "remove", note) }
+      removals.each { |kind, record, kept, note| changes << Change.new(kind, record.name, kept ? "keep" : "remove", kept || note) }
     end
     changes
   end
@@ -232,16 +233,19 @@ class WorldPack
       (2..).each { |n| candidate = "#{base.first(36)} (#{n})"; return candidate unless room.exits.exists?(name: candidate) }
     end
 
-    # [kind, record, reason it is kept or nil] for everything the pack leaves out.
+    # [kind, record, reason it is kept or nil, note] for everything the pack
+    # leaves out. Places with Chapters stay, so no story is lost; characters
+    # in a Place that goes are moved to The Prologue first.
     def removals
       place_keys = places.map { |p| [ p["name"], p["area"] ] }
       area_names = areas.map { |a| a["name"] }
       path_keys = paths.map { |p| [ p["from"], (p["name"].presence || p["to"]).squish.first(40) ] }
       prologue = Room.find_by(name: Room::PROLOGUE)
-      busy_room_ids = Character.where.not(room_id: nil).distinct.pluck(:room_id) + Scene.distinct.pluck(:room_id)
+      chapter_room_ids = Scene.distinct.pluck(:room_id)
+      people = Character.where.not(room_id: nil).group(:room_id).count
 
       rooms = Room.includes(:area).reject { |room| place_keys.include?([ room.name, room.area.name ]) }
-      kept_rooms = rooms.select { |room| room == prologue || busy_room_ids.include?(room.id) }
+      kept_rooms = rooms.select { |room| room == prologue || chapter_room_ids.include?(room.id) }
       rooms_out = rooms - kept_rooms
       kept_area_ids = (Room.where.not(id: rooms_out.map(&:id)).pluck(:area_id) + [ prologue&.area_id ]).compact
       kept_area_ids += Area.where(id: kept_area_ids).flat_map(&:ancestors).map(&:id)
@@ -253,20 +257,35 @@ class WorldPack
           rooms_out.include?(exit.source_room) || rooms_out.include?(exit.destination_room)
       end
 
-      rooms.map { |room| [ Term[:room], room, (kept_rooms.include?(room) ? (room == prologue ? "the starting #{Term[:room].downcase}" : "has characters or #{Term[:scene, count: 2].downcase}") : nil) ] } +
-        areas_out.map { |area| [ Term[:area], area, nil ] } +
-        kept_areas.map { |area| [ Term[:area], area, "still holds #{Term[:room, count: 2].downcase} that stay" ] } +
-        paths_out.map { |exit| [ Term[:exit], exit, nil ] }
+      room_rows = rooms.map do |room|
+        if room == prologue
+          [ Term[:room], room, "the starting #{Term[:room].downcase}", nil ]
+        elsif kept_rooms.include?(room)
+          [ Term[:room], room, "has #{Term[:scene, count: 2].downcase}", nil ]
+        elsif (count = people[room.id].to_i).positive?
+          [ Term[:room], room, nil, "#{count} #{count == 1 ? "character moves" : "characters move"} to #{Room::PROLOGUE}" ]
+        else
+          [ Term[:room], room, nil, nil ]
+        end
+      end
+      room_rows +
+        areas_out.map { |area| [ Term[:area], area, nil, nil ] } +
+        kept_areas.map { |area| [ Term[:area], area, "still holds #{Term[:room, count: 2].downcase} that stay", nil ] } +
+        paths_out.map { |exit| [ Term[:exit], exit, nil, nil ] }
     end
 
     def remove_unlisted_world
-      out = removals.reject { |_, _, note| note }.map { |_, record, _| record }
+      out = removals.reject { |_, _, kept, _| kept }.map { |_, record, _, _| record }
       out.grep(Exit).each(&:destroy!)
       rooms = out.grep(Room)
+      if Character.where(room_id: rooms.map(&:id)).exists?
+        prologue = Room.find_by(name: Room::PROLOGUE) || Room.create_prologue!
+        Character.where(room_id: rooms.map(&:id)).update_all(room_id: prologue.id, updated_at: Time.current)
+      end
       # Rooms the removed ones were the entrance of stop being one.
       Area.where(entrance_room_id: rooms.map(&:id)).update_all(entrance_room_id: nil)
       RememberedCharacter.where(context_type: "Room", context_id: rooms.map(&:id)).delete_all
-      rooms.each(&:destroy!)
+      rooms.each { |room| room.reload.destroy! }
       # Innermost Areas first.
       out.grep(Area).sort_by { |area| -area.ancestors.size }.each { |area| area.reload.destroy! }
     end
