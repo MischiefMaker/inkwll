@@ -1,11 +1,26 @@
-<%# Tools for the Chapter's Storyteller: call for a roll, look at the
+<%# Tools for the Chapter's Storyteller: roll for an NPC, call for a roll, look at the
     players' Aspects and Skills, and suggest XP for staff to approve. %>
 <% others = scene.participants.map(&:character).reject { |c| own?(c) } %>
-<% if others.any? %>
   <details class="storyteller-tools">
     <summary class="disclosure__summary storyteller-tools__summary"><%= term(:storyteller) %> tools</summary>
 
     <% if scene.writable? %>
+      <section class="storyteller-tools__section storyteller-tools__npc">
+        <h3 class="subsection-title">Roll for an NPC</h3>
+        <%= form_with url: scene_npc_rolls_path(scene), class: "form form--inline storyteller-tools__npc-form" do |form| %>
+          <%= form.label :npc_name, "Who", class: "visually-hidden", for: "npc_name" %>
+          <%= form.text_field :npc_name, id: "npc_name", placeholder: "NPC's name", maxlength: 60, required: true %>
+          <%= form.label :rating, "Rating", class: "visually-hidden", for: "npc_rating" %>
+          <%= form.number_field :rating, id: "npc_rating", value: 3, min: 0, max: 30, required: true, class: "storyteller-tools__amount", title: "The NPC's Skill rating plus Aspect bonus" %>
+          <%= form.label :difficulty, "Difficulty", class: "visually-hidden", for: "npc_difficulty" %>
+          <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: "standard" }, id: "npc_difficulty" %>
+          <%= form.submit "Roll", class: "button button--quiet" %>
+        <% end %>
+        <p class="hint">Two d20s plus the rating you choose. The result is posted in the <%= term(:scene).downcase %>.</p>
+      </section>
+    <% end %>
+
+    <% if others.any? && scene.writable? %>
       <section class="storyteller-tools__section storyteller-tools__call">
         <h3 class="subsection-title">Call for a roll</h3>
         <%= form_with url: scene_pending_rolls_path(scene), class: "form form--inline storyteller-tools__call-form" do |form| %>
@@ -21,6 +36,7 @@
       </section>
     <% end %>
 
+    <% if others.any? %>
     <section class="storyteller-tools__section storyteller-tools__sheets">
       <h3 class="subsection-title">Players' Aspects and Skills</h3>
       <% aspects = Soul::Aspect.ordered.includes(:skills) %>
@@ -55,5 +71,5 @@
       <% end %>
       <p class="hint">Staff approve it before anyone gets the XP.</p>
     </section>
+    <% end %>
   </details>
-<% end %>

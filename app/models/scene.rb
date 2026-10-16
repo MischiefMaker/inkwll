@@ -351,6 +351,28 @@ class Scene < ApplicationRecord
     raise ArgumentError, e.message
   end
 
+  # The Storyteller rolls for someone who has no sheet, such as an NPC: two
+  # d20s plus the rating they choose, against a difficulty, posted like any roll.
+  def npc_roll!(storyteller_character, npc_name:, rating:, difficulty_name:)
+    raise ArgumentError, "Rolls are switched off in this game." unless Soul.enabled?
+    participant = participant_for(storyteller_character)
+    raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant&.storyteller?
+    raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
+    name = npc_name.to_s.squish
+    raise ArgumentError, "Say who is rolling." if name.blank? || name.length > 60
+    rating = Integer(rating.to_s, 10) rescue raise(ArgumentError, "The rating must be a number.")
+    raise ArgumentError, "The rating must be between 0 and 30." unless (0..30).cover?(rating)
+    difficulty = Soul::Rules.difficulties.fetch(difficulty_name.to_s) { raise ArgumentError, "Pick a difficulty." }
+    dice = Soul::Dice.roll(0)
+    result = dice[:total] + rating
+    degree = Soul::Rules.degree_for(result - difficulty)
+    with_lock do
+      resume!(by: storyteller_character) if paused?
+      add_pose!(character: storyteller_character, kind: "roll", body: "#{name} (NPC, rolled by #{storyteller_character.name}) rolls against " \
+        "#{difficulty_name.to_s.humanize} (#{difficulty}) with a rating of #{rating} and gets #{result}. #{Soul::Rules::DEGREE_TEXT.fetch(degree, degree.humanize)}")
+    end
+  end
+
   # Asks the Chapter's Storyteller to judge a roll: they set the difficulty
   # and choose which Boons and Banes count.
   def ask_storyteller_to_roll!(character, skill, difficulty_name)

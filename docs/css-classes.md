@@ -230,3 +230,5 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.inkling-link-box`, `.inkling-link-box__linked`, `.inkling-link-box__item`, `.inkling-link-box__title`, `.inkling-link-box__unlink`, `.inkling-link-box__form`, `.inkling-link-box__new`, `.inkling-link-box__hint` | "Start or link an Inkling" in a Chapter's tools: the linked Inklings, the picker and the new-Inkling form |
 | `.cast-box__empty` | The note in "Cast a spell" when the character hasn't learned any spells |
 | `.inkling__chapters`, `.inkling__chapter` | The "Linked to:" line on an Inkling listing the Chapters it is linked to |
+| `.roll-box__ask` | The "Roll with the Storyteller" button in Roll a Skill, only when the Chapter has a Storyteller |
+| `.storyteller-tools__npc`, `.storyteller-tools__npc-form` | "Roll for an NPC" in the Storyteller tools |

@@ -67,6 +67,7 @@ Rails.application.routes.draw do
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
       resources :rolls, only: :create
+      resources :npc_rolls, only: :create
       resources :casts, only: :create
       resources :inkling_links, only: %i[ create destroy ]
       resources :pending_rolls, only: %i[ create update destroy ]

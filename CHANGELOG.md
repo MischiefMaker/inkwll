@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Lock the Game, profile tabs
 
+- In a Chapter with a Storyteller (GM), Roll a Skill has a "Roll with the Storyteller" button (it replaces the tick box). The Storyteller tools have "Roll for an NPC": a name, a rating and a difficulty, and the result is posted in the Chapter.
 - Chapters have a "Start or link an Inkling" box for characters in them: link one of the character's Inklings or start a new one. Only the player (and staff, once sent) see the link, and the Inkling lists its Chapters. "Cast a spell" now always shows when Grimoire is on, with a pointer to learn spells.
 - Getting started has new sections "If you're coming from a MUSH" and "If you're coming from a forum": what's the same and different, how the words match (Scene is Chapter, Pose is Passage, thread is Chapter, post is Passage), and that we write in the present tense.
 - Roll a Skill (in Inklings and Chapters) now puts the Skill, Difficulty, options and Roll button on one line.

@@ -95,6 +95,35 @@ class SoulExtrasControllersTest < ActionDispatch::IntegrationTest
     assert pending.reload.rolled?
   end
 
+  test "the Roll with the Storyteller button only shows when the Chapter has a Storyteller" do
+    scene = scenes(:duel)
+    sign_in_as(accounts(:alice))
+    get scene_path(scene)
+    assert_select ".roll-box__ask", count: 0
+    scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
+    get scene_path(scene)
+    assert_select "input.roll-box__ask[name=ask_storyteller]"
+  end
+
+  test "the Storyteller rolls for an NPC, and nobody else can" do
+    scene = scenes(:duel)
+    scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
+    sign_in_as(accounts(:alice))
+    assert_no_difference -> { scene.poses.roll.count } do
+      post scene_npc_rolls_path(scene), params: { npc_name: "Guard", rating: 4, difficulty: "standard" }
+    end
+    sign_in_as(accounts(:bob))
+    get scene_path(scene)
+    assert_select ".storyteller-tools__npc-form"
+    assert_difference -> { scene.poses.roll.count } do
+      post scene_npc_rolls_path(scene), params: { npc_name: "Guard", rating: 4, difficulty: "standard" }
+    end
+    assert_match "Guard (NPC, rolled by Sable) rolls against Standard", scene.poses.roll.last.body
+    assert_no_difference -> { scene.poses.roll.count } do
+      post scene_npc_rolls_path(scene), params: { npc_name: "Guard", rating: 99, difficulty: "standard" }
+    end
+  end
+
   test "the SOUL tab shows Boons and Banes, Culminations and history" do
     characters(:wren).add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "Family curse", source: "staff")
     sign_in_as(accounts(:alice))
