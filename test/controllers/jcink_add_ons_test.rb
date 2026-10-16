@@ -41,7 +41,7 @@ class JcinkAddOnsTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select "#alert_count .alert-bell__number", text: "1"
 
-    assert_select "details.alert-menu turbo-frame#alerts_panel[data-src=?]", alerts_path
+    assert_select "details.alert-menu turbo-frame#alerts_panel[data-src=?][target=_top]", alerts_path
 
     # The drop-down loads the list on its own, without the page around it.
     get alerts_path, headers: { "Turbo-Frame" => "alerts_panel" }
