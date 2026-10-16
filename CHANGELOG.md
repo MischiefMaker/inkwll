@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Fonts for Draganic
+
+- Cinzel and "Cinzel Decorative" (carved Roman capitals) and "Cormorant Garamond" (graceful book type) now come with Inkwll and can be named in Admin → Look, for Draganic's old look.
+
 ## 2026-10-16 — Three more web fonts
 
 - Montez (flowing script), "Cormorant SC" (elegant small capitals) and "Old Standard TT" (old-fashioned book type) now come with Inkwll and can be named in Admin → Look, for Falls the Shadow's old forum look.
