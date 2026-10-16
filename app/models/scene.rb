@@ -34,6 +34,8 @@ class Scene < ApplicationRecord
   normalizes :ic_time, with: ->(t) { t.squish.presence }
   validates :ic_time, length: { maximum: 40 }
   before_create { self.ic_date ||= IcClock.today }
+  # A permanent number, shown as "Chapter 12", one more than the newest.
+  before_create { self.number ||= (Scene.maximum(:number) || 0) + 1 }
   # Only labels staff have defined.
   before_validation { self.label_ids = SceneLabel.where(id: Array(label_ids).compact_blank).ordered.pluck(:id) if label_ids_changed? }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }

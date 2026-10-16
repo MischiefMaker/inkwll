@@ -6,6 +6,14 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-16: Chapter page and Directory tidy-up (owner)
+
+- Every Chapter gets a permanent number, counted in the order Chapters were started, shown at the top as "Chapter 12". It stays when the Chapter becomes a Manuscript.
+- On wide screens the Place, who's in the Chapter and the writing tools (Roll a Skill, spells, Storyteller tools) sit in a column to the right of the story. On narrower screens the Place stays at the top, with its Paths listed on the right.
+- The writing box is more compact: whose turn, "Writing as" and the kind of post share a row, and the box is smaller.
+- Storytellers and GMs don't get a card in the cast at the top of a Manuscript Chapter.
+- The Character Directory's first tab is **Active**: approved characters being played, without the roster. The group tabs come next, then the Roster and Unapproved tabs set apart.
+
 ## 2026-10-16: Lock the Game and Inkling names (owner)
 
 - Wellkeepers have a red **Lock the Game** button on the admin page. While locked, guests and non-staff players see a "locked" page instead of the game; staff can still use everything. Log in, log out and password reset stay reachable.

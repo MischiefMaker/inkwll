@@ -10,19 +10,24 @@
     <% elsif @group %>
       Everyone in <%= @group.name %>.
     <% else %>
-      Everyone being played, and the characters on the roster.
+      Every approved character being played.
     <% end %>
   </p>
 
   <% filter = { field: @field&.id, value: @value.presence }.compact %>
+  <%# Active and the groups first; the Roster and Unapproved set apart at the end. %>
   <nav class="directory-tabs" aria-label="Directory sections">
-    <% tabs = [ [ "All", directory_path(filter), !@roster_only && !@unapproved && !@group, "all" ] ] %>
-    <% @groups.each { |group| tabs << [ group.name, directory_path(filter.merge(group: group.id)), @group == group, "group" ] } %>
-    <% tabs << [ "Roster", roster_path(filter), @roster_only, "roster" ] %>
-    <% tabs << [ "Unapproved", directory_path(filter.merge(unapproved: 1)), @unapproved, "unapproved" ] if current_account&.staff? %>
-    <% tabs.each do |label, path, current, kind| %>
-      <%= link_to label, path, class: "directory-tabs__tab directory-tabs__tab--#{kind}#{" directory-tabs__tab--current" if current}",
-            aria: { current: (current ? "page" : nil) } %>
+    <% main_tabs = [ [ "Active", directory_path(filter), !@roster_only && !@unapproved && !@group, "active" ] ] %>
+    <% @groups.each { |group| main_tabs << [ group.name, directory_path(filter.merge(group: group.id)), @group == group, "group" ] } %>
+    <% other_tabs = [ [ "Roster", roster_path(filter), @roster_only, "roster" ] ] %>
+    <% other_tabs << [ "Unapproved", directory_path(filter.merge(unapproved: 1)), @unapproved, "unapproved" ] if current_account&.staff? %>
+    <% { "main" => main_tabs, "other" => other_tabs }.each do |set, tabs| %>
+      <div class="directory-tabs__set directory-tabs__set--<%= set %>">
+        <% tabs.each do |label, path, current, kind| %>
+          <%= link_to label, path, class: "directory-tabs__tab directory-tabs__tab--#{kind}#{" directory-tabs__tab--current" if current}",
+                aria: { current: (current ? "page" : nil) } %>
+        <% end %>
+      </div>
     <% end %>
   </nav>
 
@@ -43,7 +48,7 @@
       <% @characters.each do |character| %>
         <li class="directory__item<%= " directory__item--roster" if character.on_roster? %>">
           <%= link_to character_path(character), class: "directory__link" do %>
-            <%= character_icon(character, size: :large) %>
+            <%= character_icon(character, size: :portrait) %>
             <%= tag.span character.name, **character_name_options(character, "directory__name") %>
           <% end %>
           <% if character.character_group %><span class="directory__group muted"><%= character.character_group.name %></span><% end %>

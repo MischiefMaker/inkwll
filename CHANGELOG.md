@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Chapter page and Directory tidy-up
+
+- Each Chapter has a number at the top ("Chapter 12") that never changes, and it stays on the finished Manuscript.
+- On wide screens, the Place, who's in the Chapter and Roll a Skill sit in a column beside the story, so the writing box takes less room. The writing box itself is shorter, with "Writing as" and Passage/NPC/Narration/OOC on one line.
+- The Place box at the top is smaller, with its Paths on the right.
+- Storytellers no longer get a card in the cast at the top of a Chapter.
+- The Character Directory opens on an Active tab (approved characters being played), then the groups, with Roster and Unapproved set apart. Each character is a card with a tall picture.
+
 ## 2026-10-16 — Lock the Game, profile tabs
 
 - Wellkeepers get a red "Lock the Game" button on the admin page. While locked,
