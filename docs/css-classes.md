@@ -141,6 +141,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.wiki`, `.wiki__search`, `.wiki__tags`, `.wiki__tag`, `.wiki__tag--current`, `.wiki__list`, `.wiki__item`, `.wiki__title` | The wiki's list of pages |
 | `.wiki-page`, `.wiki-page__title`, `.wiki-page__actions`, `.wiki-page__footer`, `.wiki-page--missing`, `.wiki-page--revision` | One wiki page |
 | `.wiki-body` | The written part of a wiki page (style `.wiki-body h2` and so on) |
+| `.wiki-body__grouped` | A bullet that names a character group (a house, a faction). It gets `--group-colour` set to that group's colour, and the text and bullet use it |
 | `.wiki-embed`, `.wiki-embed--characters` (and the other list names), `.wiki-embed--unknown` | A live list inside a page |
 | `.wiki-characters`, `.wiki-character`, `.wiki-manuscripts`, `.wiki-settings`, `.wiki-pages-list` (each with `__item` and `__name` or `__title`) | The lists themselves |
 | `.wiki-form`, `.wiki-form__body`, `.wiki-form__help` | Writing a page |

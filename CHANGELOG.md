@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Wiki bullets take their group's colour
+
+- On wiki pages, a bullet that names a character group (such as "15, male, Ravenclaw") is shown in that group's colour, bullet and all. Change a group's colour in Admin → Character groups and the wiki follows.
+
 ## 2026-10-16 — Import a world: nothing gets left behind
 
 - With "Also remove what isn't in the pack" ticked, Places with characters or Chapters in them no longer stay behind. The characters move to The Prologue and the Chapters to a new Place, The Well of Lost Plots, in Out of Character, then the Place is removed. The preview says what will move where.

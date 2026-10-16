@@ -1171,6 +1171,8 @@ span.pose__icon { cursor: default; }
 
 /* --- Jcink add-ons: groups, passage details, labels, alerts, tracker ----- */
 .character-name--grouped { color: var(--group-colour); }
+.wiki-body__grouped { color: var(--group-colour); }
+.wiki-body__grouped::marker { color: var(--group-colour); }
 a.character-name--grouped, button.character-name--grouped { color: var(--group-colour); }
 .character-profile__group { margin: 0; font-weight: 600; }
 .pose__details, .mini-profile__details { display: block; font-size: 0.85rem; }
