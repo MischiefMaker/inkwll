@@ -236,6 +236,18 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "v1.1", well.reload.version
   end
 
+  test "Update every Well leaves out anything already on that version" do
+    Well.create!(name: "Moonfall", slug: "moonfall", domain: "moonfall.inkwll.com", status: "live", version: "v1.0", account: accounts(:founder))
+    Well.create!(name: "Briar", slug: "briar", domain: "briar.inkwll.com", status: "live", version: "v1.1", account: accounts(:founder))
+    sign_in_as(accounts(:founder))
+    ENV["INKWLL_VERSION"] = "v1.1"
+    post admin_well_updates_path, params: { version: "v1.1", all: "1" }
+    assert_equal [ [ "moonfall", false ] ], @github.started_for
+    assert_equal 0, WellUpdate.waiting_turn.count
+  ensure
+    ENV["INKWLL_VERSION"] = nil
+  end
+
   test "another Well's page says where its updates are done" do
     ENV["INKWLL_HOME_URL"] = "https://inkwll.com"
     sign_in_as(accounts(:founder))

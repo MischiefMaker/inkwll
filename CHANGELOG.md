@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Update every Well skips what's already current
+
+- "Update every Well" no longer redeploys a Well (including this game) that is already on that version.
+
 ## 2026-10-16 — A game's fonts travel with its world pack
 
 - A world pack can now carry its own web fonts. Import a world stores them in the game and serves them from it, so a game's fonts no longer have to be built into Inkwll for everyone. Admin → Look lists them under the form, with a Remove button for each, and you can name their families in the font boxes as before.

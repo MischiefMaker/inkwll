@@ -12,7 +12,14 @@ class Admin::WellUpdatesController < Admin::BaseController
     return redirect_to(admin_wells_path, alert: "#{version} isn't a version marked ready.") unless github.releases.any? { |release| release.tag == version }
 
     # This game goes first, then the other Wells in the order they started.
-    targets = params[:all].present? ? [ nil, *Well.listed.where(status: "live") ] : [ params[:well_id].presence && Well.find(params[:well_id]) ]
+    # nil stands for this game. With "every Well", anything already on this
+    # version is left out.
+    targets = if params[:all].present?
+      Well.listed.where(status: "live").where.not(version: version).to_a.tap { |wells| wells.unshift(nil) unless ENV["INKWLL_VERSION"] == version }
+    else
+      [ params[:well_id].presence && Well.find(params[:well_id]) ]
+    end
+    return redirect_to(admin_wells_path, notice: "Every Well is already on #{version}.") if targets.empty?
     updates = targets.map do |well|
       WellUpdate.create!(account: current_account, well: well, version: version, request_id: SecureRandom.hex(4), status: "waiting_turn")
     end
