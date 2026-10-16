@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   resources :warnings, only: :update
 
   # Scenes are shown to players as Chapters, and poses as Passages.
-  resources :scenes, only: %i[ show create edit update ] do
+  resources :scenes, only: %i[ index show create edit update ] do
     scope module: :scenes do
       resource :participation, only: %i[ create update destroy ]
       resource :writing_as, only: :update, controller: "writing_as"

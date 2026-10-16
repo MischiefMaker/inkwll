@@ -28,6 +28,7 @@
 
         <p class="menu__heading menu__heading--world">The world</p>
         <%= link_to rooms_path, class: "menu__link" do %><%= icon(:door, size: 16, css: "menu__icon") %>All <%= term(:room, count: 2) %><% end %>
+        <%= link_to scenes_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>All <%= term(:scene, count: 2) %><% end %>
         <%= link_to where_path, class: "menu__link" do %><%= icon(:pin, size: 16, css: "menu__icon") %>Where<% end %>
         <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character Directory<% end %>
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>

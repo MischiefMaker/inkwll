@@ -2,11 +2,28 @@
 # and changing its settings.
 class ScenesController < ApplicationController
   # Guests can read the Chapters anyone may read, live or in the Archives.
-  allow_previews only: :show
+  allow_previews only: %i[ index show ]
   before_action :require_character, only: :create
   before_action :set_scene, only: %i[ show edit update ]
   before_action :require_participant, only: %i[ edit update ]
   before_action :require_writable, only: %i[ edit update ]
+
+  PER_PAGE = 30
+
+  # Every Chapter that isn't Hidden, newest activity first. Closed ones are
+  # listed too, but only linked for people who may read them. A Hidden one
+  # shows only to the players in it.
+  def index
+    scenes = Scene.where.not(visibility: :hidden)
+    scenes = scenes.or(Scene.where(id: SceneParticipant.where(character_id: current_account.characters.select(:id)).select(:scene_id))) if current_account
+    scenes = scenes.where(finished_at: nil) if params[:show] == "open"
+    scenes = scenes.where.not(finished_at: nil) if params[:show] == "finished"
+    @show = params[:show].presence_in(%w[ open finished ])
+    @pages = [ (scenes.count / PER_PAGE.to_f).ceil, 1 ].max
+    @page = params[:page].to_i.clamp(1, @pages)
+    @scenes = scenes.by_activity.includes(:room, participants: :character)
+      .offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
+  end
 
   def show
     return unless current_account

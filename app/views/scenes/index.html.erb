@@ -1,0 +1,43 @@
+<% content_for :title, "All #{term(:scene, count: 2)} · Inkwll" %>
+
+<h1 class="page-title">All <%= term(:scene, count: 2) %></h1>
+<p class="muted chapter-index__intro">Every <%= term(:scene).downcase %> in the game. <%= t("terms.scene_visibility.private") %> ones show who is in them, but only the people in them can read them until they're finished. Hidden ones only show to the players in them.</p>
+
+<p class="text chapter-index__filters">
+  <% [ [ nil, "All" ], [ "open", "Open" ], [ "finished", "Finished" ] ].each_with_index do |(value, label), index| %>
+    <%= " · " if index.positive? %><%= @show == value ? tag.strong(label, class: "chapter-index__filter chapter-index__filter--current") : link_to(label, scenes_path(show: value), class: "chapter-index__filter") %>
+  <% end %>
+</p>
+
+<% if @scenes.any? %>
+  <ul class="list chapter-index">
+    <% @scenes.each do |scene| %>
+      <li class="chapter-index__item chapter-index__item--<%= scene.visibility %><%= " chapter-index__item--finished" if scene.finished? %>">
+        <div class="chapter-index__heading">
+          <% if scene.readable_by?(current_account) %>
+            <%= link_to scene.title, scene_path(scene), class: "chapter-index__title" %>
+          <% else %>
+            <span class="chapter-index__title chapter-index__title--closed"><%= scene.title %></span>
+          <% end %>
+          <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_mark(scene) %><%= scene.visibility_joinable? ? t("terms.scene_visibility.joinable") : t("terms.scene_visibility.private") %></span>
+          <% if scene.finished? %><span class="badge chapter-index__finished">Finished</span><% end %>
+        </div>
+        <div class="muted chapter-index__meta">
+          <%= link_to scene.room.name, room_path(scene.room) %> ·
+          <%= scene.participants.any? ? character_names_sentence(scene.participants) : "Nobody yet" %>
+        </div>
+        <div class="muted chapter-index__status">
+          <span class="chapter-index__written"><%= scene.last_pose_at ? "Last written to #{time_ago_in_words(scene.last_pose_at)} ago" : "Nothing written yet" %></span>
+          <% turn = scene.current_turn_participant&.character %>
+          <% if turn && !scene.finished? && !scene.paused? %>
+            · <span class="chapter-index__turn">Turn: <%= character_name_link(turn) %></span>
+          <% end %>
+          <% if scene.paused? %>· <span class="chapter-index__paused">Paused</span><% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <%= render "forum_boards/pages", pages: @pages, current: @page %>
+<% else %>
+  <p class="text muted">No <%= term(:scene, count: 2).downcase %> to show.</p>
+<% end %>

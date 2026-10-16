@@ -3,6 +3,46 @@ require "test_helper"
 class ScenesControllerTest < ActionDispatch::IntegrationTest
   setup { sign_in_as(accounts(:alice)) }
 
+  test "the All Chapters list shows Closed ones without a link, and never Hidden ones" do
+    delete session_path
+    get scenes_path
+    assert_response :success
+    assert_select ".chapter-index__title", text: "Duel at Dawn"
+    assert_select "a.chapter-index__title", text: "Duel at Dawn"
+    assert_select ".chapter-index__title", text: "A Quiet Word", count: 0
+    scenes(:tea).update_columns(visibility: "private")
+    get scenes_path
+    assert_select ".chapter-index__title", text: scenes(:tea).title
+    assert_select "span.chapter-index__title--closed", text: scenes(:tea).title
+    assert_select ".chapter-index__item--private .badge", text: "Closed"
+    assert_select ".chapter-index__item--joinable .badge", text: "Open"
+  end
+
+  test "the All Chapters list is newest activity first, and calls your own Hidden Chapters Closed" do
+    scenes(:duel).update_columns(last_pose_at: 3.days.ago)
+    scenes(:tea).update_columns(last_pose_at: 1.hour.ago)
+    get scenes_path
+    titles = css_select(".chapter-index__title").map(&:text)
+    assert_operator titles.index("Afternoon Tea"), :<, titles.index("Duel at Dawn")
+    assert_select ".chapter-index__written", text: /Last written to/
+    assert_select ".chapter-index__turn", text: /Turn: Wren/
+    sign_in_as(accounts(:alice))
+    get scenes_path
+    assert_select ".chapter-index__item--hidden", count: 0
+    sign_in_as(accounts(:wellkeeper))
+    get scenes_path
+    assert_select ".chapter-index__item--hidden", count: 0
+    sign_in_as(accounts(:bob))
+    get scenes_path
+    assert_select ".chapter-index__item--hidden .badge", text: "Closed"
+  end
+
+  test "players find All Chapters in the world part of the menu" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select ".menu__heading--world ~ a.menu__link[href=?]", scenes_path
+  end
+
   test "the names beside a Chapter in the list link to the characters' profiles" do
     get room_path(rooms(:commons))
     assert_select ".scene-list__meta a[href='#{character_path(characters(:wren))}']", text: "Wren"

@@ -60,7 +60,7 @@ en:
     # How a Chapter can be seen and joined.
     scene_visibility:
       joinable: "Open"
-      private: "Private"
+      private: "Closed"
       hidden: "Hidden"
     # How turns work in a Chapter.
     pose_modes:
