@@ -75,7 +75,7 @@
 <section class="game-stats" aria-label="Game statistics">
   <% [ [ :players, "Players", :profile, players_path ],
        [ :characters, "Characters", :characters, directory_path ],
-       [ :chapters, term(:scene, count: 2), :quill, where_path ],
+       [ :chapters, term(:scene, count: 2), :quill, scenes_path ],
        [ :archives, term(:logs_collection), :archive, archives_path ] ].each do |kind, label, icon_name, path| %>
     <span class="game-stats__item game-stats__item--<%= kind %>">
       <%= icon(icon_name, size: 16, css: "game-stats__icon") %>
