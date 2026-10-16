@@ -54,6 +54,9 @@ env:
     # Lets the Founder's Wells page start updates (see docs/wells.md). Empty
     # until it's set up, which just hides the Update buttons.
     - WELLS_GITHUB_TOKEN
+    # A new Well's setup code: the first sign-up link makes its first player
+    # the Founder (see docs/wells.md). Empty for inkwll.com.
+    - WELL_SETUP_CODE
   clear:
     SOLID_QUEUE_IN_PUMA: true
     DB_HOST: <%= service %>-db

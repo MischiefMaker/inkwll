@@ -28,4 +28,8 @@ class FounderSetupTest < ActionDispatch::IntegrationTest
     sign_up("Guesser", "wrongwrongwrong")
     assert_not Account.find_by!(display_name: "Guesser").founder?
   end
+
+  test "the setup code reaches the game's container" do
+    assert_includes YAML.load(ERB.new(Rails.root.join("config/deploy.yml").read).result)["env"]["secret"], "WELL_SETUP_CODE"
+  end
 end
