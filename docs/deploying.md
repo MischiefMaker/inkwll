@@ -66,6 +66,34 @@ From a machine that can reach the droplet over SSH, the same deploy is:
     INKWLL_SERVER=<droplet IP> bin/kamal setup     # the first time only
     INKWLL_SERVER=<droplet IP> bin/kamal deploy    # every time after
 
+## Browser checks never touch the live game
+
+**Actions → Probe login** tries signing up and logging in with real Firefox and
+Chromium browsers. It does this on a throwaway copy of the game started inside
+the run (its own empty database), with a new random password every time, and
+it all disappears when the run ends. The scripts are in `script/probe/` and
+refuse to run against anything but `127.0.0.1`. Tests in `test/lib/` fail if a
+workflow that signs players up uses the live game's address, or if a password
+is written into a workflow or script.
+
+Never test sign-up on the live game: every account made there stays. An
+earlier version did, with a shared password, and left "Probe" players and a
+forum thread behind. To find and clear them, run **Actions → Clean up probe
+players** first with "Clean up" unticked (lists them), then ticked (archives
+them, removes their forum threads, posts and OOC messages, and replaces the
+shared password). It only matches names like `Probe1760000000000` with an
+`@example.com` email.
+
+## Content Security Policy
+
+The game sends a Content Security Policy (`config/initializers/content_security_policy.rb`):
+scripts only from the game itself (the import map carries a nonce), no plug-ins,
+no framing by other sites, live updates only back to the game. Pictures may come
+from any https site, because forum and wiki posts can show pictures. Styles may
+be inline. If a new feature adds an inline `<script>`, an outside script or font,
+or a connection to another site, the browser will block it and the console will
+say "Content Security Policy"; add the site to that file deliberately.
+
 ## Still to do
 
 - A mail service: its details go in `deploy/secrets.env` as SMTP_ADDRESS,

@@ -1,0 +1,43 @@
+# Finds the throwaway "Probe" players that the old browser check made on the
+# live game (named Probe plus numbers, with an @example.com email) and, if
+# asked, archives them and deletes their forum threads, forum posts and OOC
+# messages. Their shared password is replaced too. Real players are never
+# matched. Start it by hand (Actions → Clean up probe players → Run workflow):
+# first with "Clean up" unticked to see the list, then ticked to clean up.
+# See docs/deploying.md.
+name: Clean up probe players
+
+on:
+  workflow_dispatch:
+    inputs:
+      clean_up:
+        description: "Clean up (unticked only lists them)"
+        type: boolean
+        default: false
+
+jobs:
+  probes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      INKWLL_SERVER: ${{ vars.INKWLL_SERVER || secrets.INKWLL_SERVER }}
+      INKWLL_SSH_KEY: /home/runner/.ssh/inkwll-deploy
+      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Add the droplet's key
+        run: |
+          if [ -z "$INKWLL_SERVER" ]; then echo "::error::Add the droplet's IP address as INKWLL_SERVER under Settings, Secrets and variables, Actions."; exit 1; fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/inkwll-deploy
+          chmod 600 ~/.ssh/inkwll-deploy
+          ssh-keyscan -H -t ed25519 "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+
+      - name: ${{ inputs.clean_up && 'Clean up probe players' || 'List probe players' }}
+        run: bin/kamal app exec --reuse "bin/rails inkwll:probes:${{ inputs.clean_up && 'clean_up' || 'list' }}"

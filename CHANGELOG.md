@@ -10,6 +10,18 @@ Short, plain-language notes on what changed. Newest first.
 - Storytellers no longer get a card in the cast at the top of a Chapter.
 - The Character Directory opens on an Active tab (approved characters being played), then the groups, with Roster and Unapproved set apart. Each character is a card with a tall picture.
 
+## 2026-10-16 — Security: probe players and Content Security Policy
+
+- The browser sign-up and login check no longer touches the live game. It runs
+  on a throwaway copy inside the check, with a new random password each time.
+  Tests stop it from being pointed at the live game or given a fixed password.
+- New "Clean up probe players" action lists and clears the "Probe" players,
+  forum thread and posts the old check left on the live game.
+- The game now sends a Content Security Policy, so browsers refuse scripts that
+  don't come from the game itself and other sites can't frame it. Checked by
+  walking about 160 pages as a guest and as a Founder: nothing was blocked,
+  and Turbo page changes and live chat still work.
+
 ## 2026-10-16 — Lock the Game, profile tabs
 
 - Wellkeepers get a red "Lock the Game" button on the admin page. While locked,
