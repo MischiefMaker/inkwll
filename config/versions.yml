@@ -2,6 +2,14 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.9
+  commit: 42d01ac8f232fb6fda040f11974379e94efa6c50
+  date: 2026-10-16
+  notes: |
+    - Web fonts now travel with each world pack instead of being built into Inkwll, so each game brings its own fonts when a pack is imported.
+    - Adds a small table for those fonts; nothing existing changes.
+    Going back to v1.8 is safe.
+
 - version: v1.8
   commit: af86c59e238b55d43067625a5ed7a7b32ee45a52
   date: 2026-10-16
