@@ -79,18 +79,21 @@ class WorldPackTest < ActiveSupport::TestCase
     assert prologue.exits.exists?(destination_room: Room.find_by!(name: "Foyer"))
   end
 
-  test "removing what the pack leaves out keeps The Prologue and Places with Chapters" do
+  test "removing what the pack leaves out keeps only The Prologue, and moves Chapters to The Well of Lost Plots" do
     prologue = Room.create_prologue!
     garden, tower, castle = rooms(:garden).id, rooms(:tower).id, areas(:castle).id
+    commons, scene, world = rooms(:commons).id, Scene.where(room: rooms(:commons)).first, areas(:world).id
     pack.import!(by: accounts(:founder), remove_unlisted: true)
 
     assert Room.exists?(prologue.id)
-    assert Room.exists?(rooms(:commons).id), "The Commons has Chapters"
-    assert Room.exists?(rooms(:hall).id), "North Hall has Chapters"
+    assert_not Room.exists?(commons)
     assert_not Room.exists?(garden)
     assert_not Room.exists?(tower)
-    assert Area.exists?(areas(:world).id), "it still holds places that stay"
+    assert_not Area.exists?(world)
     assert_not Area.exists?(castle)
+    lost = Room.find_by!(name: WorldPack::LOST_PLOTS)
+    assert_equal prologue.area, lost.area
+    assert_equal lost, scene.reload.room
     assert Room.exists?(name: "Foyer")
   end
 
@@ -112,7 +115,7 @@ class WorldPackTest < ActiveSupport::TestCase
   test "the preview lists what would be removed and what stays" do
     changes = pack.preview(remove_unlisted: true)
     assert changes.any? { |c| c.name == "Garden" && c.action == "remove" }
-    assert changes.any? { |c| c.name == "The Commons" && c.action == "keep" }
+    assert changes.any? { |c| c.name == "The Commons" && c.action == "remove" && c.note.include?(WorldPack::LOST_PLOTS) }
     assert changes.any? { |c| c.name == "Foyer" && c.action == "add" }
   end
 end

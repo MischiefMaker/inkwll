@@ -14,14 +14,15 @@
 # Importing only adds and updates: things are matched by name, so running
 # the same pack twice changes nothing the second time. With remove_unlisted,
 # Areas, Places and Paths the pack doesn't mention are taken away too, except
-# The Prologue and any Place with Chapters in it; characters in a Place
-# that goes are moved to The Prologue. Wiki pages,
+# The Prologue. Characters in a Place that goes move to The Prologue, and its
+# Chapters to The Well of Lost Plots, in the Out of Character Area. Wiki pages,
 # boards and characters are never removed. The format is in
 # docs/world-packs.md.
 class WorldPack
   FORMAT = "inkwll-world-pack"
   MAX_SIZE = 25.megabytes
   IMAGE_TYPES = %w[ image/png image/jpeg image/gif image/webp ].freeze
+  LOST_PLOTS = "The Well of Lost Plots"
 
   class Invalid < StandardError; end
 
@@ -234,18 +235,19 @@ class WorldPack
     end
 
     # [kind, record, reason it is kept or nil, note] for everything the pack
-    # leaves out. Places with Chapters stay, so no story is lost; characters
-    # in a Place that goes are moved to The Prologue first.
+    # leaves out. Before a Place goes, its characters move to The Prologue and
+    # its Chapters to The Well of Lost Plots, so no story is lost.
     def removals
       place_keys = places.map { |p| [ p["name"], p["area"] ] }
       area_names = areas.map { |a| a["name"] }
       path_keys = paths.map { |p| [ p["from"], (p["name"].presence || p["to"]).squish.first(40) ] }
       prologue = Room.find_by(name: Room::PROLOGUE)
-      chapter_room_ids = Scene.distinct.pluck(:room_id)
+      lost_plots = Room.find_by(name: LOST_PLOTS)
       people = Character.where.not(room_id: nil).group(:room_id).count
+      chapters = Scene.group(:room_id).count
 
       rooms = Room.includes(:area).reject { |room| place_keys.include?([ room.name, room.area.name ]) }
-      kept_rooms = rooms.select { |room| room == prologue || chapter_room_ids.include?(room.id) }
+      kept_rooms = rooms.select { |room| room == prologue || room == lost_plots }
       rooms_out = rooms - kept_rooms
       kept_area_ids = (Room.where.not(id: rooms_out.map(&:id)).pluck(:area_id) + [ prologue&.area_id ]).compact
       kept_area_ids += Area.where(id: kept_area_ids).flat_map(&:ancestors).map(&:id)
@@ -260,12 +262,13 @@ class WorldPack
       room_rows = rooms.map do |room|
         if room == prologue
           [ Term[:room], room, "the starting #{Term[:room].downcase}", nil ]
-        elsif kept_rooms.include?(room)
-          [ Term[:room], room, "has #{Term[:scene, count: 2].downcase}", nil ]
-        elsif (count = people[room.id].to_i).positive?
-          [ Term[:room], room, nil, "#{count} #{count == 1 ? "character moves" : "characters move"} to #{Room::PROLOGUE}" ]
+        elsif room == lost_plots
+          [ Term[:room], room, "keeps #{Term[:scene, count: 2].downcase} from removed #{Term[:room, count: 2].downcase}", nil ]
         else
-          [ Term[:room], room, nil, nil ]
+          moves = []
+          moves << "#{people[room.id]} #{people[room.id] == 1 ? "character moves" : "characters move"} to #{Room::PROLOGUE}" if people[room.id].to_i.positive?
+          moves << "#{chapters[room.id]} #{Term[:scene, count: chapters[room.id]].downcase} #{chapters[room.id] == 1 ? "moves" : "move"} to #{LOST_PLOTS}" if chapters[room.id].to_i.positive?
+          [ Term[:room], room, nil, moves.join("; ").presence ]
         end
       end
       room_rows +
@@ -282,12 +285,26 @@ class WorldPack
         prologue = Room.find_by(name: Room::PROLOGUE) || Room.create_prologue!
         Character.where(room_id: rooms.map(&:id)).update_all(room_id: prologue.id, updated_at: Time.current)
       end
+      if Scene.where(room_id: rooms.map(&:id)).exists?
+        Scene.where(room_id: rooms.map(&:id)).update_all(room_id: lost_plots_room.id, updated_at: Time.current)
+      end
       # Rooms the removed ones were the entrance of stop being one.
       Area.where(entrance_room_id: rooms.map(&:id)).update_all(entrance_room_id: nil)
       RememberedCharacter.where(context_type: "Room", context_id: rooms.map(&:id)).delete_all
       rooms.each { |room| room.reload.destroy! }
       # Innermost Areas first.
       out.grep(Area).sort_by { |area| -area.ancestors.size }.each { |area| area.reload.destroy! }
+    end
+
+    # Where Chapters go when their Place is removed: a Place in the Out of
+    # Character Area, beside The Prologue (owner).
+    def lost_plots_room
+      Room.find_by(name: LOST_PLOTS) || begin
+        area = (Room.find_by(name: Room::PROLOGUE) || Room.create_prologue!).area
+        area.rooms.create!(name: LOST_PLOTS, description: <<~TEXT.strip)
+          Stories whose #{Term[:room, count: 2].downcase} have vanished from the world wash up here, still readable, every page intact.
+        TEXT
+      end
     end
 
     def import_wiki(by)

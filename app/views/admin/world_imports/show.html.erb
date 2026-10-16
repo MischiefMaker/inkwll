@@ -12,7 +12,7 @@
   <div class="field field--checkbox">
     <%= form.check_box :remove_unlisted, {}, "1", "0" %>
     <%= form.label :remove_unlisted, "Also remove #{term(:area, count: 2).downcase}, #{term(:room, count: 2).downcase} and #{term(:exit, count: 2).downcase} that aren't in the pack" %>
-    <small class="hint">Characters in a <%= term(:room).downcase %> that goes are moved to <%= Room::PROLOGUE %>. <%= Room::PROLOGUE %> and any <%= term(:room).downcase %> with <%= term(:scene, count: 2).downcase %> in it always stay, so no story is lost. Wiki pages and <%= term(:forum_board, count: 2).downcase %> are never removed.</small>
+    <small class="hint"><%= Room::PROLOGUE %> always stays. Characters in a <%= term(:room).downcase %> that goes move to <%= Room::PROLOGUE %>, and its <%= term(:scene, count: 2).downcase %> to <%= WorldPack::LOST_PLOTS %> in Out of Character, so no story is lost. Wiki pages and <%= term(:forum_board, count: 2).downcase %> are never removed.</small>
   </div>
   <%= form.submit "Show me what will change", class: "button" %>
 <% end %>

@@ -16,9 +16,9 @@ From the command line the same thing is:
   boards by name (or by `was`, which renames an existing board).
 - It only adds and updates, unless **Also remove what isn't in the pack** is
   ticked. Then Areas, Places and Paths the pack leaves out are removed, except
-  The Prologue, any Place with Chapters in it (so no story is lost), and the
-  Areas that still hold those. Characters in a Place that is removed are moved
-  to The Prologue first. Wiki pages, boards, players and characters are never
+  The Prologue and its Area. Before a Place goes, its characters move to The
+  Prologue and its Chapters to The Well of Lost Plots, a Place made in the Out
+  of Character Area when it is first needed, so no story is lost. Wiki pages, boards, players and characters are never
   removed.
 - The Prologue gets a Path to the entrance of each top-level Area in the pack.
 - It all happens in one go: if anything fails, nothing changes.

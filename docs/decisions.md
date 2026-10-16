@@ -6,9 +6,9 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
-## 2026-10-16: Import a world removes Places with characters in them (owner)
+## 2026-10-16: Import a world removes Places with characters or Chapters in them (owner)
 
-- When the Founder ticks "Also remove what isn't in the pack", characters in a Place that goes are moved to The Prologue, then the Place and its Area are removed. (Claude's default, not yet confirmed by the owner: Places with Chapters still stay, so no story is lost.)
+- When the Founder ticks "Also remove what isn't in the pack", characters in a Place that goes are moved to The Prologue, and its Chapters to The Well of Lost Plots, a Place in the Out of Character Area. Then the Place and its Area are removed.
 
 ## 2026-10-16: Profile, SOUL and Inkling tweaks (owner)
 

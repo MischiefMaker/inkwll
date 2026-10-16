@@ -2,9 +2,9 @@
 
 Short, plain-language notes on what changed. Newest first.
 
-## 2026-10-16 — Import a world: characters move to The Prologue
+## 2026-10-16 — Import a world: nothing gets left behind
 
-- With "Also remove what isn't in the pack" ticked, a Place with characters in it no longer stays behind: the characters are moved to The Prologue and the Place is removed. Places with Chapters still stay, so no story is lost. The preview says how many characters will move.
+- With "Also remove what isn't in the pack" ticked, Places with characters or Chapters in them no longer stay behind. The characters move to The Prologue and the Chapters to a new Place, The Well of Lost Plots, in Out of Character, then the Place is removed. The preview says what will move where.
 
 ## 2026-10-16 — Import a world
 
