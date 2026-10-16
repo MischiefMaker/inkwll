@@ -2,6 +2,13 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.6
+  commit: 8153c3dbd486241228ff24127d81bf65bf9540f0
+  date: 2026-10-16
+  notes: |
+    - Import a world: "Show me what will change" now goes on to the preview page (it did nothing before).
+    Going back to v1.5 is safe.
+
 - version: v1.5
   commit: 7a340601ce9c5bfe385f6c194d02423bd7d999ad
   date: 2026-10-16
