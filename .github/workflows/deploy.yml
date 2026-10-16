@@ -46,6 +46,10 @@ on:
         description: "Set by the Wells page for a new Well; leave empty"
         type: string
         default: ""
+      well_name:
+        description: "That Well's name, like Last Call of the Wild"
+        type: string
+        default: ""
 
 concurrency: deploy
 
@@ -63,6 +67,7 @@ jobs:
       INKWLL_SERVICE: ${{ inputs.well || 'inkwll' }}
       INKWLL_DOMAIN: ${{ inputs.well_domain || 'inkwll.com' }}
       INKWLL_HOME_URL: ${{ inputs.well != '' && 'https://inkwll.com' || '' }}
+      INKWLL_GAME_NAME: ${{ inputs.well != '' && inputs.well_name || '' }}
     steps:
       - name: Check the Well's name and address
         if: inputs.well != ''

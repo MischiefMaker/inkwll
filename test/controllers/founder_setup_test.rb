@@ -42,4 +42,17 @@ class FounderSetupTest < ActionDispatch::IntegrationTest
   test "the setup code reaches the game's container" do
     assert_includes YAML.load(ERB.new(Rails.root.join("config/deploy.yml").read).result)["env"]["secret"], "WELL_SETUP_CODE"
   end
+
+  test "a Well shows the name it was started with until staff set one" do
+    ENV["INKWLL_GAME_NAME"] = "Last Call of the Wild"
+    GameSetting.current.update!(game_name: nil)
+    get root_path
+    assert_select ".site-header__name", text: "Last Call of the Wild"
+
+    GameSetting.current.update!(game_name: "Renamed")
+    get root_path
+    assert_select ".site-header__name", text: "Renamed"
+  ensure
+    ENV["INKWLL_GAME_NAME"] = nil
+  end
 end
