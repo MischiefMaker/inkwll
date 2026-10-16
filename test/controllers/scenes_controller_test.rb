@@ -15,6 +15,7 @@ class ScenesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".chapter-index__title", text: scenes(:tea).title
     assert_select "span.chapter-index__title--closed", text: scenes(:tea).title
     assert_select ".chapter-index__item--private .badge", text: "Closed"
+    assert_select ".chapter-index__item--private .badge .icon--eye"
     assert_select ".chapter-index__item--joinable .badge", text: "Open"
   end
 

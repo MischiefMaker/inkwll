@@ -19,7 +19,7 @@
           <% else %>
             <span class="chapter-index__title chapter-index__title--closed"><%= scene.title %></span>
           <% end %>
-          <span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_mark(scene) %><%= scene.visibility_joinable? ? t("terms.scene_visibility.joinable") : t("terms.scene_visibility.private") %></span>
+          <span class="badge badge--<%= scene.visibility %>"><%= visibility_mark(:you_only, label: "Closed") unless scene.visibility_joinable? %><%= scene.visibility_joinable? ? t("terms.scene_visibility.joinable") : t("terms.scene_visibility.private") %></span>
           <% if scene.finished? %><span class="badge chapter-index__finished">Finished</span><% end %>
         </div>
         <div class="muted chapter-index__meta">
