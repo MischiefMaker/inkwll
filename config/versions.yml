@@ -2,6 +2,17 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.4
+  commit: d238acb8949f41d80bf58108c2ff74b072ea9594
+  date: 2026-10-16
+  notes: |
+    - The game is faster: icons are served as shrunk copies, game settings are remembered during each request, and three missing database indexes were added.
+    - Boons and Banes no longer have to affect a Skill.
+    - Unapproved characters can't start Inklings (other than their Secret and Goal in the application).
+    - Inkling entries can be tied to a Chapter.
+    - Dead code was removed and one-time clean-ups moved into their migrations.
+    Going back to v1.3 is safe.
+
 - version: v1.3
   commit: d016671859966680b78813f083abfb81328a7de9
   date: 2026-10-16
