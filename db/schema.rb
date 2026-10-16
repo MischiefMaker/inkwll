@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_000002) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_011800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -288,10 +288,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_000002) do
     t.string "skin_base"
     t.boolean "compass_enabled", default: false, null: false
     t.string "profile_box", default: "top", null: false
-    t.boolean "locked", default: false, null: false
     t.string "chapter_layout", default: "manuscript", null: false
     t.string "chapter_cast_portraits", default: "large", null: false
     t.string "chapter_passage_portraits", default: "small", null: false
+    t.boolean "locked", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
@@ -628,9 +628,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_000002) do
     t.integer "label_ids", default: [], null: false, array: true
     t.date "ic_date"
     t.string "ic_time"
+    t.integer "number", null: false
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"
+    t.index ["number"], name: "index_scenes_on_number", unique: true
     t.index ["room_id"], name: "index_scenes_on_room_id"
   end
 

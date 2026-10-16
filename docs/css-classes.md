@@ -47,6 +47,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.room-index`, `.room-index--depth-1`, `.room-index__area`, `.room-index__rooms`, `.room-index__room` | All Places, grouped by Area |
 | `.writing-as`, `.writing-as__form`, `.writing-as__label`, `.writing-as__warning`, `.writing-as__warning-text`, `.writing-as__join`, `.writing-as__keep` | The "Writing as" switcher above the Passage box and its warning |
 | `.admin-characters__active`, `.admin-characters__section`, `.admin-characters__summary`, `.admin-characters__approved`, `.admin-characters__new`, `.admin-characters__roster`, `.admin-characters__roster-table`, `.admin-characters__retired`, `.admin-characters__retired-table` | Admin → Characters: the working list and the retired section |
+| `.directory-tabs__set`, `.directory-tabs__set--main`, `.directory-tabs__set--other`, `.directory-tabs__tab--active` | The Directory's tabs: Active and the groups, then the Roster and Unapproved set apart |
 | `.directory__tag--played`, `.roster-apply__played` | The "Previously played" mark on roster characters |
 | `.character-form__locked-value`, `.profile-field-form__player-can-edit` | A profile answer locked after approval; the "Player can edit" tick box |
 | `.layout`, `.main` | The page body and its main column |
@@ -194,7 +195,9 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | Class | What it is |
 | --- | --- |
 | `.scene`, `.scene__header`, `.scene__meta` | A Chapter page |
-| `.scene--layout-manuscript`, `.scene--layout-forum`, `.scene--layout-chat`, `.scene--cast-large`, `.scene--cast-small`, `.scene--portraits-large`, `.scene--portraits-small`, `.scene__kicker` | The Chapter layout chosen in Admin → Look, and the small "Chapter" line above the title in Manuscript |
+| `.scene__main`, `.scene__side`, `.scene__tools` | A Chapter's story column, and the side column (Place, people, writing tools) shown beside it on wide screens |
+| `.scene-setting__where`, `.scene-setting__paths` | The Place's location line, and its Paths on the right |
+| `.scene--layout-manuscript`, `.scene--layout-forum`, `.scene--layout-chat`, `.scene--cast-large`, `.scene--cast-small`, `.scene--portraits-large`, `.scene--portraits-small`, `.scene__kicker` | The Chapter layout chosen in Admin → Look, and the "Chapter 12" line above the title |
 | `.cast-cards`, `.cast-card`, `.cast-card--turn`, `.cast-card__button`, `.cast-card__name`, `.cast-card__details`, `.cast-card__turn` | Manuscript's cards for the cast under the title, and whose turn it is |
 | `.scene-setting`, `.scene-setting__name`, `.scene-setting__description`, `.scene-setting__here` | The Setting box at the top |
 | `.scene-people`, `.scene-people__list`, `.scene-people__actions` | Who's in it, and Leave / Pause / Finish |

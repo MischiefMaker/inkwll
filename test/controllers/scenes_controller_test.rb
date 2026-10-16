@@ -44,6 +44,25 @@ class ScenesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".turn-bar", text: /It's your turn/
   end
 
+  test "each new Chapter gets the next permanent number, shown at the top" do
+    get scene_path(scenes(:duel))
+    assert_select ".scene__kicker", text: "Chapter 1"
+
+    post scenes_path, params: { scene: { title: "Market Day", visibility: "joinable", pose_mode: "free" } }
+    assert_equal Scene.maximum(:number), Scene.last.number
+    assert_equal 4, Scene.last.number
+  end
+
+  test "the Place, people and writing tools sit in the side column, and Storytellers get no cast card" do
+    scenes(:duel).participants.find_by(character: characters(:sable)).update_columns(role: "storyteller")
+    get scene_path(scenes(:duel))
+    assert_select ".scene__side .scene-setting"
+    assert_select ".scene__side .scene-people"
+    assert_select ".scene__main .scene__footer .composer"
+    assert_select ".cast-card__name", text: "Wren"
+    assert_select ".cast-card__name", text: "Sable", count: 0
+  end
+
   test "anyone can watch an open Chapter, but only invited characters can read a private one" do
     sign_in_as(accounts(:builder))
     accounts(:builder).update!(active_character: characters(:finch))

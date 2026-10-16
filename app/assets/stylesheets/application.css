@@ -1545,7 +1545,7 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
    each Passage an author panel. The story text uses --font-story, so a skin
    can change it on its own. */
 .scene { --font-story: var(--font-body); }
-.scene__kicker { display: none; }
+.scene__kicker { margin: 0; font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); }
 .pose-break { margin: 1.5rem 0; text-align: center; letter-spacing: 1em; color: var(--color-accent); }
 .character-icon--portrait { width: 6.5rem; height: 8rem; }
 .character-icon--portrait.character-icon--initial { font-size: 2.5rem; }
@@ -1557,7 +1557,7 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 /* Manuscript */
 .scene--layout-manuscript { --font-story: Georgia, "Times New Roman", serif; }
 .scene--layout-manuscript .scene__header { text-align: center; margin: var(--space) 0; }
-.scene--layout-manuscript .scene__kicker { display: block; margin: 0; font-family: var(--font-story); font-variant: small-caps; letter-spacing: 0.2em; color: var(--color-muted); }
+.scene--layout-manuscript .scene__kicker { font-family: var(--font-story); font-size: 1rem; text-transform: none; font-variant: small-caps; letter-spacing: 0.2em; color: var(--color-muted); }
 .scene--layout-manuscript .scene__header .page-title { font-family: var(--font-heading, var(--font-story)); font-weight: normal; font-size: 2.2rem; }
 .scene--layout-manuscript .scene__subtitle { font-family: var(--font-story); font-style: italic; color: var(--color-muted); }
 .scene--layout-manuscript .scene-people__list,
@@ -1639,4 +1639,92 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
   .pose__author { flex-direction: row; flex-wrap: wrap; width: auto; gap: 0.25rem 0.75rem; text-align: left; }
   .pose__author .pose__icon { margin-bottom: 0; }
   .scene--layout-forum .pose__author { width: auto; border-right: none; border-bottom: 1px solid var(--color-border); }
+}
+
+/* The Chapter page's parts (owner, 2026-10-16). The side column holds the
+   Place, who's in the Chapter and the writing tools. On narrower screens
+   its parts slot back in: the Place at the top, the people under the title,
+   the tools under the writing box. */
+.scene { display: flex; flex-direction: column; }
+.scene__main, .scene__side { display: contents; }
+.scene__main > *, .scene__side > * { min-width: 0; }
+.scene-setting { order: -2; }
+.scene__header, .scene__side > .scene-people { order: -1; }
+.scene__tools { order: 1; }
+.scene__tools > .roll-box:first-child { margin-top: 0.4rem; }
+
+/* The Place box: where it is on one line, then About and who's here, with
+   the Paths out on the right. */
+.scene-setting { padding: 0.5rem 0.75rem; align-items: center; }
+.scene-setting__body { flex: 1 1 auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 1rem; }
+.scene-setting__where { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.4rem; }
+.scene-setting__where .breadcrumbs { font-size: 0.85rem; }
+.scene-setting__where .breadcrumbs:not(:empty)::after { content: " ›"; color: var(--color-muted); }
+.scene-setting__name { margin: 0; font-size: 1.05rem; }
+.scene-setting__description[open] { flex-basis: 100%; }
+.scene-setting__here { margin: 0; font-size: 0.85rem; }
+.scene-setting__paths { flex: 0 1 45%; justify-content: flex-end; margin: 0; }
+.scene-setting__numbered { text-align: right; }
+
+/* The writing box: whose turn, "Writing as" and the kind of post on one
+   row, the box, then the hint and Post on one row. The composer's own
+   wrappers step aside (display: contents) so its parts can share rows. */
+.scene__footer { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 1rem; padding-top: 0.4rem; padding-bottom: 0.6rem; }
+.scene__footer > *, .scene__footer .composer > .form > * { flex: 1 1 100%; margin: 0; }
+.scene__footer .composer, .scene__footer .composer > .form { display: contents; }
+.scene__footer > .turn-bar, .scene__footer > .writing-as, .scene__footer .composer > .form > .composer__kinds { flex: 0 1 auto; }
+.scene__footer .writing-as__form select { max-width: 14rem; }
+.scene__footer .composer textarea { min-height: 4.5rem; }
+.scene__footer .composer > .form > .composer__label { order: 1; flex: 1 1 auto; }
+.scene__footer .composer > .form > .composer__actions { order: 1; flex: 0 0 auto; }
+.scene__footer .composer__actions .button { padding-block: 0.25rem; }
+
+@media (max-width: 600px) {
+  .scene-setting { flex-wrap: wrap; }
+  .scene-setting__paths { flex-basis: 100%; justify-content: flex-start; }
+  .scene-setting__numbered { text-align: left; }
+}
+
+/* Wide screens: the side column. */
+@media (min-width: 1300px) {
+  .main:has(.scene__side) { max-width: 82rem; }
+  .scene { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 0 1.5rem; align-items: start; }
+  .scene__main { display: block; min-width: 0; }
+  .scene__side {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    position: sticky; top: var(--space); max-height: calc(100vh - 2 * var(--space)); overflow-y: auto;
+    font-family: var(--font-ui); font-size: 0.9rem;
+  }
+  .scene__side > * { margin: 0; }
+  .scene__side .scene-setting { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  .scene__side .scene-setting__image { width: 100%; height: 7rem; }
+  .scene__side .scene-setting__paths { flex-basis: auto; justify-content: flex-start; padding-top: 0.5rem; border-top: 1px solid var(--color-border); }
+  .scene__side .scene-setting__numbered { text-align: left; }
+  .scene__side .scene-people { padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+  .scene__side .scene-people__list { flex-direction: column; gap: 0.35rem; }
+  .scene--layout-manuscript .scene__side .scene-people__list,
+  .scene--layout-manuscript .scene__side .scene-people__actions { justify-content: flex-start; }
+  .scene__side .scene-people__actions { gap: 0.25rem 0.75rem; }
+  .scene__side .scene-people:not(:has(li, .scene-people__actions, form)) { display: none; }
+  .scene__tools { padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+  .scene__tools .roll-box { margin-top: 0; }
+  .scene__tools .roll-box + .roll-box, .scene__tools .storyteller-tools { margin-top: 0.5rem; }
+  .scene__tools .roll-box__form { flex-direction: column; align-items: stretch; }
+  .scene__tools select { max-width: 100%; }
+}
+
+/* The character directory (owner, 2026-10-16): pill tabs in two sets, Active
+   and the groups, then the Roster and Unapproved set apart on the right;
+   each character a card with a tall portrait, like the cast cards. */
+.directory-tabs { justify-content: space-between; gap: 0.5rem 1.5rem; padding-bottom: 0.75rem; }
+.directory-tabs__set { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.directory-tabs__set--other { padding-left: 1.5rem; border-left: 1px solid var(--color-border); }
+.directory-tabs .directory-tabs__tab { padding: 0.25rem 0.85rem; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface); font-size: 0.9rem; margin: 0; }
+.directory-tabs .directory-tabs__tab--current { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-text); }
+.directory__list { grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); }
+.directory__item { padding: 0.75rem 0.5rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); overflow-wrap: anywhere; }
+.directory__item:has(.directory__link:hover) { border-color: var(--color-accent); }
+@media (max-width: 600px) {
+  .directory-tabs__set--other { padding-left: 0; border-left: none; }
+  .directory__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
