@@ -62,6 +62,25 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".version-footer", text: "Inkwll v1.0"
     assert_select ".wells__release--current", text: /Running now/
     assert_select "button.wells__install", text: "Update to v1.1"
+    assert_select ".wells__status", text: /Update available. See Versions below./
+    assert_select ".wells__older .wells__release", text: /First version/
+    assert_select ".wells__older button", count: 0
+  end
+
+  test "only the newest version gets an Update button; older ones are notes without buttons" do
+    releases = [ "v1.2", "v1.1", "v1.0" ].map { |tag| GithubActions::Release.new(tag: tag, name: tag, notes: "", published_at: 1.day.ago) }
+    @github.define_singleton_method(:releases) { releases }
+    sign_in_as(accounts(:founder))
+    get admin_wells_path
+    assert_select "button.wells__install", text: "Update to v1.2"
+    assert_select "button.wells__install", text: "Update to v1.1", count: 0
+
+    ENV["INKWLL_VERSION"] = "v1.2"
+    get admin_wells_path
+    assert_select ".wells__release-current", text: /up to date/
+    assert_select ".wells__status", text: "Up-to-Date!"
+    assert_select ".wells__older .wells__release", count: 2
+    assert_select "button.wells__install", count: 0
   end
 
   test "every page shows the version at the bottom, or the build for a deploy of main" do
@@ -138,6 +157,16 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "live", well.reload.status
     assert_equal "v1.1", well.version
     assert_select ".wells__setup-link code", text: well.setup_url
+  end
+
+  test "Make me its Founder too puts my name and email on its sign-up link" do
+    sign_in_as(accounts(:founder))
+    post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall", copy_founder: "1" }, confirm_name: "Moonfall" }
+    well = Well.find_by!(slug: "moonfall")
+    assert well.copy_founder?
+    assert_includes well.setup_url, "name=Founder"
+    assert_includes well.setup_url, CGI.escape("founder@example.com")
+    assert_not_includes Well.new(account: accounts(:founder), domain: "x.inkwll.com", setup_code: "abc").setup_url, "email="
   end
 
   test "a new Well needs its name typed again and a good address" do

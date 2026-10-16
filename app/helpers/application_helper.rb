@@ -19,7 +19,9 @@ module ApplicationHelper
   end
 
   def game_name
-    GameSetting.current.game_name || "Inkwll"
+    # A Well started from the Wells page gets its name from INKWLL_GAME_NAME
+    # until staff set one in Game settings.
+    GameSetting.current.game_name || ENV["INKWLL_GAME_NAME"].presence || "Inkwll"
   end
 
   # The twitching quill that says it's your turn in a Chapter in this

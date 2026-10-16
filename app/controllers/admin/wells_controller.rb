@@ -12,7 +12,7 @@ class Admin::WellsController < Admin::BaseController
   # Starts a new Well on this droplet with the newest version marked ready.
   def create
     github = GithubActions.current
-    @well = Well.new(params.expect(well: %i[ name slug ]).merge(account: current_account))
+    @well = Well.new(params.expect(well: %i[ name slug copy_founder ]).merge(account: current_account))
     @well.domain = "#{@well.slug.to_s.strip.downcase}.#{base_domain}"
     return redirect_to(admin_wells_path, alert: "Wait for the running update to finish first.") if WellUpdate.running.exists? || WellUpdate.waiting_turn.exists?
 

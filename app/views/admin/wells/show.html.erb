@@ -21,7 +21,13 @@
       <td class="table__cell"><%= game_name %> <span class="muted">(this one)</span></td>
       <td class="table__cell"><%= ENV.fetch("APP_HOST", request.host) %></td>
       <td class="table__cell wells__version"><%= inkwll_version_name || "Unknown" %></td>
-      <td class="table__cell muted">Update it under Versions below.</td>
+      <td class="table__cell wells__status">
+        <% if @releases.empty? || @releases.first.tag == @current_version %>
+          <strong class="wells__status--current">Up-to-Date!</strong>
+        <% else %>
+          <strong class="wells__status--available">Update available.</strong> See Versions below.
+        <% end %>
+      </td>
     </tr>
     <% @wells.each do |well| %>
       <tr class="table__row wells__well wells__well--<%= well.status %>">
@@ -29,12 +35,9 @@
         <td class="table__cell"><%= link_to well.domain, "https://#{well.domain}", target: "_blank", rel: "noopener" %></td>
         <td class="table__cell wells__version"><%= { "starting" => "Starting…", "failed" => "Didn't start" }.fetch(well.status, well.version) %></td>
         <td class="table__cell">
-          <% if @releases.any? && !busy %>
-            <%= form_with url: admin_well_updates_path, class: "wells__install-form", data: { turbo_confirm: "Install this version on #{well.name}? A database backup is made first." } do |form| %>
-              <%= form.hidden_field :well_id, value: well.id %>
-              <%= form.select :version, @releases.map(&:tag), { selected: @releases.first.tag }, class: "wells__install-version", aria: { label: "Version for #{well.name}" } %>
-              <%= form.submit (well.status == "failed" ? "Try again" : "Install"), class: "button wells__install" %>
-            <% end %>
+          <% if @releases.any? && !busy && (well.version != @releases.first.tag || well.status == "failed") %>
+            <%= button_to (well.status == "failed" ? "Try again" : "Update to #{@releases.first.tag}"), admin_well_updates_path, params: { version: @releases.first.tag, well_id: well.id }, class: "button wells__install",
+                  form: { data: { turbo_confirm: "Update #{well.name} to #{@releases.first.tag}? A database backup is made first." } } %>
           <% end %>
         </td>
       </tr>
@@ -65,26 +68,39 @@
 <% elsif @releases.empty? %>
   <p class="muted">No versions are marked ready yet.</p>
 <% else %>
-  <% current_index = @releases.index { |release| release.tag == @current_version } %>
-  <ul class="wells__releases">
-    <% @releases.each_with_index do |release, index| %>
-      <li class="wells__release<%= " wells__release--current" if index == current_index %>">
-        <h3 class="wells__release-name"><%= release.name %> <span class="muted">· <%= release.published_at&.to_date&.to_fs(:long) %></span></h3>
-        <% if release.notes.present? %><div class="wells__release-notes"><%= simple_format(release.notes) %></div><% end %>
-        <% if index == current_index %>
-          <p class="wells__release-current">Running now.</p>
-        <% elsif !busy %>
-          <% going_back = current_index && index > current_index %>
-          <%= button_to (going_back ? "Go back to #{release.tag}" : "Update to #{release.tag}"), admin_well_updates_path, params: { version: release.tag }, class: "button wells__install",
-                form: { data: { turbo_confirm: going_back ? "Go back to #{release.tag}? Database changes made by newer versions stay." : "Update the live game to #{release.tag}? A database backup is made first." } } %>
-        <% end %>
-        <% if index.zero? && @wells.any? { |well| well.status == "live" } && !busy %>
-          <%= button_to "Update every Well to #{release.tag}", admin_well_updates_path, params: { version: release.tag, all: "1" }, class: "button wells__install-all",
-                form: { data: { turbo_confirm: "Update this game and every other Well to #{release.tag}, one after another? Keep the page open while it runs." } } %>
-        <% end %>
-      </li>
+  <% newest = @releases.first %>
+  <%# Only the newest version gets a button; older ones are folded away as notes. To go back, ask Claude. %>
+  <div class="wells__release wells__release--newest<%= " wells__release--current" if newest.tag == @current_version %>">
+    <h3 class="wells__release-name">Newest: <%= newest.name %> <span class="muted">· <%= newest.published_at&.to_date&.to_fs(:long) %></span></h3>
+    <% if newest.notes.present? %><div class="wells__release-notes"><%= simple_format(newest.notes) %></div><% end %>
+    <% if newest.tag == @current_version %>
+      <p class="wells__release-current">Running now. You're up to date.</p>
+    <% elsif !busy %>
+      <%= button_to "Update to #{newest.tag}", admin_well_updates_path, params: { version: newest.tag }, class: "button wells__install",
+            form: { data: { turbo_confirm: "Update the live game to #{newest.tag}? A database backup is made first." } } %>
     <% end %>
-  </ul>
+    <% if @wells.any? { |well| well.status == "live" } && !busy %>
+      <%= button_to "Update every Well to #{newest.tag}", admin_well_updates_path, params: { version: newest.tag, all: "1" }, class: "button wells__install-all",
+            form: { data: { turbo_confirm: "Update this game and every other Well to #{newest.tag}, one after another? Keep the page open while it runs." } } %>
+    <% end %>
+  </div>
+  <% older = @releases.drop(1) %>
+  <% if older.any? %>
+    <details class="wells__older">
+      <summary class="wells__older-summary">Older versions</summary>
+      <ul class="wells__releases">
+        <% older.each do |release| %>
+          <li class="wells__release<%= " wells__release--current" if release.tag == @current_version %>">
+            <h3 class="wells__release-name"><%= release.name %> <span class="muted">· <%= release.published_at&.to_date&.to_fs(:long) %></span></h3>
+            <% if release.notes.present? %><div class="wells__release-notes"><%= simple_format(release.notes) %></div><% end %>
+            <% if release.tag == @current_version %>
+              <p class="wells__release-current">Running now.</p>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </details>
+  <% end %>
 <% end %>
 
 <% if @updates.any? %>
@@ -124,6 +140,10 @@
         <%= form.label :slug, "Its address" %>
         <span class="wells__address"><%= form.text_field :slug, maxlength: 20, required: true, pattern: "[a-z][a-z0-9]{1,19}", class: "wells__slug" %>.<%= @base_domain %></span>
         <p class="muted field__hint">Small letters and numbers only, like moonfall.</p>
+      </div>
+      <div class="field field--checkbox">
+        <%= form.check_box :copy_founder %>
+        <%= form.label :copy_founder, "Make me its #{term(:founder)} too (its sign-up link opens with my name and email filled in; I just choose a password for it)" %>
       </div>
       <div class="field">
         <%= label_tag :confirm_name, "Type the name again to confirm" %>

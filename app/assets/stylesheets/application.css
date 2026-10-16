@@ -1781,3 +1781,5 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 @media (max-width: 800px) {
   .chapter-index__item { grid-template-columns: 1fr; }
 }
+.wells__older { margin-top: 1rem; }
+.wells__older-summary { cursor: pointer; color: var(--color-muted); margin-bottom: 0.75rem; }

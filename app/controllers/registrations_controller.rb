@@ -4,8 +4,9 @@ class RegistrationsController < ApplicationController
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_registration_path, alert: "Try again later." }
 
   def new
-    @account = Account.new
     @setup_code = params[:setup] if founder_setup_code?(params[:setup])
+    # A Well started with "Make me its Founder too" opens with these filled in.
+    @account = Account.new(@setup_code ? { display_name: params[:name].to_s.first(60), email: params[:email].to_s.first(254) } : {})
   end
 
   def create

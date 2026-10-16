@@ -6,6 +6,7 @@
 # Each Well (game) on a droplet is its own Kamal service with its own
 # database and uploads. inkwll.com is "inkwll"; the Deploy workflow sets
 # INKWLL_SERVICE for other Wells. See docs/wells.md.
+<% require "json" %>
 <% service = ENV.fetch("INKWLL_SERVICE", "inkwll") %>
 service: <%= service %>
 image: <%= service %>
@@ -54,12 +55,17 @@ env:
     # Lets the Founder's Wells page start updates (see docs/wells.md). Empty
     # until it's set up, which just hides the Update buttons.
     - WELLS_GITHUB_TOKEN
+    # A new Well's setup code: the first sign-up link makes its first player
+    # the Founder (see docs/wells.md). Empty for inkwll.com.
+    - WELL_SETUP_CODE
   clear:
     SOLID_QUEUE_IN_PUMA: true
     DB_HOST: <%= service %>-db
     # The game's domain: links in emails use it, and www. visits are sent
     # on to it.
     APP_HOST: <%= domain %>
+    # The name given to a Well other than inkwll.com when it was started.
+    INKWLL_GAME_NAME: <%= ENV.fetch("INKWLL_GAME_NAME", "").to_json %>
     # Set for Wells other than inkwll.com: where their updates are done from.
     INKWLL_HOME_URL: "<%= ENV.fetch("INKWLL_HOME_URL", "") %>"
     # Fewer threads and one process suit the 1 GB droplet.

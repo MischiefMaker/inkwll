@@ -4,7 +4,7 @@ Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b 
 
 ## How updates work now (step 12a)
 
-- **Admin → Wells** is only for the Founder. It shows this Well's version and the versions marked ready in `config/versions.yml`, newest first, each with its notes. "Update to" and "Go back to" buttons ask GitHub to run the Deploy workflow with that version. The page refreshes itself while an update runs and links to the log.
+- **Admin → Wells** is only for the Founder. It shows this Well's version and the versions marked ready in `config/versions.yml`, newest first, each with its notes. Only the newest version has an "Update to" button (older ones are listed, folded away, as notes; going back is done by asking Claude). The button asks GitHub to run the Deploy workflow with that version. The page refreshes itself while an update runs and links to the log.
 - **One update at a time.** The page refuses a second one while one is running, and refuses any version that isn't marked ready.
 - **Backups:** the Deploy workflow dumps the database to `/root/backups` on the droplet before every deploy (except the first), keeps the newest ten, and stops if the dump fails. The off-server nightly copy to DigitalOcean Spaces is still to do (see `deploying.md`).
 - **Going back** rebuilds the earlier version. Database changes made by newer versions stay, so a version's notes say when going back past it is unsafe.
