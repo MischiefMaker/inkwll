@@ -78,6 +78,8 @@
     <% elsif !busy %>
       <%= button_to "Update to #{newest.tag}", admin_well_updates_path, params: { version: newest.tag }, class: "button wells__install",
             form: { data: { turbo_confirm: "Update the live game to #{newest.tag}? A database backup is made first." } } %>
+    <% else %>
+      <p class="wells__release-waiting muted">Another update is running. This button comes back when it finishes.</p>
     <% end %>
     <% if @wells.any? { |well| well.status == "live" } && !busy %>
       <%= button_to "Update every Well to #{newest.tag}", admin_well_updates_path, params: { version: newest.tag, all: "1" }, class: "button wells__install-all",
