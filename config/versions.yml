@@ -2,12 +2,4 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
-- version: v1.0
-  commit: 59a4f0f87533372e8126a1cc3c855a84300222bd
-  date: 2026-10-16
-  notes: |
-    The first marked version of Inkwll: everything live on inkwll.com on 16 October 2026.
-
-    - The Founder's Wells page, with Update and Go back buttons.
-    - A database backup before every deploy.
-    - The testing tweaks (OOC Chat moderation, starter SOUL content and more) and the new character profile tabs.
+[]
