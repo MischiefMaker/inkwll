@@ -37,8 +37,17 @@
 <section class="admin-attention" aria-labelledby="admin-attention-heading">
   <h2 class="section-title admin-attention__heading" id="admin-attention-heading">Needs Attention</h2>
   <% waiting = StaffWaiting.pending_for(current_account) %>
-  <% if waiting.any? %>
+  <% update = AvailableUpdate.for(current_account) %>
+  <% if waiting.any? || update %>
     <ul class="admin-attention__list">
+      <% if update %>
+        <li class="admin-attention__item admin-attention__item--update">
+          <%= link_to admin_wells_path, class: "admin-attention__link" do %>
+            <span class="admin-attention__label">Update available: <%= update %></span>
+            <span class="admin-attention__count">1</span>
+          <% end %>
+        </li>
+      <% end %>
       <% waiting.each do |item| %>
         <li class="admin-attention__item admin-attention__item--<%= item.key %>">
           <%= link_to staff_waiting_path(item.key), class: "admin-attention__link" do %>

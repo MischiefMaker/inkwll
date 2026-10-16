@@ -40,4 +40,26 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
       assert_select ".admin-menu a[href='#{path}']"
     end
   end
+
+  test "the Founder sees an available update under Needs Attention" do
+    stub_update("v9.9") do
+      sign_in_as(accounts(:founder))
+      get admin_root_path
+      assert_select ".admin-attention__item--update a[href=?]", admin_wells_path, text: /Update available: v9.9/
+    end
+  end
+
+  test "no update is offered to someone who is not the Founder" do
+    assert_nil AvailableUpdate.for(accounts(:scribe))
+    assert_nil AvailableUpdate.for(nil)
+  end
+
+  private
+    def stub_update(version)
+      original = AvailableUpdate.method(:for)
+      AvailableUpdate.define_singleton_method(:for) { |_account| version }
+      yield
+    ensure
+      AvailableUpdate.define_singleton_method(:for, original)
+    end
 end

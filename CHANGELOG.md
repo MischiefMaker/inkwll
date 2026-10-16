@@ -9,6 +9,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Profile, SOUL, Inkling and Path tweaks
 
+- The Founder's admin front page lists "Update available" under Needs Attention when a newer version is ready, linking to the Wells page.
 - A Boon or Bane no longer has to affect a Skill.
 - Characters who aren't approved yet can't start Inklings (their Goal and Secret from the application start when they're approved).
 - New games start with a required "Goal" and "Secret" application field (singular). Existing games keep their fields.
