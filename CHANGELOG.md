@@ -22,6 +22,12 @@ Short, plain-language notes on what changed. Newest first.
 - Chapters have a new look, Manuscript: a serif page like a book, with the cast as cards under the title, small round pictures beside each Passage, narration centred, OOC as side notes and a ✦ ✦ ✦ break when half a day or more passes.
 - Admin → Look can switch to Forum (a portrait and details beside every Passage) or Chat (the old look), and set Manuscript's cast and Passage pictures to large or small.
 
+## 2026-10-15 — Wells page
+
+- The Founder has a new Admin → Wells page (nobody else sees it). It shows which version the game runs and lists the versions Claude has marked ready, each with what changed. Update to a newer one, or Go back to an earlier one, with one button. GitHub does the work, and the page shows how it's going with a link to the log.
+- Every deploy now backs up the database on the droplet first. If the backup fails, nothing changes.
+- The page needs a GitHub key before it can update anything; it shows the steps to make one.
+
 ## 2026-10-15 — inkwll.com
 
 - The game moves to https://inkwll.com with HTTPS. www.inkwll.com sends

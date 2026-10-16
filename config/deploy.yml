@@ -43,6 +43,9 @@ env:
   secret:
     - SECRET_KEY_BASE
     - INKWLL_DATABASE_PASSWORD
+    # Lets the Founder's Wells page start updates (see docs/wells.md). Empty
+    # until it's set up, which just hides the Update buttons.
+    - WELLS_GITHUB_TOKEN
   clear:
     SOLID_QUEUE_IN_PUMA: true
     DB_HOST: inkwll-db
@@ -51,6 +54,8 @@ env:
     APP_HOST: <%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
     # Fewer threads and one process suit the 1 GB droplet.
     RAILS_MAX_THREADS: 3
+    # Which version this is, shown on the Wells page. Set by the Deploy workflow.
+    INKWLL_VERSION: "<%= ENV.fetch("INKWLL_VERSION", "") %>"
     WEB_CONCURRENCY: 1
 
 aliases:

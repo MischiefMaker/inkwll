@@ -2,10 +2,14 @@
 # hand (Actions → Deploy → Run workflow), so nothing goes live by accident.
 #
 # Needs, under Settings → Secrets and variables → Actions:
-#   Secrets:   DEPLOY_SSH_KEY, SECRET_KEY_BASE, DATABASE_PASSWORD
+#   Secrets:   DEPLOY_SSH_KEY, SECRET_KEY_BASE, DATABASE_PASSWORD,
+#              WELLS_GITHUB_TOKEN (optional; lets the Founder's Wells page
+#              start updates, see docs/wells.md)
 #   Variables: INKWLL_SERVER (the droplet's IP address; a secret works too)
 # See docs/deploying.md.
 name: Deploy
+# The Wells page finds its run by the request id in brackets.
+run-name: ${{ inputs.version && format('Update to {0} ({1})', inputs.version, inputs.request_id) || 'Deploy' }}
 
 on:
   workflow_dispatch:
@@ -16,6 +20,14 @@ on:
         default: false
       make_founder:
         description: "Player name to make Founder instead of deploying (leave empty to deploy)"
+        type: string
+        default: ""
+      version:
+        description: "Version marked ready to deploy, like v1.0 (leave empty for the latest main)"
+        type: string
+        default: ""
+      request_id:
+        description: "Set by the Wells page; leave empty"
         type: string
         default: ""
 
@@ -30,8 +42,27 @@ jobs:
       INKWLL_SSH_KEY: /home/runner/.ssh/inkwll-deploy
       SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      WELLS_GITHUB_TOKEN: ${{ secrets.WELLS_GITHUB_TOKEN }}
     steps:
+      - name: Check the version name
+        if: inputs.version != ''
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          case "$VERSION" in v[0-9]*) ;; *) echo "::error::Versions look like v1.0."; exit 1;; esac
+          case "$VERSION" in *[!A-Za-z0-9.-]*) echo "::error::Versions look like v1.0."; exit 1;; esac
+
+      # The workflow's steps always come from main; the game's code comes
+      # from the version asked for.
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.version || github.ref }}
+          fetch-depth: 0
+
+      # The game shows this on the Wells page: the version's name, or for a
+      # deploy of main, the last version plus how far past it main is.
+      - name: Name the version
+        run: echo "INKWLL_VERSION=$(git describe --tags --always)" >> "$GITHUB_ENV"
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -48,6 +79,21 @@ jobs:
           ssh-keyscan -t rsa,ecdsa,ed25519 "$INKWLL_SERVER" > /tmp/host-keys 2>/dev/null
           ssh-keygen -lf /tmp/host-keys | sed "s/$INKWLL_SERVER/droplet/"
           ssh-keyscan -H -t ed25519 "$INKWLL_SERVER" >> ~/.ssh/known_hosts
+
+      # A copy of the database on the droplet before anything changes, in
+      # /root/backups. The newest ten are kept.
+      - name: Back up the database
+        if: inputs.make_founder == '' && !inputs.first_time
+        run: |
+          ssh -i "$INKWLL_SSH_KEY" "root@$INKWLL_SERVER" 'bash -s' <<'BACKUP'
+          set -euo pipefail
+          mkdir -p /root/backups
+          file="/root/backups/before-update-$(date -u +%Y%m%d-%H%M%S).sql.gz"
+          docker exec inkwll-db pg_dump -U inkwll inkwll_production | gzip > "$file"
+          if [ "$(stat -c %s "$file")" -lt 1000 ]; then echo "The backup came out empty, so nothing was updated."; exit 1; fi
+          ls -1t /root/backups/before-update-*.sql.gz | tail -n +11 | xargs -r rm --
+          echo "Backed up to $file ($(du -h "$file" | cut -f1))"
+          BACKUP
 
       - uses: docker/setup-buildx-action@v3
 

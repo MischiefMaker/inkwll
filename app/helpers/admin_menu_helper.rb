@@ -70,6 +70,10 @@ module AdminMenuHelper
       groups["Settings"] << admin_link("Look", edit_admin_skin_path, %w[ skins ])
     end
 
+    if current_account.founder?
+      groups["Settings"] << admin_link("Wells", admin_wells_path, %w[ wells well_updates ])
+    end
+
     groups.reject { |_, links| links.empty? }.to_a
   end
 

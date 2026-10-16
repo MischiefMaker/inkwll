@@ -162,6 +162,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.storyteller-tools`, `.storyteller-tools__call`, `.storyteller-tools__sheets`, `.storyteller-tools__award`, `.storyteller-sheet`, `.storyteller-sheet__name`, `.storyteller-sheet__aspect`, `.storyteller-sheet__skills` | A Chapter's Storyteller tools |
 | `.soul-reviews__item--award` | Admin: XP a Storyteller suggested |
 | `.features`, `.features__item` | Admin: Features |
+| `.wells__list`, `.wells__well`, `.wells__version`, `.wells__setup`, `.wells__steps`, `.wells__error`, `.wells__releases`, `.wells__release` (`--current`), `.wells__release-name`, `.wells__release-notes`, `.wells__release-current`, `.wells__install` (button), `.wells__updates`, `.wells__update`, `.wells__update--done`/`--failed`/`--working` (rows) | Admin: Wells (Founder only) |
 | `.admin-setup`, `.admin-setup__look` | "Pick your game's look" on the admin Overview |
 | `.skin-presets`, `.skin-preset`, `.skin-preset__swatch`, `.skin-preset__current`, `.skin-form`, `.skin-form__row`, `.skin-form__colour`, `.skin-form__css` | Admin: Look |
 | `.inklings-admin`, `.inklings-admin--waiting` | Admin: Inklings |
