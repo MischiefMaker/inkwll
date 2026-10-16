@@ -1,0 +1,32 @@
+<% content_for :title, "Name changes · Admin · Inkwll" %>
+
+<h1 class="page-title">Name changes</h1>
+<p class="muted">Every time a player or a character was renamed, newest first. Players can rename themselves; they can rename a character only until it is approved.</p>
+
+<% if @name_changes.any? %>
+  <table class="table name-changes">
+    <thead class="table__head"><tr class="table__row">
+      <th class="table__heading">When</th><th class="table__heading">Who</th><th class="table__heading">Was</th><th class="table__heading">Now</th><th class="table__heading">Changed by</th>
+    </tr></thead>
+    <tbody class="table__body">
+      <% @name_changes.each do |change| %>
+        <tr class="table__row name-changes__row name-changes__row--<%= change.player? ? "player" : "character" %>">
+          <td class="table__cell"><time datetime="<%= change.created_at.iso8601 %>"><%= change.created_at.to_fs(:long) %></time></td>
+          <td class="table__cell"><%= change.player? ? "Player" : "Character" %></td>
+          <td class="table__cell"><%= change.old_name %></td>
+          <td class="table__cell"><%= change.subject ? link_to(change.new_name, change.player? ? player_path(change.subject.username) : character_path(change.subject)) : change.new_name %></td>
+          <td class="table__cell"><%= change.changed_by&.display_name || "Unknown" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @pages > 1 %>
+    <p class="muted name-changes__pages">
+      <% if @page > 1 %><%= link_to "Newer", admin_name_changes_path(page: @page - 1) %> · <% end %>
+      Page <%= @page %> of <%= @pages %>
+      <% if @page < @pages %> · <%= link_to "Older", admin_name_changes_path(page: @page + 1) %><% end %>
+    </p>
+  <% end %>
+<% else %>
+  <p class="muted name-changes__empty">Nobody has been renamed yet.</p>
+<% end %>

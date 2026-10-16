@@ -67,6 +67,7 @@ class CharactersController < ApplicationController
     def character_params
       permitted = [ :name, :icon, :remove_icon, :roster_when_idle, profile: {}, remove_profile_pictures: [] ]
       permitted.unshift(:character_group_id) if @character.nil? || @character.group_choosable?
+      permitted.delete(:name) unless @character.nil? || @character.renamable_by?(current_account)
       params.expect(character: permitted).tap do |attributes|
         if attributes.key?(:character_group_id) && !CharacterGroup.exists?(id: attributes[:character_group_id].presence)
           attributes[:character_group_id] = nil

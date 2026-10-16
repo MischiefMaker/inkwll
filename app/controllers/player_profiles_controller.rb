@@ -7,7 +7,7 @@ class PlayerProfilesController < ApplicationController
 
   def update
     @player = current_account
-    if @player.update(params.expect(account: [ :about_me, :icon, :remove_icon ]))
+    if @player.update(params.expect(account: [ :display_name, :about_me, :icon, :remove_icon ]))
       redirect_to player_path(@player.username), notice: "Saved."
     else
       render :edit, status: :unprocessable_entity

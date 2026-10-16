@@ -5,7 +5,12 @@
     <legend class="fieldset__legend">Basics</legend>
     <div class="field">
       <%= form.label :name %>
-      <%= form.text_field :name, required: true, autofocus: true %>
+      <% if character.new_record? || character.renamable_by?(current_account) %>
+        <%= form.text_field :name, required: true, autofocus: true %>
+        <% unless character.new_record? || current_account.staff? %><small class="hint">You can rename <%= character.name %> until staff approve them. Staff keep a log of name changes.</small><% end %>
+      <% else %>
+        <p class="text"><%= character.name %> <span class="muted">(approved, so only staff can rename them)</span></p>
+      <% end %>
     </div>
     <div class="field">
       <%= form.label :icon %>

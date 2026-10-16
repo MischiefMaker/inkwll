@@ -9,6 +9,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Profile, SOUL, Inkling and Path tweaks
 
+- Players can rename themselves (My player profile). Characters can be renamed by their player until they are approved; after that only staff can. Every rename is logged under Admin → Name changes.
 - The Founder's admin front page lists "Update available" under Needs Attention when a newer version is ready, linking to the Wells page.
 - A Boon or Bane no longer has to affect a Skill.
 - Characters who aren't approved yet can't start Inklings (their Goal and Secret from the application start when they're approved).

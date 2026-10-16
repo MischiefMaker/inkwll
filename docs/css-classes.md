@@ -230,6 +230,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.profile-layout`, `.profile-menu`, `.profile-menu__group` (`--basics`, `--system`, `--writing`), `.profile-menu__heading`, `.profile-menu__list`, `.profile-menu__item`, `.profile-menu__link`, `.profile-menu__link--current` | A character profile's menu down the left (Basics: Profile, Application, Relationships, Image Gallery; System: SOUL, Inklings, Grimoire; Writing: Manuscripts, Active Chapters) with the chosen page beside it |
 | `.roll-box__private` | The "Only me and staff see the result" checkbox in an Inkling's Roll a Skill |
 | `.inkling-link-box`, `.inkling-link-box__open`, `.inkling-link-modal`, `.inkling-link-modal__form`, `.inkling-link-modal__new` | "Add to an Inkling" in a Chapter's tools: the button, and the pop-up that asks why |
+| `.name-changes`, `.name-changes__row` (with `--player`, `--character`), `.name-changes__pages`, `.name-changes__empty` | Admin → Name changes: the log of renames |
 | `.skill-checkboxes`, `.skill-checkboxes__group`, `.skill-checkboxes__aspect`, `.skill-checkboxes__option` | The tick-box list for picking Skills (grouped by Aspect) on Boons and Banes |
 | `.modal`, `.modal__form`, `.modal__title`, `.modal__actions` | Any pop-up box (a `<dialog>`) |
 | `.inkling-entry__chapter`, `.inkling-entry__chapter-link` | The "Chapter: …" line on an Inkling entry that came from a Chapter |

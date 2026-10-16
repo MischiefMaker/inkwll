@@ -32,6 +32,9 @@ class Character < ApplicationRecord
   has_one_attached :icon
   attribute :remove_icon, :boolean, default: false
 
+  include LogsNameChanges
+  logs_name_changes :name
+
   normalizes :name, with: ->(n) { n.squish }
 
   validates :name, presence: true, length: { maximum: 40 }, uniqueness: { case_sensitive: false }
@@ -131,6 +134,11 @@ class Character < ApplicationRecord
   end
 
   # Whether the player may still pick this character's group themselves.
+  # Players can rename a character until it is approved; after that only staff can.
+  def renamable_by?(account)
+    !approved? || account&.staff? || false
+  end
+
   def group_choosable?
     !approved? || !GameSetting.current.approval_required?
   end

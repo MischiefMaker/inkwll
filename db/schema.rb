@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_060001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_070000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -441,6 +441,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_060001) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_messages_on_account_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+  end
+
+  create_table "name_changes", force: :cascade do |t|
+    t.string "subject_type", null: false
+    t.bigint "subject_id", null: false
+    t.string "old_name", null: false
+    t.string "new_name", null: false
+    t.bigint "changed_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["changed_by_id"], name: "index_name_changes_on_changed_by_id"
+    t.index ["created_at"], name: "index_name_changes_on_created_at"
+    t.index ["subject_type", "subject_id"], name: "index_name_changes_on_subject_type_and_subject_id"
   end
 
   create_table "ooc_messages", force: :cascade do |t|
@@ -983,6 +996,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_060001) do
   add_foreign_key "inklings", "characters"
   add_foreign_key "messages", "accounts"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "name_changes", "accounts", column: "changed_by_id", on_delete: :nullify
   add_foreign_key "ooc_messages", "accounts"
   add_foreign_key "ooc_messages", "accounts", column: "removed_by_id", on_delete: :nullify
   add_foreign_key "poses", "characters"

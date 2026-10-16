@@ -56,6 +56,9 @@ module AdminMenuHelper
     if current_account.can?(:manage_staff)
       groups["Players and characters"] << admin_link("Players and staff", admin_accounts_path, %w[ accounts ])
     end
+    if current_account.can?(:review_apps)
+      groups["Players and characters"] << admin_link("Name changes", admin_name_changes_path, %w[ name_changes ])
+    end
     if current_account.can?(:delete_characters)
       groups["Players and characters"] << admin_link("Characters", admin_characters_path, %w[ characters ])
     end

@@ -6,6 +6,11 @@
 <%= form_with model: @player, url: player_profile_path, method: :patch, class: "form player-profile-form" do |form| %>
   <%= render "shared/errors", record: @player %>
   <div class="field">
+    <%= form.label :display_name, "Player name" %>
+    <%= form.text_field :display_name, required: true, maxlength: 30 %>
+    <small class="hint">Also what you log in with. Staff keep a log of name changes.</small>
+  </div>
+  <div class="field">
     <%= form.label :icon %>
     <% if @player.icon.attached? && @player.icon.blob.persisted? %>
       <%= player_avatar(@player, size: :large) %>

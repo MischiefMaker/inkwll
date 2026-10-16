@@ -52,6 +52,9 @@ class Account < ApplicationRecord
 
   enum :staff_level, STAFF_LEVELS, default: :player, validate: true
 
+  include LogsNameChanges
+  logs_name_changes :display_name
+
   normalizes :display_name, with: ->(n) { n.strip }
   normalizes :email, with: ->(e) { e.strip.downcase.presence }
 
