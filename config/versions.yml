@@ -2,6 +2,16 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.1
+  commit: f37e0d259843c76089d4fddce555ae17aac698fa
+  date: 2026-10-16
+  notes: |
+    - Start a new Well on this droplet from the Wells page, at an address like moonfall.inkwll.com, with a sign-up link that makes its first player its Founder.
+    - Update one Well at a time, or every Well in turn.
+    - A box at the top of the Wells page while an update runs.
+    - Brings back the nicer All Chapters styling and the front page Chapters link, which going to v1.0 had taken off.
+    Going back to v1.0 is safe, but v1.0 can't manage other Wells.
+
 - version: v1.0
   commit: 1f652e8b9fcaa0218a3ff47658f586974ee1fb40
   date: 2026-10-16
