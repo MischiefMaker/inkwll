@@ -76,7 +76,14 @@ jobs:
       - name: Name the version
         env:
           VERSION: ${{ inputs.version }}
-        run: echo "INKWLL_VERSION=${VERSION:-$(git describe --tags --always)}" >> "$GITHUB_ENV"
+        run: |
+          # A deploy of main whose commit is already marked ready gets that
+          # version's name too (looked up in config/versions.yml on main).
+          if [ -z "$VERSION" ]; then
+            git fetch -q --depth=1 origin main
+            VERSION=$(git show FETCH_HEAD:config/versions.yml | COMMIT=$(git rev-parse HEAD) ruby -rdate -ryaml -e 'v = YAML.safe_load($stdin.read, permitted_classes: [Date]).to_a.find { |e| e["commit"] == ENV["COMMIT"] }; print v ? v["version"] : ""')
+          fi
+          echo "INKWLL_VERSION=${VERSION:-$(git rev-parse --short HEAD)}" >> "$GITHUB_ENV"
 
       - uses: ruby/setup-ruby@v1
         with:

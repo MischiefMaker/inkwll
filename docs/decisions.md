@@ -27,6 +27,11 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - Manuscript has two separate settings: the cast under the title (large cards or small row) and the picture beside each Passage (large or small). Defaults: large cast, small picture.
 - Why: so Chapters look less like AresMUSH scenes. Mockups in the "RP forum and host research" thread.
 
+## 2026-10-16: Version numbers (owner)
+
+- What went live on inkwll.com on 16 October 2026 is Inkwll v1.0. Updates after it are numbered v1.1, v1.2 and so on.
+- The version shows in small text at the bottom middle of every page, and on the Wells page above the list of versions.
+
 ## 2026-10-15: Launching and updating Wells (owner)
 
 - A Founder-only Admin → Wells page starts and updates Wells. Only the Founder flag sees it.

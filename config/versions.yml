@@ -3,11 +3,12 @@
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
 - version: v1.0
-  commit: 06b8e1bb49986578cff439b51ac53f73ed95f2f9
+  commit: 1f652e8b9fcaa0218a3ff47658f586974ee1fb40
   date: 2026-10-16
   notes: |
-    The first marked version of Inkwll: what went live on inkwll.com on 16 October 2026.
+    The first marked version of Inkwll: what went live on inkwll.com on 16 October 2026. Updates after this are numbered v1.1, v1.2 and so on.
 
     - The Founder's Wells page, with Update and Go back buttons.
     - A database backup before every deploy.
-    - The testing tweaks: OOC Chat moderation, starter SOUL content, the alerts bell fix, the Chapter page tidy-up, Directory tabs and Chapter numbers.
+    - The testing tweaks: OOC Chat moderation, starter SOUL content, the alerts bell fix, the Chapter page tidy-up, Directory tabs, Chapter numbers, the All Chapters list and GM rolls.
+    - The Inkwll version in small text at the bottom of every page.

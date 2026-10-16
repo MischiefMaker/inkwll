@@ -12,7 +12,7 @@ Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b 
 
 ### Marking a version ready (Claude)
 
-When a commit on main has passed the tests and run on inkwll.com, Claude adds it to the top of `config/versions.yml` on main: the version name (v1.0, v1.1 and so on), the full commit id, the date, and a few plain lines on what changed, saying if going back past it is unsafe. The Wells page reads that file from GitHub, so the new version shows up without a deploy. The Deploy workflow looks the version up in the same file and deploys that commit.
+When a commit on main has passed the tests and run on inkwll.com, Claude adds it to the top of `config/versions.yml` on main: the next version name (v1.1, v1.2 and so on; v1.0 is what was live on 16 October 2026), the full commit id, the date, and a few plain lines on what changed, saying if going back past it is unsafe. The Wells page reads that file from GitHub, so the new version shows up without a deploy. The Deploy workflow looks the version up in the same file and deploys that commit. A plain deploy of main whose commit is already in the list gets that version's name too.
 
 (GitHub Releases were tried first, but this repository doesn't let workflows or Claude's cloud environment create tags.)
 
