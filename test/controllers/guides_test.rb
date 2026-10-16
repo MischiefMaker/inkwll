@@ -10,6 +10,15 @@ class GuidesTest < ActionDispatch::IntegrationTest
     assert_select ".guide__join a[href=?]", new_registration_path
   end
 
+  test "Getting started has sections for MUSH and forum players, with terms and present tense" do
+    get getting_started_path, headers: { "User-Agent" => "Mozilla/5.0 Firefox/130.0" }
+    assert_select ".guide__section--from-mush .subsection-title", /MUSH/
+    assert_select ".guide__section--from-mush .guide__terms", /Scene.*Chapter.*Pose.*Passage/m
+    assert_select ".guide__section--from-forum .subsection-title", /forum/
+    assert_select ".guide__section--from-forum .guide__terms", /Thread or topic.*Chapter.*Post.*Passage/m
+    assert_select ".guide__section--from-mush, .guide__section--from-forum", text: /present tense/
+  end
+
   test "the old How it works address leads to Getting started" do
     get "/how-it-works"
     assert_redirected_to "/getting-started"

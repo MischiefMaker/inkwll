@@ -80,7 +80,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.site-header--guest`, `.site-header__preview`, `.layout--guest`, `.main--preview`, `.main--narrow` | The top bar and page body for visitors who aren't logged in (`.main--narrow` on log in and sign up; `.guest-chat-hello` is the line there pointing guests to the OOC Chat) |
 | `.place__preview`, `.exit-link--preview`, `.numbered-path--preview`, `.compass__point--preview`, `.compass__centre--preview` | The Preview button and Paths shown as plain links to guests |
 | `.where-room`, `.where-room__areas`, `.where-room__list` | The Where list |
-| `.guide`, `.guide__intro`, `.guide__heading`, `.guide__section`, `.guide__section--first-steps` (and `--places`, `--scenes`, `--characters`, `--talking`, `--staff`), `.guide__steps`, `.guide__step`, `.guide__join`, `.menu__guide` | The players' Getting started page and its Menu link |
+| `.guide`, `.guide__intro`, `.guide__heading`, `.guide__section`, `.guide__section--first-steps` (and `--places`, `--scenes`, `--characters`, `--talking`, `--staff`, `--from-mush`, `--from-forum`), `.guide__steps`, `.guide__step`, `.guide__subheading`, `.guide__list`, `.guide__terms`, `.guide__join`, `.menu__guide` | The players' Getting started page and its Menu link |
 | `.guide--admin`, `.guide__section--setup`, `.guide__section--daily`, `.guide__who`, `.admin-menu__link--guide`, `.admin-guide-link` | The staff Getting started page and its links in the admin panel |
 
 ## Forum boards

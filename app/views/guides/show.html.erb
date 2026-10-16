@@ -61,6 +61,81 @@
     </p>
   </section>
 
+  <section class="guide__section guide__section--from-mush">
+    <h2 class="subsection-title">If you're coming from a MUSH</h2>
+    <p class="text">
+      You'll feel at home. You move a character through <%= term(:room, count: 2).downcase %>
+      and <%= term(:exit, count: 2).downcase %>, and play out stories by posing,
+      just like on a MUSH. The difference is that it all happens in your browser:
+      there's nothing to connect to, and nobody needs a client or a command line.
+    </p>
+    <h3 class="guide__subheading">What's the same</h3>
+    <ul class="list guide__list">
+      <li class="list__item">A world you walk around, made of linked <%= term(:room, count: 2).downcase %>.</li>
+      <li class="list__item">Characters with profiles, a roster, and staff who approve them.</li>
+      <li class="list__item">Stories where each player poses their own character, often taking turns.</li>
+      <li class="list__item">Finished stories kept as logs you can read later.</li>
+    </ul>
+    <h3 class="guide__subheading">What's different</h3>
+    <ul class="list guide__list">
+      <li class="list__item">A <%= term(:room).downcase %> can hold many <%= term(:scene, count: 2).downcase %> at once, so a busy spot never drowns out a quiet one.</li>
+      <li class="list__item">You can play several <%= term(:scene, count: 2).downcase %> at the same time, in tabs, and the page tells you when it's your turn.</li>
+      <li class="list__item">There are no commands to type. You write in a box and press a button, and everything else is a link or a menu.</li>
+      <li class="list__item">You aren't logged on and "idle". Your game is waiting for you whenever you come back, and alerts tell you when something happens.</li>
+    </ul>
+    <h3 class="guide__subheading">Words you know, and what we call them</h3>
+    <dl class="guide__terms details-list">
+      <dt class="details-list__term">Room</dt><dd class="details-list__value"><%= term(:room) %></dd>
+      <dt class="details-list__term">Exit</dt><dd class="details-list__value"><%= term(:exit) %></dd>
+      <dt class="details-list__term">Scene</dt><dd class="details-list__value"><%= term(:scene) %></dd>
+      <dt class="details-list__term">Pose</dt><dd class="details-list__value"><%= term(:pose) %></dd>
+      <dt class="details-list__term">Scene log</dt><dd class="details-list__value"><%= term(:log) %>, in the <%= term(:logs_collection) %></dd>
+      <dt class="details-list__term">@mail</dt><dd class="details-list__value">Messages</dd>
+      <dt class="details-list__term">OOC channel</dt><dd class="details-list__value">OOC Chat</dd>
+    </dl>
+    <p class="text">
+      We write in the <strong class="emphasis">present tense</strong>, the way
+      you would on a MUSH: "Lucia pushes open the door and looks around," not
+      "Lucia pushed open the door."
+    </p>
+  </section>
+
+  <section class="guide__section guide__section--from-forum">
+    <h2 class="subsection-title">If you're coming from a forum</h2>
+    <p class="text">
+      Writing a reply to someone else's post, then waiting for the next one, will
+      feel familiar. You can take your time, and nobody has to be online at once.
+      What's different is that the game is also a place: your character stands
+      somewhere, and the story happens there.
+    </p>
+    <h3 class="guide__subheading">What's the same</h3>
+    <ul class="list guide__list">
+      <li class="list__item">You write a post at your own pace and the others answer when they can.</li>
+      <li class="list__item">Stories are kept, in full, to read again.</li>
+      <li class="list__item">There are boards for news and wanted ads, much like a forum's sections.</li>
+    </ul>
+    <h3 class="guide__subheading">What's different</h3>
+    <ul class="list guide__list">
+      <li class="list__item">Your character moves from <%= term(:room).downcase %> to <%= term(:room).downcase %>, so you find stories by walking around, as well as by browsing.</li>
+      <li class="list__item">Everyone in a <%= term(:scene).downcase %> is a character in it, and each <%= term(:pose).downcase %> is written as that character.</li>
+      <li class="list__item">Most <%= term(:scene, count: 2).downcase %> take turns, and the page shows whose turn it is.</li>
+      <li class="list__item">A <%= term(:scene).downcase %> can be live, with several people posting within minutes, as well as slow.</li>
+    </ul>
+    <h3 class="guide__subheading">Words you know, and what we call them</h3>
+    <dl class="guide__terms details-list">
+      <dt class="details-list__term">Thread or topic</dt><dd class="details-list__value"><%= term(:scene) %></dd>
+      <dt class="details-list__term">Post</dt><dd class="details-list__value"><%= term(:pose) %></dd>
+      <dt class="details-list__term">Forum section</dt><dd class="details-list__value"><%= term(:room) %> (and <%= term(:area).downcase %> for a group of them)</dd>
+      <dt class="details-list__term">Private message</dt><dd class="details-list__value">Messages</dd>
+      <dt class="details-list__term">Archived thread</dt><dd class="details-list__value"><%= term(:log) %>, in the <%= term(:logs_collection) %></dd>
+    </dl>
+    <p class="text">
+      One habit to change: we write in the <strong class="emphasis">present tense</strong>,
+      like a MUSH, not the past tense many forums use. Write "Lucia pushes open the door
+      and looks around," not "Lucia pushed open the door."
+    </p>
+  </section>
+
   <section class="guide__section guide__section--characters">
     <h2 class="subsection-title">Your characters</h2>
     <p class="text">
