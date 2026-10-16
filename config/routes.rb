@@ -159,6 +159,7 @@ Rails.application.routes.draw do
     resource :wells, only: %i[ show create ]
     resources :well_updates, only: :create
     resource :world_import, only: %i[ show create ] do
+      get :preview
       post :apply
     end
     resources :profile_fields, except: %i[ show new ]

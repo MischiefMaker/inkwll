@@ -10,18 +10,30 @@ class Admin::WorldImportsController < Admin::BaseController
   def show
   end
 
-  # Reads the uploaded pack and shows what importing it would do.
+  # Keeps the uploaded pack and goes on to the preview. It redirects rather
+  # than showing the preview straight away, because Turbo ignores a form
+  # that answers with a page instead of a redirect.
   def create
     file = params[:pack]
     return redirect_to(admin_world_import_path, alert: "Choose a world pack file first.") unless file.respond_to?(:read)
     return redirect_to(admin_world_import_path, alert: "The file is bigger than #{WorldPack::MAX_SIZE / 1.megabyte} MB.") if file.size > WorldPack::MAX_SIZE
 
     text = file.read
-    @pack = WorldPack.parse(text)
+    WorldPack.parse(text)
+    upload = ActiveStorage::Blob.create_and_upload!(io: StringIO.new(text), filename: file.original_filename.presence || "world-pack.json", content_type: "application/json")
+    redirect_to preview_admin_world_import_path(upload: upload.signed_id(expires_in: 1.day), remove_unlisted: params[:remove_unlisted] == "1" ? "1" : nil)
+  rescue WorldPack::Invalid => error
+    redirect_to admin_world_import_path, alert: error.message
+  end
+
+  # Shows what importing the uploaded pack would do.
+  def preview
+    @upload = ActiveStorage::Blob.find_signed(params[:upload])
+    return redirect_to(admin_world_import_path, alert: "That upload has expired. Choose the file again.") unless @upload
+
+    @pack = WorldPack.parse(@upload.download)
     @remove_unlisted = params[:remove_unlisted] == "1"
     @changes = @pack.preview(remove_unlisted: @remove_unlisted)
-    @upload = ActiveStorage::Blob.create_and_upload!(io: StringIO.new(text), filename: file.original_filename.presence || "world-pack.json", content_type: "application/json")
-    render :preview
   rescue WorldPack::Invalid => error
     redirect_to admin_world_import_path, alert: error.message
   end

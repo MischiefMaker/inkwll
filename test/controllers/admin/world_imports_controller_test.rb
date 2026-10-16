@@ -22,6 +22,8 @@ class Admin::WorldImportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     post admin_world_import_path, params: { pack: pack_file }
+    assert_response :redirect, "Turbo only follows a form that redirects"
+    follow_redirect!
     assert_response :success
     assert_match "Tiny Place", response.body
     assert_not Area.exists?(name: "Tiny Area"), "nothing changes until Import is pressed"
