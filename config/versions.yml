@@ -2,6 +2,13 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.2
+  commit: dbbed3dc592e3204082205d7ed7d533fc43823da
+  date: 2026-10-16
+  notes: |
+    - The Chapters list is now called Open Chapters and shows only open Chapters, with a note and link to the Archives for finished ones.
+    Going back to v1.1 or v1.0 is safe.
+
 - version: v1.1
   commit: f37e0d259843c76089d4fddce555ae17aac698fa
   date: 2026-10-16
