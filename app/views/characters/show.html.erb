@@ -36,30 +36,35 @@
   <% end %>
   <%= render "characters/roster_status", character: @character %>
 
-  <%# Three tab blocks, one under the other: the profile itself, the player's private tabs, and what they have written. %>
-  <% private_tabs = {}
-     private_tabs["soul"] = "SOUL" if Soul.enabled? && show_private
-     private_tabs["inklings"] = "Inklings" if Inkling.enabled? && show_private
-     private_tabs["grimoire"] = "Grimoire" if Grimoire.enabled? && show_private
-     activity_tabs = { "logs" => term(:log, count: 2) }
-     activity_tabs["chapters"] = "Active #{term(:scene, count: 2)}" if @mine || @staff_view
-     groups = { "profile" => { "profile" => "Profile", "application" => "Application", "relationships" => "Relationships", "gallery" => "Image Gallery" },
-                "private" => private_tabs, "activity" => activity_tabs } %>
-  <div class="profile-tab-blocks">
-    <% groups.each do |group, tabs| %>
-      <% next if tabs.empty? %>
-      <nav class="profile-tabs profile-tabs--<%= group %>" aria-label="<%= { "profile" => "Profile", "private" => "Private", "activity" => "Writing" }[group] %> sections">
-        <div class="profile-tabs__group profile-tabs__group--<%= group %>">
-          <% tabs.each do |tab, label| %>
-            <%= link_to character_path(@character, tab: tab), class: "profile-tabs__tab#{" profile-tabs__tab--current" if @tab == tab}",
-                  aria: { current: (@tab == tab ? "page" : nil) } do %><%= label %><%= visibility_mark(:you_and_staff) if group == "private" || tab == "chapters" %><% end %>
-          <% end %>
+  <%# A menu down the left with a heading per section (Basics, System, Writing), and the chosen page beside it. %>
+  <% system_pages = {}
+     system_pages["soul"] = "SOUL" if Soul.enabled? && show_private
+     system_pages["inklings"] = "Inklings" if Inkling.enabled? && show_private
+     system_pages["grimoire"] = "Grimoire" if Grimoire.enabled? && show_private
+     writing_pages = { "logs" => term(:log, count: 2) }
+     writing_pages["chapters"] = "Active #{term(:scene, count: 2)}" if @mine || @staff_view
+     sections = { "basics" => [ "Basics", { "profile" => "Profile", "application" => "Application", "relationships" => "Relationships", "gallery" => "Image Gallery" } ],
+                  "system" => [ "System", system_pages ], "writing" => [ "Writing", writing_pages ] } %>
+  <div class="profile-layout">
+    <nav class="profile-menu" aria-label="Profile sections">
+      <% sections.each do |key, (heading, pages)| %>
+        <% next if pages.empty? %>
+        <div class="profile-menu__group profile-menu__group--<%= key %>">
+          <h2 class="profile-menu__heading"><%= heading %><%= visibility_mark(:you_and_staff) if key == "system" %></h2>
+          <ul class="profile-menu__list">
+            <% pages.each do |page, label| %>
+              <li class="profile-menu__item">
+                <%= link_to character_path(@character, tab: page), class: "profile-menu__link#{" profile-menu__link--current" if @tab == page}",
+                      aria: { current: (@tab == page ? "page" : nil) } do %><%= label %><%= visibility_mark(:you_and_staff) if page == "chapters" %><% end %>
+              </li>
+            <% end %>
+          </ul>
         </div>
-      </nav>
-    <% end %>
-  </div>
+      <% end %>
+    </nav>
 
-  <section class="character-profile__panel character-profile__panel--<%= @tab %>">
-    <%= render "characters/tabs/#{@tab}", character: @character, show_private: show_private %>
-  </section>
+    <section class="character-profile__panel character-profile__panel--<%= @tab %>">
+      <%= render "characters/tabs/#{@tab}", character: @character, show_private: show_private %>
+    </section>
+  </div>
 </article>

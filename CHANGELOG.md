@@ -12,8 +12,8 @@ Short, plain-language notes on what changed. Newest first.
   in more places: Chapter lists, wiki Manuscript lists, invited lists, the
   who's-online list, forum and wiki "by" lines, pop-ups and admin tables.
 - Fixed: clicking an alert in the bell drop-down showed "Content missing"; it now opens the Chapter or Inkling.
-- Character profile tabs are now three separate blocks, one under the other:
-  Profile, then the private tabs, then Manuscripts and Active Chapters.
+- Character profiles have a menu down the left with headings (Basics, System, Writing)
+  and the chosen page beside it: Basics (Profile, Application, Relationships, Image Gallery), System (SOUL, Inklings, Grimoire, private) and Writing (Manuscripts, Active Chapters).
 - Inklings made from an application's Goals and Secrets are called "Lucia's
   First Goal" and "Lucia's First Secret". Existing ones are renamed on deploy.
 

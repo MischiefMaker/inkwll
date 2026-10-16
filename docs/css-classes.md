@@ -153,9 +153,6 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.admin-attention` | The "Needs Attention" box on the admin front page: `.admin-attention__heading`, `.admin-attention__list`, `.admin-attention__item` (with `--applications`, `--roster`, `--soul`, `--inklings`, `--grimoire`, `--reports`), `.admin-attention__link`, `.admin-attention__label`, `.admin-attention__count`, `.admin-attention__empty` |
 | `.player-list` | The Players page: `.player-list__intro`, `.player-list__items`, `.player-list__item`, `.player-list__link`, `.player-list__name` |
 | `.game-stats` | The counts at the bottom of the front page. Each is `.game-stats__item` with `--players`, `--characters`, `--chapters` or `--archives`, holding `.game-stats__icon`, `.game-stats__label` (also `.game-stats__link` when it is a link) and `.game-stats__count` |
-| `.profile-tab-blocks` | Wraps the separate tab blocks on a character profile, one under the other |
-| `.profile-tabs--profile`, `--private`, `--activity` | One block of tabs on a character profile |
-| `.profile-tabs__group` | One group of tabs on a character profile: `--profile`, `--private` (SOUL, Inklings, Grimoire) and `--activity` (Manuscripts, Active Chapters) |
 | `.character-inklings` | The Inklings tab on a character profile: `.character-inklings__heading`, `__item`, `__title`, `__when`, `__empty` |
 | `.menu__wiki-page` | A wiki page listed in the Menu (indented under Wiki) |
 | `.menu__wiki-dot` | The small filled dot before a wiki page in the Menu |
@@ -224,3 +221,5 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.game-locked`, `.game-locked__actions` | The page guests and non-staff players see while the game is locked |
 | `.game-lock-banner` | The note staff see on every page while the game is locked |
 | `.character-inklings__more`, `.character-inklings__link`, `.character-inklings__shared` | On a character's Inklings tab: the link to the Inklings page, and the mark on an Inkling shared with the character by another |
+
+| `.profile-layout`, `.profile-menu`, `.profile-menu__group` (`--basics`, `--system`, `--writing`), `.profile-menu__heading`, `.profile-menu__list`, `.profile-menu__item`, `.profile-menu__link`, `.profile-menu__link--current` | A character profile's menu down the left (Basics: Profile, Application, Relationships, Image Gallery; System: SOUL, Inklings, Grimoire; Writing: Manuscripts, Active Chapters) with the chosen page beside it |

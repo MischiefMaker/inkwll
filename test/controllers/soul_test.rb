@@ -9,7 +9,7 @@ class SoulControllersTest < ActionDispatch::IntegrationTest
     sign_in_as(accounts(:bob))
     get character_path(characters(:wren), tab: "soul")
     assert_select ".soul-sheet", count: 0
-    assert_select ".profile-tabs__tab", text: "SOUL", count: 0
+    assert_select ".profile-menu__link", text: "SOUL", count: 0
   end
 
   test "a player saves their starting sheet" do
