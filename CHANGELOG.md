@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Import a world
+
+- New Founder-only **Admin → Import a world** page. Upload a world pack (a file holding Areas, Places, Paths, wiki pages, boards, the front page text and the game's look) and it shows everything it would add, change or remove before anything happens. Importing the same pack again changes nothing. There's an option to also remove Areas, Places and Paths the pack leaves out; The Prologue and any Place with characters or Chapters in it always stay. Details in docs/world-packs.md.
+- Three web fonts now come with Inkwll and can be named in Admin → Look: "Great Vibes" (flowing script), "Amatic SC" (hand-drawn capitals) and Oswald (tall and narrow). The Look page no longer suggests Google Fonts, which the Content Security Policy blocks.
+
 ## 2026-10-16 — Chapter page and Directory tidy-up
 
 - Each Chapter has a number at the top ("Chapter 12") that never changes, and it stays on the finished Manuscript.

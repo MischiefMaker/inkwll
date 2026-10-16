@@ -155,6 +155,9 @@ Rails.application.routes.draw do
     resource :skin, only: %i[ edit update ]
     resource :wells, only: %i[ show create ]
     resources :well_updates, only: :create
+    resource :world_import, only: %i[ show create ] do
+      post :apply
+    end
     resources :profile_fields, except: %i[ show new ]
     resources :character_groups, except: %i[ show new ]
     resources :scene_labels, except: %i[ show new ]
