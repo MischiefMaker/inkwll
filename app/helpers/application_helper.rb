@@ -50,7 +50,7 @@ module ApplicationHelper
   def game_icon(size)
     icon = GameSetting.current.icon
     classes = "game-icon game-icon--#{size}"
-    icon.attached? && icon.blob.persisted? ? image_tag(icon, alt: "", class: classes) : image_tag("/icon.svg", alt: "", class: "#{classes} game-icon--default")
+    icon.attached? && icon.blob.persisted? ? image_tag(icon_picture(icon), alt: "", class: classes) : image_tag("/icon.svg", alt: "", class: "#{classes} game-icon--default")
   end
 
   # The browser tab title. Pages end theirs with "· Inkwll"; the game's own

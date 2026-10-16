@@ -3,9 +3,9 @@ module ScenesHelper
   def character_icon(character, size: :small)
     classes = "character-icon character-icon--#{size}"
     if character&.icon&.attached?
-      image_tag character.icon, alt: "", class: classes
+      image_tag icon_picture(character.icon), alt: "", class: classes
     elsif character&.gm? && character.account.icon.attached?
-      image_tag character.account.icon, alt: "", class: "#{classes} character-icon--gm"
+      image_tag icon_picture(character.account.icon), alt: "", class: "#{classes} character-icon--gm"
     else
       tag.span (character&.name || "?").first.upcase, class: "#{classes} character-icon--initial", aria: { hidden: true }
     end
@@ -27,7 +27,7 @@ module ScenesHelper
     classes = "player-icon player-icon--#{size}"
     # A picture that was just refused isn't saved, so it can't be shown.
     if account.icon.attached? && account.icon.blob.persisted?
-      image_tag account.icon, alt: "", class: "#{classes} player-icon--image"
+      image_tag icon_picture(account.icon), alt: "", class: "#{classes} player-icon--image"
     else
       nib_icon(css: "#{classes} player-icon--default")
     end

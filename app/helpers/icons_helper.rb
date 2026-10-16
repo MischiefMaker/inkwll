@@ -92,11 +92,19 @@ module IconsHelper
     tag.div(class: "#{css} banner-default", "aria-hidden": "true")
   end
 
+  # Icons are shown at 6rem or smaller, so serve a copy shrunk to fit instead of
+  # the full upload. Animated GIFs are left alone, since shrinking would stop
+  # the animation.
+  def icon_picture(attachment)
+    return attachment if attachment.content_type == "image/gif"
+    attachment.variant(resize_to_limit: [ 256, 256 ])
+  end
+
   # A place's own icon picture if it has one, or a drawn icon in a small tile
   # so every Area, Setting and board has something there by default.
   def place_icon(record, default, css:)
     if record.icon.attached?
-      image_tag record.icon, alt: "", class: css
+      image_tag icon_picture(record.icon), alt: "", class: css
     else
       tag.span(icon(default, size: 20), class: "#{css} icon-tile icon-tile--#{default}")
     end
