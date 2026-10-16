@@ -75,8 +75,6 @@ module Character::SoulExtras
 
   # --- Culminations ------------------------------------------------------------
 
-  def approved_culminations = culminations.approved.newest_first
-
   private
     def check_bnb_limits!(bnb, level, starting:)
       active = active_bnbs.to_a

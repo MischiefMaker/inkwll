@@ -52,7 +52,6 @@ class Inkling < ApplicationRecord
 
   def type_name = self.class.types.dig(kind, "name") || kind.humanize
   def locked? = submitted?
-  def staff_made? = self.class.types.dig(kind, "category") == "staff" || creator_id != character.account_id
 
   # --- Writing -------------------------------------------------------------
 

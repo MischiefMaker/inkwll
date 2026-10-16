@@ -88,10 +88,6 @@ class Exit < ApplicationRecord
     COMPASS.key?(direction)
   end
 
-  def direction_name
-    DIRECTIONS[direction]
-  end
-
   private
     def compass_directions_are_for_streets
       errors.add(:direction, "can only be a compass point on a street") if compass? && kind != "street"

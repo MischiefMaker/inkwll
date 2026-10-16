@@ -1,4 +1,7 @@
 require "test_helper"
+require Rails.root.join("db/migrate/20261015120001_restore_starter_boons_and_banes.rb")
+
+# The one-time catch-ups live in their migrations; these tests run them directly.
 
 class StarterContentTest < ActiveSupport::TestCase
   test "a new game gets starter Boons and Banes and profile fields, once" do
@@ -27,14 +30,14 @@ class StarterContentTest < ActiveSupport::TestCase
   test "the starter Boons and Banes come back only when no active ones are left" do
     Soul::Bnb.delete_all
     Soul::Bnb.create!(kind: "boon", name: "Mine", description: "x")
-    StarterContent.restore_bnbs!
+    RestoreStarterBoonsAndBanes.new.restore!
     assert_equal 1, Soul::Bnb.count, "a game with its own active ones is left alone"
 
     Soul::Bnb.delete_all
-    StarterContent.restore_bnbs!
+    RestoreStarterBoonsAndBanes.new.restore!
     assert_equal 6, Soul::Bnb.where(kind: "boon").count
     assert_equal 6, Soul::Bnb.where(kind: "bane").count
-    StarterContent.restore_bnbs!
+    RestoreStarterBoonsAndBanes.new.restore!
     assert_equal 12, Soul::Bnb.count, "and not twice"
   end
 end

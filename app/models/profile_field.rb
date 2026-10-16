@@ -33,9 +33,6 @@ class ProfileField < ApplicationRecord
     !player_can_edit? && character.approved? && !editor&.staff?
   end
 
-  # Whether an approved character's answer starts an Inkling.
-  def starts_inkling? = inkling_kind.present?
-
   # The Inkling types a field can start: ones players start themselves.
   # For games set up before Goals and Secrets started Inklings: points those
   # two fields at their Inkling types if nobody has chosen one, so approving a

@@ -1,4 +1,9 @@
 require "test_helper"
+require Rails.root.join("db/migrate/20261015230001_start_goal_inklings_for_approved_characters.rb")
+require Rails.root.join("db/migrate/20261016030000_show_application_inklings_to_staff.rb")
+require Rails.root.join("db/migrate/20261016000002_rename_application_inklings.rb")
+
+# The one-time catch-ups live in their migrations; these tests run them directly.
 
 class CharacterTest < ActiveSupport::TestCase
   test "new characters start in the starting room" do
@@ -38,7 +43,7 @@ class CharacterTest < ActiveSupport::TestCase
     secrets = ProfileField.create!(name: "Secrets", section: "application", field_type: "long_text", public: false, position: 1)
     chosen = ProfileField.create!(name: "Goals", section: "demographics", field_type: "text", public: false, position: 2, inkling_kind: "progress")
 
-    assert_equal 1, Character.start_goal_inklings!
+    assert_equal 1, StartGoalInklingsForApprovedCharacters.new.start!
     assert_equal "goal", field.reload.inkling_kind
     assert_equal "secret", secrets.reload.inkling_kind
     assert_equal "progress", chosen.reload.inkling_kind, "a choice already made is kept"
@@ -48,7 +53,7 @@ class CharacterTest < ActiveSupport::TestCase
     assert_equal "Win the Ravens' trust.", goal.entries.first.body
     assert_not Inkling.exists?(character: moth, kind: "goal")
 
-    assert_equal 0, Character.start_goal_inklings!
+    assert_equal 0, StartGoalInklingsForApprovedCharacters.new.start!
     assert_equal 1, Inkling.where(character: wren, kind: "goal").count
   end
 
@@ -64,7 +69,7 @@ class CharacterTest < ActiveSupport::TestCase
 
     old = Inkling.find_by!(character: wren, kind: "goal")
     old.update_columns(staff_visible_at: nil)
-    assert_equal 1, Character.show_application_inklings_to_staff!
+    assert_equal 1, ShowApplicationInklingsToStaff.new.show!
     assert old.reload.staff_visible_at
     assert_nil own.reload.staff_visible_at
   end
@@ -73,9 +78,9 @@ class CharacterTest < ActiveSupport::TestCase
     field = ProfileField.create!(name: "Goals", section: "application", field_type: "long_text", public: false, inkling_kind: "goal")
     wren = characters(:wren)
     old = Inkling.start!(character: wren, by: wren.account, kind: "goal", title: "Goals", body: "Win.")
-    assert_equal 1, Character.rename_application_inklings!
+    assert_equal 1, RenameApplicationInklings.new.rename!
     assert_equal "Wren's First Goal", old.reload.title
-    assert_equal 0, Character.rename_application_inklings!
+    assert_equal 0, RenameApplicationInklings.new.rename!
   end
 
   test "a Boon or Bane can affect no Skill" do

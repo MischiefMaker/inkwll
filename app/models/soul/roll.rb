@@ -11,7 +11,6 @@ class Soul::Roll < ApplicationRecord
     Array(applied).map { |entry| "#{entry["name"]} (#{entry["level"].to_s.capitalize} #{entry["kind"].to_s.capitalize}, #{entry["modifier"].to_i.positive? ? "+" : ""}#{entry["modifier"]})" }.to_sentence
   end
 
-  def succeeded? = Soul::Rules::SUCCESSES.include?(degree)
   def degree_text = Soul::Rules::DEGREE_TEXT.fetch(degree, degree.humanize)
   def base = skill_rating + aspect_bonus
 

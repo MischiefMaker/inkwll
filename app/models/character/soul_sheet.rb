@@ -35,9 +35,6 @@ module Character::SoulSheet
 
   def chargen_allowance = Soul::Rules.chargen_allowance(resonance)
 
-  def skill_points_spent = soul_ratings.select { |r| r.trait_type == "Soul::Skill" }.sum(&:rating)
-  def aspect_points_spent = soul_ratings.select { |r| r.trait_type == "Soul::Aspect" }.sum(&:rating)
-
   # Saves the starting sheet in one go: Resonance plus every rating, given as
   # { "aspect" => { id => rating }, "skill" => { id => rating } }. Checks the
   # totals and caps before saving anything.
