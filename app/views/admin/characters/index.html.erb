@@ -14,3 +14,5 @@
     <%= render "table", characters: list, groups: @groups, css: "admin-characters__#{key}-table" %>
   </details>
 <% end %>
+
+<%= render "forum_boards/pages", pages: @pages, current: @page %>

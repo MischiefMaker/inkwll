@@ -1,6 +1,15 @@
 require "test_helper"
 
 class Admin::AccountsControllerTest < ActionDispatch::IntegrationTest
+  test "the player list is split into pages, and a page number out of range still works" do
+    sign_in_as(accounts(:scribe))
+
+    get admin_accounts_path(page: 999)
+    assert_response :success
+    get admin_accounts_path(page: -3)
+    assert_response :success
+  end
+
   test "a Scribe can make a player a Page with jobs, and a Storyteller" do
     sign_in_as(accounts(:scribe))
 

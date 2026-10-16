@@ -5,8 +5,14 @@ class Admin::CharactersController < Admin::BaseController
   require_job :delete_characters
   before_action :set_character, only: %i[ update retire unretire ]
 
+  PER_PAGE = 100
+
   def index
-    @characters = Character.played.includes(:account, :room).order(:retired_at, :name)
+    scope = Character.played
+    @pages = [ (scope.count / PER_PAGE.to_f).ceil, 1 ].max
+    @page = params[:page].to_i.clamp(1, @pages)
+    @characters = scope.includes({ account: { icon_attachment: :blob } }, :room).order(:retired_at, :name)
+      .offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
     @groups = CharacterGroup.ordered
   end
 
