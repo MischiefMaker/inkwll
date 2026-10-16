@@ -72,6 +72,7 @@ module AdminMenuHelper
 
     if current_account.founder?
       groups["Settings"] << admin_link("Wells", admin_wells_path, %w[ wells well_updates ])
+      groups["Settings"] << admin_link("Import a world", admin_world_import_path, %w[ world_imports ])
     end
 
     groups.reject { |_, links| links.empty? }.to_a

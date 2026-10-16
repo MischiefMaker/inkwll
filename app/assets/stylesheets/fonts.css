@@ -1,0 +1,47 @@
+/*
+ * Web fonts any game can name in Admin → Look or its extra CSS. They are
+ * served from this site, because the browser rules (content security
+ * policy) don't let pages load fonts from other websites. A browser only
+ * downloads one when a page actually uses it.
+ * Each is under the SIL Open Font License; see app/assets/fonts.
+ */
+
+@font-face {
+  font-family: "Great Vibes";
+  src: url("great-vibes.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amatic SC";
+  src: url("amatic-sc.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amatic SC";
+  src: url("amatic-sc-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("oswald.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("oswald-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
