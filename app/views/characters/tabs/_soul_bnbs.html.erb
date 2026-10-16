@@ -13,7 +13,7 @@
             <strong class="emphasis soul-bnb__name"><%= entry.name %></strong>
             <span class="badge soul-bnb__kind"><%= entry.level.capitalize %> <%= entry.kind.capitalize %></span>
             <% if entry.resolved? %><span class="badge soul-bnb__resolved">Resolved</span><% end %>
-            <span class="muted soul-bnb__skills">Affects <%= entry.skills.map(&:name).to_sentence %></span>
+            <% if entry.skills.any? %><span class="muted soul-bnb__skills">Affects <%= entry.skills.map(&:name).to_sentence %></span><% end %>
           </div>
           <% if entry.explanation.present? %><div class="prose soul-bnb__explanation"><%= simple_format entry.explanation %></div><% end %>
           <% if staff %>
@@ -57,7 +57,7 @@
         <div class="field">
           <%= form.label :skill_ids, "Skills it affects" %>
           <%= render "shared/skill_checkboxes", name: "skill_ids[]" %>
-          <small class="hint">Leave empty to use the Skills the catalogue gives it, if it has any.</small>
+          <small class="hint">Optional. Leave empty to use the Skills the catalogue gives it, if any; some Boons and Banes affect no Skill.</small>
         </div>
         <div class="field">
           <%= form.label :explanation, picking || staff ? "What it means for #{character.name} (only the player and staff see this)" : "Why #{character.name} should have it (only you and staff see this)" %>

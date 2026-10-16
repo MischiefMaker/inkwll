@@ -77,4 +77,18 @@ class CharacterTest < ActiveSupport::TestCase
     assert_equal "Wren's First Goal", old.reload.title
     assert_equal 0, Character.rename_application_inklings!
   end
+
+  test "a Boon or Bane can affect no Skill" do
+    bnb = Soul::Bnb.create!(kind: "boon", name: "Lucky Charm", skill_ids: [])
+    entry = characters(:wren).add_bnb!(bnb, level: "minor", skill_ids: [], explanation: "Just lucky.", source: "staff")
+    assert entry.persisted?
+    assert_empty entry.skills
+  end
+
+  test "an unapproved character can't start an Inkling" do
+    draft = accounts(:alice).characters.create!(name: "Not Yet", status: "draft")
+    assert_raises(ArgumentError) do
+      Inkling.start!(character: draft, by: accounts(:alice), kind: "goal", title: "Too soon", body: "Hm.")
+    end
+  end
 end
