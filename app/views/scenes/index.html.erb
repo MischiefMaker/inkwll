@@ -1,19 +1,14 @@
 <div class="chapter-index-page">
-<% content_for :title, "All #{term(:scene, count: 2)} · Inkwll" %>
+<% content_for :title, "Open #{term(:scene, count: 2)} · Inkwll" %>
 
-<h1 class="page-title">All <%= term(:scene, count: 2) %></h1>
-<p class="muted chapter-index__intro">Every <%= term(:scene).downcase %> in the game. <%= t("terms.scene_visibility.private") %> ones show who is in them, but only the people in them can read them until they're finished. Hidden ones only show to the players in them.</p>
-
-<p class="text chapter-index__filters">
-  <% [ [ nil, "All" ], [ "open", "Open" ], [ "finished", "Finished" ] ].each_with_index do |(value, label), index| %>
-    <%= " · " if index.positive? %><%= @show == value ? tag.strong(label, class: "chapter-index__filter chapter-index__filter--current") : link_to(label, scenes_path(show: value), class: "chapter-index__filter") %>
-  <% end %>
-</p>
+<h1 class="page-title">Open <%= term(:scene, count: 2) %></h1>
+<p class="muted chapter-index__intro">Every open <%= term(:scene).downcase %> in the game, most recently written to first. <%= t("terms.scene_visibility.private") %> ones show who is in them, but only the people in them can read them. Hidden ones only show to the players in them.</p>
+<p class="text chapter-index__archives">Finished <%= term(:scene, count: 2).downcase %> are in the <%= link_to term(:logs_collection), archives_path, class: "chapter-index__archives-link" %>.</p>
 
 <% if @scenes.any? %>
   <ul class="chapter-index">
     <% @scenes.each do |scene| %>
-      <li class="chapter-index__item chapter-index__item--<%= scene.visibility %><%= " chapter-index__item--finished" if scene.finished? %>">
+      <li class="chapter-index__item chapter-index__item--<%= scene.visibility %>">
         <div class="chapter-index__main">
           <div class="chapter-index__heading">
             <% if scene.readable_by?(current_account) %>
@@ -22,7 +17,6 @@
               <span class="chapter-index__title chapter-index__title--closed"><%= scene.title %></span>
             <% end %>
             <span class="badge badge--<%= scene.visibility %>"><%= visibility_mark(:you_only, label: "Closed") unless scene.visibility_joinable? %><%= scene.visibility_joinable? ? t("terms.scene_visibility.joinable") : t("terms.scene_visibility.private") %></span>
-            <% if scene.finished? %><span class="badge chapter-index__finished">Finished</span><% end %>
           </div>
           <p class="muted chapter-index__where"><%= link_to scene.room.name, room_path(scene.room) %></p>
         </div>
@@ -38,7 +32,7 @@
         <div class="muted chapter-index__status">
           <span class="chapter-index__written"><%= scene.last_pose_at ? "Last written to #{time_ago_in_words(scene.last_pose_at)} ago" : "Nothing written yet" %></span>
           <% turn = scene.current_turn_participant&.character %>
-          <% if turn && !scene.finished? && !scene.paused? %>
+          <% if turn && !scene.paused? %>
             <span class="chapter-index__turn">Turn: <%= character_name_link(turn) %></span>
           <% end %>
           <% if scene.paused? %><span class="chapter-index__paused">Paused</span><% end %>
@@ -48,6 +42,6 @@
   </ul>
   <%= render "forum_boards/pages", pages: @pages, current: @page %>
 <% else %>
-  <p class="text muted">No <%= term(:scene, count: 2).downcase %> to show.</p>
+  <p class="text muted">No open <%= term(:scene, count: 2).downcase %> right now.</p>
 <% end %>
 </div>

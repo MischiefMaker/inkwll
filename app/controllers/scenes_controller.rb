@@ -10,15 +10,13 @@ class ScenesController < ApplicationController
 
   PER_PAGE = 30
 
-  # Every Chapter that isn't Hidden, newest activity first. Closed ones are
+  # Every open Chapter that isn't Hidden, newest activity first (finished ones are in the Archives). Closed ones are
   # listed too, but only linked for people who may read them. A Hidden one
   # shows only to the players in it.
   def index
     scenes = Scene.where.not(visibility: :hidden)
     scenes = scenes.or(Scene.where(id: SceneParticipant.where(character_id: current_account.characters.select(:id)).select(:scene_id))) if current_account
-    scenes = scenes.where(finished_at: nil) if params[:show] == "open"
-    scenes = scenes.where.not(finished_at: nil) if params[:show] == "finished"
-    @show = params[:show].presence_in(%w[ open finished ])
+    scenes = scenes.where(finished_at: nil)
     @pages = [ (scenes.count / PER_PAGE.to_f).ceil, 1 ].max
     @page = params[:page].to_i.clamp(1, @pages)
     @scenes = scenes.by_activity.includes(:room, participants: :character)

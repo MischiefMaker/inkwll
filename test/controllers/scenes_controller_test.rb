@@ -3,12 +3,17 @@ require "test_helper"
 class ScenesControllerTest < ActionDispatch::IntegrationTest
   setup { sign_in_as(accounts(:alice)) }
 
-  test "the All Chapters list shows Closed ones without a link, and never Hidden ones" do
+  test "the Open Chapters list shows Closed ones without a link, and never Hidden ones" do
     delete session_path
     get scenes_path
     assert_response :success
     assert_select ".chapter-index__title", text: "Duel at Dawn"
     assert_select "a.chapter-index__title", text: "Duel at Dawn"
+    assert_select "a.chapter-index__archives-link[href=?]", archives_path
+    scenes(:duel).update_columns(finished_at: Time.current)
+    get scenes_path
+    assert_select ".chapter-index__title", text: "Duel at Dawn", count: 0
+    scenes(:duel).update_columns(finished_at: nil)
     assert_select ".chapter-index__title", text: "A Quiet Word", count: 0
     scenes(:tea).update_columns(visibility: "private")
     get scenes_path
@@ -19,7 +24,7 @@ class ScenesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".chapter-index__item--joinable .badge", text: "Open"
   end
 
-  test "the All Chapters list is newest activity first, and calls your own Hidden Chapters Closed" do
+  test "the Open Chapters list is newest activity first, and calls your own Hidden Chapters Closed" do
     scenes(:duel).update_columns(last_pose_at: 3.days.ago)
     scenes(:tea).update_columns(last_pose_at: 1.hour.ago)
     get scenes_path
@@ -38,7 +43,7 @@ class ScenesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".chapter-index__item--hidden .badge", text: "Closed"
   end
 
-  test "players find All Chapters in the world part of the menu" do
+  test "players find Open Chapters in the world part of the menu" do
     sign_in_as(accounts(:alice))
     get root_path
     assert_select ".menu__heading--world ~ a.menu__link[href=?]", scenes_path

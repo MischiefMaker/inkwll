@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Security: probe players and Content Security Policy
 
+- "All Chapters" is now "Open Chapters": it lists only open Chapters, with a note and link saying finished ones are in the Archives.
 - All Chapters is styled up: bigger titles, tiny character icons, banded rows with borders, and a wider page.
 - On the front page, the Chapters count now links to the All Chapters list.
 - New "All Chapters" list under The world in the menu: every Chapter, newest activity first, with who is in it, when it was last written to and whose turn it is. Open ones are linked; Closed ones are listed without a link (unless you are in them or they are finished). Hidden ones only show to the players in them. "Private" Chapters are now called "Closed" everywhere.
