@@ -1746,3 +1746,6 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 /* Getting started: the "coming from a MUSH / forum" sections */
 .guide__subheading { margin: var(--space) 0 0.25rem; font-family: var(--font-ui); font-size: 1rem; }
 .guide__terms { display: grid; grid-template-columns: minmax(8rem, 14rem) 1fr; gap: 0.25rem 1rem; margin: 0 0 var(--space); }
+
+/* The Inkwll version at the bottom middle of every page. */
+.version-footer { margin: 2rem 0 0.5rem; text-align: center; font-size: 0.7rem; color: var(--color-muted); }

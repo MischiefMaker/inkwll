@@ -53,8 +53,21 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "a.admin-menu__link", text: "Wells"
     assert_select ".wells__version", text: "v1.0"
+    assert_select ".wells__current", text: "You are currently running v1.0."
+    assert_select ".version-footer", text: "Inkwll v1.0"
     assert_select ".wells__release--current", text: /Running now/
     assert_select "button.wells__install", text: "Update to v1.1"
+  end
+
+  test "every page shows the version at the bottom, or the build for a deploy of main" do
+    get root_path
+    assert_select ".version-footer", text: "Inkwll v1.0"
+    ENV["INKWLL_VERSION"] = "06b8e1b"
+    get root_path
+    assert_select ".version-footer", text: "Inkwll build 06b8e1b"
+    ENV["INKWLL_VERSION"] = nil
+    get root_path
+    assert_select ".version-footer", count: 0
   end
 
   test "a Wellkeeper who isn't the Founder can't start an update" do

@@ -12,13 +12,14 @@
     <tr class="table__row wells__well">
       <td class="table__cell"><%= game_name %> <span class="muted">(this one)</span></td>
       <td class="table__cell"><%= ENV.fetch("APP_HOST", request.host) %></td>
-      <td class="table__cell wells__version"><%= @current_version || "Not a marked version" %></td>
+      <td class="table__cell wells__version"><%= inkwll_version_name || "Unknown" %></td>
     </tr>
   </tbody>
 </table>
 <p class="muted wells__later">Starting new Wells, on this droplet or a new one, comes in a later step.</p>
 
 <h2 class="section-title">Versions</h2>
+<p class="text wells__current">You are currently running <strong><%= inkwll_version_name || "an unknown version" %></strong>.</p>
 <% if !@configured %>
   <div class="wells__setup">
     <p class="text">Updates need a GitHub key first. It can only start the Deploy workflow and read the code, nothing else.</p>

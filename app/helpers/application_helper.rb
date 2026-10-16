@@ -6,6 +6,18 @@ module ApplicationHelper
   end
 
   # The game's name from Admin → Game settings, or "Inkwll" until it has one.
+  # The Inkwll version this game runs, set by the Deploy workflow: a marked
+  # version like v1.0, or a commit code for a deploy of main. Nil when unknown.
+  def inkwll_version
+    ENV["INKWLL_VERSION"].presence
+  end
+
+  # "v1.0", or "build 06b8e1b" for a deploy that isn't a marked version.
+  def inkwll_version_name
+    version = inkwll_version
+    version.match?(/\Av\d/) ? version : "build #{version}" if version
+  end
+
   def game_name
     GameSetting.current.game_name || "Inkwll"
   end

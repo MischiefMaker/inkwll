@@ -40,6 +40,7 @@
           <%= render "shared/flash" %>
           <%= render "shared/warnings" %>
           <%= content_for?(:admin_content) ? yield(:admin_content) : yield %>
+          <%= render "shared/version_footer" %>
         </main>
         <%= yield :admin_menu %>
         <%= render "ooc_messages/sidebar" unless content_for?(:hide_ooc_sidebar) %>
@@ -53,6 +54,7 @@
         <main class="main <%= @previewing ? "main--preview" : "main--narrow" %>">
           <%= render "shared/flash" %>
           <%= yield %>
+          <%= render "shared/version_footer" %>
         </main>
         <%= render "ooc_messages/sidebar" if guest_chat_open? && !content_for?(:hide_ooc_sidebar) %>
       </div>

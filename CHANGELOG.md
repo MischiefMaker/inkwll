@@ -48,6 +48,11 @@ Short, plain-language notes on what changed. Newest first.
 - Chapters have a new look, Manuscript: a serif page like a book, with the cast as cards under the title, small round pictures beside each Passage, narration centred, OOC as side notes and a ✦ ✦ ✦ break when half a day or more passes.
 - Admin → Look can switch to Forum (a portrait and details beside every Passage) or Chat (the old look), and set Manuscript's cast and Passage pictures to large or small.
 
+## 2026-10-16 — Version on every page
+
+- Every page shows the Inkwll version in small text at the bottom middle, like "Inkwll v1.0" ("Inkwll build 06b8e1b" between marked versions).
+- The Wells page says "You are currently running v1.0" above the list of versions.
+
 ## 2026-10-15 — Wells page
 
 - The Founder has a new Admin → Wells page (nobody else sees it). It shows which version the game runs and lists the versions Claude has marked ready, each with what changed. Update to a newer one, or Go back to an earlier one, with one button. GitHub does the work, and the page shows how it's going with a link to the log.
