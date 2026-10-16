@@ -1,6 +1,6 @@
 # Talks to GitHub for the Founder's Wells page: lists the versions marked
-# ready (GitHub Releases) and starts the Deploy workflow, which does the real
-# work. The game only holds a token that can run workflows and read the
+# ready (config/versions.yml on main) and starts the Deploy workflow, which
+# does the real work. The game only holds a token that can run workflows and read the
 # code; the keys that log in to droplets stay in GitHub. See docs/wells.md.
 require "net/http"
 
@@ -11,6 +11,7 @@ class GithubActions
   Run = Data.define(:id, :url, :status, :conclusion)
 
   WORKFLOW = "deploy.yml"
+  VERSIONS_FILE = "config/versions.yml"
 
   # Tests swap in a stand-in so nothing reaches GitHub.
   class << self
@@ -20,11 +21,19 @@ class GithubActions
 
   def configured? = token.present?
 
-  # Versions marked ready, newest first. Drafts and test builds are left out.
+  # Versions marked ready, newest first, read from main on GitHub so a new
+  # version shows up without a deploy.
   def releases
-    get("/releases?per_page=20").reject { |r| r["draft"] || r["prerelease"] }.map do |r|
-      Release.new(tag: r["tag_name"], name: r["name"].presence || r["tag_name"], notes: r["body"].to_s, published_at: Time.zone.parse(r["published_at"].to_s))
+    self.class.parse_versions(get_raw("/contents/#{VERSIONS_FILE}?ref=#{branch}"))
+  end
+
+  def self.parse_versions(yaml)
+    Array(YAML.safe_load(yaml.to_s, permitted_classes: [ Date ])).filter_map do |entry|
+      next unless entry.is_a?(Hash) && entry["version"].present?
+      Release.new(tag: entry["version"].to_s, name: entry["version"].to_s, notes: entry["notes"].to_s, published_at: entry["date"]&.to_date)
     end
+  rescue Psych::Exception
+    raise Error, "#{VERSIONS_FILE} couldn't be read."
   end
 
   # Asks GitHub to run Deploy with this version. GitHub doesn't say which run
@@ -34,13 +43,13 @@ class GithubActions
   end
 
   def find_run(request_id)
-    run = get("/actions/workflows/#{WORKFLOW}/runs?event=workflow_dispatch&per_page=30")["workflow_runs"].to_a
+    run = get_json("/actions/workflows/#{WORKFLOW}/runs?event=workflow_dispatch&per_page=30")["workflow_runs"].to_a
       .find { |r| r["display_title"].to_s.include?("(#{request_id})") }
     run && to_run(run)
   end
 
   def run(id)
-    to_run(get("/actions/runs/#{id.to_i}"))
+    to_run(get_json("/actions/runs/#{id.to_i}"))
   end
 
   private
@@ -52,7 +61,17 @@ class GithubActions
       Run.new(id: r["id"], url: r["html_url"], status: r["status"], conclusion: r["conclusion"])
     end
 
-    def get(path) = request(Net::HTTP::Get.new(uri(path)))
+    def get_json(path)
+      body = request(Net::HTTP::Get.new(uri(path)))
+      JSON.parse(body)
+    rescue JSON::ParserError
+      raise Error, "GitHub sent back something unexpected. Try again in a minute."
+    end
+
+    # The file's own text rather than GitHub's description of it.
+    def get_raw(path)
+      request(Net::HTTP::Get.new(uri(path)), accept: "application/vnd.github.raw+json")
+    end
 
     def post(path, body)
       req = Net::HTTP::Post.new(uri(path))
@@ -63,17 +82,17 @@ class GithubActions
 
     def uri(path) = URI("https://api.github.com/repos/#{repo}#{path}")
 
-    def request(req)
+    def request(req, accept: "application/vnd.github+json")
       raise Error, "The GitHub key isn't set up yet." unless configured?
-      req["Accept"] = "application/vnd.github+json"
+      req["Accept"] = accept
       req["Authorization"] = "Bearer #{token}"
       req["X-GitHub-Api-Version"] = "2022-11-28"
       response = Net::HTTP.start(req.uri.host, req.uri.port, use_ssl: true, open_timeout: 5, read_timeout: 15) { |http| http.request(req) }
       unless response.is_a?(Net::HTTPSuccess)
         raise Error, "GitHub said no (#{response.code}). The key may have expired or be missing a permission."
       end
-      response.body.present? ? JSON.parse(response.body) : {}
-    rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED, OpenSSL::SSL::SSLError, JSON::ParserError
+      response.body.to_s
+    rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED, OpenSSL::SSL::SSLError
       raise Error, "Couldn't reach GitHub. Try again in a minute."
     end
 end

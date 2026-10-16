@@ -52,17 +52,31 @@ jobs:
           case "$VERSION" in v[0-9]*) ;; *) echo "::error::Versions look like v1.0."; exit 1;; esac
           case "$VERSION" in *[!A-Za-z0-9.-]*) echo "::error::Versions look like v1.0."; exit 1;; esac
 
-      # The workflow's steps always come from main; the game's code comes
-      # from the version asked for.
+      # The workflow's steps always come from main. A version's commit is
+      # looked up in config/versions.yml on main, then the game's code is
+      # taken from that commit.
+      - uses: actions/checkout@v7
+
+      - name: Find the version's commit
+        if: inputs.version != ''
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          commit=$(ruby -rdate -ryaml -e 'v = YAML.safe_load_file("config/versions.yml", permitted_classes: [Date]).find { |e| e["version"] == ENV["VERSION"] }; print v ? v["commit"] : ""')
+          case "$commit" in *[!0-9a-f]*|"") echo "::error::$VERSION isn't in config/versions.yml."; exit 1;; esac
+          echo "VERSION_COMMIT=$commit" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v7
         with:
-          ref: ${{ inputs.version || github.ref }}
+          ref: ${{ env.VERSION_COMMIT || github.ref }}
           fetch-depth: 0
 
       # The game shows this on the Wells page: the version's name, or for a
-      # deploy of main, the last version plus how far past it main is.
+      # deploy of main, the commit it was.
       - name: Name the version
-        run: echo "INKWLL_VERSION=$(git describe --tags --always)" >> "$GITHUB_ENV"
+        env:
+          VERSION: ${{ inputs.version }}
+        run: echo "INKWLL_VERSION=${VERSION:-$(git describe --tags --always)}" >> "$GITHUB_ENV"
 
       - uses: ruby/setup-ruby@v1
         with:
