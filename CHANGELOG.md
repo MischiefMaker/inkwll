@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Three more web fonts
+
+- Montez (flowing script), "Cormorant SC" (elegant small capitals) and "Old Standard TT" (old-fashioned book type) now come with Inkwll and can be named in Admin → Look, for Falls the Shadow's old forum look.
+
 ## 2026-10-16 — Wiki bullets take their group's colour
 
 - On wiki pages, a bullet that names a character group (such as "15, male, Ravenclaw") is shown in that group's colour, bullet and all. Change a group's colour in Admin → Character groups and the wiki follows.
