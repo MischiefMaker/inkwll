@@ -146,7 +146,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.wiki-history`, `.wiki-history__item`, `.wiki-history__current` | A page's history |
 | `.wiki-form__tabs`, `.wiki-form__tab` | The Edit / Preview tabs on the wiki page form (`.is-current` marks the open one) |
 | `.wiki-form__preview` | The box that shows the preview of a wiki page |
-| `.visibility-mark` | A small sign for who can see something. Kinds: `.visibility-mark--you-and-staff` (lock), `.visibility-mark--you-only` (open eye), `.visibility-mark--staff-only` (star). Its icon classes are `.icon--lock`, `.icon--eye` and `.icon--star` |
+| `.visibility-mark` | A small sign for who can see something. Kinds: `.visibility-mark--you-and-staff` (shield), `.visibility-mark--you-only` (open eye), `.visibility-mark--staff-only` (star). Its icon classes are `.icon--shield`, `.icon--lock` (the locked kind, `.visibility-mark--locked`), `.icon--eye` and `.icon--star` |
 | `.profile-box` | The box with a character's icon, name, details and buttons. `.profile-box--top` goes across the top, `.profile-box--side` down the side (Admin > Look). Parts: `.profile-box__portrait`, `.profile-box__heading`, `.profile-box__facts` (the short demographics), `.profile-box__actions` |
 | `.character-profile--box-top`, `.character-profile--box-side` | The whole character profile, set by where the box goes |
 | `.profile-tab__empty` | "Nothing more to show here." on a Profile tab with no long answers |
@@ -228,7 +228,11 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 | `.profile-layout`, `.profile-menu`, `.profile-menu__group` (`--basics`, `--system`, `--writing`), `.profile-menu__heading`, `.profile-menu__list`, `.profile-menu__item`, `.profile-menu__link`, `.profile-menu__link--current` | A character profile's menu down the left (Basics: Profile, Application, Relationships, Image Gallery; System: SOUL, Inklings, Grimoire; Writing: Manuscripts, Active Chapters) with the chosen page beside it |
 | `.roll-box__private` | The "Only me and staff see the result" checkbox in an Inkling's Roll a Skill |
-| `.inkling-link-box`, `.inkling-link-box__linked`, `.inkling-link-box__item`, `.inkling-link-box__title`, `.inkling-link-box__unlink`, `.inkling-link-box__form`, `.inkling-link-box__new`, `.inkling-link-box__hint` | "Start or link an Inkling" in a Chapter's tools: the linked Inklings, the picker and the new-Inkling form |
+| `.inkling-link-box`, `.inkling-link-box__open`, `.inkling-link-modal`, `.inkling-link-modal__form`, `.inkling-link-modal__new` | "Add to an Inkling" in a Chapter's tools: the button, and the pop-up that asks why |
+| `.skill-checkboxes`, `.skill-checkboxes__group`, `.skill-checkboxes__aspect`, `.skill-checkboxes__option` | The tick-box list for picking Skills (grouped by Aspect) on Boons and Banes |
+| `.modal`, `.modal__form`, `.modal__title`, `.modal__actions` | Any pop-up box (a `<dialog>`) |
+| `.inkling-entry__chapter`, `.inkling-entry__chapter-link` | The "Chapter: …" line on an Inkling entry that came from a Chapter |
+| `.inkling__cast` | "Cast a spell" in an Inkling (like `.inkling__roll`) |
 | `.cast-box__empty` | The note in "Cast a spell" when the character hasn't learned any spells |
 | `.inkling__chapters`, `.inkling__chapter` | The "Linked to:" line on an Inkling listing the Chapters it is linked to |
 | `.roll-box__ask` | The "Roll with the Storyteller" button in Roll a Skill, only when the Chapter has a Storyteller |

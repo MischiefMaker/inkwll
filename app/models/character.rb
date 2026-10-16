@@ -142,6 +142,7 @@ class Character < ApplicationRecord
     settings = GameSetting.current
     missing = ProfileField.where(required: true).ordered.reject { |field| profile_value_for(field)&.value.present? }.map(&:name)
     missing << "an icon" if settings.require_icon? && !icon.attached?
+    missing << "their SOUL sheet (Aspects and Skills)" if soul_sheet_pending?
     missing
   end
 
@@ -210,7 +211,7 @@ class Character < ApplicationRecord
   # isn't given another. Returns how many were made.
   def self.start_goal_inklings!
     ProfileField.start_inklings_from_goals_and_secrets!
-    field = ProfileField.where("lower(name) = 'goals'").where(field_type: %w[ text long_text ]).ordered.first or return 0
+    field = ProfileField.where("lower(name) IN ('goal', 'goals')").where(field_type: %w[ text long_text ]).ordered.first or return 0
     return 0 unless ProfileField.inkling_kinds.key?(field.inkling_kind)
     made = 0
     approved.played.includes(:account, :profile_values).find_each do |character|

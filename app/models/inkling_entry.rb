@@ -7,6 +7,7 @@ class InklingEntry < ApplicationRecord
   belongs_to :character, optional: true
   belongs_to :private_to, class_name: "Character", optional: true
   belongs_to :soul_roll, class_name: "Soul::Roll", optional: true
+  belongs_to :scene, optional: true
 
   validates :kind, inclusion: { in: KINDS }
   validates :body, presence: true, length: { maximum: 20_000 }

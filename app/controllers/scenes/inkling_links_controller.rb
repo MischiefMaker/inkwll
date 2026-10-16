@@ -1,5 +1,8 @@
-# Starting an Inkling from a Chapter, or linking one you already have to it.
-# Only a character in the Chapter can do this, and only with their own Inklings.
+# Adding a Chapter to an Inkling: the player says why, and the Inkling gets a
+# new entry with the reason and a link to the Chapter. Works for Chapters
+# still being written and for finished ones read in the Archives. Only a
+# character in the Chapter can do this, and only in their own Inklings (or
+# ones shared with them).
 class Scenes::InklingLinksController < ApplicationController
   limit_posting to: 10
   before_action :require_inklings
@@ -7,20 +10,15 @@ class Scenes::InklingLinksController < ApplicationController
 
   def create
     inkling = if params[:inkling_id].present?
-      Inkling.where(character: @character).find(params[:inkling_id])
+      Inkling.visible_to(current_account).find(params[:inkling_id])
     else
-      Inkling.start!(character: @character, by: current_account, kind: params[:kind].to_s, title: params[:title], body: params[:body])
+      Inkling.start!(character: @character, by: current_account, kind: params[:kind].to_s, title: params[:title], body: nil)
     end
-    InklingSceneLink.find_or_create_by!(inkling: inkling, scene: @scene) { |link| link.linked_by = current_account }
-    redirect_to @scene, notice: "Linked #{inkling.title} to this #{Term[:scene].downcase}."
+    raise ArgumentError, "You can't write in that Inkling." unless inkling.writable_by?(current_account) && !inkling.staff_view?(current_account)
+    inkling.link_scene!(@scene, reason: params[:reason], by: current_account, character: @character)
+    redirect_to @scene, notice: "Added this #{Term[:scene].downcase} to #{inkling.title}."
   rescue ArgumentError, ActiveRecord::RecordInvalid => e
     redirect_to @scene, alert: e.message
-  end
-
-  def destroy
-    link = InklingSceneLink.where(scene: @scene, inkling: Inkling.where(character: @character)).find(params[:id])
-    link.destroy
-    redirect_to @scene, notice: "Unlinked."
   end
 
   private

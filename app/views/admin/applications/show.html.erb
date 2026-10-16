@@ -32,7 +32,14 @@
 <% if @character.submitted? %>
   <section class="application-review">
     <h2 class="section-title">Decision</h2>
-    <%= button_to "Approve", admin_application_path(@character), method: :patch, params: { decision: "approve" }, class: "button" %>
+    <%= form_with url: admin_application_path(@character), method: :patch, class: "form form--inline application-review__approve" do |form| %>
+      <%= hidden_field_tag :decision, "approve" %>
+      <% if @character.character_group_id.nil? && (groups = CharacterGroup.ordered).any? %>
+        <%= form.label :character_group_id, "Add to a group", class: "application-review__group-label" %>
+        <%= form.select :character_group_id, groups.map { |group| [ group.name, group.id ] }, include_blank: "No group" %>
+      <% end %>
+      <%= form.submit "Approve", class: "button" %>
+    <% end %>
     <%= form_with url: admin_application_path(@character), method: :patch, class: "form application-review__return" do |form| %>
       <%= hidden_field_tag :decision, "return" %>
       <div class="field">

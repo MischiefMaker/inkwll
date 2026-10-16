@@ -23,6 +23,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
   test "staff approve or return applications" do
     character = accounts(:alice).characters.create!(name: "Applicant", status: "draft")
     character.update!(profile: { profile_fields(:hometown).id => "York" })
+    character.set_starting_sheet!(resonance: 0, skills: { soul_skills(:wit).id.to_s => 1 })
     character.submit!
 
     sign_in_as(accounts(:scribe))
@@ -58,6 +59,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
   test "changing an answer that's already filled in saves it" do
     character = characters(:wren)
     character.update!(profile: { profile_fields(:hometown).id => "York" })
+    character.set_starting_sheet!(resonance: 0, skills: { soul_skills(:wit).id.to_s => 1 })
     sign_in_as(accounts(:alice))
     patch character_path(character), params: { character: { profile: { profile_fields(:hometown).id => "Leeds" } } }
     assert_equal "Leeds", character.reload.profile_value_for(profile_fields(:hometown)).value
@@ -117,6 +119,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
   test "staff reviewing an application can open the SOUL sheet, gallery and relationships" do
     character = accounts(:alice).characters.create!(name: "Applicant", status: "draft")
     character.update!(profile: { profile_fields(:hometown).id => "York" })
+    character.set_starting_sheet!(resonance: 0, skills: { soul_skills(:wit).id.to_s => 1 })
     character.submit!
 
     sign_in_as(accounts(:scribe))
@@ -140,6 +143,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     ProfileField.create!(name: "Quirk", section: "application", field_type: "text")
     character = accounts(:alice).characters.create!(name: "Applicant", status: "draft")
     character.update!(profile: { profile_fields(:hometown).id => "York", goals.id => "Become mayor.", secrets.id => "Is a spy." })
+    character.set_starting_sheet!(resonance: 0, skills: { soul_skills(:wit).id.to_s => 1 })
     character.submit!
 
     sign_in_as(accounts(:scribe))
@@ -193,7 +197,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     Scene.start!(character: wren, room: wren.room, title: "Secret doings", visibility: "hidden", pose_mode: Scene.pose_modes.keys.first)
     sign_in_as(accounts(:alice))
     get character_path(wren, tab: "chapters")
-    assert_select ".profile-menu__link .visibility-mark--you-and-staff .icon--lock"
+    assert_select ".profile-menu__link .visibility-mark--you-and-staff .icon--shield"
     assert_select ".character-chapters__item .visibility-mark--you-only .icon--eye"
   end
 
@@ -246,5 +250,16 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     delete session_path
     get character_path(characters(:wren))
     assert_select ".profile-menu__group--system", count: 0
+  end
+
+  test "after creating a character, the player is sent to finish the SOUL sheet before submitting" do
+    sign_in_as(accounts(:alice))
+    post characters_path, params: { character: { name: "Fresh Face", profile: { profile_fields(:hometown).id => "Leeds" } } }
+    character = Character.find_by!(name: "Fresh Face")
+    assert_redirected_to character_path(character, tab: "soul")
+    assert_includes character.missing_for_submission.join, "SOUL"
+    assert_not character.submit!
+    character.set_starting_sheet!(resonance: 0, skills: { soul_skills(:wit).id.to_s => 1 })
+    assert character.reload.submit!
   end
 end

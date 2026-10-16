@@ -12,7 +12,7 @@
       <% if manages?(character) %>
         <% missing = character.missing_for_submission %>
         <% if missing.any? %>
-          <p class="text application-status__missing">Still needed: <%= missing.to_sentence %>. <%= link_to "Edit", edit_character_path(character) %></p>
+          <p class="text application-status__missing">Still needed: <%= missing.to_sentence %>. <%= link_to "Edit", edit_character_path(character) %><% if character.soul_sheet_pending? %> · <%= link_to "Finish the SOUL sheet", character_path(character, tab: "soul") %><% end %></p>
         <% else %>
           <%= button_to "Submit for approval", character_submission_path(character), class: "button" %>
         <% end %>

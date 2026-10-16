@@ -14,7 +14,7 @@
   </div>
   <div class="field">
     <%= form.label :skill_ids, "Skills it always affects (optional)" %>
-    <%= form.select :skill_ids, Soul::Skill.ordered.map { |s| [ s.name, s.id ] }, {}, multiple: true, size: 5 %>
+    <%= render "shared/skill_checkboxes", name: "soul_bnb[skill_ids][]", selected: bnb.skill_ids %>
     <small class="hint">Leave empty if it differs for each character, like Cursed. Whoever adds it to a character then picks the Skills.</small>
   </div>
   <div class="field field--checkbox">

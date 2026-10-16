@@ -42,13 +42,14 @@ module IconsHelper
       fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round")
   end
 
-  # Small signs for who can see something: a lock (only you and staff), an
-  # open eye (only you) and a star (only staff). Pass label: to say it in
+  # Small signs for who can see something: a shield (only you and staff), an
+  # open eye (only you) and a star (only staff) and a lock (can't be edited any more). Pass label: to say it in
   # other words, for example for a private Chapter.
   VISIBILITY_MARKS = {
-    you_and_staff: [ :lock, "Only you and staff can see this" ],
+    you_and_staff: [ :shield, "Only you and staff can see this" ],
     you_only: [ :eye, "Only you can see this" ],
-    staff_only: [ :star, "Only staff can see this" ]
+    staff_only: [ :star, "Only staff can see this" ],
+    locked: [ :lock, "Locked: it can't be edited any more" ]
   }.freeze
 
   def visibility_mark(kind, label: nil, size: 14)

@@ -56,7 +56,7 @@
         </div>
         <div class="field">
           <%= form.label :skill_ids, "Skills it affects" %>
-          <%= form.select :skill_ids, skills.map { |s| [ s.name, s.id ] }, {}, multiple: true, size: [ skills.size, 6 ].min %>
+          <%= render "shared/skill_checkboxes", name: "skill_ids[]" %>
           <small class="hint">Leave empty to use the Skills the catalogue gives it, if it has any.</small>
         </div>
         <div class="field">

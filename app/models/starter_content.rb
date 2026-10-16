@@ -37,8 +37,8 @@ module StarterContent
     [ "Description", "demographics", "long_text", true, false, "How they look and come across." ],
     [ "Background", "application", "long_text", true, true, "Where they come from and what brought them here." ],
     [ "Personality", "application", "long_text", true, false, "How they think, act and get along with others." ],
-    [ "Goals", "application", "long_text", false, false, "What they want. Only you and staff can see this.", "goal" ],
-    [ "Secrets", "application", "long_text", false, false, "Something they are hiding. Only you and staff can see this.", "secret" ]
+    [ "Goal", "application", "long_text", false, true, "What they want. Only you and staff can see this.", "goal" ],
+    [ "Secret", "application", "long_text", false, true, "Something they are hiding. Only you and staff can see this.", "secret" ]
   ].freeze
 
   # [from, to, name, what it means]. Written for a 0-10 scale; staff change it

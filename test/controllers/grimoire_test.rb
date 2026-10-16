@@ -100,4 +100,30 @@ class GrimoireTest < ActionDispatch::IntegrationTest
     assert_select ".grimoire-spell__name", text: /Will-o'-wisp/
     assert_select "button", text: "Learn for 2 XP"
   end
+
+  test "casting a learned spell in an Inkling adds a roll entry" do
+    @wren.learn_spell!(@spell)
+    sign_in_as(accounts(:alice))
+    inkling = Inkling.start!(character: @wren, by: accounts(:alice), kind: "goal", title: "Light the way", body: "Somehow.")
+    get inkling_path(inkling)
+    assert_select ".inkling__cast form"
+    assert_difference "inkling.entries.count" do
+      post inkling_casts_path(inkling), params: { spell_id: @spell.id, private: "1" }
+    end
+    assert_match "Wren casts Will-o'-wisp", inkling.entries.last.body
+    assert inkling.entries.last.private?
+  end
+
+  test "you can't cast an unlearned spell, or in someone else's Inkling" do
+    inkling = Inkling.start!(character: @wren, by: accounts(:alice), kind: "goal", title: "Light the way", body: "Somehow.")
+    sign_in_as(accounts(:alice))
+    assert_no_difference "inkling.entries.count" do
+      post inkling_casts_path(inkling), params: { spell_id: @spell.id }
+    end
+    @wren.learn_spell!(@spell)
+    sign_in_as(accounts(:bob))
+    assert_no_difference "inkling.entries.count" do
+      post inkling_casts_path(inkling), params: { spell_id: @spell.id }
+    end
+  end
 end

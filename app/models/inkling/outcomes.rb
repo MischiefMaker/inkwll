@@ -20,6 +20,32 @@ module Inkling::Outcomes
     raise ArgumentError, e.message
   end
 
+  # Casting a learned spell (Grimoire) in an Inkling: a SOUL roll of the
+  # branch's Skill against the spell's difficulty, like a Skill roll.
+  def cast!(caster, spell, by:, private: false)
+    raise ArgumentError, "Magic is switched off in this game." unless Grimoire.enabled?
+    raise ArgumentError, "#{caster.name} hasn't learned #{spell.name}." unless caster.knows_spell?(spell)
+    skill = spell.branch.skill
+    roll = caster.roll_skill(skill, spell.difficulty_name)
+    roll.save!
+    text = "#{caster.name} casts #{spell.name} (#{skill.name} against #{spell.difficulty_name.humanize}, #{roll.difficulty})" \
+      "#{" with #{roll.applied_text}" if roll.applied.any?} and gets #{roll.result}. " \
+      "#{"Extraordinary! " if roll.extraordinary?}#{roll.degree_text}"
+    add_entry!(account: by, character: caster, kind: "roll", body: text, private: private, soul_roll: roll, unless_locked: true)
+  rescue Character::SoulSheet::SheetError => e
+    raise ArgumentError, e.message
+  end
+
+  # A Chapter that moved this Inkling along (or set it back): a numbered entry
+  # with the player's reason and a link to the Chapter. Remembers the link too.
+  def link_scene!(scene, reason:, by:, character:)
+    raise ArgumentError, "Say why this #{Term[:scene].downcase} belongs in the Inkling." if reason.to_s.strip.blank?
+    transaction do
+      InklingSceneLink.find_or_create_by!(inkling: self, scene: scene) { |link| link.linked_by = by }
+      add_entry!(account: by, character: character, kind: "public", body: reason.to_s.strip, scene: scene, unless_locked: true)
+    end
+  end
+
   # Staff granting something for this Inkling. Returns the entry recording it.
   def reward!(by:, type:, amount: nil, bnb: nil, level: nil, entry: nil, title: nil, note: nil, private: true)
     raise ArgumentError, "Pick a kind of reward." unless type.in?(REWARDS)

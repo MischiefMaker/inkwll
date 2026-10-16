@@ -1,0 +1,17 @@
+<%# A tick-box list of SOUL Skills, grouped by Aspect, in place of a hold-Ctrl list.
+    Pass name: (the field name, ending in []) and selected: (Skill ids already ticked). %>
+<% selected = Array(local_assigns[:selected]).map(&:to_i) %>
+<%= hidden_field_tag name, "", id: nil %>
+<div class="skill-checkboxes">
+  <% Soul::Aspect.ordered.includes(:skills).each do |aspect| %>
+    <% next if aspect.skills.empty? %>
+    <fieldset class="skill-checkboxes__group">
+      <legend class="skill-checkboxes__aspect"><%= aspect.name %></legend>
+      <% aspect.skills.each do |skill| %>
+        <label class="skill-checkboxes__option field--checkbox">
+          <%= check_box_tag name, skill.id, selected.include?(skill.id), id: nil %> <%= skill.name %>
+        </label>
+      <% end %>
+    </fieldset>
+  <% end %>
+</div>

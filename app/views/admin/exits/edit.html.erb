@@ -1,0 +1,30 @@
+<% content_for :title, "Edit #{term(:exit).downcase} · Inkwll" %>
+
+<h1 class="page-title">Edit <%= term(:exit).downcase %> “<%= @exit.name_was.presence || @exit.name %>” from <%= link_to @room.name, edit_admin_room_path(@room) %></h1>
+
+<%= form_with model: [ :admin, @room, @exit ], class: "form exit-form" do |form| %>
+  <%= render "shared/errors", record: @exit %>
+  <div class="field">
+    <%= form.label :kind, "Type" %>
+    <%= form.select :kind, Exit::KINDS.map { |kind| [ t("terms.exit_kind_names.#{kind}"), kind ] } %>
+  </div>
+  <div class="field">
+    <%= form.label :direction, "Direction (optional)" %>
+    <%= form.select :direction, Exit::DIRECTIONS.map { |short, long| [ short == long ? long : "#{short} (#{long})", short ] }, include_blank: "None" %>
+  </div>
+  <div class="field">
+    <%= form.label :number, "Number (optional)" %>
+    <%= form.text_field :number, size: 6, maxlength: 10 %>
+  </div>
+  <div class="field">
+    <%= form.label :name, "#{term(:exit)} name" %>
+    <%= form.text_field :name, required: true, maxlength: 40 %>
+  </div>
+  <div class="field">
+    <%= form.label :destination_room_id, "Leads to" %>
+    <%= form.collection_select :destination_room_id, Room.where.not(id: @room.id).order(:name), :id, :name %>
+  </div>
+  <p class="hint">Only this one-way <%= term(:exit).downcase %> changes. The way back, if there is one, is edited from the other Setting.</p>
+  <%= form.submit "Save", class: "button" %>
+  <%= link_to "Cancel", edit_admin_room_path(@room), class: "button button--quiet" %>
+<% end %>

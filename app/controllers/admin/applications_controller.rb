@@ -19,6 +19,9 @@ class Admin::ApplicationsController < Admin::BaseController
   def update
     character = Character.submitted.find(params[:id])
     if params[:decision] == "approve"
+      if character.character_group_id.nil? && (group = CharacterGroup.find_by(id: params[:character_group_id].presence))
+        character.update!(character_group: group)
+      end
       character.approve!(by: current_account)
       redirect_to admin_applications_path, notice: "#{character.name} approved."
     else

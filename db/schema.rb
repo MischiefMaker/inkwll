@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_060000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -368,6 +368,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
     t.text "body", null: false
     t.boolean "private", default: false, null: false
     t.bigint "soul_roll_id"
+    t.bigint "scene_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_inkling_entries_on_account_id"
@@ -375,6 +376,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
     t.index ["inkling_id", "sequence"], name: "index_inkling_entries_on_inkling_id_and_sequence", unique: true
     t.index ["inkling_id"], name: "index_inkling_entries_on_inkling_id"
     t.index ["private_to_id"], name: "index_inkling_entries_on_private_to_id"
+    t.index ["scene_id"], name: "index_inkling_entries_on_scene_id"
     t.index ["soul_roll_id"], name: "index_inkling_entries_on_soul_roll_id"
   end
 
@@ -965,6 +967,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
   add_foreign_key "inkling_entries", "characters", column: "private_to_id", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", on_delete: :nullify
   add_foreign_key "inkling_entries", "inklings", on_delete: :cascade
+  add_foreign_key "inkling_entries", "scenes", on_delete: :nullify
   add_foreign_key "inkling_entries", "soul_rolls", on_delete: :nullify
   add_foreign_key "inkling_reads", "accounts", on_delete: :cascade
   add_foreign_key "inkling_reads", "inklings", on_delete: :cascade

@@ -20,6 +20,7 @@
         <% if room_exit.number %><span class="tag exit-number"><%= room_exit.number %></span><% end %>
         <% if room_exit.kind == "building" %><span class="tag exit-kind"><%= t("terms.exit_kind_names.building") %></span><% end %>
         <strong class="emphasis"><%= room_exit.name %></strong> → <%= link_to room_exit.destination_room.name, edit_admin_room_path(room_exit.destination_room) %>
+        <%= edit_icon_link(edit_admin_room_exit_path(@room, room_exit), label: "Edit") %>
         <%= delete_icon_button(admin_room_exit_path(@room, room_exit), label: "Remove", confirm: "Remove the #{term(:exit).downcase} \"#{room_exit.name}\"?") %>
       </li>
     <% end %>
@@ -29,7 +30,8 @@
 <%= form_with model: [ :admin, @room, Exit.new ], class: "form form--inline" do |form| %>
   <div class="field">
     <%= form.label :kind, "Type" %>
-    <%= form.select :kind, Exit::KINDS.map { |kind| [ t("terms.exit_kind_names.#{kind}"), kind ] } %>
+    <%= form.select :kind, Exit::KINDS.map { |kind| [ t("terms.exit_kind_names.#{kind}"), kind ] }, include_blank: "Pick it from what it leads to", selected: "" %>
+    <small class="hint">Left alone, a Path to a building is a Building and any other is a Street.</small>
   </div>
   <div class="field">
     <%= form.label :direction, "Direction (optional)" %>

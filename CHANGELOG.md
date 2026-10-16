@@ -2,6 +2,19 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-16 — Profile, SOUL, Inkling and Path tweaks
+
+- New games start with a required "Goal" and "Secret" application field (singular). Existing games keep their fields.
+- After creating a character you land on its SOUL sheet, and the application status says the SOUL sheet is still needed before you can submit.
+- Boons and Banes: pick the Skills they affect with tick boxes, grouped by Aspect.
+- Approving an application can add the character to a group if they don't have one.
+- SOUL sheet: the Aspect "+0 to its Skills" column is gone; hover an Aspect's name for the bonus.
+- The profile page uses more of a wide screen.
+- A shield now marks things only you and staff can see; a lock marks fields that can't be edited any more (application answers after approval).
+- New Paths pick their type from the Setting they lead to, and existing Paths have a pencil to edit them.
+- The Cast a spell box in a Chapter's side column fits.
+- "Add to an Inkling" in a Chapter (also in the Archives) asks why in a pop-up and adds an entry to the Inkling with a link to the Chapter. You can also cast a Grimoire spell in an Inkling.
+
 ## 2026-10-16 — Chapter page and Directory tidy-up
 
 - Each Chapter has a number at the top ("Chapter 12") that never changes, and it stays on the finished Manuscript.
