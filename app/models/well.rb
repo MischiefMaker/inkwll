@@ -21,7 +21,13 @@ class Well < ApplicationRecord
 
   # Where its first player signs up to become its Founder. It only works
   # until that Well has a Founder.
-  def setup_url = "https://#{domain}/registration/new?setup=#{setup_code}"
+  # With copy_founder, the form opens with the creator's name and email filled
+  # in; they only choose a password. No password ever leaves the game.
+  def setup_url
+    query = { setup: setup_code }
+    query.merge!(name: account.display_name, email: account.email) if copy_founder?
+    "https://#{domain}/registration/new?#{query.to_query}"
+  end
 
   private
     def not_this_game

@@ -141,6 +141,10 @@
         <span class="wells__address"><%= form.text_field :slug, maxlength: 20, required: true, pattern: "[a-z][a-z0-9]{1,19}", class: "wells__slug" %>.<%= @base_domain %></span>
         <p class="muted field__hint">Small letters and numbers only, like moonfall.</p>
       </div>
+      <div class="field field--checkbox">
+        <%= form.check_box :copy_founder %>
+        <%= form.label :copy_founder, "Make me its #{term(:founder)} too (its sign-up link opens with my name and email filled in; I just choose a password for it)" %>
+      </div>
       <div class="field">
         <%= label_tag :confirm_name, "Type the name again to confirm" %>
         <%= text_field_tag :confirm_name, nil, required: true, autocomplete: "off" %>

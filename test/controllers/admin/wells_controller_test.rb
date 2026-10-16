@@ -159,6 +159,16 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".wells__setup-link code", text: well.setup_url
   end
 
+  test "Make me its Founder too puts my name and email on its sign-up link" do
+    sign_in_as(accounts(:founder))
+    post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall", copy_founder: "1" }, confirm_name: "Moonfall" }
+    well = Well.find_by!(slug: "moonfall")
+    assert well.copy_founder?
+    assert_includes well.setup_url, "name=Founder"
+    assert_includes well.setup_url, CGI.escape("founder@example.com")
+    assert_not_includes Well.new(account: accounts(:founder), domain: "x.inkwll.com", setup_code: "abc").setup_url, "email="
+  end
+
   test "a new Well needs its name typed again and a good address" do
     sign_in_as(accounts(:founder))
     assert_no_difference("Well.count") { post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall" }, confirm_name: "Moon" } }
