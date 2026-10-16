@@ -52,7 +52,7 @@
   <div class="field">
     <%= form.label :font_heading, "Font for headings" %>
     <%= form.text_field :font_heading, maxlength: 200, placeholder: "Georgia, serif" %>
-    <small class="hint">List a few fonts, separated by commas; visitors see the first one their device has. Leave empty to use the built-in fonts. Web fonts that come with Inkwll, which you can name here: "Great Vibes" and Montez (flowing scripts), "Amatic SC" (hand-drawn capitals), Oswald (tall and narrow), "Cormorant SC" (elegant small capitals), "Old Standard TT" (old-fashioned book type), Cinzel and "Cinzel Decorative" (carved Roman capitals) and "Cormorant Garamond" (graceful book type).</small>
+    <small class="hint">List a few fonts, separated by commas; visitors see the first one their device has. Leave empty to use the built-in fonts. Web fonts that come with Inkwll, which you can name here: "Great Vibes" (flowing script), "Amatic SC" (hand-drawn capitals) and Oswald (tall and narrow).<% if @game_setting.skin_fonts.any? %> This game's own fonts, brought by its world pack, are listed under the form: <%= @game_setting.skin_fonts.map(&:family).uniq.sort.to_sentence %>.<% end %></small>
   </div>
 
   <h2 class="section-title">Character profiles</h2>
@@ -94,4 +94,19 @@
   </div>
 
   <%= form.submit "Save", class: "button" %>
+<% end %>
+
+<% if @game_setting.skin_fonts.any? %>
+  <section class="skin-fonts">
+    <h2 class="section-title">This game's fonts</h2>
+    <p class="text muted">These came with the game's world pack and are served from this game. Name a family in the font boxes above to use it. Removing one is safe: pages just fall back to the next font in the list.</p>
+    <ul class="skin-fonts__list">
+      <% @game_setting.skin_fonts.order(:family, :weight, :style).each do |font| %>
+        <li class="skin-fonts__item">
+          <span class="skin-fonts__name"><%= font.name %></span>
+          <%= button_to "Remove", admin_skin_font_path(font), method: :delete, class: "button button--small", form_class: "skin-fonts__form", data: { turbo_confirm: "Remove #{font.name}?" } %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
 <% end %>

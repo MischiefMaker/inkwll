@@ -10,6 +10,8 @@
 #   wiki_pages  wiki pages, by title
 #   boards      forum boards, by name ("was" renames an existing board)
 #   images      the pictures, base64, which everything else names by key
+#   fonts       web fonts (WOFF2, base64) the game's look can name, kept with
+#               the game rather than with Inkwll (see SkinFont)
 #
 # Importing only adds and updates: things are matched by name, so running
 # the same pack twice changes nothing the second time. With remove_unlisted,
@@ -23,6 +25,7 @@ class WorldPack
   MAX_SIZE = 25.megabytes
   IMAGE_TYPES = %w[ image/png image/jpeg image/gif image/webp ].freeze
   LOST_PLOTS = "The Well of Lost Plots"
+  MAX_FONTS = 24
 
   class Invalid < StandardError; end
 
@@ -52,6 +55,7 @@ class WorldPack
   def paths = list("paths")
   def wiki_pages = list("wiki_pages")
   def boards = list("boards")
+  def fonts = list("fonts")
   def game = data["game"].is_a?(Hash) ? data["game"] : {}
   def look = data["look"].is_a?(Hash) ? data["look"] : {}
 
@@ -60,6 +64,7 @@ class WorldPack
     changes = []
     changes << Change.new("Game", "Name and front page text", "change", nil) if game.any?
     changes << Change.new("Look", "Colours, fonts, extra CSS and pictures", "change", nil) if look.any?
+    fonts.each { |f| changes << Change.new("Font", font_name(f), font_for(f) ? "change" : "add", nil) }
     areas.each { |a| changes << Change.new(Term[:area], a["name"], Area.exists?(name: a["name"]) ? "change" : "add", a["parent"]) }
     places.each do |p|
       found = Room.joins(:area).exists?(name: p["name"], areas: { name: p["area"] })
@@ -80,6 +85,7 @@ class WorldPack
     ApplicationRecord.transaction do
       import_game
       import_look
+      import_fonts
       area_records = import_areas
       place_records = import_places(area_records)
       import_paths(place_records)
@@ -113,7 +119,30 @@ class WorldPack
       wiki_pages.each { |w| raise Invalid, "Every wiki page needs a title." if w["title"].blank? }
       boards.each { |b| raise Invalid, "Every board needs a name." if b["name"].blank? }
       picture_keys.each { |key| raise Invalid, "The picture #{key.inspect} isn't in the pack." unless images.key?(key) }
+      raise Invalid, "A pack can bring at most #{MAX_FONTS} fonts." if fonts.size > MAX_FONTS
+      fonts.each do |f|
+        raise Invalid, "The font #{font_name(f).inspect} needs a family name (letters, numbers, spaces and hyphens)." unless f["family"].to_s.squish.match?(/\A[\p{L}\p{N} -]{1,60}\z/)
+        raise Invalid, "The font #{font_name(f).inspect} has a weight that isn't 100 to 900." unless (f["weight"] || 400).to_i.in?(SkinFont::WEIGHTS)
+        raise Invalid, "The font #{font_name(f).inspect} must be normal or italic." unless (f["style"].presence || "normal").in?(SkinFont::STYLES)
+        font_bytes(f)
+      end
     end
+
+    def font_name(font) = [ font["family"], (font["weight"] unless font["weight"].to_i == 400), (font["style"] unless font["style"].blank? || font["style"] == "normal") ].compact.join(" ")
+
+    # The font file, checked: WOFF2 (it starts with "wOF2") and not too big.
+    def font_bytes(font)
+      bytes = Base64.decode64(font["data"].to_s)
+      raise Invalid, "The font #{font_name(font).inspect} must be a WOFF2 file." unless bytes.start_with?("wOF2")
+      raise Invalid, "The font #{font_name(font).inspect} is bigger than #{SkinFont::MAX_SIZE / 1.kilobyte} KB." if bytes.bytesize > SkinFont::MAX_SIZE
+      bytes
+    end
+
+    def font_attributes(font)
+      { family: font["family"].to_s.squish, weight: (font["weight"] || 400).to_i, style: font["style"].presence || "normal" }
+    end
+
+    def font_for(font) = GameSetting.current.skin_fonts.find_by(font_attributes(font))
 
     def images = data["images"].is_a?(Hash) ? data["images"] : {}
 
@@ -138,6 +167,22 @@ class WorldPack
       # can't be lost if the record is saved or reloaded again later.
       blob = ActiveStorage::Blob.create_and_upload!(io: StringIO.new(bytes), filename: image["filename"].presence || "#{key}.#{type.split("/").last}", content_type: type)
       current.attach(blob)
+    end
+
+    def import_fonts
+      return if fonts.empty?
+      settings = GameSetting.current
+      fonts.each do |font|
+        bytes = font_bytes(font)
+        record = settings.skin_fonts.find_or_initialize_by(font_attributes(font))
+        # Skip a font that is already there, as pictures are skipped.
+        next if record.persisted? && record.file.attached? && record.file.blob.checksum == OpenSSL::Digest::MD5.base64digest(bytes)
+        blob = ActiveStorage::Blob.create_and_upload!(io: StringIO.new(bytes), filename: font["filename"].presence || "#{record.family.parameterize}.woff2", content_type: SkinFont::CONTENT_TYPE, identify: false)
+        record.file.attach(blob)
+        record.save!
+      end
+      # The skin stylesheet's address changes with this, so browsers fetch it again.
+      settings.update!(updated_at: Time.current)
     end
 
     def import_game

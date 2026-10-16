@@ -2,17 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
-## 2026-10-16 — Fonts for Draganic
+## 2026-10-16 — A game's fonts travel with its world pack
 
-- Cinzel and "Cinzel Decorative" (carved Roman capitals) and "Cormorant Garamond" (graceful book type) now come with Inkwll and can be named in Admin → Look, for Draganic's old look.
-
-## 2026-10-16 — Import a world when starting a Well
-
-- Start a new Well has an "I'll import a world pack" box. After you sign up on the new Well you land straight on Import a world, and the Wells page keeps an "Import a world" link for each Well that has a Founder.
-
-## 2026-10-16 — Three more web fonts
-
-- Montez (flowing script), "Cormorant SC" (elegant small capitals) and "Old Standard TT" (old-fashioned book type) now come with Inkwll and can be named in Admin → Look, for Falls the Shadow's old forum look.
+- A world pack can now carry its own web fonts. Import a world stores them in the game and serves them from it, so a game's fonts no longer have to be built into Inkwll for everyone. Admin → Look lists them under the form, with a Remove button for each, and you can name their families in the font boxes as before.
+- The three fonts that come with Inkwll (Great Vibes, Amatic SC, Oswald) stay for now.
 
 ## 2026-10-16 — Wiki bullets take their group's colour
 

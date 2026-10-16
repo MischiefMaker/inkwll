@@ -106,7 +106,7 @@ module GameSetting::Skin
   end
 
   def skinned?
-    PICTURES.keys.any? { |picture| send(picture).attached? } || skin_colours.any? || skin_dark_colours.any? || !skin_dark_mode? || font_body || font_heading || custom_css
+    PICTURES.keys.any? { |picture| send(picture).attached? } || skin_colours.any? || skin_dark_colours.any? || !skin_dark_mode? || font_body || font_heading || custom_css || skin_fonts.any?
   end
 
   # The stylesheet itself. Every value in it has been checked above, except
@@ -114,7 +114,7 @@ module GameSetting::Skin
   def skin_css
     # @import (for web fonts) only works at the very top of a stylesheet.
     imports = custom_css.to_s.scan(/^[ \t]*@import[^;\n]*;[ \t]*$/)
-    lines = [ "/* This game's skin, set in Admin, Look */", *imports.map(&:strip), ":root {" ]
+    lines = [ "/* This game's skin, set in Admin, Look */", *imports.map(&:strip), *skin_fonts.includes(file_attachment: :blob).map(&:font_face), ":root {" ]
     COLOURS.each_key { |key| lines << "  --color-#{key}: #{colour(key)};" if skin_colours[key] }
     lines << "  --font-body: #{font_body};" << "  --font-ui: #{font_body};" if font_body
     lines << "  --font-heading: #{font_heading};" if font_heading

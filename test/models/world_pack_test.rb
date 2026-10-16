@@ -118,4 +118,45 @@ class WorldPackTest < ActiveSupport::TestCase
     assert changes.any? { |c| c.name == "The Commons" && c.action == "remove" && c.note.include?(WorldPack::LOST_PLOTS) }
     assert changes.any? { |c| c.name == "Foyer" && c.action == "add" }
   end
+
+  FONT = Base64.strict_encode64("wOF2" + "\0" * 60)
+
+  def font(**overrides)
+    { "family" => "Cinzel", "weight" => 700, "style" => "normal", "filename" => "cinzel-bold.woff2", "data" => FONT }.merge(overrides.transform_keys(&:to_s))
+  end
+
+  test "a pack's fonts are stored in the game and declared in its stylesheet" do
+    pack(fonts: [ font, font(weight: 400, family: "Old Standard TT") ]).import!(by: accounts(:founder))
+
+    settings = GameSetting.current
+    assert_equal 2, settings.skin_fonts.count
+    css = settings.skin_css
+    assert_includes css, %(font-family: "Cinzel")
+    assert_includes css, "font-weight: 700"
+    assert_includes css, 'format("woff2")'
+    assert_match %r{url\("/rails/active_storage/blobs/redirect/}, css
+    assert settings.skinned?
+  end
+
+  test "importing the same fonts twice keeps one of each" do
+    pack(fonts: [ font ]).import!(by: accounts(:founder))
+    blob = SkinFont.last.file.blob
+    pack(fonts: [ font ]).import!(by: accounts(:founder))
+
+    assert_equal 1, SkinFont.count
+    assert_equal blob, SkinFont.last.file.blob
+  end
+
+  test "the preview lists fonts" do
+    assert pack(fonts: [ font ]).preview.any? { |c| c.kind == "Font" && c.name == "Cinzel 700" && c.action == "add" }
+  end
+
+  test "fonts must be small WOFF2 files with plain names" do
+    assert_raises(WorldPack::Invalid) { pack(fonts: [ font(data: Base64.strict_encode64("not a font")) ]) }
+    assert_raises(WorldPack::Invalid) { pack(fonts: [ font(data: Base64.strict_encode64("wOF2" + "\0" * SkinFont::MAX_SIZE)) ]) }
+    assert_raises(WorldPack::Invalid) { pack(fonts: [ font(family: "x\"; } body { display: none") ]) }
+    assert_raises(WorldPack::Invalid) { pack(fonts: [ font(weight: 450) ]) }
+    assert_raises(WorldPack::Invalid) { pack(fonts: [ font(style: "oblique") ]) }
+    assert_raises(WorldPack::Invalid) { pack(fonts: Array.new(WorldPack::MAX_FONTS + 1) { |i| font(family: "Font #{i}") }) }
+  end
 end

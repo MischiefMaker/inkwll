@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_080001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_170000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -673,6 +673,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_080001) do
     t.index ["account_id"], name: "index_sessions_on_account_id"
   end
 
+  create_table "skin_fonts", force: :cascade do |t|
+    t.bigint "game_setting_id", null: false
+    t.string "family", null: false
+    t.integer "weight", default: 400, null: false
+    t.string "style", default: "normal", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_setting_id", "family", "weight", "style"], name: "index_skin_fonts_on_face", unique: true
+    t.index ["game_setting_id"], name: "index_skin_fonts_on_game_setting_id"
+  end
+
   create_table "soul_aspects", force: :cascade do |t|
     t.string "key", null: false
     t.string "name", null: false
@@ -1027,6 +1038,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_080001) do
   add_foreign_key "scenes", "rooms"
   add_foreign_key "scenes", "scene_participants", column: "current_turn_participant_id", on_delete: :nullify
   add_foreign_key "sessions", "accounts"
+  add_foreign_key "skin_fonts", "game_settings"
   add_foreign_key "soul_audit_entries", "accounts", column: "actor_id"
   add_foreign_key "soul_audit_entries", "characters", on_delete: :nullify
   add_foreign_key "soul_award_suggestions", "accounts", column: "reviewed_by_id"

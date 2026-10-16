@@ -47,13 +47,22 @@ except `format`.
   "wiki_pages": [ { "title": "Rules", "body": "Markdown…", "tags": ["lore"], "menu_position": 2, "locked": true } ],
   "boards": [ { "name": "Newest News", "was": "News", "description": "…", "position": 1,
                 "who_can_start": "staff", "who_can_reply": "nobody", "icon": null, "image": null } ],
-  "images": { "icon": { "content_type": "image/jpeg", "filename": "icon.jpg", "data": "base64…" } }
+  "images": { "icon": { "content_type": "image/jpeg", "filename": "icon.jpg", "data": "base64…" } },
+  "fonts": [ { "family": "Cinzel", "weight": 700, "style": "normal", "filename": "cinzel-700.woff2", "data": "base64…" } ]
 }
 ```
 
 - Pictures are named by their key in `images`. PNG, JPEG, GIF or WebP, 5 MB
   each at most. `look.pictures` uses the Look picture names
   (`page_background`, `box_background`, `intro_banner`).
+- Fonts are WOFF2 files (they start with `wOF2`), 300 KB each at most and no
+  more than 24 per pack. The import stores them in the game and the game's
+  stylesheet declares them, so `look.font_body` and `look.font_heading` can
+  name the family. They are served from the game itself, because the content
+  security policy blocks font sites. The weight is 100 to 900 and the style
+  `normal` or `italic`; the family can only have letters, numbers, spaces and
+  hyphens. Admin → Look lists a game's fonts and can remove them. Importing
+  the same pack again doesn't upload a font that is already there.
 - A Path's `name` defaults to the Place it goes to (40 characters at most).
 - Areas nest by naming their `parent`, which can be in the pack or already in
   the game.

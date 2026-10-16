@@ -3,6 +3,9 @@
 class GameSetting < ApplicationRecord
   include Skin
 
+  # Web fonts that came with an imported world pack, named in Admin → Look.
+  has_many :skin_fonts, dependent: :destroy
+
   # The game's own icon, beside its name in the top bar and on the front
   # page. Without one, the favicon's inkwell is used.
   has_one_attached :icon

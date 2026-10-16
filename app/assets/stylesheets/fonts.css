@@ -1,10 +1,11 @@
 /*
- * Web fonts any game can name in Admin → Look or its extra CSS. They are
- * served from this site, because the browser rules (content security
- * policy) don't let pages load fonts from other websites. A browser only
- * downloads one when a page actually uses it.
- * Each is under the SIL Open Font License, except Montez (Apache 2.0); see
- * app/assets/fonts.
+ * Web fonts that come with Inkwll, which any game can name in Admin → Look or
+ * its extra CSS. They are served from this site, because the browser rules
+ * (content security policy) don't let pages load fonts from other websites.
+ * A browser only downloads one when a page actually uses it. Each is under
+ * the SIL Open Font License; see app/assets/fonts.
+ *
+ * A game's other fonts travel with its world pack instead (see SkinFont).
  */
 
 @font-face {
@@ -44,90 +45,5 @@
   src: url("oswald-bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Montez";
-  src: url("montez.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cormorant SC";
-  src: url("cormorant-sc.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cormorant SC";
-  src: url("cormorant-sc-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Old Standard TT";
-  src: url("old-standard-tt.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Old Standard TT";
-  src: url("old-standard-tt-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cinzel";
-  src: url("cinzel.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cinzel";
-  src: url("cinzel-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cinzel Decorative";
-  src: url("cinzel-decorative.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cinzel Decorative";
-  src: url("cinzel-decorative-black.woff2") format("woff2");
-  font-weight: 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cormorant Garamond";
-  src: url("cormorant-garamond.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cormorant Garamond";
-  src: url("cormorant-garamond-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Cormorant Garamond";
-  src: url("cormorant-garamond-bold.woff2") format("woff2");
-  font-weight: 700;
   font-display: swap;
 }

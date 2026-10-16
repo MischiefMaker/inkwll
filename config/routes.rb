@@ -156,6 +156,7 @@ Rails.application.routes.draw do
     resource :features, only: %i[ edit update ]
     resource :game_lock, only: %i[ create destroy ]
     resource :skin, only: %i[ edit update ]
+    resources :skin_fonts, only: :destroy
     resource :wells, only: %i[ show create ]
     resources :well_updates, only: :create
     resource :world_import, only: %i[ show create ] do

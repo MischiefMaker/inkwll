@@ -1298,6 +1298,8 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .skin-form__row { display: grid; grid-template-columns: minmax(0, 1fr) 4rem 4rem; gap: 0.5rem; align-items: center; max-width: 32rem; }
 .skin-form__colour { width: 100%; height: 2rem; padding: 0; border: 1px solid var(--color-border); background: none; }
 .skin-form__css { font-family: ui-monospace, monospace; }
+.skin-fonts__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; max-width: 32rem; }
+.skin-fonts__item { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
 .admin-setup { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; margin-bottom: var(--space); }
 .skin-preset__current { font-size: 0.75rem; }
 
