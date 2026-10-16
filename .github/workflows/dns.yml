@@ -1,0 +1,26 @@
+# Shows which nameservers answer for inkwll.com and what its records say,
+# from outside. It only reads, so Claude runs it without asking.
+name: Check DNS
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Address to look up"
+        type: string
+        default: "inkwll.com"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look it up
+        env:
+          NAME: ${{ inputs.name }}
+        run: |
+          case "$NAME" in *[!a-z0-9.-]*) echo "::error::Not an address."; exit 1;; esac
+          echo "== Nameservers (public resolvers)"; dig +short NS inkwll.com @1.1.1.1; dig +short NS inkwll.com @8.8.8.8
+          echo "== Nameservers (from the .com registry)"; dig +noall +authority NS inkwll.com @a.gtld-servers.net
+          for type in A CNAME TXT MX; do echo "== $type $NAME"; dig +short "$type" "$NAME" @1.1.1.1; done
+          echo "== www.inkwll.com"; dig +short www.inkwll.com @1.1.1.1
+          echo "== Asking DigitalOcean directly"; dig +short A "$NAME" @ns1.digitalocean.com; dig +short www.inkwll.com @ns1.digitalocean.com
