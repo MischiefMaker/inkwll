@@ -66,6 +66,21 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".wells__older button", count: 0
   end
 
+  test "only the newest version gets an Update button; older ones are notes without buttons" do
+    releases = [ "v1.2", "v1.1", "v1.0" ].map { |tag| GithubActions::Release.new(tag: tag, name: tag, notes: "", published_at: 1.day.ago) }
+    @github.define_singleton_method(:releases) { releases }
+    sign_in_as(accounts(:founder))
+    get admin_wells_path
+    assert_select "button.wells__install", text: "Update to v1.2"
+    assert_select "button.wells__install", text: "Update to v1.1", count: 0
+
+    ENV["INKWLL_VERSION"] = "v1.2"
+    get admin_wells_path
+    assert_select ".wells__release-current", text: /up to date/
+    assert_select ".wells__older .wells__release", count: 2
+    assert_select "button.wells__install", count: 0
+  end
+
   test "every page shows the version at the bottom, or the build for a deploy of main" do
     get root_path
     assert_select ".version-footer", text: "Inkwll v1.0"
