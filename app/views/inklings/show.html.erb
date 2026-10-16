@@ -120,7 +120,7 @@
               <%= form.label :difficulty %>
               <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, selected: "standard" %>
             </div>
-            <div class="field field--checkbox">
+            <div class="field field--checkbox roll-box__field roll-box__private">
               <%= form.check_box :private, {}, "1", "0" %>
               <%= form.label :private, "Only me and staff see the result" %>
             </div>

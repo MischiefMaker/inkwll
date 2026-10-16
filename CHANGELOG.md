@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Lock the Game, profile tabs
 
+- Roll a Skill (in Inklings and Chapters) now puts the Skill, Difficulty, options and Roll button on one line.
 - Wellkeepers get a red "Lock the Game" button on the admin page. While locked,
   guests and non-staff players see a page saying the game is locked (they can
   still log in or out); staff keep working and see a banner. "Unlock the Game"

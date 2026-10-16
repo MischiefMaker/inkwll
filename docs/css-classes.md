@@ -226,3 +226,4 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.character-inklings__more`, `.character-inklings__link`, `.character-inklings__shared` | On a character's Inklings tab: the link to the Inklings page, and the mark on an Inkling shared with the character by another |
 
 | `.profile-layout`, `.profile-menu`, `.profile-menu__group` (`--basics`, `--system`, `--writing`), `.profile-menu__heading`, `.profile-menu__list`, `.profile-menu__item`, `.profile-menu__link`, `.profile-menu__link--current` | A character profile's menu down the left (Basics: Profile, Application, Relationships, Image Gallery; System: SOUL, Inklings, Grimoire; Writing: Manuscripts, Active Chapters) with the chosen page beside it |
+| `.roll-box__private` | The "Only me and staff see the result" checkbox in an Inkling's Roll a Skill |

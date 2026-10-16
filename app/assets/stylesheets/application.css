@@ -1111,8 +1111,13 @@ span.pose__icon { cursor: default; }
 .soul-admin__actions .button_to { display: inline; }
 
 .roll-box { margin-top: 0.75rem; font-family: var(--font-ui); }
-.roll-box__form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem; margin-top: 0.5rem; }
+.roll-box__form { display: flex; flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem; margin-top: 0.5rem; }
 .roll-box__field { margin: 0; }
+/* Skill, difficulty, options and the button sit on one line (they wrap only when the space runs out). */
+.roll-box__form select { width: auto; max-width: 14rem; }
+.roll-box__form .field { align-self: flex-end; }
+.roll-box__form .field--checkbox { margin: 0; padding-bottom: 0.45rem; }
+.roll-box__form .button, .roll-box__form input[type="submit"].button { margin: 0; align-self: flex-end; }
 .pose--roll { border-left: 3px solid var(--color-accent); padding-left: 0.75rem; }
 .roll-details { font-size: 0.85rem; color: var(--color-muted); }
 .button--small { padding: 0.2rem 0.6rem; font-size: 0.85rem; }
