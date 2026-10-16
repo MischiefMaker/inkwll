@@ -151,7 +151,7 @@ class ProfilesTest < ActionDispatch::IntegrationTest
     assert_equal "Applicant's First Secret", Inkling.find_by!(character: character, kind: "secret").title
     assert_equal accounts(:alice), goal.creator
     assert_equal "Become mayor.", goal.entries.first.body
-    assert_nil goal.staff_visible_at, "staff don't see it until the player sends it"
+    assert goal.staff_visible_at, "staff already read the application, so they see it"
     assert Inkling.exists?(character: character, kind: "secret")
 
     assert_no_difference "Inkling.count" do

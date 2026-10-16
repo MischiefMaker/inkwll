@@ -52,6 +52,23 @@ class CharacterTest < ActiveSupport::TestCase
     assert_equal 1, Inkling.where(character: wren, kind: "goal").count
   end
 
+  test "Inklings made from an application are shown to staff, and the catch-up fixes older ones" do
+    field = ProfileField.create!(name: "Goals", section: "application", field_type: "long_text", public: false, inkling_kind: "goal")
+    wren = characters(:wren)
+    wren.update!(status: "approved")
+    wren.profile_values.create!(profile_field: field, value: "Win.")
+    wren.start_inklings_from_profile!
+    assert Inkling.find_by!(character: wren, kind: "goal").staff_visible_at
+    own = Inkling.start!(character: wren, by: wren.account, kind: "goal", title: "My secret plan", body: "Shh.")
+    assert_nil own.staff_visible_at, "a player's own draft stays private"
+
+    old = Inkling.find_by!(character: wren, kind: "goal")
+    old.update_columns(staff_visible_at: nil)
+    assert_equal 1, Character.show_application_inklings_to_staff!
+    assert old.reload.staff_visible_at
+    assert_nil own.reload.staff_visible_at
+  end
+
   test "Inklings already titled with just the field name get the First Goal title" do
     field = ProfileField.create!(name: "Goals", section: "application", field_type: "long_text", public: false, inkling_kind: "goal")
     wren = characters(:wren)

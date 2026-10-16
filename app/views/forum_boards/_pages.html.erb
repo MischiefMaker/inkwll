@@ -6,7 +6,7 @@
       <% if number == current %>
         <span class="forum-pages__link forum-pages__link--current"><%= number %></span>
       <% else %>
-        <%= link_to number, url_for(page: number), class: "forum-pages__link" %>
+        <%= link_to number, url_for(request.query_parameters.symbolize_keys.merge(page: number)), class: "forum-pages__link" %>
       <% end %>
     <% end %>
   </nav>

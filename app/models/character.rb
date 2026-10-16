@@ -167,7 +167,7 @@ class Character < ApplicationRecord
       text = profile_value_for(field)&.value.presence or next
       next unless ProfileField.inkling_kinds.key?(field.inkling_kind)
       next if Inkling.exists?(character: self, kind: field.inkling_kind, title: [ field.name, first_inkling_title(field) ])
-      Inkling.start!(character: self, by: account, kind: field.inkling_kind, title: first_inkling_title(field), body: text)
+      Inkling.start!(character: self, by: account, kind: field.inkling_kind, title: first_inkling_title(field), body: text, staff_visible: true)
     end
   end
 
@@ -178,6 +178,20 @@ class Character < ApplicationRecord
 
   # One-off: Inklings already made from an application answer were titled with
   # just the field's name ("Goals"). Gives them the "Lucia's First Goal" title.
+  # One-off: Inklings made from an application answer are shown to staff
+  # (staff already read the application). Safe to run twice.
+  def self.show_application_inklings_to_staff!
+    shown = 0
+    ProfileField.where.not(inkling_kind: [ nil, "" ]).find_each do |field|
+      Inkling.where(kind: field.inkling_kind, staff_visible_at: nil).includes(:character).find_each do |inkling|
+        next unless inkling.title == inkling.character.first_inkling_title(field)
+        inkling.update_columns(staff_visible_at: Time.current)
+        shown += 1
+      end
+    end
+    shown
+  end
+
   def self.rename_application_inklings!
     renamed = 0
     ProfileField.where.not(inkling_kind: [ nil, "" ]).find_each do |field|
@@ -202,7 +216,7 @@ class Character < ApplicationRecord
     approved.played.includes(:account, :profile_values).find_each do |character|
       text = character.profile_value_for(field)&.value.presence or next
       next if character.account.nil? || Inkling.exists?(character: character, kind: field.inkling_kind, title: [ field.name, character.first_inkling_title(field) ])
-      Inkling.start!(character: character, by: character.account, kind: field.inkling_kind, title: character.first_inkling_title(field), body: text)
+      Inkling.start!(character: character, by: character.account, kind: field.inkling_kind, title: character.first_inkling_title(field), body: text, staff_visible: true)
       made += 1
     end
     made

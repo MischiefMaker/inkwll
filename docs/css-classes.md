@@ -232,3 +232,4 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.inkling__chapters`, `.inkling__chapter` | The "Linked to:" line on an Inkling listing the Chapters it is linked to |
 | `.roll-box__ask` | The "Roll with the Storyteller" button in Roll a Skill, only when the Chapter has a Storyteller |
 | `.storyteller-tools__npc`, `.storyteller-tools__npc-form` | "Roll for an NPC" in the Storyteller tools |
+| `.inklings-admin__filters`, `.inklings-admin__days`, `.inklings-admin__days--current` | The "Active in the last N days" choices above the admin Inklings list |

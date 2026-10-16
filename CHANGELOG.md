@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Security: probe players and Content Security Policy
 
+- The admin Inklings list shows Inklings active in the last 90 days, a page at a time; pick 30, 90, 180, 365 days or any time. Goals and Secrets from approved applications now show there too (staff already read the application), including existing ones after the next deploy.
 - The browser sign-up and login check no longer touches the live game. It runs
   on a throwaway copy inside the check, with a new random password each time.
   Tests stop it from being pointed at the live game or given a fixed password.

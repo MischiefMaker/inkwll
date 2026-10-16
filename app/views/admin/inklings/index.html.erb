@@ -18,7 +18,11 @@
 <% end %>
 
 <h2 class="section-title"><%= @status == "open" ? "Other open Inklings" : "Closed Inklings" %></h2>
-<p class="text"><%= link_to @status == "open" ? "Show closed ones" : "Show open ones", admin_inklings_path(status: (@status == "open" ? "closed" : nil)) %></p>
+<p class="text inklings-admin__filters">
+  <%= link_to @status == "open" ? "Show closed ones" : "Show open ones", admin_inklings_path(status: (@status == "open" ? "closed" : nil), days: @days) %> ·
+  Active in the last
+  <%= safe_join(Admin::InklingsController::DAY_CHOICES.map { |days| days == @days ? tag.strong("#{days} days", class: "inklings-admin__days inklings-admin__days--current") : link_to("#{days} days", admin_inklings_path(status: @status, days: days), class: "inklings-admin__days") } + [ @days.zero? ? tag.strong("any time", class: "inklings-admin__days inklings-admin__days--current") : link_to("any time", admin_inklings_path(status: @status, days: 0), class: "inklings-admin__days") ], " · ") %>
+</p>
 <% if @inklings.any? %>
   <ul class="list inklings-admin">
     <% @inklings.each do |inkling| %>
@@ -28,5 +32,6 @@
     <% end %>
   </ul>
 <% else %>
-  <p class="text muted">None.</p>
+  <p class="text muted"><%= @days.zero? ? "None." : "None active in the last #{@days} days." %></p>
 <% end %>
+<%= render "forum_boards/pages", pages: @pages, current: @page %>

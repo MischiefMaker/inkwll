@@ -56,11 +56,11 @@ class Inkling < ApplicationRecord
 
   # --- Writing -------------------------------------------------------------
 
-  def self.start!(character:, by:, kind:, title:, body:)
+  def self.start!(character:, by:, kind:, title:, body:, staff_visible: false)
     raise ArgumentError, "Pick a type." unless types_for(by).key?(kind.to_s)
     transaction do
       inkling = create!(character: character, creator: by, kind: kind, title: title,
-        staff_visible_at: (Time.current if by != character.account))
+        staff_visible_at: (Time.current if staff_visible || by != character.account))
       inkling.add_entry!(account: by, character: (character if by == character.account), body: body) if body.present?
       inkling
     end
