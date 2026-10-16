@@ -80,9 +80,9 @@
           <% [ aspect, *aspect.skills ].each do |trait| %>
             <% rating = character.rating_for(trait) %>
             <tr class="table__row soul-trait soul-trait--<%= trait.aspect? ? "aspect" : "skill" %>">
-              <td class="table__cell soul-trait__name" title="<%= trait.description %>"><%= trait.name %></td>
+              <td class="table__cell soul-trait__name" title="<%= trait.aspect? ? "#{trait.description} Adds +#{Soul::Rules.aspect_bonus(rating)} to rolls of its Skills (a small bonus that grows with the rating)." : trait.description %>"><%= trait.name %></td>
               <td class="table__cell soul-trait__rating"><%= rating %></td>
-              <td class="table__cell soul-trait__bonus muted"><%= trait.aspect? ? "+#{Soul::Rules.aspect_bonus(rating)} to its Skills" : "+#{character.roll_base(trait)}" %></td>
+              <td class="table__cell soul-trait__bonus muted"><%= "+#{character.roll_base(trait)}" unless trait.aspect? %></td>
               <% if can_spend %>
                 <td class="table__cell soul-trait__raise">
                   <% if rating >= trait.max_rating %>

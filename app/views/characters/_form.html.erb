@@ -39,7 +39,7 @@
         <% profile_value = character.profile_value_for(field) %>
         <% value = profile_value&.value %>
         <div class="field character-form__field character-form__field--<%= field.field_type %>">
-          <%= label_tag "character_profile_#{field.id}", field.name + (field.required? ? " *" : "") %>
+          <%= label_tag "character_profile_#{field.id}" do %><%= field.name + (field.required? ? " *" : "") %><%= visibility_mark(:locked, label: "Locked once approved") if field.locked_for?(character, current_account) %><% end %>
           <% if field.locked_for?(character, current_account) %>
             <% if field.image? && profile_value&.image&.attached? %>
               <%= image_tag profile_value.image, class: "profile-field-input__picture", alt: "" %>

@@ -20,6 +20,9 @@ module Character::SoulSheet
 
   def sheet_open? = sheet_locked_at.nil?
 
+  # A new character whose player hasn't saved a starting sheet yet.
+  def soul_sheet_pending? = Soul.enabled? && sheet_open? && !soul_ratings.exists?
+
   def rating_for(trait)
     soul_ratings.detect { |r| r.trait_type == trait.class.name && r.trait_id == trait.id }&.rating.to_i
   end
@@ -31,9 +34,6 @@ module Character::SoulSheet
   # --- Starting points -------------------------------------------------------
 
   def chargen_allowance = Soul::Rules.chargen_allowance(resonance)
-
-  def skill_points_spent = soul_ratings.select { |r| r.trait_type == "Soul::Skill" }.sum(&:rating)
-  def aspect_points_spent = soul_ratings.select { |r| r.trait_type == "Soul::Aspect" }.sum(&:rating)
 
   # Saves the starting sheet in one go: Resonance plus every rating, given as
   # { "aspect" => { id => rating }, "skill" => { id => rating } }. Checks the

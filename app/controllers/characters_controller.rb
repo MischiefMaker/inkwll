@@ -33,7 +33,11 @@ class CharactersController < ApplicationController
     @character = current_account.characters.new(character_params)
     if @character.save
       current_account.switch_to(@character) unless current_character
-      redirect_to @character, notice: "#{@character.name} has been created."
+      if @character.soul_sheet_pending?
+        redirect_to character_path(@character, tab: "soul"), notice: "#{@character.name} has been created. Next, finish their SOUL sheet (Aspects and Skills), then submit them for approval."
+      else
+        redirect_to @character, notice: "#{@character.name} has been created."
+      end
     else
       render :new, status: :unprocessable_entity
     end

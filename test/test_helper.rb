@@ -14,3 +14,13 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+# A real visitor's request starts with nothing remembered. In tests the test
+# itself shares memory with the requests it makes, so forget what the game
+# remembered (like the settings) after each request.
+module ForgetBetweenRequests
+  def process(*, **)
+    super.tap { Current.reset }
+  end
+end
+ActionDispatch::Integration::Session.prepend ForgetBetweenRequests

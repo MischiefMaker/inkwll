@@ -100,11 +100,12 @@
       <%# Posting tools only where you can post; Storyteller tools also after it ends. %>
       <% posting = @scene.writable? && !whole %>
       <% story_tools = Soul.enabled? && @participant.storyteller? && (posting || !@scene.writable?) %>
-      <% if posting || story_tools %>
+      <% link_box = Inkling.enabled? && !@participant.character.gm? %>
+      <% if posting || story_tools || link_box %>
         <div class="scene__tools">
           <%= render "scenes/roll", scene: @scene, participant: @participant if posting && Soul.enabled? %>
           <%= render "scenes/cast", scene: @scene, participant: @participant if posting && Grimoire.enabled? %>
-          <%= render "scenes/inkling_link", scene: @scene, participant: @participant if posting && Inkling.enabled? && !@participant.character.gm? %>
+          <%= render "scenes/inkling_link", scene: @scene, participant: @participant if link_box %>
           <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant if story_tools %>
         </div>
       <% end %>

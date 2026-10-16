@@ -7,6 +7,29 @@ Short, plain-language notes on what changed. Newest first.
 - New Founder-only **Admin → Import a world** page. Upload a world pack (a file holding Areas, Places, Paths, wiki pages, boards, the front page text and the game's look) and it shows everything it would add, change or remove before anything happens. Importing the same pack again changes nothing. There's an option to also remove Areas, Places and Paths the pack leaves out; The Prologue and any Place with characters or Chapters in it always stay. Details in docs/world-packs.md.
 - Three web fonts now come with Inkwll and can be named in Admin → Look: "Great Vibes" (flowing script), "Amatic SC" (hand-drawn capitals) and Oswald (tall and narrow). The Look page no longer suggests Google Fonts, which the Content Security Policy blocks.
 
+## 2026-10-16 — Profile, SOUL, Inkling and Path tweaks
+
+- A Boon or Bane no longer has to affect a Skill.
+- Characters who aren't approved yet can't start Inklings (their Goal and Secret from the application start when they're approved).
+- New games start with a required "Goal" and "Secret" application field (singular). Existing games keep their fields.
+- After creating a character you land on its SOUL sheet, and the application status says the SOUL sheet is still needed before you can submit.
+- Boons and Banes: pick the Skills they affect with tick boxes, grouped by Aspect.
+- Approving an application can add the character to a group if they don't have one.
+- SOUL sheet: the Aspect "+0 to its Skills" column is gone; hover an Aspect's name for the bonus.
+- The profile page uses more of a wide screen.
+- A shield now marks things only you and staff can see; a lock marks fields that can't be edited any more (application answers after approval).
+- New Paths pick their type from the Setting they lead to, and existing Paths have a pencil to edit them.
+- The Cast a spell box in a Chapter's side column fits.
+- "Add to an Inkling" in a Chapter (also in the Archives) asks why in a pop-up and adds an entry to the Inkling with a link to the Chapter. You can also cast a Grimoire spell in an Inkling.
+
+## 2026-10-16 — Speed and tidy-up
+
+- Pages that were doing a lot of repeat work now do much less: the OOC Chat beside every page, the front page, Where, and the Chapters list all load character and player pictures together instead of one at a time.
+- Pictures (icons) are now sent as smaller copies sized for where they show, so pages download faster. Animated GIF icons are left as they are.
+- The staff Players and Characters lists show 50 and 100 at a time, with page links.
+- Three database look-ups that had no index now have one.
+- Removed a few unused bits of code, and moved four one-time clean-ups into their migrations.
+
 ## 2026-10-16 — Chapter page and Directory tidy-up
 
 - Each Chapter has a number at the top ("Chapter 12") that never changes, and it stays on the finished Manuscript.
@@ -17,6 +40,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Security: probe players and Content Security Policy
 
+- On a profile with the side box, the buttons are all the same width and height.
 - "All Chapters" is now "Open Chapters": it lists only open Chapters, with a note and link saying finished ones are in the Archives.
 - All Chapters is styled up: bigger titles, tiny character icons, banded rows with borders, and a wider page.
 - On the front page, the Chapters count now links to the All Chapters list.

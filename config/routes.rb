@@ -67,9 +67,10 @@ Rails.application.routes.draw do
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
       resources :rolls, only: :create
+      resources :casts, only: :create
       resources :npc_rolls, only: :create
       resources :casts, only: :create
-      resources :inkling_links, only: %i[ create destroy ]
+      resources :inkling_links, only: :create
       resources :pending_rolls, only: %i[ create update destroy ]
       resources :award_suggestions, only: :create
       resource :reading, only: :update
@@ -101,6 +102,7 @@ Rails.application.routes.draw do
     scope module: :inklings do
       resources :entries, only: :create
       resources :rolls, only: :create
+      resources :casts, only: :create
       resource :submission, only: :create
       resource :review, only: :create
       resource :closing, only: %i[ create destroy ]
@@ -133,7 +135,7 @@ Rails.application.routes.draw do
     resources :areas, only: %i[ index new create edit update ]
     resource :bulk_build, only: %i[ new create ], path: "build_several"
     resources :rooms, only: %i[ new create edit update ] do
-      resources :exits, only: %i[ create destroy ]
+      resources :exits, only: %i[ create edit update destroy ]
       resource :numbered_rooms, only: :create
     end
     resources :accounts, only: %i[ index edit update destroy ] do

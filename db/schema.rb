@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_060001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -370,11 +370,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
     t.bigint "soul_roll_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "scene_id"
     t.index ["account_id"], name: "index_inkling_entries_on_account_id"
     t.index ["character_id"], name: "index_inkling_entries_on_character_id"
     t.index ["inkling_id", "sequence"], name: "index_inkling_entries_on_inkling_id_and_sequence", unique: true
     t.index ["inkling_id"], name: "index_inkling_entries_on_inkling_id"
     t.index ["private_to_id"], name: "index_inkling_entries_on_private_to_id"
+    t.index ["scene_id"], name: "index_inkling_entries_on_scene_id"
     t.index ["soul_roll_id"], name: "index_inkling_entries_on_soul_roll_id"
   end
 
@@ -641,6 +643,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
     t.date "ic_date"
     t.string "ic_time"
     t.integer "number", null: false
+    t.index ["current_turn_participant_id"], name: "index_scenes_on_current_turn_participant_id"
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"
@@ -874,6 +877,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
     t.bigint "well_id"
     t.boolean "first_time", default: false, null: false
     t.index ["account_id"], name: "index_well_updates_on_account_id"
+    t.index ["request_id"], name: "index_well_updates_on_request_id"
+    t.index ["run_id"], name: "index_well_updates_on_run_id"
     t.index ["well_id"], name: "index_well_updates_on_well_id"
   end
 
@@ -965,6 +970,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_050001) do
   add_foreign_key "inkling_entries", "characters", column: "private_to_id", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", on_delete: :nullify
   add_foreign_key "inkling_entries", "inklings", on_delete: :cascade
+  add_foreign_key "inkling_entries", "scenes", on_delete: :nullify
   add_foreign_key "inkling_entries", "soul_rolls", on_delete: :nullify
   add_foreign_key "inkling_reads", "accounts", on_delete: :cascade
   add_foreign_key "inkling_reads", "inklings", on_delete: :cascade

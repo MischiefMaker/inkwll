@@ -77,6 +77,9 @@
             <time class="inkling-entry__time muted" datetime="<%= entry.created_at.iso8601 %>"><%= time_ago_in_words(entry.created_at) %> ago</time>
             <a class="inkling-entry__ref muted" href="#entry-<%= entry.sequence %>"><%= entry.reference %></a>
           </header>
+          <% if entry.scene %>
+            <p class="inkling-entry__chapter"><%= term(:scene) %>: <%= entry.scene.visible_to?(current_account) ? link_to(entry.scene.title, scene_path(entry.scene), class: "inkling-entry__chapter-link") : entry.scene.title %></p>
+          <% end %>
           <div class="prose inkling-entry__body"><%= simple_format entry.body %></div>
           <% if entry.soul_roll %>
             <details class="roll-details inkling-entry__roll">
@@ -131,6 +134,29 @@
               <%= form.label :private, "Only me and staff see the result" %>
             </div>
             <%= form.submit "Roll", class: "button button--quiet" %>
+          <% end %>
+        </details>
+      <% end %>
+
+      <% if Soul.enabled? && Grimoire.enabled? && writable && !staff %>
+        <% caster = owner ? @inkling.character : current_account.characters.active.find { |c| @inkling.shared_characters.exists?(c.id) || (@inkling.shared_group_ids.include?(c.character_group_id)) } %>
+        <% spells = caster ? caster.spells.includes(branch: :skill).order(:name) : [] %>
+        <details class="roll-box inkling__cast">
+          <summary class="disclosure__summary roll-box__summary">Cast a spell</summary>
+          <% if spells.any? %>
+            <%= form_with url: inkling_casts_path(@inkling), class: "form roll-box__form" do |form| %>
+              <div class="field roll-box__field">
+                <%= form.label :spell_id, "Spell" %>
+                <%= form.select :spell_id, spells.map { |spell| [ "#{spell.name} (#{spell.branch.skill.name}, #{spell.difficulty_label})", spell.id ] } %>
+              </div>
+              <div class="field field--checkbox roll-box__field roll-box__private">
+                <%= form.check_box :private, {}, "1", "0" %>
+                <%= form.label :private, "Only me and staff see the result" %>
+              </div>
+              <%= form.submit "Cast", class: "button button--quiet" %>
+            <% end %>
+          <% else %>
+            <p class="hint"><%= caster&.name || "Nobody here" %> hasn't learned any spells yet.</p>
           <% end %>
         </details>
       <% end %>

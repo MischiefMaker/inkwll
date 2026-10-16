@@ -38,6 +38,13 @@ class Exit < ApplicationRecord
   validates :name, presence: true, length: { maximum: 40 }, uniqueness: { scope: :source_room_id }
   validates :kind, inclusion: { in: KINDS }
 
+  # The kind a new Path gets from the Place it leads to: a building (with or
+  # without units) is entered, so it's a Building; anything else is an
+  # ordinary Street. A door number makes it a Unit regardless.
+  def self.kind_for(room)
+    room&.kind.in?(%w[ apartments building ]) ? "building" : "street"
+  end
+
   def path_group
     return "street" if kind == "street"
     case destination_room.kind
@@ -79,10 +86,6 @@ class Exit < ApplicationRecord
 
   def compass?
     COMPASS.key?(direction)
-  end
-
-  def direction_name
-    DIRECTIONS[direction]
   end
 
   private

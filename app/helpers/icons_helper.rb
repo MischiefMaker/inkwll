@@ -42,13 +42,14 @@ module IconsHelper
       fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round")
   end
 
-  # Small signs for who can see something: a lock (only you and staff), an
-  # open eye (only you) and a star (only staff). Pass label: to say it in
+  # Small signs for who can see something: a shield (only you and staff), an
+  # open eye (only you) and a star (only staff) and a lock (can't be edited any more). Pass label: to say it in
   # other words, for example for a private Chapter.
   VISIBILITY_MARKS = {
-    you_and_staff: [ :lock, "Only you and staff can see this" ],
+    you_and_staff: [ :shield, "Only you and staff can see this" ],
     you_only: [ :eye, "Only you can see this" ],
-    staff_only: [ :star, "Only staff can see this" ]
+    staff_only: [ :star, "Only staff can see this" ],
+    locked: [ :lock, "Locked: it can't be edited any more" ]
   }.freeze
 
   def visibility_mark(kind, label: nil, size: 14)
@@ -91,11 +92,19 @@ module IconsHelper
     tag.div(class: "#{css} banner-default", "aria-hidden": "true")
   end
 
+  # Icons are shown at 6rem or smaller, so serve a copy shrunk to fit instead of
+  # the full upload. Animated GIFs are left alone, since shrinking would stop
+  # the animation.
+  def icon_picture(attachment)
+    return attachment if attachment.content_type == "image/gif"
+    attachment.variant(resize_to_limit: [ 256, 256 ])
+  end
+
   # A place's own icon picture if it has one, or a drawn icon in a small tile
   # so every Area, Setting and board has something there by default.
   def place_icon(record, default, css:)
     if record.icon.attached?
-      image_tag record.icon, alt: "", class: css
+      image_tag icon_picture(record.icon), alt: "", class: css
     else
       tag.span(icon(default, size: 20), class: "#{css} icon-tile icon-tile--#{default}")
     end

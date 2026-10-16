@@ -28,7 +28,7 @@
               <%= button_to "Archive", archive_admin_account_path(account), class: "button-link",
                     form: { data: { turbo_confirm: "Archive #{account.display_name}? They can't log in again, and their characters are retired or go on the roster." } } %>
             <% end %>
-            <% if current_account.founder? && account.characters.none? %>
+            <% if current_account.founder? && !@with_characters.include?(account.id) %>
               <%= delete_icon_button(admin_account_path(account), label: "Delete", confirm: "Delete #{account.display_name} for good? This can't be undone.", css: "account-actions__delete") %>
             <% end %>
           <% end %>
@@ -37,6 +37,8 @@
     <% end %>
   </tbody>
 </table>
+
+<%= render "forum_boards/pages", pages: @pages, current: @page %>
 
 <p class="muted">
   You can edit players below your own level. Only a <%= term(:founder) %> can make someone a

@@ -142,6 +142,7 @@ class Character < ApplicationRecord
     settings = GameSetting.current
     missing = ProfileField.where(required: true).ordered.reject { |field| profile_value_for(field)&.value.present? }.map(&:name)
     missing << "an icon" if settings.require_icon? && !icon.attached?
+    missing << "their SOUL sheet (Aspects and Skills)" if soul_sheet_pending?
     missing
   end
 
@@ -174,52 +175,6 @@ class Character < ApplicationRecord
   # "Lucia's First Goal": the title of an Inkling made from an application answer.
   def first_inkling_title(field)
     "#{name}'s First #{field.name.singularize}"
-  end
-
-  # One-off: Inklings already made from an application answer were titled with
-  # just the field's name ("Goals"). Gives them the "Lucia's First Goal" title.
-  # One-off: Inklings made from an application answer are shown to staff
-  # (staff already read the application). Safe to run twice.
-  def self.show_application_inklings_to_staff!
-    shown = 0
-    ProfileField.where.not(inkling_kind: [ nil, "" ]).find_each do |field|
-      Inkling.where(kind: field.inkling_kind, staff_visible_at: nil).includes(:character).find_each do |inkling|
-        next unless inkling.title == inkling.character.first_inkling_title(field)
-        inkling.update_columns(staff_visible_at: Time.current)
-        shown += 1
-      end
-    end
-    shown
-  end
-
-  def self.rename_application_inklings!
-    renamed = 0
-    ProfileField.where.not(inkling_kind: [ nil, "" ]).find_each do |field|
-      Inkling.where(kind: field.inkling_kind, title: field.name).includes(:character).find_each do |inkling|
-        inkling.update_columns(title: inkling.character.first_inkling_title(field))
-        renamed += 1
-      end
-    end
-    renamed
-  end
-
-  # One-off catch-up for games that were already running: every approved
-  # character with an answer to the Goals field gets a Goal Inkling from it,
-  # as newly approved characters do. Also points the Goals and Secrets fields at
-  # their Inkling types, so new approvals start them too. Safe to run twice: a character that already has one
-  # isn't given another. Returns how many were made.
-  def self.start_goal_inklings!
-    ProfileField.start_inklings_from_goals_and_secrets!
-    field = ProfileField.where("lower(name) = 'goals'").where(field_type: %w[ text long_text ]).ordered.first or return 0
-    return 0 unless ProfileField.inkling_kinds.key?(field.inkling_kind)
-    made = 0
-    approved.played.includes(:account, :profile_values).find_each do |character|
-      text = character.profile_value_for(field)&.value.presence or next
-      next if character.account.nil? || Inkling.exists?(character: character, kind: field.inkling_kind, title: [ field.name, character.first_inkling_title(field) ])
-      Inkling.start!(character: character, by: character.account, kind: field.inkling_kind, title: character.first_inkling_title(field), body: text, staff_visible: true)
-      made += 1
-    end
-    made
   end
 
   def return!(by:, note:)

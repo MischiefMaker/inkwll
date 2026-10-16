@@ -10,7 +10,6 @@ class Soul::CharacterBnb < ApplicationRecord
 
   validates :level, inclusion: { in: ->(_) { Soul::Rules.bnb_levels.keys } }
   validates :explanation, length: { maximum: 2_000 }
-  validate :has_skills
 
   delegate :boon?, :bane?, :name, :kind, to: :bnb
 
@@ -18,9 +17,4 @@ class Soul::CharacterBnb < ApplicationRecord
   def skills = Soul::Skill.where(id: skill_ids).ordered
   def modifier = Soul::Rules.bnb_levels.fetch(level, 0) * (boon? ? 1 : -1)
   def affects?(skill) = !resolved? && skill_ids.include?(skill.id)
-
-  private
-    def has_skills
-      errors.add(:base, "Pick at least one Skill it affects") if skill_ids.blank?
-    end
 end

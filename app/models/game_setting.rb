@@ -61,9 +61,14 @@ class GameSetting < ApplicationRecord
     super
   end
 
+  # Remembered for the rest of the request, since nearly every page asks many
+  # times. Saving a change forgets it.
   def self.current
-    first || create!
+    Current.game_setting ||= first || create!
   end
+
+  after_save { Current.game_setting = nil }
+  after_destroy { Current.game_setting = nil }
 
   private
     def auto_finish_after_idle

@@ -15,8 +15,16 @@ class Admin::AccountsController < Admin::BaseController
   before_action :require_manageable, only: %i[ edit update archive destroy reset_link ]
   limit_posting to: 10, within: 10.minutes, only: :reset_link
 
+  PER_PAGE = 50
+
   def index
-    @accounts = Account.where(system: false).order(:archived_at, staff_level: :desc, username: :asc)
+    scope = Account.where(system: false)
+    @pages = [ (scope.count / PER_PAGE.to_f).ceil, 1 ].max
+    @page = params[:page].to_i.clamp(1, @pages)
+    @accounts = scope.includes(icon_attachment: :blob).order(:archived_at, staff_level: :desc, username: :asc)
+      .offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
+    # Who has any characters at all, in one question instead of one per row.
+    @with_characters = Character.where(account_id: @accounts.map(&:id)).distinct.pluck(:account_id).to_set
   end
 
   def archive

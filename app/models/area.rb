@@ -58,9 +58,18 @@ class Area < ApplicationRecord
   end
 
   # Every area inside this one, at any depth.
+  # Remembered for the life of this record, because the front page asks
+  # several times per Area.
   def descendant_ids
-    ids = children.pluck(:id)
-    ids + Area.where(id: ids).flat_map(&:descendant_ids)
+    @descendant_ids ||= begin
+      ids = children.pluck(:id)
+      ids + Area.where(id: ids).flat_map(&:descendant_ids)
+    end
+  end
+
+  def reload(*)
+    @descendant_ids = nil
+    super
   end
 
   # All areas in nesting order, each with its depth, for dropdowns.

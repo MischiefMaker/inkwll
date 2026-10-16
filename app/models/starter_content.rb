@@ -37,8 +37,8 @@ module StarterContent
     [ "Description", "demographics", "long_text", true, false, "How they look and come across." ],
     [ "Background", "application", "long_text", true, true, "Where they come from and what brought them here." ],
     [ "Personality", "application", "long_text", true, false, "How they think, act and get along with others." ],
-    [ "Goals", "application", "long_text", false, false, "What they want. Only you and staff can see this.", "goal" ],
-    [ "Secrets", "application", "long_text", false, false, "Something they are hiding. Only you and staff can see this.", "secret" ]
+    [ "Goal", "application", "long_text", false, true, "What they want. Only you and staff can see this.", "goal" ],
+    [ "Secret", "application", "long_text", false, true, "Something they are hiding. Only you and staff can see this.", "secret" ]
   ].freeze
 
   # [from, to, name, what it means]. Written for a 0-10 scale; staff change it
@@ -78,17 +78,6 @@ module StarterContent
     return if Soul::Bnb.exists?
     BOONS.each { |name, description| Soul::Bnb.create!(kind: "boon", name: name, description: description) }
     BANES.each { |name, description| Soul::Bnb.create!(kind: "bane", name: name, description: description) }
-  end
-
-  # Puts the starter Boons and Banes back when a game has deleted or retired
-  # all of its own: names a game already has (even retired ones) are left alone.
-  def self.restore_bnbs!
-    return if Soul::Bnb.active.exists?
-    { "boon" => BOONS, "bane" => BANES }.each do |kind, entries|
-      entries.each do |name, description|
-        Soul::Bnb.create!(kind: kind, name: name, description: description) unless Soul::Bnb.exists?(kind: kind, name: name)
-      end
-    end
   end
 
   def self.install_profile_fields!

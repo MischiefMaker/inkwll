@@ -52,12 +52,12 @@ class Inkling < ApplicationRecord
 
   def type_name = self.class.types.dig(kind, "name") || kind.humanize
   def locked? = submitted?
-  def staff_made? = self.class.types.dig(kind, "category") == "staff" || creator_id != character.account_id
 
   # --- Writing -------------------------------------------------------------
 
   def self.start!(character:, by:, kind:, title:, body:, staff_visible: false)
     raise ArgumentError, "Pick a type." unless types_for(by).key?(kind.to_s)
+    raise ArgumentError, "#{character.name} isn't approved yet, so can't start Inklings." unless character.approved?
     transaction do
       inkling = create!(character: character, creator: by, kind: kind, title: title,
         staff_visible_at: (Time.current if staff_visible || by != character.account))
@@ -68,11 +68,11 @@ class Inkling < ApplicationRecord
 
   # Adds an entry, numbered within the thread.
   # unless_locked: refuse if it was sent to staff in the meantime.
-  def add_entry!(account:, body:, kind: "public", character: nil, private_to: nil, private: false, soul_roll: nil, unless_locked: false)
+  def add_entry!(account:, body:, kind: "public", character: nil, private_to: nil, private: false, soul_roll: nil, scene: nil, unless_locked: false)
     with_lock do
       raise ArgumentError, "This is waiting for staff, so it's locked until they answer." if unless_locked && (locked? || closed?)
       entry = entries.create!(sequence: last_sequence + 1, account: account, character: character, kind: kind,
-        body: body, private_to: private_to, private: private, soul_roll: soul_roll)
+        body: body, private_to: private_to, private: private, soul_roll: soul_roll, scene: scene)
       update!(last_sequence: entry.sequence, last_entry_at: entry.created_at)
       mark_read!(account) if account
       ActiveRecord.after_all_transactions_commit { alert_about(entry) }

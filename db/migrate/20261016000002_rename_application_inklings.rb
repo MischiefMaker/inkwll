@@ -4,7 +4,19 @@
 class RenameApplicationInklings < ActiveRecord::Migration[8.1]
   def up
     [ ProfileField, Inkling ].each(&:reset_column_information)
-    Character.rename_application_inklings!
+    rename!
+  end
+
+  # Returns how many were renamed.
+  def rename!
+    renamed = 0
+    ProfileField.where.not(inkling_kind: [ nil, "" ]).find_each do |field|
+      Inkling.where(kind: field.inkling_kind, title: field.name).includes(:character).find_each do |inkling|
+        inkling.update_columns(title: inkling.character.first_inkling_title(field))
+        renamed += 1
+      end
+    end
+    renamed
   end
 
   def down

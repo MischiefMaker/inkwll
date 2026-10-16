@@ -19,7 +19,7 @@ class ScenesController < ApplicationController
     scenes = scenes.where(finished_at: nil)
     @pages = [ (scenes.count / PER_PAGE.to_f).ceil, 1 ].max
     @page = params[:page].to_i.clamp(1, @pages)
-    @scenes = scenes.by_activity.includes(:room, participants: :character)
+    @scenes = scenes.by_activity.includes(:room, participants: { character: [ :account, { icon_attachment: :blob } ] })
       .offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
   end
 

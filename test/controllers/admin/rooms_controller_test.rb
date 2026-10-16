@@ -97,4 +97,29 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".room-paths__heading--building", "Buildings"
     assert_select ".exits--building .exit-link", text: "Greenhouse"
   end
+
+  test "a new exit's type is picked from the Setting it leads to, and can be edited" do
+    shop = Room.create!(area: rooms(:hall).area, name: "Corner Shop", kind: "building")
+    sign_in_as(accounts(:scribe))
+    post admin_room_exits_path(rooms(:hall)), params: { exit: { name: "Shop door", kind: "", destination_room_id: shop.id } }
+    door = rooms(:hall).exits.find_by!(name: "Shop door")
+    assert_equal "building", door.kind
+    post admin_room_exits_path(rooms(:hall)), params: { exit: { name: "Lane", kind: "", destination_room_id: rooms(:commons).id } }
+    assert_equal "street", rooms(:hall).exits.find_by!(name: "Lane").kind
+
+    get edit_admin_room_exit_path(rooms(:hall), door)
+    assert_response :success
+    patch admin_room_exit_path(rooms(:hall), door), params: { exit: { name: "Shop entrance", kind: "street" } }
+    assert_equal "Shop entrance", door.reload.name
+    assert_equal "street", door.kind
+    get edit_admin_room_path(rooms(:hall))
+    assert_select ".icon-action--edit"
+  end
+
+  test "an ordinary player can't edit an exit" do
+    door = rooms(:hall).exits.first || Exit.create!(source_room: rooms(:hall), destination_room: rooms(:commons), name: "Lane")
+    sign_in_as(accounts(:alice))
+    patch admin_room_exit_path(rooms(:hall), door), params: { exit: { name: "Hacked" } }
+    assert_not_equal "Hacked", door.reload.name
+  end
 end

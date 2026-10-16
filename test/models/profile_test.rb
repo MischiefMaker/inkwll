@@ -35,6 +35,7 @@ class ProfileTest < ActiveSupport::TestCase
 
     assert_not character.submit!, "Hometown is required"
     character.update!(profile: { profile_fields(:hometown).id => "London" })
+    character.set_starting_sheet!(resonance: 0, skills: { soul_skills(:wit).id.to_s => 1 })
     assert character.submit!
     assert character.submitted?
 

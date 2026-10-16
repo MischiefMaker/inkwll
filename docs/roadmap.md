@@ -32,6 +32,7 @@ Status: **Now**, **Next**, **Later** or **Done**.
 Ideas the owner wants after the first release. Not built until the owner says so.
 
 - **Create an NPC (admin):** a lighter kind of character that staff make in the admin panel. An NPC can take an icon, SOUL skills and so on, but never shows in any player's Characters list. Any GM/Storyteller can use a pre-made NPC for an NPC Passage, with a dropdown of them beside the box where you type a name (owner, 2026-10-16). Note only, not built.
+- **Factions or teams (in addition to groups):** a character can belong to several, and each membership can be public or secret. For example, publicly in their family faction and secretly in an assassin's guild. They tie into Inklings, so an Inkling can be shared with a faction (owner, 2026-10-16). Note only, not built.
 - **Mini-map:** the Streets (Paths of type Street) make up a map; buildings and outdoor spaces sit on streets (owner, 2026-10-15). Note only, not built.
 - **Private Game option:** an admin setting that turns off guests, so you must be logged in to see anything. The main URL redirects to the login page when you're not logged in. Registering could also take an optional admin approval step before a new player can take part (owner, 2026-10-15). Note only, not built.
 - **More Wiki features from Wikidot:** borrow ideas from Wikidot's modules (https://www.wikidot.com/doc-modules:start), especially ListPages (lists of pages filtered by tag, category and so on) (owner, 2026-10-15). Note only, not built.

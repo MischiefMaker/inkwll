@@ -6,6 +6,17 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-16: Profile, SOUL and Inkling tweaks (owner)
+
+- The default application fields are "Goal" and "Secret" (not plural) and both are required.
+- Creating a character leads straight to its SOUL sheet; a character can't be submitted for approval until the starting sheet has some ratings saved.
+- A shield means "only you and staff can see this" (a lock suggested it couldn't be edited); a lock now means "can't be edited any more", such as application answers after approval.
+- Aspects don't get their own "+N to its Skills" column on the SOUL sheet; it is a hover note on the Aspect's name. (The small bonus rounds to 0 at low ratings.)
+- Picking the Skills a Boon or Bane affects uses tick boxes grouped by Aspect.
+- Approving an application can add the character to a group when they have none.
+- A new Path's type comes from the Setting it leads to (a Building for a building, otherwise a Street), and existing Paths can be edited with a pencil.
+- Linking a Chapter to an Inkling adds a new entry in the Inkling, with a link to the Chapter and the player's reason, asked for in a pop-up. It works from Chapters and from the Archives. Players can also cast a Grimoire spell inside an Inkling, like rolling a Skill.
+
 ## 2026-10-16: Chapter page and Directory tidy-up (owner)
 
 - Every Chapter gets a permanent number, counted in the order Chapters were started, shown at the top as "Chapter 12". It stays when the Chapter becomes a Manuscript.
