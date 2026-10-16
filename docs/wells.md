@@ -12,12 +12,7 @@ Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b 
 
 ### Marking a version ready (Claude)
 
-When main has passed the tests and run on inkwll.com, Claude pushes an annotated tag with plain-language notes as its message:
-
-    git tag -a v1.1 -m "What changed, in a few plain lines. Say if going back past this is unsafe."
-    git push origin v1.1
-
-The "Mark version ready" workflow turns the tag into a GitHub Release, and the Wells page lists it. Versions are v1.0, v1.1 and so on.
+When a commit on main has passed the tests and run on inkwll.com, Claude runs **Actions → Mark version ready** with the version name (v1.0, v1.1 and so on), the commit, and a few plain lines on what changed, saying if going back past it is unsafe. The workflow makes a GitHub Release (and its tag), and the Wells page lists it. Claude's cloud environment can't push tags directly, which is why this goes through a workflow.
 
 ---
 
