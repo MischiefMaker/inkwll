@@ -17,6 +17,14 @@ Short, plain-language notes on what changed. Newest first.
 - The Cast a spell box in a Chapter's side column fits.
 - "Add to an Inkling" in a Chapter (also in the Archives) asks why in a pop-up and adds an entry to the Inkling with a link to the Chapter. You can also cast a Grimoire spell in an Inkling.
 
+## 2026-10-16 — Speed and tidy-up
+
+- Pages that were doing a lot of repeat work now do much less: the OOC Chat beside every page, the front page, Where, and the Chapters list all load character and player pictures together instead of one at a time.
+- Pictures (icons) are now sent as smaller copies sized for where they show, so pages download faster. Animated GIF icons are left as they are.
+- The staff Players and Characters lists show 50 and 100 at a time, with page links.
+- Three database look-ups that had no index now have one.
+- Removed a few unused bits of code, and moved four one-time clean-ups into their migrations.
+
 ## 2026-10-16 — Chapter page and Directory tidy-up
 
 - Each Chapter has a number at the top ("Chapter 12") that never changes, and it stays on the finished Manuscript.
