@@ -368,7 +368,13 @@ a.ooc-message__author:hover { text-decoration: underline; }
 .character-profile--box-side { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; column-gap: var(--space); align-items: start; }
 .character-profile--box-side > * { grid-column: 1; }
 .character-profile--box-side > .profile-box--side { grid-column: 2; grid-row: 1 / span 20; flex-direction: column; flex-wrap: nowrap; align-items: stretch; text-align: center; margin-bottom: 0; }
-.profile-box--side .profile-box__actions { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+.profile-box--side .profile-box__actions { display: grid; grid-template-columns: 1fr; justify-items: stretch; gap: 0.4rem; }
+/* The side box's buttons are all the same width and height, whether they are links or buttons in a form. */
+.profile-box--side .profile-box__actions .icon-action { justify-self: center; }
+.profile-box--side .profile-box__actions form { display: flex; margin: 0; }
+.profile-box--side .profile-box__actions .button,
+.profile-box--side .profile-box__actions input[type="submit"].button { display: flex; align-items: center; justify-content: center; align-self: stretch; width: 100%; min-height: 4.2rem; box-sizing: border-box; text-align: center; }
+.profile-box--side .profile-box__actions form { flex: 1; }
 .profile-box--side .profile-box__actions > * { margin-right: 0; }
 .profile-box--side .profile-box__portrait { display: flex; justify-content: center; }
 .profile-box--side .profile-fields__row { grid-template-columns: 1fr; gap: 0; text-align: left; }

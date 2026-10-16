@@ -12,6 +12,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Security: probe players and Content Security Policy
 
+- On a profile with the side box, the buttons are all the same width and height.
 - "All Chapters" is now "Open Chapters": it lists only open Chapters, with a note and link saying finished ones are in the Archives.
 - All Chapters is styled up: bigger titles, tiny character icons, banded rows with borders, and a wider page.
 - On the front page, the Chapters count now links to the All Chapters list.
