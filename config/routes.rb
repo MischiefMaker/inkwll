@@ -94,7 +94,10 @@ Rails.application.routes.draw do
   get "where", to: "where#show"
   get "getting-started", to: "guides#show", as: :getting_started
   get "how-it-works", to: redirect("/getting-started")
-  get "archives", to: "archives#index"
+  # The Bookshelf (finished Chapters). The route keeps its plain name in code;
+  # the old /archives address redirects, keeping its filters.
+  get "bookshelf", to: "archives#index", as: :archives
+  get "archives", to: redirect { |_params, request| "/bookshelf#{"?#{request.query_string}" if request.query_string.present?}" }
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"
   resources :alerts, only: :index

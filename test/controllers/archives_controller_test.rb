@@ -34,4 +34,12 @@ class ArchivesControllerTest < ActionDispatch::IntegrationTest
     assert_select "button", text: "Undo finish"
     assert_select ".composer", count: 0
   end
+
+  test "the Bookshelf lives at /bookshelf and the old /archives address redirects, keeping filters" do
+    assert_equal "/bookshelf", archives_path
+    get "/archives?room_id=5"
+    assert_redirected_to "/bookshelf?room_id=5"
+    get "/archives"
+    assert_redirected_to "/bookshelf"
+  end
 end
