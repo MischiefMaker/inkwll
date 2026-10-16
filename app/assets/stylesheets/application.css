@@ -813,8 +813,13 @@ body { background: var(--color-bg) var(--page-image, none) center top / cover fi
 /* All Places, grouped by Area */
 .room-index { margin-bottom: var(--space); }
 .room-index__area { font-size: 1.15rem; margin: 0 0 0.25rem; }
-.room-index--depth-1 { margin-left: 1.5rem; }
-.room-index--depth-2, .room-index--depth-3 { margin-left: 3rem; }
+/* An inner Area's heading lines up with the bullets of its parent's Places;
+   its own Places step in one level from there. */
+.room-index--depth-1 .room-index__rooms { margin-left: 1.5rem; }
+.room-index--depth-2 .room-index__area { margin-left: 1.5rem; }
+.room-index--depth-2 .room-index__rooms { margin-left: 3rem; }
+.room-index--depth-3 .room-index__area { margin-left: 3rem; }
+.room-index--depth-3 .room-index__rooms { margin-left: 4.5rem; }
 
 /* Which character writes in a Chapter */
 .writing-as { margin-bottom: 0.5rem; }
