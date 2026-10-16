@@ -10,10 +10,12 @@
 <article class="scene <%= chapter_layout_classes %>" data-controller="scene-reader"
          data-scene-reader-url-value="<%= scene_reading_path(@scene) %>"
          data-scene-reader-participating-value="<%= @scene.participating?(current_account) %>">
-  <%= render "scenes/setting", scene: @scene %>
-
+  <%# Two columns on wide screens: the story, and beside it the Place, who's
+      in the Chapter and the writing tools. On narrower screens the side
+      column's parts slot back in above and below the story. %>
+  <div class="scene__main">
   <header class="scene__header">
-    <p class="scene__kicker"><%= term(:scene) %></p>
+    <p class="scene__kicker"><%= term(:scene) %> <%= @scene.number %></p>
     <h1 class="page-title"><%= @scene.title %></h1>
     <% if @scene.subtitle %><p class="scene__subtitle"><%= @scene.subtitle %></p><% end %>
     <p class="scene__meta muted">
@@ -32,8 +34,6 @@
   </header>
 
   <%= render "scenes/status", scene: @scene, participant: @participant %>
-
-  <%= render "scenes/participants", scene: @scene, participant: @participant %>
 
   <% if readable %>
     <% poses = @scene.poses.includes(:soul_roll, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>
@@ -68,9 +68,6 @@
       <%= render "characters/mini_profile", character: character %>
     <% end %>
 
-    <% if !@scene.writable? && @participant&.storyteller? && Soul.enabled? %>
-      <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant %>
-    <% end %>
     <% if whole && !@scene.finished? %>
       <p class="text passages__whole"><%= link_to "Back to the live #{term(:scene).downcase} to post", scene_path(@scene) %></p>
     <% elsif @scene.writable? %>
@@ -80,9 +77,6 @@
         <% if @participant %>
           <%= render "scenes/writing_as", scene: @scene, participant: @participant %>
           <%= render "scenes/composer", scene: @scene, participant: @participant %>
-          <%= render "scenes/roll", scene: @scene, participant: @participant if Soul.enabled? %>
-          <%= render "scenes/cast", scene: @scene, participant: @participant if Grimoire.enabled? %>
-          <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant if Soul.enabled? && @participant.storyteller? %>
         <% else %>
           <%= render "scenes/join", scene: @scene %>
         <% end %>
@@ -97,4 +91,22 @@
       <%= render "scenes/join", scene: @scene %>
     </div>
   <% end %>
+  </div>
+
+  <aside class="scene__side">
+    <%= render "scenes/setting", scene: @scene %>
+    <%= render "scenes/participants", scene: @scene, participant: @participant %>
+    <% if readable && @participant %>
+      <%# Posting tools only where you can post; Storyteller tools also after it ends. %>
+      <% posting = @scene.writable? && !whole %>
+      <% story_tools = Soul.enabled? && @participant.storyteller? && (posting || !@scene.writable?) %>
+      <% if posting || story_tools %>
+        <div class="scene__tools">
+          <%= render "scenes/roll", scene: @scene, participant: @participant if posting && Soul.enabled? %>
+          <%= render "scenes/cast", scene: @scene, participant: @participant if posting && Grimoire.enabled? %>
+          <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant if story_tools %>
+        </div>
+      <% end %>
+    <% end %>
+  </aside>
 </article>

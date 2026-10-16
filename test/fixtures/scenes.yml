@@ -3,6 +3,7 @@
 # secret: a hidden Chapter in the Commons that only Sable is in.
 # tea: a private Chapter in the Hall that only Moth is in.
 duel:
+  number: 1
   room: commons
   title: Duel at Dawn
   visibility: joinable
@@ -13,12 +14,14 @@ duel:
   last_pose_at: <%= 1.minute.ago.to_fs(:db) %>
 
 secret:
+  number: 2
   room: commons
   title: A Quiet Word
   visibility: hidden
   last_sequence: 0
 
 tea:
+  number: 3
   room: hall
   title: Afternoon Tea
   visibility: private

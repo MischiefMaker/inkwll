@@ -1,33 +1,21 @@
 <%# The Chapter's Setting, so each Chapter feels like being there: its name,
-    image, description and who is standing in it. %>
+    image, description and who is standing in it, with the Paths out of it
+    to the right (or underneath, in the narrow side column). %>
 <% room = scene.room %>
 <section class="scene-setting">
   <% if room.image.attached? %>
     <%= image_tag room.image, alt: "", class: "scene-setting__image" %>
   <% end %>
   <div class="scene-setting__body">
-    <%= render "areas/breadcrumbs", area: room.area, include_self: true, skip_home: true %>
-    <p class="scene-setting__name"><%= link_to room.name, room_path(room) %></p>
+    <div class="scene-setting__where">
+      <%= render "areas/breadcrumbs", area: room.area, include_self: true, skip_home: true %>
+      <p class="scene-setting__name"><%= link_to room.name, room_path(room) %></p>
+    </div>
     <% if room.description.present? %>
       <details class="scene-setting__description">
         <summary class="disclosure__summary">About this <%= term(:room).downcase %></summary>
         <div class="prose"><%= simple_format room.description %></div>
       </details>
-    <% end %>
-    <% if current_character&.room_id == room.id && room.exits.any? %>
-      <div class="scene-setting__paths">
-        <span class="scene-setting__paths-label muted"><%= term(:exit, count: 2) %>:</span>
-        <% Exit.in_compass_order(room.exits.reject(&:number)).each do |room_exit| %>
-          <%= button_to exit_movement_path(room_exit), class: "exit-link exit-link--small",
-                title: "Walk to #{room_exit.destination_room.name}", form_class: "scene-setting__path" do %><% if room_exit.compass? %><span class="exit-link__direction"><%= room_exit.direction %></span> <% end %><%= room_exit.name %><% end %>
-        <% end %>
-        <% if room.exits.any?(&:number) %>
-          <details class="scene-setting__numbered">
-            <summary class="disclosure__summary"><%= room.numbered_list_title %> (<%= room.exits.to_a.count(&:number) %>)</summary>
-            <%= render "rooms/numbered_paths", room: room, exits: room.exits, here: true %>
-          </details>
-        <% end %>
-      </div>
     <% end %>
     <p class="muted scene-setting__here">
       Here now:
@@ -38,4 +26,19 @@
       <% end %>
     </p>
   </div>
+  <% if current_character&.room_id == room.id && room.exits.any? %>
+    <div class="scene-setting__paths">
+      <span class="scene-setting__paths-label muted"><%= term(:exit, count: 2) %>:</span>
+      <% Exit.in_compass_order(room.exits.reject(&:number)).each do |room_exit| %>
+        <%= button_to exit_movement_path(room_exit), class: "exit-link exit-link--small",
+              title: "Walk to #{room_exit.destination_room.name}", form_class: "scene-setting__path" do %><% if room_exit.compass? %><span class="exit-link__direction"><%= room_exit.direction %></span> <% end %><%= room_exit.name %><% end %>
+      <% end %>
+      <% if room.exits.any?(&:number) %>
+        <details class="scene-setting__numbered">
+          <summary class="disclosure__summary"><%= room.numbered_list_title %> (<%= room.exits.to_a.count(&:number) %>)</summary>
+          <%= render "rooms/numbered_paths", room: room, exits: room.exits, here: true %>
+        </details>
+      <% end %>
+    </div>
+  <% end %>
 </section>

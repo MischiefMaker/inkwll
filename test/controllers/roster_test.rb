@@ -184,7 +184,7 @@ class RosterTest < ActionDispatch::IntegrationTest
 
     get directory_path
     assert_select ".directory__name", text: "Wren"
-    assert_select ".directory__item--roster", text: /Moth/
+    assert_select ".directory__name", text: "Moth", count: 0
 
     get directory_path, params: { field: hometown.id, value: "raven" }
     assert_select ".directory__name", text: "Wren"

@@ -191,8 +191,9 @@ class JcinkAddOnsTest < ActionDispatch::IntegrationTest
 
     sign_in_as(accounts(:bob))
     get directory_path
-    assert_select ".directory-tabs__tab--group", text: "Ravens"
-    assert_select ".directory-tabs__tab--roster"
+    assert_select ".directory-tabs__set--main .directory-tabs__tab--active.directory-tabs__tab--current", text: "Active"
+    assert_select ".directory-tabs__set--main .directory-tabs__tab--group", text: "Ravens"
+    assert_select ".directory-tabs__set--other .directory-tabs__tab--roster"
     assert_select ".directory-tabs__tab--unapproved", count: 0
     get directory_path, params: { unapproved: 1 }
     assert_select ".directory__name", text: "Newcomer", count: 0

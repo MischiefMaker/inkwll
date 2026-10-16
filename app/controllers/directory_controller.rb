@@ -1,6 +1,6 @@
-# The character directory, in tabs: everyone (approved characters being
-# played, and the roster), one tab per character group, the Roster, and for
-# staff the characters not approved yet. A public profile field filters
+# The character directory, in tabs: Active (approved characters being
+# played), one tab per character group, then apart from those the Roster and,
+# for staff, the characters not approved yet. A public profile field filters
 # whichever tab is open. /roster is the same page on the Roster tab.
 class DirectoryController < ApplicationController
   allow_previews
@@ -16,7 +16,7 @@ class DirectoryController < ApplicationController
     characters =
       if @roster_only then characters.on_roster
       elsif @unapproved then characters.active.where.not(status: "approved")
-      else characters.where("(characters.status = 'approved' AND characters.retired_at IS NULL) OR characters.on_roster_at IS NOT NULL")
+      else characters.where(status: "approved", retired_at: nil, on_roster_at: nil)
       end
 
     @field = @fields.find_by(id: params[:field])
