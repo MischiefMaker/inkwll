@@ -83,3 +83,14 @@
     <%= form.submit "Add numbered #{term(:room, count: 2).downcase}", class: "button" %>
   <% end %>
 </section>
+
+<section class="admin-delete">
+  <h2 class="section-title">Delete this <%= term(:room).downcase %></h2>
+  <% if @room.deletable? %>
+    <p class="muted">Nobody is in it and it has no <%= term(:scene, count: 2).downcase %>, so it can be deleted. Its <%= term(:exit, count: 2).downcase %>, and the ones leading here, are deleted with it. This can't be undone.</p>
+    <%= button_to "Delete #{@room.name}", admin_room_path(@room), method: :delete, class: "button button--danger admin-delete__button",
+          form: { data: { turbo_confirm: "Delete #{@room.name} and its #{term(:exit, count: 2).downcase}? This can't be undone." } } %>
+  <% else %>
+    <p class="muted admin-delete__blocked">It can't be deleted yet: <%= @room.deletion_blockers.to_sentence %></p>
+  <% end %>
+</section>

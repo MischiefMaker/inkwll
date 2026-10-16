@@ -132,10 +132,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#show"
     get "getting-started", to: "guides#show", as: :getting_started
-    resources :areas, only: %i[ index new create edit update ]
+    resources :areas, only: %i[ index new create edit update destroy ]
     resources :name_changes, only: :index
     resource :bulk_build, only: %i[ new create ], path: "build_several"
-    resources :rooms, only: %i[ new create edit update ] do
+    resources :rooms, only: %i[ new create edit update destroy ] do
       resources :exits, only: %i[ create edit update destroy ]
       resource :numbered_rooms, only: :create
     end

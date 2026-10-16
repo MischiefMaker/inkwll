@@ -16,6 +16,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - Approving an application can add the character to a group when they have none.
 - A new Path's type comes from the Setting it leads to (a Building for a building, otherwise a Street), and existing Paths can be edited with a pencil.
 - Players can rename themselves; a character can be renamed by its player only until it is approved (staff always can). Staff keep a log of every rename (Admin → Name changes).
+- Admin can delete Areas (only when empty) and Places (only with no characters, no Chapters and not the starting Place), so nothing in the Archives is lost (owner, 2026-10-16).
 - Linking a Chapter to an Inkling adds a new entry in the Inkling, with a link to the Chapter and the player's reason, asked for in a pop-up. It works from Chapters and from the Archives. Players can also cast a Grimoire spell inside an Inkling, like rolling a Skill.
 
 ## 2026-10-16: Chapter page and Directory tidy-up (owner)

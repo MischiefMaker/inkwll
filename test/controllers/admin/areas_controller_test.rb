@@ -44,4 +44,32 @@ class Admin::AreasControllerTest < ActionDispatch::IntegrationTest
     assert_select ".admin-menu__heading", text: "Settings", count: 0
     assert_select "body.is-admin"
   end
+
+  test "an empty Area can be deleted, one with Places or inner Areas can't" do
+    sign_in_as(accounts(:scribe))
+    empty = Area.create!(name: "Empty Land")
+    assert_difference "Area.count", -1 do
+      delete admin_area_path(empty)
+    end
+
+    full = rooms(:hall).area
+    assert_no_difference "Area.count" do
+      delete admin_area_path(full)
+    end
+    assert_redirected_to edit_admin_area_path(full)
+
+    outer = Area.create!(name: "Outer")
+    Area.create!(name: "Inner", parent: outer)
+    assert_no_difference "Area.count" do
+      delete admin_area_path(outer)
+    end
+  end
+
+  test "an ordinary player can't delete an Area" do
+    empty = Area.create!(name: "Empty Land")
+    sign_in_as(accounts(:alice))
+    assert_no_difference "Area.count" do
+      delete admin_area_path(empty)
+    end
+  end
 end

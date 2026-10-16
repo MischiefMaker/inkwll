@@ -3,3 +3,14 @@
 <h1 class="page-title">Edit <%= link_to @area.name, area_path(@area) %></h1>
 
 <%= render "form", area: @area %>
+
+<section class="admin-delete">
+  <h2 class="section-title">Delete this <%= term(:area).downcase %></h2>
+  <% if @area.deletable? %>
+    <p class="muted">It's empty, so it can be deleted. This can't be undone.</p>
+    <%= button_to "Delete #{@area.name}", admin_area_path(@area), method: :delete, class: "button button--danger admin-delete__button",
+          form: { data: { turbo_confirm: "Delete #{@area.name}? This can't be undone." } } %>
+  <% else %>
+    <p class="muted admin-delete__blocked">It can't be deleted yet: <%= @area.deletion_blockers.to_sentence %></p>
+  <% end %>
+</section>

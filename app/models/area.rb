@@ -17,6 +17,17 @@ class Area < ApplicationRecord
 
   scope :top_level, -> { where(parent_id: nil).order(:position, :name) }
 
+  # Why this Area can't be deleted yet; empty when it can. Its Places and
+  # inner Areas have to be deleted or moved first.
+  def deletion_blockers
+    blockers = []
+    blockers << "It has #{children.count} #{Term[:area, count: 2].downcase} inside it. Delete or move them first." if children.exists?
+    blockers << "It has #{rooms.count} #{Term[:room, count: 2].downcase} in it. Delete or move them first." if rooms.exists?
+    blockers
+  end
+
+  def deletable? = deletion_blockers.empty?
+
   # Where Enter on the front page takes a character: the area's chosen
   # default Setting, or failing that the first Setting made in it, or the
   # entrance of the first area inside it.

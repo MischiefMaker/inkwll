@@ -56,6 +56,19 @@ class Room < ApplicationRecord
   end
   private :save_area_default
 
+  # Why this Setting can't be deleted yet, as plain sentences; empty when it
+  # can. Chapters (open or finished) and characters are never thrown away
+  # with it, so the Archives and character records stay safe.
+  def deletion_blockers
+    blockers = []
+    blockers << "New characters start here. Pick another starting #{Term[:room].downcase} first." if starting?
+    blockers << "It has #{Character.where(room_id: id).count} character(s) in it. Move them out first." if Character.where(room_id: id).exists?
+    blockers << "It has #{Scene.where(room_id: id).count} #{Term[:scene, count: 2].downcase} (open or finished), which stay in the Archives." if Scene.where(room_id: id).exists?
+    blockers
+  end
+
+  def deletable? = deletion_blockers.empty?
+
   def kind_details
     KINDS.fetch(kind, KINDS["plain"])
   end

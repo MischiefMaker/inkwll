@@ -122,4 +122,34 @@ class Admin::RoomsControllerTest < ActionDispatch::IntegrationTest
     patch admin_room_exit_path(rooms(:hall), door), params: { exit: { name: "Hacked" } }
     assert_not_equal "Hacked", door.reload.name
   end
+
+  test "an empty Setting can be deleted along with its Paths, but not one with Chapters, characters or the starting flag" do
+    sign_in_as(accounts(:scribe))
+    spare = Room.create!(area: rooms(:hall).area, name: "Spare Room")
+    Exit.create!(source_room: rooms(:hall), destination_room: spare, name: "Spare door")
+    assert_difference "Room.count", -1 do
+      delete admin_room_path(spare)
+    end
+    assert_nil rooms(:hall).exits.find_by(name: "Spare door")
+
+    busy = scenes(:duel).room
+    assert_no_difference "Room.count" do
+      delete admin_room_path(busy)
+    end
+    assert_redirected_to edit_admin_room_path(busy)
+    assert_equal busy, Scene.find(scenes(:duel).id).room
+
+    start = Room.starting
+    assert_no_difference "Room.count" do
+      delete admin_room_path(start)
+    end
+  end
+
+  test "an ordinary player can't delete a Setting" do
+    spare = Room.create!(area: rooms(:hall).area, name: "Spare Room")
+    sign_in_as(accounts(:alice))
+    assert_no_difference "Room.count" do
+      delete admin_room_path(spare)
+    end
+  end
 end

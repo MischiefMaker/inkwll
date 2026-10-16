@@ -1,7 +1,7 @@
-# Building tools: create and edit Areas, which group Settings.
+# Building tools: create, edit and delete Areas, which group Settings.
 class Admin::AreasController < Admin::BaseController
   require_job :build
-  before_action :set_area, only: %i[ edit update ]
+  before_action :set_area, only: %i[ edit update destroy ]
 
   def index
     @areas = Area.top_level.includes(:rooms, children: :rooms)
@@ -28,6 +28,15 @@ class Admin::AreasController < Admin::BaseController
       redirect_to area_path(@area), notice: "#{Term[:area]} saved."
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # An Area is only deleted when it is empty.
+  def destroy
+    if @area.deletable? && @area.destroy
+      redirect_to admin_areas_path, notice: "#{Term[:area]} deleted."
+    else
+      redirect_to edit_admin_area_path(@area), alert: "Can't delete #{@area.name}: #{@area.deletion_blockers.to_sentence.presence || @area.errors.full_messages.to_sentence}"
     end
   end
 

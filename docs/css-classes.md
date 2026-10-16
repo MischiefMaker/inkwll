@@ -231,6 +231,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.roll-box__private` | The "Only me and staff see the result" checkbox in an Inkling's Roll a Skill |
 | `.inkling-link-box`, `.inkling-link-box__open`, `.inkling-link-modal`, `.inkling-link-modal__form`, `.inkling-link-modal__new` | "Add to an Inkling" in a Chapter's tools: the button, and the pop-up that asks why |
 | `.name-changes`, `.name-changes__row` (with `--player`, `--character`), `.name-changes__pages`, `.name-changes__empty` | Admin → Name changes: the log of renames |
+| `.admin-delete`, `.admin-delete__button`, `.admin-delete__blocked` | The "Delete this Area/Place" box at the bottom of the admin edit pages |
 | `.skill-checkboxes`, `.skill-checkboxes__group`, `.skill-checkboxes__aspect`, `.skill-checkboxes__option` | The tick-box list for picking Skills (grouped by Aspect) on Boons and Banes |
 | `.modal`, `.modal__form`, `.modal__title`, `.modal__actions` | Any pop-up box (a `<dialog>`) |
 | `.inkling-entry__chapter`, `.inkling-entry__chapter-link` | The "Chapter: …" line on an Inkling entry that came from a Chapter |

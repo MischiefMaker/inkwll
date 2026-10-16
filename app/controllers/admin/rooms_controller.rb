@@ -1,7 +1,7 @@
-# Building tools: create and edit rooms (Settings).
+# Building tools: create, edit and delete rooms (Settings).
 class Admin::RoomsController < Admin::BaseController
   require_job :build
-  before_action :set_room, only: %i[ edit update ]
+  before_action :set_room, only: %i[ edit update destroy ]
 
   def new
     @room = Room.new(area_id: params[:area_id])
@@ -24,6 +24,18 @@ class Admin::RoomsController < Admin::BaseController
       redirect_to room_path(@room), notice: "#{Term[:room]} saved."
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # A Setting is only deleted when nobody is in it and it has no Chapters, so
+  # nothing in the Archives is lost. Its Paths (and the Paths leading to it)
+  # go with it.
+  def destroy
+    area = @room.area
+    if @room.deletable? && @room.destroy
+      redirect_to admin_areas_path, notice: "#{Term[:room]} deleted."
+    else
+      redirect_to edit_admin_room_path(@room), alert: "Can't delete #{@room.name}: #{@room.deletion_blockers.to_sentence.presence || @room.errors.full_messages.to_sentence}"
     end
   end
 
