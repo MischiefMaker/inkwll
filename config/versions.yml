@@ -2,6 +2,15 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.5
+  commit: 7a340601ce9c5bfe385f6c194d02423bd7d999ad
+  date: 2026-10-16
+  notes: |
+    - A new Well's first sign-up link disappears from the Wells page once the Well has a Founder.
+    - Import a world for Founders, with bundled web fonts.
+    - The Founder's admin front page lists an available update under Needs Attention.
+    Going back to v1.4 is safe.
+
 - version: v1.4
   commit: d238acb8949f41d80bf58108c2ff74b072ea9594
   date: 2026-10-16
