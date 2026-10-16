@@ -9,7 +9,7 @@
     <details class="alert-menu" data-controller="alert-menu" data-action="toggle->alert-menu#toggle click@document->alert-menu#closeOutside">
       <summary class="alert-menu__summary"><%= render "alerts/count", account: current_account %></summary>
       <div class="alert-menu__panel">
-        <turbo-frame id="alerts_panel" class="alert-menu__frame" data-alert-menu-target="frame" data-src="<%= alerts_path %>">
+        <turbo-frame id="alerts_panel" target="_top" class="alert-menu__frame" data-alert-menu-target="frame" data-src="<%= alerts_path %>">
           <p class="text muted">Loading…</p>
         </turbo-frame>
       </div>
