@@ -62,6 +62,8 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".version-footer", text: "Inkwll v1.0"
     assert_select ".wells__release--current", text: /Running now/
     assert_select "button.wells__install", text: "Update to v1.1"
+    assert_select ".wells__older .wells__release", text: /First version/
+    assert_select ".wells__older button", count: 0
   end
 
   test "every page shows the version at the bottom, or the build for a deploy of main" do
