@@ -35,6 +35,8 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
   end
 
   setup do
+    @old_founder_check = Well.founder_check
+    Well.founder_check = ->(_domain) { @well_has_founder || false }
     @github = FakeGithub.new
     GithubActions.current = @github
     @old_version = ENV["INKWLL_VERSION"]
@@ -42,6 +44,7 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
   end
 
   teardown do
+    Well.founder_check = @old_founder_check
     GithubActions.current = nil
     ENV["INKWLL_VERSION"] = @old_version
   end
@@ -167,6 +170,30 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     assert_includes well.setup_url, "name=Founder"
     assert_includes well.setup_url, CGI.escape("founder@example.com")
     assert_not_includes Well.new(account: accounts(:founder), domain: "x.inkwll.com", setup_code: "abc").setup_url, "email="
+  end
+
+  test "the first sign-up link disappears once the Well has a Founder" do
+    well = Well.create!(name: "Moonfall", slug: "moonfall", domain: "moonfall.inkwll.com", status: "live", version: "v1.1", account: accounts(:founder))
+    sign_in_as(accounts(:founder))
+    get admin_wells_path
+    assert_select ".wells__setup-link code", text: well.setup_url
+
+    @well_has_founder = true
+    get admin_wells_path
+    assert_select ".wells__setup-link", count: 0
+    assert well.reload.founder_claimed_at
+
+    @well_has_founder = false
+    get admin_wells_path
+    assert_select ".wells__setup-link", count: 0
+  end
+
+  test "a Well that can't be reached keeps its sign-up link" do
+    Well.founder_check = ->(_domain) { raise Errno::ECONNREFUSED }
+    Well.create!(name: "Moonfall", slug: "moonfall", domain: "moonfall.inkwll.com", status: "live", version: "v1.1", account: accounts(:founder))
+    sign_in_as(accounts(:founder))
+    get admin_wells_path
+    assert_select ".wells__setup-link"
   end
 
   test "a new Well needs its name typed again and a good address" do
