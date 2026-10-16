@@ -39,6 +39,9 @@ It needs these in the repository's **Settings → Secrets and variables → Acti
 | `SECRET_KEY_BASE` | Secret | The `SECRET_KEY_BASE` line's value from `deploy/secrets.env` |
 | `DATABASE_PASSWORD` | Secret | The `DATABASE_PASSWORD` line's value from `deploy/secrets.env` |
 | `WELLS_GITHUB_TOKEN` | Secret | Optional. The token for the Founder's Wells page (see `docs/wells.md`) |
+| `DIGITALOCEAN_TOKEN` | Secret | Optional. Lets a new Well's subdomain be made in DigitalOcean's DNS (domain scope only) |
+
+Other Wells on the droplet keep their own passwords in `/root/wells/<short name>.env` on the droplet, and their backups in `/root/backups/<short name>-before-update-*`.
 
 Every deploy except the first backs up the database on the droplet first, to
 `/root/backups/before-update-<date>.sql.gz`. The newest ten are kept. If the

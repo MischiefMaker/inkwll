@@ -871,7 +871,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_030000) do
     t.string "run_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "well_id"
+    t.boolean "first_time", default: false, null: false
     t.index ["account_id"], name: "index_well_updates_on_account_id"
+    t.index ["well_id"], name: "index_well_updates_on_well_id"
+  end
+
+  create_table "wells", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.string "domain", null: false
+    t.string "setup_code", null: false
+    t.string "status", default: "starting", null: false
+    t.string "version"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_wells_on_account_id"
+    t.index ["domain"], name: "index_wells_on_domain", unique: true
+    t.index ["slug"], name: "index_wells_on_slug", unique: true
   end
 
   create_table "wiki_pages", force: :cascade do |t|
@@ -1013,6 +1031,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_030000) do
   add_foreign_key "soul_xp_entries", "accounts", column: "actor_id"
   add_foreign_key "soul_xp_entries", "characters"
   add_foreign_key "well_updates", "accounts"
+  add_foreign_key "well_updates", "wells"
+  add_foreign_key "wells", "accounts"
   add_foreign_key "wiki_pages", "accounts", column: "updated_by_id", on_delete: :nullify
   add_foreign_key "wiki_revisions", "accounts", on_delete: :nullify
   add_foreign_key "wiki_revisions", "wiki_pages", column: "page_id", on_delete: :cascade

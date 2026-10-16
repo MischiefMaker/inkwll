@@ -1,22 +1,51 @@
 <% content_for :title, "Wells · Admin · Inkwll" %>
-<% if @updates.any?(&:running?) %>
+<% if @updates.any? { |update| update.running? || update.status == "waiting_turn" } %>
   <% content_for :head do %><meta http-equiv="refresh" content="15"><% end %>
 <% end %>
 
 <h1 class="page-title">Wells</h1>
+<% if @home_url %>
+  <p class="text wells__home">This Well runs <strong><%= inkwll_version_name || "an unknown version" %></strong>. Its updates are done from <%= link_to "#{@home_url}/admin/wells", "#{@home_url}/admin/wells" %>.</p>
+<% else %>
 <p class="muted">Only the <%= term(:founder) %> sees this page. Each Well is its own game with its own database. Updates are done by GitHub, and only versions Claude has marked ready can be installed. A database backup is made before every update.</p>
 
+<% busy = @updates.any? { |update| update.running? || update.status == "waiting_turn" } %>
+<% @updates.select { |update| update.running? || update.status == "waiting_turn" }.reverse_each do |update| %>
+  <p class="flash flash--notice wells__busy"><strong><%= update.first_time ? "Starting #{(update.well&.name || game_name)} at #{update.version}" : "Updating #{(update.well&.name || game_name)} to #{update.version}" %>: <%= update.state_label.downcase %>.</strong>
+    <%= update.state_label == "Waiting to start" ? "GitHub starts it as soon as any other deploy has finished." : "It takes a few minutes." %> This page checks every 15 seconds, so there's nothing to do but wait.<% if update.run_url.present? %> <%= link_to "See the log", update.run_url, target: "_blank", rel: "noopener" %><% end %></p>
+<% end %>
 <table class="table wells__list">
-  <thead class="table__head"><tr class="table__row"><th class="table__heading">Well</th><th class="table__heading">Address</th><th class="table__heading">Version</th></tr></thead>
+  <thead class="table__head"><tr class="table__row"><th class="table__heading">Well</th><th class="table__heading">Address</th><th class="table__heading">Version</th><th class="table__heading"></th></tr></thead>
   <tbody class="table__body">
     <tr class="table__row wells__well">
       <td class="table__cell"><%= game_name %> <span class="muted">(this one)</span></td>
       <td class="table__cell"><%= ENV.fetch("APP_HOST", request.host) %></td>
       <td class="table__cell wells__version"><%= inkwll_version_name || "Unknown" %></td>
+      <td class="table__cell muted">Update it under Versions below.</td>
     </tr>
+    <% @wells.each do |well| %>
+      <tr class="table__row wells__well wells__well--<%= well.status %>">
+        <td class="table__cell"><%= well.name %></td>
+        <td class="table__cell"><%= link_to well.domain, "https://#{well.domain}", target: "_blank", rel: "noopener" %></td>
+        <td class="table__cell wells__version"><%= { "starting" => "Starting…", "failed" => "Didn't start" }.fetch(well.status, well.version) %></td>
+        <td class="table__cell">
+          <% if @releases.any? && !busy %>
+            <%= form_with url: admin_well_updates_path, class: "wells__install-form", data: { turbo_confirm: "Install this version on #{well.name}? A database backup is made first." } do |form| %>
+              <%= form.hidden_field :well_id, value: well.id %>
+              <%= form.select :version, @releases.map(&:tag), { selected: @releases.first.tag }, class: "wells__install-version", aria: { label: "Version for #{well.name}" } %>
+              <%= form.submit (well.status == "failed" ? "Try again" : "Install"), class: "button wells__install" %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <% if well.status == "live" %>
+        <tr class="table__row wells__setup-link">
+          <td class="table__cell muted" colspan="4">First sign-up link for <%= well.name %> (that player becomes its <%= term(:founder) %>; it stops working once it has one): <code><%= well.setup_url %></code></td>
+        </tr>
+      <% end %>
+    <% end %>
   </tbody>
 </table>
-<p class="muted wells__later">Starting new Wells, on this droplet or a new one, comes in a later step.</p>
 
 <h2 class="section-title">Versions</h2>
 <p class="text wells__current">You are currently running <strong><%= inkwll_version_name || "an unknown version" %></strong>.</p>
@@ -37,7 +66,6 @@
   <p class="muted">No versions are marked ready yet.</p>
 <% else %>
   <% current_index = @releases.index { |release| release.tag == @current_version } %>
-  <% busy = @updates.any?(&:running?) %>
   <ul class="wells__releases">
     <% @releases.each_with_index do |release, index| %>
       <li class="wells__release<%= " wells__release--current" if index == current_index %>">
@@ -50,6 +78,10 @@
           <%= button_to (going_back ? "Go back to #{release.tag}" : "Update to #{release.tag}"), admin_well_updates_path, params: { version: release.tag }, class: "button wells__install",
                 form: { data: { turbo_confirm: going_back ? "Go back to #{release.tag}? Database changes made by newer versions stay." : "Update the live game to #{release.tag}? A database backup is made first." } } %>
         <% end %>
+        <% if index.zero? && @wells.any? { |well| well.status == "live" } && !busy %>
+          <%= button_to "Update every Well to #{release.tag}", admin_well_updates_path, params: { version: release.tag, all: "1" }, class: "button wells__install-all",
+                form: { data: { turbo_confirm: "Update this game and every other Well to #{release.tag}, one after another? Keep the page open while it runs." } } %>
+        <% end %>
       </li>
     <% end %>
   </ul>
@@ -58,11 +90,12 @@
 <% if @updates.any? %>
   <h2 class="section-title">Recent updates</h2>
   <table class="table wells__updates">
-    <thead class="table__head"><tr class="table__row"><th class="table__heading">Version</th><th class="table__heading">Started</th><th class="table__heading">By</th><th class="table__heading">How it went</th></tr></thead>
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Well</th><th class="table__heading">Version</th><th class="table__heading">Started</th><th class="table__heading">By</th><th class="table__heading">How it went</th></tr></thead>
     <tbody class="table__body">
       <% @updates.each do |update| %>
         <tr class="table__row wells__update wells__update--<%= update.state_kind %>">
-          <td class="table__cell"><%= update.version %></td>
+          <td class="table__cell"><%= (update.well&.name || game_name) %></td>
+          <td class="table__cell"><%= update.first_time ? "Start at #{update.version}" : update.version %></td>
           <td class="table__cell"><%= update.created_at.to_fs(:short) %></td>
           <td class="table__cell"><%= update.account.display_name %></td>
           <td class="table__cell"><%= update.state_label %><% if update.run_url.present? %> · <%= link_to "Log", update.run_url, target: "_blank", rel: "noopener" %><% end %></td>
@@ -70,4 +103,34 @@
       <% end %>
     </tbody>
   </table>
+<% end %>
+
+<% if @configured && !@github_error %>
+  <h2 class="section-title">Start a new Well</h2>
+  <% newest = @releases.first %>
+  <% if newest.nil? %>
+    <p class="muted">A version has to be marked ready first.</p>
+  <% elsif busy %>
+    <p class="muted">Wait for the running update to finish first.</p>
+  <% else %>
+    <p class="muted">A new game on this droplet, with its own database, at its own address under <%= @base_domain %>. It starts with <%= newest.tag %> and the starter map. This droplet has 1 GB of memory, which is probably enough for two small Wells; more need a bigger droplet.</p>
+    <%= form_with model: @well, url: admin_wells_path, method: :post, class: "form wells__new" do |form| %>
+      <%= render "shared/errors", record: @well %>
+      <div class="field">
+        <%= form.label :name, "The Well's name" %>
+        <%= form.text_field :name, maxlength: 60, required: true %>
+      </div>
+      <div class="field">
+        <%= form.label :slug, "Its address" %>
+        <span class="wells__address"><%= form.text_field :slug, maxlength: 20, required: true, pattern: "[a-z][a-z0-9]{1,19}", class: "wells__slug" %>.<%= @base_domain %></span>
+        <p class="muted field__hint">Small letters and numbers only, like moonfall.</p>
+      </div>
+      <div class="field">
+        <%= label_tag :confirm_name, "Type the name again to confirm" %>
+        <%= text_field_tag :confirm_name, nil, required: true, autocomplete: "off" %>
+      </div>
+      <%= form.submit "Start this Well", class: "button wells__start" %>
+    <% end %>
+  <% end %>
+<% end %>
 <% end %>

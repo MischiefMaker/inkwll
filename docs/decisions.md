@@ -37,7 +37,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - A Founder-only Admin → Wells page starts and updates Wells. Only the Founder flag sees it.
 - Its buttons ask GitHub to run the Deploy workflow; the game never runs Kamal itself. The game holds only a GitHub token that can run workflows and read the code; the droplet SSH key and the DigitalOcean token stay in GitHub's secrets.
 - Update offers only versions Claude has marked ready (listed in `config/versions.yml`), never whatever is on main. Each update backs up the database first, and an earlier version can be put back.
-- inkwll.com's DNS moves to DigitalOcean so subdomains can be made automatically. The domain stays registered at Namecheap.
+- inkwll.com's DNS moves to DigitalOcean so subdomains can be made automatically. The domain stays registered at Namecheap. On 2026-10-16 the owner chose to move it now (before the first subdomain Well), not to use a Namecheap wildcard record in the meantime.
 - Built in four steps, each with the owner's go-ahead. Details in `docs/wells.md`.
 
 ## 2026-10-15: "Page" staff level renamed Steward (owner)

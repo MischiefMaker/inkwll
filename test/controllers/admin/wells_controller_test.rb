@@ -19,7 +19,12 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
         GithubActions::Release.new(tag: "v1.0", name: "v1.0", notes: "First version.", published_at: 3.days.ago) ]
     end
 
-    def start_update(version:, request_id:) = @started << [ version, request_id ]
+    def start_update(version:, request_id:, well: nil, first_time: false)
+      @started << [ version, request_id ]
+      @started_for = (@started_for || []) << [ well&.slug, first_time ]
+    end
+
+    attr_reader :started_for
 
     def find_run(request_id)
       return unless @started.any? { |_, id| id == request_id }
@@ -85,6 +90,7 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
 
     get admin_wells_path
     assert_select ".wells__update--working", text: /Working/
+    assert_select ".wells__busy", text: /Updating Inkwll to v1.1: working/
     assert_select "button.wells__install", count: 0
     assert_select "meta[http-equiv=refresh]"
 
@@ -116,5 +122,58 @@ class Admin::WellsControllerTest < ActionDispatch::IntegrationTest
     get admin_wells_path
     assert_equal "lost", update.reload.status
     assert_select ".wells__update--failed", text: /Never started/
+  end
+
+  test "the Founder starts a new Well with the newest version" do
+    sign_in_as(accounts(:founder))
+    post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall" }, confirm_name: "Moonfall" }
+    assert_redirected_to admin_wells_path
+    well = Well.find_by!(slug: "moonfall")
+    assert_equal "moonfall.inkwll.com", well.domain
+    assert_equal [ [ "moonfall", true ] ], @github.started_for
+    assert_equal "v1.1", well.well_updates.last.version
+
+    @github.run_status = "completed"
+    get admin_wells_path
+    assert_equal "live", well.reload.status
+    assert_equal "v1.1", well.version
+    assert_select ".wells__setup-link code", text: well.setup_url
+  end
+
+  test "a new Well needs its name typed again and a good address" do
+    sign_in_as(accounts(:founder))
+    assert_no_difference("Well.count") { post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall" }, confirm_name: "Moon" } }
+    assert_no_difference("Well.count") { post admin_wells_path, params: { well: { name: "Moonfall", slug: "Moon Fall!" }, confirm_name: "Moonfall" } }
+    assert_no_difference("Well.count") { post admin_wells_path, params: { well: { name: "Again", slug: "inkwll" }, confirm_name: "Again" } }
+    assert_empty @github.started
+  end
+
+  test "a Wellkeeper who isn't the Founder can't start a Well" do
+    sign_in_as(accounts(:wellkeeper))
+    assert_no_difference("Well.count") { post admin_wells_path, params: { well: { name: "Moonfall", slug: "moonfall" }, confirm_name: "Moonfall" } }
+  end
+
+  test "Update every Well goes one at a time, this game first" do
+    well = Well.create!(name: "Moonfall", slug: "moonfall", domain: "moonfall.inkwll.com", status: "live", version: "v1.0", account: accounts(:founder))
+    sign_in_as(accounts(:founder))
+    post admin_well_updates_path, params: { version: "v1.1", all: "1" }
+    assert_equal [ [ nil, false ] ], @github.started_for
+    assert_equal 1, WellUpdate.waiting_turn.count
+
+    @github.run_status = "completed"
+    get admin_wells_path
+    assert_equal [ [ nil, false ], [ "moonfall", false ] ], @github.started_for
+    get admin_wells_path
+    assert_equal "v1.1", well.reload.version
+  end
+
+  test "another Well's page says where its updates are done" do
+    ENV["INKWLL_HOME_URL"] = "https://inkwll.com"
+    sign_in_as(accounts(:founder))
+    get admin_wells_path
+    assert_select ".wells__home a", text: "https://inkwll.com/admin/wells"
+    assert_select "form.wells__new", count: 0
+  ensure
+    ENV["INKWLL_HOME_URL"] = nil
   end
 end

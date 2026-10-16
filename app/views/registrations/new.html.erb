@@ -3,6 +3,10 @@
 <h1 class="page-title">Create an account</h1>
 
 <%= form_with model: @account, url: registration_path, class: "form" do |form| %>
+  <% if @setup_code %>
+    <p class="flash flash--notice registration__founder">You're setting up this Well: this account will be its <%= term(:founder) %>.</p>
+    <%= hidden_field_tag :setup, @setup_code %>
+  <% end %>
   <%= render "shared/errors", record: @account %>
 
   <div class="field">

@@ -153,7 +153,7 @@ Rails.application.routes.draw do
     resource :features, only: %i[ edit update ]
     resource :game_lock, only: %i[ create destroy ]
     resource :skin, only: %i[ edit update ]
-    resource :wells, only: :show
+    resource :wells, only: %i[ show create ]
     resources :well_updates, only: :create
     resources :profile_fields, except: %i[ show new ]
     resources :character_groups, except: %i[ show new ]

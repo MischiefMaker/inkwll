@@ -38,8 +38,12 @@ class GithubActions
 
   # Asks GitHub to run Deploy with this version. GitHub doesn't say which run
   # it started, so the request id goes into the run's title to find it later.
-  def start_update(version:, request_id:)
-    post("/actions/workflows/#{WORKFLOW}/dispatches", ref: branch, inputs: { version: version, request_id: request_id })
+  # For another Well, well: is its row, and first_time: starts it.
+  def start_update(version:, request_id:, well: nil, first_time: false)
+    inputs = { version: version, request_id: request_id }
+    inputs.merge!(well: well.slug, well_domain: well.domain) if well
+    inputs.merge!(first_time: "true", setup_code: well.setup_code) if well && first_time
+    post("/actions/workflows/#{WORKFLOW}/dispatches", ref: branch, inputs: inputs)
   end
 
   def find_run(request_id)

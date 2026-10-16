@@ -49,6 +49,12 @@ Short, plain-language notes on what changed. Newest first.
 - Chapters have a new look, Manuscript: a serif page like a book, with the cast as cards under the title, small round pictures beside each Passage, narration centred, OOC as side notes and a ✦ ✦ ✦ break when half a day or more passes.
 - Admin → Look can switch to Forum (a portrait and details beside every Passage) or Chat (the old look), and set Manuscript's cast and Passage pictures to large or small.
 
+## 2026-10-16 — New Wells
+
+- The Founder can start a new Well (a separate game with its own database) on this droplet from Admin → Wells, at an address like moonfall.inkwll.com. Its first sign-up link makes that player its Founder.
+- Each Well can be updated on its own, or every Well at once, one after another.
+- While an update runs, a box at the top of the Wells page says what it's doing and that the page checks every 15 seconds.
+
 ## 2026-10-16 — Version on every page
 
 - Every page shows the Inkwll version in small text at the bottom middle, like "Inkwll v1.0" ("Inkwll build 06b8e1b" between marked versions).

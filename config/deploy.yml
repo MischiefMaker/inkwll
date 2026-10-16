@@ -3,8 +3,12 @@
 # Nothing secret goes in this file. Passwords and keys are read by
 # .kamal/secrets from the deploy folder in the project files.
 
-service: inkwll
-image: inkwll
+# Each Well (game) on a droplet is its own Kamal service with its own
+# database and uploads. inkwll.com is "inkwll"; the Deploy workflow sets
+# INKWLL_SERVICE for other Wells. See docs/wells.md.
+<% service = ENV.fetch("INKWLL_SERVICE", "inkwll") %>
+service: <%= service %>
+image: <%= service %>
 
 # The droplet's IP address.
 servers:
@@ -15,15 +19,19 @@ servers:
 # minutes to pass its health check instead of the default 30 seconds.
 deploy_timeout: 120
 
-# kamal-proxy answers for the game's domain (and its www. version) and gets
-# free HTTPS certificates for them from Let's Encrypt. The domain's DNS must
-# already point at the droplet when this deploys, or the certificates fail.
-# Plain http visits are sent on to https.
+# kamal-proxy answers for the game's domain (and its www. version, except
+# for subdomains like moonfall.inkwll.com) and gets free HTTPS certificates
+# for them from Let's Encrypt. The domain's DNS must already point at the
+# droplet when this deploys, or the certificates fail. Plain http visits are
+# sent on to https. One kamal-proxy serves every Well on the droplet.
+<% domain = ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
 proxy:
   ssl: true
   hosts:
-    - <%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
-    - www.<%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
+    - <%= domain %>
+<% if domain.count(".") == 1 %>
+    - www.<%= domain %>
+<% end %>
   app_port: 80
   healthcheck:
     path: /up
@@ -48,10 +56,12 @@ env:
     - WELLS_GITHUB_TOKEN
   clear:
     SOLID_QUEUE_IN_PUMA: true
-    DB_HOST: inkwll-db
+    DB_HOST: <%= service %>-db
     # The game's domain: links in emails use it, and www. visits are sent
     # on to it.
-    APP_HOST: <%= ENV.fetch("INKWLL_DOMAIN", "inkwll.com") %>
+    APP_HOST: <%= domain %>
+    # Set for Wells other than inkwll.com: where their updates are done from.
+    INKWLL_HOME_URL: "<%= ENV.fetch("INKWLL_HOME_URL", "") %>"
     # Fewer threads and one process suit the 1 GB droplet.
     RAILS_MAX_THREADS: 3
     # Which version this is, shown on the Wells page. Set by the Deploy workflow.
@@ -66,7 +76,7 @@ aliases:
 
 # Uploaded images live in this volume, so they survive new deploys.
 volumes:
-  - "inkwll_storage:/rails/storage"
+  - "<%= service %>_storage:/rails/storage"
 
 asset_path: /rails/public/assets
 
@@ -78,7 +88,9 @@ accessories:
   db:
     image: postgres:16
     host: <%= ENV.fetch("INKWLL_SERVER", "DROPLET_IP_GOES_HERE") %>
+<% if service == "inkwll" %>
     port: "127.0.0.1:5432:5432"
+<% end %>
     env:
       clear:
         POSTGRES_USER: inkwll

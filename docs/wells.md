@@ -10,6 +10,16 @@ Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b 
 - **Going back** rebuilds the earlier version. Database changes made by newer versions stay, so a version's notes say when going back past it is unsafe.
 - **The key:** the game reads `WELLS_GITHUB_TOKEN` (a fine-grained GitHub token, only the inkwll repository, Actions read and write, Contents read-only). It's a repository secret, and the Deploy workflow hands it to the game through Kamal. Without it, the page shows how to make one. `WELLS_GITHUB_REPO` and `WELLS_GITHUB_BRANCH` change where it points, for someone running their own copy.
 
+## New Wells on this droplet (step 12b)
+
+- **Start a new Well** on the Wells page asks for a name and a short name (moonfall), which becomes its address (moonfall.inkwll.com). Typing the name twice confirms it. It starts with the newest version marked ready.
+- GitHub runs the Deploy workflow with `well`, `well_domain`, `setup_code` and `first_time`. The workflow makes the address in DigitalOcean's DNS (`DIGITALOCEAN_TOKEN` secret, only for subdomains of inkwll.com), makes the Well's own passwords on the droplet in `/root/wells/<short name>.env` the first time (never in GitHub), and runs `kamal setup` with `INKWLL_SERVICE` set to the short name. Each Well is its own Kamal service with its own database container, uploads volume and backups; one kamal-proxy serves them all.
+- A version from before Wells existed (v1.0) can't be put on another Well; the workflow refuses, because its Kamal settings would deploy over inkwll.com.
+- When it's running, the page shows a **first sign-up link**. Whoever signs up with it becomes that Well's Founder (and Wellkeeper). It stops working once the Well has a Founder.
+- Each Well's row has a version list and **Install**, and the newest version has **Update every Well**, which does this game first and then each other Well, one at a time. The page starts the next one when it sees the last finish, so it has to be left open.
+- Other Wells don't get the GitHub key; their Wells page says their updates are done from inkwll.com.
+- Memory: the 1 GB droplet probably holds two small Wells. More need a bigger droplet (resize in DigitalOcean).
+
 ### Marking a version ready (Claude)
 
 When a commit on main has passed the tests and run on inkwll.com, Claude adds it to the top of `config/versions.yml` on main: the next version name (v1.1, v1.2 and so on; v1.0 is what was live on 16 October 2026), the full commit id, the date, and a few plain lines on what changed, saying if going back past it is unsafe. The Wells page reads that file from GitHub, so the new version shows up without a deploy. The Deploy workflow looks the version up in the same file and deploys that commit. A plain deploy of main whose commit is already in the list gets that version's name too.

@@ -1,5 +1,6 @@
 # Update on the Wells page: asks GitHub to deploy a version marked ready to
-# this Well. Only the Founder can, one update at a time.
+# this game, to one other Well, or to every Well one after another. Only the
+# Founder can, one update at a time.
 class Admin::WellUpdatesController < Admin::BaseController
   before_action :require_founder
   limit_posting to: 5, within: 10.minutes, only: :create
@@ -7,18 +8,18 @@ class Admin::WellUpdatesController < Admin::BaseController
   def create
     github = GithubActions.current
     version = params.require(:version).to_s
-    return redirect_to(admin_wells_path, alert: "An update is already running. Wait for it to finish.") if WellUpdate.running.exists?
+    return redirect_to(admin_wells_path, alert: "An update is already running. Wait for it to finish.") if WellUpdate.running.exists? || WellUpdate.waiting_turn.exists?
     return redirect_to(admin_wells_path, alert: "#{version} isn't a version marked ready.") unless github.releases.any? { |release| release.tag == version }
 
-    update = WellUpdate.create!(account: current_account, version: version, request_id: SecureRandom.hex(4))
-    begin
-      github.start_update(version: version, request_id: update.request_id)
-    rescue GithubActions::Error
-      update.update!(status: "failed_to_start")
-      raise
+    # This game goes first, then the other Wells in the order they started.
+    targets = params[:all].present? ? [ nil, *Well.listed.where(status: "live") ] : [ params[:well_id].presence && Well.find(params[:well_id]) ]
+    updates = targets.map do |well|
+      WellUpdate.create!(account: current_account, well: well, version: version, request_id: SecureRandom.hex(4), status: "waiting_turn")
     end
-    redirect_to admin_wells_path, notice: "Updating to #{version}. This page shows how it's going."
+    updates.first.start!(github)
+    redirect_to admin_wells_path, notice: updates.one? ? "Updating #{updates.first.well_name} to #{version}. This page shows how it's going." : "Updating every Well to #{version}, one after another. Keep this page open; it starts each one when the last is done."
   rescue GithubActions::Error => error
+    WellUpdate.waiting_turn.update_all(status: "failed_to_start")
     redirect_to admin_wells_path, alert: error.message
   end
 end
