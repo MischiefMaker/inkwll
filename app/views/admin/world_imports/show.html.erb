@@ -1,0 +1,18 @@
+<% content_for :title, "Import a world · Admin · Inkwll" %>
+
+<h1 class="page-title">Import a world</h1>
+<p class="text muted">Sets up this game from a world pack: a file holding <%= term(:area, count: 2).downcase %>, <%= term(:room, count: 2).downcase %>, <%= term(:exit, count: 2).downcase %>, wiki pages, <%= term(:forum_board, count: 2).downcase %>, the front page text and the game's look. Claude makes these from old games. You see everything it would change before anything happens.</p>
+
+<%= form_with url: admin_world_import_path, class: "form world-import-form", multipart: true do |form| %>
+  <div class="field">
+    <%= form.label :pack, "World pack file" %>
+    <%= form.file_field :pack, accept: ".json,application/json", required: true %>
+    <small class="hint">A .json file, up to <%= WorldPack::MAX_SIZE / 1.megabyte %> MB.</small>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :remove_unlisted, {}, "1", "0" %>
+    <%= form.label :remove_unlisted, "Also remove #{term(:area, count: 2).downcase}, #{term(:room, count: 2).downcase} and #{term(:exit, count: 2).downcase} that aren't in the pack" %>
+    <small class="hint"><%= Room::PROLOGUE %> and any <%= term(:room).downcase %> with characters or <%= term(:scene, count: 2).downcase %> in it always stay. Wiki pages and <%= term(:forum_board, count: 2).downcase %> are never removed.</small>
+  </div>
+  <%= form.submit "Show me what will change", class: "button" %>
+<% end %>

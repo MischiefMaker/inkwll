@@ -1,0 +1,36 @@
+<% content_for :title, "Import #{@pack.name} · Admin · Inkwll" %>
+
+<h1 class="page-title">Import <%= @pack.name %>?</h1>
+<p class="text muted">Nothing has changed yet. This is what importing would do. Things the game already has with the same name are updated, not doubled.</p>
+
+<% counts = @changes.group_by(&:action).transform_values(&:size) %>
+<p class="text world-import__summary">
+  <strong><%= counts["add"].to_i %></strong> to add,
+  <strong><%= counts["change"].to_i %></strong> to update<% if @remove_unlisted %>,
+  <strong><%= counts["remove"].to_i %></strong> to remove, <strong><%= counts["keep"].to_i %></strong> kept<% end %>.
+</p>
+
+<%= button_to "Import #{@pack.name}", apply_admin_world_import_path, params: { upload: @upload.signed_id(expires_in: 1.day), remove_unlisted: (@remove_unlisted ? "1" : "0") },
+      class: "button world-import__go", form: { data: { turbo_confirm: "Import #{@pack.name} into this game now?" } } %>
+<p><%= link_to "Choose a different file", admin_world_import_path %></p>
+
+<table class="table world-import__changes">
+  <thead class="table__head">
+    <tr class="table__row">
+      <th class="table__heading">What</th>
+      <th class="table__heading">Name</th>
+      <th class="table__heading">Import will</th>
+      <th class="table__heading"></th>
+    </tr>
+  </thead>
+  <tbody class="table__body">
+    <% @changes.each do |change| %>
+      <tr class="table__row world-import__change world-import__change--<%= change.action %>">
+        <td class="table__cell"><%= change.kind %></td>
+        <td class="table__cell"><%= change.name %></td>
+        <td class="table__cell"><%= { "add" => "Add", "change" => "Update", "remove" => "Remove", "keep" => "Keep" }[change.action] %></td>
+        <td class="table__cell muted"><%= change.note %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
