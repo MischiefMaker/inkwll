@@ -73,7 +73,7 @@
         <% if release.notes.present? %><div class="wells__release-notes"><%= simple_format(release.notes) %></div><% end %>
         <% if index == current_index %>
           <p class="wells__release-current">Running now.</p>
-        <% elsif !busy %>
+        <% elsif !busy && (index.zero? || (current_index && index > current_index)) %>
           <% going_back = current_index && index > current_index %>
           <%= button_to (going_back ? "Go back to #{release.tag}" : "Update to #{release.tag}"), admin_well_updates_path, params: { version: release.tag }, class: "button wells__install",
                 form: { data: { turbo_confirm: going_back ? "Go back to #{release.tag}? Database changes made by newer versions stay." : "Update the live game to #{release.tag}? A database backup is made first." } } %>
