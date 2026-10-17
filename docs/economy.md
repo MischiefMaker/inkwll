@@ -71,9 +71,10 @@ a ledger. Items and shops come with Crafting.
 Staff tick **Bank manager** on a character's membership of a faction. The
 player of that character can then, from the Bank tab:
 
-- pay anyone from the Bank, once, with a reason;
-- set up, change and stop the Bank's scheduled payments, such as a salary
-  for each guard;
+- pay any character or another faction's Bank, once, with a reason;
+- set up, change and stop the Bank's scheduled payments to any character or
+  faction, such as a salary for each guard or a yearly gift to an ally
+  (owner, 2026-10-17);
 - set the faction's taxes, if the game has taxes switched on;
 - see who paid tax and who couldn't.
 
