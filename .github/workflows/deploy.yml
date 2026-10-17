@@ -4,7 +4,9 @@
 # Needs, under Settings → Secrets and variables → Actions:
 #   Secrets:   DEPLOY_SSH_KEY, SECRET_KEY_BASE, DATABASE_PASSWORD,
 #              WELLS_GITHUB_TOKEN (optional; lets the Founder's Wells page
-#              start updates, see docs/wells.md)
+#              start updates, see docs/wells.md), SMTP_USERNAME and
+#              SMTP_PASSWORD (optional; the Brevo login and key that send
+#              email, see docs/email-setup.md)
 #   Variables: INKWLL_SERVER (the droplet's IP address; a secret works too)
 # See docs/deploying.md.
 #
@@ -64,6 +66,9 @@ jobs:
       SECRET_KEY_BASE: ${{ inputs.well == '' && secrets.SECRET_KEY_BASE || '' }}
       DATABASE_PASSWORD: ${{ inputs.well == '' && secrets.DATABASE_PASSWORD || '' }}
       WELLS_GITHUB_TOKEN: ${{ inputs.well == '' && secrets.WELLS_GITHUB_TOKEN || '' }}
+      # Every Well shares the one Brevo account for email.
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       INKWLL_SERVICE: ${{ inputs.well || 'inkwll' }}
       INKWLL_DOMAIN: ${{ inputs.well_domain || 'inkwll.com' }}
       INKWLL_HOME_URL: ${{ inputs.well != '' && 'https://inkwll.com' || '' }}

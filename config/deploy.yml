@@ -58,12 +58,19 @@ env:
     # A new Well's setup code: the first sign-up link makes its first player
     # the Founder (see docs/wells.md). Empty for inkwll.com.
     - WELL_SETUP_CODE
+    # The Brevo login and key that send the game's email (see
+    # docs/email-setup.md). Empty until set up, which means no email is sent.
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
   clear:
     SOLID_QUEUE_IN_PUMA: true
     DB_HOST: <%= service %>-db
     # The game's domain: links in emails use it, and www. visits are sent
     # on to it.
     APP_HOST: <%= domain %>
+    # The address the game's emails come from. It stays on inkwll.com for
+    # every Well, because that's the domain set up in Brevo.
+    MAIL_FROM_ADDRESS: no-reply@inkwll.com
     # The name given to a Well other than inkwll.com when it was started.
     INKWLL_GAME_NAME: <%= ENV.fetch("INKWLL_GAME_NAME", "").to_json %>
     # Set for Wells other than inkwll.com: where their updates are done from.

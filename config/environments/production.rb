@@ -64,14 +64,15 @@ Rails.application.configure do
   # Links in emails point at APP_HOST, e.g. "play.yourgame.com".
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: https ? "https" : "http" }
 
-  # The mail service is picked at launch. Its details go in Kamal secrets:
-  # SMTP_ADDRESS, SMTP_PORT, SMTP_USERNAME and SMTP_PASSWORD. Until they're
-  # set, emails are quietly not sent.
-  if ENV["SMTP_ADDRESS"].present?
+  # Email goes out through Brevo (see docs/email-setup.md). The login and key
+  # come from Kamal secrets: SMTP_USERNAME and SMTP_PASSWORD. Until the key
+  # is set, emails are quietly not sent. SMTP_ADDRESS and SMTP_PORT only
+  # need setting for a service other than Brevo.
+  if ENV["SMTP_PASSWORD"].present?
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      address: ENV["SMTP_ADDRESS"],
-      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      address: ENV["SMTP_ADDRESS"].presence || "smtp-relay.brevo.com",
+      port: (ENV["SMTP_PORT"].presence || 587).to_i,
       user_name: ENV["SMTP_USERNAME"],
       password: ENV["SMTP_PASSWORD"],
       authentication: :plain,
