@@ -43,6 +43,9 @@
             <% when "money" %>
               <%= alert.note %>
               <% if alert.character %><%= link_to "Purse", character_path(alert.character, tab: "purse"), class: "alerts__purse" %><% elsif alert.faction %><%= link_to term(:bank), faction_path(alert.faction, anchor: "bank"), class: "alerts__bank" %><% end %>
+            <% when "lfrp_nudge" %>
+              <% if alert.character %><%= link_to alert.character.name, character_path(alert.character), class: "alerts__lfrp-character" %> is looking for a <%= term(:scene).downcase %> right now<%= ": #{alert.note}" if alert.note %>.<% else %>Someone was looking for a <%= term(:scene).downcase %>.<% end %>
+              <%= link_to "Looking for RP", looking_for_rp_path, class: "alerts__lfrp" %>
             <% when "item" %>
               <%= alert.note %>
               <% if alert.character %><%= link_to term(:belongings), character_path(alert.character, tab: "belongings"), class: "alerts__belongings" %><% end %>

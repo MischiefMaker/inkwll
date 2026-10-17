@@ -24,6 +24,23 @@ module Character::LookingForRp
     update!(lfrp_at: Time.current, lfrp_i_am: i_am, lfrp_looking_for: looking_for)
   end
 
+  # The "Looking for a scene" nudge: one quiet alert (the bell only, no
+  # email) to every other player with a character on the list. A player
+  # can nudge once every NUDGE_EVERY. Returns how many players were told.
+  NUDGE_EVERY = 3.hours
+
+  def nudgeable?
+    looking_for_rp? && (account.lfrp_nudged_at.nil? || account.lfrp_nudged_at <= NUDGE_EVERY.ago)
+  end
+
+  def nudge_everyone_looking!
+    return 0 unless nudgeable?
+    account.update!(lfrp_nudged_at: Time.current)
+    accounts = Account.where(id: Character.looking_for_rp_now.where.not(account_id: account_id).select(:account_id))
+    accounts.each { |other| Alert.notify!(other, "lfrp_nudge", character: self, note: lfrp_looking_for) }
+    accounts.size
+  end
+
   def stop_looking_for_rp!
     update!(lfrp_at: nil)
   end

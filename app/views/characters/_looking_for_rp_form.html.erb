@@ -6,6 +6,12 @@
       <% if character.lfrp_i_am %><span class="looking-for-rp-form__tag">I am <%= character.lfrp_i_am %>.</span><% end %>
       <% if character.lfrp_looking_for %><span class="looking-for-rp-form__tag">Looking for <%= character.lfrp_looking_for %>.</span><% end %>
     </p>
+    <% if character.nudgeable? %>
+      <%= button_to "Nudge everyone looking", character_looking_for_rp_nudge_path(character), class: "button looking-for-rp-form__nudge",
+            form: { data: { turbo_confirm: "Send one quiet alert to every other player who's looking for RP? You can do this once every #{Character::LookingForRp::NUDGE_EVERY.inspect}." } } %>
+    <% else %>
+      <p class="looking-for-rp-form__nudged muted">You can nudge everyone again <%= distance_of_time_in_words_to_now(character.account.lfrp_nudged_at + Character::LookingForRp::NUDGE_EVERY) %> from now.</p>
+    <% end %>
     <%= button_to "Stop looking for RP", character_looking_for_rp_path(character), method: :delete, class: "button button--quiet looking-for-rp-form__off" %>
   <% else %>
     <%= form_with url: character_looking_for_rp_path(character), method: :post, class: "form looking-for-rp-form__form" do |form| %>

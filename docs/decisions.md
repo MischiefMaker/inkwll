@@ -11,6 +11,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
 
 - **Looking for RP flag** belongs to a character, not the player. The player switches it on from the character's profile or from the Looking for RP page, with two optional tags of up to 100 characters ("I am…" and "Looking for…"), and off again with one button. It stays on until switched off, but the list leaves out characters whose player hasn't been on the site for a week, so a forgotten flag doesn't send people after someone who's gone. Only characters that can play (approved, not retired) can use it. Flagged characters get a small "Looking for RP" mark in Here (on a Place and in a Chapter's "Here now"), on Where and on their profile, with the tags shown on hover. The Looking for RP page is in the Menu under "The world", newest first, and guests can read it.
+- **Looking for a scene nudge** is a "Nudge everyone looking" button that appears once a character is Looking for RP (on their profile and on the Looking for RP page). It sends one alert under the bell, with the character's "Looking for" tag, to every other player with a character on the list; no email or browser pop-up, to keep it quiet. A player can nudge once every 3 hours, counted per player rather than per character, so alts can't get around it.
 
 ## 2026-10-17: Version 2.0 quick wins, decided by Claude
 

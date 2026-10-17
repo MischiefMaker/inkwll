@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       resources :culminations, only: %i[ create update ]
       resource :roster_request, only: %i[ create destroy ]
       resource :looking_for_rp, only: %i[ create destroy ]
+      resource :looking_for_rp_nudge, only: :create
       resources :spells, only: :create
       resources :spell_proposals, only: :create
       resources :roster_applications, only: %i[ new create ]

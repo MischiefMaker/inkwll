@@ -54,3 +54,41 @@ class LookingForRpTest < ActionDispatch::IntegrationTest
     assert_not characters(:wren).reload.looking_for_rp?
   end
 end
+
+class LookingForRpNudgeTest < ActionDispatch::IntegrationTest
+  setup do
+    characters(:wren).look_for_rp!(looking_for: "a duel")
+    characters(:sable).look_for_rp!
+    accounts(:bob).update_columns(last_seen_at: Time.current)
+  end
+
+  test "a player looking for RP nudges everyone else looking, once every few hours" do
+    sign_in_as(accounts(:alice))
+    assert_difference -> { Alert.where(account: accounts(:bob), kind: "lfrp_nudge").count }, 1 do
+      post character_looking_for_rp_nudge_path(characters(:wren))
+    end
+    assert_equal 0, Alert.where(account: accounts(:alice), kind: "lfrp_nudge").count
+
+    assert_no_difference -> { Alert.where(kind: "lfrp_nudge").count } do
+      post character_looking_for_rp_nudge_path(characters(:moth))
+      post character_looking_for_rp_nudge_path(characters(:wren))
+    end
+
+    sign_in_as(accounts(:bob))
+    get alerts_path
+    assert_select ".alerts__item--lfrp_nudge", text: /Wren is looking for a .* right now: a duel/
+  end
+
+  test "a character not looking for RP can't nudge" do
+    sign_in_as(accounts(:alice))
+    assert_no_difference -> { Alert.count } do
+      post character_looking_for_rp_nudge_path(characters(:moth))
+    end
+  end
+
+  test "someone else's character can't nudge" do
+    sign_in_as(accounts(:bob))
+    post character_looking_for_rp_nudge_path(characters(:wren))
+    assert_response :not_found
+  end
+end
