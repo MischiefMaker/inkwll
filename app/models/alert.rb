@@ -2,12 +2,13 @@
 # an @mention, a Chapter you were in being finished, a request to join a
 # faction (asked, accepted or declined), money (a payment arriving, or a
 # scheduled payment that couldn't go through), items (given, traded, sold),
-# or someone Looking for RP nudging everyone else who is.
+# someone Looking for RP nudging everyone else who is, or a private aside from
+# a Chapter's Storyteller.
 #
 # New Passages (and turns) in the same Chapter add to one unread alert
 # rather than making a new one each time, so the bell doesn't fill up.
 class Alert < ApplicationRecord
-  KINDS = %w[ passage turn mention finished inkling faction_request faction_accepted faction_declined money item lfrp_nudge ].freeze
+  KINDS = %w[ passage turn mention finished inkling faction_request faction_accepted faction_declined money item lfrp_nudge aside ].freeze
   COLLAPSING_KINDS = %w[ passage turn inkling ].freeze
   KEEP_READ_FOR = 30.days
   SHOWN = 50

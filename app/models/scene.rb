@@ -386,6 +386,17 @@ class Scene < ApplicationRecord
     end
   end
 
+  # A private line from the Storyteller to one character. It doesn't take a
+  # turn, and only that character's player gets an alert.
+  def aside!(storyteller, to:, body:)
+    participant = participant_for(storyteller)
+    raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant&.storyteller?
+    raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
+    pose = add_pose!(character: storyteller, kind: "aside", body: body, to_character_ids: [ to.to_i ])
+    pose.to_characters.each { |character| Alert.notify!(character.account, "aside", scene: self, character: character, pose: pose) }
+    pose
+  end
+
   # Asks the Chapter's Storyteller to judge a roll: they set the difficulty
   # and choose which Boons and Banes count.
   def ask_storyteller_to_roll!(character, skill, difficulty_name)

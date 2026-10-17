@@ -58,6 +58,7 @@
         <p class="muted passages__ooc-toggle"><%= link_to "Show OOC lines", scene_path(@scene, ooc: 1) %></p>
       <% end %>
     <% end %>
+    <% poses = poses.to_a.select { |pose| pose.shown_to?(current_account) } unless @scene.reported_to?(current_account) %>
     <div class="passages" id="passages" data-scene-reader-target="passages" data-controller="follow-bottom">
       <% if poses.empty? %>
         <p class="muted passages__empty">No <%= term(:pose, count: 2).downcase %> yet.</p>
@@ -109,6 +110,7 @@
           <%= render "scenes/cast", scene: @scene, participant: @participant if posting && Grimoire.enabled? %>
           <%= render "scenes/inkling_link", scene: @scene, participant: @participant if link_box %>
           <%= render "scenes/storyteller_tools", scene: @scene, participant: @participant if story_tools %>
+          <%= render "scenes/aside", scene: @scene, participant: @participant if posting && @participant.storyteller? %>
         </div>
       <% end %>
     <% end %>

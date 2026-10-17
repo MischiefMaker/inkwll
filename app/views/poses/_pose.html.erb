@@ -56,6 +56,8 @@
           <span class="pose__tag pose__tag--letter"><%= pose.letter_style == "text" ? "Text" : "Letter" %></span>
         <% elsif pose.mutter? %>
           <span class="pose__tag pose__tag--mutter">Mutter</span>
+        <% elsif pose.aside? %>
+          <span class="pose__tag pose__tag--aside"><%= visibility_mark(:you_and_staff, label: "Private") %>Aside to <%= pose.to_characters.map(&:name).to_sentence %></span>
         <% end %>
         <%= name unless panel %>
         <time class="pose__time muted" datetime="<%= pose.created_at.iso8601 %>" title="<%= pose.created_at.utc.to_fs(:long) %> UTC"><%= time_ago_in_words(pose.created_at) %> ago</time>

@@ -63,7 +63,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Chapter speed toggle (live chat or forum speed). Builds on the Chat, Manuscript and Forum layouts that are already built. **Built on `v2.0`.**
 - Mutter (a whisper Passage). **Built on `v2.0`.**
 - In-character letters and texts (a Passage type). **Built on `v2.0`.**
-- Live private chat and pages, plus private Storyteller asides. Builds on Messages.
+- Live private chat and pages, plus private Storyteller asides. Builds on Messages. **Storyteller asides built on `v2.0`.**
 
 **Theme 4: NPCs, groups and factions.** Who characters are and who they belong to.
 - NPCs (one feature, owner 2026-10-17): staff make NPCs in the admin panel, and anyone running a Chapter can pick one.

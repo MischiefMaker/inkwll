@@ -8,6 +8,7 @@ Short, plain-language notes on what changed. Newest first.
 - Chapter speed: pick "Live chat" (chat look, Enter posts) or "Forum speed" (forum look, a big writing box) when starting a Chapter or in its settings.
 - Mutter: whisper a Passage to one character in the Chapter. They hear all of it; everyone else catches a few words.
 - Letters and texts: post an in-character letter (on paper) or text message (a phone bubble) in a Chapter, addressed to someone.
+- Storyteller asides: a Chapter's Storyteller can send one character a private line that only their player sees.
 
 ## 2026-10-17 — Finding someone to RP with (Version 2.0 branch)
 

@@ -59,6 +59,8 @@
               It's <%= alert.character ? "#{alert.character.name}'s" : "your" %> turn in <%= chapter %>.
             <% when "mention" %>
               <%= alert.character&.name || "You" %> was mentioned in <%= chapter %>.
+            <% when "aside" %>
+              The <%= term(:storyteller).downcase %> sent <%= alert.character&.name || "you" %> a private aside in <%= chapter %>.
             <% when "finished" %>
               <%= chapter %> was finished.
             <% end %>

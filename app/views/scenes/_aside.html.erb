@@ -1,0 +1,15 @@
+<%# The Storyteller's private aside: a line only one character's player sees. %>
+<% others = scene.participants.reject { |p| p.character.account_id == participant.character.account_id } %>
+<% if others.any? %>
+  <details class="storyteller-aside">
+    <summary class="disclosure__summary storyteller-aside__summary">Private aside</summary>
+    <%= form_with url: scene_asides_path(scene), class: "form storyteller-aside__form" do |form| %>
+      <%= form.label :to, "To", for: "aside_to" %>
+      <%= form.select :to, others.map { |p| [ p.character.name, p.character_id ] }, {}, id: "aside_to" %>
+      <%= form.label :body, "What only they see", for: "aside_body" %>
+      <%= form.text_area :body, id: "aside_body", rows: 3, maxlength: 5_000, required: true, placeholder: "You notice the guard's hand shaking." %>
+      <small class="hint">Only that character's player sees it. It doesn't take a turn.</small>
+      <%= form.submit "Send aside", class: "button button--quiet" %>
+    <% end %>
+  </details>
+<% end %>

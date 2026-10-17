@@ -14,6 +14,8 @@
 # - letter: an in-character letter or text message, shown on paper or as a
 #   phone message, addressed to someone. Everyone in the Chapter can read it.
 #   It doesn't take a turn.
+# - aside: a private line from the Storyteller to one character, such as what
+#   they noticed. Only its writer and that character's player see it.
 # - system: lines from the game, such as "Wren joins the Chapter.", with no
 #   character.
 #
@@ -27,7 +29,7 @@ class Pose < ApplicationRecord
 
   include Whispers
 
-  enum :kind, { passage: "passage", npc: "npc", narration: "narration", ooc: "ooc", roll: "roll", system: "system", mutter: "mutter", letter: "letter" }, validate: true
+  enum :kind, { passage: "passage", npc: "npc", narration: "narration", ooc: "ooc", roll: "roll", system: "system", mutter: "mutter", letter: "letter", aside: "aside" }, validate: true
 
   # Kinds that are part of the story: shown in Manuscripts, counted as unread
   # and sent in emails.
