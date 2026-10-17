@@ -1,9 +1,8 @@
 # Economy (Version 2.0, Theme 9)
 
-**Status: [Proposed]** by Claude on 2026-10-17, reworked the same day around
-the owner's brief below, and answered by the owner the same day (listed at
-the end and in `decisions.md`). Nothing here is built, and one question is
-still open at the bottom.
+**Status: Agreed** with the owner on 2026-10-17 (answers at the end and in
+`decisions.md`). Nothing here is built. It waits for factions (Theme 4) and
+the owner's go.
 
 Economy comes first and Crafting after it (owner, 2026-10-17). Crafting gets
 its own page later.
@@ -35,16 +34,17 @@ is too much to track at once:
   week, so players couldn't easily see why their money changed.
 - **Everything by command,** with switches to remember.
 
-Kept from Arx: giving money, a trade that both sides must agree to, an
-organisation's own treasury, and regular incomes. Here they're all buttons on
+Kept from Arx: giving money, an organisation's own treasury, and regular
+incomes. Arx's trade, where both sides must agree, comes back with items in
+Crafting. Here they're all buttons on
 the page, and every change is a line on a ledger people can read.
 
 ## The idea in one line
 
-One kind of money. Every character has a Purse and Belongings, and every
-faction can have a Bank. Money moves between them by one-off payments or
-scheduled payments, taxes can skim a share into a faction's Bank, shops sell
-items, and every movement is a line on a ledger.
+One kind of money. Every character has a Purse and every faction can have a
+Bank. Money moves between them by one-off payments or scheduled payments,
+taxes can skim a share into a faction's Bank, and every movement is a line on
+a ledger. Items and shops come with Crafting.
 
 ## What players see
 
@@ -64,17 +64,6 @@ items, and every movement is a line on a ledger.
   faction's Bank stays as secret as the faction.
 - **Paying into a Bank.** Any member can pay into their faction's Bank, like
   paying a character.
-- **A Belongings tab on the character.** The things the character owns, each
-  with a name, a short description and an optional picture. Items can be
-  single (a horse, a key to a flat) or stacked (12 arrows, 3 loaves).
-  Everyone can see a character's Belongings, so others can notice the sword
-  on someone's hip.
-- **Shops in Places.** A Place can have a shop with a list of items and
-  prices. A Buy button takes the money and puts the item in Belongings.
-  Selling back to a shop is optional, per shop.
-- **Give and Trade items.** Items can be given like money. A Trade lets both
-  characters put money and items into one offer, and it only goes through
-  once both tick Agree. Changing the offer clears both ticks.
 
 ## Running a faction's Bank (players)
 
@@ -124,15 +113,16 @@ their control:
 - **game payments:** scheduled payments from "the game" that staff set up,
   such as a weekly allowance for everyone, or a stipend for one faction's
   Bank;
-- **staff awards** with a reason, and **Inkling rewards** (new "money" and
-  "item" choices beside XP).
+- **staff awards** with a reason, and **Inkling rewards** (a new "money"
+  choice beside XP).
 
 The usual weekly allowance is simply a game payment to every approved
 character. **Wealth Boons and Banes** can change it: staff mark a Boon or
 Bane in Admin → Economy as adding to or taking from the allowance, such as
 "Wealthy" adding 10 or "Penniless" taking 5.
 
-Money leaves through shops, and when staff take it with a reason.
+Money leaves when staff take it with a reason. Shops, the main way money will
+leave, come with Crafting.
 
 ## What staff control (Admin → Economy)
 
@@ -140,12 +130,6 @@ Money leaves through shops, and when staff take it with a reason.
   and an optional symbol. Whole numbers only.
 - **Starting amount** and the **game payments**, including the weekly
   allowance and which Boons and Banes change it.
-- **The item catalogue:** items staff define once, with name, description,
-  picture, single or stacked, and a suggested price. Shops and rewards use
-  the catalogue. Players can't invent catalogue items (Crafting may change
-  this).
-- **Shops:** which Place, which items, at what price, and whether the shop
-  buys things back.
 - **Taxes:** on or off, and the highest rate.
 - **Give or take** money from any Purse or Bank, always with a reason. These
   go on the ledger and the staff log, like XP changes.
@@ -157,8 +141,8 @@ Money leaves through shops, and when staff take it with a reason.
 
 - **Admin → Features** gets a "Use Economy" switch beside SOUL, Inklings and
   Grimoire, off by default.
-- Turning it off hides Purses, Belongings, Banks, shops, Pay and taxes, and
-  pauses scheduled payments. Nothing is deleted, and turning it back on picks up where it
+- Turning it off hides Purses, Banks, Pay and taxes, and pauses scheduled
+  payments. Nothing is deleted, and turning it back on picks up where it
   left off. Payments missed while it was off are not back-paid.
 - The code lives in its own part (`Economy`, with tables starting
   `economy_`), the same way Grimoire does, so a game could swap in another
@@ -183,22 +167,23 @@ taxes and managers. Until factions exist, nothing here is built.
 
 ## Left for later
 
-- Making items (Crafting).
+- **With Crafting:** items, a Belongings tab (which everyone can see, so
+  others can notice the sword on someone's hip), shops in Places, giving
+  items, a Trade both sides must agree to, and items as Inkling rewards.
 - Loans and debts.
 - Player-run businesses.
 - Banks for things other than factions.
 
-## The owner's answers so far (2026-10-17)
+## The owner's answers (2026-10-17)
 
-- **Belongings and shops** are part of the Economy step, not left for
-  Crafting.
+- **One kind of money.**
+- **Items and shops** come with Crafting, so the Economy step is money only.
+  (The owner first said they belonged here, then changed their mind.)
 - **A character's Purse** is seen by the player and staff only.
-- **Belongings** can be seen by everyone.
+- **Belongings,** when they arrive with Crafting, can be seen by everyone.
 - **Income** is a starting amount plus a weekly allowance.
 - **Wealth Boons and Banes** can change the allowance.
-- **One kind of money.**
 - **It doesn't need SOUL** switched on.
-
 - **Scheduled payments** run on real-world days: every week, two weeks or
   month.
 - **Taxes** come in both kinds: income tax and dues.
@@ -206,8 +191,3 @@ taxes and managers. Until factions exist, nothing here is built.
 - **A character in several factions** is taxed by each faction separately.
 - **Characters can set up their own scheduled payments** from their own
   Purse.
-
-## Question still open
-
-- **Items and shops:** the first answers put them in the Economy step, but
-  the second set said they come with Crafting. Waiting on the owner.

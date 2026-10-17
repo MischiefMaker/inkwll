@@ -11,9 +11,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - The Economy is planned before Crafting and built from scratch, since there is no economy plugin to rebuild. Arx is the starting point, but its economy was too clunky to copy.
 - Characters need money and ways to move it around, including automatic payments at set intervals, such as a salary or an allowance.
 - Taxes are optional. With them comes a faction Bank that taxes go into and payments come out of. It is run by the players of characters marked with permission to manage it.
-- The design and its open questions are in `economy.md`.
-- First answers: one kind of money. Belongings and shops are part of the Economy step. A Purse is seen only by the player and staff; Belongings are seen by everyone. Income is a starting amount plus a weekly allowance, which staff-marked Wealth Boons and Banes can change. The economy doesn't need SOUL switched on.
+- The agreed design is in `economy.md`.
+- First answers: one kind of money. A Purse is seen only by the player and staff; Belongings are seen by everyone. Income is a starting amount plus a weekly allowance, which staff-marked Wealth Boons and Banes can change. The economy doesn't need SOUL switched on.
 - Second answers: scheduled payments run on real-world weeks, fortnights or months. Taxes can be income tax and dues, set by each faction's Bank managers within a staff limit, and each faction taxes its own members separately. Characters can set up their own scheduled payments.
+- Items, Belongings and shops come with Crafting, so the Economy step is money only. When they arrive, Belongings can be seen by everyone.
 
 ## 2026-10-17: Players choose their Boons and Banes on rolls (owner)
 
