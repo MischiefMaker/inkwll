@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 physical world (Theme 8), decided by Claude
+
+The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
+
+- **Mini-map:** drawn on each Place's page above its Paths, from Places of the Street type joined by Street Paths that have a compass direction; each street sits one step from the last in its Path's direction, out to three streets away (at most 30). Paths without a direction aren't on the map. When two streets would land on the same spot, the nearer one keeps it and the other is pushed a little further out, or left off. You're on a street: it's the filled dot, and its buildings and other places are listed under the map ("On Midtown Street: ..."). You're inside a building: the map centres on the street with a Path into it, with "Just off ..." under it. Each street on the map links to its page (moving still happens through the Paths, so nobody jumps across the map). A place with no street nearby shows no map. It's on by default and can be switched off under Admin → Features, next to the compass.
+
 ## 2026-10-17: Version 2.0 wiki (Theme 6), decided by Claude
 
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.

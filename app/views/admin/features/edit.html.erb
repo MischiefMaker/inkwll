@@ -86,5 +86,13 @@
     <p class="muted features__hint">Only <%= term(:exit, count: 2).downcase %> with a direction (N, NNE ... NNW) go on the compass; the rest are listed beside it. Builders set directions when adding <%= term(:exit, count: 2).downcase %>.</p>
   </div>
 
+  <div class="features__item">
+    <div class="field field--checkbox">
+      <%= form.check_box :mini_map_enabled %>
+      <%= form.label :mini_map_enabled, "Mini-map: a small map of the streets near each #{term(:room).downcase}" %>
+    </div>
+    <p class="muted features__hint">Drawn from the Street <%= term(:exit, count: 2).downcase %> that have a direction, up to three streets away. On a street, its buildings are listed under the map.</p>
+  </div>
+
   <%= form.submit "Save", class: "button" %>
 <% end %>

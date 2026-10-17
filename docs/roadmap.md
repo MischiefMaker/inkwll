@@ -84,7 +84,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Templates beyond CSS. Study Jcink's templates first. This is big, because games could then change page layouts, not only colours and fonts.
 
 **Theme 8: The physical world.**
-- Mini-map. One feature: the map shows only the Streets, and the buildings appear once you're on that street. It uses the Streets that already exist, so it needs no new grid.
+- Mini-map. One feature: the map shows only the Streets, and the buildings appear once you're on that street. It uses the Streets that already exist, so it needs no new grid. **Built on `v2.0`.**
 - Weather system. Details still to be decided.
 
 **Theme 9: Big new systems (each needs a design talk first).** Both are optional systems that a game switches on or off, like Grimoire.

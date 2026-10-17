@@ -1,0 +1,26 @@
+<%# A small map of the streets nearby (MiniMap). Each street links to its
+    page; on a street, its buildings and other places are listed under it. %>
+<% sx = 160 %>
+<% sy = 90 %>
+<section class="mini-map" aria-label="Map of the streets nearby">
+  <svg class="mini-map__drawing" viewBox="<%= map.view_box(scale_x: sx, scale_y: sy, margin: 50) %>" role="img" aria-label="Streets near <%= map.centre.name %>">
+    <% map.lines.each do |from, to| %>
+      <line class="mini-map__road" x1="<%= from.x * sx %>" y1="<%= from.y * sy %>" x2="<%= to.x * sx %>" y2="<%= to.y * sy %>" />
+    <% end %>
+    <% map.spots.each do |spot| %>
+      <a href="<%= room_path(spot.room) %>" class="mini-map__street<%= " mini-map__street--current" if spot.current %><%= " mini-map__street--centre" if spot.room == map.centre %>">
+        <title><%= spot.room.name %></title>
+        <circle class="mini-map__dot" cx="<%= spot.x * sx %>" cy="<%= spot.y * sy %>" r="<%= spot.room == map.centre ? 9 : 6 %>" />
+        <text class="mini-map__label" x="<%= spot.x * sx %>" y="<%= spot.y * sy + 24 %>" text-anchor="middle"><%= spot.room.name.truncate(22) %></text>
+      </a>
+    <% end %>
+  </svg>
+  <% if map.on_street? && map.places.any? %>
+    <p class="mini-map__places">
+      <span class="mini-map__places-label">On <%= map.centre.name %>:</span>
+      <%= safe_join(map.places.map { |e| link_to(e.number ? "#{e.number} - #{e.name}" : e.name, room_path(e.destination_room), class: "mini-map__place mini-map__place--#{e.path_group}") }, " · ") %>
+    </p>
+  <% elsif !map.on_street? %>
+    <p class="mini-map__places muted">Just off <%= link_to map.centre.name, room_path(map.centre) %>.</p>
+  <% end %>
+</section>

@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — The physical world (Version 2.0 branch)
+
+- Mini-map: each Place shows a small map of the streets nearby, and on a street, the buildings along it.
+
 ## 2026-10-17 — The wiki (Version 2.0 branch)
 
 - Wiki page lists can now filter by several tags, by the start of the title, sort by newest or recently updated, and show each page's first paragraph or a table. New `{{tags}}` and `{{backlinks}}` lists too.

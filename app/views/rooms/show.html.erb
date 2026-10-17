@@ -53,6 +53,9 @@
       <% if GameSetting.current.compass_enabled? && streets.any?(&:compass?) %>
         <%= render "rooms/compass", room: @room, exits: streets, here: here %>
       <% end %>
+      <% if (map = MiniMap.for(@room)) %>
+        <%= render "rooms/mini_map", map: map %>
+      <% end %>
       <% if exits.any? %>
         <% grouped = exits.group_by(&:path_group) %>
         <% Exit::PATH_GROUPS.each do |group, heading| %>

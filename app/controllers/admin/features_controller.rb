@@ -9,7 +9,7 @@ class Admin::FeaturesController < Admin::BaseController
 
   def update
     @game_setting = GameSetting.current
-    if @game_setting.update(params.expect(game_setting: %i[ soul_enabled inklings_enabled grimoire_enabled wiki_enabled guest_chat compass_enabled factions_enabled economy_enabled domains_enabled crafting_enabled ]))
+    if @game_setting.update(params.expect(game_setting: %i[ soul_enabled inklings_enabled grimoire_enabled wiki_enabled guest_chat compass_enabled mini_map_enabled factions_enabled economy_enabled domains_enabled crafting_enabled ]))
       redirect_to edit_admin_features_path, notice: "Features saved."
     else
       render :edit, status: :unprocessable_entity
