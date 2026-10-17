@@ -885,6 +885,8 @@ a.turn-quill { text-decoration: none; }
 
 .passages { border-top: 1px solid var(--color-border); }
 .passages__empty { padding: var(--space) 0; }
+/* A live Chapter scrolls inside its own box, so the tabs above and the tools below stay a short scroll away. */
+.passages--scroll { max-height: calc(100vh - 19rem); max-height: calc(100dvh - 19rem); min-height: 14rem; overflow-y: auto; overscroll-behavior: contain; }
 
 .pose { display: flex; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); }
 .pose--removed .pose__icon { opacity: 0.4; }
@@ -1126,6 +1128,7 @@ span.pose__icon { cursor: default; }
 .roll-box { margin-top: 0.75rem; font-family: var(--font-ui); }
 .roll-box__form { display: flex; flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem; margin-top: 0.5rem; }
 .roll-box__field { margin: 0; }
+.roll-box__buttons { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
 /* Skill, difficulty, options and the button sit on one line (they wrap only when the space runs out). */
 .roll-box__form select { width: auto; max-width: 14rem; }
 .roll-box__form .field { align-self: flex-end; }

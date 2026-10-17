@@ -306,7 +306,7 @@ class Scene < ApplicationRecord
 
       resume!(by: character) if paused? && Pose::STORY_KINDS.include?(kind)
       pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"))
-      after_pose_by(participant) if takes_turn
+      after_pose_by(participant) if takes_turn || (kind == "narration" && participant.storyteller?)
       pose
     end
   end
@@ -353,8 +353,12 @@ class Scene < ApplicationRecord
 
   # The Storyteller rolls for someone who has no sheet, such as an NPC: two
   # d20s plus the rating they choose, against a difficulty, posted like any roll.
-  def npc_roll!(storyteller_character, npc_name:, rating:, difficulty_name:)
+  def npc_roll!(storyteller_character, npc_name:, rating:, difficulty_name: nil, spell: nil)
     raise ArgumentError, "Rolls are switched off in this game." unless Soul.enabled?
+    if spell
+      raise ArgumentError, "Magic is switched off in this game." unless Grimoire.enabled?
+      difficulty_name = spell.difficulty_name
+    end
     participant = participant_for(storyteller_character)
     raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant&.storyteller?
     raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
@@ -368,7 +372,8 @@ class Scene < ApplicationRecord
     degree = Soul::Rules.degree_for(result - difficulty)
     with_lock do
       resume!(by: storyteller_character) if paused?
-      add_pose!(character: storyteller_character, kind: "roll", body: "#{name} (NPC, rolled by #{storyteller_character.name}) rolls against " \
+      action = spell ? "casts #{spell.name} (#{spell.branch.skill.name}) against" : "rolls against"
+      add_pose!(character: storyteller_character, kind: "roll", body: "#{name} (NPC, #{spell ? "cast" : "rolled"} by #{storyteller_character.name}) #{action} " \
         "#{difficulty_name.to_s.humanize} (#{difficulty}) with a rating of #{rating} and gets #{result}. #{Soul::Rules::DEGREE_TEXT.fetch(degree, degree.humanize)}")
     end
   end
@@ -391,7 +396,6 @@ class Scene < ApplicationRecord
   def call_roll!(character, skill, difficulty_name, by:, mandatory_ids: [], optional_ids: [])
     raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant_for(by)&.storyteller?
     raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}." unless participant_for(character)
-    raise ArgumentError, "A #{Term[:storyteller]} doesn't judge their own player's rolls." if character.account_id == by.account_id
     check_can_roll!(character)
     raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.in_progress.exists?(character: character)
 
@@ -446,9 +450,10 @@ class Scene < ApplicationRecord
     broadcast_change
   end
 
-  # A Storyteller who can judge this character's rolls (not their own).
-  def storyteller_for(character)
-    participants.detect { |p| p.storyteller? && p.character.account_id != character.account_id }
+  # The Chapter's Storyteller, who judges rolls (a Storyteller may also play a
+  # character here and judge that character's rolls).
+  def storyteller_for(_character = nil)
+    participants.detect(&:storyteller?)
   end
 
   # Finishing gives XP to each character who posted, once per Chapter.

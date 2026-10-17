@@ -56,7 +56,7 @@
         <p class="muted passages__ooc-toggle"><%= link_to "Show OOC lines", scene_path(@scene, ooc: 1) %></p>
       <% end %>
     <% end %>
-    <div class="passages" id="passages" data-scene-reader-target="passages" data-controller="follow-bottom">
+    <div class="passages<%= " passages--scroll" if @scene.writable? && !whole %>" id="passages" data-scene-reader-target="passages" data-controller="follow-bottom">
       <% if poses.empty? %>
         <p class="muted passages__empty">No <%= term(:pose, count: 2).downcase %> yet.</p>
       <% end %>

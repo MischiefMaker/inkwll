@@ -37,6 +37,32 @@ class StorytellerToolsTest < ActionDispatch::IntegrationTest
     assert @scene.pending_rolls.last.ready?
   end
 
+  test "a Storyteller who is also a character in the Chapter can call for and judge their own roll" do
+    characters(:sable).soul_ratings.create!(trait: soul_skills(:wit), rating: 2)
+    sign_in_as(accounts(:bob))
+    get scene_path(@scene)
+    assert_select "#call_character option", text: "Sable"
+
+    assert_difference -> { @scene.poses.roll.count } do
+      post scene_pending_rolls_path(@scene), params: { character_id: characters(:sable).id, skill_id: soul_skills(:wit).id, difficulty: "easy" }
+    end
+    assert @scene.pending_rolls.last.rolled?
+  end
+
+  test "the Storyteller casts a spell as an NPC" do
+    GameSetting.current.update!(grimoire_enabled: true)
+    branch = Grimoire::Branch.create!(name: "Hedgecraft", skill: soul_skills(:wit))
+    spell = Grimoire::Spell.create!(branch: branch, name: "Bramble Snare", difficulty_name: "hard", minimum_rating: 1)
+    sign_in_as(accounts(:bob))
+    get scene_path(@scene)
+    assert_select ".storyteller-tools__npc-cast-form"
+
+    assert_difference -> { @scene.poses.roll.count } do
+      post scene_npc_rolls_path(@scene), params: { npc_name: "Old Hob", spell_id: spell.id, rating: 5 }
+    end
+    assert_match(/Old Hob \(NPC, cast by Sable\) casts Bramble Snare \(Wit\) against Hard/, @scene.poses.roll.last.body)
+  end
+
   test "players who aren't the Storyteller can't call rolls or see the tools" do
     sign_in_as(accounts(:alice))
     get scene_path(@scene)

@@ -181,7 +181,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.soul-sheet__points`, `.soul-aspect`, `.soul-trait`, `.soul-trait--aspect`, `.soul-trait--skill`, `.soul-trait__input` | Setting the starting sheet |
 | `.soul-sheet__table`, `.soul-trait__rating`, `.soul-trait__bonus`, `.soul-trait__raise` | The locked sheet |
 | `.soul-xp`, `.soul-xp__summary`, `.soul-xp__ledger`, `.soul-xp__entry--award`, `--spend`, `--correction` | XP |
-| `.roll-box`, `.roll-box__form`, `.roll-box__ask` | "Roll a Skill" in a Chapter |
+| `.roll-box`, `.roll-box__form`, `.roll-box__ask`, `.roll-box__buttons` | "Roll a Skill" in a Chapter (the buttons sit together, right-aligned) |
 | `.pending-rolls`, `.pending-roll`, `.pending-roll__form`, `.pending-roll__bnbs`, `.pending-roll__no-bnbs`, `.storyteller-tools__bnbs`, `.storyteller-tools__bnb`, `.pending-roll__required`, `.roll-box__bnbs`, `.roll-box__bnb` | Rolls waiting for the Storyteller |
 | `.soul-bnbs`, `.soul-bnb`, `.soul-bnb--boon`, `--bane`, `--resolved`, `.soul-bnb__name`, `.soul-bnb__kind`, `.soul-bnb__explanation` | Boons and Banes on the sheet |
 | `.soul-culminations`, `.soul-culmination`, `.soul-culmination--approved` (and the other statuses) | Culminations |
@@ -203,7 +203,8 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.scene-setting`, `.scene-setting__name`, `.scene-setting__description`, `.scene-setting__here` | The Setting box at the top |
 | `.scene-people`, `.scene-people__list`, `.scene-people__actions` | Who's in it, and Leave / Pause / Finish |
 | `.turn-bar`, `.turn-bar__text`, `.turn-bar__timer`, `.turn-bar__warning` | Whose turn it is |
-| `.passages` | All the posts |
+| `.passages`, `.passages--scroll` | All the posts (a live Chapter scrolls inside its own box) |
+| `.storyteller-tools__npc-cast`, `.storyteller-tools__npc-cast-form` | The Storyteller casting a spell as an NPC |
 | `.passages__earlier`, `.passages__whole` | The "Read the whole chapter" link above the latest posts, and the note on the whole-chapter page |
 | `.pose`, `.pose__icon`, `.pose__name`, `.pose__time`, `.pose__body`, `.pose__actions` | One post |
 | `.pose--passage`, `.pose--npc`, `.pose--narration`, `.pose--ooc`, `.pose--system` | Each kind of post |

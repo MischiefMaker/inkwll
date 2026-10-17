@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Storyteller tweaks
+
+- A Storyteller who is also a character in the Chapter now sees their own characters in the tools and can call for, and judge, their own rolls.
+- Under Storyteller tools there is a new "Cast a spell as an NPC": the NPC's name, a spell and a rating, rolled against the spell's difficulty.
+- A Storyteller's narration on their turn now passes the turn on, so it no longer sticks on the Storyteller.
+- "Roll with the Storyteller" matches the other Roll button and sits right-aligned under it.
+- A live Chapter scrolls inside its own box, so the tabs above and the tools below are a short scroll away.
+
 ## 2026-10-17 — The starting map has streets
 
 - The sample map a new game starts with now has a street, lane or path in every smaller Area: Uptown, Midtown and Downtown Street in the City; High Street, Hedgerow Lane and The Towpath in the Country; Woodland Track, Mossy Path and Shoreline Trail in the Forest. The streets join north to south, and the buildings and outdoor spaces (Ashcombe Hotel, Central Square, the Trailhead and the rest) sit on them, so you can see Streets, Buildings and Outdoor areas working. Each Area's Enter button now lands on its street. Games that already have the sample places get the streets added too, once, when they update (nothing is changed or removed, and a game with a different map is left alone).

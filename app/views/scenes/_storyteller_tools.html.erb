@@ -1,6 +1,7 @@
 <%# Tools for the Chapter's Storyteller: roll for an NPC, call for a roll, look at the
     players' Aspects and Skills, and suggest XP for staff to approve. %>
-<% others = scene.participants.map(&:character).reject { |c| own?(c) } %>
+<%# Everyone with a sheet in the Chapter, including the Storyteller's own characters. %>
+<% others = scene.participants.map(&:character).reject(&:gm?) %>
   <details class="storyteller-tools">
     <summary class="disclosure__summary storyteller-tools__summary"><%= term(:storyteller) %> tools</summary>
 
@@ -18,6 +19,25 @@
         <% end %>
         <p class="hint">Two d20s plus the rating you choose. The result is posted in the <%= term(:scene).downcase %>.</p>
       </section>
+    <% end %>
+
+    <% if Grimoire.enabled? && scene.writable? %>
+      <% spells = Grimoire::Spell.active.includes(branch: :skill).order(:name) %>
+      <% if spells.any? %>
+        <section class="storyteller-tools__section storyteller-tools__npc-cast">
+          <h3 class="subsection-title">Cast a spell as an NPC</h3>
+          <%= form_with url: scene_npc_rolls_path(scene), class: "form form--inline storyteller-tools__npc-cast-form" do |form| %>
+            <%= form.label :npc_name, "Who", class: "visually-hidden", for: "npc_cast_name" %>
+            <%= form.text_field :npc_name, id: "npc_cast_name", placeholder: "NPC's name", maxlength: 60, required: true %>
+            <%= form.label :spell_id, "Spell", class: "visually-hidden", for: "npc_cast_spell" %>
+            <%= form.select :spell_id, spells.map { |spell| [ "#{spell.name} (#{spell.branch.skill.name}, #{spell.difficulty_label})", spell.id ] }, {}, id: "npc_cast_spell" %>
+            <%= form.label :rating, "Rating", class: "visually-hidden", for: "npc_cast_rating" %>
+            <%= form.number_field :rating, id: "npc_cast_rating", value: 3, min: 0, max: 30, required: true, class: "storyteller-tools__amount", title: "The NPC's skill rating plus Aspect bonus for this magic" %>
+            <%= form.submit "Cast", class: "button button--quiet" %>
+          <% end %>
+          <p class="hint">Two d20s plus the rating you choose, against the spell's difficulty. The result is posted in the <%= term(:scene).downcase %>.</p>
+        </section>
+      <% end %>
     <% end %>
 
     <% if others.any? && scene.writable? %>

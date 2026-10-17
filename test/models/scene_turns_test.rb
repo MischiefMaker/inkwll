@@ -17,6 +17,13 @@ class SceneTurnsTest < ActiveSupport::TestCase
     assert @scene.reload.turn_of?(@wren)
   end
 
+  test "a Storyteller's narration on their turn passes the turn on" do
+    @sable.update_column(:role, "storyteller")
+    @scene.update_column(:current_turn_participant_id, @sable.id)
+    @scene.post!(characters(:sable), "The wind rises.", kind: "narration")
+    assert @scene.reload.turn_of?(@wren)
+  end
+
   test "posting out of turn is allowed but doesn't move the turn" do
     assert @scene.out_of_turn?(@sable)
     @scene.post!(characters(:sable), "Sable gets impatient.")
