@@ -170,6 +170,12 @@ class Account < ApplicationRecord
   end
 
   # Updates the Messages count in the header on this player's open pages.
+  # Redraws the private chat tabs in the chat sidebar on this player's pages.
+  def broadcast_private_chats
+    Turbo::StreamsChannel.broadcast_replace_later_to [ self, :chapters ], target: "private-chats",
+      partial: "private_chats/panel", locals: { account: self }
+  end
+
   def broadcast_message_count
     Turbo::StreamsChannel.broadcast_replace_later_to [ self, :chapters ], target: "message_count",
       partial: "conversations/count", locals: { account: self }

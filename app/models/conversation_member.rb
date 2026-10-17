@@ -7,6 +7,7 @@ class ConversationMember < ApplicationRecord
   validates :account_id, uniqueness: { scope: :conversation_id }
 
   scope :active, -> { where(left_at: nil) }
+  scope :live, -> { active.where(live_open: true) }
 
   def active?
     left_at.nil?

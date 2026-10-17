@@ -9,6 +9,7 @@ Short, plain-language notes on what changed. Newest first.
 - Mutter: whisper a Passage to one character in the Chapter. They hear all of it; everyone else catches a few words.
 - Letters and texts: post an in-character letter (on paper) or text message (a phone bubble) in a Chapter, addressed to someone.
 - Storyteller asides: a Chapter's Storyteller can send one character a private line that only their player sees.
+- Live private chat: the chat sidebar has tabs. "+ Page" sends a quick private message that opens as a live chat tab for both of you, and any Messages conversation can be chatted live there too.
 
 ## 2026-10-17 — Finding someone to RP with (Version 2.0 branch)
 

@@ -2011,3 +2011,24 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .pose--aside { border-left: 3px dashed var(--color-accent); padding-left: 0.6rem; }
 .pose__tag--aside { display: inline-flex; align-items: center; }
 .storyteller-aside__form textarea { width: 100%; }
+
+/* Live private chats and pages in the chat sidebar (Version 2.0) */
+.chat-pane { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.chat-pane[hidden] { display: none; }
+.private-chats { display: contents; }
+.chat-tabs { display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0 0 0.5rem; font-family: var(--font-ui); }
+.chat-tabs__tab { padding: 0.15rem 0.55rem; border: 1px solid var(--color-border); border-radius: 999px; background: transparent; color: var(--color-text); font-size: 0.8rem; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-tabs__tab--current { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-text); }
+.chat-tabs__tab--unread { border-color: var(--color-accent); font-weight: 700; }
+.chat-tabs__tab--unread::after { content: " •"; color: var(--color-accent); }
+.chat-tabs__tab--current.chat-tabs__tab--unread::after { color: var(--color-accent-text); }
+.private-chat__head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; font-size: 0.8rem; }
+.private-chat__head form { margin: 0; }
+.private-chat__messages { flex: 1; overflow-y: auto; font-family: var(--font-ui); font-size: 0.9rem; }
+.private-chat-message { padding: 0.2rem 0; overflow-wrap: anywhere; }
+.private-chat-message__sender { font-weight: 600; }
+.private-chat-message--mine .private-chat-message__sender { color: var(--color-muted); }
+.private-chat__form { display: flex; gap: 0.4rem; margin-top: 0.5rem; }
+.private-chat__form input[type=text] { flex: 1; min-width: 0; }
+.private-chat__intro { font-size: 0.85rem; }
+.private-chat__problem { color: var(--color-accent); font-size: 0.85rem; }

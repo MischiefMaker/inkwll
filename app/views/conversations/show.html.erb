@@ -30,6 +30,9 @@
         <%= form.submit "Send", class: "button" %>
       </div>
     <% end %>
+    <% unless @member.live_open? %>
+      <%= button_to "Chat live in the sidebar", conversation_live_tab_path(@conversation), class: "button button--quiet conversation__live" %>
+    <% end %>
     <%= button_to "Leave this conversation", conversation_membership_path(@conversation), method: :delete, class: "button-link conversation__leave",
           form: { data: { turbo_confirm: "Leave? You won't get new messages in it." } } %>
   <% else %>

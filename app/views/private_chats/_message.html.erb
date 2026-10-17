@@ -1,0 +1,6 @@
+<%# One message in a live chat tab. The same for everyone in it, so it says
+    who sent it by member, and the tab marks the viewer's own. %>
+<div class="private-chat-message" id="<%= dom_id message, :live %>" data-member="<%= message.conversation.member_for(message.account)&.id %>">
+  <span class="private-chat-message__sender"><%= message.sender_label %>:</span>
+  <span class="private-chat-message__body"><%= message.body %></span>
+</div>

@@ -1,0 +1,46 @@
+<%# Private chats in the chat sidebar: a tab for the OOC Chat, one per
+    Messages conversation open here, and one for sending a page. Redrawn
+    when a tab opens or closes. %>
+<% members = account.conversation_members.live.includes(conversation: { members: %i[ account via_character ] }).order(:updated_at) %>
+<% open = local_assigns[:open] %>
+<div id="private-chats" class="private-chats" data-chat-tabs-target="panel"<% if open %> data-open="<%= open %>"<% end %>>
+  <nav class="chat-tabs" aria-label="Chats">
+    <button type="button" class="chat-tabs__tab chat-tabs__tab--ooc" data-chat-tabs-target="tab" data-pane="ooc" data-action="chat-tabs#show">OOC</button>
+    <% members.each do |member| %>
+      <% others = member.conversation.members.reject { |m| m == member }.map(&:label).to_sentence %>
+      <button type="button" class="chat-tabs__tab chat-tabs__tab--private<%= " chat-tabs__tab--unread" if member.unread? %>" data-chat-tabs-target="tab" data-pane="chat-<%= member.conversation_id %>" data-action="chat-tabs#show" title="<%= others %>"><%= others.truncate(18) %></button>
+    <% end %>
+    <button type="button" class="chat-tabs__tab chat-tabs__tab--page" data-chat-tabs-target="tab" data-pane="page" data-action="chat-tabs#show" title="Page someone">+ Page</button>
+  </nav>
+
+  <% members.each do |member| %>
+    <% conversation = member.conversation %>
+    <section class="chat-pane chat-pane--private" data-chat-tabs-target="pane" data-pane="chat-<%= conversation.id %>" data-me="<%= member.id %>"
+             data-read-url="<%= conversation_reading_path(conversation) %>" hidden>
+      <%= turbo_stream_from conversation, :live %>
+      <div class="private-chat__head">
+        <%= link_to "Open in Messages", conversation_path(conversation), class: "private-chat__open", data: { turbo_frame: "_top" } %>
+        <%= button_to "Close", conversation_live_tab_path(conversation), method: :delete, class: "button-link private-chat__close", title: "Close this tab (the conversation stays in Messages)" %>
+      </div>
+      <div id="private_chat_messages_<%= conversation.id %>" class="private-chat__messages" data-chat-tabs-target="messages">
+        <%= render partial: "private_chats/message", collection: conversation.messages.includes(:account).last(30), as: :message %>
+      </div>
+      <%= form_with url: conversation_live_messages_path(conversation), scope: :message, class: "private-chat__form", data: { action: "turbo:submit-end->chat-tabs#sent" } do |form| %>
+        <%= form.text_field :body, placeholder: "Say something…", autocomplete: "off", required: true, maxlength: 1000, "aria-label": "Message" %>
+        <%= form.submit "Send", class: "button" %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <section class="chat-pane chat-pane--page" data-chat-tabs-target="pane" data-pane="page" hidden>
+    <p class="muted private-chat__intro">A page is a quick private message that opens as a tab here for both of you, like a MUSH page. It's kept in Messages too.</p>
+    <% if local_assigns[:problem] %><p class="private-chat__problem" role="alert"><%= problem %></p><% end %>
+    <%= form_with url: pages_path, class: "form private-chat__page-form", data: { action: "turbo:submit-end->chat-tabs#sent" } do |form| %>
+      <%= form.label :to, "To", for: "page_to" %>
+      <%= form.text_field :to, id: "page_to", required: true, maxlength: 60, placeholder: "A player or character name", autocomplete: "off" %>
+      <%= form.label :body, "Message", for: "page_body" %>
+      <%= form.text_field :body, id: "page_body", required: true, maxlength: 1000, autocomplete: "off" %>
+      <%= form.submit "Page", class: "button" %>
+    <% end %>
+  </section>
+</div>

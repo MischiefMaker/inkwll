@@ -7,8 +7,11 @@
     <span class="ooc-sidebar__tab-label">OOC Chat</span>
     <span class="ooc-sidebar__count" data-collapsible-sidebar-target="count" hidden></span>
   </button>
-  <div id="ooc-sidebar-body" class="ooc-sidebar__body">
+  <div id="ooc-sidebar-body" class="ooc-sidebar__body" data-controller="chat-tabs">
     <h2 class="ooc-sidebar__title">OOC Chat</h2>
-    <%= render "ooc_messages/chat" %>
+    <%= render "private_chats/panel", account: current_account if current_account %>
+    <div class="chat-pane chat-pane--ooc" data-chat-tabs-target="pane" data-pane="ooc">
+      <%= render "ooc_messages/chat" %>
+    </div>
   </div>
 </aside>

@@ -54,7 +54,38 @@ class Conversation < ApplicationRecord
     members.select(&:active?)
   end
 
-  def post!(account, body)
+  # A page: a quick message to one player that opens as a live chat tab for
+  # both of them. Reuses their last page conversation if there is one.
+  PAGE_SUBJECT = "Pages".freeze
+
+  def self.page!(from:, to:, body:)
+    account, character = to
+    existing = joins(:members).where(subject: PAGE_SUBJECT, conversation_members: { account_id: from.id, left_at: nil })
+      .where(id: ConversationMember.active.where(account_id: account.id).select(:conversation_id))
+      .where(id: ConversationMember.group(:conversation_id).having("count(*) = 2").select(:conversation_id))
+      .by_activity.first
+    conversation = existing || transaction do
+      create!(subject: PAGE_SUBJECT).tap do |c|
+        c.members.create!(account: from)
+        c.members.create!(account: account, via_character: character)
+      end
+    end
+    conversation.post!(from, body, live: true)
+    conversation
+  end
+
+  # Messages in the chat sidebar: opens the tab for everyone still in it (live)
+  # or just for one person.
+  def open_live!(only: nil)
+    opening = members.active.where(live_open: false)
+    opening = opening.where(account: only) if only
+    opening.includes(:account).each do |member|
+      member.update!(live_open: true)
+      member.account.broadcast_private_chats
+    end
+  end
+
+  def post!(account, body, live: false)
     member = member_for(account) or raise ArgumentError, "You're not in this conversation."
     raise ArgumentError, "You've left this conversation." unless member.active?
 
@@ -62,6 +93,8 @@ class Conversation < ApplicationRecord
     update!(last_message_at: message.created_at)
     member.update!(last_read_at: message.created_at)
     broadcast_refresh_later
+    message.broadcast_append_later_to [ self, :live ], target: "private_chat_messages_#{id}", partial: "private_chats/message", locals: { message: message }
+    open_live! if live
     active_members.each { |m| m.account.broadcast_message_count }
     Notifier.message_posted(message)
     message

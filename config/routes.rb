@@ -111,8 +111,12 @@ Rails.application.routes.draw do
     scope module: :conversations do
       resources :messages, only: :create
       resource :membership, only: :destroy
+      resource :live_tab, only: %i[ create destroy ]
+      resources :live_messages, only: :create
+      resource :reading, only: :update
     end
   end
+  resources :pages, only: :create
   resource :chapter_tabs, only: :show
   delete "chapter_tabs/:participant_id", to: "chapter_tabs#close", as: :close_chapter_tab
   get "where", to: "where#show"
