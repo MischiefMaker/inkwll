@@ -211,6 +211,7 @@ Rails.application.routes.draw do
     resources :character_groups, except: %i[ show new ]
     resources :factions, except: %i[ show new ]
     resources :scene_labels, except: %i[ show new ]
+    resources :scene_ideas, only: %i[ index create destroy ]
     resources :forum_boards, except: %i[ show new ]
     resource :soul, only: :show, controller: "soul"
     resources :soul_aspects, only: %i[ create edit update destroy ]

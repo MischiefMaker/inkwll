@@ -34,14 +34,18 @@
   <% if current_character&.room_id == room.id %>
     <details class="new-scene">
       <summary class="button">Start a <%= term(:scene).downcase %> here</summary>
-      <%= form_with model: Scene.new, class: "form" do |form| %>
+      <% ideas = SceneIdea.for_form %>
+      <%= form_with model: Scene.new, class: "form", data: { controller: "scene-idea", scene_idea_ideas_value: ideas.to_json } do |form| %>
+        <% if ideas.any? %>
+          <button type="button" class="button button--quiet new-scene__idea" data-action="scene-idea#pick">Give me an idea</button>
+        <% end %>
         <div class="field">
           <%= form.label :title %>
-          <%= form.text_field :title, required: true, maxlength: 100 %>
+          <%= form.text_field :title, required: true, maxlength: 100, data: { scene_idea_target: "title" } %>
         </div>
         <div class="field">
           <%= form.label :subtitle, "Subtitle (optional)" %>
-          <%= form.text_field :subtitle, maxlength: 150 %>
+          <%= form.text_field :subtitle, maxlength: 150, data: { scene_idea_target: "subtitle" } %>
           <small class="hint">One line about what's happening, shown under the title.</small>
         </div>
         <% if (labels = SceneLabel.ordered).any? %>

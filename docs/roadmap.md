@@ -53,7 +53,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Looking for RP flag. Comes first, because the next item needs it. **Built on `v2.0`.**
 - Looking for a scene nudge. Needs the Looking for RP flag. **Built on `v2.0`.**
 - Storyteller wanted, and the Need a ruling button next to it. Both are ticks on a Chapter that put it on a list. **Built on `v2.0`.**
-- Scene prompt ("Give me an idea").
+- Scene prompt ("Give me an idea"). **Built on `v2.0`.**
 - Random character spotlight on the front page.
 - Random scene bounty. Uses SOUL XP, which already exists.
 - Census of active characters per group. Uses the groups that already exist.

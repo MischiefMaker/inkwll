@@ -1,0 +1,32 @@
+<% content_for :title, "#{term(:scene)} ideas · Admin · Inkwll" %>
+
+<h1 class="page-title"><%= term(:scene) %> ideas</h1>
+<p class="muted">Short ideas for <%= term(:scene, count: 2).downcase %>. "Give me an idea" on the form for starting a <%= term(:scene).downcase %> copies a random one into the title and subtitle, and the player can change it before starting. The button only shows once there's at least one idea.</p>
+
+<% if @ideas.any? %>
+  <ul class="list scene-ideas-admin">
+    <% @ideas.each do |idea| %>
+      <li class="list__item scene-ideas-admin__item">
+        <span class="scene-ideas-admin__title"><%= idea.title %></span>
+        <% if idea.subtitle %><span class="muted scene-ideas-admin__subtitle"><%= idea.subtitle %></span><% end %>
+        <%= delete_icon_button(admin_scene_idea_path(idea), label: "Delete", confirm: "Delete this idea?") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No ideas yet.</p>
+<% end %>
+
+<h2 class="section-title">Add an idea</h2>
+<%= form_with model: @idea, url: admin_scene_ideas_path, class: "form scene-ideas-admin__form" do |form| %>
+  <%= render "shared/errors", record: @idea %>
+  <div class="field">
+    <%= form.label :title, "Title" %>
+    <%= form.text_field :title, required: true, maxlength: 100, placeholder: "A stranger asks for directions" %>
+  </div>
+  <div class="field">
+    <%= form.label :subtitle, "Subtitle (optional)" %>
+    <%= form.text_field :subtitle, maxlength: 150, placeholder: "Someone new in town is lost, and not everything they say adds up." %>
+  </div>
+  <%= form.submit "Add idea", class: "button" %>
+<% end %>

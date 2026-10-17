@@ -8,6 +8,7 @@ Short, plain-language notes on what changed. Newest first.
 - While a character is looking, "Nudge everyone looking" sends one quiet alert to everyone else on the list. Once every three hours.
 - "Storyteller wanted" on a Chapter lists it for players with the Storyteller flag, on a new page in their Menu. Taking the Storyteller role takes it off.
 - "Need a ruling" on a Chapter asks staff to rule on something. Staff answer from Admin → Rulings, and the ruling appears in the Chapter.
+- "Give me an idea" on the form for starting a Chapter fills in a random idea that staff wrote under Admin → Chapter ideas.
 
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 
