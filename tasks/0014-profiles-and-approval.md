@@ -1,6 +1,6 @@
 # 0014: Character profiles and approval
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 4. Character profiles and approval
 - **Created:** 2026-10-14

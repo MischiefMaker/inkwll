@@ -1,6 +1,6 @@
 # 0012: Email and browser notifications
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 3. Logs and safety
 - **Created:** 2026-10-14

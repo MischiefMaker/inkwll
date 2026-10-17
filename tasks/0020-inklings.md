@@ -1,6 +1,6 @@
 # 0020: Inklings
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 8. Inklings and storyteller tools
 - **Created:** 2026-10-14

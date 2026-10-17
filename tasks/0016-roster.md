@@ -1,6 +1,6 @@
 # 0016: Roster
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 6b. Rosters
 - **Created:** 2026-10-14

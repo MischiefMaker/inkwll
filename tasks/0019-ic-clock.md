@@ -1,6 +1,6 @@
 # 0019: IC clock
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 7. IC clock
 - **Created:** 2026-10-14

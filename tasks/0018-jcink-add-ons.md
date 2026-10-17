@@ -1,6 +1,6 @@
 # 0018: Jcink add-ons
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 6c. Jcink add-ons
 - **Created:** 2026-10-14
