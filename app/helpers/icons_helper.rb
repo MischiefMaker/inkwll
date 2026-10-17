@@ -18,6 +18,7 @@ module IconsHelper
     inkwell: '<path d="M9 3h6"/><path d="M10 3v4c-4 .7-6 3-6 6v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6c0-3-2-5.3-6-6V3"/><path d="M4 15h16"/>',
     bookmark: '<path d="M6 3h12v18l-6-4-6 4z"/>',
     archive: '<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/>',
+    bookshelf: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7"/>',
     roster: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 10h6"/><path d="M9 14h6"/><path d="M9 18h3"/>',
     board: '<path d="M4 4h16v12H9l-5 4z"/><path d="M8 8h8"/><path d="M8 12h5"/>',
     wiki: '<path d="M5 4a1 1 0 0 1 1-1h13v15H6a1 1 0 0 0-1 1z"/><path d="M5 19a2 2 0 0 0 2 2h12v-3"/><path d="M9 7h6"/>',

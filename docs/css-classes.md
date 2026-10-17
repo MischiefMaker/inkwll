@@ -38,7 +38,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | --- | --- |
 | `.site-header`, `.site-header__nav`, `.site-header__account`, `.site-header__player`, `.site-header__link`, `.site-header__home`, `.site-header__characters`, `.site-header__icon`, `.site-header__label`, `.site-header__log-out`, `.message-count__icon` | The bar along the top (on phones `.site-header__label` is hidden, so the links show as icons only) |
 | `.menu`, `.menu__items`, `.menu__link`, `.menu__icon`, `.menu__heading` (and `--mine`, `--world`, `--community`, `--staff`) | The Menu |
-| `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass` and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
+| `.icon`, `.icon--home` (and `--characters`, `--messages`, `--door`, `--compass`, `--bookshelf` (the Bookshelf link) and the rest, named as in `app/helpers/icons_helper.rb`) | Inkwll's built-in line icons. They take the colour of the text around them |
 | `.banner-default` | The drawn banner (accent colour with ink lines) on an Area or Setting that has no banner picture. It also has `.place__banner` on front-page cards and `.description-image` on Area and Setting pages |
 | `.nib-icon`, `.nib-icon__back`, `.nib-icon__nib`, `.nib-icon__slit`, `.nib-icon__hole`, `.player-icon--default` | The pen-nib player icon shown when a player has no icon picture (guests get a grey one) |
 | `.icon-tile`, `.icon-tile--compass` (Areas), `--door` (Settings), `--board` (boards) | The drawn icon shown on an Area, Setting or board that has no icon picture of its own. It also keeps the class an uploaded icon would have (`.place__icon`, `.board__icon`) |
