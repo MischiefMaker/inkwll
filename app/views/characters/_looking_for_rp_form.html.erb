@@ -1,0 +1,23 @@
+<%# Switch Looking for RP on (with two optional tags) or off, for one of the player's own characters. %>
+<div class="looking-for-rp-form<%= " looking-for-rp-form--on" if character.looking_for_rp? %>">
+  <% if character.looking_for_rp? %>
+    <p class="looking-for-rp-form__status">
+      <%= looking_for_rp_mark(character) %>
+      <% if character.lfrp_i_am %><span class="looking-for-rp-form__tag">I am <%= character.lfrp_i_am %>.</span><% end %>
+      <% if character.lfrp_looking_for %><span class="looking-for-rp-form__tag">Looking for <%= character.lfrp_looking_for %>.</span><% end %>
+    </p>
+    <%= button_to "Stop looking for RP", character_looking_for_rp_path(character), method: :delete, class: "button button--quiet looking-for-rp-form__off" %>
+  <% else %>
+    <%= form_with url: character_looking_for_rp_path(character), method: :post, class: "form looking-for-rp-form__form" do |form| %>
+      <div class="field looking-for-rp-form__field">
+        <%= form.label :i_am, "I am… (optional)", for: "lfrp_i_am_#{character.id}" %>
+        <%= form.text_field :i_am, id: "lfrp_i_am_#{character.id}", maxlength: Character::LookingForRp::TAG_LENGTH, value: character.lfrp_i_am, placeholder: "new in town, a healer, around tonight" %>
+      </div>
+      <div class="field looking-for-rp-form__field">
+        <%= form.label :looking_for, "Looking for… (optional)", for: "lfrp_looking_for_#{character.id}" %>
+        <%= form.text_field :looking_for, id: "lfrp_looking_for_#{character.id}", maxlength: Character::LookingForRp::TAG_LENGTH, value: character.lfrp_looking_for, placeholder: "a tavern scene, a rival, anything" %>
+      </div>
+      <%= form.submit "Look for RP as #{character.name}", class: "button looking-for-rp-form__on" %>
+    <% end %>
+  <% end %>
+</div>

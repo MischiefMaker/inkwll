@@ -1,0 +1,36 @@
+<% content_for :title, "Looking for RP · #{game_name}" %>
+
+<div class="looking-for-rp">
+  <h1 class="page-title">Looking for RP</h1>
+  <p class="text muted looking-for-rp__intro">Characters whose players would like someone to write with. Say hello, or start a <%= term(:scene).downcase %> where they are.</p>
+
+  <% if @characters.any? %>
+    <ul class="looking-for-rp__list">
+      <% @characters.each do |character| %>
+        <li class="looking-for-rp__item">
+          <%= link_to character_path(character), class: "looking-for-rp__link" do %>
+            <%= character_icon(character, size: :portrait) %>
+            <%= tag.span character.name, **character_name_options(character, "looking-for-rp__name") %>
+          <% end %>
+          <% if character.lfrp_i_am %><span class="looking-for-rp__i-am">I am <%= character.lfrp_i_am %></span><% end %>
+          <% if character.lfrp_looking_for %><span class="looking-for-rp__looking-for">Looking for <%= character.lfrp_looking_for %></span><% end %>
+          <span class="looking-for-rp__where muted">In <%= link_to character.room.name, room_path(character.room) %> · <%= time_ago_in_words(character.lfrp_at) %> ago</span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">Nobody has said they're looking right now.</p>
+  <% end %>
+
+  <% if @mine.any? %>
+    <section class="looking-for-rp__mine">
+      <h2 class="section-title">Your characters</h2>
+      <% @mine.each do |character| %>
+        <div class="looking-for-rp__mine-item">
+          <h3 class="looking-for-rp__mine-name"><%= character.name %></h3>
+          <%= render "characters/looking_for_rp_form", character: character %>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
+</div>

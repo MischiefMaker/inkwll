@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -168,10 +168,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_010000) do
     t.datetime "roster_retired_at"
     t.date "deceased_on"
     t.string "deceased_note"
+    t.datetime "lfrp_at"
+    t.string "lfrp_i_am"
+    t.string "lfrp_looking_for"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["character_group_id"], name: "index_characters_on_character_group_id"
     t.index ["deceased_on"], name: "index_characters_on_deceased_on"
+    t.index ["lfrp_at"], name: "index_characters_on_lfrp_at"
     t.index ["on_roster_at"], name: "index_characters_on_on_roster_at"
     t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"
     t.index ["room_id"], name: "index_characters_on_room_id"

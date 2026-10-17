@@ -106,6 +106,14 @@ module ApplicationHelper
     tag.span("New", class: "badge badge--new new-player", title: "New to the game in the last two weeks")
   end
 
+  # A small mark beside a character who has switched on Looking for RP,
+  # with their tags as the hover text.
+  def looking_for_rp_mark(character)
+    return unless character.looking_for_rp?
+    tags = [ ("I am #{character.lfrp_i_am}" if character.lfrp_i_am), ("Looking for #{character.lfrp_looking_for}" if character.lfrp_looking_for) ].compact
+    tag.span("Looking for RP", class: "badge badge--lfrp looking-for-rp-mark", title: tags.any? ? tags.join(" · ") : "Looking for RP")
+  end
+
   def character_name_options(character, extra_class = nil)
     group = character&.character_group
     classes = [ extra_class, "character-name", ("character-name--grouped character-group-#{group.id}" if group) ]

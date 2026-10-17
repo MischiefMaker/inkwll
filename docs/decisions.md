@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 finding RP (Theme 2), decided by Claude
+
+The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
+
+- **Looking for RP flag** belongs to a character, not the player. The player switches it on from the character's profile or from the Looking for RP page, with two optional tags of up to 100 characters ("I am…" and "Looking for…"), and off again with one button. It stays on until switched off, but the list leaves out characters whose player hasn't been on the site for a week, so a forgotten flag doesn't send people after someone who's gone. Only characters that can play (approved, not retired) can use it. Flagged characters get a small "Looking for RP" mark in Here (on a Place and in a Chapter's "Here now"), on Where and on their profile, with the tags shown on hover. The Looking for RP page is in the Menu under "The world", newest first, and guests can read it.
+
 ## 2026-10-17: Version 2.0 quick wins, decided by Claude
 
 The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0` branch, doing as much as possible without asking and recording every choice made without them. Each line below is Claude's call; the owner can change any of it.

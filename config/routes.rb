@@ -36,6 +36,7 @@ Rails.application.routes.draw do
       resources :bnb_requests, only: :create
       resources :culminations, only: %i[ create update ]
       resource :roster_request, only: %i[ create destroy ]
+      resource :looking_for_rp, only: %i[ create destroy ]
       resources :spells, only: :create
       resources :spell_proposals, only: :create
       resources :roster_applications, only: %i[ new create ]
@@ -121,6 +122,7 @@ Rails.application.routes.draw do
   resources :alerts, only: :index
   get "birthdays", to: "birthdays#index"
   get "graveyard", to: "graveyard#index"
+  get "looking-for-rp", to: "looking_for_rp#index", as: :looking_for_rp
   resource :account_waiting, only: :show, path: "waiting"
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions

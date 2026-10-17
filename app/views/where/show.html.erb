@@ -12,7 +12,7 @@
     <ul class="list where-room__list">
       <% characters.each do |character| %>
         <li class="list__item">
-          <%= link_to character.name, character %>
+          <%= link_to character.name, character %><%= looking_for_rp_mark(character) %>
           <% if (label = idle_label(character.last_active_at)) %>
             <span class="where-room__idle muted">(<%= label %>)</span>
           <% end %>

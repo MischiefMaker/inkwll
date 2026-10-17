@@ -7,6 +7,7 @@ class Character < ApplicationRecord
   include FactionMember
   include Purse
   include Belongings
+  include LookingForRp
 
   # Played characters that aren't retired. GM stand-ins (see Account#gm!)
   # never count as characters in lists.

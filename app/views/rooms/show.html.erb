@@ -73,7 +73,7 @@
       <% if @room.characters.any? || guests.positive? %>
         <ul class="list list--inline">
           <% @room.characters.each do |character| %>
-            <li class="list__item"><%= character_name_link(character) %><%= new_player_badge(character) %></li>
+            <li class="list__item"><%= character_name_link(character) %><%= new_player_badge(character) %><%= looking_for_rp_mark(character) %></li>
           <% end %>
           <% if guests.positive? %>
             <li class="list__item room-here__guests"><%= guests == 1 ? "Guest" : "#{guests} Guests" %></li>

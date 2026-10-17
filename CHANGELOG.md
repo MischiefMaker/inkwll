@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Finding someone to RP with (Version 2.0 branch)
+
+- Looking for RP: switch it on for a character (on their profile, or the new Looking for RP page in the Menu) with a short "I am…" and "Looking for…". The character gets a mark in Here and on Where, and shows on the Looking for RP page until you switch it off.
+
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 
 - Drafts: what you're writing in a Passage, a Message, a forum post, a wiki page or an Inkling is kept in your browser as you type, so it comes back if the page closes or reloads. Posting clears it.

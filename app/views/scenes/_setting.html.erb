@@ -20,7 +20,7 @@
     <p class="muted scene-setting__here">
       Here now:
       <% if room.characters.any? %>
-        <%= safe_join(room.characters.map { |character| safe_join([ link_to(character.name, character), new_player_badge(character) ].compact) }, ", ") %>
+        <%= safe_join(room.characters.map { |character| safe_join([ link_to(character.name, character), new_player_badge(character), looking_for_rp_mark(character) ].compact) }, ", ") %>
       <% else %>
         nobody
       <% end %>

@@ -1939,3 +1939,14 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .graveyard__date { font-size: 0.85rem; }
 .graveyard__epitaph { font-style: italic; font-size: 0.9rem; overflow-wrap: anywhere; }
 .admin-characters__decease { display: inline-block; }
+
+/* Looking for RP (Version 2.0) */
+.badge--lfrp { border-color: var(--color-accent); color: var(--color-accent); margin-left: 0.3rem; }
+.looking-for-rp__list { list-style: none; margin: 0 0 calc(var(--space) * 2); padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: var(--space); }
+.looking-for-rp__item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.75rem 0.5rem; text-align: center; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); overflow-wrap: anywhere; }
+.looking-for-rp__link { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-decoration: none; font-weight: 600; }
+.looking-for-rp__where { font-size: 0.85rem; }
+.looking-for-rp__mine-item { margin-bottom: var(--space); }
+.looking-for-rp__mine-name { margin: 0 0 0.3rem; font-size: 1rem; }
+.looking-for-rp-form__status { margin: 0 0 0.4rem; }
+.looking-for-rp-form__tag { margin-left: 0.4rem; }
