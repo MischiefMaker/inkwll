@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 
 - Drafts: what you're writing in a Passage, a Message, a forum post, a wiki page or an Inkling is kept in your browser as you type, so it comes back if the page closes or reloads. Posting clears it.
+- Tick boxes on Admin → Characters and Admin → Players and staff: tick several (or tick the heading for all), then retire them, put them on the roster, or archive the players in one go.
 
 ## 2026-10-17 — Factions (Version 2.0 branch)
 

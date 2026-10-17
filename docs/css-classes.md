@@ -22,6 +22,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.hint` | The small help text under a form field |
 | `.emphasis` | Bold or italic words inside text |
 | `.list`, `.list__item` | Lists |
+| `.admin-batch`, `.admin-batch__label`, `.admin-batch__heading`, `.admin-batch__all`, `.admin-batch__cell`, `.admin-batch__tick`, `.admin-characters__batch`, `.admin-accounts`, `.admin-accounts__batch` | Tick boxes on the admin lists, and the form that acts on every ticked row |
 | `.draft-note`, `.draft-note__use`, `.draft-note__discard` | The note above a writing box when an unposted draft was kept |
 | `.table`, `.table__head`, `.table__body`, `.table__row`, `.table__heading`, `.table__cell` | Tables |
 | `.disclosure`, `.disclosure__summary` | Fold-out sections ("About this setting") |

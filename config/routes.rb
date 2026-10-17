@@ -153,6 +153,8 @@ Rails.application.routes.draw do
         post :reset_link
       end
     end
+    resource :character_batch, only: :create
+    resource :account_batch, only: :create
     resources :characters, only: %i[ index update ] do
       member do
         post :retire

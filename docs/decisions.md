@@ -11,6 +11,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0` branch, doing as much as possible without asking and recording every choice made without them. Each line below is Claude's call; the owner can change any of it.
 
 - **Drafts** are kept in the player's own browser, not on the server, so they don't follow a player to another device. They cover the Passage box, Messages, forum threads and replies, wiki pages and Inklings. An empty box gets its draft back on its own; a box that already has text (editing a wiki page) offers it with "Use it" or "Throw it away". Posting clears the draft, and drafts older than two weeks are forgotten.
+- **Mass actions:** tick boxes on Admin → Characters (for characters in play) with "Retire them" or "Put them on the roster", for staff who can do both (Wellkeepers), and on Admin → Players and staff with "Archive them", for anyone who can archive (only players the staff member may manage, never themselves). A tick box in the heading ticks the whole table. Characters already retired or on the roster are skipped, and every action asks "Are you sure?" once.
 
 ## 2026-10-17: Factions (owner)
 

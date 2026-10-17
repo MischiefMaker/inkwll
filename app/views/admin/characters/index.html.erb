@@ -11,8 +11,16 @@
   <% next if list.empty? && key != "approved" %>
   <details class="admin-characters__section admin-characters__<%= key == "approved" ? "active admin-characters__approved" : key %>" open>
     <summary class="admin-characters__summary section-title"><%= title %> (<%= list.size %>)</summary>
-    <%= render "table", characters: list, groups: @groups, css: "admin-characters__#{key}-table" %>
+    <%= render "table", characters: list, groups: @groups, css: "admin-characters__#{key}-table", batch: key.in?(%w[ approved new ]) %>
   </details>
+<% end %>
+
+<% if (approved + new_ones).any? %>
+  <%= form_with url: admin_character_batch_path, id: "character-batch", class: "form form--inline admin-batch admin-characters__batch" do |form| %>
+    <%= form.label :decision, "With the ticked characters", class: "admin-batch__label" %>
+    <%= form.select :decision, [ [ "Retire them", "retire" ], [ "Put them on the roster", "roster" ] ], include_blank: "Choose…" %>
+    <%= form.submit "Apply", class: "button button--quiet", data: { turbo_confirm: "Do this to every ticked character?" } %>
+  <% end %>
 <% end %>
 
 <%= render "forum_boards/pages", pages: @pages, current: @page %>

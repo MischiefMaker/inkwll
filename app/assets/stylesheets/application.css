@@ -1839,3 +1839,7 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .faction__join-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .faction__join-form input[type=text] { width: auto; flex: 1 1 14rem; max-width: 24rem; }
 .faction__withdraw-form { display: inline; }
+
+/* Tick boxes on the admin lists, and the "with the ticked ones" form */
+.admin-batch { margin: var(--space) 0; align-items: center; gap: 0.5rem; }
+.admin-batch__cell, .admin-batch__heading { width: 2rem; }
