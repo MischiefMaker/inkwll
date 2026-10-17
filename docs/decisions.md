@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Crafting brief (owner)
+
+- Crafting starts from Arx's crafting, simplified.
+- Characters craft items for a starting cost, add a description, pictures and features that can affect rolls, then sell them for a profit.
+- The design and its open questions are in `crafting.md`.
+
 ## 2026-10-17: Economy brief (owner)
 
 - The Economy is planned before Crafting and built from scratch, since there is no economy plugin to rebuild. Arx is the starting point, but its economy was too clunky to copy.

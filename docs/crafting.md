@@ -1,57 +1,55 @@
 # Crafting (Version 2.0, Theme 9)
 
-**Status: [Proposed]** by Claude on 2026-10-17, for the owner to answer the
-questions at the bottom. Nothing here is built. Once the owner answers, the
-settled parts move to `decisions.md` and this page is updated to match.
+**Status: [Proposed]** by Claude on 2026-10-17, reworked the same day around
+the owner's brief below. Nothing here is built. Once the owner answers the
+questions at the bottom, the settled parts move to `decisions.md` and this
+page is updated to match.
 
 Crafting comes after the Economy (`economy.md`) and builds on it. It's an
-optional system a game switches on, like Grimoire (owner, 2026-10-17). Arx
-is the starting point again, simplified (owner, 2026-10-17).
+optional system a game switches on, like Grimoire.
+
+## The owner's brief (2026-10-17)
+
+- Start from Arx's crafting, but simplify it.
+- Characters craft items for a starting cost.
+- They add a description, pictures, and features that can affect rolls.
+- Then they sell them for a profit.
+- Items, Belongings, shops and Trade were held back from the Economy step to
+  come here, and everyone can see a character's Belongings.
 
 ## What we learned from Arx
 
-Arx's crafting (github.com/Arx-Game/arxcode, `world/crafting`) has:
+Arx's crafting (github.com/Arx-Game/arxcode, `world/crafting`) has recipes
+tied to an ability and a skill, dozens of material types, a silver cost, a
+roll that sets a quality number from 0 to 11 which changes the item's combat
+stats, paying again to re-roll for better quality, adornments, forgeries,
+translated text, breaking items down for materials, and a `craft` command
+with a dozen switches.
 
-- **Recipes** known by a character or an organisation, each tied to an
-  ability and a skill, with a difficulty and a level.
-- **Dozens of material types,** which a recipe needs in set amounts, plus a
-  silver cost.
-- **A roll that sets a quality number** from 0 to 11, which then changes the
-  item's stats (armour, weapon damage, how much a container holds, where it's
-  worn).
-- **Refining:** paying again to re-roll for a better quality.
-- **Adornments** (extra materials added for value), **forgeries** (one
-  material passed off as another), **translated text** and **junking**
-  (breaking an item down to get materials back).
-- **Everything by command,** with a dozen switches on `craft`.
-
-Most of that exists to feed combat stats and a strategy-style economy, which
-Inkwll doesn't have. What's worth keeping is the core: a recipe, what it
-uses, a Skill roll, and a named, described thing the player made, with the
-maker's name on it.
+Kept: paying to make something, a Skill roll, a named and described item
+with the maker's name on it, and selling what you make. Dropped: materials,
+quality numbers, combat stats, re-rolling, adornments and forgeries. Arx's
+"quality changes stats" becomes **features**, which use SOUL's own Boons
+and Banes instead of new numbers.
 
 ## The idea in one line
 
-Staff write recipes. A character with the right Skill uses one, spends the
-items and money it needs, rolls once, and gets an item they name and
-describe, which goes into their Belongings with their name on it as maker.
+A character pays a starting cost, writes up the item with pictures, adds
+features that help rolls (each adds to the cost), rolls their Skill once,
+and gets an item with their name on it as maker, which they can keep, give,
+trade or sell for whatever price they like.
 
-## Items first
+## Items
 
-Items were held back from the Economy step to come here (owner, 2026-10-17),
-so this step builds them first:
-
-- **Belongings tab on the character.** Everything the character owns, each
-  with a name, a short description and an optional picture. Items can be
-  single (a horse, a key to a flat) or stacked (12 arrows, 3 loaves).
-  Everyone can see a character's Belongings (owner, 2026-10-17), so others
-  can notice the sword on someone's hip.
-- **Item catalogue (staff).** Items staff define once: name, description,
-  picture, single or stacked, and a suggested price. Any catalogue item can
-  be marked as a **material** that recipes use.
-- **Shops in Places.** A Place can have a shop selling catalogue items. A Buy
-  button takes the money and puts the item in Belongings. Each shop can also
-  buy things back.
+- **Belongings tab on the character.** Everything the character owns: name,
+  description, pictures, its features, and who made it. Items can be single
+  (a sword) or stacked (12 arrows). Everyone can see a character's
+  Belongings (owner, 2026-10-17), so others can notice the sword on
+  someone's hip.
+- **Item catalogue (staff).** Ready-made items staff define for shops and
+  rewards, with a name, description, picture and price.
+- **Shops in Places (staff).** A Place can have a shop selling catalogue
+  items. A Buy button takes the money and puts the item in Belongings.
 - **Give and Trade.** Items can be given like money. A Trade lets both
   characters put money and items into one offer, and it only goes through
   once both tick Agree. Changing the offer clears both ticks. In a Chapter,
@@ -60,58 +58,92 @@ so this step builds them first:
 
 ## Making things
 
-- **Recipes (staff).** Each recipe has a name, what it makes (a kind of
-  thing, such as "a dress" or "a healing draught"), what it uses (materials
-  and money), which SOUL Skill it needs, a lowest rating, and a difficulty.
-- **The Craft button.** On the character's Belongings tab, or in a Chapter.
-  The player picks a recipe they can use, sees what it will use up, names
-  and describes the result, and rolls the Skill, with their Boons and Banes
-  ticked as for any roll.
-- **The roll sets a quality word,** not stats:
-  - exceptional success: *Masterwork*;
-  - success: no word, just a well-made thing;
-  - complicated success: *Flawed* (the player says how);
-  - lucky failure or failure: nothing is made, and half the materials are
-    used up (rounded down); the money is kept;
-  - catastrophic failure: nothing is made and all the materials are used up.
+- **Item types (staff).** What can be made, each with a starting cost and
+  the SOUL Skill used to make it: a sword (40 crowns, Smithing), a dress
+  (25 crowns, Tailoring), a healing draught (10 crowns, Herbalism).
+- **Features (staff).** What an item can do for rolls. Each feature works
+  like a SOUL Boon tied to one or more Skills, at a level (Minor or Major,
+  and Legendary if staff allow), and has an extra cost. For example,
+  "Well-balanced" (Minor Boon to Swordplay, +20 crowns), or "Concealed
+  pocket" (Minor Boon to Sleight of hand, +15). Staff say which item types
+  each feature fits.
+- **The Craft button,** on the Belongings tab or in a Chapter. The player
+  picks an item type, writes the name and description, adds pictures, picks
+  features, and sees the total cost. They then roll the Skill, with their
+  own Boons and Banes ticked as for any roll. Each feature makes the roll a
+  step harder.
+- **What the roll does:**
+  - exceptional success: a *Masterwork*, and the player gets back half the
+    cost of the features;
+  - success: the item as planned;
+  - complicated success: the item is made, but with a Minor flaw, which
+    works like a Bane on one of its Skills. The player says what the flaw
+    is;
+  - lucky failure or failure: nothing is made, and half the cost is lost;
+  - catastrophic failure: nothing is made, and the whole cost is lost.
 - **The maker's mark.** Every made item shows who made it and when, and that
-  stays with the item when it's given, traded or sold.
+  stays with it when it's given, traded or sold.
 - **In a Chapter,** crafting shows as a Passage, like a roll: "Mara crafts a
   silk dress (Masterwork)".
-- **With SOUL switched off,** there's no roll: making always succeeds, with
-  no quality word.
+
+## Items in rolls
+
+- When a character rolls a Skill, the features of items in their
+  Belongings that are tied to that Skill show as tick boxes in the roll box,
+  beside their Boons and Banes, and work the same way (the 2026-10-17 roll
+  decision). Flaws show as Banes and are ticked automatically.
+- Storyteller-judged rolls treat item features like Boons: the Storyteller
+  marks each one as must count, the player's choice, or doesn't count.
+- An item that's given, traded or sold takes its features with it.
+
+## Selling for a profit
+
+- **Set a price.** Any item a character owns can be put up for sale at a
+  price the player chooses, and taken down again.
+- **Where it's sold** is question 3: on the crafter's own stall in a Place
+  they choose, or on one Market page for the whole game.
+- **Buying** takes the money from the buyer's Purse, pays the seller, and
+  moves the item. Both see it on their ledgers.
+- **Taxes:** if the seller's faction has income tax, a sale counts as income
+  (question 4).
 
 ## Switching it on and off
 
 - **Admin → Features** gets "Use Crafting", off by default. It needs the
-  Economy switched on, since recipes use money and items.
-- Turning it off hides recipes and the Craft button. Items people already
-  made stay in their Belongings.
+  Economy switched on, since everything costs money.
+- Turning it off hides the Craft button and item features in rolls. Items
+  people already own stay in their Belongings.
 - The code lives in its own part (`Crafting`, tables starting
   `crafting_`), like Grimoire.
 
 ## How it talks to SOUL and the Economy
 
-- Rolls go through SOUL's public roll methods, the same way Grimoire casts a
-  spell, so SOUL needs no changes.
-- Money and items are spent through the Economy's ledger, so every craft
-  shows as lines in the Purse and Belongings history.
-- Crafting never makes money or XP by itself.
+- **Crafting rolls** go through SOUL's public roll methods, the same way
+  Grimoire casts a spell.
+- **Item features in rolls** need one small, general addition to SOUL: a
+  published hook where other systems can offer extra Boons and Banes for a
+  character's roll on a Skill. Crafting offers its item features through
+  it, and SOUL never needs to know what an item is. Other systems could use
+  the same hook later.
+- **With SOUL off,** there's no roll (making always succeeds, with no
+  Masterwork or flaw), and features are just descriptions.
+- **Money and items** move through the Economy's ledger, so every craft and
+  sale shows in the Purse history.
 
 ## What staff control (Admin → Crafting)
 
-- The item catalogue and which items are materials.
-- Recipes.
-- Shops, under Admin → Economy.
-- Give or take items from a character, always with a reason, logged like
-  money.
+- Item types, their starting costs and Skills.
+- Features: their Skills, levels, extra costs and which item types they fit.
+- The highest feature level players can choose, and how many features one
+  item can have.
+- The item catalogue and shops (under Admin → Economy).
+- Give, take or edit items, always with a reason, logged like money.
 
 ## Left out on purpose (from Arx)
 
-- Item stats (armour, damage, wear slots, containers).
-- Refining and re-rolling for a better quality.
+- Materials, recipes, quality numbers and combat stats.
+- Refining and re-rolling.
 - Adornments, forgeries and translated text.
-- Dozens of material types: a game makes only the materials it wants.
 - Action points.
 
 ## Questions for the owner
@@ -119,16 +151,17 @@ so this step builds them first:
 1. **Items without Crafting:** items, Belongings, shops and Trade work
    whenever the Economy is on *(recommended, so a game can have shops
    without crafting)*, or only when Crafting is on.
-2. **Who can use a recipe:** anyone with the Skill rating it asks for
-   *(recommended, nothing extra to track)*, characters must learn each one
-   with XP like Grimoire spells, or staff grant recipes to characters.
-3. **Players propose recipes:** yes, staff approve them, like Grimoire spell
-   proposals *(recommended)*, or only staff write recipes.
-4. **What the player makes is described by:** the player, freely, and staff
-   can edit it *(recommended)*, or staff approve each one first.
-5. **A failed roll:** uses up half the materials *(recommended)*, uses up
-   all of them, or uses up none.
-6. **Getting materials:** buying, trading and rewards *(recommended to start)*,
-   or also gathering once a day at Places staff mark (a forest gives herbs).
-7. **Selling what you make:** by Give and Trade only *(recommended to
-   start)*, or players can open their own shop in a Place.
+2. **What players write up:** freely, and staff can edit afterwards
+   *(recommended)*, or staff approve each crafted item before it exists.
+3. **Where crafted items are sold:** on one Market page for the whole game
+   *(recommended, easy to browse)*, or on stalls in Places, so you go there
+   to buy.
+4. **Do sales count as income for faction income tax:** yes
+   *(recommended)*, or no.
+5. **How many features an item can have:** staff set a limit, starting at 3
+   *(recommended)*, or no limit, just cost.
+6. **Can players invent new features:** yes, staff approve them like
+   Grimoire spell proposals *(recommended)*, or only staff make features.
+7. **When can an item's features count in a roll:** whenever it's in their
+   Belongings *(recommended, simplest)*, or only when the player marks it as
+   carried in that Chapter.
