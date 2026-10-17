@@ -13,6 +13,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - Taxes are optional. With them comes a faction Bank that taxes go into and payments come out of. It is run by the players of characters marked with permission to manage it.
 - The design and its open questions are in `economy.md`.
 - First answers: one kind of money. Belongings and shops are part of the Economy step. A Purse is seen only by the player and staff; Belongings are seen by everyone. Income is a starting amount plus a weekly allowance, which staff-marked Wealth Boons and Banes can change. The economy doesn't need SOUL switched on.
+- Second answers: scheduled payments run on real-world weeks, fortnights or months. Taxes can be income tax and dues, set by each faction's Bank managers within a staff limit, and each faction taxes its own members separately. Characters can set up their own scheduled payments.
 
 ## 2026-10-17: Players choose their Boons and Banes on rolls (owner)
 

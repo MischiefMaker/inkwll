@@ -1,9 +1,9 @@
 # Economy (Version 2.0, Theme 9)
 
 **Status: [Proposed]** by Claude on 2026-10-17, reworked the same day around
-the owner's brief below. Nothing here is built. The owner has answered the
-first set of questions (listed at the end and in `decisions.md`); the ones
-still open are at the bottom.
+the owner's brief below, and answered by the owner the same day (listed at
+the end and in `decisions.md`). Nothing here is built, and one question is
+still open at the bottom.
 
 Economy comes first and Crafting after it (owner, 2026-10-17). Crafting gets
 its own page later.
@@ -199,16 +199,15 @@ taxes and managers. Until factions exist, nothing here is built.
 - **One kind of money.**
 - **It doesn't need SOUL** switched on.
 
-## Questions still open
+- **Scheduled payments** run on real-world days: every week, two weeks or
+  month.
+- **Taxes** come in both kinds: income tax and dues.
+- **A faction's taxes** are set by its Bank managers, within the staff limit.
+- **A character in several factions** is taxed by each faction separately.
+- **Characters can set up their own scheduled payments** from their own
+  Purse.
 
-1. **Scheduled payments run on:** real-world days, every week, two weeks or
-   month *(recommended, predictable)*, or the IC clock's days.
-2. **Kinds of tax:** both income tax and dues *(recommended)*, income tax
-   only, or dues only.
-3. **Who sets a faction's taxes:** its Bank managers, within the staff limit
-   *(recommended)*, or staff only.
-4. **When a character is in several factions:** each faction taxes its own
-   members separately *(recommended)*, or one game-wide tax goes into one
-   chosen faction's Bank (for example, the Crown).
-5. **Can characters set up their own scheduled payments,** from their own
-   Purse: yes *(recommended)*, or only Banks and staff can.
+## Question still open
+
+- **Items and shops:** the first answers put them in the Economy step, but
+  the second set said they come with Crafting. Waiting on the owner.
