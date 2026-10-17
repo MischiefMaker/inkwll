@@ -37,6 +37,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-16 — Profile, SOUL, Inkling and Path tweaks
 
+- Switching "Writing as" between a character and GM in a Chapter reloads the page cleanly, so the writing box no longer ends up doubled or broken.
 - The Bookshelf has its own book icon in the menu and on the front page (it was a box).
 - The Archives are now called the Bookshelf (menu, front page, guides), and the address is now /bookshelf; the old /archives address redirects. Finished Chapters are still Manuscripts.
 - Admin can delete Areas and Places (Settings). An Area must be empty first. A Place can't be deleted while it has characters, Chapters (open or finished, so the Archives stay safe) or is where new characters start; its Paths are deleted with it.

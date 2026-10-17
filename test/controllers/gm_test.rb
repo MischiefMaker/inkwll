@@ -90,4 +90,10 @@ class GmTest < ActionDispatch::IntegrationTest
     get here
     assert_equal garden, accounts(:scribe).reload.active_character
   end
+
+  test "switching who writes reloads the page the plain way, so the Passage box can't double up" do
+    sign_in_as(accounts(:alice))
+    get scene_path(scenes(:duel))
+    assert_select "form.writing-as__form[data-turbo=false]"
+  end
 end

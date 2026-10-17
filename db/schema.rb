@@ -288,10 +288,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_050000) do
     t.string "skin_base"
     t.boolean "compass_enabled", default: false, null: false
     t.string "profile_box", default: "top", null: false
+    t.boolean "locked", default: false, null: false
     t.string "chapter_layout", default: "manuscript", null: false
     t.string "chapter_cast_portraits", default: "large", null: false
     t.string "chapter_passage_portraits", default: "small", null: false
-    t.boolean "locked", default: false, null: false
     t.string "font_title"
   end
 
@@ -997,7 +997,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_050000) do
   add_foreign_key "inkling_entries", "characters", column: "private_to_id", on_delete: :nullify
   add_foreign_key "inkling_entries", "characters", on_delete: :nullify
   add_foreign_key "inkling_entries", "inklings", on_delete: :cascade
-  add_foreign_key "inkling_entries", "scenes", on_delete: :nullify
+  add_foreign_key "inkling_entries", "scenes"
   add_foreign_key "inkling_entries", "soul_rolls", on_delete: :nullify
   add_foreign_key "inkling_reads", "accounts", on_delete: :cascade
   add_foreign_key "inkling_reads", "inklings", on_delete: :cascade
