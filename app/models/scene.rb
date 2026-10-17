@@ -394,7 +394,7 @@ class Scene < ApplicationRecord
     check_can_roll!(character)
     raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.waiting.exists?(character: character)
 
-    pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s)
+    pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s, called: true)
     add_system_line!("The #{Term[:storyteller]} calls for a #{skill.name} roll from #{character.name}.")
     pending
   end

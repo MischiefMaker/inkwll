@@ -7,7 +7,12 @@
     <h2 class="section-title pending-rolls__title">Rolls waiting for the <%= term(:storyteller) %></h2>
     <% waiting.each do |pending| %>
       <div class="pending-roll" id="<%= dom_id pending %>">
-        <p class="text pending-roll__what"><strong class="emphasis"><%= pending.character.name %></strong> wants to roll <%= pending.skill.name %> (asked for <%= pending.difficulty_name.humanize %>).</p>
+        <p class="text pending-roll__what"><strong class="emphasis"><%= pending.character.name %></strong>
+          <% if pending.called? %>
+            was asked to roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>).
+          <% else %>
+            wants to roll <%= pending.skill.name %> (asked for <%= pending.difficulty_name.humanize %>).
+          <% end %></p>
         <% if storyteller %>
           <%= form_with url: scene_pending_roll_path(scene, pending), method: :patch, class: "form pending-roll__form" do |form| %>
             <div class="field">
@@ -25,6 +30,8 @@
                   </label>
                 <% end %>
               </fieldset>
+            <% else %>
+              <p class="hint pending-roll__no-bnbs"><%= pending.character.name %> has no Boons or Banes.</p>
             <% end %>
             <%= form.submit "Roll it", class: "button" %>
           <% end %>

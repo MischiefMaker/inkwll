@@ -2,6 +2,12 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Storyteller rolls work properly
+
+- "Roll with the Storyteller" now really asks: the roll waits for the Storyteller instead of rolling straight away.
+- When the Storyteller calls for a roll, the waiting box says "was asked to roll" rather than "wants to roll".
+- The Storyteller's box says so when the character has no Boons or Banes, instead of leaving the space blank.
+
 ## 2026-10-17 — A font box for big titles
 
 - Admin → Look has a third font box, "Font for big titles", beside text and headings. The game's name on the front page and the titles of forum sections use it, so a script font like Great Vibes can be changed without touching CSS. Left empty, they use the heading font as before.
