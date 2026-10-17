@@ -29,7 +29,7 @@ class StorytellerToolsTest < ActionDispatch::IntegrationTest
     entry = characters(:wren).add_bnb!(bane, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
     sign_in_as(accounts(:bob))
     get scene_path(@scene)
-    assert_select "select[name='rulings[#{entry.id}]'][data-skill-ids='#{soul_skills(:wit).id}']"
+    assert_select "select[name='rulings[#{entry.id}]'] option[selected][value=choice]"
 
     assert_no_difference -> { @scene.poses.roll.count } do
       post scene_pending_rolls_path(@scene), params: { character_id: characters(:wren).id, skill_id: soul_skills(:wit).id, difficulty: "hard", rulings: { entry.id.to_s => "choice" } }

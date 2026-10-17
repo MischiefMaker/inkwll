@@ -27,7 +27,7 @@
           <%= form.label :character_id, "Who", class: "visually-hidden", for: "call_character" %>
           <%= form.select :character_id, others.map { |c| [ c.name, c.id ] }, {}, { id: "call_character", data: { call_roll_target: "character", action: "call-roll#show" } } %>
           <%= form.label :skill_id, "Skill", class: "visually-hidden", for: "call_skill" %>
-          <%= form.select :skill_id, grouped_options_for_select(Soul::Aspect.ordered.includes(:skills).to_h { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }), {}, { id: "call_skill", data: { call_roll_target: "skill", action: "call-roll#preset" } } %>
+          <%= form.select :skill_id, grouped_options_for_select(Soul::Aspect.ordered.includes(:skills).to_h { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }), {}, { id: "call_skill" } %>
           <%= form.label :difficulty, "Difficulty", class: "visually-hidden", for: "call_difficulty" %>
           <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: "standard" }, id: "call_difficulty" %>
           <% others.each do |character| %>
@@ -38,7 +38,7 @@
               <% entries.each do |entry| %>
                 <div class="field storyteller-tools__bnb">
                   <%= label_tag "call_ruling_#{entry.id}", "#{entry.name} (#{entry.level.capitalize} #{entry.kind.capitalize})" %>
-                  <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "no"), id: "call_ruling_#{entry.id}", data: { call_roll_target: "ruling", skill_ids: entry.skill_ids.join(",") } %>
+                  <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "choice"), id: "call_ruling_#{entry.id}" %>
                 </div>
               <% end %>
             </fieldset>
