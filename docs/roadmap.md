@@ -91,6 +91,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 
 **Maybe later**
 - Awards and profile comments.
+- Applying for a crafted item to add a Boon or Bane to the character's sheet, for staff to approve. For the version after Crafting (owner, 2026-10-17).
 
 ### The notes
 

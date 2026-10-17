@@ -156,6 +156,12 @@ nothing in rolls. An item with features counts in rolls:
 - The item catalogue and shops (under Admin → Economy).
 - Give, take or edit items, always with a reason, logged like money.
 
+## Next version
+
+- **Applying for an item to add a Boon or Bane:** a player applies for an
+  item to give a real Boon or Bane on the character's SOUL sheet, for staff
+  to approve (owner, 2026-10-17). Left for the version after this one.
+
 ## Left out on purpose (from Arx)
 
 - Materials, recipes, quality numbers and combat stats.
