@@ -11,7 +11,8 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - Crafting starts from Arx's crafting, simplified.
 - Characters craft items for a starting cost, add a description, pictures and features that can affect rolls, then sell them for a profit.
 - No materials for now. Crafting costs a straight price based on the finished item's worth, so features that affect the game cost far more than ornamental items.
-- The design and its open questions are in `crafting.md`.
+- The agreed design is in `crafting.md`.
+- Items, Belongings, staff shops, Give and Trade work whenever the Economy is on, even without Crafting. Players write up their items freely and staff can edit them later. Crafted items are sold on one Market page, and sales count as income for faction income tax. Items have up to 3 features to start, which staff can raise as far as unlimited. Players can propose new features for staff to approve. An item's features count in rolls whenever it's owned, as tick boxes that go with the item, leaving the SOUL sheet untouched.
 
 ## 2026-10-17: Economy brief (owner)
 

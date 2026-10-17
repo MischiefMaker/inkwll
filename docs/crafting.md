@@ -1,9 +1,8 @@
 # Crafting (Version 2.0, Theme 9)
 
-**Status: [Proposed]** by Claude on 2026-10-17, reworked the same day around
-the owner's brief below. Nothing here is built. Once the owner answers the
-questions at the bottom, the settled parts move to `decisions.md` and this
-page is updated to match.
+**Status: Agreed** with the owner on 2026-10-17 (answers at the end and in
+`decisions.md`). Nothing here is built. It comes after the Economy, and
+waits for the owner's go.
 
 Crafting comes after the Economy (`economy.md`) and builds on it. It's an
 optional system a game switches on, like Grimoire.
@@ -111,18 +110,23 @@ nothing in rolls. An item with features counts in rolls:
 
 - **Set a price.** Any item a character owns can be put up for sale at a
   price the player chooses, and taken down again.
-- **Where it's sold** is question 3: on the crafter's own stall in a Place
-  they choose, or on one Market page for the whole game.
+- **The Market.** Items for sale are listed on one Market page for the
+  whole game, with the seller, price, pictures and features, so it's easy to
+  browse.
 - **Buying** takes the money from the buyer's Purse, pays the seller, and
   moves the item. Both see it on their ledgers.
-- **Taxes:** if the seller's faction has income tax, a sale counts as income
-  (question 4).
+- **Taxes:** if the seller's faction has income tax, a sale counts as
+  income.
 
 ## Switching it on and off
 
 - **Admin → Features** gets "Use Crafting", off by default. It needs the
   Economy switched on, since everything costs money.
-- Turning it off hides the Craft button and item features in rolls. Items
+- Items, Belongings, staff shops, Give and Trade work whenever the Economy
+  is on, even with Crafting off, so a game can have shops without crafting.
+  They're built in this step, but live under the Economy switch.
+- Turning it off hides the Craft button, the Market and item features in
+  rolls. Items
   people already own stay in their Belongings.
 - The code lives in its own part (`Crafting`, tables starting
   `crafting_`), like Grimoire.
@@ -146,7 +150,9 @@ nothing in rolls. An item with features counts in rolls:
 - Item types, their starting costs and Skills.
 - Features: their Skills, levels, extra costs and which item types they fit.
 - The highest feature level players can choose, and how many features one
-  item can have.
+  item can have (3 to start, and staff can raise it as far as unlimited).
+- New features players propose, which staff approve or turn down with a
+  reason, like Grimoire spell proposals.
 - The item catalogue and shops (under Admin → Economy).
 - Give, take or edit items, always with a reason, logged like money.
 
@@ -157,27 +163,15 @@ nothing in rolls. An item with features counts in rolls:
 - Adornments, forgeries and translated text.
 - Action points.
 
-## Questions for the owner
+## The owner's answers (2026-10-17)
 
-1. **Items without Crafting:** items, Belongings, shops and Trade work
-   whenever the Economy is on *(recommended, so a game can have shops
-   without crafting)*, or only when Crafting is on.
-2. **What players write up:** freely, and staff can edit afterwards
-   *(recommended)*, or staff approve each crafted item before it exists.
-3. **Where crafted items are sold:** on one Market page for the whole game
-   *(recommended, easy to browse)*, or on stalls in Places, so you go there
-   to buy.
-4. **Do sales count as income for faction income tax:** yes
-   *(recommended)*, or no.
-5. **How many features an item can have:** staff set a limit, starting at 3
-   *(recommended)*, or no limit, just cost.
-6. **Can players invent new features:** yes, staff approve them like
-   Grimoire spell proposals *(recommended)*, or only staff make features.
-7. **When can an item's features count in a roll:** whenever it's in their
-   Belongings *(recommended, simplest)*, or only when the player marks it as
-   carried in that Chapter.
-8. **How an item's features reach the sheet:** they show as extra tick boxes
-   in the roll box while the character owns the item, and go with the item
-   *(recommended: SOUL's Boons and Banes list and its one-Bane-per-two-Boons
-   rule stay untouched)*, or owning the item adds a real Boon to the
-   character's SOUL sheet, which is taken off again when the item leaves.
+1. **Items, Belongings, shops and Trade** work whenever the Economy is on.
+2. **Players write up their items freely,** and staff can edit them later.
+3. **Crafted items are sold on one Market page** for the whole game.
+4. **Sales count as income** for faction income tax.
+5. **Features per item:** staff set a limit, starting at 3, which they can
+   raise as far as unlimited.
+6. **Players can propose new features,** which staff approve.
+7. **Features count in a roll whenever the item is owned.**
+8. **Features reach rolls as tick boxes** that go with the item. SOUL's
+   Boons and Banes list is untouched.
