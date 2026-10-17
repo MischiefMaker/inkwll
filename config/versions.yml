@@ -2,6 +2,13 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.14
+  commit: 4eeeb8c84b09202856168471abc28f8bb156faeb
+  date: 2026-10-17
+  notes: |
+    - The sample map gets streets: a street in every small Area, with its buildings and outdoor spaces on it. New games start with them.
+    - Updating adds the same streets to a game that still has the sample places (one-off, adds only, never changes or removes anything, does nothing a second time).
+    - Going back to v1.13 is safe; the streets stay.
 - version: v1.13
   commit: b65251bdae0bde49b8fbffeb10e9500fc39b104c
   date: 2026-10-17
