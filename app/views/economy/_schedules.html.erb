@@ -1,0 +1,24 @@
+<%# Scheduled payments into and out of a Purse or Bank. `stop_url` gives the
+    url to stop one, or nil when the viewer can't. %>
+<% schedules = Economy::Schedule.running.where(from_account: account).or(Economy::Schedule.running.where(to_account: account))
+     .includes(from_account: :owner, to_account: :owner).order(:next_due_on) %>
+<% if schedules.any? %>
+  <ul class="schedules">
+    <% schedules.each do |schedule| %>
+      <% outgoing = schedule.from_account_id == account.id %>
+      <li class="schedules__item schedules__item--<%= outgoing ? "out" : "in" %>">
+        <span class="schedules__text">
+          <strong class="emphasis"><%= money(schedule.amount) %></strong> <%= schedule.interval_name %>
+          <%= outgoing ? "to #{schedule.to_account.owner_name}" : "from #{schedule.payer_name}" %><%= " · #{schedule.note}" if schedule.note.present? %>
+        </span>
+        <span class="schedules__next muted">next on <%= schedule.next_due_on.to_fs(:long) %><%= ", until #{schedule.ends_on.to_fs(:long)}" if schedule.ends_on %></span>
+        <% if (url = stop_url.call(schedule)) %>
+          <%= button_to (outgoing ? "Stop" : "Turn down"), url, method: :delete, class: "button-link schedules__stop",
+                form: { data: { turbo_confirm: outgoing ? "Stop this payment?" : "Turn this payment down? It stops for good." } } %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text muted">None.</p>
+<% end %>

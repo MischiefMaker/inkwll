@@ -89,7 +89,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 
 **Theme 9: Big new systems (each needs a design talk first).** Both are optional systems that a game switches on or off, like Grimoire.
 - Crafting.
-- Economy. Probably goes with crafting, so the two should be designed together.
+- Economy. Designed with Crafting (`economy.md`). **Built on the `v2.0` branch (2026-10-17), waiting for you to try it.** Domains and Crafting follow.
 
 **Maybe later**
 - Awards and profile comments.

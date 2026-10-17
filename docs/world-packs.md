@@ -32,7 +32,7 @@ except `format`.
 {
   "format": "inkwll-world-pack",
   "name": "Last Call of the Wild",
-  "game": { "name": "…", "blurb": "…", "icon": "icon" },
+  "game": { "name": "…", "blurb": "…", "icon": "icon", "currency": { "one": "crown", "other": "crowns", "symbol": null } },
   "look": {
     "preset": "…", "colours": { "bg": "#405570" }, "dark_colours": {}, "dark_mode": false,
     "font_body": "Oswald, sans-serif", "font_heading": "'Amatic SC', serif", "font_title": "'Great Vibes', cursive",

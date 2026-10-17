@@ -17,6 +17,8 @@ class FactionsController < ApplicationController
     @requests = @manager ? @faction.requests.pending.includes(:character).order(:created_at) : FactionRequest.none
     @own_requests = current_account ? @faction.requests.pending.where(character: current_account.characters).includes(:character) : FactionRequest.none
     @askable = FactionRequest.askable_characters(current_account, @faction)
+    @bank_visible = Economy.enabled? && @faction.bank_visible_to?(current_account)
+    @bank_manager = @bank_visible && @faction.bank_manager?(current_account)
     Alert.read_for_faction!(current_account, @faction) if current_account
   end
 end

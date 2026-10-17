@@ -31,6 +31,7 @@
             <% if membership.head? %><span class="tag faction__tag faction__tag--head">Head</span><% end %>
             <% if membership.head? && character.on_roster? %><span class="tag faction__tag faction__tag--roster">On the roster</span><% end %>
             <% if membership.secret? %><span class="tag faction__tag faction__tag--secret">Secret member</span><% end %>
+            <% if membership.bank_manager? && Economy.enabled? %><span class="tag faction__tag faction__tag--bank-manager"><%= term(:bank) %> manager</span><% end %>
 
             <% if @manager && (!membership.head? || @staff) %>
               <details class="faction__manage">
@@ -40,6 +41,7 @@
                   <%= form.text_field :title, placeholder: "Title (optional)", maxlength: 60 %>
                   <span class="field--checkbox"><%= form.check_box :secret %> <%= form.label :secret, "Secret member" %></span>
                   <% if @staff %><span class="field--checkbox"><%= form.check_box :head %> <%= form.label :head, "Head" %></span><% end %>
+                  <% if @staff && Economy.enabled? %><span class="field--checkbox"><%= form.check_box :bank_manager %> <%= form.label :bank_manager, "#{term(:bank)} manager" %></span><% end %>
                   <%= form.submit "Save", class: "button button--quiet" %>
                 <% end %>
                 <%= button_to "Remove #{character.name}", faction_membership_path(@faction, membership), method: :delete, class: "button-link faction__remove",
@@ -56,6 +58,10 @@
       <p class="text muted">Nobody yet.</p>
     <% end %>
   </section>
+
+  <% if @bank_visible %>
+    <%= render "factions/bank", faction: @faction, manager: @bank_manager %>
+  <% end %>
 
   <% if @requests.any? %>
     <section class="faction__requests">

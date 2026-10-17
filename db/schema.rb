@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_130000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -94,6 +94,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
     t.datetime "updated_at", null: false
     t.bigint "inkling_id"
     t.bigint "faction_id"
+    t.string "note"
     t.index ["account_id", "read_at"], name: "index_alerts_on_account_id_and_read_at"
     t.index ["account_id"], name: "index_alerts_on_account_id"
     t.index ["character_id"], name: "index_alerts_on_character_id"
@@ -192,6 +193,64 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "economy_accounts", force: :cascade do |t|
+    t.string "owner_type", null: false
+    t.bigint "owner_id", null: false
+    t.integer "balance", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_economy_accounts_on_owner", unique: true
+  end
+
+  create_table "economy_allowance_changes", force: :cascade do |t|
+    t.bigint "soul_bnb_id", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["soul_bnb_id"], name: "index_economy_allowance_changes_on_soul_bnb_id", unique: true
+  end
+
+  create_table "economy_entries", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "counterparty_id"
+    t.integer "amount", null: false
+    t.integer "balance_after", null: false
+    t.string "kind", null: false
+    t.string "note"
+    t.bigint "actor_id"
+    t.bigint "actor_character_id"
+    t.bigint "schedule_id"
+    t.string "key"
+    t.datetime "created_at", null: false
+    t.index ["account_id", "created_at"], name: "index_economy_entries_on_account_id_and_created_at"
+    t.index ["account_id"], name: "index_economy_entries_on_account_id"
+    t.index ["actor_character_id"], name: "index_economy_entries_on_actor_character_id"
+    t.index ["actor_id"], name: "index_economy_entries_on_actor_id"
+    t.index ["counterparty_id"], name: "index_economy_entries_on_counterparty_id"
+    t.index ["key"], name: "index_economy_entries_on_key", unique: true, where: "(key IS NOT NULL)"
+    t.index ["schedule_id"], name: "index_economy_entries_on_schedule_id"
+  end
+
+  create_table "economy_schedules", force: :cascade do |t|
+    t.bigint "from_account_id"
+    t.bigint "to_account_id", null: false
+    t.integer "amount", null: false
+    t.string "interval", default: "week", null: false
+    t.date "next_due_on", null: false
+    t.date "ends_on"
+    t.string "note"
+    t.bigint "created_by_id"
+    t.bigint "created_by_character_id"
+    t.datetime "stopped_at"
+    t.string "stopped_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_character_id"], name: "index_economy_schedules_on_created_by_character_id"
+    t.index ["created_by_id"], name: "index_economy_schedules_on_created_by_id"
+    t.index ["from_account_id"], name: "index_economy_schedules_on_from_account_id"
+    t.index ["to_account_id"], name: "index_economy_schedules_on_to_account_id"
+  end
+
   create_table "exits", force: :cascade do |t|
     t.bigint "source_room_id", null: false
     t.bigint "destination_room_id", null: false
@@ -215,6 +274,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
     t.boolean "secret", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "bank_manager", default: false, null: false
     t.index ["character_id"], name: "index_faction_memberships_on_character_id"
     t.index ["faction_id", "character_id"], name: "index_faction_memberships_on_faction_id_and_character_id", unique: true
     t.index ["faction_id"], name: "index_faction_memberships_on_faction_id"
@@ -244,6 +304,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
     t.integer "position", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "income_tax_percent", default: 0, null: false
+    t.integer "dues_amount", default: 0, null: false
+    t.string "dues_interval", default: "month", null: false
+    t.date "dues_next_on"
     t.index "lower((name)::text)", name: "index_factions_on_lower_name", unique: true
   end
 
@@ -336,6 +400,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
     t.boolean "locked", default: false, null: false
     t.string "font_title"
     t.boolean "factions_enabled", default: false, null: false
+    t.boolean "economy_enabled", default: false, null: false
+    t.boolean "economy_taxes_enabled", default: false, null: false
+    t.string "currency_one", default: "crown", null: false
+    t.string "currency_other", default: "crowns", null: false
+    t.string "currency_symbol"
+    t.integer "economy_starting_amount", default: 0, null: false
+    t.integer "economy_allowance", default: 0, null: false
+    t.integer "economy_tax_max_percent", default: 25, null: false
+    t.integer "economy_dues_max", default: 0, null: false
     t.string "chapter_tabs_side", default: "top", null: false
   end
 
@@ -1026,6 +1099,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_120000) do
   add_foreign_key "conversation_members", "accounts"
   add_foreign_key "conversation_members", "characters", column: "via_character_id"
   add_foreign_key "conversation_members", "conversations"
+  add_foreign_key "economy_allowance_changes", "soul_bnbs", on_delete: :cascade
+  add_foreign_key "economy_entries", "accounts", column: "actor_id", on_delete: :nullify
+  add_foreign_key "economy_entries", "characters", column: "actor_character_id", on_delete: :nullify
+  add_foreign_key "economy_entries", "economy_accounts", column: "account_id", on_delete: :cascade
+  add_foreign_key "economy_entries", "economy_accounts", column: "counterparty_id", on_delete: :nullify
+  add_foreign_key "economy_entries", "economy_schedules", column: "schedule_id", on_delete: :nullify
+  add_foreign_key "economy_schedules", "accounts", column: "created_by_id", on_delete: :nullify
+  add_foreign_key "economy_schedules", "characters", column: "created_by_character_id", on_delete: :nullify
+  add_foreign_key "economy_schedules", "economy_accounts", column: "from_account_id", on_delete: :cascade
+  add_foreign_key "economy_schedules", "economy_accounts", column: "to_account_id", on_delete: :cascade
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
   add_foreign_key "faction_memberships", "characters", on_delete: :cascade

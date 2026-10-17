@@ -30,6 +30,13 @@ class GameSetting < ApplicationRecord
   validates :chapter_tabs_side, inclusion: { in: CHAPTER_TABS_SIDES }
   validates :chapter_cast_portraits, :chapter_passage_portraits, inclusion: { in: PORTRAIT_SIZES }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
+  # The Economy (docs/economy.md).
+  normalizes :currency_one, :currency_other, with: ->(word) { word.squish }
+  normalizes :currency_symbol, with: ->(symbol) { symbol.strip.presence }
+  validates :currency_one, :currency_other, presence: true, length: { maximum: 30 }
+  validates :currency_symbol, length: { maximum: 5 }
+  validates :economy_starting_amount, :economy_allowance, :economy_dues_max, numericality: { only_integer: true, in: 0..10_000_000 }
+  validates :economy_tax_max_percent, numericality: { only_integer: true, in: 0..100 }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }
   validate :auto_finish_after_idle

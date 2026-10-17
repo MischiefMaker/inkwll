@@ -39,6 +39,8 @@ Rails.application.routes.draw do
       resources :spells, only: :create
       resources :spell_proposals, only: :create
       resources :roster_applications, only: %i[ new create ]
+      resources :payments, only: :create
+      resources :payment_schedules, only: %i[ create destroy ]
     end
   end
   resource :active_character, only: :update
@@ -104,6 +106,11 @@ Rails.application.routes.draw do
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions
     resources :requests, only: %i[ create update destroy ], module: :factions
+    scope module: :factions do
+      resource :bank, only: :update
+      resources :bank_payments, only: :create
+      resources :bank_schedules, only: %i[ create destroy ]
+    end
   end
   resources :inklings, only: %i[ index new create show update ] do
     scope module: :inklings do
@@ -193,6 +200,10 @@ Rails.application.routes.draw do
     resources :grimoire_spells, only: %i[ create edit update ]
     resources :grimoire_proposals, only: :update
     resources :roster_characters, only: %i[ create update ]
+    resource :economy, only: %i[ show update ], controller: "economy"
+    resources :economy_adjustments, only: :create
+    resources :economy_schedules, only: %i[ create destroy ]
+    resources :economy_allowance_changes, only: %i[ create destroy ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do
       resource :hiding, only: :create

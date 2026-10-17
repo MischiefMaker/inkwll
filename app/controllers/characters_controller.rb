@@ -22,6 +22,7 @@ class CharactersController < ApplicationController
     tabs << "soul" if Soul.enabled? && (@mine || @staff_view)
     tabs << "inklings" if Inkling.enabled? && (@mine || @staff_view)
     tabs << "grimoire" if Grimoire.enabled? && (@mine || @staff_view)
+    tabs << "purse" if Economy.enabled? && (@mine || @staff_view)
     @tab = params[:tab].presence_in(tabs) || "profile"
   end
 

@@ -190,6 +190,12 @@ class WorldPack
       settings = GameSetting.current
       settings.game_name = game["name"] if game.key?("name")
       settings.game_blurb = game["blurb"] if game.key?("blurb")
+      # The money's name, for the Economy: { "one": "crown", "other": "crowns", "symbol": null }.
+      if game["currency"].is_a?(Hash)
+        settings.currency_one = game["currency"]["one"].to_s.squish.first(30) if game["currency"]["one"].present?
+        settings.currency_other = game["currency"]["other"].to_s.squish.first(30) if game["currency"]["other"].present?
+        settings.currency_symbol = game["currency"]["symbol"].to_s.squish.first(5).presence if game["currency"].key?("symbol")
+      end
       attach(settings, :icon, game["icon"])
       settings.save!
     end

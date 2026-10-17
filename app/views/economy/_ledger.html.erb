@@ -1,0 +1,22 @@
+<%# The newest lines of a Purse's or Bank's ledger. %>
+<% entries = account.entries.newest_first.includes(:actor, :actor_character, counterparty: :owner).limit(local_assigns.fetch(:limit, 50)) %>
+<% if entries.any? %>
+  <table class="ledger">
+    <thead><tr><th class="ledger__when">When</th><th class="ledger__what">What</th><th class="ledger__amount">Amount</th><th class="ledger__balance">Balance</th></tr></thead>
+    <tbody>
+      <% entries.each do |entry| %>
+        <tr class="ledger__row ledger__row--<%= entry.kind %><%= entry.amount.negative? ? " ledger__row--out" : " ledger__row--in" %>">
+          <td class="ledger__when muted"><%= entry.created_at.to_date.to_fs(:long) %></td>
+          <td class="ledger__what">
+            <span class="ledger__kind"><%= entry.kind_name %></span><%= " #{entry.other_side}" if entry.other_side %><% if (signed = entry_signature(entry)) %> <span class="ledger__by muted"><%= signed %></span><% end %>
+            <% if entry.note.present? && entry.note != entry.kind_name %><span class="ledger__note muted"> · <%= entry.note %></span><% end %>
+          </td>
+          <td class="ledger__amount"><%= entry.missed? ? "—" : signed_money(entry.amount) %></td>
+          <td class="ledger__balance muted"><%= money(entry.balance_after) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="text muted">Nothing yet.</p>
+<% end %>

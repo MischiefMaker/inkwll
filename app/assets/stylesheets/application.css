@@ -1859,3 +1859,22 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
   .layout--tabs-left .chapter-tab { align-self: stretch; min-height: 0; max-width: none; border-bottom: 1px solid var(--color-border); border-radius: var(--radius); }
   .layout--tabs-left .chapter-tab--current { box-shadow: inset 3px 0 0 var(--color-accent); }
 }
+
+/* Economy: Purses, Banks, ledgers and scheduled payments */
+.purse__balance, .bank__balance { font-size: 1.1rem; margin: 0 0 0.5rem; }
+.purse__pay, .purse__schedule, .bank__pay, .bank__schedule, .bank__tax-settings { margin: 0.5rem 0; }
+.purse__pay-form, .bank__pay-form, .bank__deposit-form, .economy-admin__give-form, .economy-admin__schedule-form, .economy-admin__change-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.purse__pay-form input[type=text], .bank__pay-form input[type=text], .bank__deposit-form input[type=text] { width: auto; flex: 1 1 12rem; max-width: 20rem; }
+.purse__pay-form input[type=number], .bank__pay-form input[type=number], .bank__deposit-form input[type=number], .purse__schedule-form input[type=number], .bank__schedule-form input[type=number] { width: 7rem; }
+.bank__deposit-who { font-weight: 600; }
+.bank__heading { font-size: 1rem; margin: 1rem 0 0.5rem; }
+.ledger { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 0.9rem; }
+.ledger th, .ledger td { text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--color-border); vertical-align: top; }
+.ledger__amount, .ledger__balance { text-align: right !important; white-space: nowrap; }
+.ledger__row--missed { opacity: 0.75; font-style: italic; }
+.schedules { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.schedules__item { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.schedules__stop { margin-left: auto; }
+.economy-admin section { margin-bottom: 1.5rem; }
+.economy-admin__changes { list-style: none; margin: 0 0 0.5rem; padding: 0; }
+.economy-admin__change { display: flex; align-items: center; gap: 0.5rem; }

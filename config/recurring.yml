@@ -31,3 +31,9 @@ production:
   weekly_xp:
     class: WeeklyXpJob
     schedule: every sunday at midnight
+  economy_payments:
+    class: EconomyDailyJob
+    schedule: every day at 1am
+  economy_allowance:
+    class: EconomyAllowanceJob
+    schedule: every sunday at 12:15am

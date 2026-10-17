@@ -1,0 +1,135 @@
+<% content_for :title, "Economy · Admin · Inkwll" %>
+<% wellkeeper = current_account.can?(:change_game_settings) %>
+
+<div class="economy-admin">
+  <h1 class="page-title">Economy</h1>
+  <p class="muted">Every character has a <%= term(:purse).downcase %> and every <%= term(:faction).downcase %> a <%= term(:bank).downcase %>. Only staff make new money:
+    the starting amount, the weekly allowance, game payments and staff gifts. Every movement of money is on a ledger.</p>
+
+  <section class="economy-admin__give">
+    <h2 class="section-title">Give or take money</h2>
+    <%= form_with url: admin_economy_adjustments_path, class: "form form--inline economy-admin__give-form" do |form| %>
+      <%= form.label :direction, "Give or take", class: "visually-hidden" %>
+      <%= form.select :direction, [ [ "Give", "give" ], [ "Take", "take" ] ] %>
+      <%= form.label :amount, "Amount", class: "visually-hidden" %>
+      <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true %>
+      <%= form.label :to, "Character or #{term(:faction).downcase}", class: "visually-hidden" %>
+      <%= form.text_field :to, placeholder: "Character or #{term(:faction).downcase}", maxlength: 100, required: true %>
+      <%= form.label :reason, "Reason", class: "visually-hidden" %>
+      <%= form.text_field :reason, placeholder: "Reason (shows on their ledger)", maxlength: 200, required: true %>
+      <%= form.submit "Save", class: "button button--quiet" %>
+    <% end %>
+  </section>
+
+  <section class="economy-admin__schedules">
+    <h2 class="section-title">Game payments</h2>
+    <p class="hint">Scheduled payments the game makes, so they create new money, such as a stipend for a <%= term(:faction).downcase %>'s <%= term(:bank).downcase %>.
+      The weekly allowance for everyone is set below instead.</p>
+    <% if @schedules.any? %>
+      <ul class="schedules">
+        <% @schedules.each do |schedule| %>
+          <li class="schedules__item">
+            <span class="schedules__text"><strong class="emphasis"><%= money(schedule.amount) %></strong> <%= schedule.interval_name %> to <%= schedule.to_account.owner_name %><%= " · #{schedule.note}" if schedule.note.present? %></span>
+            <span class="schedules__next muted">next on <%= schedule.next_due_on.to_fs(:long) %></span>
+            <%= button_to "Stop", admin_economy_schedule_path(schedule), method: :delete, class: "button-link schedules__stop", form: { data: { turbo_confirm: "Stop this game payment?" } } %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= form_with url: admin_economy_schedules_path, class: "form form--inline economy-admin__schedule-form" do |form| %>
+      <%= form.label :to, "To", class: "visually-hidden" %>
+      <%= form.text_field :to, placeholder: "Character or #{term(:faction).downcase}", maxlength: 100, required: true %>
+      <%= form.label :amount, "Amount", class: "visually-hidden" %>
+      <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true %>
+      <%= form.label :interval, "How often", class: "visually-hidden" %>
+      <%= form.select :interval, interval_options %>
+      <%= form.label :starts_on, "First payment" %>
+      <%= form.date_field :starts_on, value: Date.tomorrow, min: Date.current %>
+      <%= form.label :note, "What for", class: "visually-hidden" %>
+      <%= form.text_field :note, placeholder: "What for (optional)", maxlength: 200 %>
+      <%= form.submit "Add", class: "button button--quiet" %>
+    <% end %>
+  </section>
+
+  <% if wellkeeper %>
+    <section class="economy-admin__settings">
+      <h2 class="section-title">Settings</h2>
+      <%= form_with model: @game_setting, url: admin_economy_path, method: :patch, class: "form economy-admin__settings-form" do |form| %>
+        <%= render "shared/errors", record: @game_setting %>
+        <div class="form--inline">
+          <%= form.label :currency_one, "The money is called" %>
+          <%= form.text_field :currency_one, maxlength: 30, required: true %>
+          <%= form.label :currency_other, "and in plural" %>
+          <%= form.text_field :currency_other, maxlength: 30, required: true %>
+          <%= form.label :currency_symbol, "Symbol (optional)" %>
+          <%= form.text_field :currency_symbol, maxlength: 5, size: 5 %>
+        </div>
+        <p class="hint">With a symbol, amounts show as "£12"; without one, as "12 <%= @game_setting.currency_other %>".</p>
+        <div class="form--inline">
+          <%= form.label :economy_starting_amount, "Starting amount for a newly approved character" %>
+          <%= form.number_field :economy_starting_amount, min: 0 %>
+        </div>
+        <div class="form--inline">
+          <%= form.label :economy_allowance, "Weekly allowance for every approved character" %>
+          <%= form.number_field :economy_allowance, min: 0 %>
+        </div>
+        <p class="hint">Paid on Sundays. Retired characters and those on the roster get none. 0 means no allowance.</p>
+        <div class="field field--checkbox">
+          <%= form.check_box :economy_taxes_enabled %>
+          <%= form.label :economy_taxes_enabled, "Taxes: #{term(:faction, count: 2).downcase} can charge income tax and dues into their #{term(:bank, count: 2).downcase}" %>
+        </div>
+        <div class="form--inline">
+          <%= form.label :economy_tax_max_percent, "Highest income tax (%)" %>
+          <%= form.number_field :economy_tax_max_percent, min: 0, max: 100 %>
+          <%= form.label :economy_dues_max, "Highest dues (0 for no limit)" %>
+          <%= form.number_field :economy_dues_max, min: 0 %>
+        </div>
+        <%= form.submit "Save", class: "button" %>
+      <% end %>
+    </section>
+
+    <% if Soul.enabled? %>
+      <section class="economy-admin__wealth">
+        <h2 class="section-title">Boons and Banes that change the allowance</h2>
+        <p class="hint">Such as "Wealthy" adding 10 or "Penniless" taking 5. Every character with one gets the change each week.</p>
+        <% if @changes.any? %>
+          <ul class="economy-admin__changes">
+            <% @changes.each do |change| %>
+              <li class="economy-admin__change"><%= change.bnb.name %> (<%= change.bnb.kind.capitalize %>): <strong><%= change.amount.positive? ? "+" : "" %><%= money(change.amount) %></strong>
+                <%= button_to "Remove", admin_economy_allowance_change_path(change), method: :delete, class: "button-link" %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%= form_with url: admin_economy_allowance_changes_path, class: "form form--inline economy-admin__change-form" do |form| %>
+          <%= form.label :soul_bnb_id, "Boon or Bane", class: "visually-hidden" %>
+          <%= form.select :soul_bnb_id, Soul::Bnb.active.order(:kind, :name).map { |bnb| [ "#{bnb.name} (#{bnb.kind.capitalize})", bnb.id ] } %>
+          <%= form.label :amount, "Change", class: "visually-hidden" %>
+          <%= form.number_field :amount, placeholder: "+10 or -5", required: true %>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+      </section>
+    <% end %>
+  <% end %>
+
+  <section class="economy-admin__transactions">
+    <h2 class="section-title">Recent money</h2>
+    <p class="hint">The newest 100 lines from every <%= term(:purse).downcase %> and <%= term(:bank).downcase %>, so you can spot anything odd.</p>
+    <% if @entries.any? %>
+      <table class="ledger ledger--all">
+        <thead><tr><th class="ledger__when">When</th><th class="ledger__who">Whose</th><th class="ledger__what">What</th><th class="ledger__amount">Amount</th></tr></thead>
+        <tbody>
+          <% @entries.each do |entry| %>
+            <tr class="ledger__row ledger__row--<%= entry.kind %>">
+              <td class="ledger__when muted"><%= entry.created_at.to_fs(:short) %></td>
+              <td class="ledger__who"><% owner = entry.account.owner %><%= owner.is_a?(Character) ? link_to(owner.name, character_path(owner, tab: "purse")) : owner ? link_to("#{owner.name} #{term(:bank)}", faction_path(owner, anchor: "bank")) : "Gone" %></td>
+              <td class="ledger__what"><%= entry.kind_name %><%= " #{entry.other_side}" if entry.other_side %><% if entry.actor %> <span class="muted">by <%= entry.actor_character&.name || entry.actor.display_name %></span><% end %><%= " · #{entry.note}" if entry.note.present? && entry.note != entry.kind_name %></td>
+              <td class="ledger__amount"><%= entry.missed? ? "—" : signed_money(entry.amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text muted">No money has moved yet.</p>
+    <% end %>
+  </section>
+</div>

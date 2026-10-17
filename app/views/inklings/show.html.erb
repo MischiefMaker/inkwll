@@ -218,12 +218,14 @@
           <%= form.label :reward_type, "Kind" %>
           <% kinds = [ [ "A note", "note" ] ] %>
           <% kinds = [ [ "XP", "xp" ], [ "A new Boon or Bane", "bnb" ], [ "Progress a Boon or Bane they have", "progress" ], [ "A Culmination", "culmination" ] ] + kinds if Soul.enabled? %>
+          <% kinds += [ [ "Money", "money" ] ] if Economy.enabled? %>
           <%= form.select :reward_type, kinds %>
         </div>
-        <% if Soul.enabled? %>
+        <% if Soul.enabled? || Economy.enabled? %>
           <div class="form--inline inkling__reward-details">
-            <%= form.label :amount, "XP", class: "visually-hidden" %>
-            <%= form.number_field :amount, min: 1, max: 100, placeholder: "XP" %>
+            <%= form.label :amount, "XP or money", class: "visually-hidden" %>
+            <%= form.number_field :amount, min: 1, placeholder: Economy.enabled? ? "XP or #{Economy.currency_name}" : "XP" %>
+            <% if Soul.enabled? %>
             <%= form.label :bnb_id, "Boon or Bane", class: "visually-hidden" %>
             <%= form.select :bnb_id, Soul::Bnb.active.order(:kind, :name).map { |bnb| [ "#{bnb.name} (#{bnb.kind.capitalize})", bnb.id ] }, include_blank: "New Boon or Bane…" %>
             <%= form.label :level, "Level", class: "visually-hidden" %>
@@ -232,6 +234,7 @@
             <%= form.select :character_bnb_id, @inkling.character.character_bnbs.unresolved.includes(:bnb).map { |entry| [ "#{entry.name} (#{entry.level.capitalize})", entry.id ] }, include_blank: "Theirs to progress…" %>
             <%= form.label :title, "Culmination title", class: "visually-hidden" %>
             <%= form.text_field :title, placeholder: "Culmination title", maxlength: 120 %>
+            <% end %>
           </div>
         <% end %>
         <div class="field">

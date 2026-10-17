@@ -40,6 +40,9 @@
               <%= who %> was accepted into <%= faction %>.
             <% when "faction_declined" %>
               <%= who %>'s request to join <%= faction %> was declined.
+            <% when "money" %>
+              <%= alert.note %>
+              <% if alert.character %><%= link_to "Purse", character_path(alert.character, tab: "purse"), class: "alerts__purse" %><% elsif alert.faction %><%= link_to term(:bank), faction_path(alert.faction, anchor: "bank"), class: "alerts__bank" %><% end %>
             <% end %>
             <% chapter = scene ? link_to(scene.title, scene_path(scene, anchor: alert.pose_id && "pose_#{alert.pose_id}"), class: "alerts__chapter") : "a #{term(:scene).downcase} that's gone" %>
             <% case alert.kind %>

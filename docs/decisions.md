@@ -14,6 +14,24 @@ The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0`
 - **Mass actions:** tick boxes on Admin → Characters (for characters in play) with "Retire them" or "Put them on the roster", for staff who can do both (Wellkeepers), and on Admin → Players and staff with "Archive them", for anyone who can archive (only players the staff member may manage, never themselves). A tick box in the heading ticks the whole table. Characters already retired or on the roster are skipped, and every action asks "Are you sure?" once.
 - **Chapter tabs position** is under Admin → Look ("Along the top" or "Down the left-hand side"), next to the other Chapter look choices, and defaults to the top. On phones the tabs always stay along the top, since a side column doesn't fit.
 
+## 2026-10-17: Economy built on the v2.0 branch (Claude's choices)
+
+The owner asked Claude to build the Economy, Domains and Crafting on the `v2.0` branch and to "do as much as you can without me and record any decisions you made without me". These are the choices Claude made while building the Economy. Each one can be changed.
+
+- The Economy and its taxes are both off by default. The money is called "crown"/"crowns" until a game renames it under Admin → Economy, and a symbol (such as £) replaces the name when set. A world pack can set the money's name too.
+- A character approved before the Economy was switched on gets the starting amount the first time their Purse is opened. Nobody gets it twice.
+- Only approved characters who aren't retired can pay or set up scheduled payments.
+- Paying from inside a Chapter adds a short game line to the Chapter ("Mara hands Tom 5 crowns."), shown like a roll.
+- Scheduled payments run every day at 1am; the weekly allowance is paid on Sundays at 12:15am. Roster characters get no allowance and pay no dues while nobody plays them, but their scheduled payments keep running.
+- A payment that comes due while the Economy is off, or more than two days late, is skipped rather than paid late. A payment the payer can't cover is skipped, both sides get an alert, and the ledger shows a "missed" line.
+- Income tax applies to money that arrives on its own (scheduled payments, game payments, the allowance, and later sales), not to one-off payments, so friends handing each other money isn't taxed. Each faction takes its percentage of the full amount, in the factions' order, and never more than is left.
+- The highest income tax starts at 25%. The highest dues start at 0, which means no limit.
+- A faction's Bank can be read by its members and staff. Staff tick who manages it, on the faction's member list. Every Bank action is signed with the manager's character.
+- Staff who can review applications can use Admin → Economy (give and take money with a reason, game payments, recent transactions). Only Wellkeepers change the Economy's settings and which Boons and Banes change the allowance.
+- A Wealth Boon or Bane changes the allowance by one fixed amount, whatever its level.
+- Money alerts go to the character's player, or to a Bank's managers.
+- Inklings can give money as a reward when the Economy is on.
+
 ## 2026-10-17: Factions (owner)
 
 - Factions are built first from Version 2.0, on a long-lived `v2.0` branch that stays off the live game until the owner says so. The rest of the roadmap follows on the same branch.

@@ -36,6 +36,17 @@ en:
     faction:
       one: "Faction"
       other: "Factions"
+    # Money (the Economy). The money's own name is set in Admin → Economy.
+    purse:
+      one: "Purse"
+      other: "Purses"
+    bank:
+      one: "Bank"
+      other: "Banks"
+    # Land in the Domains system, such as a Duchy or a Barony.
+    domain:
+      one: "Domain"
+      other: "Domains"
     # Kinds of Path, as headings on a Setting's page. Rename them freely.
     exit_kinds:
       street: "Streets"

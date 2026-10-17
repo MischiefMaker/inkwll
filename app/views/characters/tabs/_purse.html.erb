@@ -1,0 +1,64 @@
+<%# The character's money (the Economy): balance, scheduled payments and the
+    ledger. Only the player and staff see this tab. %>
+<% mine = manages?(character) %>
+<% purse = character.purse %>
+<% can_pay = mine && character.approved? && !character.retired? %>
+
+<div class="purse">
+  <p class="purse__balance"><span class="purse__balance-label">In <%= character.name %>'s <%= term(:purse).downcase %>:</span> <strong class="emphasis purse__amount"><%= money(purse.balance) %></strong></p>
+  <% if Economy.taxes_enabled? && (taxing = character.factions.where("income_tax_percent > 0").merge(Faction.ordered)).any? %>
+    <p class="hint purse__taxes">Income tax on scheduled payments and sales: <%= taxing.map { |faction| "#{faction.name} #{faction.income_tax_percent}%" }.to_sentence %>.</p>
+  <% end %>
+
+  <% if can_pay %>
+    <% chapters = Scene.open.where(id: character.scene_participants.select(:scene_id)).by_activity.limit(20).select(&:writable?) %>
+    <details class="purse__pay" open>
+      <summary class="disclosure__summary">Pay someone</summary>
+      <%= form_with url: character_payments_path(character), class: "form form--inline purse__pay-form" do |form| %>
+        <%= form.label :to, "To", class: "visually-hidden" %>
+        <%= form.text_field :to, placeholder: "Character or #{term(:faction).downcase}", maxlength: 100, required: true %>
+        <%= form.label :amount, "Amount", class: "visually-hidden" %>
+        <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true, class: "purse__amount-field" %>
+        <%= form.label :note, "What for", class: "visually-hidden" %>
+        <%= form.text_field :note, placeholder: "What for (optional)", maxlength: 200 %>
+        <% if chapters.any? %>
+          <%= form.label :scene_id, "Show in a #{term(:scene).downcase}", class: "visually-hidden" %>
+          <%= form.select :scene_id, chapters.map { |scene| [ "Show in #{scene.title}", scene.id ] }, include_blank: "Don't show in a #{term(:scene).downcase}" %>
+        <% end %>
+        <%= form.submit "Pay", class: "button button--quiet" %>
+      <% end %>
+    </details>
+
+    <details class="purse__schedule">
+      <summary class="disclosure__summary">Set up a scheduled payment</summary>
+      <%= form_with url: character_payment_schedules_path(character), class: "form purse__schedule-form" do |form| %>
+        <div class="form--inline">
+          <%= form.label :to, "To", class: "visually-hidden" %>
+          <%= form.text_field :to, placeholder: "Character or #{term(:faction).downcase}", maxlength: 100, required: true %>
+          <%= form.label :amount, "Amount", class: "visually-hidden" %>
+          <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true, class: "purse__amount-field" %>
+          <%= form.label :interval, "How often", class: "visually-hidden" %>
+          <%= form.select :interval, interval_options %>
+        </div>
+        <div class="form--inline">
+          <%= form.label :starts_on, "First payment" %>
+          <%= form.date_field :starts_on, value: Date.tomorrow, min: Date.current %>
+          <%= form.label :ends_on, "Last payment (optional)" %>
+          <%= form.date_field :ends_on, min: Date.current %>
+        </div>
+        <div class="field">
+          <%= form.label :note, "What for (optional)" %>
+          <%= form.text_field :note, maxlength: 200 %>
+        </div>
+        <%= form.submit "Set it up", class: "button button--quiet" %>
+      <% end %>
+      <p class="hint">It goes through on its own. If <%= character.name %> can't cover it on the day, it's skipped and both sides are told.</p>
+    </details>
+  <% end %>
+
+  <h2 class="section-title">Scheduled payments</h2>
+  <%= render "economy/schedules", account: purse, stop_url: ->(schedule) { mine ? character_payment_schedule_path(character, schedule) : nil } %>
+
+  <h2 class="section-title">Ledger</h2>
+  <%= render "economy/ledger", account: purse %>
+</div>

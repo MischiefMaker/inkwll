@@ -5,6 +5,7 @@ class Character < ApplicationRecord
   include Roster
   include GrimoireBook
   include FactionMember
+  include Purse
 
   # Played characters that aren't retired. GM stand-ins (see Account#gm!)
   # never count as characters in lists.

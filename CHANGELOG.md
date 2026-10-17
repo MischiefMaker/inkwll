@@ -8,6 +8,14 @@ Short, plain-language notes on what changed. Newest first.
 - Admin → Look can put the Chapter tabs down the left-hand side instead of along the top (phones keep them on top).
 - Tick boxes on Admin → Characters and Admin → Players and staff: tick several (or tick the heading for all), then retire them, put them on the roster, or archive the players in one go.
 
+## 2026-10-17 — The Economy (Version 2.0 branch)
+
+- Money, switched on under Admin → Features. Every character has a Purse tab (seen only by their player and staff) with their balance and a ledger of every change.
+- Pay any character or faction from the Purse, with a note, optionally inside a Chapter, where it shows as a short line. Set up scheduled payments every week, two weeks or month; the payer can stop them and the payee can turn them down.
+- Factions get a Bank. Staff tick Bank managers, who can pay out, set up salaries, and (when taxes are on) set income tax and dues. Members can read the Bank.
+- Admin → Economy: the money's name, a starting amount, a weekly allowance, Boons and Banes that change it, game payments, giving and taking money with a reason, and recent transactions.
+- Inklings can give money as a reward.
+
 ## 2026-10-17 — Factions (Version 2.0 branch)
 
 - Factions: families, guilds and clubs, and a character can be in several. Switch them on under Admin → Features, and make them under Admin → Factions.

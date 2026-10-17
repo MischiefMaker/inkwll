@@ -39,6 +39,9 @@ module AdminMenuHelper
       if Soul.enabled?
         groups["Game systems"] << admin_link("Boons and Banes", admin_soul_bnbs_path, %w[ soul_bnbs ])
       end
+      if Economy.enabled?
+        groups["Game systems"] << admin_link("Economy", admin_economy_path, %w[ economy economy_adjustments economy_schedules economy_allowance_changes ])
+      end
     end
 
     if current_account.can?(:handle_reports)

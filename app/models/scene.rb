@@ -483,6 +483,13 @@ class Scene < ApplicationRecord
     add_pose!(character: nil, kind: "system", body: body)
   end
 
+  # A line the game writes for a character, such as a payment or something
+  # they crafted. It reads like a roll: part of the story, can't be edited,
+  # and doesn't take a turn.
+  def add_game_line!(character, body)
+    add_pose!(character: character, kind: "roll", body: body)
+  end
+
   # Re-renders this scene for everyone watching it, its room's list of scenes,
   # and the Chapter tabs of every player in it.
   def broadcast_change

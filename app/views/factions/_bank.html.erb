@@ -1,0 +1,97 @@
+<%# The faction's Bank (the Economy). Members and staff can read it, so
+    nobody wonders where the money went; its managers and staff run it. %>
+<% bank = faction.bank %>
+<% members_purses = current_account ? current_account.characters.active.where(status: "approved", retired_at: nil, id: faction.memberships.select(:character_id)) : Character.none %>
+<section class="faction__bank bank" id="bank">
+  <h2 class="section-title"><%= term(:bank) %></h2>
+  <p class="bank__balance"><span class="bank__balance-label">In the <%= term(:bank).downcase %>:</span> <strong class="emphasis bank__amount"><%= money(bank.balance) %></strong></p>
+  <% managers = faction.memberships.where(bank_manager: true).joins(:character).merge(Character.active).includes(:character).map(&:character) %>
+  <p class="hint bank__managers"><%= managers.any? ? "Run by #{managers.map(&:name).to_sentence}." : "No #{term(:bank).downcase} managers yet, so staff run it." %></p>
+
+  <% if Economy.taxes_enabled? && (faction.income_tax_percent.positive? || faction.dues_amount.positive?) %>
+    <p class="text bank__taxes">
+      <% if faction.income_tax_percent.positive? %>Income tax: <strong><%= faction.income_tax_percent %>%</strong> of members' scheduled payments and sales.<% end %>
+      <% if faction.dues_amount.positive? %>Dues: <strong><%= money(faction.dues_amount) %></strong> <%= Economy::INTERVALS[faction.dues_interval] %><%= ", next on #{faction.dues_next_on.to_fs(:long)}" if faction.dues_next_on %>.<% end %>
+    </p>
+  <% end %>
+
+  <% members_purses.each do |character| %>
+    <%= form_with url: character_payments_path(character), class: "form form--inline bank__deposit-form" do |form| %>
+      <%= hidden_field_tag :to, faction.name %>
+      <span class="bank__deposit-who">Pay in as <%= character.name %></span>
+      <%= form.label :amount, "Amount", class: "visually-hidden" %>
+      <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true %>
+      <%= form.label :note, "What for", class: "visually-hidden" %>
+      <%= form.text_field :note, placeholder: "What for (optional)", maxlength: 200 %>
+      <%= form.submit "Pay in", class: "button button--quiet" %>
+    <% end %>
+  <% end %>
+
+  <% if manager %>
+    <details class="bank__pay">
+      <summary class="disclosure__summary">Pay from the <%= term(:bank).downcase %></summary>
+      <%= form_with url: faction_bank_payments_path(faction), class: "form form--inline bank__pay-form" do |form| %>
+        <%= form.label :to, "To", class: "visually-hidden" %>
+        <%= form.text_field :to, placeholder: "Character or #{term(:faction).downcase}", maxlength: 100, required: true %>
+        <%= form.label :amount, "Amount", class: "visually-hidden" %>
+        <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true %>
+        <%= form.label :note, "What for", class: "visually-hidden" %>
+        <%= form.text_field :note, placeholder: "What for (optional)", maxlength: 200 %>
+        <%= form.submit "Pay", class: "button button--quiet" %>
+      <% end %>
+    </details>
+
+    <details class="bank__schedule">
+      <summary class="disclosure__summary">Set up a scheduled payment, such as a salary</summary>
+      <%= form_with url: faction_bank_schedules_path(faction), class: "form bank__schedule-form" do |form| %>
+        <div class="form--inline">
+          <%= form.label :to, "To", class: "visually-hidden" %>
+          <%= form.text_field :to, placeholder: "Character or #{term(:faction).downcase}", maxlength: 100, required: true %>
+          <%= form.label :amount, "Amount", class: "visually-hidden" %>
+          <%= form.number_field :amount, min: 1, placeholder: Economy.currency_name.capitalize, required: true %>
+          <%= form.label :interval, "How often", class: "visually-hidden" %>
+          <%= form.select :interval, interval_options %>
+        </div>
+        <div class="form--inline">
+          <%= form.label :starts_on, "First payment" %>
+          <%= form.date_field :starts_on, value: Date.tomorrow, min: Date.current %>
+          <%= form.label :ends_on, "Last payment (optional)" %>
+          <%= form.date_field :ends_on, min: Date.current %>
+        </div>
+        <div class="field">
+          <%= form.label :note, "What for (optional)" %>
+          <%= form.text_field :note, maxlength: 200 %>
+        </div>
+        <%= form.submit "Set it up", class: "button button--quiet" %>
+      <% end %>
+    </details>
+
+    <% if Economy.taxes_enabled? %>
+      <% settings = GameSetting.current %>
+      <details class="bank__tax-settings">
+        <summary class="disclosure__summary">Taxes and dues</summary>
+        <%= form_with model: faction, url: faction_bank_path(faction), method: :patch, class: "form bank__tax-form" do |form| %>
+          <div class="form--inline">
+            <%= form.label :income_tax_percent, "Income tax (%)" %>
+            <%= form.number_field :income_tax_percent, min: 0, max: settings.economy_tax_max_percent %>
+          </div>
+          <div class="form--inline">
+            <%= form.label :dues_amount, "Dues" %>
+            <%= form.number_field :dues_amount, min: 0, max: (settings.economy_dues_max if settings.economy_dues_max.positive?) %>
+            <%= form.select :dues_interval, interval_options %>
+            <%= form.label :dues_next_on, "next on" %>
+            <%= form.date_field :dues_next_on, value: faction.dues_next_on || Date.tomorrow, min: Date.current %>
+          </div>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+        <p class="hint">Income tax is taken from members' scheduled payments (salaries, allowances) and sales as they arrive, up to <%= settings.economy_tax_max_percent %>%. Dues are a set amount each member pays. Someone who can't pay isn't put in debt; it's marked on the ledger.</p>
+      </details>
+    <% end %>
+  <% end %>
+
+  <h3 class="bank__heading">Scheduled payments</h3>
+  <%= render "economy/schedules", account: bank, stop_url: ->(schedule) { manager ? faction_bank_schedule_path(faction, schedule) : nil } %>
+
+  <h3 class="bank__heading">Ledger</h3>
+  <%= render "economy/ledger", account: bank %>
+</section>

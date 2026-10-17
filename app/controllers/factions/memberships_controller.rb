@@ -1,5 +1,6 @@
 # Adding, changing and removing a faction's members. Its heads and staff add
-# members and set their titles; only staff choose heads or remove a head.
+# members and set their titles; only staff choose heads (and Bank managers)
+# or remove a head.
 # A player can take their own character out of a faction.
 class Factions::MembershipsController < ApplicationController
   limit_posting to: 30, within: 10.minutes, only: :create
@@ -21,8 +22,9 @@ class Factions::MembershipsController < ApplicationController
 
   def update
     return back(alert: "Only staff can change a head.") if @membership.head? && !@staff
-    changes = params.expect(faction_membership: [ :title, :secret, :head ])
+    changes = params.expect(faction_membership: [ :title, :secret, :head, :bank_manager ])
     changes.delete(:head) unless @staff
+    changes.delete(:bank_manager) unless @staff
     if @membership.update(changes)
       back(notice: "Saved.")
     else
