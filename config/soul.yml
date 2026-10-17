@@ -30,6 +30,7 @@ shared:
   xp:
     weekly_award: 1          # to every approved character, each Sunday
     scene_award: 1           # to each approved character who posted in a finished Chapter
+    bounty_award: 1          # extra, for writing with someone on the weekly scene bounty (0 switches it off)
     cost:
       skill_curve_numerator: 1
       skill_curve_denominator: 2

@@ -230,6 +230,7 @@ class Scene < ApplicationRecord
       update!(finished_at: Time.current, finished_by: by, current_turn_participant: nil,
         turn_started_at: nil, turn_warned_at: nil, turn_token: turn_token + 1)
       ActiveRecord.after_all_transactions_commit { award_xp! }
+      ActiveRecord.after_all_transactions_commit { SceneBounty.pay_for!(self) }
       ActiveRecord.after_all_transactions_commit { Notifier.chapter_finished(self, by: by) }
       true
     end

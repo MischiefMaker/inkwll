@@ -16,7 +16,7 @@ class Soul::XpEntry < ApplicationRecord
 
   def description
     case kind
-    when "award" then { "weekly" => "Weekly XP", "scene" => "Finished #{Term[:scene]}", "staff" => "Awarded by staff", "inkling" => "From an Inkling", "storyteller" => "Suggested by a #{Term[:storyteller]}" }.fetch(source.to_s, "Award")
+    when "award" then { "weekly" => "Weekly XP", "scene" => "Finished #{Term[:scene]}", "staff" => "Awarded by staff", "inkling" => "From an Inkling", "storyteller" => "Suggested by a #{Term[:storyteller]}", "bounty" => "Scene bounty" }.fetch(source.to_s, "Award")
     when "spend" then trait.is_a?(Grimoire::Spell) ? "Learned the spell #{trait.name}" : "Raised #{trait&.name || "a trait"} to #{new_rating}"
     else "Corrected by staff"
     end

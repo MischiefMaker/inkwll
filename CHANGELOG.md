@@ -10,6 +10,7 @@ Short, plain-language notes on what changed. Newest first.
 - "Need a ruling" on a Chapter asks staff to rule on something. Staff answer from Admin → Rulings, and the ruling appears in the Chapter.
 - "Give me an idea" on the form for starting a Chapter fills in a random idea that staff wrote under Admin → Chapter ideas.
 - A character spotlight on the front page: a different character played lately each day, with a line from their profile. It can be switched off in Game settings.
+- Scene bounty: My Chapters lists five characters each week, new ones first. Finish a Chapter with one of them and your character earns extra SOUL XP.
 
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 

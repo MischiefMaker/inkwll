@@ -1964,3 +1964,9 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .character-spotlight__link { display: inline-flex; flex-direction: column; align-items: center; gap: 0.3rem; text-decoration: none; font-weight: 600; }
 .character-spotlight__line { margin: 0.5rem auto 0.25rem; max-width: 36rem; font-style: italic; overflow-wrap: anywhere; }
 .character-spotlight__where { margin: 0; font-size: 0.85rem; }
+
+/* Scene bounty on My Chapters (Version 2.0) */
+.scene-bounty { margin-top: calc(var(--space) * 2); }
+.scene-bounty__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.scene-bounty__item { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.scene-bounty__link { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; font-weight: 600; }

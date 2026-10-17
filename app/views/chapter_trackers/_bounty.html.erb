@@ -1,0 +1,19 @@
+<%# This week's scene bounty: characters the player earns extra XP for writing with. %>
+<% if SceneBounty.enabled? && current_account.characters.active.any? && (bounty = SceneBounty.for(current_account)).character_ids.any? %>
+  <section class="scene-bounty">
+    <h2 class="section-title scene-bounty__title">This week's scene bounty</h2>
+    <p class="muted scene-bounty__intro">Finish a <%= term(:scene).downcase %> this week where your character and one of these both write, and your character earns <%= pluralize(SceneBounty.award, "extra XP") %> for each. New characters are always on the list. It changes on Monday.</p>
+    <ul class="scene-bounty__list">
+      <% bounty.characters.includes(:room, :character_group, icon_attachment: :blob).each do |character| %>
+        <li class="scene-bounty__item">
+          <%= link_to character_path(character), class: "scene-bounty__link" do %>
+            <%= character_icon(character, size: :small) %>
+            <%= tag.span character.name, **character_name_options(character, "scene-bounty__name") %>
+          <% end %>
+          <%= new_player_badge(character) %><%= looking_for_rp_mark(character) %>
+          <span class="muted scene-bounty__where">in <%= link_to character.room.name, room_path(character.room) %></span>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

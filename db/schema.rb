@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_060000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_070000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -871,6 +871,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_060000) do
     t.index ["room_id"], name: "index_saved_places_on_room_id"
   end
 
+  create_table "scene_bounties", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.date "week_of", null: false
+    t.bigint "character_ids", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "week_of"], name: "index_scene_bounties_on_account_id_and_week_of", unique: true
+    t.index ["account_id"], name: "index_scene_bounties_on_account_id"
+  end
+
   create_table "scene_ideas", force: :cascade do |t|
     t.string "title", null: false
     t.string "subtitle"
@@ -1360,6 +1370,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_060000) do
   add_foreign_key "roster_applications", "characters"
   add_foreign_key "saved_places", "accounts"
   add_foreign_key "saved_places", "rooms"
+  add_foreign_key "scene_bounties", "accounts"
   add_foreign_key "scene_invitations", "characters"
   add_foreign_key "scene_invitations", "scenes"
   add_foreign_key "scene_participants", "characters"

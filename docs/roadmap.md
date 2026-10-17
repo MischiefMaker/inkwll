@@ -55,7 +55,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Storyteller wanted, and the Need a ruling button next to it. Both are ticks on a Chapter that put it on a list. **Built on `v2.0`.**
 - Scene prompt ("Give me an idea"). **Built on `v2.0`.**
 - Random character spotlight on the front page. **Built on `v2.0`.**
-- Random scene bounty. Uses SOUL XP, which already exists.
+- Random scene bounty. Uses SOUL XP, which already exists. **Built on `v2.0`.**
 - Census of active characters per group. Uses the groups that already exist.
 
 **Theme 3: Inside a Chapter.** New things to do while writing.
