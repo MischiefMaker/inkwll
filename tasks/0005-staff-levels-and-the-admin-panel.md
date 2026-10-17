@@ -1,6 +1,6 @@
 # 0005: Staff levels and the admin panel
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 1b. Step 1 changes
 - **Created:** 2026-10-14

@@ -1,6 +1,6 @@
 # Wells: launching and updating games
 
-Decided by the owner on 2026-10-15 (see `decisions.md`). Step 12a is built; 12b to 12d are next.
+Decided by the owner on 2026-10-15 (see `decisions.md`). Steps 12a and 12b are built and live; 12c and 12d are next.
 
 ## How updates work now (step 12a)
 

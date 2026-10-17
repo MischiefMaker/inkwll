@@ -36,6 +36,10 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 - Second answers: scheduled payments run on real-world weeks, fortnights or months. Taxes can be income tax and dues, set by each faction's Bank managers within a staff limit, and each faction taxes its own members separately. Characters can set up their own scheduled payments.
 - Items, Belongings and shops come with Crafting, so the Economy step is money only. When they arrive, Belongings can be seen by everyone.
 
+## 2026-10-17: The starting map walks along streets (owner)
+
+- In the sample map, each smaller Area has one street (a street, lane or path) that players move along, and its buildings and outdoor spaces hang off it. Existing places were kept. New games get this map, and games that still have the sample places get the streets added once by a migration (StarterStreets).
+
 ## 2026-10-17: Players choose their Boons and Banes on rolls (owner)
 
 - Regular rolls show the character's Boons and Banes as tick boxes in the roll box (the ones affecting the chosen Skill are ticked automatically, and the player can change any), with no extra step, and Storyteller-judged rolls work the way the SOUL plugin's GM-assisted rolls did: the Storyteller marks each one as must count, the player's choice, or doesn't count, and the player picks the optional ones and rolls.

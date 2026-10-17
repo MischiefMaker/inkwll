@@ -69,12 +69,12 @@ class SoulExtrasTest < ActiveSupport::TestCase
     assert_raises(ArgumentError) { scene.ask_storyteller_to_roll!(@wren, soul_skills(:wit), "standard") }
     assert_raises(ArgumentError) { scene.judge_roll!(pending, by: @wren, difficulty_name: "easy") }
 
-    assert_nil scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "hard", mandatory_ids: [ entry.id ])
+    assert_nil scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "hard", optional_ids: [ entry.id ])
     assert pending.reload.ready?
-    assert_equal [ entry.id ], pending.mandatory_bnb_ids
+    assert_equal [ entry.id ], pending.optional_bnb_ids
     assert_raises(ArgumentError) { scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "hard") }
 
-    pose = scene.finish_roll!(pending, bnb_ids: [])
+    pose = scene.finish_roll!(pending, bnb_ids: [ entry.id ])
     assert pending.reload.rolled?
     assert_match(/against Hard \(21\) as judged by Sable with Cursed/, pose.body)
     assert_equal(-1, pose.soul_roll.net_modifier)

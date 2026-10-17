@@ -1,6 +1,6 @@
 # 0017: SOUL extras
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 6. SOUL extras
 - **Created:** 2026-10-14

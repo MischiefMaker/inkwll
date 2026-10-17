@@ -1,6 +1,6 @@
 # 0006: Chapters and live Passages
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 2. Scenes
 - **Created:** 2026-10-14

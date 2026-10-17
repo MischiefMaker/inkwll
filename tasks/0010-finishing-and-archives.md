@@ -1,6 +1,6 @@
 # 0010: Finishing Chapters and the Archives
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 3. Logs and safety
 - **Created:** 2026-10-14

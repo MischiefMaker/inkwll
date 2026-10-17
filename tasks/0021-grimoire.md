@@ -1,6 +1,6 @@
 # 0021: Grimoire
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 9. Grimoire
 - **Created:** 2026-10-14

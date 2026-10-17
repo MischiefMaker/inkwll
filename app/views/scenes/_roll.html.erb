@@ -26,7 +26,7 @@
     <%= form.submit "Roll as #{participant.character.name}", class: "button button--quiet" %>
     <%# Only when the Chapter has a Storyteller (GM) who isn't you. %>
     <% if Soul::Rules.storyteller_rolls? && scene.storyteller_for(participant.character) %>
-      <%= form.submit "Roll with the #{term(:storyteller)}", name: "ask_storyteller", value: "1", class: "button button--quiet roll-box__ask",
+      <%= form.button "Roll with the #{term(:storyteller)}", type: "submit", name: "ask_storyteller", value: "1", class: "button button--quiet roll-box__ask",
             title: "Ask the #{term(:storyteller)} to judge the roll: they set the difficulty and say which Boons and Banes must count, or are yours to choose." %>
     <% end %>
   <% end %>

@@ -11,6 +11,15 @@ Short, plain-language notes on what changed. Newest first.
 - Approved characters can "Request to join" a faction that isn't secret, with an optional note. Its heads get an alert, staff see it waiting under the bell, and either can accept or decline it from the faction's page.
 - Factions show under the character's name on their profile, and an Inkling can be shared with a whole faction.
 
+## 2026-10-17 — The starting map has streets
+
+- The sample map a new game starts with now has a street, lane or path in every smaller Area: Uptown, Midtown and Downtown Street in the City; High Street, Hedgerow Lane and The Towpath in the Country; Woodland Track, Mossy Path and Shoreline Trail in the Forest. The streets join north to south, and the buildings and outdoor spaces (Ashcombe Hotel, Central Square, the Trailhead and the rest) sit on them, so you can see Streets, Buildings and Outdoor areas working. Each Area's Enter button now lands on its street. Games that already have the sample places get the streets added too, once, when they update (nothing is changed or removed, and a game with a different map is left alone).
+
+## 2026-10-17 — One step for a Storyteller's call for a roll
+
+- "Call for a roll" now has the Boons and Banes drop-downs right in it (for whichever character you pick, every one starting as "Player's choice"). If nothing is left for the player to choose, the roll happens at once; otherwise it waits for the player to choose and roll.
+- The "Roll with the Storyteller" button shows its name again instead of "1".
+
 ## 2026-10-17 — Choosing Boons and Banes on rolls
 
 - The roll box lists the character's Boons and Banes as tick boxes. Picking a Skill ticks the ones that affect it; the player can untick them or tick others, then rolls, with no extra step.

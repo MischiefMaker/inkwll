@@ -1,6 +1,6 @@
 # 0009: Where list, arrivals and latest activity
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 2. Scenes
 - **Created:** 2026-10-14

@@ -1,6 +1,6 @@
 # 0011: Reports, warnings and bans
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 3. Logs and safety
 - **Created:** 2026-10-14

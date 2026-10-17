@@ -1,6 +1,6 @@
 # 0001: Help text for private and hidden scenes
 
-- **Status:** Open
+- **Status:** Done
 - **Hand off?:** Yes
 - **Roadmap step:** 3. Logs and safety
 - **Created:** 2026-10-14
@@ -43,3 +43,5 @@ A plain list with headings: "Joinable", "Private", "Hidden", "Private or hidden 
 - [ ] The owner has picked the wording
 
 ## Notes
+
+2026-10-17: Done without a hand-off. Claude wrote the wording while building Chapters: the "Who can join" choices on the new Chapter form (`app/views/scenes/_list.html.erb`) describe each setting, and the report form (`app/views/scenes/reports/new.html.erb`) says staff can read a reported Chapter but not unreported private or hidden ones. It is live on inkwll.com.

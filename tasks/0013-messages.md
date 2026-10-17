@@ -1,6 +1,6 @@
 # 0013: Messages
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 3b. Messages
 - **Created:** 2026-10-14

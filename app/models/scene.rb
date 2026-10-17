@@ -386,22 +386,27 @@ class Scene < ApplicationRecord
   end
 
   # The Storyteller calls for a roll from a player. It waits like an asked-for
-  # roll, so the Storyteller then picks the Boons and Banes and rolls it.
-  def call_roll!(character, skill, difficulty_name, by:)
+  # roll but already carries the Storyteller's ruling on each Boon and Bane, so
+  # it rolls at once unless the player has some to choose.
+  def call_roll!(character, skill, difficulty_name, by:, mandatory_ids: [], optional_ids: [])
     raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant_for(by)&.storyteller?
     raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}." unless participant_for(character)
     raise ArgumentError, "A #{Term[:storyteller]} doesn't judge their own player's rolls." if character.account_id == by.account_id
     check_can_roll!(character)
     raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.in_progress.exists?(character: character)
 
-    pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s, called: true)
-    add_system_line!("The #{Term[:storyteller]} calls for a #{skill.name} roll from #{character.name}.")
-    pending
+    transaction do
+      pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s, called: true)
+      add_system_line!("The #{Term[:storyteller]} calls for a #{skill.name} roll from #{character.name}.")
+      judge_roll!(pending, by: by, difficulty_name: difficulty_name, mandatory_ids: mandatory_ids, optional_ids: optional_ids)
+      pending
+    end
   end
 
   # The Storyteller rules on a waiting roll: the difficulty, which Boons and
-  # Banes must count and which the player may choose. A character with none
-  # is rolled straight away; otherwise the roll is ready for the player.
+  # Banes must count and which the player may choose. If nothing is left for
+  # the player to choose, it is rolled straight away; otherwise the roll is
+  # ready for the player.
   def judge_roll!(pending, by:, difficulty_name:, mandatory_ids: [], optional_ids: [])
     participant = participant_for(by)
     raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant&.storyteller?
@@ -410,15 +415,16 @@ class Scene < ApplicationRecord
     entries = pending.character.active_bnbs.to_a
     mandatory = Array(mandatory_ids).map(&:to_i) & entries.map(&:id)
     optional = (Array(optional_ids).map(&:to_i) & entries.map(&:id)) - mandatory
-    if entries.empty?
-      pose = roll!(pending.character, pending.skill, difficulty_name, bnbs: [], storyteller: by)
+    Soul::Rules.difficulties.fetch(difficulty_name.to_s) { raise ArgumentError, "Pick a difficulty." }
+    if optional.empty?
+      chosen = entries.select { |entry| mandatory.include?(entry.id) }
+      pose = roll!(pending.character, pending.skill, difficulty_name, bnbs: chosen, storyteller: by)
       pending.rolled!
       return pose
     end
 
-    Soul::Rules.difficulties.fetch(difficulty_name.to_s) { raise ArgumentError, "Pick a difficulty." }
     pending.update!(status: "ready", difficulty_name: difficulty_name.to_s, mandatory_bnb_ids: mandatory, optional_bnb_ids: optional, judge: by)
-    add_system_line!("The #{Term[:storyteller]} has ruled on #{pending.character.name}'s #{pending.skill.name} roll. #{pending.character.name} picks any Boons and Banes and rolls.")
+    add_system_line!("The #{Term[:storyteller]} has set the difficulty for #{pending.character.name}'s #{pending.skill.name} roll. Waiting for #{pending.character.name} to choose from the Boons and Banes offered.")
     broadcast_change
     nil
   end

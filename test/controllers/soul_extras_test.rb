@@ -100,16 +100,14 @@ class SoulExtrasControllersTest < ActionDispatch::IntegrationTest
     scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
     sign_in_as(accounts(:alice))
     get scene_path(scene)
-    assert_select "input.roll-box__ask[name=ask_storyteller][value='1']"
+    assert_select "button.roll-box__ask[name=ask_storyteller][value='1']"
   end
 
   test "a called-for roll says so and a waiting roll with no Boons or Banes says that" do
     scene = scenes(:duel)
     scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
     sign_in_as(accounts(:bob))
-    post scene_pending_rolls_path(scene), params: { character_id: characters(:wren).id, skill_id: soul_skills(:wit).id, difficulty: "standard" }
-    pending = scene.pending_rolls.waiting.last
-    assert pending.called?
+    pending = scene.pending_rolls.create!(character: characters(:wren), skill: soul_skills(:wit), difficulty_name: "standard", called: true)
     get scene_path(scene)
     assert_select ".pending-roll__what", /was asked to roll/
     assert_select ".pending-roll__no-bnbs"
@@ -119,7 +117,7 @@ class SoulExtrasControllersTest < ActionDispatch::IntegrationTest
     scene = scenes(:duel)
     scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
     characters(:wren).add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
-    scene.call_roll!(characters(:wren), soul_skills(:wit), "standard", by: characters(:sable))
+    scene.pending_rolls.create!(character: characters(:wren), skill: soul_skills(:wit), difficulty_name: "standard", called: true)
     sign_in_as(accounts(:bob))
     get scene_path(scene)
     assert_select ".pending-roll__bnb", /Cursed/
@@ -172,7 +170,7 @@ class SoulExtrasControllersTest < ActionDispatch::IntegrationTest
     assert_select ".roll-box__ask", count: 0
     scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
     get scene_path(scene)
-    assert_select "input.roll-box__ask[name=ask_storyteller]"
+    assert_select "button.roll-box__ask[name=ask_storyteller]"
   end
 
   test "the Storyteller rolls for an NPC, and nobody else can" do

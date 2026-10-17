@@ -1,6 +1,6 @@
 # 0015: SOUL basics
 
-- **Status:** Review
+- **Status:** Done
 - **Hand off?:** No
 - **Roadmap step:** 5. SOUL basics
 - **Created:** 2026-10-14

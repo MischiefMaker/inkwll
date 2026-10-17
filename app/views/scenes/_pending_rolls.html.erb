@@ -9,7 +9,7 @@
       <div class="pending-roll" id="<%= dom_id pending %>">
         <p class="text pending-roll__what"><strong class="emphasis"><%= pending.character.name %></strong>
           <% if pending.ready? %>
-            will roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>) once they pick their Boons and Banes.
+            has the <%= pending.difficulty_name.humanize %> <%= pending.skill.name %> roll set and is choosing which Boons and Banes to add.
           <% elsif pending.called? %>
             was asked to roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>).
           <% else %>
@@ -28,7 +28,7 @@
                 <% entries.each do |entry| %>
                   <div class="field pending-roll__bnb">
                     <%= label_tag "ruling_#{pending.id}_#{entry.id}", "#{entry.name} (#{entry.level.capitalize} #{entry.kind.capitalize})" %>
-                    <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], entry.affects?(pending.skill) ? "choice" : "no"), id: "ruling_#{pending.id}_#{entry.id}" %>
+                    <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "choice"), id: "ruling_#{pending.id}_#{entry.id}" %>
                   </div>
                 <% end %>
               </fieldset>
