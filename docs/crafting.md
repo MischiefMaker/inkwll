@@ -58,14 +58,20 @@ trade or sell for whatever price they like.
 
 ## Making things
 
+**No materials** for now, unlike Arx. The cost is a straight price based on
+what the finished item is worth, so anything that affects the game costs far
+more than something only ornamental (owner, 2026-10-17).
+
 - **Item types (staff).** What can be made, each with a starting cost and
   the SOUL Skill used to make it: a sword (40 crowns, Smithing), a dress
   (25 crowns, Tailoring), a healing draught (10 crowns, Herbalism).
 - **Features (staff).** What an item can do for rolls. Each feature works
   like a SOUL Boon tied to one or more Skills, at a level (Minor or Major,
-  and Legendary if staff allow), and has an extra cost. For example,
-  "Well-balanced" (Minor Boon to Swordplay, +20 crowns), or "Concealed
-  pocket" (Minor Boon to Sleight of hand, +15). Staff say which item types
+  and Legendary if staff allow). Its cost comes from its level and is set
+  by staff, and it's meant to dwarf the starting cost: with a 40-crown
+  sword, Minor might add 200, Major 600 and Legendary 2,000. For example,
+  "Well-balanced" (Minor Boon to Swordplay) or "Concealed pocket" (Minor
+  Boon to Sleight of hand). Staff say which item types
   each feature fits.
 - **The Craft button,** on the Belongings tab or in a Chapter. The player
   picks an item type, writes the name and description, adds pictures, picks

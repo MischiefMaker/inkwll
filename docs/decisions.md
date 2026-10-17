@@ -10,6 +10,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 - Crafting starts from Arx's crafting, simplified.
 - Characters craft items for a starting cost, add a description, pictures and features that can affect rolls, then sell them for a profit.
+- No materials for now. Crafting costs a straight price based on the finished item's worth, so features that affect the game cost far more than ornamental items.
 - The design and its open questions are in `crafting.md`.
 
 ## 2026-10-17: Economy brief (owner)
