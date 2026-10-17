@@ -120,6 +120,7 @@ Rails.application.routes.draw do
   get "my_chapters", to: "chapter_trackers#show"
   resources :alerts, only: :index
   get "birthdays", to: "birthdays#index"
+  get "graveyard", to: "graveyard#index"
   resource :account_waiting, only: :show, path: "waiting"
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions
@@ -186,6 +187,7 @@ Rails.application.routes.draw do
       member do
         post :retire
         post :unretire
+        post :decease
       end
     end
     resource :game_settings, only: %i[ edit update ]

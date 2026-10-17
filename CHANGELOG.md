@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 
 - Drafts: what you're writing in a Passage, a Message, a forum post, a wiki page or an Inkling is kept in your browser as you type, so it comes back if the page closes or reloads. Posting clears it.
+- Graveyard: staff can mark a character deceased (with an optional epitaph), which retires them and lists them on a new Graveyard page.
 - Birthdays: a page in the Menu listing the characters whose birthday falls in the game's current month.
 - A "New" mark beside new players (their first two weeks) in the OOC Chat, and beside their characters in Here and the Character Directory, so others know to say hello.
 - Away notice: set "Away until" a date on your player profile, with a note, and it shows on your Chapters beside whose turn it is until that day has passed.

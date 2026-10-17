@@ -47,7 +47,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Away notice. **Built on `v2.0`.**
 - New player badge. **Built on `v2.0`.**
 - Birthdays this month. Uses the birthdays and IC clock that already exist. **Built on `v2.0`.**
-- Graveyard. A Deceased status beside Retired, and its own page.
+- Graveyard. A Deceased status beside Retired, and its own page. **Built on `v2.0`.**
 
 **Theme 2: Finding someone to RP with.** This theme serves the "fewer cliques" aim most directly, so it comes early.
 - Looking for RP flag. Comes first, because the next item needs it.

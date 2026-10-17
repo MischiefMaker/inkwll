@@ -22,6 +22,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.hint` | The small help text under a form field |
 | `.emphasis` | Bold or italic words inside text |
 | `.list`, `.list__item` | Lists |
+| `.graveyard`, `.graveyard__intro`, `.graveyard__list`, `.graveyard__item`, `.graveyard__link`, `.graveyard__name`, `.graveyard__date`, `.graveyard__epitaph`, `.character-profile__deceased`, `.character-profile__epitaph`, `.admin-characters__decease`, `.admin-characters__decease-form`, `.admin-characters__deceased` | The Graveyard, a deceased character's profile, and marking one deceased |
 | `.birthdays`, `.birthdays__intro`, `.birthdays__list`, `.birthdays__item` (`--today`, `--past`), `.birthdays__day`, `.birthdays__link`, `.birthdays__name`, `.birthdays__age` | Birthdays this month |
 | `.new-player`, `.badge--new` | The "New" mark for a player's first two weeks, in the OOC Chat, Here and the directory |
 | `.turn-bar__away`, `.scene-people__away`, `.badge--away`, `.player-profile-form__away` | A player's "Away until" notice: beside whose turn it is, on the Chapter's cast list, and where they set it |

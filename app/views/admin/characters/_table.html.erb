@@ -31,12 +31,23 @@
           <% elsif character.roster_retired? %>
             <%= button_to "Put back on the roster", admin_roster_character_path(character), method: :patch, params: { decision: "open" }, class: "button-link" %>
           <% elsif character.retired? %>
+            <% if character.deceased? %><span class="muted admin-characters__deceased">Deceased</span><% end %>
             <%= button_to "Bring back", unretire_admin_character_path(character), class: "button-link" %>
           <% else %>
             <%= button_to "Retire", retire_admin_character_path(character), class: "button-link",
                   form: { data: { turbo_confirm: "Retire #{character.name}? They can't be played until you bring them back." } } %>
             <%= button_to "Put on the roster", admin_roster_character_path(character), method: :patch, class: "button-link",
                   form: { data: { turbo_confirm: "Put #{character.name} on the roster? They stop being #{character.account.display_name}'s, and other players can apply to play them." } } %>
+          <% end %>
+          <% unless character.deceased? %>
+            <details class="admin-characters__decease">
+              <summary class="disclosure__summary button-link">Deceased</summary>
+              <%= form_with url: decease_admin_character_path(character), class: "form form--inline admin-characters__decease-form" do |form| %>
+                <%= form.label :deceased_note, "Epitaph for #{character.name} (optional)", class: "visually-hidden" %>
+                <%= form.text_field :deceased_note, maxlength: 200, placeholder: "Epitaph (optional)" %>
+                <%= form.submit "Mark as deceased", class: "button button--quiet", data: { turbo_confirm: "Mark #{character.name} as deceased? They're retired and go in the Graveyard. Bring back undoes it." } %>
+              <% end %>
+            </details>
           <% end %>
         </td>
       </tr>

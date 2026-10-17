@@ -20,6 +20,12 @@ class Admin::CharacterBatchesController < Admin::BaseController
         Soul::AuditEntry.record!("retire", "Retired #{character.name}", actor: current_account, character: character)
       end
       redirect_to admin_characters_path, notice: "Retired #{characters.map(&:name).to_sentence}."
+    when "deceased"
+      characters.each do |character|
+        character.die!
+        Soul::AuditEntry.record!("retire", "Marked #{character.name} as deceased", actor: current_account, character: character)
+      end
+      redirect_to admin_characters_path, notice: "Marked #{characters.map(&:name).to_sentence} as deceased."
     when "roster"
       characters.each { |character| character.put_on_roster! }
       redirect_to admin_characters_path, notice: "Put #{characters.map(&:name).to_sentence} on the roster."

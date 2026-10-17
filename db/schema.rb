@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -166,9 +166,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
     t.bigint "character_group_id"
     t.boolean "gm", default: false, null: false
     t.datetime "roster_retired_at"
+    t.date "deceased_on"
+    t.string "deceased_note"
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["character_group_id"], name: "index_characters_on_character_group_id"
+    t.index ["deceased_on"], name: "index_characters_on_deceased_on"
     t.index ["on_roster_at"], name: "index_characters_on_on_roster_at"
     t.index ["reviewed_by_id"], name: "index_characters_on_reviewed_by_id"
     t.index ["room_id"], name: "index_characters_on_room_id"
@@ -549,14 +552,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
     t.string "chapter_tabs_side", default: "top", null: false
     t.boolean "domains_enabled", default: false, null: false
     t.integer "domain_tax_max_percent", default: 50, null: false
+    t.boolean "private_game", default: false, null: false
+    t.boolean "player_approval_required", default: false, null: false
     t.boolean "crafting_enabled", default: false, null: false
     t.integer "crafting_max_features", default: 3, null: false
     t.string "crafting_highest_level", default: "major", null: false
     t.integer "crafting_minor_cost", default: 200, null: false
     t.integer "crafting_major_cost", default: 600, null: false
     t.integer "crafting_legendary_cost", default: 2000, null: false
-    t.boolean "private_game", default: false, null: false
-    t.boolean "player_approval_required", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

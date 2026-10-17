@@ -18,7 +18,7 @@
 <% if (approved + new_ones).any? %>
   <%= form_with url: admin_character_batch_path, id: "character-batch", class: "form form--inline admin-batch admin-characters__batch" do |form| %>
     <%= form.label :decision, "With the ticked characters", class: "admin-batch__label" %>
-    <%= form.select :decision, [ [ "Retire them", "retire" ], [ "Put them on the roster", "roster" ] ], include_blank: "Choose…" %>
+    <%= form.select :decision, [ [ "Retire them", "retire" ], [ "Put them on the roster", "roster" ], [ "Mark them deceased", "deceased" ] ], include_blank: "Choose…" %>
     <%= form.submit "Apply", class: "button button--quiet", data: { turbo_confirm: "Do this to every ticked character?" } %>
   <% end %>
 <% end %>

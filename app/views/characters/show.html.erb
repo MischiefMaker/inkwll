@@ -15,7 +15,9 @@
           <% end %>
         </ul>
       <% end %>
-      <% if @character.retired? && !@character.roster_kept? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
+      <% if @character.deceased? %>
+        <p class="character-profile__deceased muted">Died <%= @character.deceased_on.strftime("%-d %B %Y") %>.<% if @character.deceased_note %> <span class="character-profile__epitaph"><%= @character.deceased_note %></span><% end %> <%= link_to "Graveyard", graveyard_path %></p>
+      <% elsif @character.retired? && !@character.roster_kept? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
       <%= render "characters/profile_box_facts", character: @character, show_private: show_private %>
       <div class="character-profile__actions profile-box__actions">

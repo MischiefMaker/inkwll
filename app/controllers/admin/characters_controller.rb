@@ -1,9 +1,9 @@
 # Character list for staff. Characters are never deleted: Wellkeepers can
-# retire one (it can't be played, but its Passages and Manuscripts stay) and
-# bring it back.
+# retire one (it can't be played, but its Passages and Manuscripts stay),
+# mark one deceased (retired, and listed in the Graveyard) and bring it back.
 class Admin::CharactersController < Admin::BaseController
   require_job :delete_characters
-  before_action :set_character, only: %i[ update retire unretire ]
+  before_action :set_character, only: %i[ update retire unretire decease ]
 
   PER_PAGE = 100
 
@@ -27,6 +27,14 @@ class Admin::CharactersController < Admin::BaseController
     @character.retire!
     Soul::AuditEntry.record!("retire", "Retired #{@character.name}", actor: current_account, character: @character)
     redirect_to admin_characters_path, notice: "#{@character.name} has been retired."
+  end
+
+  # Marking a character as having died in the story: retired, and listed in
+  # the Graveyard with the game date and an optional epitaph.
+  def decease
+    @character.die!(note: params[:deceased_note])
+    Soul::AuditEntry.record!("retire", "Marked #{@character.name} as deceased", actor: current_account, character: @character)
+    redirect_to admin_characters_path, notice: "#{@character.name} is in the Graveyard now."
   end
 
   def unretire

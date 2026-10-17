@@ -1,0 +1,23 @@
+<% content_for :title, "Graveyard · #{game_name}" %>
+
+<div class="graveyard">
+  <h1 class="page-title">Graveyard</h1>
+  <p class="text muted graveyard__intro">Characters who have died in the story. Their <%= term(:log, count: 2).downcase %> stay on the <%= term(:logs_collection) %>.</p>
+
+  <% if @characters.any? %>
+    <ul class="graveyard__list">
+      <% @characters.each do |character| %>
+        <li class="graveyard__item">
+          <%= link_to character_path(character), class: "graveyard__link" do %>
+            <%= character_icon(character, size: :portrait) %>
+            <%= tag.span character.name, **character_name_options(character, "graveyard__name") %>
+          <% end %>
+          <span class="graveyard__date muted">Died <%= character.deceased_on.strftime("%-d %B %Y") %></span>
+          <% if character.deceased_note %><span class="graveyard__epitaph"><%= character.deceased_note %></span><% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">Nobody rests here yet.</p>
+  <% end %>
+</div>

@@ -41,6 +41,7 @@ class Character < ApplicationRecord
   normalizes :name, with: ->(n) { n.squish }
 
   validates :name, presence: true, length: { maximum: 40 }, uniqueness: { case_sensitive: false }
+  validates :deceased_note, length: { maximum: 200 }
   validate :icon_is_a_reasonable_picture
   validates_associated :profile_values
 
@@ -80,7 +81,23 @@ class Character < ApplicationRecord
   end
 
   def unretire!
-    update!(retired_at: nil)
+    update!(retired_at: nil, deceased_on: nil, deceased_note: nil)
+  end
+
+  # --- Deceased ------------------------------------------------------------------
+  # A character who has died in the story: retired, and listed in the
+  # Graveyard with the game date they died and an optional epitaph. Bringing
+  # them back (unretire!) clears it.
+
+  scope :deceased, -> { where.not(deceased_on: nil) }
+
+  def deceased? = deceased_on.present?
+
+  def die!(note: nil, on: IcClock.today)
+    transaction do
+      retire! if !retired? || on_roster? || preparing_for_roster?
+      update!(deceased_on: on, deceased_note: note.to_s.squish.first(200).presence)
+    end
   end
 
   def leave_open_scenes!
