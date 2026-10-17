@@ -12,6 +12,15 @@
     <%= form.label :description, "Description (optional)" %>
     <%= form.text_field :description, maxlength: 300 %>
   </div>
+  <div class="field field--checkbox character-group-form__wanted">
+    <%= form.check_box :needs_players %>
+    <%= form.label :needs_players, "This group needs players" %>
+  </div>
+  <div class="field">
+    <%= form.label :wanted_note, "What it needs (optional)" %>
+    <%= form.text_field :wanted_note, maxlength: 200, placeholder: "A healer, and someone to lead the night watch" %>
+    <small class="hint">Shown in the census at the top of the Character Directory, so new players can see where they're needed.</small>
+  </div>
   <% if group.persisted? %>
     <div class="field">
       <%= form.label :position, "Order (lower comes first)" %>

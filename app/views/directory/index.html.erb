@@ -14,6 +14,30 @@
     <% end %>
   </p>
 
+  <% if !@roster_only && !@unapproved && !@group && @groups.any? %>
+    <% census = Census.rows %>
+    <section class="census">
+      <h2 class="census__title">Census</h2>
+      <p class="muted census__intro">Characters played in the last month, by group.</p>
+      <ul class="census__list">
+        <% census.each do |row| %>
+          <li class="census__item<%= " census__item--wanted" if row.group&.needs_players? %>">
+            <% if row.group %>
+              <%= link_to row.group.name, directory_path(group: row.group.id), class: "census__group character-group-#{row.group.id}", style: "--group-colour: #{row.group.colour}" %>
+            <% else %>
+              <span class="census__group census__group--none">No group</span>
+            <% end %>
+            <span class="census__count"><%= row.count %></span>
+            <% if row.group&.needs_players? %>
+              <span class="badge census__wanted">Needs players</span>
+              <% if row.group.wanted_note %><span class="census__note"><%= row.group.wanted_note %></span><% end %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
   <% filter = { field: @field&.id, value: @value.presence }.compact %>
   <%# Active and the groups first; the Roster and Unapproved set apart at the end. %>
   <nav class="directory-tabs" aria-label="Directory sections">

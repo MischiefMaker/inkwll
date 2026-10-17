@@ -56,7 +56,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Scene prompt ("Give me an idea"). **Built on `v2.0`.**
 - Random character spotlight on the front page. **Built on `v2.0`.**
 - Random scene bounty. Uses SOUL XP, which already exists. **Built on `v2.0`.**
-- Census of active characters per group. Uses the groups that already exist.
+- Census of active characters per group. Uses the groups that already exist. **Built on `v2.0`.**
 
 **Theme 3: Inside a Chapter.** New things to do while writing.
 - The story so far, plus the one-line version in the Bookshelf list. Do these together, since the one-line version is the same summary.

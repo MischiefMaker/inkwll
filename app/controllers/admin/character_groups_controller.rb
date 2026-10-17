@@ -42,6 +42,6 @@ class Admin::CharacterGroupsController < Admin::BaseController
     end
 
     def group_params
-      params.expect(character_group: [ :name, :colour, :description, :position ])
+      params.expect(character_group: [ :name, :colour, :description, :position, :needs_players, :wanted_note ])
     end
 end

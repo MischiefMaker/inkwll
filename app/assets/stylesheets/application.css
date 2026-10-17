@@ -1970,3 +1970,14 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .scene-bounty__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
 .scene-bounty__item { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
 .scene-bounty__link { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; font-weight: 600; }
+
+/* Census in the Character Directory (Version 2.0) */
+.census { margin: 0 0 var(--space); padding: 0.75rem var(--space); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.census__title { margin: 0; font-size: 1rem; }
+.census__intro { margin: 0 0 0.4rem; font-size: 0.85rem; }
+.census__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.census__item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem; }
+.census__group { color: var(--group-colour, inherit); font-weight: 600; }
+.census__count { font-variant-numeric: tabular-nums; }
+.census__wanted { border-color: var(--color-accent); color: var(--color-accent); }
+.census__note { font-size: 0.9rem; overflow-wrap: anywhere; }
