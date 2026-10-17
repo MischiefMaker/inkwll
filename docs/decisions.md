@@ -6,6 +6,15 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 order (owner)
+
+- The Version 2.0 list in `roadmap.md` is grouped into nine themes, in the order there, from quick wins to crafting and economy. Nothing in it is built until the owner says so.
+- Crafting and economy are optional systems a game switches on, like Grimoire.
+- There is one mini-map: it shows only the Streets, and a street's buildings show once you're on it. No grid of Places is needed.
+- "Create an NPC" and the shared NPC list are one feature.
+- "Deploy a new game from the web" is dropped from Version 2.0, because the Wells page (step 12) covers it.
+- The research into more RPG forums and hosts is closed, because the RP platforms research covered it. Ideas 45 to 47 from that shortlist were not added.
+
 ## 2026-10-16: A game's fonts travel with its world pack (owner)
 
 - Fonts are not built into Inkwll for everyone. A world pack carries the fonts its game uses, and Import a world stores them in that game. Google Fonts and other font sites stay blocked, as a security rule that every game shares. The three fonts that were built in before this (Great Vibes, Amatic SC, Oswald) were removed once Last Call of the Wild had been re-imported with its own copies.
