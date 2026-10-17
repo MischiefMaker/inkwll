@@ -6,7 +6,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 
 - **Blocks and parts:** `.pose` is a block, `.pose__name` is a part of it, and `.pose--ooc` is a kind of it. So `.pose--narration .pose__body` means "the text of a narration post".
 - **Colours, fonts and spacing** are CSS variables at the top of `app/assets/stylesheets/application.css` (`--font-body`, `--font-heading`, `--color-accent` and so on; Admin → Look sets most of them). Changing those restyles the whole site at once.
-- **Fonts that come with Inkwll** are in `app/assets/stylesheets/fonts.css` (the files are in `app/assets/fonts/`, with their licences): "Great Vibes", "Amatic SC", Oswald, Montez, "Cormorant SC", "Old Standard TT", Cinzel, "Cinzel Decorative" and "Cormorant Garamond". Fonts from other sites (Google Fonts and the like) are blocked by the Content Security Policy, so add new ones there.
+- **Fonts** come with each game's world pack, not with Inkwll (see `SkinFont` and `docs/world-packs.md`); the family names are listed in Admin → Look. Fonts from other sites (Google Fonts and the like) are blocked by the Content Security Policy.
 - **Every page** puts classes on `<body>`: `page-scenes` (any Chapter page), `page-scenes-show` (just the Chapter itself), `page-admin-bans`, and so on. They are made from the page's address in the code, `page-<section>-<action>`. Add `is-logged-in` or `is-guest`, plus `is-staff` for staff, and `is-admin` on every admin panel page. Use them to style one page only, for example `.page-home-show .page-title`.
 - Class names use plain words (`scene`, `pose`, `room`) rather than the themed words players see (Chapter, Passage, Setting), so they stay the same if a game renames things.
 

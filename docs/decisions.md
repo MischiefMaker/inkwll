@@ -8,7 +8,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ## 2026-10-16: A game's fonts travel with its world pack (owner)
 
-- Fonts are not built into Inkwll for everyone. A world pack carries the fonts its game uses, and Import a world stores them in that game. Google Fonts and other font sites stay blocked, as a security rule that every game shares. The three fonts built in before this (Great Vibes, Amatic SC, Oswald) stay until Last Call of the Wild has been re-imported with its own copies; then they come out too.
+- Fonts are not built into Inkwll for everyone. A world pack carries the fonts its game uses, and Import a world stores them in that game. Google Fonts and other font sites stay blocked, as a security rule that every game shares. The three fonts that were built in before this (Great Vibes, Amatic SC, Oswald) were removed once Last Call of the Wild had been re-imported with its own copies.
 
 ## 2026-10-16: Import a world removes Places with characters or Chapters in them (owner)
 

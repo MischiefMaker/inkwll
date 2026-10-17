@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — No fonts are built into Inkwll any more
+
+- Great Vibes, Amatic SC and Oswald, the last fonts that came with Inkwll itself, are gone. Last Call of the Wild now brings its own copies in its world pack, as every game's fonts do.
+
 ## 2026-10-17 — Importing a look replaces the old one
 
 - When a world pack has a look, Import a world now replaces the game's whole look with it. Before, bits of the earlier look stayed behind: with the Old-school MUSH look, the pack's pages still showed "<OOC>" labels and square MUSH styling.
@@ -13,7 +17,6 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-16 — A game's fonts travel with its world pack
 
 - A world pack can now carry its own web fonts. Import a world stores them in the game and serves them from it, so a game's fonts no longer have to be built into Inkwll for everyone. Admin → Look lists them under the form, with a Remove button for each, and you can name their families in the font boxes as before.
-- The three fonts that come with Inkwll (Great Vibes, Amatic SC, Oswald) stay for now.
 
 ## 2026-10-16 — Wiki bullets take their group's colour
 
