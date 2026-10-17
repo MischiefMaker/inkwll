@@ -34,7 +34,7 @@ class ForumTopicsController < ApplicationController
     @page = [ params[:page].to_i, 1 ].max
     @pages = [ (@topic.posts.count / ForumTopic::PER_PAGE.to_f).ceil, 1 ].max
     @page = @pages if params[:page] == "last"
-    @posts = @topic.posts.includes(account: { icon_attachment: :blob })
+    @posts = @topic.posts.includes(account: { icon_attachment: { blob: { variant_records: { image_attachment: :blob } } } })
       .offset((@page - 1) * ForumTopic::PER_PAGE).limit(ForumTopic::PER_PAGE)
     @reply = @topic.posts.new if @topic.may_reply?(current_account)
   end

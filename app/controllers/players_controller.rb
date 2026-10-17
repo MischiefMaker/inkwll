@@ -7,7 +7,7 @@ class PlayersController < ApplicationController
   # Everyone playing, by name and picture only. Never who they play, so it can't
   # give away an alt; the profile page decides what else to show.
   def index
-    @players = Account.where(system: false, archived_at: nil).includes(icon_attachment: :blob).order(Arel.sql("lower(display_name)")).limit(1000)
+    @players = Account.where(system: false, archived_at: nil).includes(icon_attachment: { blob: { variant_records: { image_attachment: :blob } } }).order(Arel.sql("lower(display_name)")).limit(1000)
   end
 
   def show

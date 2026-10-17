@@ -6,6 +6,11 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Small icon copies and an icon size limit (owner)
+
+- **Small copies:** every player and character icon gets a 64×64 copy as soon as it's uploaded (WebP, cropped square), used in the OOC Chat, Chapters and other small spots. A GIF's copy is its first frame, so small icons don't animate; the larger profile icon still does. Icons uploaded before this got their copy when the change was deployed.
+- **Size limit:** Admin → Game settings → "Biggest player or character icon, in KB". Default 1024 KB (1 MB), between 10 KB and the 5 MB every picture is capped at. Default picked by Claude.
+
 ## 2026-10-17: Version 2.0 order (owner)
 
 - The Version 2.0 list in `roadmap.md` is grouped into nine themes, in the order there, from quick wins to crafting and economy. Nothing in it is built until the owner says so.

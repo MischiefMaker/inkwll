@@ -93,10 +93,20 @@ module IconsHelper
     tag.div(class: "#{css} banner-default", "aria-hidden": "true")
   end
 
+  # The small copy of each player and character icon, made as soon as it's
+  # uploaded: 64 pixels square (sharp at the 3rem and smaller sizes, even on
+  # phones), cropped to fill, as WebP. A GIF's copy is its first frame.
+  TINY_ICON = { resize_to_fill: [ 64, 64 ], format: :webp }.freeze
+
   # Icons are shown at 6rem or smaller, so serve a copy shrunk to fit instead of
   # the full upload. Animated GIFs are left alone, since shrinking would stop
   # the animation.
-  def icon_picture(attachment)
+  # tiny: true uses the small copy made at upload (TINY_ICON) once it's ready.
+  def icon_picture(attachment, tiny: false)
+    if tiny
+      small = attachment.variant(:tiny)
+      return small if small.image&.attached?
+    end
     return attachment if attachment.content_type == "image/gif"
     attachment.variant(resize_to_limit: [ 256, 256 ])
   end

@@ -2,10 +2,12 @@ module ScenesHelper
   # A character's small icon, or their initial in a circle if they have none.
   def character_icon(character, size: :small)
     classes = "character-icon character-icon--#{size}"
+    # Chat-sized icons use the small copy made when the icon was uploaded.
+    tiny = size.in?(%i[ tiny small ])
     if character&.icon&.attached?
-      image_tag icon_picture(character.icon), alt: "", class: classes
+      image_tag icon_picture(character.icon, tiny: tiny), alt: "", class: classes
     elsif character&.gm? && character.account.icon.attached?
-      image_tag icon_picture(character.account.icon), alt: "", class: "#{classes} character-icon--gm"
+      image_tag icon_picture(character.account.icon, tiny: tiny), alt: "", class: "#{classes} character-icon--gm"
     else
       tag.span (character&.name || "?").first.upcase, class: "#{classes} character-icon--initial", aria: { hidden: true }
     end
@@ -27,7 +29,7 @@ module ScenesHelper
     classes = "player-icon player-icon--#{size}"
     # A picture that was just refused isn't saved, so it can't be shown.
     if account.icon.attached? && account.icon.blob.persisted?
-      image_tag icon_picture(account.icon), alt: "", class: "#{classes} player-icon--image"
+      image_tag icon_picture(account.icon, tiny: size == :tiny), alt: "", class: "#{classes} player-icon--image"
     else
       nib_icon(css: "#{classes} player-icon--default")
     end

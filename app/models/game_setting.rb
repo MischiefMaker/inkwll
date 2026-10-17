@@ -36,6 +36,8 @@ class GameSetting < ApplicationRecord
   validates :game_name, length: { maximum: 80 }
   validates :game_blurb, length: { maximum: 3_000 }
   validates :roster_idle_days, numericality: { only_integer: true, in: 7..3650 }
+  # Player and character icons: the admin's limit, never above the 5 MB every picture has.
+  validates :icon_max_kb, numericality: { only_integer: true, in: 10..(DescribedWithImage::MAX_IMAGE_SIZE / 1.kilobyte) }
   validates :ic_days_per_day, numericality: { greater_than: 0, less_than_or_equal_to: 365 }
 
   # "Today's date in the game", as set on the settings page. Setting it
@@ -66,6 +68,11 @@ class GameSetting < ApplicationRecord
 
   # Remembered for the rest of the request, since nearly every page asks many
   # times. Saving a change forgets it.
+  # The biggest player or character icon upload allowed, in bytes.
+  def icon_max_bytes
+    icon_max_kb.kilobytes
+  end
+
   def self.current
     Current.game_setting ||= first || create!
   end

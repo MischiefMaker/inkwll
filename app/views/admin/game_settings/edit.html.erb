@@ -42,6 +42,11 @@
     <%= form.check_box :require_icon %>
     <%= form.label :require_icon, "Characters need an icon before they're submitted" %>
   </div>
+  <div class="field">
+    <%= form.label :icon_max_kb, "Biggest player or character icon, in KB" %>
+    <%= form.number_field :icon_max_kb, min: 10, max: 5120 %>
+    <small class="hint">1024 KB is 1 MB. The most it can be is 5120 (5 MB). A smaller copy of every icon is made for the chat either way.</small>
+  </div>
   <p class="muted">The questions on profiles and applications are under Profile fields.</p>
 
   <h2 class="section-title">Game date</h2>

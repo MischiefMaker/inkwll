@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_050000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -293,6 +293,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_050000) do
     t.string "chapter_passage_portraits", default: "small", null: false
     t.boolean "locked", default: false, null: false
     t.string "font_title"
+    t.integer "icon_max_kb", default: 1024, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|

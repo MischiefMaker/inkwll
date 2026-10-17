@@ -11,7 +11,7 @@ class Admin::CharactersController < Admin::BaseController
     scope = Character.played
     @pages = [ (scope.count / PER_PAGE.to_f).ceil, 1 ].max
     @page = params[:page].to_i.clamp(1, @pages)
-    @characters = scope.includes({ account: { icon_attachment: :blob } }, :room).order(:retired_at, :name)
+    @characters = scope.includes({ account: { icon_attachment: { blob: { variant_records: { image_attachment: :blob } } } } }, :room).order(:retired_at, :name)
       .offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
     @groups = CharacterGroup.ordered
   end

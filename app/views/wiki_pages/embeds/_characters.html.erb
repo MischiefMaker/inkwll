@@ -1,5 +1,5 @@
 <%# {{characters}}, {{characters group="Ravens"}} or {{characters roster}} %>
-<% characters = Character.played.includes(:character_group, icon_attachment: :blob).order(:name) %>
+<% characters = Character.played.includes(:character_group, icon_attachment: { blob: { variant_records: { image_attachment: :blob } } }).order(:name) %>
 <% if options[:roster] %>
   <% characters = characters.on_roster %>
 <% else %>

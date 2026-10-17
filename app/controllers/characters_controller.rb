@@ -6,7 +6,7 @@ class CharactersController < ApplicationController
   allow_previews only: :show
 
   def index
-    @characters = current_account.characters.played.includes(:room, :character_group, icon_attachment: :blob).order(:name)
+    @characters = current_account.characters.played.includes(:room, :character_group, icon_attachment: { blob: { variant_records: { image_attachment: :blob } } }).order(:name)
   end
 
   # Profiles of characters still waiting for approval are only shown to

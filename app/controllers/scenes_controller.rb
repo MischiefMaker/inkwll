@@ -19,7 +19,7 @@ class ScenesController < ApplicationController
     scenes = scenes.where(finished_at: nil)
     @pages = [ (scenes.count / PER_PAGE.to_f).ceil, 1 ].max
     @page = params[:page].to_i.clamp(1, @pages)
-    @scenes = scenes.by_activity.includes(:room, participants: { character: [ :account, { icon_attachment: :blob } ] })
+    @scenes = scenes.by_activity.includes(:room, participants: { character: [ :account, { icon_attachment: { blob: { variant_records: { image_attachment: :blob } } } } ] })
       .offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
   end
 
@@ -58,7 +58,7 @@ class ScenesController < ApplicationController
 
   private
     def set_scene
-      @scene = Scene.includes(participants: { character: [ :account, { icon_attachment: :blob } ] }).find(params[:id])
+      @scene = Scene.includes(participants: { character: [ :account, { icon_attachment: { blob: { variant_records: { image_attachment: :blob } } } } ] }).find(params[:id])
       raise ActiveRecord::RecordNotFound unless @scene.visible_to?(current_account)
     end
 

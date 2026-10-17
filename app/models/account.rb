@@ -29,7 +29,10 @@ class Account < ApplicationRecord
   # to pass it on, and stops working once the password changes.
   generates_token_for(:staff_password_reset, expires_in: 1.day) { password_salt.last(10) }
   # The player's own picture, on their player profile and in the OOC Chat.
-  has_one_attached :icon
+  # :tiny is a small copy made as soon as it's uploaded, for the OOC Chat.
+  has_one_attached :icon do |icon|
+    icon.variant :tiny, **IconsHelper::TINY_ICON, preprocessed: true
+  end
   attribute :remove_icon, :boolean, default: false
   after_save { icon.purge_later if remove_icon && icon.attached? }
   # At least 10 characters, with a number, a capital and a lower-case letter.
@@ -278,7 +281,8 @@ class Account < ApplicationRecord
     def icon_is_a_reasonable_picture
       return unless icon.attached? && attachment_changes["icon"]
       errors.add(:icon, "must be a picture (PNG, JPEG, GIF or WebP)") unless icon.content_type.in?(%w[ image/png image/jpeg image/gif image/webp ])
-      errors.add(:icon, "must be smaller than 5 MB") if icon.blob.byte_size > DescribedWithImage::MAX_IMAGE_SIZE
+      limit = GameSetting.current.icon_max_bytes
+      errors.add(:icon, "must be smaller than #{ActiveSupport::NumberHelper.number_to_human_size(limit)}") if icon.blob.byte_size > limit
     end
 
     def email_needed_for_notifications

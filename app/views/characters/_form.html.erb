@@ -19,7 +19,7 @@
         <label class="field--checkbox"><%= form.check_box :remove_icon %> Remove this icon</label>
       <% end %>
       <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
-      <small class="hint">Shown beside every <%= term(:pose).downcase %>. A square picture works best. PNG, JPEG, GIF or WebP, up to 5 MB.<%= " Needed before you submit." if GameSetting.current.require_icon? %></small>
+      <small class="hint">Shown beside every <%= term(:pose).downcase %>. A square picture works best. PNG, JPEG, GIF or WebP, up to <%= number_to_human_size(GameSetting.current.icon_max_bytes) %>.<%= " Needed before you submit." if GameSetting.current.require_icon? %></small>
     </div>
     <% groups = CharacterGroup.ordered %>
     <% if groups.any? %>

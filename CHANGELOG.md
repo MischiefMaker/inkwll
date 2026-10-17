@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Small icons and an icon size limit
+
+- Player and character icons get a small copy as soon as they're uploaded, so
+  the OOC Chat and Chapters load them quickly. GIFs show their first frame at
+  that size.
+- Admin → Game settings has a limit for how big a player or character icon
+  can be (1 MB to start).
+
 ## 2026-10-17 — A font box for big titles
 
 - Admin → Look has a third font box, "Font for big titles", beside text and headings. The game's name on the front page and the titles of forum sections use it, so a script font like Great Vibes can be changed without touching CSS. Left empty, they use the heading font as before.
