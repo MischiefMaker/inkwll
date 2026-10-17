@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_220000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_220000) do
     t.boolean "system", default: false, null: false
     t.datetime "archived_at"
     t.boolean "awaiting_approval", default: false, null: false
+    t.date "away_until"
+    t.string "away_note"
     t.index "lower((email)::text)", name: "index_accounts_on_lower_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["active_character_id"], name: "index_accounts_on_active_character_id"
     t.index ["username"], name: "index_accounts_on_username", unique: true

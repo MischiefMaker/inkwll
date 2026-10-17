@@ -7,6 +7,7 @@
         <%= link_to p.character.name, p.character %>
         <% if p.storyteller? %><span class="badge"><%= term(:storyteller) %></span><% end %>
         <% if scene.turn_of?(p) %><span class="badge badge--turn">Turn</span><% end %>
+        <% if (away = p.character.account.away_label) %><span class="badge badge--away scene-people__away"><%= away %></span><% end %>
       </li>
     <% end %>
   </ul>

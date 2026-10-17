@@ -23,5 +23,17 @@
     <%= form.label :about_me, "About me" %>
     <%= form.text_area :about_me, rows: 8 %>
   </div>
+  <fieldset class="fieldset player-profile-form__away">
+    <legend class="fieldset__legend">Away notice</legend>
+    <div class="field">
+      <%= form.label :away_until, "Away until" %>
+      <%= form.date_field :away_until, min: Date.current, max: 1.year.from_now.to_date %>
+    </div>
+    <div class="field">
+      <%= form.label :away_note, "Note (optional)" %>
+      <%= form.text_field :away_note, maxlength: 100, placeholder: "e.g. On holiday, back for the weekend" %>
+    </div>
+    <small class="hint">Shows on your <%= term(:scene, count: 2).downcase %> beside whose turn it is, so others know to wait or skip you. It clears itself after that day. Leave the date empty to clear it now.</small>
+  </fieldset>
   <%= form.submit "Save", class: "button" %>
 <% end %>

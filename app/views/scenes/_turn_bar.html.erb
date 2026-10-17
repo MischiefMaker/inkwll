@@ -27,6 +27,7 @@
     <%= button_to "Pass", pass_scene_turn_path(scene), class: "button button--quiet" %>
   <% else %>
     <span class="turn-bar__text">It's <strong class="emphasis"><%= current.character.name %></strong>'s turn<%= " (warned)" if scene.turn_warned_at %>.</span>
+    <% if (away = current.character.account.away_label) %><span class="tag turn-bar__away"><%= away %></span><% end %>
     <% if participant&.storyteller? %>
       <%= button_to "Skip #{current.character.name}", skip_scene_turn_path(scene), class: "button button--quiet" %>
     <% end %>

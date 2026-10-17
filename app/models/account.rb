@@ -98,6 +98,18 @@ class Account < ApplicationRecord
 
   def archived? = archived_at.present?
 
+  # "Away until (date)", set by the player on their profile. It counts until
+  # the end of that day, then clears itself.
+  normalizes :away_note, with: ->(note) { note.squish.presence }
+  validates :away_note, length: { maximum: 100 }
+  validate :away_until_is_ahead, if: -> { away_until.present? && will_save_change_to_away_until? }
+
+  def away? = away_until.present? && away_until >= Date.current
+
+  def away_label
+    "Away until #{away_until.strftime("%a %-d %b")}#{": #{away_note}" if away_note}" if away?
+  end
+
   # New players wait for staff approval when the game asks for it
   # (Admin → Game settings). Staff never wait.
   def awaiting_approval? = super && !staff? && !system?
@@ -301,6 +313,14 @@ class Account < ApplicationRecord
     def active_character_must_be_own
       if active_character && active_character.account_id != id
         errors.add(:active_character, "must be one of your own characters")
+      end
+    end
+
+    def away_until_is_ahead
+      if away_until < Date.current
+        errors.add(:away_until, "can't be in the past")
+      elsif away_until > 1.year.from_now.to_date
+        errors.add(:away_until, "can't be more than a year away")
       end
     end
 end

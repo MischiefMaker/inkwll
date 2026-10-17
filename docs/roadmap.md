@@ -44,7 +44,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Mass actions on the admin lists. Tick several characters, then Roster, Archive or Retire them at once. **Built on `v2.0`.**
 - Chapter tabs position (top or left side). **Built on `v2.0`.**
 - Private Game option, with the optional approval step for new players. **Built on `v2.0`.**
-- Away notice.
+- Away notice. **Built on `v2.0`.**
 - New player badge.
 - Birthdays this month. Uses the birthdays and IC clock that already exist.
 - Graveyard. A Deceased status beside Retired, and its own page.
