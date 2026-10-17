@@ -40,6 +40,14 @@
 
   <div class="features__item">
     <div class="field field--checkbox">
+      <%= form.check_box :factions_enabled %>
+      <%= form.label :factions_enabled, "#{term(:faction, count: 2)}: families, guilds and clubs, and a character can be in several" %>
+    </div>
+    <p class="muted features__hint">Staff make them under <%= term(:faction, count: 2) %> in the admin panel. Players pick open ones on their application, and each one's heads and staff add members after that.</p>
+  </div>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
       <%= form.check_box :guest_chat %>
       <%= form.label :guest_chat, "Guest chat: guests can talk in the OOC Chat without logging in" %>
     </div>

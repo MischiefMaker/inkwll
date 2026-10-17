@@ -33,6 +33,26 @@
         <% end %>
       </div>
     <% end %>
+    <% if Faction.enabled? && (factions = Faction.pickable.ordered).any? %>
+      <div class="field character-form__factions">
+        <% if character.new_record? || character.group_choosable? %>
+          <fieldset class="character-form__faction-choices">
+            <legend class="character-form__faction-legend"><%= term(:faction, count: 2) %></legend>
+            <%= hidden_field_tag "character[picked_faction_ids][]", "", id: nil %>
+            <% chosen = character.faction_memberships.map(&:faction_id) %>
+            <% factions.each do |faction| %>
+              <label class="field--checkbox character-form__faction">
+                <%= check_box_tag "character[picked_faction_ids][]", faction.id, chosen.include?(faction.id), id: "character_faction_#{faction.id}" %>
+                <%= faction.name %>
+              </label>
+            <% end %>
+            <small class="hint">Families, guilds and clubs. Pick as many as fit. Once approved, a <%= term(:faction).downcase %>'s heads or staff add them to more.</small>
+          </fieldset>
+        <% else %>
+          <p class="text"><span class="character-form__faction-legend"><%= term(:faction, count: 2) %>:</span> <%= character.factions.ordered.map(&:name).to_sentence.presence || "None" %> <span class="muted">(heads and staff add members from each <%= term(:faction).downcase %>'s page)</span></p>
+        <% end %>
+      </div>
+    <% end %>
   </fieldset>
 
   <% { "demographics" => "Demographics", "application" => "Application" }.each do |section, heading| %>

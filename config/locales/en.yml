@@ -32,6 +32,10 @@ en:
       one: "Manuscript"
       other: "Manuscripts"
     logs_collection: "Bookshelf"
+    # Families, guilds, clubs: circles a character can belong to many of.
+    faction:
+      one: "Faction"
+      other: "Factions"
     # Kinds of Path, as headings on a Setting's page. Rename them freely.
     exit_kinds:
       street: "Streets"

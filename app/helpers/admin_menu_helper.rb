@@ -66,6 +66,7 @@ module AdminMenuHelper
     if current_account.can?(:change_game_settings)
       groups["Game world"] << admin_link("#{term(:scene)} labels", admin_scene_labels_path, %w[ scene_labels ])
       groups["Players and characters"] << admin_link("Character groups", admin_character_groups_path, %w[ character_groups ])
+      groups["Players and characters"] << admin_link(term(:faction, count: 2), admin_factions_path, %w[ factions ])
       groups["Players and characters"] << admin_link("Profile fields", admin_profile_fields_path, %w[ profile_fields ])
       groups["Game systems"] << admin_link("SOUL", admin_soul_path, %w[ soul soul_aspects soul_skills ])
       groups["Settings"] << admin_link("Game settings", edit_admin_game_settings_path, %w[ game_settings ])

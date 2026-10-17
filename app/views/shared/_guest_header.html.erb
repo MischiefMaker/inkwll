@@ -14,6 +14,7 @@
         <%= link_to archives_path, class: "menu__link" do %><%= icon(:bookshelf, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
         <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character Directory<% end %>
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
+        <% if Faction.enabled? %><%= link_to factions_path, class: "menu__link" do %><%= icon(:banner, size: 16, css: "menu__icon") %><%= term(:faction, count: 2) %><% end %><% end %>
         <%= link_to forum_boards_path, class: "menu__link" do %><%= icon(:board, size: 16, css: "menu__icon") %><%= term(:forum_board, count: 2) %><% end %>
         <% if WikiPage.enabled? %>
           <%= link_to wiki_pages_path, class: "menu__link" do %><%= icon(:wiki, size: 16, css: "menu__icon") %>Wiki<% end %>

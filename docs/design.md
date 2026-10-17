@@ -451,6 +451,26 @@ words, and `config/locales/en.yml` maps one to the other.
   layout (Manuscript, Forum or Chat). Details in
   `decisions.md`.
 
+### Version 2.0: Factions (on the v2.0 branch)
+
+- **Factions** are families, guilds, clubs and other circles. Unlike a
+  character group (one each, colours the name), a character can be in many.
+  A game switches them on under Admin → Features (off by default).
+- **Staff make them** under Admin → Factions. A faction can be secret (only
+  its members and staff know it exists) and can be left off applications.
+- **Joining:** players tick open factions on the character form until the
+  character is approved. After that, a faction's heads and staff add members
+  from its page, with an optional title, and a membership can be secret
+  (seen only by that character's player, the heads and staff). A player can
+  take their own character out.
+- **Heads:** staff tick Head on a membership. A faction can also have NPC
+  heads (names typed by staff); staff run a faction whose heads are only
+  NPCs or on the roster, and the wording nudges games to give each faction
+  two or three player heads.
+- **Inklings** can be shared with a faction, like a character group.
+- **Later:** faction Banks (`economy.md`) hang off factions and their
+  memberships (a Bank manager tick on a membership).
+
 ### Patterns from old MUSH logs (reference)
 
 The owner shared four logs from 2009 and 2010 MUSHes as examples. They are not kept in the repository: the descriptions in them aren't all the owner's, so none of their text may be used as default or sample content. Patterns noted from them:

@@ -31,6 +31,8 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 Ideas the owner wants after the first release. Not built until the owner says so.
 
+Version 2.0 is built on the long-lived `v2.0` branch, not on `main`, so the live game and the Tweaks work are untouched until the owner decides to release it (owner, 2026-10-17). Started with Factions.
+
 ### The order (adopted by the owner, 2026-10-17)
 
 Claude grouped every note below into themes and suggested this order, and the owner adopted it on 2026-10-17. The owner can still reorder, merge or drop anything, and nothing is built until the owner says so. Each theme lists its items by the names used in the notes further down.
@@ -67,7 +69,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - NPCs (one feature, owner 2026-10-17): staff make NPCs in the admin panel, and anyone running a Chapter can pick one.
 - Group pages, ranks and an IC board.
 - IC or OOC Boards. Do this with the group pages, since a group's IC board needs it.
-- Factions or teams, public or secret, tied into Inklings. Comes after group pages, so the two can share their look.
+- Factions or teams, public or secret, tied into Inklings. **Built on the `v2.0` branch (2026-10-17), waiting for you to try it.** The owner started Version 2.0 with factions, ahead of the rest of this theme. See "Factions" in `decisions.md`.
 
 **Theme 5: The world's history and events.**
 - World timeline. Staff mark finished Chapters as world events.
@@ -96,7 +98,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 ### The notes
 
 - **Create an NPC (admin):** a lighter kind of character that staff make in the admin panel. An NPC can take an icon, SOUL skills and so on, but never shows in any player's Characters list. Any GM/Storyteller can use a pre-made NPC for an NPC Passage, with a dropdown of them beside the box where you type a name (owner, 2026-10-16). This is also the shared NPC list (idea 25); the two are one feature (owner, 2026-10-17). Note only, not built.
-- **Factions or teams (in addition to groups):** a character can belong to several, and each membership can be public or secret. For example, publicly in their family faction and secretly in an assassin's guild. They tie into Inklings, so an Inkling can be shared with a faction (owner, 2026-10-16). Note only, not built.
+- **Factions or teams (in addition to groups):** a character can belong to several, and each membership can be public or secret. For example, publicly in their family faction and secretly in an assassin's guild. They tie into Inklings, so an Inkling can be shared with a faction (owner, 2026-10-16). Players pick them on their application, heads and staff add members later, and NPC or roster heads are run by staff (owner, 2026-10-17). Built on the `v2.0` branch.
 - **Chapter speed toggle:** a switch on a Chapter between live chat (instant, like the Chat look we have now) and forum speed (asynchronous, with a forum-style posting area). The toggle changes how the page looks and feels to match (owner, 2026-10-17). Note only, not built.
 - **Destroy a Well:** a Founder button on the Wells page to destroy a Well, only after it has been turned off first. It takes a backup first that can be used to restore it later, in the same JSON format the world export/import already uses (owner, 2026-10-17). Note only, not built.
 - **Mini-map:** the Streets (Paths of type Street) make up a map; buildings and outdoor spaces sit on streets (owner, 2026-10-15). The map shows only the streets, and when you're on a street you see its buildings (owner, 2026-10-17). Note only, not built.

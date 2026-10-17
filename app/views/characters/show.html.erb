@@ -8,6 +8,13 @@
     <div class="character-profile__heading profile-box__heading">
       <%= tag.h1 @character.name, **character_name_options(@character, "page-title character-profile__name") %>
       <% if @character.character_group %><p class="character-profile__group"><%= @character.character_group.name %></p><% end %>
+      <% if Faction.enabled? && (memberships = @character.visible_faction_memberships_for(current_account)).any? %>
+        <ul class="character-profile__factions">
+          <% memberships.each do |membership| %>
+            <li class="character-profile__faction<%= " character-profile__faction--secret" if membership.secret? || membership.faction.secret? %>"><%= link_to membership.faction.name, faction_path(membership.faction) %><%= ", #{membership.title}" if membership.title %><%= " (head)" if membership.head? %><%= visibility_mark(:you_and_staff, label: "Secret") if membership.secret? || membership.faction.secret? %></li>
+          <% end %>
+        </ul>
+      <% end %>
       <% if @character.retired? && !@character.roster_kept? %><p class="character-profile__retired muted">Retired. <%= @character.name %> is no longer played.</p><% end %>
       <p class="character-profile__where muted">Currently in <%= link_to @character.room.name, room_path(@character.room) %>.</p>
       <%= render "characters/profile_box_facts", character: @character, show_private: show_private %>

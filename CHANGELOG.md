@@ -2,6 +2,14 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Factions (Version 2.0 branch)
+
+- Factions: families, guilds and clubs, and a character can be in several. Switch them on under Admin → Features, and make them under Admin → Factions.
+- Players tick factions on their character's application. After approval, a faction's heads and staff add members from the faction's page, with an optional title such as "Apprentice".
+- A faction can be secret, so only its members and staff know it exists, and one membership can be secret too.
+- Staff choose heads. A faction can have NPC heads, and staff run any faction whose heads are only NPCs or on the roster.
+- Factions show under the character's name on their profile, and an Inkling can be shared with a whole faction.
+
 ## 2026-10-17 — Choosing Boons and Banes on rolls
 
 - The roll box lists the character's Boons and Banes as tick boxes. Picking a Skill ticks the ones that affect it; the player can untick them or tick others, then rolls, with no extra step.

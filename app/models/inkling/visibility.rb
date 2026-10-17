@@ -1,7 +1,8 @@
 # Who can see an Inkling, and what they see.
 #
 # - Its character's player sees it all, except staff notes.
-# - Characters it's shared with (one by one, or by character group) see it,
+# - Characters it's shared with (one by one, by character group or by
+#   faction) see it,
 #   except private entries not meant for them.
 # - App staff see it once it has been sent to them (or if staff started
 #   it), including staff notes. Never a draft.
@@ -17,6 +18,7 @@ module Inkling::Visibility
       where(character_id: characters.select(:id))
         .or(where(id: InklingShare.where(character_id: characters.select(:id)).select(:inkling_id)))
         .or(where("inklings.shared_group_ids && ARRAY(?)::integer[]", characters.where.not(character_group_id: nil).select(:character_group_id)))
+        .or(where("inklings.shared_faction_ids && ARRAY(?)::integer[]", FactionMembership.where(character_id: characters.select(:id)).select(:faction_id)))
     }
   end
 
@@ -29,7 +31,8 @@ module Inkling::Visibility
   def shared_with?(account)
     mine = account.characters.active
     shares.where(character_id: mine.select(:id)).exists? ||
-      (shared_group_ids.any? && mine.where(character_group_id: shared_group_ids).exists?)
+      (shared_group_ids.any? && mine.where(character_group_id: shared_group_ids).exists?) ||
+      (shared_faction_ids.any? && FactionMembership.where(faction_id: shared_faction_ids, character_id: mine.select(:id)).exists?)
   end
 
   def visible_to?(account)

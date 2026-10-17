@@ -1,0 +1,35 @@
+<% content_for :title, "#{term(:faction, count: 2)} · Admin · Inkwll" %>
+
+<h1 class="page-title"><%= term(:faction, count: 2) %></h1>
+<p class="muted">Families, guilds, clubs and other circles. Unlike a character group, a character can be in several.
+  Players pick open ones on their application; after that, each one's heads and staff add members from its page, where staff also choose the heads.</p>
+<p class="muted factions-admin__heads-tip">Give each <%= term(:faction).downcase %> two or three player heads where you can, so staff don't have to run them all. When its heads are only NPCs or characters on the roster, staff look after it.</p>
+<% unless Faction.enabled? %>
+  <p class="notice-box factions-admin__off"><%= term(:faction, count: 2) %> are switched off, so players can't see them yet. Switch them on under <%= link_to "Features", edit_admin_features_path %>.</p>
+<% end %>
+
+<% if @factions.any? %>
+  <table class="table factions-admin">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading"><%= term(:faction) %></th><th class="table__heading">Members</th><th class="table__heading">Run by</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
+      <% @factions.each do |faction| %>
+        <tr class="table__row">
+          <td class="table__cell"><%= link_to faction.name, faction_path(faction) %>
+            <% if faction.secret? %><span class="muted factions-admin__secret">(secret)</span><% end %>
+            <% unless faction.pick_on_application? || faction.secret? %><span class="muted factions-admin__closed">(not on applications)</span><% end %></td>
+          <td class="table__cell"><%= faction.memberships.count %></td>
+          <td class="table__cell factions-admin__run-by"><%= faction.player_heads? ? "Players" : tag.strong("Staff", class: "factions-admin__staff-run") %></td>
+          <td class="table__cell">
+            <%= edit_icon_link(edit_admin_faction_path(faction)) %>
+            <%= delete_icon_button(admin_faction_path(faction), label: "Delete", confirm: "Delete #{faction.name}? Its characters stay, but lose this membership.") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">No <%= term(:faction, count: 2).downcase %> yet.</p>
+<% end %>
+
+<h2 class="section-title">Add a <%= term(:faction).downcase %></h2>
+<%= render "form", faction: @faction %>

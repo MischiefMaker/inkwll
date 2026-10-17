@@ -101,6 +101,9 @@ Rails.application.routes.draw do
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"
   resources :alerts, only: :index
+  resources :factions, only: %i[ index show ] do
+    resources :memberships, only: %i[ create update destroy ], module: :factions
+  end
   resources :inklings, only: %i[ index new create show update ] do
     scope module: :inklings do
       resources :entries, only: :create
@@ -168,6 +171,7 @@ Rails.application.routes.draw do
     end
     resources :profile_fields, except: %i[ show new ]
     resources :character_groups, except: %i[ show new ]
+    resources :factions, except: %i[ show new ]
     resources :scene_labels, except: %i[ show new ]
     resources :forum_boards, except: %i[ show new ]
     resource :soul, only: :show, controller: "soul"

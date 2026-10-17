@@ -1,0 +1,74 @@
+<% content_for :title, "#{@faction.name} · #{term(:faction, count: 2)} · Inkwll" %>
+
+<article class="faction<%= " faction--secret" if @faction.secret? %>">
+  <p class="breadcrumbs"><%= link_to term(:faction, count: 2), factions_path %></p>
+  <h1 class="page-title faction__name"><%= @faction.name %></h1>
+  <% if @faction.secret? %><p class="faction__secret muted"><%= visibility_mark(:you_and_staff, label: "Members and staff only") %> Secret: only its members and staff know it exists.</p><% end %>
+  <% if @faction.description.present? %><div class="text faction__description"><%= simple_format(@faction.description) %></div><% end %>
+
+  <section class="faction__members">
+    <h2 class="section-title">Members</h2>
+    <% if @staff && !@faction.player_heads? %>
+      <p class="notice-box faction__staff-run">No player heads, so staff run <%= @faction.name %> for now. Ticking Head on two or three members shares the work.</p>
+    <% end %>
+    <% if @memberships.any? || @faction.npc_head_names.any? %>
+      <ul class="faction__list">
+        <% @faction.npc_head_names.each do |name| %>
+          <li class="faction__member faction__member--head faction__member--npc">
+            <span class="faction__member-name faction__npc-name"><%= name %></span>
+            <span class="tag faction__tag faction__tag--head">Head</span>
+            <span class="tag faction__tag faction__tag--npc">NPC</span>
+          </li>
+        <% end %>
+        <% @memberships.each do |membership| %>
+          <% character = membership.character %>
+          <li class="faction__member<%= " faction__member--head" if membership.head? %><%= " faction__member--secret" if membership.secret? %>">
+            <%= link_to character_path(character), class: "faction__member-link" do %>
+              <%= character_icon(character, size: :small) %>
+              <%= tag.span character.name, **character_name_options(character, "faction__member-name") %>
+            <% end %>
+            <% if membership.title %><span class="faction__title muted"><%= membership.title %></span><% end %>
+            <% if membership.head? %><span class="tag faction__tag faction__tag--head">Head</span><% end %>
+            <% if membership.head? && character.on_roster? %><span class="tag faction__tag faction__tag--roster">On the roster</span><% end %>
+            <% if membership.secret? %><span class="tag faction__tag faction__tag--secret">Secret member</span><% end %>
+
+            <% if @manager && (!membership.head? || @staff) %>
+              <details class="faction__manage">
+                <summary class="disclosure__summary faction__manage-summary">Change</summary>
+                <%= form_with model: membership, url: faction_membership_path(@faction, membership), method: :patch, namespace: "membership_#{membership.id}", class: "form form--inline faction__manage-form" do |form| %>
+                  <%= form.label :title, "Title for #{character.name}", class: "visually-hidden" %>
+                  <%= form.text_field :title, placeholder: "Title (optional)", maxlength: 60 %>
+                  <span class="field--checkbox"><%= form.check_box :secret %> <%= form.label :secret, "Secret member" %></span>
+                  <% if @staff %><span class="field--checkbox"><%= form.check_box :head %> <%= form.label :head, "Head" %></span><% end %>
+                  <%= form.submit "Save", class: "button button--quiet" %>
+                <% end %>
+                <%= button_to "Remove #{character.name}", faction_membership_path(@faction, membership), method: :delete, class: "button-link faction__remove",
+                      form: { data: { turbo_confirm: "Take #{character.name} out of #{@faction.name}?" } } %>
+              </details>
+            <% elsif current_account && character.account_id == current_account.id %>
+              <%= button_to "Leave", faction_membership_path(@faction, membership), method: :delete, class: "button-link faction__leave",
+                    form: { data: { turbo_confirm: "Take #{character.name} out of #{@faction.name}? Only its heads or staff can add them back." } } %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text muted">Nobody yet.</p>
+    <% end %>
+  </section>
+
+  <% if @manager %>
+    <section class="faction__add">
+      <h2 class="section-title">Add a member</h2>
+      <%= form_with url: faction_memberships_path(@faction), class: "form form--inline faction__add-form" do |form| %>
+        <%= form.label :name, "Character's name", class: "visually-hidden" %>
+        <%= form.text_field :name, placeholder: "Character's name", maxlength: 100, required: true %>
+        <%= form.label :title, "Title", class: "visually-hidden" %>
+        <%= form.text_field :title, placeholder: "Title (optional)", maxlength: 60 %>
+        <span class="field--checkbox"><%= form.check_box :secret, {}, "1", "0" %> <%= form.label :secret, "Secret member" %></span>
+        <%= form.submit "Add", class: "button button--quiet" %>
+      <% end %>
+      <p class="hint">A secret member is only shown to their player, the heads and staff.<%= @staff ? " Two or three player heads per #{term(:faction).downcase} share the work, so staff don't have to run it all." : " Only staff choose heads." %></p>
+    </section>
+  <% end %>
+</article>

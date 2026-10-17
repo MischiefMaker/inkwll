@@ -32,6 +32,9 @@
 <% if @character.submitted? %>
   <section class="application-review">
     <h2 class="section-title">Decision</h2>
+    <% if Faction.enabled? %>
+      <p class="text application-review__factions"><%= term(:faction, count: 2) %> picked: <%= safe_join(@character.factions.ordered.map { |faction| link_to(faction.name, faction_path(faction)) }, ", ").presence || "none" %></p>
+    <% end %>
     <%= form_with url: admin_application_path(@character), method: :patch, class: "form form--inline application-review__approve" do |form| %>
       <%= hidden_field_tag :decision, "approve" %>
       <% if @character.character_group_id.nil? && (groups = CharacterGroup.ordered).any? %>

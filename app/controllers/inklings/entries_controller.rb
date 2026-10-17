@@ -29,6 +29,7 @@ class Inklings::EntriesController < Inklings::BaseController
       return @inkling.character if @inkling.owned_by?(current_account)
       mine = current_account.characters.active
       @inkling.shared_characters.where(id: mine.select(:id)).first ||
-        mine.where(character_group_id: @inkling.shared_group_ids).first
+        mine.where(character_group_id: @inkling.shared_group_ids).first ||
+        mine.where(id: FactionMembership.where(faction_id: @inkling.shared_faction_ids).select(:character_id)).first
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_070000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -205,6 +205,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_070000) do
     t.index ["source_room_id"], name: "index_exits_on_source_room_id"
   end
 
+  create_table "faction_memberships", force: :cascade do |t|
+    t.bigint "faction_id", null: false
+    t.bigint "character_id", null: false
+    t.string "title"
+    t.boolean "head", default: false, null: false
+    t.boolean "secret", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_faction_memberships_on_character_id"
+    t.index ["faction_id", "character_id"], name: "index_faction_memberships_on_faction_id_and_character_id", unique: true
+    t.index ["faction_id"], name: "index_faction_memberships_on_faction_id"
+  end
+
+  create_table "factions", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "npc_heads"
+    t.boolean "secret", default: false, null: false
+    t.boolean "pick_on_application", default: true, null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower((name)::text)", name: "index_factions_on_lower_name", unique: true
+  end
+
   create_table "forum_boards", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -293,6 +318,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_070000) do
     t.string "chapter_passage_portraits", default: "small", null: false
     t.boolean "locked", default: false, null: false
     t.string "font_title"
+    t.boolean "factions_enabled", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
@@ -429,6 +455,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_070000) do
     t.integer "shared_group_ids", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "shared_faction_ids", default: [], null: false, array: true
     t.index ["character_id"], name: "index_inklings_on_character_id"
     t.index ["creator_id"], name: "index_inklings_on_creator_id"
     t.index ["review_state"], name: "index_inklings_on_review_state"
@@ -982,6 +1009,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_070000) do
   add_foreign_key "conversation_members", "conversations"
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
+  add_foreign_key "faction_memberships", "characters", on_delete: :cascade
+  add_foreign_key "faction_memberships", "factions", on_delete: :cascade
   add_foreign_key "forum_posts", "accounts", on_delete: :nullify
   add_foreign_key "forum_posts", "forum_topics", column: "topic_id", on_delete: :cascade
   add_foreign_key "forum_topics", "accounts", on_delete: :nullify

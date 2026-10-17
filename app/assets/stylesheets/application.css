@@ -1812,3 +1812,23 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 }
 .wells__older { margin-top: 1rem; }
 .wells__older-summary { cursor: pointer; color: var(--color-muted); margin-bottom: 0.75rem; }
+
+/* Factions: the list, each faction's page and the profile line */
+.factions__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+.factions__item { padding: 0.75rem 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.factions__name { font-weight: 600; margin-right: 0.5rem; }
+.factions__count { font-size: 0.85rem; }
+.factions__description { margin: 0.25rem 0 0; font-size: 0.9rem; }
+.faction__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.faction__member { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.faction__member-link { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 600; }
+.faction__title { font-size: 0.9rem; }
+.faction__manage { flex-basis: 100%; }
+.faction__manage-form, .faction__add-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.faction__manage-form input[type=text], .faction__add-form input[type=text] { width: auto; flex: 1 1 12rem; max-width: 20rem; }
+.faction__secret { display: flex; align-items: center; gap: 0.35rem; }
+.character-profile__factions { list-style: none; margin: 0.25rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: 0.9rem; }
+.character-profile__faction .visibility-mark { margin-left: 0.25rem; vertical-align: middle; }
+.character-form__faction-choices { border: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.character-form__faction-legend { font-weight: 600; padding: 0; }
+.character-form__factions .hint { flex-basis: 100%; }

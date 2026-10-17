@@ -139,7 +139,7 @@
       <% end %>
 
       <% if Soul.enabled? && Grimoire.enabled? && writable && !staff %>
-        <% caster = owner ? @inkling.character : current_account.characters.active.find { |c| @inkling.shared_characters.exists?(c.id) || (@inkling.shared_group_ids.include?(c.character_group_id)) } %>
+        <% caster = owner ? @inkling.character : current_account.characters.active.find { |c| @inkling.shared_characters.exists?(c.id) || (@inkling.shared_group_ids.include?(c.character_group_id)) || c.faction_memberships.where(faction_id: @inkling.shared_faction_ids).exists? } %>
         <% spells = caster ? caster.spells.includes(branch: :skill).order(:name) : [] %>
         <details class="roll-box inkling__cast">
           <summary class="disclosure__summary roll-box__summary">Cast a spell</summary>
@@ -169,7 +169,8 @@
     <section class="inkling__sharing">
       <h2 class="section-title">Shared with</h2>
       <% groups = CharacterGroup.where(id: @inkling.shared_group_ids).ordered %>
-      <% if @inkling.shares.any? || groups.any? %>
+      <% factions = Faction.enabled? ? Faction.where(id: @inkling.shared_faction_ids).ordered : Faction.none %>
+      <% if @inkling.shares.any? || groups.any? || factions.any? %>
         <ul class="list inkling__shares">
           <% @inkling.shares.includes(:character).each do |share| %>
             <li class="list__item inkling__share"><%= link_to share.character.name, share.character %>
@@ -178,6 +179,10 @@
           <% groups.each do |group| %>
             <li class="list__item inkling__share inkling__share--group">Everyone in <%= group.name %>
               <%= button_to "Stop sharing", inkling_share_path(@inkling, "group-#{group.id}"), method: :delete, class: "button-link" %></li>
+          <% end %>
+          <% factions.each do |faction| %>
+            <li class="list__item inkling__share inkling__share--faction">Everyone in <%= faction.name %>
+              <%= button_to "Stop sharing", inkling_share_path(@inkling, "faction-#{faction.id}"), method: :delete, class: "button-link" %></li>
           <% end %>
         </ul>
       <% else %>
@@ -193,6 +198,13 @@
           <%= form.label :group_id, "Group", class: "visually-hidden" %>
           <%= form.select :group_id, all_groups.map { |group| [ group.name, group.id ] } %>
           <%= form.submit "Share with the group", class: "button button--quiet" %>
+        <% end %>
+      <% end %>
+      <% if Faction.enabled? && (all_factions = Faction.visible_to(current_account).ordered.where.not(id: @inkling.shared_faction_ids)).any? %>
+        <%= form_with url: inkling_shares_path(@inkling), class: "form form--inline inkling__share-form inkling__share-form--faction" do |form| %>
+          <%= form.label :faction_id, term(:faction), class: "visually-hidden" %>
+          <%= form.select :faction_id, all_factions.map { |faction| [ faction.name, faction.id ] } %>
+          <%= form.submit "Share with the #{term(:faction).downcase}", class: "button button--quiet" %>
         <% end %>
       <% end %>
     </section>

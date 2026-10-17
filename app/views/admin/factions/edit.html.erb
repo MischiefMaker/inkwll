@@ -1,0 +1,5 @@
+<% content_for :title, "#{@faction.name_was} · #{term(:faction, count: 2)} · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to term(:faction, count: 2), admin_factions_path %></p>
+<h1 class="page-title">Edit <%= @faction.name_was %></h1>
+<%= render "form", faction: @faction %>

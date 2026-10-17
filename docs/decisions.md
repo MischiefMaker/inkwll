@@ -6,6 +6,15 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Factions (owner)
+
+- Factions are built first from Version 2.0, on a long-lived `v2.0` branch that stays off the live game until the owner says so. The rest of the roadmap follows on the same branch.
+- Factions are a bit like character groups, but a character can belong to several: families, guilds, clubs.
+- Players pick factions during the application. After that, faction heads and staff add characters.
+- Factions need heads. Some factions have NPC heads, and then staff run them; the same goes when the head is on the roster. The wording suggests several heads per faction so staff don't have to do it all.
+- Factions are optional: a switch under Admin → Features.
+- Defaults picked by Claude (the owner can change any): the switch is off by default; Wellkeepers make factions under Admin → Factions; a faction can be secret (only members and staff see it) and a single membership can be secret (only that character's player, the faction's heads and staff see it); members can have a title; only staff choose heads, and a head can't remove another head; a player can take their own character out of a faction; NPC heads are names typed by staff until the NPC feature exists; Inklings can be shared with a faction; a faction can be kept off the application.
+
 ## 2026-10-17: Crafting brief (owner)
 
 - Crafting starts from Arx's crafting, simplified.

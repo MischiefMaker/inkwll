@@ -1,0 +1,33 @@
+<%= form_with model: [ :admin, faction ], class: "form faction-form" do |form| %>
+  <%= render "shared/errors", record: faction %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 60 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_area :description, rows: 4, maxlength: 5000 %>
+    <small class="hint">Shown at the top of its page.</small>
+  </div>
+  <div class="field">
+    <%= form.label :npc_heads, "NPC heads (optional)" %>
+    <%= form.text_field :npc_heads, maxlength: 300, placeholder: "Lady Corvane, Old Tamsin" %>
+    <small class="hint">Names separated by commas. Staff run the <%= term(:faction).downcase %> for its NPC heads, and for heads on the roster. Character heads are chosen on its page.</small>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :secret %>
+    <%= form.label :secret, "Secret: only its members and staff know it exists" %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :pick_on_application %>
+    <%= form.label :pick_on_application, "Players can pick it on their character's application" %>
+  </div>
+  <small class="hint">Secret ones never show on the application. Heads and staff can always add members from its page.</small>
+  <% if faction.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit class: "button" %>
+<% end %>

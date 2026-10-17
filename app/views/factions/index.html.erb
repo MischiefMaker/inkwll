@@ -1,0 +1,21 @@
+<% content_for :title, "#{term(:faction, count: 2)} · Inkwll" %>
+
+<div class="factions">
+  <h1 class="page-title"><%= term(:faction, count: 2) %></h1>
+  <p class="text muted factions__intro">Families, guilds, clubs and other circles. A character can belong to several.</p>
+
+  <% if @factions.any? %>
+    <ul class="factions__list">
+      <% @factions.each do |faction| %>
+        <li class="factions__item<%= " factions__item--secret" if faction.secret? %>">
+          <%= link_to faction.name, faction_path(faction), class: "factions__name" %>
+          <% if faction.secret? %><span class="tag factions__tag factions__tag--secret">Secret</span><% end %>
+          <span class="factions__count muted"><%= pluralize(faction.visible_memberships_for(current_account).size, "member") %></span>
+          <% if faction.description.present? %><p class="factions__description muted"><%= faction.description.truncate(200) %></p><% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">No <%= term(:faction, count: 2).downcase %> yet.</p>
+  <% end %>
+</div>
