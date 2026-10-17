@@ -88,6 +88,11 @@ trade or sell for whatever price they like.
 
 ## Items in rolls
 
+Some items are only ornamental, and some work in the game world, such as a
+weapon that should count in a roll (owner, 2026-10-17). An item with no
+features is ornamental: it has a name, description and pictures, and does
+nothing in rolls. An item with features counts in rolls:
+
 - When a character rolls a Skill, the features of items in their
   Belongings that are tied to that Skill show as tick boxes in the roll box,
   beside their Boons and Banes, and work the same way (the 2026-10-17 roll
@@ -165,3 +170,8 @@ trade or sell for whatever price they like.
 7. **When can an item's features count in a roll:** whenever it's in their
    Belongings *(recommended, simplest)*, or only when the player marks it as
    carried in that Chapter.
+8. **How an item's features reach the sheet:** they show as extra tick boxes
+   in the roll box while the character owns the item, and go with the item
+   *(recommended: SOUL's Boons and Banes list and its one-Bane-per-two-Boons
+   rule stay untouched)*, or owning the item adds a real Boon to the
+   character's SOUL sheet, which is taken off again when the item leaves.
