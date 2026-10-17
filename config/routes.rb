@@ -135,6 +135,7 @@ Rails.application.routes.draw do
   resources :npcs, only: :index
   get "storyteller-wanted", to: "storyteller_wanted#index", as: :storyteller_wanted
   resource :account_waiting, only: :show, path: "waiting"
+  get "timeline", to: "timeline#index", as: :timeline
   resources :groups, only: %i[ show update ] do
     resources :members, only: :update, module: :groups
   end
@@ -256,6 +257,7 @@ Rails.application.routes.draw do
     end
     resources :scenes, only: [] do
       resource :lock, only: %i[ create destroy ]
+      resource :world_event, only: %i[ create destroy ]
     end
     resources :warnings, only: %i[ new create ]
     resources :rulings, only: %i[ index update ]

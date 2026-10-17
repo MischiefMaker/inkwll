@@ -1,0 +1,30 @@
+<% content_for :title, "World timeline · Inkwll" %>
+
+<div class="timeline">
+  <h1 class="page-title">World timeline</h1>
+  <p class="text muted timeline__intro">The <%= term(:scene, count: 2).downcase %> that changed the world, in the game's own order. Staff add them once they're finished.</p>
+
+  <% if @events.any? %>
+    <% @events.group_by { |scene| scene.ic_date&.year }.each do |year, scenes| %>
+      <section class="timeline__year">
+        <h2 class="section-title timeline__year-title"><%= year || "Undated" %></h2>
+        <ol class="timeline__list">
+          <% scenes.each do |scene| %>
+            <li class="timeline__event">
+              <p class="timeline__when muted"><%= scene.ic_when.presence || "Undated" %></p>
+              <h3 class="timeline__title"><%= link_to scene.title, scene_path(scene) %></h3>
+              <% if scene.world_event_note %><p class="text timeline__note"><%= scene.world_event_note %></p><% end %>
+              <% if scene.summary && scene.readable_by?(current_account) %><p class="text timeline__summary"><%= scene.summary_line %></p><% end %>
+              <p class="timeline__who muted">
+                <%= link_to scene.room.name, room_path(scene.room) %>
+                <% if scene.participants.any? %>· <%= safe_join(scene.participants.map { |p| link_to(p.character.name, character_path(p.character), **character_name_options(p.character, "timeline__character")) }, ", ") %><% end %>
+              </p>
+            </li>
+          <% end %>
+        </ol>
+      </section>
+    <% end %>
+  <% else %>
+    <p class="text muted">Nothing on the timeline yet.</p>
+  <% end %>
+</div>

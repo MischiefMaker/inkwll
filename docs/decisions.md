@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 world history and events (Theme 5), decided by Claude
+
+The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
+
+- **World timeline:** staff with the building job (the ones who make the world) mark a finished Chapter as a world event from the Chapter's own page, with an optional one-line note of what happened. Open Chapters can't be added. The World timeline page (Menu → The world, once there's an entry; guests can read it) lists the events by the Chapter's in-game date, grouped by in-game year, with the note, the Chapter's one-line story so far, its Place and the characters who were in it. A Chapter someone can't see (a hidden one) is left out for them, and the story-so-far line only shows to people who can read the Chapter. Marked Chapters carry a "World event" badge.
+
 ## 2026-10-17: Version 2.0 NPCs and groups (Theme 4), decided by Claude
 
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.

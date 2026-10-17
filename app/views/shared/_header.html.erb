@@ -34,6 +34,7 @@
         <% if current_account.may_storytell? %><%= link_to storyteller_wanted_path, class: "menu__link menu__storyteller-wanted" do %><%= icon(:quill, size: 16, css: "menu__icon") %><%= term(:storyteller) %> wanted<% if (wanted = Scene.storyteller_wanted.count).positive? %> <span class="badge menu__count"><%= wanted %></span><% end %><% end %><% end %>
         <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character Directory<% end %>
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
+        <% if Scene.world_events.exists? %><%= link_to timeline_path, class: "menu__link" do %><%= icon(:compass, size: 16, css: "menu__icon") %>World timeline<% end %><% end %>
         <% if Npc.exists? %><%= link_to npcs_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>NPCs<% end %><% end %>
         <% if Character.deceased.exists? %><%= link_to graveyard_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %>Graveyard<% end %><% end %>
         <% if ProfileField.exists?(field_type: "birthday") %><%= link_to birthdays_path, class: "menu__link" do %><%= icon(:star, size: 16, css: "menu__icon") %>Birthdays<% end %><% end %>

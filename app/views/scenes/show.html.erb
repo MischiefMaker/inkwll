@@ -36,6 +36,7 @@
 
   <%= render "scenes/status", scene: @scene, participant: @participant %>
   <%= render "scenes/summary", scene: @scene, participant: @participant if readable %>
+  <%= render "scenes/world_event", scene: @scene %>
 
   <% if readable %>
     <% poses = @scene.poses.includes(:soul_roll, { npc: { icon_attachment: :blob } }, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>

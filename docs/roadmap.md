@@ -72,7 +72,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Factions or teams, public or secret, tied into Inklings. **Built on the `v2.0` branch (2026-10-17), waiting for you to try it.** The owner started Version 2.0 with factions, ahead of the rest of this theme. See "Factions" in `decisions.md`.
 
 **Theme 5: The world's history and events.**
-- World timeline. Staff mark finished Chapters as world events.
+- World timeline. Staff mark finished Chapters as world events. **Built on `v2.0`.**
 - Event calendar with sign-ups. A Chapter opens when the event starts.
 
 **Theme 6: The wiki.**

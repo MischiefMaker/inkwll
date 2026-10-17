@@ -1852,6 +1852,19 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .group-page__ranks, .group-page__board, .group-page__directory { margin-top: 1rem; }
 .group-page__topic-meta { font-size: 0.85rem; margin-left: 0.35rem; }
 .character-profile__rank { font-size: 0.9rem; }
+/* The world timeline, and a Chapter's place on it. */
+.timeline__list { list-style: none; margin: 0 0 1.5rem; padding: 0 0 0 1rem; border-left: 2px solid var(--color-border); display: grid; gap: 1rem; }
+.timeline__event { position: relative; }
+.timeline__event::before { content: ""; position: absolute; left: calc(-1rem - 6px); top: 0.35rem; width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent, currentColor); }
+.timeline__when { margin: 0; font-size: 0.85rem; }
+.timeline__title { margin: 0.1rem 0 0.25rem; font-size: 1.1rem; }
+.timeline__note, .timeline__summary { margin: 0 0 0.25rem; }
+.timeline__summary { font-style: italic; }
+.timeline__who { margin: 0; font-size: 0.9rem; }
+.world-event { margin: 0.75rem 0; }
+.world-event__mark { margin: 0 0 0.5rem; }
+.world-event__form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.world-event__form input[type=text] { width: auto; flex: 1 1 16rem; }
 
 /* Tick boxes on the admin lists, and the "with the ticked ones" form */
 .admin-batch { margin: var(--space) 0; align-items: center; gap: 0.5rem; }

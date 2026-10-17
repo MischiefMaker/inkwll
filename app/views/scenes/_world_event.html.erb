@@ -1,0 +1,22 @@
+<%# A finished Chapter on the world timeline, and the staff tools to put it there. %>
+<% marker = Scene::WorldEvent.marker?(current_account) %>
+<% if scene.world_event? || (marker && scene.finished?) %>
+  <section class="world-event<%= " world-event--marked" if scene.world_event? %>">
+    <% if scene.world_event? %>
+      <p class="world-event__mark"><span class="badge world-event__badge">World event</span> <%= link_to "On the world timeline", timeline_path %><% if scene.world_event_note %>: <span class="world-event__note"><%= scene.world_event_note %></span><% end %></p>
+    <% end %>
+    <% if marker && scene.finished? %>
+      <details class="world-event__manage">
+        <summary class="disclosure__summary world-event__summary"><%= scene.world_event? ? "Change the timeline entry" : "Add to the world timeline" %></summary>
+        <%= form_with url: admin_scene_world_event_path(scene), class: "form form--inline world-event__form" do |form| %>
+          <%= form.label :world_event_note, "What happened (optional)", class: "visually-hidden" %>
+          <%= form.text_field :world_event_note, value: scene.world_event_note, maxlength: Scene::WorldEvent::NOTE_LENGTH, placeholder: "What happened, in a line (optional)" %>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+        <% if scene.world_event? %>
+          <%= button_to "Take it off the timeline", admin_scene_world_event_path(scene), method: :delete, class: "button-link world-event__remove" %>
+        <% end %>
+      </details>
+    <% end %>
+  </section>
+<% end %>

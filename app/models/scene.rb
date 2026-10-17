@@ -5,6 +5,7 @@ class Scene < ApplicationRecord
   include Turns
   include AsksForHelp
   include StorySoFar
+  include WorldEvent
 
   # Players can undo finishing a scene for this long.
   UNDO_FINISH_WITHIN = 24.hours

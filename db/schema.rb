@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_142000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_143000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -984,6 +984,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_142000) do
     t.bigint "summary_by_id"
     t.datetime "summary_at"
     t.string "speed"
+    t.datetime "world_event_at"
+    t.string "world_event_note"
+    t.bigint "world_event_by_id"
     t.index ["current_turn_participant_id"], name: "index_scenes_on_current_turn_participant_id"
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
@@ -993,6 +996,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_142000) do
     t.index ["ruling_wanted_at"], name: "index_scenes_on_ruling_wanted_at"
     t.index ["storyteller_wanted_at"], name: "index_scenes_on_storyteller_wanted_at"
     t.index ["summary_by_id"], name: "index_scenes_on_summary_by_id"
+    t.index ["world_event_at"], name: "index_scenes_on_world_event_at"
+    t.index ["world_event_by_id"], name: "index_scenes_on_world_event_by_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -1413,6 +1418,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_142000) do
   add_foreign_key "scene_invitations", "scenes"
   add_foreign_key "scene_participants", "characters"
   add_foreign_key "scene_participants", "scenes"
+  add_foreign_key "scenes", "accounts", column: "world_event_by_id", on_delete: :nullify
   add_foreign_key "scenes", "characters", column: "finished_by_id", on_delete: :nullify
   add_foreign_key "scenes", "characters", column: "summary_by_id"
   add_foreign_key "scenes", "rooms"
