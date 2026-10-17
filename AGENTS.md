@@ -38,6 +38,7 @@ The owner is comfortable with HTML and CSS but is not an experienced programmer.
 | `docs/email-setup.md` | How to connect the game's email (Brevo). |
 | `docs/wells.md` | The Founder's Wells page: updating games and launching new ones. |
 | `docs/css-classes.md` | The CSS classes games can use to skin the site. |
+| `docs/templates-proposal.md` | [Proposed] Letting games change page layouts, after studying Jcink's templates. |
 | `tasks/` | One file per piece of work, plus the task board in `tasks/README.md`. |
 | `tasks/inbox/` | Answers from outside AIs, waiting to be reviewed. |
 | `CHANGELOG.md` | A short, plain-language list of what changed. |

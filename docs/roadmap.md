@@ -81,7 +81,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 
 **Theme 7: Running games (Wells) and the look.**
 - Destroy a Well, with a restorable JSON backup. Steps 12c and 12d of the current plan come first.
-- Templates beyond CSS. Study Jcink's templates first. This is big, because games could then change page layouts, not only colours and fonts.
+- Templates beyond CSS. Study Jcink's templates first. This is big, because games could then change page layouts, not only colours and fonts. **Studied; proposal in `templates-proposal.md`, waiting for the owner's answers.**
 
 **Theme 8: The physical world.**
 - Mini-map. One feature: the map shows only the Streets, and the buildings appear once you're on that street. It uses the Streets that already exist, so it needs no new grid. **Built on `v2.0`.**

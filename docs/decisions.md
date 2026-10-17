@@ -6,6 +6,11 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 running games (Theme 7), decided by Claude
+
+- **Destroy a Well** was not started: the roadmap puts steps 12c and 12d first, and those are live deploy work on `main` that can't be built or tried on the `v2.0` branch.
+- **Templates beyond CSS** is too big to settle alone, so Claude studied Jcink's templates and wrote a proposal (`templates-proposal.md`, marked Proposed) with three questions for the owner. Nothing is built.
+
 ## 2026-10-17: Version 2.0 physical world (Theme 8), decided by Claude
 
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
