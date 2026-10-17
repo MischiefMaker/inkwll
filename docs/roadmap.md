@@ -86,7 +86,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Mini-map. There are two notes for it (Streets making up a map, and Places on a grid). Claude suggests building them as one feature. The Streets version needs no new data, so it could come first.
 - Weather system. Details still to be decided.
 
-**Theme 9: Big new systems (each needs a design talk first).**
+**Theme 9: Big new systems (each needs a design talk first).** Both are optional systems that a game switches on or off, like Grimoire.
 - Crafting.
 - Economy. Probably goes with crafting, so the two should be designed together.
 
@@ -118,8 +118,8 @@ The order goes from small, everyday improvements to big new systems. The early t
 - **Live private chat and pages:** players chat privately in real time, shown as tabs inside the OOC sidebar, and MUSH-style pages (instant direct messages between players) fit in here too. Builds on Messages (step 3b). Also private Storyteller asides inside a Chapter (owner, 2026-10-15, idea 7 of the RP platforms shortlist). Note only, not built.
 - **Awards and profile comments** (from the Jcink shortlist, maybe later).
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.
-- **Crafting:** characters make items (owner, 2026-10-14). Details to be decided.
-- **Economy:** money or trade between characters (owner, 2026-10-14). Details to be decided.
+- **Crafting:** characters make items (owner, 2026-10-14). An optional system each game can switch on, like Grimoire (owner, 2026-10-17). Details to be decided.
+- **Economy:** money or trade between characters (owner, 2026-10-14). An optional system each game can switch on, like Grimoire (owner, 2026-10-17). Details to be decided.
 - **Mini map:** a small map of the Settings around you, beyond the compass's next step. Needs each Setting placed on a grid first (owner, 2026-10-14).
 - **IC or OOC Boards:** an admin setting on each Board for whether people post in character or out of character (owner, 2026-10-15). OOC posts show the player name, as now. IC posts let the poster choose which of their characters to post as, for IC boards or posting things as your character. Details to be decided.
 - **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
