@@ -52,6 +52,8 @@
           <span class="pose__tag">Narration</span>
         <% elsif pose.roll? %>
           <span class="pose__tag">Roll</span>
+        <% elsif pose.letter? %>
+          <span class="pose__tag pose__tag--letter"><%= pose.letter_style == "text" ? "Text" : "Letter" %></span>
         <% elsif pose.mutter? %>
           <span class="pose__tag pose__tag--mutter">Mutter</span>
         <% end %>
@@ -78,6 +80,12 @@
           <% heard = staff_view || pose.full_for?(current_account) %>
           <p class="pose__mutter-to muted"><%= pose.character&.name %> mutters to <%= pose.to_characters.map(&:name).to_sentence %><%= heard ? ". Only they hear all of it; everyone else catches a few words." : ", and you catch a few words." %></p>
           <div class="pose__body prose<%= " pose__body--overheard" unless heard %>"><%= simple_format(heard ? pose.body : pose.overheard_body) %></div>
+        <% elsif pose.letter? %>
+          <div class="pose__letter pose__letter--<%= pose.letter_style %>">
+            <% if pose.letter_to %><p class="pose__letter-to"><%= pose.letter_style == "text" ? "To: " : "To " %><%= pose.letter_to %><%= "," if pose.letter_style == "letter" %></p><% end %>
+            <div class="pose__body prose"><%= simple_format pose.body %></div>
+            <% if pose.letter_style == "letter" %><p class="pose__letter-from"><%= pose.character&.name %></p><% end %>
+          </div>
         <% else %>
           <div class="pose__body prose"><%= simple_format pose.body %></div>
         <% end %>

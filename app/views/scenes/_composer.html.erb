@@ -9,7 +9,7 @@
     <% kinds = scene.postable_kinds(participant) %>
     <fieldset class="composer__kinds">
       <legend class="visually-hidden">What to post</legend>
-      <% { "passage" => term(:pose), "npc" => "NPC", "narration" => "Narration", "mutter" => "Mutter", "ooc" => "OOC" }.each do |kind, label| %>
+      <% { "passage" => term(:pose), "npc" => "NPC", "narration" => "Narration", "mutter" => "Mutter", "letter" => "Letter or text", "ooc" => "OOC" }.each do |kind, label| %>
         <% next unless kinds.include?(kind) %>
         <label class="composer__kind">
           <%= form.radio_button :kind, kind, checked: kind == "passage", data: { composer_target: "kind", action: "composer#kindChanged" } %>
@@ -28,11 +28,21 @@
         <small class="hint">They hear all of it. Everyone else only catches a few words.</small>
       </div>
     <% end %>
+    <div class="composer__letter" hidden data-composer-target="letter">
+      <fieldset class="composer__letter-style">
+        <legend class="visually-hidden">Letter or text</legend>
+        <label class="composer__kind"><%= form.radio_button :letter_style, "letter", checked: true %> A letter</label>
+        <label class="composer__kind"><%= form.radio_button :letter_style, "text" %> A text message</label>
+      </fieldset>
+      <%= form.label :letter_to, "To (optional)" %>
+      <%= form.text_field :letter_to, maxlength: 60, placeholder: "Who it's for" %>
+    </div>
     <%= form.label :body, "Write a #{term(:pose).downcase} as #{participant.character.name}", class: "composer__label",
           data: { composer_target: "label", passage: "Write a #{term(:pose).downcase} as #{participant.character.name}",
                   npc: "Write as the NPC (played by #{participant.character.name})",
                   narration: "Write narration: set the scene or describe what happens",
                   mutter: "Mutter, as #{participant.character.name}. It doesn't take a turn.",
+                  letter: "Write the letter or text from #{participant.character.name}. Everyone in the #{term(:scene).downcase} can read it. It doesn't take a turn.",
                   ooc: "Out of character (brb, timing, questions). It doesn't take a turn." } %>
     <%= form.text_area :body, rows: { "live" => 2, "forum" => 10 }.fetch(scene.speed, 3), required: true, data: { composer_target: "body", draft_target: "field", action: "input->draft#save" } %>
     <div class="composer__warning" hidden data-composer-target="warning">

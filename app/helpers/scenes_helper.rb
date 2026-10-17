@@ -41,6 +41,7 @@ module ScenesHelper
     when "narration" then "Narration by #{pose.character&.name}"
     when "ooc" then "#{pose.character&.name} (OOC)"
     when "roll" then "Roll"
+    when "letter" then "#{pose.letter_style == "text" ? "A text" : "A letter"} from #{pose.character&.name}#{" to #{pose.letter_to}" if pose.letter_to}"
     when "mutter" then "#{pose.character&.name} mutters to #{pose.to_characters.map(&:name).to_sentence}"
     else pose.character&.name.to_s
     end

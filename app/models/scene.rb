@@ -303,7 +303,7 @@ class Scene < ApplicationRecord
   # Posts a pose by one of the scene's characters. The server numbers every
   # pose, so the order never depends on whose browser was faster.
   # kind is "passage", "npc" (with npc_name), "narration" or "ooc"; see Pose.
-  def post!(character, body, kind: "passage", npc_name: nil, to: nil)
+  def post!(character, body, kind: "passage", npc_name: nil, to: nil, letter_style: nil)
     participant = participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
     raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
     raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
@@ -317,7 +317,8 @@ class Scene < ApplicationRecord
 
       resume!(by: character) if paused? && Pose::STORY_KINDS.include?(kind)
       pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"),
-        to_character_ids: (kind == "mutter" ? [ to.to_i ] : []))
+        to_character_ids: (kind == "mutter" ? [ to.to_i ] : []),
+        letter_style: (letter_style.presence || "letter" if kind == "letter"), letter_to: (to if kind == "letter"))
       after_pose_by(participant) if takes_turn
       pose
     end
@@ -494,6 +495,7 @@ class Scene < ApplicationRecord
   def postable_kinds(participant)
     kinds = %w[ passage npc ooc ]
     kinds << "mutter" if participants.size > 1
+    kinds << "letter"
     kinds << "narration" if participant.storyteller? || participants.none?(&:storyteller?)
     kinds
   end

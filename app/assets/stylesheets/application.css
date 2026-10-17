@@ -1995,3 +1995,14 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .pose__mutter-to { margin: 0 0 0.25rem; font-size: 0.85rem; font-style: italic; }
 .pose__body--overheard { font-style: italic; opacity: 0.8; }
 .composer__mutter { margin-bottom: 0.5rem; }
+
+/* In-character letters and texts (Version 2.0) */
+.pose__letter--letter { margin: 0.3rem 0; padding: 1rem 1.25rem; max-width: 34rem; background: #fbf6e9; color: #2b2418; border: 1px solid #e3d7b8; border-radius: 2px; box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); font-family: var(--font-heading, Georgia, serif); }
+.pose__letter--letter .pose__letter-to { margin: 0 0 0.6rem; }
+.pose__letter-from { margin: 0.6rem 0 0; text-align: right; font-style: italic; }
+.pose__letter--text { margin: 0.3rem 0; max-width: 24rem; }
+.pose__letter--text .pose__letter-to { margin: 0 0 0.25rem; font-family: var(--font-ui); font-size: 0.8rem; color: var(--color-muted); }
+.pose__letter--text .pose__body { padding: 0.5rem 0.8rem; background: var(--color-accent); color: var(--color-accent-text); border-radius: 1rem 1rem 1rem 0.25rem; font-family: var(--font-ui); }
+.pose__letter--text .pose__body p { margin: 0; }
+.composer__letter { margin-bottom: 0.5rem; }
+.composer__letter-style { display: flex; gap: 1rem; border: 0; margin: 0 0 0.4rem; padding: 0; }
