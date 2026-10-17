@@ -1,0 +1,22 @@
+<% content_for :title, "NPCs · Admin · Inkwll" %>
+
+<h1 class="page-title">NPCs</h1>
+<p class="muted">Recurring non-player characters. Whoever runs a <%= term(:scene).downcase %> can pick one when posting as an NPC, so it shows with its name and picture. They're listed for everyone on the <%= link_to "NPCs page", npcs_path %>, and they're never anyone's character.</p>
+
+<% if @npcs.any? %>
+  <ul class="npc-admin__list">
+    <% @npcs.each do |npc| %>
+      <li class="npc-admin__item">
+        <%= character_icon(npc) %>
+        <span class="npc-admin__name"><%= npc.name %></span>
+        <%= edit_icon_link(edit_admin_npc_path(npc)) %>
+        <%= delete_icon_button(admin_npc_path(npc), label: "Delete", confirm: "Delete #{npc.name}? #{term(:pose, count: 2)} already posted as them keep the name.") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">No NPCs yet.</p>
+<% end %>
+
+<h2 class="section-title">Add an NPC</h2>
+<%= render "form", npc: @npc %>

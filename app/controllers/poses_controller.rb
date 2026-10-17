@@ -9,7 +9,7 @@ class PosesController < ApplicationController
   # Posting out of turn needs a second click ("Post anyway"); the page asks
   # first, and this double-checks in case the turn moved in the meantime.
   def create
-    attributes = params.expect(pose: [ :body, :kind, :npc_name, :to, :letter_to, :letter_style ])
+    attributes = params.expect(pose: [ :body, :kind, :npc_name, :to, :letter_to, :letter_style, :npc_id ])
     kind = attributes[:kind].presence || "passage"
     participant = @scene.participant_for(current_character)
     if participant && Pose::TURN_KINDS.include?(kind) && @scene.out_of_turn?(participant) && params[:post_anyway] != "1"
@@ -17,9 +17,9 @@ class PosesController < ApplicationController
     end
 
     @scene.post!(current_character, attributes[:body], kind: kind, npc_name: attributes[:npc_name],
-      to: (kind == "letter" ? attributes[:letter_to] : attributes[:to]), letter_style: attributes[:letter_style])
+      to: (kind == "letter" ? attributes[:letter_to] : attributes[:to]), letter_style: attributes[:letter_style], npc_id: attributes[:npc_id])
     redirect_to @scene
-  rescue ArgumentError, ActiveRecord::RecordInvalid => e
+  rescue ArgumentError, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     redirect_to @scene, alert: e.message
   end
 

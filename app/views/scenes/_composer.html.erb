@@ -18,6 +18,10 @@
       <% end %>
     </fieldset>
     <div class="composer__npc" hidden data-composer-target="npc">
+      <% if scene.may_use_npcs?(participant) && (npcs = Npc.ordered.pluck(:name, :id)).any? %>
+        <%= form.label :npc_id, "The game's NPCs" %>
+        <%= form.select :npc_id, npcs, { include_blank: "Someone else (type a name)" }, class: "composer__npc-pick", data: { composer_target: "npcPick", action: "composer#kindChanged" } %>
+      <% end %>
       <%= form.label :npc_name, "NPC's name" %>
       <%= form.text_field :npc_name, maxlength: 60, data: { composer_target: "npcName" } %>
     </div>

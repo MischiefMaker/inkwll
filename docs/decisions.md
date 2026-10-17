@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 NPCs and groups (Theme 4), decided by Claude
+
+The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
+
+- **NPCs** are their own kind of record, not characters, so they can never show up in My Characters, the directory, Where or Here. Staff who review applications (Scribes, Wellkeepers, Stewards with that job) make them under Admin → NPCs, each with a name, an optional picture, a public description, private notes and, when SOUL is on, optional Skill ratings. The notes and ratings are only shown to staff and Storytellers. An NPCs page (Menu → The world, once there's at least one; guests can read it) lists them. When posting as an NPC, whoever runs the Chapter picks one from a "The game's NPCs" list above the name box, and the Passage shows the NPC's name and picture. "Whoever runs the Chapter" means its Storyteller, or anyone in it when it has no Storyteller. Typing any NPC name still works for everyone, as before. Deleting an NPC keeps the name on Passages already posted. The ratings are for the Storyteller to read when rolling for the NPC; they don't fill in the NPC roll by themselves yet.
+
 ## 2026-10-17: Version 2.0 inside a Chapter (Theme 3), decided by Claude
 
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.

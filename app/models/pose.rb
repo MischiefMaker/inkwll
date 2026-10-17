@@ -26,6 +26,7 @@ class Pose < ApplicationRecord
   belongs_to :scene, inverse_of: :poses
   belongs_to :character, optional: true
   has_one :soul_roll, class_name: "Soul::Roll", dependent: :nullify
+  belongs_to :npc, optional: true
 
   include Whispers
 

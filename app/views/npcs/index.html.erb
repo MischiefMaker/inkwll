@@ -1,0 +1,28 @@
+<% content_for :title, "NPCs · #{game_name}" %>
+
+<div class="npcs">
+  <h1 class="page-title">NPCs</h1>
+  <p class="text muted npcs__intro">The game's recurring non-player characters. Whoever runs a <%= term(:scene).downcase %> can bring them in.</p>
+
+  <% if @npcs.any? %>
+    <ul class="npcs__list">
+      <% @npcs.each do |npc| %>
+        <li class="npcs__item" id="<%= dom_id npc %>">
+          <%= character_icon(npc, size: :portrait) %>
+          <div class="npcs__text">
+            <h2 class="npcs__name"><%= npc.name %></h2>
+            <% if npc.description %><div class="text npcs__description"><%= simple_format npc.description %></div><% end %>
+            <% if @secrets && npc.notes %>
+              <div class="npcs__notes"><%= visibility_mark(:staff_only, label: "Staff and #{term(:storyteller, count: 2).downcase} only") %><%= simple_format npc.notes %></div>
+            <% end %>
+            <% if @secrets && (ratings = npc.skill_ratings).any? %>
+              <p class="npcs__ratings muted"><%= visibility_mark(:staff_only, label: "Staff and #{term(:storyteller, count: 2).downcase} only") %><%= ratings.map { |skill, rating| "#{skill.name} #{rating}" }.join(", ") %></p>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">No NPCs yet.</p>
+  <% end %>
+</div>

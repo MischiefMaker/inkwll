@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — NPCs and groups (Version 2.0 branch)
+
+- NPCs: staff keep the game's recurring NPCs under Admin → NPCs, with a picture, a description and private notes. Whoever runs a Chapter can pick one when posting as an NPC, and an NPCs page lists them for everyone.
+
 ## 2026-10-17 — Inside a Chapter (Version 2.0 branch)
 
 - The story so far: players in a Chapter can write a short summary that sits at its top, so anyone joining can catch up. Its first line shows in the Place's list of Chapters and on the Bookshelf.

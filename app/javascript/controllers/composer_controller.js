@@ -6,7 +6,7 @@ import { Controller } from "@hotwired/stimulus"
 // Players can also post as an NPC, narration or an OOC line; only Passages
 // and NPC Passages take a turn.
 export default class extends Controller {
-  static targets = ["body", "anyway", "warning", "warningText", "kind", "npc", "npcName", "label", "mutter", "mutterTo", "letter"]
+  static targets = ["body", "anyway", "warning", "warningText", "kind", "npc", "npcName", "label", "mutter", "mutterTo", "letter", "npcPick"]
   static values = { enterPosts: Boolean }
 
   get kind() {
@@ -16,7 +16,9 @@ export default class extends Controller {
   kindChanged() {
     const npc = this.kind === "npc"
     this.npcTarget.hidden = !npc
-    this.npcNameTarget.required = npc
+    const picked = this.hasNpcPickTarget && this.npcPickTarget.value !== ""
+    this.npcNameTarget.required = npc && !picked
+    this.npcNameTarget.disabled = picked
     if (this.hasMutterTarget) this.mutterTarget.hidden = this.kind !== "mutter"
     this.letterTarget.hidden = this.kind !== "letter"
     this.labelTarget.textContent = this.labelTarget.dataset[this.kind]

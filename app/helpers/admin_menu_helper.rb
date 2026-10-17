@@ -23,6 +23,7 @@ module AdminMenuHelper
     waiting = StaffWaiting.for(current_account).to_h { |item| [ item.key, item.count ] }
     if current_account.can?(:review_apps)
       groups["Waiting on staff"] << admin_link("Applications", admin_applications_path, %w[ applications ], waiting[:applications])
+      groups["Players and characters"] << admin_link("NPCs", admin_npcs_path, %w[ npcs ])
       groups["Waiting on staff"] << admin_link("Roster", admin_roster_path, %w[ roster roster_applications roster_characters ], waiting[:roster])
       if Soul.enabled?
         groups["Waiting on staff"] << admin_link("SOUL requests", admin_soul_reviews_path, %w[ soul_reviews ], waiting[:soul])

@@ -38,7 +38,7 @@
   <%= render "scenes/summary", scene: @scene, participant: @participant if readable %>
 
   <% if readable %>
-    <% poses = @scene.poses.includes(:soul_roll, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>
+    <% poses = @scene.poses.includes(:soul_roll, { npc: { icon_attachment: :blob } }, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>
     <% unless whole %>
       <% earlier = [ @scene.last_sequence - Scene::LIVE_PASSAGES, 0 ].max %>
       <% if earlier.positive? %>

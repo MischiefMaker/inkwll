@@ -303,11 +303,15 @@ class Scene < ApplicationRecord
   # Posts a pose by one of the scene's characters. The server numbers every
   # pose, so the order never depends on whose browser was faster.
   # kind is "passage", "npc" (with npc_name), "narration" or "ooc"; see Pose.
-  def post!(character, body, kind: "passage", npc_name: nil, to: nil, letter_style: nil)
+  def post!(character, body, kind: "passage", npc_name: nil, to: nil, letter_style: nil, npc_id: nil)
     participant = participant_for(character) or raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}."
     raise ArgumentError, "#{character.name} #{NOT_APPROVED}." unless character.can_play?
     raise ArgumentError, "This #{Term[:scene]} is #{finished? ? "finished" : "locked by staff"}." unless writable?
     raise ArgumentError, "That kind of post isn't allowed here." unless postable_kinds(participant).include?(kind)
+
+    npc = (Npc.find(npc_id) if kind == "npc" && npc_id.present?)
+    raise ArgumentError, "Only whoever runs this #{Term[:scene].downcase} can bring in the game's NPCs." if npc && !may_use_npcs?(participant)
+    npc_name = npc.name if npc
 
     with_lock do
       takes_turn = Pose::TURN_KINDS.include?(kind)
@@ -316,7 +320,7 @@ class Scene < ApplicationRecord
       end
 
       resume!(by: character) if paused? && Pose::STORY_KINDS.include?(kind)
-      pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"),
+      pose = add_pose!(character: character, kind: kind, body: body, npc_name: (npc_name if kind == "npc"), npc: npc,
         to_character_ids: (kind == "mutter" ? [ to.to_i ] : []),
         letter_style: (letter_style.presence || "letter" if kind == "letter"), letter_to: (to if kind == "letter"))
       after_pose_by(participant) if takes_turn
@@ -384,6 +388,12 @@ class Scene < ApplicationRecord
       add_pose!(character: storyteller_character, kind: "roll", body: "#{name} (NPC, rolled by #{storyteller_character.name}) rolls against " \
         "#{difficulty_name.to_s.humanize} (#{difficulty}) with a rating of #{rating} and gets #{result}. #{Soul::Rules::DEGREE_TEXT.fetch(degree, degree.humanize)}")
     end
+  end
+
+  # The game's NPCs are picked by whoever runs the Chapter: its Storyteller, or
+  # anyone in it when it has none.
+  def may_use_npcs?(participant)
+    participant.present? && (participant.storyteller? || participants.none?(&:storyteller?))
   end
 
   # A private line from the Storyteller to one character. It doesn't take a

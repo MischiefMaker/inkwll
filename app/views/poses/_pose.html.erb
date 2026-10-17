@@ -15,7 +15,9 @@
   <article class="pose pose--<%= pose.kind %><%= " pose--with-author" if panel %><%= " pose--mine" if mine %><%= " pose--removed" if pose.removed? %><%= " pose--retired" if character&.retired? %>" id="<%= dom_id pose %>" data-sequence="<%= pose.sequence %>">
     <% icon_size = panel ? :portrait : :small %>
     <% icon = capture do %>
-      <% if pose.npc? %>
+      <% if pose.npc? && pose.npc&.icon&.attached? %>
+        <span class="pose__icon"><%= character_icon(pose.npc, size: icon_size) %></span>
+      <% elsif pose.npc? %>
         <span class="pose__icon"><%= tag.span pose.npc_name.first.upcase, class: "character-icon character-icon--#{icon_size} character-icon--initial character-icon--npc", aria: { hidden: true } %></span>
       <% elsif pose.passage? && character %>
         <button type="button" class="pose__icon" popovertarget="mini-profile-<%= character.id %>" aria-label="About <%= character.name %>">

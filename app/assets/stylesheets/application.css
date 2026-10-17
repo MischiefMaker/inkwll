@@ -2032,3 +2032,16 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .private-chat__form input[type=text] { flex: 1; min-width: 0; }
 .private-chat__intro { font-size: 0.85rem; }
 .private-chat__problem { color: var(--color-accent); font-size: 0.85rem; }
+
+/* NPCs (Version 2.0) */
+.npcs__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space); }
+.npcs__item { display: flex; gap: var(--space); align-items: flex-start; padding: 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.npcs__text { min-width: 0; overflow-wrap: anywhere; }
+.npcs__name { margin: 0 0 0.3rem; font-size: 1.1rem; }
+.npcs__notes { padding-left: 0.6rem; border-left: 3px solid var(--color-border); font-size: 0.9rem; }
+.npc-admin__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.npc-admin__item { display: flex; align-items: center; gap: 0.5rem; }
+.npc-admin__name { font-weight: 600; }
+.npc-admin__ratings { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.4rem; }
+.npc-admin__rating { display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; }
+.npc-admin__rating-input { width: 4rem; }

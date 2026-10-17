@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -734,6 +734,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_130000) do
     t.index ["subject_type", "subject_id"], name: "index_name_changes_on_subject_type_and_subject_id"
   end
 
+  create_table "npcs", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.text "notes"
+    t.jsonb "soul_ratings", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower((name)::text)", name: "index_npcs_on_lower_name", unique: true
+  end
+
   create_table "ooc_messages", force: :cascade do |t|
     t.bigint "account_id"
     t.text "body", null: false
@@ -766,7 +776,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_130000) do
     t.text "overheard_body"
     t.string "letter_style"
     t.string "letter_to"
+    t.bigint "npc_id"
     t.index ["character_id"], name: "index_poses_on_character_id"
+    t.index ["npc_id"], name: "index_poses_on_npc_id"
     t.index ["scene_id", "sequence"], name: "index_poses_on_scene_id_and_sequence", unique: true
     t.index ["scene_id"], name: "index_poses_on_scene_id"
   end
@@ -1365,6 +1377,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_130000) do
   add_foreign_key "ooc_messages", "accounts"
   add_foreign_key "ooc_messages", "accounts", column: "removed_by_id", on_delete: :nullify
   add_foreign_key "poses", "characters"
+  add_foreign_key "poses", "npcs", on_delete: :nullify
   add_foreign_key "poses", "scenes"
   add_foreign_key "profile_values", "characters"
   add_foreign_key "profile_values", "profile_fields"

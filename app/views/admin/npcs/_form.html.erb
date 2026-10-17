@@ -1,0 +1,34 @@
+<%= form_with model: npc, url: npc.persisted? ? admin_npc_path(npc) : admin_npcs_path, multipart: true, class: "form npc-admin__form" do |form| %>
+  <%= render "shared/errors", record: npc %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, maxlength: 60, required: true, placeholder: "Old Marta, the ferrywoman" %>
+  </div>
+  <div class="field">
+    <%= form.label :icon, "Picture (optional)" %>
+    <% if npc.icon.attached? %><%= character_icon(npc) %><% end %>
+    <%= form.file_field :icon, accept: "image/png,image/jpeg,image/gif,image/webp" %>
+    <% if npc.icon.attached? %><label class="field--checkbox"><%= form.check_box :remove_icon %> Remove the picture</label><% end %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (everyone sees this)" %>
+    <%= form.text_area :description, rows: 3, maxlength: 3_000 %>
+  </div>
+  <div class="field">
+    <%= form.label :notes, "Notes (only staff and #{term(:storyteller, count: 2).downcase} see these)" %>
+    <%= form.text_area :notes, rows: 3, maxlength: 3_000, placeholder: "How they talk, what they know, secrets" %>
+  </div>
+  <% if Soul.enabled? && (aspects = Soul::Aspect.ordered.includes(:skills)).any? %>
+    <fieldset class="field npc-admin__ratings">
+      <legend class="fieldset__legend">SOUL ratings (optional, only staff and <%= term(:storyteller, count: 2).downcase %> see these)</legend>
+      <% aspects.each do |aspect| %>
+        <% aspect.skills.each do |skill| %>
+          <label class="npc-admin__rating"><%= skill.name %>
+            <%= number_field_tag "npc[soul_ratings][#{skill.id}]", npc.soul_ratings[skill.id.to_s], min: 0, max: Soul::Rules.skill_max, class: "npc-admin__rating-input" %>
+          </label>
+        <% end %>
+      <% end %>
+    </fieldset>
+  <% end %>
+  <%= form.submit npc.persisted? ? "Save" : "Add NPC", class: "button" %>
+<% end %>

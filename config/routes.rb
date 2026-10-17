@@ -132,6 +132,7 @@ Rails.application.routes.draw do
   get "birthdays", to: "birthdays#index"
   get "graveyard", to: "graveyard#index"
   get "looking-for-rp", to: "looking_for_rp#index", as: :looking_for_rp
+  resources :npcs, only: :index
   get "storyteller-wanted", to: "storyteller_wanted#index", as: :storyteller_wanted
   resource :account_waiting, only: :show, path: "waiting"
   resources :factions, only: %i[ index show ] do
@@ -218,6 +219,7 @@ Rails.application.routes.draw do
     resources :factions, except: %i[ show new ]
     resources :scene_labels, except: %i[ show new ]
     resources :scene_ideas, only: %i[ index create destroy ]
+    resources :npcs, except: %i[ show new ]
     resources :forum_boards, except: %i[ show new ]
     resource :soul, only: :show, controller: "soul"
     resources :soul_aspects, only: %i[ create edit update destroy ]

@@ -66,7 +66,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Live private chat and pages, plus private Storyteller asides. Builds on Messages. **Built on `v2.0`.**
 
 **Theme 4: NPCs, groups and factions.** Who characters are and who they belong to.
-- NPCs (one feature, owner 2026-10-17): staff make NPCs in the admin panel, and anyone running a Chapter can pick one.
+- NPCs (one feature, owner 2026-10-17): staff make NPCs in the admin panel, and anyone running a Chapter can pick one. **Built on `v2.0`.**
 - Group pages, ranks and an IC board.
 - IC or OOC Boards. Do this with the group pages, since a group's IC board needs it.
 - Factions or teams, public or secret, tied into Inklings. **Built on the `v2.0` branch (2026-10-17), waiting for you to try it.** The owner started Version 2.0 with factions, ahead of the rest of this theme. See "Factions" in `decisions.md`.

@@ -1,0 +1,5 @@
+<% content_for :title, "#{@npc.name_was} · NPCs · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "NPCs", admin_npcs_path %></p>
+<h1 class="page-title">Edit <%= @npc.name_was %></h1>
+<%= render "form", npc: @npc %>
