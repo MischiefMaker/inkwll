@@ -5,6 +5,9 @@
 <% page_background(@area) %>
 <h1 class="page-title"><%= place_icon(@area, :compass, css: "page-title__icon") %><%= @area.name %></h1>
 <%= render "shared/description", record: @area, default_banner: true %>
+<% if Domain.enabled? && (domain = Domain.includes(:holder_character, :holder_faction).find_by(area: @area)) %>
+  <p class="area-domain muted"><%= link_to domain.name, domains_path(anchor: "domain-#{domain.id}"), class: "area-domain__name" %><% if domain.rank %> (<%= domain.rank %>)<% end %><% holder = domain.holder_character&.retired? ? nil : domain.holder %><% if holder.is_a?(Character) %>, held by <%= link_to holder.name, character_path(holder), class: "area-domain__holder" %><% elsif holder && Faction.enabled? && Faction.visible_to(current_account).exists?(holder.id) %>, held by <%= link_to holder.name, faction_path(holder), class: "area-domain__holder" %><% end %></p>
+<% end %>
 
 <% listed_rooms = @area.rooms.listed %>
 <% if listed_rooms.any? %>

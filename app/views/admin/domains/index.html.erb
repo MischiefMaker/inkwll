@@ -1,0 +1,32 @@
+<% content_for :title, "#{term(:domain, count: 2)} · Admin · Inkwll" %>
+
+<h1 class="page-title"><%= term(:domain, count: 2) %></h1>
+<p class="muted">Land in a chain of lieges, such as a Realm holding Duchies holding Counties holding Baronies. On the 1st of every month each one earns its people × its yield,
+  pays its tax to its liege on everything it took in, and its holder keeps the rest. The holder of a liege sets the tax its vassals pay, up to
+  <%= @game_setting.domain_tax_max_percent %>% (change that under <%= link_to "Economy", admin_economy_path %>). Everything else here is staff's, because it's the story.</p>
+
+<% if @domains.any? %>
+  <table class="table domains-admin">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading"><%= term(:domain) %></th><th class="table__heading">Liege</th><th class="table__heading">Holder</th><th class="table__heading">People × yield</th><th class="table__heading">Tax</th><th class="table__heading"></th></tr></thead>
+    <tbody class="table__body">
+      <% @domains.each do |domain| %>
+        <tr class="table__row">
+          <td class="table__cell"><%= domain.name %><% if domain.rank %> <span class="muted domains-admin__rank">(<%= domain.rank %>)</span><% end %></td>
+          <td class="table__cell"><%= domain.liege&.name || "—" %></td>
+          <td class="table__cell"><%= domain.holder&.name || "—" %></td>
+          <td class="table__cell"><%= number_with_delimiter(domain.people) %> × <%= money(domain.yield_per_head) %></td>
+          <td class="table__cell"><%= domain.liege ? "#{domain.tax_percent}%" : "—" %></td>
+          <td class="table__cell">
+            <%= edit_icon_link(edit_admin_domain_path(domain)) %>
+            <%= delete_icon_button(admin_domain_path(domain), label: "Delete", confirm: "Delete #{domain.name}? Its vassals are kept, with no liege.") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="muted">No <%= term(:domain, count: 2).downcase %> yet.</p>
+<% end %>
+
+<h2 class="section-title">Add a <%= term(:domain).downcase %></h2>
+<%= render "form", domain: @domain %>

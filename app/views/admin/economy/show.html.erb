@@ -84,6 +84,12 @@
           <%= form.label :economy_dues_max, "Highest dues (0 for no limit)" %>
           <%= form.number_field :economy_dues_max, min: 0 %>
         </div>
+        <% if Domain.enabled? %>
+          <div class="form--inline">
+            <%= form.label :domain_tax_max_percent, "Highest tax a #{term(:domain).downcase} pays its liege (%)" %>
+            <%= form.number_field :domain_tax_max_percent, min: 0, max: 100 %>
+          </div>
+        <% end %>
         <%= form.submit "Save", class: "button" %>
       <% end %>
     </section>

@@ -56,6 +56,14 @@
 
   <div class="features__item">
     <div class="field field--checkbox">
+      <%= form.check_box :domains_enabled %>
+      <%= form.label :domains_enabled, "#{term(:domain, count: 2)}: land in a chain of lieges, earning money from its people each month" %>
+    </div>
+    <p class="muted features__hint"><%= term(:domain, count: 2) %> need the Economy. Staff make them under <%= term(:domain, count: 2) %> in the admin panel once they're on.</p>
+  </div>
+
+  <div class="features__item">
+    <div class="field field--checkbox">
       <%= form.check_box :guest_chat %>
       <%= form.label :guest_chat, "Guest chat: guests can talk in the OOC Chat without logging in" %>
     </div>

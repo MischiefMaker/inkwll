@@ -8,6 +8,13 @@ Short, plain-language notes on what changed. Newest first.
 - Admin → Look can put the Chapter tabs down the left-hand side instead of along the top (phones keep them on top).
 - Tick boxes on Admin → Characters and Admin → Players and staff: tick several (or tick the heading for all), then retire them, put them on the roster, or archive the players in one go.
 
+## 2026-10-17 — Domains (Version 2.0 branch)
+
+- Land in a chain of lieges, such as Realm, Duchy, County and Barony, switched on under Admin → Features (it needs the Economy). Wellkeepers make them under Admin → Domains, with a holder, a number of people and a yield per head.
+- On the 1st of each month every Domain earns from its people, pays its tax up the chain, and its holder keeps the rest in their Purse (or their faction's Bank).
+- A Domains page in the menu shows the tree of land and who holds it. Holders see their earnings and set the tax their vassals pay them.
+- An Area linked to a Domain says whose land it is.
+
 ## 2026-10-17 — The Economy (Version 2.0 branch)
 
 - Money, switched on under Admin → Features. Every character has a Purse tab (seen only by their player and staff) with their balance and a ledger of every change.

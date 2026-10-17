@@ -1,0 +1,13 @@
+<% content_for :title, "#{term(:domain, count: 2)} · Inkwll" %>
+
+<div class="domains">
+  <h1 class="page-title"><%= term(:domain, count: 2) %></h1>
+  <p class="text muted domains__intro">The land and who holds it. Each one earns from its people every month and pays a share to the one above it.</p>
+
+  <% roots = @vassals.fetch(nil, []) %>
+  <% if roots.any? %>
+    <%= render "domains/tree", domains: roots %>
+  <% else %>
+    <p class="text muted">No <%= term(:domain, count: 2).downcase %> yet.</p>
+  <% end %>
+</div>

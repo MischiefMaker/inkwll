@@ -1,0 +1,43 @@
+<ul class="domains__tree">
+  <% domains.each do |domain| %>
+    <li class="domain" id="domain-<%= domain.id %>">
+      <div class="domain__heading">
+        <span class="domain__name"><%= domain.name %></span>
+        <% if domain.rank %><span class="tag domain__rank"><%= domain.rank %></span><% end %>
+        <span class="domain__holder muted">
+          <% if domain.holder_character && !domain.holder_character.retired? %>
+            held by <%= link_to domain.holder_character.name, character_path(domain.holder_character) %>
+          <% elsif domain.holder_faction && Faction.enabled? && Faction.visible_to(current_account).exists?(domain.holder_faction_id) %>
+            held by <%= link_to domain.holder_faction.name, faction_path(domain.holder_faction) %>
+          <% elsif domain.holder_faction %>
+            held in secret
+          <% else %>
+            no holder
+          <% end %>
+        </span>
+        <% if domain.area %><%= link_to domain.area.name, area_path(domain.area), class: "domain__area" %><% end %>
+      </div>
+      <% if domain.description.present? %><p class="domain__description muted"><%= domain.description.truncate(300) %></p><% end %>
+
+      <% if domain.details_visible_to?(current_account) %>
+        <% sums = @sums[domain.id] %>
+        <p class="domain__sums">
+          Each month: <%= number_with_delimiter(domain.people) %> people × <%= money(domain.yield_per_head) %> = <%= money(sums[:own]) %><% if sums[:from_vassals].positive? %>, plus <%= money(sums[:from_vassals]) %> from vassals<% end %><% if domain.liege %>, less <%= domain.tax_percent %>% tax to <%= domain.liege.name %> (<%= money(sums[:tax]) %>)<% end %>.
+          <strong class="domain__kept">The holder keeps <%= money(sums[:kept]) %>.</strong>
+        </p>
+      <% end %>
+
+      <% if domain.tax_settable_by?(current_account) %>
+        <%= form_with model: domain, url: domain_path(domain), method: :patch, class: "form form--inline domain__tax-form" do |form| %>
+          <%= form.label :tax_percent, "Tax #{domain.name} pays #{domain.liege.name} (%)" %>
+          <%= form.number_field :tax_percent, min: 0, max: GameSetting.current.domain_tax_max_percent %>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+      <% end %>
+
+      <% if (vassals = @vassals.fetch(domain.id, [])).any? %>
+        <%= render "domains/tree", domains: vassals %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

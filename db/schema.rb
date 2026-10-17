@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -191,6 +191,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_130000) do
     t.datetime "last_message_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "domains", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "rank"
+    t.text "description"
+    t.bigint "liege_id"
+    t.bigint "holder_character_id"
+    t.bigint "holder_faction_id"
+    t.bigint "area_id"
+    t.integer "people", default: 0, null: false
+    t.integer "yield_per_head", default: 0, null: false
+    t.integer "tax_percent", default: 0, null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower((name)::text)", name: "index_domains_on_lower_name", unique: true
+    t.index ["area_id"], name: "index_domains_on_area_id"
+    t.index ["holder_character_id"], name: "index_domains_on_holder_character_id"
+    t.index ["holder_faction_id"], name: "index_domains_on_holder_faction_id"
+    t.index ["liege_id"], name: "index_domains_on_liege_id"
   end
 
   create_table "economy_accounts", force: :cascade do |t|
@@ -410,6 +431,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_130000) do
     t.integer "economy_tax_max_percent", default: 25, null: false
     t.integer "economy_dues_max", default: 0, null: false
     t.string "chapter_tabs_side", default: "top", null: false
+    t.boolean "domains_enabled", default: false, null: false
+    t.integer "domain_tax_max_percent", default: 50, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
@@ -1099,6 +1122,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_130000) do
   add_foreign_key "conversation_members", "accounts"
   add_foreign_key "conversation_members", "characters", column: "via_character_id"
   add_foreign_key "conversation_members", "conversations"
+  add_foreign_key "domains", "areas", on_delete: :nullify
+  add_foreign_key "domains", "characters", column: "holder_character_id", on_delete: :nullify
+  add_foreign_key "domains", "domains", column: "liege_id", on_delete: :nullify
+  add_foreign_key "domains", "factions", column: "holder_faction_id", on_delete: :nullify
   add_foreign_key "economy_allowance_changes", "soul_bnbs", on_delete: :cascade
   add_foreign_key "economy_entries", "accounts", column: "actor_id", on_delete: :nullify
   add_foreign_key "economy_entries", "characters", column: "actor_character_id", on_delete: :nullify

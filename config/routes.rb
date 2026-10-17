@@ -112,6 +112,7 @@ Rails.application.routes.draw do
       resources :bank_schedules, only: %i[ create destroy ]
     end
   end
+  resources :domains, only: %i[ index update ]
   resources :inklings, only: %i[ index new create show update ] do
     scope module: :inklings do
       resources :entries, only: :create
@@ -204,6 +205,7 @@ Rails.application.routes.draw do
     resources :economy_adjustments, only: :create
     resources :economy_schedules, only: %i[ create destroy ]
     resources :economy_allowance_changes, only: %i[ create destroy ]
+    resources :domains, except: %i[ show new ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do
       resource :hiding, only: :create

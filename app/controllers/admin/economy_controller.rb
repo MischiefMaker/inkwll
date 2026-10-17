@@ -17,7 +17,7 @@ class Admin::EconomyController < Admin::BaseController
   def update
     @game_setting = GameSetting.current
     if @game_setting.update(params.expect(game_setting: %i[ currency_one currency_other currency_symbol economy_starting_amount economy_allowance
-        economy_taxes_enabled economy_tax_max_percent economy_dues_max ]))
+        economy_taxes_enabled economy_tax_max_percent economy_dues_max domain_tax_max_percent ]))
       redirect_to admin_economy_path, notice: "Saved."
     else
       show

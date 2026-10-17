@@ -36,7 +36,7 @@ class GameSetting < ApplicationRecord
   validates :currency_one, :currency_other, presence: true, length: { maximum: 30 }
   validates :currency_symbol, length: { maximum: 5 }
   validates :economy_starting_amount, :economy_allowance, :economy_dues_max, numericality: { only_integer: true, in: 0..10_000_000 }
-  validates :economy_tax_max_percent, numericality: { only_integer: true, in: 0..100 }
+  validates :economy_tax_max_percent, :domain_tax_max_percent, numericality: { only_integer: true, in: 0..100 }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }
   validate :auto_finish_after_idle

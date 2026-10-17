@@ -1,0 +1,47 @@
+<%= form_with model: [ :admin, domain ], class: "form domain-form" do |form| %>
+  <%= render "shared/errors", record: domain %>
+  <div class="form--inline">
+    <%= form.label :name %>
+    <%= form.text_field :name, required: true, maxlength: 80, placeholder: "Niwen" %>
+    <%= form.label :rank, "Rank (optional)" %>
+    <%= form.text_field :rank, maxlength: 40, placeholder: "Duchy", list: "domain-ranks" %>
+    <datalist id="domain-ranks"><% Domain.ranks.each do |rank| %><option value="<%= rank %>"></option><% end %></datalist>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_area :description, rows: 3, maxlength: 5000 %>
+  </div>
+  <div class="field">
+    <%= form.label :liege_id, "Liege: the #{term(:domain).downcase} it sits under" %>
+    <%= form.collection_select :liege_id, Domain.ordered.where.not(id: domain.id), :id, :name, include_blank: "None (the top of a chain)" %>
+  </div>
+  <div class="form--inline">
+    <%= form.label :holder_name, "Held by (a character's name)" %>
+    <%= form.text_field :holder_name, value: @holder_name || domain.holder_character&.name, maxlength: 100, placeholder: "Leave empty for none" %>
+    <% if Faction.enabled? %>
+      <%= form.label :holder_faction_id, "or a #{term(:faction).downcase}" %>
+      <%= form.collection_select :holder_faction_id, Faction.ordered, :id, :name, include_blank: "None" %>
+    <% end %>
+  </div>
+  <small class="hint">A character's share goes to their <%= term(:purse).downcase %>; a <%= term(:faction).downcase %>'s goes to its <%= term(:bank).downcase %>.</small>
+  <div class="form--inline">
+    <%= form.label :people %>
+    <%= form.number_field :people, min: 0 %>
+    <%= form.label :yield_per_head, "Yield per head each month" %>
+    <%= form.number_field :yield_per_head, min: 0 %>
+    <%= form.label :tax_percent, "Tax to its liege (%)" %>
+    <%= form.number_field :tax_percent, min: 0, max: GameSetting.current.domain_tax_max_percent %>
+  </div>
+  <div class="field">
+    <%= form.label :area_id, "#{term(:area)} on the map (optional)" %>
+    <%= form.collection_select :area_id, Area.order(:name), :id, :name, include_blank: "None" %>
+    <small class="hint">Its page then says whose land it is.</small>
+  </div>
+  <% if domain.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit class: "button" %>
+<% end %>

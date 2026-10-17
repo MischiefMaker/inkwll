@@ -1,0 +1,5 @@
+<% content_for :title, "#{@domain.name_was} · #{term(:domain, count: 2)} · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to term(:domain, count: 2), admin_domains_path %></p>
+<h1 class="page-title">Edit <%= @domain.name_was %></h1>
+<%= render "form", domain: @domain %>

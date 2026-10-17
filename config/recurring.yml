@@ -37,3 +37,6 @@ production:
   economy_allowance:
     class: EconomyAllowanceJob
     schedule: every sunday at 12:15am
+  domain_income:
+    class: DomainIncomeJob
+    schedule: "0 2 1 * *"

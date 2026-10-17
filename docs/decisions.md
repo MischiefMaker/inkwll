@@ -14,6 +14,21 @@ The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0`
 - **Mass actions:** tick boxes on Admin → Characters (for characters in play) with "Retire them" or "Put them on the roster", for staff who can do both (Wellkeepers), and on Admin → Players and staff with "Archive them", for anyone who can archive (only players the staff member may manage, never themselves). A tick box in the heading ticks the whole table. Characters already retired or on the roster are skipped, and every action asks "Are you sure?" once.
 - **Chapter tabs position** is under Admin → Look ("Along the top" or "Down the left-hand side"), next to the other Chapter look choices, and defaults to the top. On phones the tabs always stay along the top, since a side column doesn't fit.
 
+## 2026-10-17: Domains built on the v2.0 branch (Claude's choices)
+
+Choices Claude made while building Domains, without the owner. Each one can be changed.
+
+- Domains have their own switch under Admin → Features, off by default, and only work while the Economy is on. Only Wellkeepers make and change them (Admin → Domains), since they make money.
+- A Domain's rank is a word staff type on each one (Realm, Duchy, County, Barony), with the ranks already used offered as suggestions, rather than a fixed list per game.
+- Each Domain pays its liege's tax on everything it took in, its vassals' taxes included, so taxes pass up the chain.
+- Domains are paid at 2am on the 1st of every month. The holder's ledger shows the land's own earnings, each vassal's tax coming in, and the tax going up. Domain income isn't taxed again by factions.
+- A Domain nobody holds (or held by a retired character) still earns and pays its liege, but its own share goes to no one. If one person holds both a vassal and its liege, the tax just stays with them.
+- Anyone, guests too, can see the tree of land and who holds what. People, yield, earnings and tax rates show only to the holder, the liege's holder (who sets the tax) and staff. A faction holder that's secret shows as "held in secret".
+- The highest tax a Domain can pay its liege starts at 50%, set under Admin → Economy.
+- An Area linked to a Domain shows a line saying whose land it is.
+- The holding faction's Bank managers count as the holder.
+- No alert is sent each month; the money shows on the ledger.
+
 ## 2026-10-17: Economy built on the v2.0 branch (Claude's choices)
 
 The owner asked Claude to build the Economy, Domains and Crafting on the `v2.0` branch and to "do as much as you can without me and record any decisions you made without me". These are the choices Claude made while building the Economy. Each one can be changed.

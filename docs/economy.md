@@ -1,9 +1,9 @@
 # Economy (Version 2.0, Theme 9)
 
-**Status: Built on the `v2.0` branch** (2026-10-17), apart from Domains,
-which come next. Agreed with the owner on 2026-10-17 (answers at the end and
+**Status: Built on the `v2.0` branch** (2026-10-17), Domains included. Agreed with the owner on 2026-10-17 (answers at the end and
 in `decisions.md`). Choices Claude made while building are listed in
-`decisions.md` under "Economy built on the v2.0 branch".
+`decisions.md` under "Economy built on the v2.0 branch" and "Domains built
+on the v2.0 branch".
 
 Economy comes first and Crafting after it (owner, 2026-10-17). Crafting gets
 its own page later.

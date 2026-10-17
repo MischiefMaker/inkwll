@@ -262,3 +262,6 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.schedules`, `.schedules__item` (`--in`, `--out`), `.schedules__text`, `.schedules__next`, `.schedules__stop` | A list of scheduled payments |
 | `.economy-admin`, `.economy-admin__give`, `.economy-admin__give-form`, `.economy-admin__schedules`, `.economy-admin__schedule-form`, `.economy-admin__settings`, `.economy-admin__settings-form`, `.economy-admin__wealth`, `.economy-admin__changes`, `.economy-admin__change`, `.economy-admin__change-form`, `.economy-admin__transactions` | Admin → Economy |
 | `.alerts__purse`, `.alerts__bank` | The link to the Purse or Bank on a money alert |
+| `.domains`, `.domains__intro`, `.domains__tree`, `.domain`, `.domain__heading`, `.domain__name`, `.domain__rank`, `.domain__holder`, `.domain__area`, `.domain__description`, `.domain__sums`, `.domain__kept`, `.domain__tax-form` | The Domains page: the tree of land, who holds it, and (for holders) its earnings and the tax a vassal pays |
+| `.area-domain`, `.area-domain__name`, `.area-domain__holder` | The "whose land" line on an Area linked to a Domain |
+| `.domains-admin`, `.domains-admin__rank`, `.domain-form` | Admin → Domains |
