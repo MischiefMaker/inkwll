@@ -106,6 +106,10 @@ class Account < ApplicationRecord
 
   def away? = away_until.present? && away_until >= Date.current
 
+  # A "new" mark for a player's first two weeks, so others can say hello.
+  NEW_FOR = 14.days
+  def new_player? = !system? && created_at.present? && created_at > NEW_FOR.ago
+
   def away_label
     "Away until #{away_until.strftime("%a %-d %b")}#{": #{away_note}" if away_note}" if away?
   end

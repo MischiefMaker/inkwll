@@ -6,7 +6,7 @@
   <% if ooc_message.guest? %>
     <span class="ooc-message__author ooc-message__author--guest"><%= ooc_message.author_name %></span>
   <% else %>
-    <%= link_to ooc_message.author_name, player_path(ooc_message.account.username), class: "ooc-message__author" %>
+    <%= link_to ooc_message.author_name, player_path(ooc_message.account.username), class: "ooc-message__author" %><%= new_player_badge(ooc_message.account) %>
   <% end %>
   <time class="ooc-message__time" datetime="<%= ooc_message.created_at.iso8601 %>"><%= ooc_message.created_at.utc.strftime("%H:%M") %></time>
   <% if ooc_message.deleted? %>

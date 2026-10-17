@@ -52,6 +52,7 @@
             <%= tag.span character.name, **character_name_options(character, "directory__name") %>
           <% end %>
           <% if character.character_group %><span class="directory__group muted"><%= character.character_group.name %></span><% end %>
+          <%= new_player_badge(character) %>
           <% if character.on_roster? %><span class="tag directory__tag">On the roster</span><% end %>
           <% if character.on_roster? && character.previously_played? %><span class="tag directory__tag directory__tag--played">Previously played</span><% end %>
           <% if @unapproved %><span class="tag directory__tag directory__tag--status"><%= character.status.humanize %></span><% end %>

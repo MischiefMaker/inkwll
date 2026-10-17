@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 
 - Drafts: what you're writing in a Passage, a Message, a forum post, a wiki page or an Inkling is kept in your browser as you type, so it comes back if the page closes or reloads. Posting clears it.
+- A "New" mark beside new players (their first two weeks) in the OOC Chat, and beside their characters in Here and the Character Directory, so others know to say hello.
 - Away notice: set "Away until" a date on your player profile, with a note, and it shows on your Chapters beside whose turn it is until that day has passed.
 - Private Game: a setting under Admin → Game settings that sends anyone not logged in to the log-in page.
 - New players can be made to wait for staff approval (another setting there). Staff approve or turn them away at the top of Players and staff.

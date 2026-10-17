@@ -98,6 +98,14 @@ module ApplicationHelper
   # The class and colour for a character's name. A character in a group
   # (a house, a faction) gets the group's colour; skins can override it
   # with .character-group-<id>.
+  # The "New" mark for a player's first two weeks. Pass a character to mark
+  # it by its player (it never says who the player is).
+  def new_player_badge(account_or_character)
+    account = account_or_character.is_a?(Character) ? account_or_character.account : account_or_character
+    return unless account&.new_player? && !(account_or_character.is_a?(Character) && account_or_character.on_roster?)
+    tag.span("New", class: "badge badge--new new-player", title: "New to the game in the last two weeks")
+  end
+
   def character_name_options(character, extra_class = nil)
     group = character&.character_group
     classes = [ extra_class, "character-name", ("character-name--grouped character-group-#{group.id}" if group) ]

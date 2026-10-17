@@ -11,7 +11,7 @@ class DirectoryController < ApplicationController
     @unapproved = params[:unapproved] == "1" && current_account&.staff?
     @groups = CharacterGroup.ordered
     @group = @groups.find_by(id: params[:group]) unless @roster_only || @unapproved
-    characters = Character.played.includes(:character_group, icon_attachment: :blob).order(:name)
+    characters = Character.played.includes(:character_group, :account, icon_attachment: :blob).order(:name)
     characters = characters.where(character_group: @group) if @group
     characters =
       if @roster_only then characters.on_roster

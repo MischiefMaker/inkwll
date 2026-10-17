@@ -22,6 +22,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.hint` | The small help text under a form field |
 | `.emphasis` | Bold or italic words inside text |
 | `.list`, `.list__item` | Lists |
+| `.new-player`, `.badge--new` | The "New" mark for a player's first two weeks, in the OOC Chat, Here and the directory |
 | `.turn-bar__away`, `.scene-people__away`, `.badge--away`, `.player-profile-form__away` | A player's "Away until" notice: beside whose turn it is, on the Chapter's cast list, and where they set it |
 | `.account-waiting`, `.account-waiting__log-out`, `.account-approvals`, `.account-approvals__list`, `.account-approvals__item`, `.account-approvals__form`, `.account-approvals__approve`, `.account-approvals__decline` | New players waiting for staff approval: their page, and the list on Players and staff |
 | `.layout--tabs-left`, `.has-chapter-tabs-left` (on `body`), `.chapter-tabs-side-field` | Chapter tabs down the left-hand side (Admin → Look), instead of along the top |
