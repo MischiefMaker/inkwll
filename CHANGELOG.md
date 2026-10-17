@@ -9,6 +9,7 @@ Short, plain-language notes on what changed. Newest first.
 - "Storyteller wanted" on a Chapter lists it for players with the Storyteller flag, on a new page in their Menu. Taking the Storyteller role takes it off.
 - "Need a ruling" on a Chapter asks staff to rule on something. Staff answer from Admin → Rulings, and the ruling appears in the Chapter.
 - "Give me an idea" on the form for starting a Chapter fills in a random idea that staff wrote under Admin → Chapter ideas.
+- A character spotlight on the front page: a different character played lately each day, with a line from their profile. It can be switched off in Game settings.
 
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 

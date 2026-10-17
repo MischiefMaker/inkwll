@@ -79,6 +79,12 @@
   </div>
   <p class="muted">When this is off, only staff can see it. Players can still message "the player of" a character, who stays anonymous.</p>
 
+  <div class="field field--checkbox">
+    <%= form.check_box :character_spotlight %>
+    <%= form.label :character_spotlight, "Show a character spotlight on the front page" %>
+  </div>
+  <p class="muted">One character a day, picked at random from those played in the last month, with a line from their profile.</p>
+
   <p class="muted">SOUL, Inklings, Grimoire, the wiki and guest chat are switched on and off under Features.</p>
 
   <h2 class="section-title"><%= term(:scene, count: 2) %></h2>

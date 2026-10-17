@@ -1,0 +1,14 @@
+<%# One character a day, picked at random from those played lately. %>
+<% if CharacterSpotlight.enabled? && (character = CharacterSpotlight.today) %>
+  <section class="character-spotlight">
+    <h2 class="section-title character-spotlight__title">Character spotlight</h2>
+    <%= link_to character_path(character), class: "character-spotlight__link" do %>
+      <%= character_icon(character, size: :portrait) %>
+      <%= tag.span character.name, **character_name_options(character, "character-spotlight__name") %>
+    <% end %>
+    <% if (line = CharacterSpotlight.line_for(character)) %>
+      <p class="text character-spotlight__line"><%= line %></p>
+    <% end %>
+    <p class="muted character-spotlight__where">In <%= link_to character.room.name, room_path(character.room) %></p>
+  </section>
+<% end %>

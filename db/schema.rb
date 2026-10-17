@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_050000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_060000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -565,6 +565,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_050000) do
     t.integer "crafting_minor_cost", default: 200, null: false
     t.integer "crafting_major_cost", default: 600, null: false
     t.integer "crafting_legendary_cost", default: 2000, null: false
+    t.boolean "character_spotlight", default: true, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
