@@ -1,0 +1,8 @@
+<% content_for :title, "Waiting for staff · #{game_name}" %>
+<% content_for :hide_ooc_sidebar, true %>
+
+<div class="account-waiting">
+  <h1 class="page-title">Thanks for signing up, <%= current_account.display_name %></h1>
+  <p class="text">Staff look at every new player before they can take part in <%= game_name %>. You'll be able to make your first character as soon as they approve your account. Log in again later to check.</p>
+  <%= button_to "Log out", session_path, method: :delete, class: "button button--quiet account-waiting__log-out" %>
+</div>

@@ -3,6 +3,7 @@
 # password changes). Staff can also make a link for a player who has no
 # email (Admin::AccountsController#reset_link); that one works for a day.
 class PasswordsController < ApplicationController
+  skip_before_action :hold_unapproved_player
   allow_unauthenticated_access
   skip_before_action :enforce_game_lock # staff locked out can still reset a password
   before_action :set_account_by_token, only: %i[ edit update ]

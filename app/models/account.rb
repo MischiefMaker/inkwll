@@ -98,6 +98,12 @@ class Account < ApplicationRecord
 
   def archived? = archived_at.present?
 
+  # New players wait for staff approval when the game asks for it
+  # (Admin → Game settings). Staff never wait.
+  def awaiting_approval? = super && !staff? && !system?
+
+  scope :waiting_for_approval, -> { where(awaiting_approval: true, system: false, archived_at: nil, staff_level: "player") }
+
   # Accounts are archived, not deleted. The player can't log in, and their
   # characters are retired, or go on the roster if they asked for that.
   def archive!

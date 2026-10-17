@@ -17,6 +17,7 @@ module StaffWaiting
       items << Item.new(key: :grimoire, label: "Spell proposals", count: Grimoire::Proposal.pending.count) if Grimoire.enabled?
       items << Item.new(key: :factions, label: "#{Term[:faction]} requests", count: FactionRequest.pending.count) if Faction.enabled?
     end
+    items << Item.new(key: :players, label: "New players", count: Account.waiting_for_approval.count) if account.can?(:manage_staff) && GameSetting.current.player_approval_required?
     items << Item.new(key: :reports, label: "Reports", count: Report.unresolved.count) if account.can?(:handle_reports)
     items
   end

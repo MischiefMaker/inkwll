@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :hold_unapproved_player
   allow_unauthenticated_access only: %i[ new create ]
   # Staff log in here while the game is locked, and anyone can log out.
   skip_before_action :enforce_game_lock

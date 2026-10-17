@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_account, :current_character, :guest_chat_open?
   before_action :note_last_seen
+  # New players waiting for staff approval only see the waiting page.
+  before_action :hold_unapproved_player
   # While the game is locked, only staff get in. Runs before the login check so
   # guests see the locked page too.
   before_action :enforce_game_lock, prepend: true
@@ -45,9 +47,14 @@ class ApplicationController < ActionController::Base
     # OocMessagesController), just as opening the chat page does.
     def guest_chat_open?
       return @guest_chat_open if defined?(@guest_chat_open)
-      @guest_chat_open = GameSetting.current.guest_chat? && !GameSetting.current.locked? && !Ban.for(account: nil, ip: request.remote_ip)
+      settings = GameSetting.current
+      @guest_chat_open = settings.guest_chat? && !settings.private_game? && !settings.locked? && !Ban.for(account: nil, ip: request.remote_ip)
       session[:guest_chat_opened_at] ||= Time.current.to_i if @guest_chat_open
       @guest_chat_open
+    end
+
+    def hold_unapproved_player
+      redirect_to account_waiting_path if current_account&.awaiting_approval?
     end
 
     def enforce_game_lock

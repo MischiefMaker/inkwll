@@ -103,6 +103,7 @@ Rails.application.routes.draw do
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"
   resources :alerts, only: :index
+  resource :account_waiting, only: :show, path: "waiting"
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions
     resources :requests, only: %i[ create update destroy ], module: :factions
@@ -163,6 +164,7 @@ Rails.application.routes.draw do
     end
     resource :character_batch, only: :create
     resource :account_batch, only: :create
+    resources :account_approvals, only: %i[ update destroy ]
     resources :characters, only: %i[ index update ] do
       member do
         post :retire

@@ -33,6 +33,18 @@
   <p class="muted">When this is off, email is optional at sign-up. Players who leave it blank can't reset their own password or get email notifications (alerts and browser pop-ups still work). Staff can make them a password reset link from Players and staff. Players can add an email later under Notifications.</p>
 
   <div class="field field--checkbox">
+    <%= form.check_box :private_game %>
+    <%= form.label :private_game, "Private Game: you must log in to see anything" %>
+  </div>
+  <p class="muted">Visitors who aren't logged in go straight to the log-in page, with a link to sign up. They can't preview the game or use the OOC Chat.</p>
+
+  <div class="field field--checkbox">
+    <%= form.check_box :player_approval_required %>
+    <%= form.label :player_approval_required, "New players need staff approval before they can take part" %>
+  </div>
+  <p class="muted">A new player can log in, but only sees a "waiting for staff" page until staff approve them under Players and staff. Players who already have an account aren't affected.</p>
+
+  <div class="field field--checkbox">
     <%= form.check_box :approval_required %>
     <%= form.label :approval_required, "Characters need staff approval before they can play" %>
   </div>

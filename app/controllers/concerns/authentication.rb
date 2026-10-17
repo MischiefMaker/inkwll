@@ -58,6 +58,9 @@ module Authentication
         end_banned_session
       elsif (ban = Ban.for(account: nil, ip: request.remote_ip))
         redirect_to new_session_path, alert: ban_message(ban)
+      elsif GameSetting.current.private_game?
+        # A Private Game has no guests: everything needs logging in.
+        request_authentication
       else
         @previewing = true
       end

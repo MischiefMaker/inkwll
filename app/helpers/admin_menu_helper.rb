@@ -61,7 +61,7 @@ module AdminMenuHelper
     end
 
     if current_account.can?(:manage_staff)
-      groups["Players and characters"] << admin_link("Players and staff", admin_accounts_path, %w[ accounts ])
+      groups["Players and characters"] << admin_link("Players and staff", admin_accounts_path, %w[ accounts ], waiting[:players] || 0)
     end
     if current_account.can?(:review_apps)
       groups["Players and characters"] << admin_link("Name changes", admin_name_changes_path, %w[ name_changes ])
@@ -118,6 +118,7 @@ module AdminMenuHelper
     when :grimoire then admin_grimoire_path
     when :factions then factions_path
     when :reports then admin_reports_path
+    when :players then admin_accounts_path
     end
   end
 

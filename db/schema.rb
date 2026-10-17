@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_220000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
     t.datetime "muted_until"
     t.boolean "system", default: false, null: false
     t.datetime "archived_at"
+    t.boolean "awaiting_approval", default: false, null: false
     t.index "lower((email)::text)", name: "index_accounts_on_lower_email", unique: true, where: "(email IS NOT NULL)"
     t.index ["active_character_id"], name: "index_accounts_on_active_character_id"
     t.index ["username"], name: "index_accounts_on_username", unique: true
@@ -433,6 +434,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_210000) do
     t.string "chapter_tabs_side", default: "top", null: false
     t.boolean "domains_enabled", default: false, null: false
     t.integer "domain_tax_max_percent", default: 50, null: false
+    t.boolean "private_game", default: false, null: false
+    t.boolean "player_approval_required", default: false, null: false
   end
 
   create_table "grimoire_branches", force: :cascade do |t|
