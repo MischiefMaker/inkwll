@@ -1,7 +1,8 @@
 # Economy (Version 2.0, Theme 9)
 
 **Status: Agreed** with the owner on 2026-10-17 (answers at the end and in
-`decisions.md`). Nothing here is built. It waits for factions (Theme 4) and
+`decisions.md`), except "Factions taxing factions", which is still
+[Proposed]. Nothing here is built. It waits for factions (Theme 4) and
 the owner's go.
 
 Economy comes first and Crafting after it (owner, 2026-10-17). Crafting gets
@@ -93,6 +94,31 @@ without taxes. When it's on, each faction's managers can set:
 Staff can set the highest rate a faction may charge. A member who can't pay
 their dues isn't pushed into debt. The payment is skipped, the managers see
 it on the Bank's list, and what happens next is up to the story.
+
+### Factions taxing factions [Proposed]
+
+The owner wants factions to tax each other too, like a king taxing his lords,
+who in turn tax their subjects (owner, 2026-10-17). Claude's proposal:
+
+- **Under another faction.** Staff can set a faction as being under one
+  other faction (its overlord), so the Lords of the North sit under the
+  Crown. A chain can be as deep as the game likes (Crown, then a duchy, then
+  a barony), but it can't loop back on itself.
+- **Tribute.** The overlord's Bank managers can set taxes on the factions
+  under it, the same two kinds as for members: a percentage of the tax the
+  lower faction collects, and fixed dues on a schedule. Both come out of the
+  lower faction's Bank into the overlord's Bank.
+- **It flows upward.** A subject pays their lord's tax, then the lord's Bank
+  pays the Crown its share as that money arrives. Each step is its own line
+  on both ledgers, so anyone in a faction can follow where its money went.
+- **Each faction only taxes the level directly below it.** The Crown doesn't
+  tax the barony's members itself; it taxes the duchy, which taxes the
+  barony. The same staff limit on rates applies.
+- **When a Bank can't pay,** the tribute is skipped, not part-paid, and both
+  factions' managers see it, as with members' dues.
+- **Seeing it:** each faction's Bank tab lists the faction above it and the
+  ones below it. A secret faction's link to its overlord is only shown to
+  members of the two factions.
 
 ## Scheduled payments, in detail
 
