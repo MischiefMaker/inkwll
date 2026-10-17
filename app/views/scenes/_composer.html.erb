@@ -3,7 +3,8 @@
     character, so switching characters gives a fresh box. %>
 <div id="composer_<%= scene.id %>_<%= participant.character_id %>" class="composer" data-turbo-permanent>
   <%= form_with url: scene_poses_path(scene), scope: :pose, class: "form",
-        data: { controller: "composer", action: "turbo:submit-end->composer#reset keydown->composer#shortcut submit->composer#check" } do |form| %>
+        data: { controller: "composer draft", draft_key_value: "passage-#{scene.id}-#{participant.character_id}",
+                action: "turbo:submit-end->composer#reset turbo:submit-end->draft#posted keydown->composer#shortcut submit->composer#check" } do |form| %>
     <%= hidden_field_tag :post_anyway, "0", data: { composer_target: "anyway" } %>
     <% kinds = scene.postable_kinds(participant) %>
     <fieldset class="composer__kinds">
@@ -25,7 +26,7 @@
                   npc: "Write as the NPC (played by #{participant.character.name})",
                   narration: "Write narration: set the scene or describe what happens",
                   ooc: "Out of character (brb, timing, questions). It doesn't take a turn." } %>
-    <%= form.text_area :body, rows: 3, required: true, data: { composer_target: "body" } %>
+    <%= form.text_area :body, rows: 3, required: true, data: { composer_target: "body", draft_target: "field", action: "input->draft#save" } %>
     <div class="composer__warning" hidden data-composer-target="warning">
       <span class="composer__warning-text" data-composer-target="warningText"></span>
       <button type="button" class="button" data-action="composer#postAnyway">Post anyway</button>

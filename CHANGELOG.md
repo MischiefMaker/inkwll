@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Quick wins (Version 2.0 branch)
+
+- Drafts: what you're writing in a Passage, a Message, a forum post, a wiki page or an Inkling is kept in your browser as you type, so it comes back if the page closes or reloads. Posting clears it.
+
 ## 2026-10-17 — Factions (Version 2.0 branch)
 
 - Factions: families, guilds and clubs, and a character can be in several. Switch them on under Admin → Features, and make them under Admin → Factions.

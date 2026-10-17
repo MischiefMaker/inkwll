@@ -6,6 +6,12 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 quick wins, decided by Claude
+
+The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0` branch, doing as much as possible without asking and recording every choice made without them. Each line below is Claude's call; the owner can change any of it.
+
+- **Drafts** are kept in the player's own browser, not on the server, so they don't follow a player to another device. They cover the Passage box, Messages, forum threads and replies, wiki pages and Inklings. An empty box gets its draft back on its own; a box that already has text (editing a wiki page) offers it with "Use it" or "Throw it away". Posting clears the draft, and drafts older than two weeks are forgotten.
+
 ## 2026-10-17: Factions (owner)
 
 - Factions are built first from Version 2.0, on a long-lived `v2.0` branch that stays off the live game until the owner says so. The rest of the roadmap follows on the same branch.

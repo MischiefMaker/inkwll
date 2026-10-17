@@ -36,10 +36,10 @@
 
 <% if @reply %>
   <h2 class="section-title">Reply</h2>
-  <%= form_with model: @reply, url: forum_topic_forum_posts_path(@topic), class: "form forum-reply-form" do |form| %>
+  <%= form_with model: @reply, url: forum_topic_forum_posts_path(@topic), class: "form forum-reply-form", data: { controller: "draft", draft_key_value: "reply-#{@topic.id}", action: "turbo:submit-end->draft#posted" } do |form| %>
     <div class="field">
       <%= form.label :body, "Your reply", class: "visually-hidden" %>
-      <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000 %>
+      <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000, data: { draft_target: "field", action: "input->draft#save" } %>
       <small class="hint">Markdown works here. It's posted under your player name.</small>
     </div>
     <%= form.submit "Post reply", class: "button" %>

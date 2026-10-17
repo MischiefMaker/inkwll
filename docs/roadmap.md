@@ -40,7 +40,7 @@ Claude grouped every note below into themes and suggested this order, and the ow
 The order goes from small, everyday improvements to big new systems. The early themes reuse things Inkwll already has, so they are quicker and safer. The later ones need new design talks first.
 
 **Theme 1: Quick wins.** Small changes that make every day smoother. Each one stands alone, so any can be done first.
-- Saving drafts as people write. Nothing is lost if the page closes.
+- Saving drafts as people write. Nothing is lost if the page closes. **Built on `v2.0`.**
 - Mass actions on the admin lists. Tick several characters, then Roster, Archive or Retire them at once.
 - Chapter tabs position (top or left side).
 - Private Game option, with the optional approval step for new players.

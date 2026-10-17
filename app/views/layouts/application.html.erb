@@ -8,6 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <% if current_account %><meta name="inkwll-account" content="<%= current_account.id %>"><% end %>
     <%# When a page is refreshed live (e.g. someone enters the room), update it in place. %>
     <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
 

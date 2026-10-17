@@ -2,7 +2,7 @@
 
 <div class="inkling-new">
   <h1 class="page-title">Start an Inkling<%= " for #{@character.name}" %></h1>
-  <%= form_with model: @inkling, url: inklings_path, class: "form inkling-new__form" do |form| %>
+  <%= form_with model: @inkling, url: inklings_path, class: "form inkling-new__form", data: { controller: "draft", draft_key_value: "inkling-new", action: "turbo:submit-end->draft#posted" } do |form| %>
     <% mine = current_account.characters.active.where(status: "approved").order(:name) %>
     <% if @character.account_id == current_account.id && mine.size > 1 %>
       <div class="field">
@@ -27,7 +27,7 @@
     </div>
     <div class="field">
       <%= form.label :body, "Opening entry" %>
-      <%= form.text_area :body, rows: 8, maxlength: 20_000 %>
+      <%= form.text_area :body, rows: 8, maxlength: 20_000, data: { draft_target: "field", action: "input->draft#save" } %>
       <% if @character.account_id == current_account.id %>
         <small class="hint">Only you see this until you share it or send it to staff.</small>
       <% else %>

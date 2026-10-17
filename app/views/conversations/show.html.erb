@@ -22,9 +22,10 @@
   </div>
 
   <% if @member.active? %>
-    <%= form_with url: conversation_messages_path(@conversation), scope: :message, id: "reply", class: "form conversation__reply" do |form| %>
+    <%= form_with url: conversation_messages_path(@conversation), scope: :message, id: "reply", class: "form conversation__reply",
+          data: { controller: "draft", draft_key_value: "message-#{@conversation.id}", action: "turbo:submit-end->draft#posted" } do |form| %>
       <%= form.label :body, "Reply", class: "visually-hidden" %>
-      <%= form.text_area :body, rows: 4, required: true, placeholder: "Write a reply…" %>
+      <%= form.text_area :body, rows: 4, required: true, placeholder: "Write a reply…", data: { draft_target: "field", action: "input->draft#save" } %>
       <div class="conversation__actions">
         <%= form.submit "Send", class: "button" %>
       </div>

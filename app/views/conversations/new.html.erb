@@ -2,7 +2,7 @@
 
 <h1 class="page-title">New message</h1>
 
-<%= form_with url: conversations_path, class: "form" do |form| %>
+<%= form_with url: conversations_path, class: "form", data: { controller: "draft", draft_key_value: "message-new", action: "turbo:submit-end->draft#posted" } do |form| %>
   <div class="field">
     <%= form.label :to, "To" %>
     <%= form.text_field :to, value: @to, required: true, placeholder: "Player names or character names, separated by commas" %>
@@ -18,7 +18,7 @@
   </div>
   <div class="field">
     <%= form.label :body, "Message" %>
-    <%= form.text_area :body, value: params[:body], rows: 6, required: true %>
+    <%= form.text_area :body, value: params[:body], rows: 6, required: true, data: { draft_target: "field", action: "input->draft#save" } %>
   </div>
   <%= form.submit "Send", class: "button" %>
 <% end %>

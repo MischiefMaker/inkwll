@@ -96,9 +96,9 @@
   <% if writable || (owner && @inkling.open?) %>
     <section class="inkling__write">
       <h2 class="section-title">Add to it</h2>
-      <%= form_with url: inkling_entries_path(@inkling), class: "form inkling__write-form" do |form| %>
+      <%= form_with url: inkling_entries_path(@inkling), class: "form inkling__write-form", data: { controller: "draft", draft_key_value: "inkling-#{@inkling.id}", action: "turbo:submit-end->draft#posted" } do |form| %>
         <%= form.label :body, "Entry", class: "visually-hidden" %>
-        <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000 %>
+        <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000, data: { draft_target: "field", action: "input->draft#save" } %>
         <fieldset class="field inkling__kinds">
           <legend class="visually-hidden">Who sees it</legend>
           <% if writable %>
