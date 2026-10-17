@@ -6,6 +6,13 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Version 2.0 wiki (Theme 6), decided by Claude
+
+The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
+
+- **ListPages, the Wikidot way:** the existing `{{pages}}` list grew Wikidot's most useful ListPages options rather than becoming a new list: `tags="+lore -secret"` (+ must have, - must not have, plain words any of them), `prefix="House "` (titles starting with those words, standing in for Wikidot's page categories, which Inkwll doesn't have), `order=` title, newest, oldest, updated or random, `show=` list, summary (each page's first paragraph) or table (title, tags, last updated), and `limit=`. Wikidot's custom templates for each item (`%%title%%` and so on) were left out to keep it simple. Two more Wikidot modules came with it: `{{tags}}` (a tag cloud, bigger the more pages have the tag) and `{{backlinks}}` (pages linking to this one, also through its old names).
+- **Infoboxes:** the roadmap said the style still needed choosing, so Claude picked a Wikipedia-like default that games can restyle with the CSS classes in `css-classes.md`: a box on the right of the page on wide screens, full width at the top on phones, with the page's title in a coloured bar. It's written between a `{{infobox}}` line and a `{{/infobox}}` line, one `Label: value` per line, plus `## Heading` lines across the box, pictures (`![words](address)`) and plain lines. `{{infobox title="..."}}` changes the bar's title. Values take the same Markdown and `[[links]]` as the rest of the page, and are cleaned the same way. Filling an infobox automatically from a character's profile was left for later.
+
 ## 2026-10-17: Version 2.0 world history and events (Theme 5), decided by Claude
 
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.

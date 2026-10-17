@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — The wiki (Version 2.0 branch)
+
+- Wiki page lists can now filter by several tags, by the start of the title, sort by newest or recently updated, and show each page's first paragraph or a table. New `{{tags}}` and `{{backlinks}}` lists too.
+- Wiki infoboxes: a box of facts at the side of a page, written between `{{infobox}}` and `{{/infobox}}`.
+
 ## 2026-10-17 — The world's history and events (Version 2.0 branch)
 
 - World timeline: staff mark finished Chapters as world events, and a World timeline page lists them in the game's own date order with who was there.

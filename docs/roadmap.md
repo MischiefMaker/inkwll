@@ -76,8 +76,8 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Event calendar with sign-ups. A Chapter opens when the event starts. **Built on `v2.0`.**
 
 **Theme 6: The wiki.**
-- More Wiki features from Wikidot, starting with ListPages.
-- Wiki Infoboxes. The style still needs choosing.
+- More Wiki features from Wikidot, starting with ListPages. **Built on `v2.0`** (ListPages options, tag cloud, backlinks).
+- Wiki Infoboxes. The style still needs choosing. **Built on `v2.0`** with a Wikipedia-like default style games can change.
 
 **Theme 7: Running games (Wells) and the look.**
 - Destroy a Well, with a restorable JSON backup. Steps 12c and 12d of the current plan come first.

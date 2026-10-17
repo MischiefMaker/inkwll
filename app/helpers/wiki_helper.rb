@@ -9,15 +9,36 @@
 #
 # A line on its own like {{characters group="Ravens"}} shows a live list from
 # the game. Each list is drawn by a partial in app/views/wiki_pages/embeds.
+#
+# An infobox is a boxed summary of facts beside the page, written between
+# {{infobox}} and {{/infobox}} lines, one "Label: value" per line.
 module WikiHelper
   EMBED_LINE = /\A\{\{\s*(\w+)(.*?)\}\}\s*\z/
-  EMBEDS = %w[ characters character manuscripts settings pages ].freeze
+  EMBEDS = %w[ characters character manuscripts settings pages tags backlinks ].freeze
+  INFOBOX_START = /\A\{\{\s*infobox\b(.*?)\}\}\s*\z/i
+  INFOBOX_END = /\A\{\{\s*\/\s*infobox\s*\}\}\s*\z/i
+  INFOBOX_ROWS = 40
 
-  def render_wiki(text)
+  # page: the wiki page being shown, for lists about it such as {{backlinks}}.
+  def render_wiki(text, page: nil)
+    @wiki_page = page
     chunks = []
     markdown = []
+    infobox = nil
     text.to_s.dup.force_encoding("UTF-8").scrub.each_line do |line|
-      if (match = line.strip.match(EMBED_LINE))
+      stripped = line.strip
+      if infobox
+        if stripped.match?(INFOBOX_END)
+          chunks << wiki_infobox(*infobox)
+          infobox = nil
+        else
+          infobox.last << stripped
+        end
+      elsif (match = stripped.match(INFOBOX_START))
+        chunks << wiki_markdown(markdown.join) if markdown.any?
+        markdown = []
+        infobox = [ wiki_embed_options(match[1]), [] ]
+      elsif (match = stripped.match(EMBED_LINE))
         chunks << wiki_markdown(markdown.join) if markdown.any?
         markdown = []
         chunks << wiki_embed(match[1].downcase, wiki_embed_options(match[2]))
@@ -25,8 +46,19 @@ module WikiHelper
         markdown << line
       end
     end
+    chunks << wiki_infobox(*infobox) if infobox
     chunks << wiki_markdown(markdown.join) if markdown.any?
     tag.div safe_join(chunks), class: "wiki-body"
+  end
+
+  # A page's first paragraph as plain text, for lists of pages.
+  def wiki_summary(page, length: 200)
+    line = page.body.to_s.each_line.map(&:strip).find do |text|
+      text.present? && !text.start_with?("#", "{{", "|", "!", "---", ">") && !text.match?(/\A[-*]\s/)
+    end
+    return unless line
+    line = line.gsub(/\[\[([^\]|]{1,100})(?:\|([^\]]{1,100}))?\]\]/) { ($2 || $1).strip }
+    strip_tags(Commonmarker.to_html(line, options: { render: { unsafe: false } })).squish.truncate(length, separator: " ")
   end
 
   private
@@ -78,7 +110,32 @@ module WikiHelper
       unless EMBEDS.include?(name)
         return tag.p("Unknown list: {{#{name}}}", class: "wiki-embed wiki-embed--unknown muted")
       end
-      tag.div render("wiki_pages/embeds/#{name}", options: options), class: "wiki-embed wiki-embed--#{name}"
+      tag.div render("wiki_pages/embeds/#{name}", options: options, page: @wiki_page), class: "wiki-embed wiki-embed--#{name}"
+    end
+
+    # Each line is "Label: value", a "## Heading" across the box, a picture
+    # (![words](address)) or plain words across the box. Values can use the
+    # same Markdown and [[links]] as the rest of the page.
+    def wiki_infobox(options, lines)
+      title = options[:title].is_a?(String) ? options[:title] : @wiki_page&.title
+      rows = lines.compact_blank.first(INFOBOX_ROWS).map do |line|
+        if line.start_with?("![")
+          [ :picture, wiki_inline(line) ]
+        elsif (heading = line[/\A#+\s*(.+)\z/, 1])
+          [ :heading, heading ]
+        elsif (match = line.match(/\A([^:]{1,40}):\s*(.*)\z/)) && !match[1].include?("http")
+          [ :fact, match[1].strip, wiki_inline(match[2]) ]
+        else
+          [ :text, wiki_inline(line) ]
+        end
+      end
+      render "wiki_pages/infobox", title: title, rows: rows
+    end
+
+    # A bit of Markdown without the paragraph around it.
+    def wiki_inline(text)
+      html = wiki_markdown(text).to_str.strip.delete_prefix("<p>").delete_suffix("</p>")
+      sanitize(html, tags: WIKI_TAGS, attributes: %w[ href title alt src ])
     end
 
     def wiki_limit(options, default: 20)

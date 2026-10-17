@@ -1,0 +1,12 @@
+<%# {{tags}}: every tag on the wiki, bigger the more pages have it, like Wikidot's tag cloud. %>
+<% counts = WikiPage.pluck(:tags).flatten.tally.sort_by { |tag, _| tag }.first(wiki_limit(options, default: 100)) %>
+<% if counts.any? %>
+  <% most = counts.map(&:last).max %>
+  <p class="wiki-tag-cloud">
+    <% counts.each do |tag, count| %>
+      <%= link_to tag, wiki_pages_path(tag: tag), class: "wiki-tag-cloud__tag wiki-tag-cloud__tag--#{(count * 4.0 / most).ceil}", title: pluralize(count, "page") %>
+    <% end %>
+  </p>
+<% else %>
+  <p class="muted">No tags yet.</p>
+<% end %>

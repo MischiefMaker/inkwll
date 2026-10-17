@@ -1,0 +1,20 @@
+<%# A boxed summary of facts at the side of a wiki page: {{infobox}} ... {{/infobox}}. %>
+<aside class="wiki-infobox">
+  <% if title.present? %><p class="wiki-infobox__title"><%= title %></p><% end %>
+  <table class="wiki-infobox__table">
+    <tbody>
+      <% rows.each do |kind, first, second| %>
+        <% case kind %>
+        <% when :picture %>
+          <tr class="wiki-infobox__row wiki-infobox__row--picture"><td class="wiki-infobox__picture" colspan="2"><%= first %></td></tr>
+        <% when :heading %>
+          <tr class="wiki-infobox__row wiki-infobox__row--heading"><th class="wiki-infobox__heading" colspan="2" scope="colgroup"><%= first %></th></tr>
+        <% when :fact %>
+          <tr class="wiki-infobox__row"><th class="wiki-infobox__label" scope="row"><%= first %></th><td class="wiki-infobox__value"><%= second %></td></tr>
+        <% else %>
+          <tr class="wiki-infobox__row wiki-infobox__row--text"><td class="wiki-infobox__text" colspan="2"><%= first %></td></tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</aside>

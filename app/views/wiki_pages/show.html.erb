@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <%= render_wiki(@page.body) %>
+  <%= render_wiki(@page.body, page: @page) %>
 
   <footer class="muted wiki-page__footer">
     <% if @page.tags.any? %>

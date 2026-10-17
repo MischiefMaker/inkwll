@@ -1276,6 +1276,26 @@ a.character-name--grouped, button.character-name--grouped { color: var(--group-c
 .wiki-characters__name, .wiki-character__name { font-weight: 600; }
 .wiki-character { display: inline-flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.75rem; border: 1px solid var(--color-border); background: var(--color-surface); }
 .wiki-manuscripts, .wiki-settings, .wiki-pages-list { padding-left: 1.2rem; }
+.wiki-pages-list--summary { list-style: none; padding-left: 0; display: grid; gap: 0.6rem; }
+.wiki-pages-list__summary { margin: 0.15rem 0 0; font-size: 0.9rem; color: var(--color-muted, inherit); }
+.wiki-tag-cloud { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.75rem; }
+.wiki-tag-cloud__tag--1 { font-size: 0.85rem; }
+.wiki-tag-cloud__tag--2 { font-size: 1rem; }
+.wiki-tag-cloud__tag--3 { font-size: 1.2rem; }
+.wiki-tag-cloud__tag--4 { font-size: 1.45rem; font-weight: 600; }
+/* An infobox: a box of facts at the side of a wiki page, beside the text on wide screens. */
+.wiki-infobox { float: right; clear: right; width: min(20rem, 100%); margin: 0 0 1rem 1.25rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); font-size: 0.9rem; overflow: hidden; }
+.wiki-infobox__title { margin: 0; padding: 0.5rem 0.75rem; background: var(--color-accent); color: var(--color-accent-text); font-weight: 600; text-align: center; }
+.wiki-body .wiki-infobox__table { display: table; width: 100%; border-collapse: collapse; }
+.wiki-body .wiki-infobox th, .wiki-body .wiki-infobox td { border: 0; }
+.wiki-infobox__row + .wiki-infobox__row { border-top: 1px solid var(--color-border); }
+.wiki-infobox__label { width: 40%; padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; font-weight: 600; }
+.wiki-infobox__value, .wiki-infobox__text { padding: 0.35rem 0.6rem; vertical-align: top; }
+.wiki-infobox__heading { padding: 0.35rem 0.6rem; text-align: center; background: var(--color-border); }
+.wiki-infobox__picture { padding: 0.5rem; text-align: center; }
+.wiki-infobox__picture img { max-width: 100%; height: auto; }
+@media (max-width: 40rem) { .wiki-infobox { float: none; width: 100%; margin: 0 0 1rem; } }
+.wiki-body::after { content: ""; display: table; clear: both; }
 .wiki-manuscripts__meta, .wiki-settings__area { font-size: 0.85rem; margin-left: 0.35rem; }
 .wiki-form__body { font-family: ui-monospace, monospace; }
 .wiki-form__tabs { display: flex; gap: 0.25rem; margin-bottom: -1px; }

@@ -1,0 +1,20 @@
+<%# {{backlinks}}: the pages that link to this one with [[...]]. %>
+<% if page %>
+  <%# A rough search first (any spacing or punctuation), then each match checked properly. %>
+  <% names = [ page.title, *page.old_slugs ].map { |name| WikiPage.sanitize_sql_like(name.tr("-", " ")).split.join("%") } %>
+  <% candidates = WikiPage.where.not(id: page.id).where(names.map { "body ILIKE ?" }.join(" OR "), *names.map { |name| "%[[%#{name}%" }) %>
+  <% linking = candidates.order(:title).limit(200).select do |other|
+       other.body.scan(/\[\[([^\]|]{1,100})/).flatten.any? { |name| WikiPage.slug_for(name).in?([ page.slug, *page.old_slugs ]) }
+     end %>
+  <% if linking.any? %>
+    <ul class="wiki-pages-list wiki-backlinks">
+      <% linking.first(wiki_limit(options, default: 100)).each do |other| %>
+        <li class="wiki-pages-list__item"><%= link_to other.title, wiki_page_path(other), class: "wiki-pages-list__title" %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="muted">No pages link here yet.</p>
+  <% end %>
+<% else %>
+  <p class="muted">The pages that link here show once this page is saved.</p>
+<% end %>

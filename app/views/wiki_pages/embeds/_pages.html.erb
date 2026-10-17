@@ -1,13 +1,52 @@
-<%# {{pages}} or {{pages tag="lore"}}: a list of wiki pages. %>
-<% pages = WikiPage.order(:title) %>
+<%# {{pages}}: a list of wiki pages, like Wikidot's ListPages.
+    tag="lore"            pages with that tag
+    tags="+lore -secret"  +must have, -must not have, plain words: any of them
+    prefix="House "       titles starting with these words
+    order="title"         or newest, oldest, updated, random
+    show="list"           or summary (with each page's first paragraph) or table
+    limit=20 %>
+<% pages = WikiPage.all %>
 <% pages = pages.tagged(options[:tag]) if options[:tag].is_a?(String) %>
-<% pages = pages.limit(wiki_limit(options, default: 100)) %>
-<% if pages.any? %>
-  <ul class="wiki-pages-list">
-    <% pages.each do |page| %>
-      <li class="wiki-pages-list__item"><%= link_to page.title, wiki_page_path(page), class: "wiki-pages-list__title" %></li>
+<% if options[:tags].is_a?(String) %>
+  <% words = options[:tags].downcase.split.first(10) %>
+  <% words.select { |w| w.start_with?("+") }.each { |w| pages = pages.tagged(w.delete_prefix("+")) } %>
+  <% words.select { |w| w.start_with?("-") }.each { |w| pages = pages.where.not("? = ANY(tags)", w.delete_prefix("-")) } %>
+  <% any = words.reject { |w| w.start_with?("+", "-") } %>
+  <% pages = pages.where("tags && ARRAY[?]::varchar[]", any) if any.any? %>
+<% end %>
+<% pages = pages.where("title ILIKE ?", "#{WikiPage.sanitize_sql_like(options[:prefix])}%") if options[:prefix].is_a?(String) %>
+<% pages = case options[:order]
+           when "newest" then pages.order(created_at: :desc)
+           when "oldest" then pages.order(:created_at)
+           when "updated" then pages.order(updated_at: :desc)
+           when "random" then pages.order(Arel.sql("RANDOM()"))
+           else pages.order(:title)
+           end %>
+<% pages = pages.where.not(id: page.id) if page && options[:order] == "random" %>
+<% pages = pages.limit(wiki_limit(options, default: 100)).to_a %>
+<% show = options[:show].to_s %>
+<% if pages.empty? %>
+  <p class="muted">No pages to show.</p>
+<% elsif show == "table" %>
+  <table class="table wiki-pages-table">
+    <thead class="table__head"><tr class="table__row"><th class="table__heading">Page</th><th class="table__heading">Tags</th><th class="table__heading">Updated</th></tr></thead>
+    <tbody class="table__body">
+      <% pages.each do |listed| %>
+        <tr class="table__row wiki-pages-table__row">
+          <td class="table__cell"><%= link_to listed.title, wiki_page_path(listed), class: "wiki-pages-list__title" %></td>
+          <td class="table__cell wiki-pages-table__tags"><%= safe_join(listed.tags.map { |t| link_to(t, wiki_pages_path(tag: t), class: "tag wiki__tag") }, " ") %></td>
+          <td class="table__cell wiki-pages-table__updated muted"><%= listed.updated_at.to_date.to_fs(:long) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <ul class="wiki-pages-list<%= " wiki-pages-list--summary" if show == "summary" %>">
+    <% pages.each do |listed| %>
+      <li class="wiki-pages-list__item">
+        <%= link_to listed.title, wiki_page_path(listed), class: "wiki-pages-list__title" %>
+        <% if show == "summary" && (summary = wiki_summary(listed)) %><p class="wiki-pages-list__summary"><%= summary %></p><% end %>
+      </li>
     <% end %>
   </ul>
-<% else %>
-  <p class="muted">No pages to show.</p>
 <% end %>

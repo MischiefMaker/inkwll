@@ -25,6 +25,12 @@
           <code>{{character name="Ash Ravenscroft"}}</code>,
           <code>{{manuscripts place="The Commons" label="Plot" limit=5}}</code>,
           <code>{{places area="Ravenhollow"}}</code>, <code>{{pages tag="lore"}}</code></li>
+        <li>Lists of pages: <code>{{pages tags="+lore -secret" order="updated" show="summary" limit=10}}</code>.
+          <code>tags</code>: <code>+</code> must have, <code>-</code> must not have, plain words any of them. <code>prefix="House "</code> for titles starting with those words.
+          <code>order</code>: title, newest, oldest, updated or random. <code>show</code>: list, summary or table.
+          Also <code>{{tags}}</code> (every tag) and <code>{{backlinks}}</code> (pages that link here).</li>
+        <li>An infobox, a box of facts at the side of the page: a line <code>{{infobox}}</code> (or <code>{{infobox title="Wren Ashdown"}}</code>),
+          then one <code>Label: value</code> per line, a picture <code>![Wren](https://…)</code> or a <code>## Heading</code>, and a line <code>{{/infobox}}</code> to end it.</li>
       </ul>
     </details>
   </div>
