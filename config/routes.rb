@@ -119,6 +119,7 @@ Rails.application.routes.draw do
   get "directory", to: "directory#index"
   get "my_chapters", to: "chapter_trackers#show"
   resources :alerts, only: :index
+  get "birthdays", to: "birthdays#index"
   resource :account_waiting, only: :show, path: "waiting"
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions

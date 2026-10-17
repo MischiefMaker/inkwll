@@ -46,7 +46,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Private Game option, with the optional approval step for new players. **Built on `v2.0`.**
 - Away notice. **Built on `v2.0`.**
 - New player badge. **Built on `v2.0`.**
-- Birthdays this month. Uses the birthdays and IC clock that already exist.
+- Birthdays this month. Uses the birthdays and IC clock that already exist. **Built on `v2.0`.**
 - Graveyard. A Deceased status beside Retired, and its own page.
 
 **Theme 2: Finding someone to RP with.** This theme serves the "fewer cliques" aim most directly, so it comes early.

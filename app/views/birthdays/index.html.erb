@@ -1,0 +1,27 @@
+<% content_for :title, "Birthdays · #{game_name}" %>
+
+<div class="birthdays">
+  <h1 class="page-title">Birthdays in <%= @today.strftime("%B") %></h1>
+  <p class="text muted birthdays__intro">By the game's own calendar, where today is <%= @today.strftime("%-d %B %Y") %>.</p>
+
+  <% if @birthdays.any? %>
+    <ul class="birthdays__list">
+      <% @birthdays.each do |date, character| %>
+        <% today = date.day == @today.day %>
+        <li class="birthdays__item<%= " birthdays__item--today" if today %><%= " birthdays__item--past" if date.day < @today.day %>">
+          <span class="birthdays__day"><%= date.day.ordinalize %></span>
+          <%= link_to character_path(character), class: "birthdays__link" do %>
+            <%= character_icon(character, size: :small) %>
+            <%= tag.span character.name, **character_name_options(character, "birthdays__name") %>
+          <% end %>
+          <% turning = @today.year - date.year %>
+          <% if turning.positive? %>
+            <span class="birthdays__age muted"><%= today ? "turns #{turning} today" : date.day < @today.day ? "turned #{turning}" : "turns #{turning}" %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">No birthdays this month.</p>
+  <% end %>
+</div>
