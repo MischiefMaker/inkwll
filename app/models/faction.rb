@@ -12,6 +12,7 @@
 class Faction < ApplicationRecord
   has_many :memberships, class_name: "FactionMembership", dependent: :delete_all
   has_many :characters, through: :memberships
+  has_many :requests, class_name: "FactionRequest", dependent: :delete_all
 
   normalizes :name, with: ->(n) { n.squish }
   validates :name, presence: true, length: { maximum: 60 }, uniqueness: { case_sensitive: false }

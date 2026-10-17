@@ -57,6 +57,52 @@
     <% end %>
   </section>
 
+  <% if @requests.any? %>
+    <section class="faction__requests">
+      <h2 class="section-title">Asking to join</h2>
+      <ul class="faction__request-list">
+        <% @requests.each do |request| %>
+          <li class="faction__request">
+            <%= link_to character_path(request.character), class: "faction__member-link" do %>
+              <%= character_icon(request.character, size: :small) %>
+              <%= tag.span request.character.name, **character_name_options(request.character, "faction__member-name") %>
+            <% end %>
+            <% if request.note %><span class="faction__request-note">"<%= request.note %>"</span><% end %>
+            <span class="faction__request-actions">
+              <%= button_to "Accept", faction_request_path(@faction, request), method: :patch, params: { decision: "accept" }, class: "button button--quiet faction__accept" %>
+              <%= button_to "Decline", faction_request_path(@faction, request), method: :patch, params: { decision: "decline" }, class: "button-link faction__decline" %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <% if @own_requests.any? || @askable.any? %>
+    <section class="faction__join">
+      <% @own_requests.each do |request| %>
+        <p class="text faction__join-waiting"><%= request.character.name %> asked to join and is waiting for an answer.
+          <%= button_to "Take it back", faction_request_path(@faction, request), method: :delete, class: "button-link faction__withdraw", form: { class: "faction__withdraw-form" } %></p>
+      <% end %>
+      <% if @askable.any? %>
+        <h2 class="section-title">Request to join</h2>
+        <%= form_with url: faction_requests_path(@faction), class: "form form--inline faction__join-form" do |form| %>
+          <% if @askable.size == 1 %>
+            <%= hidden_field_tag :character_id, @askable.first.id %>
+            <span class="faction__join-who">As <%= @askable.first.name %></span>
+          <% else %>
+            <%= form.label :character_id, "Character", class: "visually-hidden" %>
+            <%= form.select :character_id, @askable.map { |character| [ character.name, character.id ] } %>
+          <% end %>
+          <%= form.label :note, "A note for the heads", class: "visually-hidden" %>
+          <%= form.text_field :note, placeholder: "A note for the heads (optional)", maxlength: 500 %>
+          <%= form.submit "Request to join", class: "button button--quiet" %>
+        <% end %>
+        <p class="hint">The heads and staff get your request and can accept or decline it.</p>
+      <% end %>
+    </section>
+  <% end %>
+
   <% if @manager %>
     <section class="faction__add">
       <h2 class="section-title">Add a member</h2>

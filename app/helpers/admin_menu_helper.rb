@@ -30,6 +30,9 @@ module AdminMenuHelper
       if Inkling.enabled?
         groups["Waiting on staff"] << admin_link("Inklings", admin_inklings_path, %w[ inklings ], waiting[:inklings])
       end
+      if Faction.enabled?
+        groups["Waiting on staff"] << admin_link("#{term(:faction)} requests", factions_path, %w[], waiting[:factions])
+      end
       if Grimoire.enabled?
         groups["Game systems"] << admin_link("Grimoire", admin_grimoire_path, %w[ grimoire grimoire_branches grimoire_spells grimoire_proposals ], waiting[:grimoire])
       end
@@ -109,6 +112,7 @@ module AdminMenuHelper
     when :soul then admin_soul_reviews_path
     when :inklings then admin_inklings_path
     when :grimoire then admin_grimoire_path
+    when :factions then factions_path
     when :reports then admin_reports_path
     end
   end

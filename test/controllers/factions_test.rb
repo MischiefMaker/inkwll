@@ -202,4 +202,68 @@ class FactionsTest < ActionDispatch::IntegrationTest
     assert_select ".faction__staff-run", count: 0
     assert head.reload.head?
   end
+
+  test "an approved character asks to join; the head is alerted and accepts" do
+    @guild.memberships.create!(character: characters(:wren), head: true)
+    sign_in_as(accounts(:bob))
+    get faction_path(@guild)
+    assert_select ".faction__join-form"
+    post faction_requests_path(@guild), params: { character_id: characters(:sable).id, note: "I can dye cloth." }
+    request = @guild.requests.pending.find_by!(character: characters(:sable))
+    assert accounts(:alice).alerts.unread.exists?(kind: "faction_request", faction: @guild)
+    assert_equal 1, StaffWaiting.count(accounts(:scribe), :factions)
+
+    post faction_requests_path(@guild), params: { character_id: characters(:sable).id }
+    assert_equal 1, @guild.requests.pending.count
+
+    patch faction_request_path(@guild, request), params: { decision: "accept" }
+    assert request.reload.pending?
+
+    sign_in_as(accounts(:alice))
+    get faction_path(@guild)
+    assert_select ".faction__request-note", text: /dye cloth/
+    assert_not accounts(:alice).alerts.unread.exists?(kind: "faction_request")
+    patch faction_request_path(@guild, request), params: { decision: "accept" }
+    assert request.reload.accepted?
+    assert @guild.memberships.exists?(character: characters(:sable))
+    assert accounts(:bob).alerts.exists?(kind: "faction_accepted", faction: @guild)
+  end
+
+  test "staff can decline a request, and the player is told" do
+    sign_in_as(accounts(:bob))
+    post faction_requests_path(@guild), params: { character_id: characters(:sable).id }
+    request = @guild.requests.last
+
+    sign_in_as(accounts(:scribe))
+    patch faction_request_path(@guild, request), params: { decision: "decline" }
+    assert request.reload.declined?
+    assert_not @guild.memberships.exists?(character: characters(:sable))
+    assert accounts(:bob).alerts.exists?(kind: "faction_declined", faction: @guild)
+  end
+
+  test "only approved characters can ask, never for a secret faction, and never for someone else's character" do
+    GameSetting.current.update!(approval_required: true)
+    characters(:sable).update!(status: "draft")
+    sign_in_as(accounts(:bob))
+    get faction_path(@guild)
+    assert_select ".faction__join-form", count: 0
+    post faction_requests_path(@guild), params: { character_id: characters(:sable).id }
+    assert_empty @guild.requests
+
+    characters(:sable).update!(status: "approved")
+    @knives.memberships.create!(character: characters(:moth))
+    post faction_requests_path(@knives), params: { character_id: characters(:sable).id }
+    assert_response :not_found
+
+    post faction_requests_path(@guild), params: { character_id: characters(:wren).id }
+    assert_response :not_found
+    assert_empty @guild.requests
+  end
+
+  test "a player can take a request back" do
+    sign_in_as(accounts(:bob))
+    post faction_requests_path(@guild), params: { character_id: characters(:sable).id }
+    delete faction_request_path(@guild, @guild.requests.last)
+    assert_empty @guild.requests
+  end
 end

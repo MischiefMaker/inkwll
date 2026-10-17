@@ -103,6 +103,7 @@ Rails.application.routes.draw do
   resources :alerts, only: :index
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions
+    resources :requests, only: %i[ create update destroy ], module: :factions
   end
   resources :inklings, only: %i[ index new create show update ] do
     scope module: :inklings do

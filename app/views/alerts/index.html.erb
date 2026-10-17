@@ -31,6 +31,16 @@
                 Something new in an Inkling that's gone.
               <% end %>
             <% end %>
+            <% faction = alert.faction ? link_to(alert.faction.name, faction_path(alert.faction), class: "alerts__faction") : "a #{term(:faction).downcase} that's gone" %>
+            <% who = alert.character&.name || "Someone" %>
+            <% case alert.kind %>
+            <% when "faction_request" %>
+              <%= who %> asked to join <%= faction %>.
+            <% when "faction_accepted" %>
+              <%= who %> was accepted into <%= faction %>.
+            <% when "faction_declined" %>
+              <%= who %>'s request to join <%= faction %> was declined.
+            <% end %>
             <% chapter = scene ? link_to(scene.title, scene_path(scene, anchor: alert.pose_id && "pose_#{alert.pose_id}"), class: "alerts__chapter") : "a #{term(:scene).downcase} that's gone" %>
             <% case alert.kind %>
             <% when "passage" %>

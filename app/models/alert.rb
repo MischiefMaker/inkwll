@@ -1,10 +1,11 @@
 # One entry under the alerts bell: a new Passage in your Chapter, your turn,
-# an @mention, or a Chapter you were in being finished.
+# an @mention, a Chapter you were in being finished, or a request to join a
+# faction (asked, accepted or declined).
 #
 # New Passages (and turns) in the same Chapter add to one unread alert
 # rather than making a new one each time, so the bell doesn't fill up.
 class Alert < ApplicationRecord
-  KINDS = %w[ passage turn mention finished inkling ].freeze
+  KINDS = %w[ passage turn mention finished inkling faction_request faction_accepted faction_declined ].freeze
   COLLAPSING_KINDS = %w[ passage turn inkling ].freeze
   KEEP_READ_FOR = 30.days
   SHOWN = 50
@@ -14,18 +15,19 @@ class Alert < ApplicationRecord
   belongs_to :scene, optional: true
   belongs_to :pose, optional: true
   belongs_to :inkling, optional: true
+  belongs_to :faction, optional: true
 
   validates :kind, inclusion: { in: KINDS }
 
   scope :unread, -> { where(read_at: nil) }
   scope :newest_first, -> { order(updated_at: :desc) }
 
-  def self.notify!(account, kind, scene: nil, inkling: nil, character: nil, pose: nil)
+  def self.notify!(account, kind, scene: nil, inkling: nil, character: nil, pose: nil, faction: nil)
     existing = unread.find_by(account: account, kind: kind, scene: scene, inkling: inkling) if kind.in?(COLLAPSING_KINDS)
     if existing
       existing.update!(count: existing.count + 1, pose: pose || existing.pose, character: character || existing.character, updated_at: Time.current)
     else
-      create!(account: account, kind: kind, scene: scene, inkling: inkling, character: character, pose: pose)
+      create!(account: account, kind: kind, scene: scene, inkling: inkling, character: character, pose: pose, faction: faction)
     end
     account.broadcast_alert_count
   end
@@ -33,6 +35,12 @@ class Alert < ApplicationRecord
   # Opening a Chapter (or an Inkling) reads its alerts.
   def self.read_for!(account, scene = nil, inkling: nil)
     changed = unread.where(account: account, **(inkling ? { inkling: inkling } : { scene: scene })).update_all(read_at: Time.current)
+    account.broadcast_alert_count if changed.positive?
+  end
+
+  # Opening a faction's page reads its alerts.
+  def self.read_for_faction!(account, faction)
+    changed = unread.where(account: account, faction: faction).update_all(read_at: Time.current)
     account.broadcast_alert_count if changed.positive?
   end
 

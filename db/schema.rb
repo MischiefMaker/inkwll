@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_110000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,9 +93,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_100000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "inkling_id"
+    t.bigint "faction_id"
     t.index ["account_id", "read_at"], name: "index_alerts_on_account_id_and_read_at"
     t.index ["account_id"], name: "index_alerts_on_account_id"
     t.index ["character_id"], name: "index_alerts_on_character_id"
+    t.index ["faction_id"], name: "index_alerts_on_faction_id"
     t.index ["inkling_id"], name: "index_alerts_on_inkling_id"
     t.index ["pose_id"], name: "index_alerts_on_pose_id"
     t.index ["scene_id"], name: "index_alerts_on_scene_id"
@@ -216,6 +218,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_100000) do
     t.index ["character_id"], name: "index_faction_memberships_on_character_id"
     t.index ["faction_id", "character_id"], name: "index_faction_memberships_on_faction_id_and_character_id", unique: true
     t.index ["faction_id"], name: "index_faction_memberships_on_faction_id"
+  end
+
+  create_table "faction_requests", force: :cascade do |t|
+    t.bigint "faction_id", null: false
+    t.bigint "character_id", null: false
+    t.string "note"
+    t.string "status", default: "pending", null: false
+    t.bigint "decided_by_id"
+    t.datetime "decided_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_faction_requests_on_character_id"
+    t.index ["decided_by_id"], name: "index_faction_requests_on_decided_by_id"
+    t.index ["faction_id", "character_id"], name: "index_faction_requests_one_pending", unique: true, where: "((status)::text = 'pending'::text)"
+    t.index ["faction_id"], name: "index_faction_requests_on_faction_id"
   end
 
   create_table "factions", force: :cascade do |t|
@@ -993,6 +1010,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_100000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alerts", "accounts", on_delete: :cascade
   add_foreign_key "alerts", "characters", on_delete: :cascade
+  add_foreign_key "alerts", "factions", on_delete: :cascade
   add_foreign_key "alerts", "inklings", on_delete: :cascade
   add_foreign_key "alerts", "poses", on_delete: :nullify
   add_foreign_key "alerts", "scenes", on_delete: :cascade
@@ -1011,6 +1029,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_100000) do
   add_foreign_key "exits", "rooms", column: "source_room_id"
   add_foreign_key "faction_memberships", "characters", on_delete: :cascade
   add_foreign_key "faction_memberships", "factions", on_delete: :cascade
+  add_foreign_key "faction_requests", "accounts", column: "decided_by_id", on_delete: :nullify
+  add_foreign_key "faction_requests", "characters", on_delete: :cascade
+  add_foreign_key "faction_requests", "factions", on_delete: :cascade
   add_foreign_key "forum_posts", "accounts", on_delete: :nullify
   add_foreign_key "forum_posts", "forum_topics", column: "topic_id", on_delete: :cascade
   add_foreign_key "forum_topics", "accounts", on_delete: :nullify

@@ -7,6 +7,7 @@ module Character::FactionMember
   included do
     has_many :faction_memberships, dependent: :delete_all
     has_many :factions, through: :faction_memberships
+    has_many :faction_requests, dependent: :delete_all
 
     # Ids from the form's tick boxes, or nil when the form didn't send them.
     attribute :picked_faction_ids

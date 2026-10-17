@@ -462,7 +462,10 @@ words, and `config/locales/en.yml` maps one to the other.
   character is approved. After that, a faction's heads and staff add members
   from its page, with an optional title, and a membership can be secret
   (seen only by that character's player, the heads and staff). A player can
-  take their own character out.
+  take their own character out. An approved character can also "Request to
+  join" a faction that isn't secret, with an optional note; its heads get an
+  alert, staff see it waiting under the bell, and either can accept or
+  decline it.
 - **Heads:** staff tick Head on a membership. A faction can also have NPC
   heads (names typed by staff); staff run a faction whose heads are only
   NPCs or on the roster, and the wording nudges games to give each faction

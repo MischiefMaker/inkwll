@@ -11,6 +11,9 @@
           <%= link_to faction.name, faction_path(faction), class: "factions__name" %>
           <% if faction.secret? %><span class="tag factions__tag factions__tag--secret">Secret</span><% end %>
           <span class="factions__count muted"><%= pluralize(faction.visible_memberships_for(current_account).size, "member") %></span>
+          <% if (waiting = @waiting[faction.id].to_i).positive? && faction.manageable_by?(current_account) %>
+            <span class="tag factions__tag factions__tag--waiting"><%= pluralize(waiting, "request") %> to join</span>
+          <% end %>
           <% if faction.description.present? %><p class="factions__description muted"><%= faction.description.truncate(200) %></p><% end %>
         </li>
       <% end %>

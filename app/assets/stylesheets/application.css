@@ -1832,3 +1832,10 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .character-form__faction-choices { border: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
 .character-form__faction-legend { font-weight: 600; padding: 0; }
 .character-form__factions .hint { flex-basis: 100%; }
+.faction__request-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.faction__request { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.faction__request-note { font-style: italic; }
+.faction__request-actions { display: inline-flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+.faction__join-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.faction__join-form input[type=text] { width: auto; flex: 1 1 14rem; max-width: 24rem; }
+.faction__withdraw-form { display: inline; }

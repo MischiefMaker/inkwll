@@ -8,6 +8,7 @@ Short, plain-language notes on what changed. Newest first.
 - Players tick factions on their character's application. After approval, a faction's heads and staff add members from the faction's page, with an optional title such as "Apprentice".
 - A faction can be secret, so only its members and staff know it exists, and one membership can be secret too.
 - Staff choose heads. A faction can have NPC heads, and staff run any faction whose heads are only NPCs or on the roster.
+- Approved characters can "Request to join" a faction that isn't secret, with an optional note. Its heads get an alert, staff see it waiting under the bell, and either can accept or decline it from the faction's page.
 - Factions show under the character's name on their profile, and an Inkling can be shared with a whole faction.
 
 ## 2026-10-17 — Choosing Boons and Banes on rolls
