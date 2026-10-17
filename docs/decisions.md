@@ -8,7 +8,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ## 2026-10-17: Players choose their Boons and Banes on rolls (owner)
 
-- Regular rolls ask the player which Boons and Banes apply, and Storyteller-judged rolls work the way the SOUL plugin's GM-assisted rolls did: the Storyteller marks each one as must count, the player's choice, or doesn't count, and the player picks the optional ones and rolls.
+- Regular rolls show the character's Boons and Banes as tick boxes in the roll box (the ones affecting the chosen Skill are ticked automatically, and the player can change any), with no extra step, and Storyteller-judged rolls work the way the SOUL plugin's GM-assisted rolls did: the Storyteller marks each one as must count, the player's choice, or doesn't count, and the player picks the optional ones and rolls.
 
 ## 2026-10-17: Version 2.0 order (owner)
 

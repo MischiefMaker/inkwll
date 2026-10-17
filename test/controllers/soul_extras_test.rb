@@ -126,25 +126,17 @@ class SoulExtrasControllersTest < ActionDispatch::IntegrationTest
     assert_select ".pending-roll__no-bnbs", count: 0
   end
 
-  test "a regular roll asks which Boons and Banes apply first, when the character has any" do
+  test "the roll box lists the character's Boons and Banes and rolls with the ones ticked" do
     scene = scenes(:duel)
+    entry = characters(:wren).add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
     sign_in_as(accounts(:alice))
-    # No Boons or Banes: rolls straight away.
-    assert_difference -> { scene.poses.roll.count } do
-      post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard" }
-    end
+    get scene_path(scene)
+    assert_select ".roll-box__bnb input[name='bnb_ids[]'][data-skill-ids='#{soul_skills(:wit).id}']"
 
-    characters(:wren).add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
-    assert_no_difference -> { scene.poses.roll.count } do
-      post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard" }
-    end
-    assert_redirected_to new_scene_roll_path(scene, skill_id: soul_skills(:wit).id, difficulty: "standard")
-    get new_scene_roll_path(scene, skill_id: soul_skills(:wit).id, difficulty: "standard")
-    assert_select ".roll-confirm__bnb", /Cursed/
+    post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard", confirmed: "1", bnb_ids: [ entry.id ] }
+    assert_equal [ "Cursed" ], scene.poses.roll.last.soul_roll.applied.map { |a| a["name"] }
 
-    assert_difference -> { scene.poses.roll.count } do
-      post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard", confirmed: "1" }
-    end
+    post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard", confirmed: "1" }
     assert_empty scene.poses.roll.last.soul_roll.applied
   end
 

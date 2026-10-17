@@ -1,11 +1,24 @@
 <%# Rolling a SOUL Skill. The game posts the result into the Chapter. %>
+<% entries = participant.character.active_bnbs %>
 <details class="roll-box">
   <summary class="disclosure__summary roll-box__summary">Roll a Skill</summary>
-  <%= form_with url: scene_rolls_path(scene), class: "form roll-box__form" do |form| %>
+  <%= form_with url: scene_rolls_path(scene), class: "form roll-box__form", data: { controller: "bnb-picker" } do |form| %>
+    <%= hidden_field_tag :confirmed, "1" %>
     <div class="field roll-box__field">
       <%= form.label :skill_id, "Skill" %>
-      <%= form.select :skill_id, Soul::Aspect.ordered.includes(:skills).map { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }.to_h.then { |groups| grouped_options_for_select(groups) } %>
+      <%= form.select :skill_id, Soul::Aspect.ordered.includes(:skills).map { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }.to_h.then { |groups| grouped_options_for_select(groups) }, {}, data: { bnb_picker_target: "skill", action: "bnb-picker#pick" } %>
     </div>
+    <% if entries.any? %>
+      <fieldset class="fieldset roll-box__bnbs">
+        <legend class="fieldset__legend">Boons and Banes that apply</legend>
+        <% entries.each do |entry| %>
+          <label class="field--checkbox roll-box__bnb">
+            <%= check_box_tag "bnb_ids[]", entry.id, false, id: "roll_bnb_#{entry.id}", data: { bnb_picker_target: "bnb", skill_ids: entry.skill_ids.join(",") } %>
+            <%= entry.name %> (<%= entry.level.capitalize %> <%= entry.kind.capitalize %>)
+          </label>
+        <% end %>
+      </fieldset>
+    <% end %>
     <div class="field roll-box__field">
       <%= form.label :difficulty %>
       <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, selected: "standard" %>
@@ -17,5 +30,5 @@
             title: "Ask the #{term(:storyteller)} to judge the roll: they set the difficulty and say which Boons and Banes must count, or are yours to choose." %>
     <% end %>
   <% end %>
-  <p class="hint roll-box__hint">Two d20s plus the Skill and a bonus from its Aspect. Your Boons and Banes for that Skill count too. Doubles of 20 roll again and add; doubles of 1 roll again and subtract.</p>
+  <p class="hint roll-box__hint">Two d20s plus the Skill and a bonus from its Aspect. Your Boons and Banes for that Skill are ticked for you; untick or tick others as the story calls for. Doubles of 20 roll again and add; doubles of 1 roll again and subtract.</p>
 </details>

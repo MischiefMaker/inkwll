@@ -5,19 +5,8 @@ class Scenes::RollsController < ApplicationController
 
   before_action :set_scene_and_character
 
-  # The step between picking a Skill and rolling it: tick which of your Boons
-  # and Banes apply.
-  def new
-    @skill = Soul::Skill.find(params[:skill_id])
-    @difficulty = params[:difficulty]
-    @entries = @character.active_bnbs
-  end
-
   def create
     skill = Soul::Skill.find(params[:skill_id])
-    if params[:confirmed] != "1" && params[:ask_storyteller] != "1" && @character.active_bnbs.any?
-      return redirect_to new_scene_roll_path(@scene, skill_id: skill.id, difficulty: params[:difficulty])
-    end
     scene = @scene
     character = @character
     if params[:ask_storyteller] == "1"

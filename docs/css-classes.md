@@ -182,7 +182,7 @@ Every part of every page has a CSS class, so a game can restyle anything without
 | `.soul-sheet__table`, `.soul-trait__rating`, `.soul-trait__bonus`, `.soul-trait__raise` | The locked sheet |
 | `.soul-xp`, `.soul-xp__summary`, `.soul-xp__ledger`, `.soul-xp__entry--award`, `--spend`, `--correction` | XP |
 | `.roll-box`, `.roll-box__form`, `.roll-box__ask` | "Roll a Skill" in a Chapter |
-| `.pending-rolls`, `.pending-roll`, `.pending-roll__form`, `.pending-roll__bnbs`, `.pending-roll__no-bnbs`, `.pending-roll__required`, `.roll-confirm`, `.roll-confirm__bnbs`, `.roll-confirm__bnb` | Rolls waiting for the Storyteller |
+| `.pending-rolls`, `.pending-roll`, `.pending-roll__form`, `.pending-roll__bnbs`, `.pending-roll__no-bnbs`, `.pending-roll__required`, `.roll-box__bnbs`, `.roll-box__bnb` | Rolls waiting for the Storyteller |
 | `.soul-bnbs`, `.soul-bnb`, `.soul-bnb--boon`, `--bane`, `--resolved`, `.soul-bnb__name`, `.soul-bnb__kind`, `.soul-bnb__explanation` | Boons and Banes on the sheet |
 | `.soul-culminations`, `.soul-culmination`, `.soul-culmination--approved` (and the other statuses) | Culminations |
 | `.soul-history`, `.soul-history__item` | Narrative History |

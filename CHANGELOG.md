@@ -4,7 +4,7 @@ Short, plain-language notes on what changed. Newest first.
 
 ## 2026-10-17 — Choosing Boons and Banes on rolls
 
-- A regular roll now asks first: if the character has any Boons or Banes, a page lists them (the ones that affect the Skill are ticked) so the player decides which apply, then rolls.
+- The roll box lists the character's Boons and Banes as tick boxes. Picking a Skill ticks the ones that affect it; the player can untick them or tick others, then rolls, with no extra step.
 - When the Storyteller judges a roll (asked for or called for), they set the difficulty and mark each Boon and Bane "Must count", "Player's choice" or "Doesn't count". The player then sees the required ones and ticks any optional ones, and rolls it themselves. A character with no Boons or Banes is still rolled straight away. This follows how the SOUL plugin handled GM-assisted rolls.
 
 ## 2026-10-17 — Storyteller rolls work properly
