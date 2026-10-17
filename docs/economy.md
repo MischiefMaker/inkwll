@@ -95,32 +95,7 @@ Staff can set the highest rate a faction may charge. A member who can't pay
 their dues isn't pushed into debt. The payment is skipped, the managers see
 it on the Bank's list, and what happens next is up to the story.
 
-### Factions taxing factions
-
-The owner wants factions to tax each other too, like a king taxing his lords,
-who in turn tax their subjects (owner, 2026-10-17). Agreed the same day:
-
-- **Under another faction.** Staff can set a faction as being under one
-  other faction (its overlord), so the Lords of the North sit under the
-  Crown. A chain can be as deep as the game likes (Crown, then a duchy, then
-  a barony), but it can't loop back on itself.
-- **Tribute.** The overlord's Bank managers can set taxes on the factions
-  under it, the same two kinds as for members: a percentage of the tax the
-  lower faction collects, and fixed dues on a schedule. Both come out of the
-  lower faction's Bank into the overlord's Bank.
-- **It flows upward.** A subject pays their lord's tax, then the lord's Bank
-  pays the Crown its share as that money arrives. Each step is its own line
-  on both ledgers, so anyone in a faction can follow where its money went.
-- **Each faction only taxes the level directly below it.** The Crown doesn't
-  tax the barony's members itself; it taxes the duchy, which taxes the
-  barony. The same staff limit on rates applies.
-- **When a Bank can't pay,** the tribute is skipped, not part-paid, and both
-  factions' managers see it, as with members' dues.
-- **Seeing it:** each faction's Bank tab lists the faction above it and the
-  ones below it. A secret faction's link to its overlord is only shown to
-  members of the two factions.
-
-## Domains (land and the people on it) [Proposed]
+## Domains (land and the people on it)
 
 **Why a separate system.** The owner's Draganic game is very stratified:
 Realms hold Duchies, Duchies hold Counties, Counties hold Baronies, and each
@@ -139,9 +114,9 @@ and factions keep their member taxes and dues.
 - **Liege:** the one Domain it sits under, so the County of Aqagia sits under
   the Duchy of Niwen. Chains can be as deep as the game likes, but can't
   loop.
-- **Holder:** the character who holds it (Baron Odde holds Everean). Staff
-  can also let a faction hold it, such as a clan, in which case the money
-  goes to that faction's Bank.
+- **Holder:** usually the character who holds it (Baron Odde holds
+  Everean). Staff can also let a faction hold it, such as a clan, in which
+  case the money goes to that faction's Bank.
 - **People:** a number, such as 1,200 serfs. They're not characters. Staff
   change the number as the story goes (a plague, a good harvest, new
   settlers).
@@ -273,8 +248,13 @@ taxes and managers. Until factions exist, nothing here is built.
 - **A character in several factions** is taxed by each faction separately.
 - **Characters can set up their own scheduled payments** from their own
   Purse.
-- **Factions can tax factions:** staff decide which faction is under which,
-  each faction has at most one overlord, and tribute is a share of the tax
-  the lower faction collects plus fixed dues.
+- **Domains** carry the land-based tax chain (Realm, Duchy, County,
+  Barony), as their own system with their own switch inside the Economy.
+  Factions are guilds, families and social groups that characters can
+  belong to many of, so factions don't tax each other; they keep their
+  member taxes and dues.
+- **A Domain is usually held by a character,** with the option of a faction
+  such as a clan holding it.
+- **A Domain can be linked to an Area** on the grid, optionally.
 - **Faction Banks can pay** any character or another faction's Bank, once
   or on a schedule.
