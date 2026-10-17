@@ -31,6 +31,77 @@ Status: **Now**, **Next**, **Later** or **Done**.
 
 Ideas the owner wants after the first release. Not built until the owner says so.
 
+### Proposed order (Claude, 2026-10-17)
+
+**Proposed, not decided.** Claude grouped every note below into themes and suggested an order. The owner can reorder, merge or drop anything, and nothing is built until the owner says so. Each theme lists its items by the names used in the notes further down.
+
+The order goes from small, everyday improvements to big new systems. The early themes reuse things Inkwll already has, so they are quicker and safer. The later ones need new design talks first.
+
+**Theme 1: Quick wins.** Small changes that make every day smoother. Each one stands alone, so any can be done first.
+- Saving drafts as people write. Nothing is lost if the page closes.
+- Mass actions on the admin lists. Tick several characters, then Roster, Archive or Retire them at once.
+- Chapter tabs position (top or left side).
+- Private Game option, with the optional approval step for new players.
+- Away notice.
+- New player badge.
+- Birthdays this month. Uses the birthdays and IC clock that already exist.
+- Graveyard. A Deceased status beside Retired, and its own page.
+
+**Theme 2: Finding someone to RP with.** This theme serves the "fewer cliques" aim most directly, so it comes early.
+- Looking for RP flag. Comes first, because the next item needs it.
+- Looking for a scene nudge. Needs the Looking for RP flag.
+- Storyteller wanted, and the Need a ruling button next to it. Both are ticks on a Chapter that put it on a list.
+- Scene prompt ("Give me an idea").
+- Random character spotlight on the front page.
+- Random scene bounty. Uses SOUL XP, which already exists.
+- Census of active characters per group. Uses the groups that already exist.
+
+**Theme 3: Inside a Chapter.** New things to do while writing.
+- The story so far, plus the one-line version in the Bookshelf list. Do these together, since the one-line version is the same summary.
+- Chapter speed toggle (live chat or forum speed). Builds on the Chat, Manuscript and Forum layouts that are already built.
+- Mutter (a whisper Passage).
+- In-character letters and texts (a Passage type).
+- Live private chat and pages, plus private Storyteller asides. Builds on Messages.
+
+**Theme 4: NPCs, groups and factions.** Who characters are and who they belong to.
+- Create an NPC (admin) and the Shared NPC list. Claude suggests these are one feature: staff make NPCs, and anyone running a Chapter can pick one.
+- Group pages, ranks and an IC board.
+- IC or OOC Boards. Do this with the group pages, since a group's IC board needs it.
+- Factions or teams, public or secret, tied into Inklings. Comes after group pages, so the two can share their look.
+
+**Theme 5: The world's history and events.**
+- World timeline. Staff mark finished Chapters as world events.
+- Event calendar with sign-ups. A Chapter opens when the event starts.
+
+**Theme 6: The wiki.**
+- More Wiki features from Wikidot, starting with ListPages.
+- Wiki Infoboxes. The style still needs choosing.
+
+**Theme 7: Running games (Wells) and the look.**
+- Destroy a Well, with a restorable JSON backup. Steps 12c and 12d of the current plan come first.
+- Templates beyond CSS. Study Jcink's templates first. This is big, because games could then change page layouts, not only colours and fonts.
+- Deploy a new game from the web. The Wells page (step 12) already does most of this. Claude suggests marking it as covered once 12c and 12d are done.
+
+**Theme 8: The physical world.**
+- Mini-map. There are two notes for it (Streets making up a map, and Places on a grid). Claude suggests building them as one feature. The Streets version needs no new data, so it could come first.
+- Weather system. Details still to be decided.
+
+**Theme 9: Big new systems (each needs a design talk first).**
+- Crafting.
+- Economy. Probably goes with crafting, so the two should be designed together.
+
+**Maybe later**
+- Awards and profile comments.
+- Research: more RPG forum and hosting examples. The RP platforms research (`design/rp-platforms-shortlist.md`) has done most of this. Ideas 45 to 47 there (Watch list, IC broadcast channels, Group points) are still waiting for the owner to review them.
+
+**Questions for the owner** (these stay open until answered):
+1. Is this order right, or should any theme move up?
+2. Should the two NPC notes become one feature, and the two mini-map notes too?
+3. Can "Deploy a new game from the web" count as covered by the Wells page?
+4. Should the research item close, and do any of ideas 45 to 47 join the list?
+
+### The notes
+
 - **Create an NPC (admin):** a lighter kind of character that staff make in the admin panel. An NPC can take an icon, SOUL skills and so on, but never shows in any player's Characters list. Any GM/Storyteller can use a pre-made NPC for an NPC Passage, with a dropdown of them beside the box where you type a name (owner, 2026-10-16). Note only, not built.
 - **Factions or teams (in addition to groups):** a character can belong to several, and each membership can be public or secret. For example, publicly in their family faction and secretly in an assassin's guild. They tie into Inklings, so an Inkling can be shared with a faction (owner, 2026-10-16). Note only, not built.
 - **Chapter speed toggle:** a switch on a Chapter between live chat (instant, like the Chat look we have now) and forum speed (asynchronous, with a forum-style posting area). The toggle changes how the page looks and feels to match (owner, 2026-10-17). Note only, not built.
