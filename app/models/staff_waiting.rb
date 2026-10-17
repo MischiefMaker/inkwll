@@ -1,7 +1,7 @@
 # What is waiting on a staff member to look at, limited to the kinds of work
 # their jobs allow: applications, roster requests, SOUL requests, Inklings
-# sent to staff, Grimoire spell proposals, requests to join factions and
-# reports. The admin menu and
+# sent to staff, Grimoire spell proposals, requests to join factions,
+# reports and Chapters asking for a ruling. The admin menu and
 # the bell's drop-down both read from here.
 module StaffWaiting
   Item = Struct.new(:key, :label, :count, keyword_init: true)
@@ -18,7 +18,10 @@ module StaffWaiting
       items << Item.new(key: :factions, label: "#{Term[:faction]} requests", count: FactionRequest.pending.count) if Faction.enabled?
     end
     items << Item.new(key: :players, label: "New players", count: Account.waiting_for_approval.count) if account.can?(:manage_staff) && GameSetting.current.player_approval_required?
-    items << Item.new(key: :reports, label: "Reports", count: Report.unresolved.count) if account.can?(:handle_reports)
+    if account.can?(:handle_reports)
+      items << Item.new(key: :reports, label: "Reports", count: Report.unresolved.count)
+      items << Item.new(key: :rulings, label: "Rulings wanted", count: Scene.ruling_wanted.count)
+    end
     items
   end
 

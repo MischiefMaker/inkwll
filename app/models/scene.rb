@@ -3,6 +3,7 @@
 # same room at once.
 class Scene < ApplicationRecord
   include Turns
+  include AsksForHelp
 
   # Players can undo finishing a scene for this long.
   UNDO_FINISH_WITHIN = 24.hours
@@ -50,7 +51,7 @@ class Scene < ApplicationRecord
   scope :visible_to, ->(account) {
     return where.not(visibility: :hidden).or(where.not(made_public_at: nil)) unless account
     visible = where.not(visibility: :hidden).or(where(id: involving(account).select(:id))).or(where.not(made_public_at: nil))
-    account.can?(:handle_reports) ? visible.or(where(id: Report.select(:scene_id))) : visible
+    account.can?(:handle_reports) ? visible.or(where(id: Report.select(:scene_id))).or(where.not(ruling_wanted_at: nil)) : visible
   }
   # Scenes the account has a character in, or an invitation to.
   scope :involving, ->(account) {
@@ -193,7 +194,7 @@ class Scene < ApplicationRecord
 
   # Whether the account knows this scene exists.
   def visible_to?(account)
-    !visibility_hidden? || made_public_at.present? || participating?(account) || invited_account?(account) || reported_to?(account)
+    !visibility_hidden? || made_public_at.present? || participating?(account) || invited_account?(account) || reported_to?(account) || ruling_asked_of?(account)
   end
 
   # Whether the account can read the scene's poses.
@@ -205,7 +206,7 @@ class Scene < ApplicationRecord
   # - Staff who handle reports can read a scene once it has been reported.
   def readable_by?(account)
     return true if visibility_joinable? || made_public_at.present? || (visibility_private? && finished?)
-    participating?(account) || invited_account?(account) || reported_to?(account)
+    participating?(account) || invited_account?(account) || reported_to?(account) || ruling_asked_of?(account)
   end
 
   # Staff can read a private or hidden scene only once someone reports it.

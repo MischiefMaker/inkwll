@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_030000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_040000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -930,12 +930,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_030000) do
     t.date "ic_date"
     t.string "ic_time"
     t.integer "number", null: false
+    t.datetime "storyteller_wanted_at"
+    t.datetime "ruling_wanted_at"
+    t.string "ruling_note"
     t.index ["current_turn_participant_id"], name: "index_scenes_on_current_turn_participant_id"
     t.index ["finished_at"], name: "index_scenes_on_finished_at"
     t.index ["finished_by_id"], name: "index_scenes_on_finished_by_id"
     t.index ["last_pose_at"], name: "index_scenes_on_last_pose_at"
     t.index ["number"], name: "index_scenes_on_number", unique: true
     t.index ["room_id"], name: "index_scenes_on_room_id"
+    t.index ["ruling_wanted_at"], name: "index_scenes_on_ruling_wanted_at"
+    t.index ["storyteller_wanted_at"], name: "index_scenes_on_storyteller_wanted_at"
   end
 
   create_table "sessions", force: :cascade do |t|

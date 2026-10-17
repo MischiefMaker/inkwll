@@ -49,6 +49,7 @@ module AdminMenuHelper
 
     if current_account.can?(:handle_reports)
       groups["Moderation"] << admin_link("Reports", admin_reports_path, %w[ reports warnings ], waiting[:reports])
+      groups["Waiting on staff"] << admin_link("Rulings", admin_rulings_path, %w[ rulings ], waiting[:rulings] || 0)
     end
     if current_account.can?(:ban)
       groups["Moderation"] << admin_link("Bans", admin_bans_path, %w[ bans ])
@@ -120,6 +121,7 @@ module AdminMenuHelper
     when :grimoire then admin_grimoire_path
     when :factions then factions_path
     when :reports then admin_reports_path
+    when :rulings then admin_rulings_path
     when :players then admin_accounts_path
     end
   end

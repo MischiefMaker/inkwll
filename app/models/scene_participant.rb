@@ -9,6 +9,8 @@ class SceneParticipant < ApplicationRecord
 
   validates :character_id, uniqueness: { scope: :scene_id }
   validate :storyteller_needs_permission
+  # Someone taking the Storyteller role answers "Storyteller wanted".
+  after_save -> { scene.stop_wanting_storyteller! }, if: -> { storyteller? && saved_change_to_role? }
 
   # Passages by others this character hasn't seen yet.
   def unread_count

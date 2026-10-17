@@ -83,6 +83,8 @@ Rails.application.routes.draw do
       resource :writing_as, only: :update, controller: "writing_as"
       resource :finish, only: %i[ create destroy ]
       resource :pause, only: %i[ create destroy ]
+      resource :storyteller_wanted, only: %i[ create destroy ]
+      resource :ruling_request, only: %i[ create destroy ]
       resource :public_consent, only: %i[ create destroy ]
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
@@ -124,6 +126,7 @@ Rails.application.routes.draw do
   get "birthdays", to: "birthdays#index"
   get "graveyard", to: "graveyard#index"
   get "looking-for-rp", to: "looking_for_rp#index", as: :looking_for_rp
+  get "storyteller-wanted", to: "storyteller_wanted#index", as: :storyteller_wanted
   resource :account_waiting, only: :show, path: "waiting"
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions
@@ -243,6 +246,7 @@ Rails.application.routes.draw do
       resource :lock, only: %i[ create destroy ]
     end
     resources :warnings, only: %i[ new create ]
+    resources :rulings, only: %i[ index update ]
     resources :bans, only: %i[ index new create update ]
     # Removes every OOC Chat message a guest sent from one address.
     delete "guest_messages", to: "guest_messages#destroy", as: :guest_messages

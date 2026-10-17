@@ -1,0 +1,25 @@
+<% content_for :title, "Rulings · Admin · Inkwll" %>
+
+<h1 class="page-title">Rulings wanted</h1>
+<p class="muted">Players in these <%= term(:scene, count: 2).downcase %> asked staff to rule on something. You can read each one while it waits, even if it's hidden. Your ruling is written into the <%= term(:scene).downcase %> under your player name.</p>
+
+<% if @scenes.any? %>
+  <ul class="admin-rulings__list">
+    <% @scenes.each do |scene| %>
+      <li class="admin-rulings__item">
+        <p class="admin-rulings__heading">
+          <%= link_to scene.title, scene_path(scene), class: "admin-rulings__chapter" %>
+          <span class="muted">in <%= scene.room.name %> · <%= character_names_sentence(scene.participants) %> · asked <%= time_ago_in_words(scene.ruling_wanted_at) %> ago</span>
+        </p>
+        <p class="text admin-rulings__note"><%= scene.ruling_note %></p>
+        <%= form_with url: admin_ruling_path(scene), method: :patch, class: "form admin-rulings__form" do |form| %>
+          <%= form.label :ruling, "Your ruling", for: "ruling_#{scene.id}" %>
+          <%= form.text_area :ruling, id: "ruling_#{scene.id}", rows: 3, maxlength: Scene::AsksForHelp::RULING_LENGTH, required: true %>
+          <%= form.submit "Post the ruling", class: "button" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="muted">Nobody is waiting for a ruling.</p>
+<% end %>

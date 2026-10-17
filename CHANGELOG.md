@@ -6,6 +6,8 @@ Short, plain-language notes on what changed. Newest first.
 
 - Looking for RP: switch it on for a character (on their profile, or the new Looking for RP page in the Menu) with a short "I am…" and "Looking for…". The character gets a mark in Here and on Where, and shows on the Looking for RP page until you switch it off.
 - While a character is looking, "Nudge everyone looking" sends one quiet alert to everyone else on the list. Once every three hours.
+- "Storyteller wanted" on a Chapter lists it for players with the Storyteller flag, on a new page in their Menu. Taking the Storyteller role takes it off.
+- "Need a ruling" on a Chapter asks staff to rule on something. Staff answer from Admin → Rulings, and the ruling appears in the Chapter.
 
 ## 2026-10-17 — Quick wins (Version 2.0 branch)
 

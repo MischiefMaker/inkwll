@@ -10,6 +10,15 @@
     <% end %>
   </div>
 <% end %>
+<% if scene.ruling_wanted? && !scene.finished? %>
+  <div class="notice-box scene-status__ruling">
+    <p class="text">Waiting for a staff ruling: <%= scene.ruling_note %></p>
+    <% if participant %><%= button_to "Take it back", scene_ruling_request_path(scene), method: :delete, class: "button-link" %><% end %>
+  </div>
+<% end %>
+<% if scene.storyteller_wanted? && !scene.finished? %>
+  <p class="notice-box scene-status__storyteller-wanted"><%= term(:storyteller) %> wanted. This <%= term(:scene).downcase %> is on the list for players who can be a <%= term(:storyteller).downcase %>.</p>
+<% end %>
 <% if scene.locked? %>
   <p class="notice-box">Staff have locked this <%= term(:scene).downcase %>. Nobody can post in it for now.</p>
 <% end %>

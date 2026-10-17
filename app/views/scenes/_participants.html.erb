@@ -30,6 +30,22 @@
           <% end %>
         </details>
       <% end %>
+      <% if scene.storyteller_wanted? %>
+        <%= button_to "Stop asking for a #{term(:storyteller).downcase}", scene_storyteller_wanted_path(scene), method: :delete, class: "button-link scene-people__storyteller-wanted" %>
+      <% elsif scene.can_want_storyteller? %>
+        <%= button_to "#{term(:storyteller)} wanted", scene_storyteller_wanted_path(scene), class: "button-link scene-people__storyteller-wanted",
+              title: "List this #{term(:scene).downcase} for players who can be a #{term(:storyteller).downcase}" %>
+      <% end %>
+      <% unless scene.ruling_wanted? %>
+        <details class="scene-people__ruling">
+          <summary class="disclosure__summary">Need a ruling</summary>
+          <%= form_with url: scene_ruling_request_path(scene), class: "form form--inline" do |form| %>
+            <%= form.label :note, "What should staff rule on?", class: "visually-hidden" %>
+            <%= form.text_field :note, placeholder: "What should staff rule on?", maxlength: Scene::AsksForHelp::RULING_NOTE_LENGTH, required: true %>
+            <%= form.submit "Ask staff", class: "button button--quiet" %>
+          <% end %>
+        </details>
+      <% end %>
       <%= button_to "Finish #{term(:scene).downcase}", scene_finish_path(scene), class: "button-link",
             form: { data: { turbo_confirm: "Finish #{scene.title}? Its #{term(:pose, count: 2).downcase} will be locked and it moves to the #{term(:logs_collection)}. The others can undo this for 24 hours." } } %>
     </div>

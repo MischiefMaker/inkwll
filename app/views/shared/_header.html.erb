@@ -31,6 +31,7 @@
         <%= link_to scenes_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>Open <%= term(:scene, count: 2) %><% end %>
         <%= link_to where_path, class: "menu__link" do %><%= icon(:pin, size: 16, css: "menu__icon") %>Where<% end %>
         <%= link_to looking_for_rp_path, class: "menu__link" do %><%= icon(:quill, size: 16, css: "menu__icon") %>Looking for RP<% end %>
+        <% if current_account.may_storytell? %><%= link_to storyteller_wanted_path, class: "menu__link menu__storyteller-wanted" do %><%= icon(:quill, size: 16, css: "menu__icon") %><%= term(:storyteller) %> wanted<% if (wanted = Scene.storyteller_wanted.count).positive? %> <span class="badge menu__count"><%= wanted %></span><% end %><% end %><% end %>
         <%= link_to directory_path, class: "menu__link" do %><%= icon(:characters, size: 16, css: "menu__icon") %>Character Directory<% end %>
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
         <% if Character.deceased.exists? %><%= link_to graveyard_path, class: "menu__link" do %><%= icon(:archive, size: 16, css: "menu__icon") %>Graveyard<% end %><% end %>

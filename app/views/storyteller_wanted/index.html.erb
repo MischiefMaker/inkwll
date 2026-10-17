@@ -1,0 +1,24 @@
+<% content_for :title, "#{term(:storyteller)} wanted · #{game_name}" %>
+
+<div class="storyteller-wanted">
+  <h1 class="page-title"><%= term(:storyteller) %> wanted</h1>
+  <p class="text muted storyteller-wanted__intro">Open <%= term(:scene, count: 2).downcase %> whose players would like a <%= term(:storyteller).downcase %>. Join one and take the <%= term(:storyteller) %> role, and it comes off this list.</p>
+
+  <% if @scenes.any? %>
+    <ul class="list storyteller-wanted__list">
+      <% @scenes.each do |scene| %>
+        <li class="list__item storyteller-wanted__item">
+          <%= link_to scene.title, scene_path(scene), class: "storyteller-wanted__title" %>
+          <span class="muted storyteller-wanted__meta">
+            in <%= link_to scene.room.name, room_path(scene.room) %> ·
+            <%= scene.participants.any? ? character_names_sentence(scene.participants) : "Nobody yet" %> ·
+            asked <%= time_ago_in_words(scene.storyteller_wanted_at) %> ago
+          </span>
+          <% if scene.subtitle %><span class="storyteller-wanted__subtitle"><%= scene.subtitle %></span><% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">No <%= term(:scene).downcase %> is asking for a <%= term(:storyteller).downcase %> right now.</p>
+  <% end %>
+</div>
