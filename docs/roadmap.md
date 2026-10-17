@@ -88,6 +88,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 **Theme 9: Big new systems (each needs a design talk first).** Both are optional systems that a game switches on or off, like Grimoire.
 - Crafting.
 - Economy. Probably goes with crafting, so the two should be designed together.
+- Grimoire spell levels. This is an extra for the Grimoire that already exists, so it could move earlier if wanted.
 
 **Maybe later**
 - Awards and profile comments.
@@ -109,6 +110,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - **Mass actions on the admin lists:** checkboxes on the admin Players and staff and Characters pages, to Roster, Archive or Retire many at once (owner, 2026-10-15). Note only, not built.
 - **Live private chat and pages:** players chat privately in real time, shown as tabs inside the OOC sidebar, and MUSH-style pages (instant direct messages between players) fit in here too. Builds on Messages (step 3b). Also private Storyteller asides inside a Chapter (owner, 2026-10-15, idea 7 of the RP platforms shortlist). Note only, not built.
 - **Awards and profile comments** (from the Jcink shortlist, maybe later).
+- **Grimoire spell levels:** an optional setting so a character can know a spell at a higher level, which gives a better chance of success. Each level costs more XP to buy or raise, scaling the same way SOUL skills do (owner, 2026-10-17). Note only, not built.
 - **Crafting:** characters make items (owner, 2026-10-14). An optional system each game can switch on, like Grimoire (owner, 2026-10-17). Planned after the Economy, starting from Arx but simplified. Characters pay to craft items, add descriptions, pictures and features that affect rolls, and sell them for a profit; it also brings the items, Belongings, shops and Trade held back from the Economy (owner, 2026-10-17). Agreed design in `crafting.md` (owner, 2026-10-17).
 - **Economy:** money or trade between characters (owner, 2026-10-14). An optional system each game can switch on, like Grimoire (owner, 2026-10-17). Planned first, before Crafting, and built from scratch with Arx as a starting point (owner, 2026-10-17). Includes scheduled payments (salaries, allowances), and optional taxes that feed a faction Bank run by characters given permission (owner, 2026-10-17). Agreed design in `economy.md` (owner, 2026-10-17); it's money only, and items and shops come with Crafting.
 - **IC or OOC Boards:** an admin setting on each Board for whether people post in character or out of character (owner, 2026-10-15). OOC posts show the player name, as now. IC posts let the poster choose which of their characters to post as, for IC boards or posting things as your character. Details to be decided.
