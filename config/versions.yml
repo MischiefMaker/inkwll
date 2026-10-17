@@ -2,6 +2,14 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.12
+  commit: dba871f58b761f3152897bc6544368c7b80c8b59
+  date: 2026-10-17
+  notes: |
+    - Rolls: players choose which Boons and Banes apply, shown as tick boxes in the roll box and ticked automatically for the chosen Skill.
+    - Storyteller rolls: the ask button waits, called-for rolls read correctly, and empty Boons and Banes are noted. A Storyteller can rule which must count and which are optional.
+    - A third font box (for big titles) in Admin → Look; the Chapter book icon; switching characters or GM reloads the page so the Passage box can't double up.
+    - Adds a few columns to waiting rolls and a title font setting; nothing existing changes. Going back to v1.11 is safe.
 - version: v1.11
   commit: 5da0e1437177adf22af9ff5621fc748283a8631b
   date: 2026-10-17
