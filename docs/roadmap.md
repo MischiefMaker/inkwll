@@ -42,7 +42,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 **Theme 1: Quick wins.** Small changes that make every day smoother. Each one stands alone, so any can be done first.
 - Saving drafts as people write. Nothing is lost if the page closes. **Built on `v2.0`.**
 - Mass actions on the admin lists. Tick several characters, then Roster, Archive or Retire them at once. **Built on `v2.0`.**
-- Chapter tabs position (top or left side).
+- Chapter tabs position (top or left side). **Built on `v2.0`.**
 - Private Game option, with the optional approval step for new players.
 - Away notice.
 - New player badge.

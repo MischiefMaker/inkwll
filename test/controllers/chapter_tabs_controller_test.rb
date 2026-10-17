@@ -103,4 +103,22 @@ class ChapterTabsControllerTest < ActionDispatch::IntegrationTest
       assert_select ".turn-quill", count: 0
     end
   end
+
+  test "a game can put the Chapter tabs down the left-hand side" do
+    sign_in_as(accounts(:alice))
+    get root_path
+    assert_select "body > #chapter_tabs .chapter-tab"
+    assert_select ".layout--tabs-left", count: 0
+
+    GameSetting.current.update!(chapter_tabs_side: "left")
+    get root_path
+    assert_select "body.has-chapter-tabs-left .layout.layout--tabs-left > #chapter_tabs .chapter-tab"
+    assert_select "body > #chapter_tabs", count: 0
+  end
+
+  test "Wellkeepers choose the side under Admin, Look" do
+    sign_in_as(accounts(:wellkeeper))
+    patch admin_skin_path, params: { game_setting: { chapter_tabs_side: "left" } }
+    assert_equal "left", GameSetting.current.reload.chapter_tabs_side
+  end
 end

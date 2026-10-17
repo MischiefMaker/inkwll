@@ -24,6 +24,10 @@ class GameSetting < ApplicationRecord
   CHAPTER_LAYOUTS = %w[ manuscript chat forum ].freeze
   PORTRAIT_SIZES = %w[ large small ].freeze
   validates :chapter_layout, inclusion: { in: CHAPTER_LAYOUTS }
+  # Where the player's open Chapters sit as tabs: along the top under the
+  # header, or down the left-hand side (phones always get them on top).
+  CHAPTER_TABS_SIDES = %w[ top left ].freeze
+  validates :chapter_tabs_side, inclusion: { in: CHAPTER_TABS_SIDES }
   validates :chapter_cast_portraits, :chapter_passage_portraits, inclusion: { in: PORTRAIT_SIZES }
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }

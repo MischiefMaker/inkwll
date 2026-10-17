@@ -1843,3 +1843,19 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 /* Tick boxes on the admin lists, and the "with the ticked ones" form */
 .admin-batch { margin: var(--space) 0; align-items: center; gap: 0.5rem; }
 .admin-batch__cell, .admin-batch__heading { width: 2rem; }
+
+/* Chapter tabs down the left-hand side (Admin → Look). Phones keep them on top. */
+@media (min-width: 801px) {
+  .layout--tabs-left { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .layout--tabs-left.layout--admin { grid-template-columns: auto minmax(0, 1fr) auto auto; }
+  .layout--tabs-left > #chapter_tabs .chapter-tabs {
+    flex-direction: column; align-items: stretch; gap: 0.4rem;
+    position: sticky; top: 0; width: 13rem; height: 100%; max-height: 100vh;
+    padding: var(--space) 0.5rem; border-bottom: none; border-right: 1px solid var(--color-border);
+  }
+  .layout--tabs-left .chapter-tabs--collapsed { width: auto; }
+  .layout--tabs-left .chapter-tabs__list { flex-direction: column; overflow: hidden auto; flex: 1; }
+  .layout--tabs-left .chapter-tabs__toggle,
+  .layout--tabs-left .chapter-tab { align-self: stretch; min-height: 0; max-width: none; border-bottom: 1px solid var(--color-border); border-radius: var(--radius); }
+  .layout--tabs-left .chapter-tab--current { box-shadow: inset 3px 0 0 var(--color-accent); }
+}

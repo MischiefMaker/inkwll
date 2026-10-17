@@ -74,6 +74,11 @@
     <label class="field--checkbox"><%= form.radio_button :chapter_layout, "forum" %> Forum: each <%= term(:pose).downcase %> is a post with the character's picture, group and details beside it.</label>
     <label class="field--checkbox"><%= form.radio_button :chapter_layout, "chat" %> Chat: a simple list of posts with small icons.</label>
   </div>
+  <div class="field chapter-look-field chapter-tabs-side-field">
+    <span class="field__label">Where each player's open <%= term(:scene, count: 2).downcase %> show as tabs</span>
+    <label class="field--checkbox"><%= form.radio_button :chapter_tabs_side, "top" %> Along the top, under the menu bar.</label>
+    <label class="field--checkbox"><%= form.radio_button :chapter_tabs_side, "left" %> Down the left-hand side. On phones they stay along the top.</label>
+  </div>
   <div class="field chapter-look-field">
     <span class="field__label">Manuscript: the cast under the title</span>
     <label class="field--checkbox"><%= form.radio_button :chapter_cast_portraits, "large" %> Large: a card for each character, with their picture, group and details.</label>

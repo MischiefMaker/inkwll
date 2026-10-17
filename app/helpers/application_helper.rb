@@ -88,6 +88,7 @@ module ApplicationHelper
     classes << "is-staff" if current_account&.staff?
     classes << "can-ban" if current_account&.can?(:ban)
     classes << "is-admin" if controller_path.start_with?("admin/")
+    classes << "has-chapter-tabs-left" if current_account && GameSetting.current.chapter_tabs_side == "left"
     # The ready-made look the game started from, for looks with extra styling
     # of their own, such as skin-mush (app/assets/stylesheets/skin-mush.css).
     classes << "skin-#{GameSetting.current.skin_base}" if GameSetting.current.skin_base

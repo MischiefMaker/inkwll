@@ -32,8 +32,10 @@
     <% if current_account %>
       <%= render "shared/header" %>
       <%= turbo_stream_from current_account, :chapters %>
-      <%= render "chapter_tabs/tabs", account: current_account %>
-      <div class="layout<%= " layout--admin" if content_for?(:admin_menu) %>">
+      <% tabs_left = GameSetting.current.chapter_tabs_side == "left" %>
+      <%= render "chapter_tabs/tabs", account: current_account unless tabs_left %>
+      <div class="layout<%= " layout--admin" if content_for?(:admin_menu) %><%= " layout--tabs-left" if tabs_left %>">
+        <%= render "chapter_tabs/tabs", account: current_account if tabs_left %>
         <main class="main">
           <% if GameSetting.current.locked? %>
             <p class="flash flash--alert game-lock-banner">The game is locked: only staff can get in. <%= link_to "Unlock it", admin_root_path %></p>

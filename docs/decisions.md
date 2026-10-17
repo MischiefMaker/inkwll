@@ -12,6 +12,7 @@ The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0`
 
 - **Drafts** are kept in the player's own browser, not on the server, so they don't follow a player to another device. They cover the Passage box, Messages, forum threads and replies, wiki pages and Inklings. An empty box gets its draft back on its own; a box that already has text (editing a wiki page) offers it with "Use it" or "Throw it away". Posting clears the draft, and drafts older than two weeks are forgotten.
 - **Mass actions:** tick boxes on Admin → Characters (for characters in play) with "Retire them" or "Put them on the roster", for staff who can do both (Wellkeepers), and on Admin → Players and staff with "Archive them", for anyone who can archive (only players the staff member may manage, never themselves). A tick box in the heading ticks the whole table. Characters already retired or on the roster are skipped, and every action asks "Are you sure?" once.
+- **Chapter tabs position** is under Admin → Look ("Along the top" or "Down the left-hand side"), next to the other Chapter look choices, and defaults to the top. On phones the tabs always stay along the top, since a side column doesn't fit.
 
 ## 2026-10-17: Factions (owner)
 
