@@ -3,7 +3,7 @@ require "test_helper"
 class SoulExtrasTest < ActiveSupport::TestCase
   setup do
     @contacts = Soul::Bnb.create!(kind: "boon", name: "Contacts", skill_ids: [ soul_skills(:wit).id ])
-    @luck = Soul::Bnb.create!(kind: "boon", name: "Lucky")
+    @luck = Soul::Bnb.create!(kind: "boon", name: "Fortunate")
     @cursed = Soul::Bnb.create!(kind: "bane", name: "Cursed")
     @wren = characters(:wren)
   end
@@ -67,11 +67,28 @@ class SoulExtrasTest < ActiveSupport::TestCase
 
     pending = scene.ask_storyteller_to_roll!(@wren, soul_skills(:wit), "standard")
     assert_raises(ArgumentError) { scene.ask_storyteller_to_roll!(@wren, soul_skills(:wit), "standard") }
-    assert_raises(ArgumentError) { scene.judge_roll!(pending, by: @wren, difficulty_name: "easy", bnb_ids: []) }
+    assert_raises(ArgumentError) { scene.judge_roll!(pending, by: @wren, difficulty_name: "easy") }
 
-    pose = scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "hard", bnb_ids: [ entry.id ])
+    assert_nil scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "hard", mandatory_ids: [ entry.id ])
+    assert pending.reload.ready?
+    assert_equal [ entry.id ], pending.mandatory_bnb_ids
+    assert_raises(ArgumentError) { scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "hard") }
+
+    pose = scene.finish_roll!(pending, bnb_ids: [])
     assert pending.reload.rolled?
     assert_match(/against Hard \(21\) as judged by Sable with Cursed/, pose.body)
     assert_equal(-1, pose.soul_roll.net_modifier)
+  end
+
+  test "a player only applies the optional Boons and Banes the Storyteller allowed" do
+    scene = scenes(:duel)
+    scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
+    allowed = @wren.add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
+    barred = @wren.add_bnb!(@luck, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
+    pending = scene.ask_storyteller_to_roll!(@wren, soul_skills(:wit), "standard")
+    scene.judge_roll!(pending, by: characters(:sable), difficulty_name: "easy", optional_ids: [ allowed.id ])
+
+    pose = scene.finish_roll!(pending, bnb_ids: [ allowed.id, barred.id ])
+    assert_equal [ "Cursed" ], pose.soul_roll.applied.map { |a| a["name"] }
   end
 end

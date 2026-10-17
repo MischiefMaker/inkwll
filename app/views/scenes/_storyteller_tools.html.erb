@@ -32,7 +32,7 @@
           <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: "standard" }, id: "call_difficulty" %>
           <%= form.submit "Call for it", class: "button button--quiet" %>
         <% end %>
-        <p class="hint">It waits above until you pick which Boons and Banes count and roll it.</p>
+        <p class="hint">It waits above until you set the difficulty and rule on their Boons and Banes; then they pick any optional ones and roll.</p>
       </section>
     <% end %>
 

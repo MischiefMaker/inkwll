@@ -126,6 +126,53 @@ class SoulExtrasControllersTest < ActionDispatch::IntegrationTest
     assert_select ".pending-roll__no-bnbs", count: 0
   end
 
+  test "a regular roll asks which Boons and Banes apply first, when the character has any" do
+    scene = scenes(:duel)
+    sign_in_as(accounts(:alice))
+    # No Boons or Banes: rolls straight away.
+    assert_difference -> { scene.poses.roll.count } do
+      post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard" }
+    end
+
+    characters(:wren).add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
+    assert_no_difference -> { scene.poses.roll.count } do
+      post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard" }
+    end
+    assert_redirected_to new_scene_roll_path(scene, skill_id: soul_skills(:wit).id, difficulty: "standard")
+    get new_scene_roll_path(scene, skill_id: soul_skills(:wit).id, difficulty: "standard")
+    assert_select ".roll-confirm__bnb", /Cursed/
+
+    assert_difference -> { scene.poses.roll.count } do
+      post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard", confirmed: "1" }
+    end
+    assert_empty scene.poses.roll.last.soul_roll.applied
+  end
+
+  test "the Storyteller rules on Boons and Banes, then the player picks and rolls" do
+    scene = scenes(:duel)
+    scene.participant_for(characters(:sable)).update_column(:role, "storyteller")
+    entry = characters(:wren).add_bnb!(@cursed, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
+    sign_in_as(accounts(:alice))
+    post scene_rolls_path(scene), params: { skill_id: soul_skills(:wit).id, difficulty: "standard", ask_storyteller: "1" }
+    pending = scene.pending_rolls.waiting.last
+
+    sign_in_as(accounts(:bob))
+    patch scene_pending_roll_path(scene, pending), params: { difficulty: "easy", rulings: { entry.id.to_s => "choice" } }
+    assert pending.reload.ready?
+
+    sign_in_as(accounts(:bob))
+    patch scene_pending_roll_path(scene, pending)
+    assert_response :forbidden
+
+    sign_in_as(accounts(:alice))
+    get scene_path(scene)
+    assert_select ".pending-roll__bnb input[name='bnb_ids[]']"
+    assert_difference -> { scene.poses.roll.count } do
+      patch scene_pending_roll_path(scene, pending), params: { bnb_ids: [ entry.id ] }
+    end
+    assert pending.reload.rolled?
+  end
+
   test "the Roll with the Storyteller button only shows when the Chapter has a Storyteller" do
     scene = scenes(:duel)
     sign_in_as(accounts(:alice))

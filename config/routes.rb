@@ -66,7 +66,7 @@ Rails.application.routes.draw do
       resource :public_consent, only: %i[ create destroy ]
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create
-      resources :rolls, only: :create
+      resources :rolls, only: %i[ new create ]
       resources :casts, only: :create
       resources :npc_rolls, only: :create
       resources :casts, only: :create

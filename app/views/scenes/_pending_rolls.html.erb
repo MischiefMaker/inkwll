@@ -1,6 +1,6 @@
 <%# Rolls waiting for the Storyteller. The Storyteller picks the difficulty
     and which Boons and Banes count; the player who asked can cancel. %>
-<% waiting = scene.pending_rolls.waiting.includes(:skill, character: { character_bnbs: :bnb }) %>
+<% waiting = scene.pending_rolls.in_progress.includes(:skill, character: { character_bnbs: :bnb }) %>
 <% if waiting.any? %>
   <% storyteller = participant&.storyteller? %>
   <section class="pending-rolls">
@@ -8,30 +8,53 @@
     <% waiting.each do |pending| %>
       <div class="pending-roll" id="<%= dom_id pending %>">
         <p class="text pending-roll__what"><strong class="emphasis"><%= pending.character.name %></strong>
-          <% if pending.called? %>
+          <% if pending.ready? %>
+            will roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>) once they pick their Boons and Banes.
+          <% elsif pending.called? %>
             was asked to roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>).
           <% else %>
             wants to roll <%= pending.skill.name %> (asked for <%= pending.difficulty_name.humanize %>).
           <% end %></p>
-        <% if storyteller %>
+        <% entries = pending.character.active_bnbs %>
+        <% if pending.waiting? && storyteller %>
           <%= form_with url: scene_pending_roll_path(scene, pending), method: :patch, class: "form pending-roll__form" do |form| %>
             <div class="field">
               <%= form.label :difficulty, "Difficulty", for: "difficulty_#{pending.id}" %>
               <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: pending.difficulty_name }, id: "difficulty_#{pending.id}" %>
             </div>
-            <% entries = pending.character.active_bnbs %>
             <% if entries.any? %>
               <fieldset class="fieldset pending-roll__bnbs">
-                <legend class="fieldset__legend">Boons and Banes that count</legend>
+                <legend class="fieldset__legend">Boons and Banes</legend>
                 <% entries.each do |entry| %>
+                  <div class="field pending-roll__bnb">
+                    <%= label_tag "ruling_#{pending.id}_#{entry.id}", "#{entry.name} (#{entry.level.capitalize} #{entry.kind.capitalize})" %>
+                    <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], entry.affects?(pending.skill) ? "choice" : "no"), id: "ruling_#{pending.id}_#{entry.id}" %>
+                  </div>
+                <% end %>
+              </fieldset>
+              <%= form.submit "Send to #{pending.character.name}", class: "button" %>
+            <% else %>
+              <p class="hint pending-roll__no-bnbs"><%= pending.character.name %> has no Boons or Banes.</p>
+              <%= form.submit "Roll it", class: "button" %>
+            <% end %>
+          <% end %>
+        <% elsif pending.ready? && own?(pending.character) %>
+          <%= form_with url: scene_pending_roll_path(scene, pending), method: :patch, class: "form pending-roll__form" do |form| %>
+            <% required = entries.select { |e| pending.mandatory_bnb_ids.include?(e.id) } %>
+            <% optional = entries.select { |e| pending.optional_bnb_ids.include?(e.id) } %>
+            <% if required.any? %>
+              <p class="text pending-roll__required">Counting for this roll: <%= required.map { |e| "#{e.name} (#{e.level.capitalize} #{e.kind.capitalize})" }.to_sentence %>.</p>
+            <% end %>
+            <% if optional.any? %>
+              <fieldset class="fieldset pending-roll__bnbs">
+                <legend class="fieldset__legend">Boons and Banes you can choose to apply</legend>
+                <% optional.each do |entry| %>
                   <label class="field--checkbox pending-roll__bnb">
                     <%= check_box_tag "bnb_ids[]", entry.id, entry.affects?(pending.skill), id: "bnb_#{pending.id}_#{entry.id}" %>
                     <%= entry.name %> (<%= entry.level.capitalize %> <%= entry.kind.capitalize %>)
                   </label>
                 <% end %>
               </fieldset>
-            <% else %>
-              <p class="hint pending-roll__no-bnbs"><%= pending.character.name %> has no Boons or Banes.</p>
             <% end %>
             <%= form.submit "Roll it", class: "button" %>
           <% end %>

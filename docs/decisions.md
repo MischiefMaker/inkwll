@@ -6,6 +6,10 @@ Only things the owner decided go here. Ideas that still need the owner's yes are
 
 To add one: copy an entry, put it at the top, and fill in today's date.
 
+## 2026-10-17: Players choose their Boons and Banes on rolls (owner)
+
+- Regular rolls ask the player which Boons and Banes apply, and Storyteller-judged rolls work the way the SOUL plugin's GM-assisted rolls did: the Storyteller marks each one as must count, the player's choice, or doesn't count, and the player picks the optional ones and rolls.
+
 ## 2026-10-17: Version 2.0 order (owner)
 
 - The Version 2.0 list in `roadmap.md` is grouped into nine themes, in the order there, from quick wins to crafting and economy. Nothing in it is built until the owner says so.

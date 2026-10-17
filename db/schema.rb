@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_060000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_17_070000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -799,6 +799,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_060000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "called", default: false, null: false
+    t.integer "mandatory_bnb_ids", default: [], null: false, array: true
+    t.integer "optional_bnb_ids", default: [], null: false, array: true
+    t.bigint "judge_id"
     t.index ["character_id"], name: "index_soul_pending_rolls_on_character_id"
     t.index ["scene_id"], name: "index_soul_pending_rolls_on_scene_id"
     t.index ["soul_skill_id"], name: "index_soul_pending_rolls_on_soul_skill_id"

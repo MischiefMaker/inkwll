@@ -378,7 +378,7 @@ class Scene < ApplicationRecord
   def ask_storyteller_to_roll!(character, skill, difficulty_name)
     check_can_roll!(character)
     raise ArgumentError, "This #{Term[:scene]} has no Storyteller to ask." unless storyteller_for(character)
-    raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.waiting.exists?(character: character)
+    raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.in_progress.exists?(character: character)
 
     pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s)
     add_system_line!("#{character.name} asks the #{Term[:storyteller]} for a #{skill.name} roll.")
@@ -392,27 +392,51 @@ class Scene < ApplicationRecord
     raise ArgumentError, "#{character.name} isn't in this #{Term[:scene]}." unless participant_for(character)
     raise ArgumentError, "A #{Term[:storyteller]} doesn't judge their own player's rolls." if character.account_id == by.account_id
     check_can_roll!(character)
-    raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.waiting.exists?(character: character)
+    raise ArgumentError, "#{character.name} is already waiting on a roll here." if pending_rolls.in_progress.exists?(character: character)
 
     pending = pending_rolls.create!(character: character, skill: skill, difficulty_name: difficulty_name.to_s, called: true)
     add_system_line!("The #{Term[:storyteller]} calls for a #{skill.name} roll from #{character.name}.")
     pending
   end
 
-  # The Storyteller rolls a waiting roll.
-  def judge_roll!(pending, by:, difficulty_name:, bnb_ids:)
+  # The Storyteller rules on a waiting roll: the difficulty, which Boons and
+  # Banes must count and which the player may choose. A character with none
+  # is rolled straight away; otherwise the roll is ready for the player.
+  def judge_roll!(pending, by:, difficulty_name:, mandatory_ids: [], optional_ids: [])
     participant = participant_for(by)
     raise ArgumentError, "Only the #{Term[:storyteller]} can do that." unless participant&.storyteller?
     raise ArgumentError, "That roll has already been dealt with." unless pending.waiting?
 
-    chosen = pending.character.active_bnbs.select { |entry| Array(bnb_ids).map(&:to_i).include?(entry.id) }
-    pose = roll!(pending.character, pending.skill, difficulty_name, bnbs: chosen, storyteller: by)
+    entries = pending.character.active_bnbs.to_a
+    mandatory = Array(mandatory_ids).map(&:to_i) & entries.map(&:id)
+    optional = (Array(optional_ids).map(&:to_i) & entries.map(&:id)) - mandatory
+    if entries.empty?
+      pose = roll!(pending.character, pending.skill, difficulty_name, bnbs: [], storyteller: by)
+      pending.rolled!
+      return pose
+    end
+
+    Soul::Rules.difficulties.fetch(difficulty_name.to_s) { raise ArgumentError, "Pick a difficulty." }
+    pending.update!(status: "ready", difficulty_name: difficulty_name.to_s, mandatory_bnb_ids: mandatory, optional_bnb_ids: optional, judge: by)
+    add_system_line!("The #{Term[:storyteller]} has ruled on #{pending.character.name}'s #{pending.skill.name} roll. #{pending.character.name} picks any Boons and Banes and rolls.")
+    broadcast_change
+    nil
+  end
+
+  # The player confirms a ready roll: the required Boons and Banes plus any of
+  # the optional ones they chose, then it rolls.
+  def finish_roll!(pending, bnb_ids:)
+    raise ArgumentError, "That roll isn't ready." unless pending.ready?
+
+    chosen_ids = pending.mandatory_bnb_ids + (pending.optional_bnb_ids & Array(bnb_ids).map(&:to_i))
+    chosen = pending.character.active_bnbs.select { |entry| chosen_ids.include?(entry.id) }
+    pose = roll!(pending.character, pending.skill, pending.difficulty_name, bnbs: chosen, storyteller: pending.judge)
     pending.rolled!
     pose
   end
 
   def cancel_pending_roll!(pending)
-    pending.cancelled! if pending.waiting?
+    pending.cancelled! if pending.waiting? || pending.ready?
     broadcast_change
   end
 

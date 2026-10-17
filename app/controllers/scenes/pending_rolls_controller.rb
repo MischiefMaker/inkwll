@@ -19,9 +19,18 @@ class Scenes::PendingRollsController < ApplicationController
     redirect_to @scene, alert: e.message
   end
 
+  # A waiting roll is ruled on by the Storyteller; a ready one is rolled by
+  # its player, who picks from the Boons and Banes the Storyteller allowed.
   def update
-    by = @scene.participants_for(current_account).find(&:storyteller?)&.character or return head :forbidden
-    @scene.judge_roll!(@pending, by: by, difficulty_name: params[:difficulty], bnb_ids: params[:bnb_ids])
+    if @pending.ready?
+      return head :forbidden unless @pending.character.account_id == current_account.id
+      @scene.finish_roll!(@pending, bnb_ids: params[:bnb_ids])
+    else
+      by = @scene.participants_for(current_account).find(&:storyteller?)&.character or return head :forbidden
+      rulings = params[:rulings].respond_to?(:to_unsafe_h) ? params[:rulings].to_unsafe_h : {}
+      @scene.judge_roll!(@pending, by: by, difficulty_name: params[:difficulty],
+        mandatory_ids: rulings.select { |_, v| v == "must" }.keys, optional_ids: rulings.select { |_, v| v == "choice" }.keys)
+    end
     redirect_to @scene
   rescue ArgumentError, Character::SoulSheet::SheetError => e
     redirect_to @scene, alert: e.message
