@@ -14,6 +14,7 @@
             <%= scene_labels(scene) %>
           </div>
           <% if scene.subtitle %><p class="scene-list__subtitle"><%= scene.subtitle %></p><% end %>
+          <% if scene.summary && scene.readable_by?(current_account) %><p class="scene-list__summary"><%= scene.summary_line %></p><% end %>
           <div class="muted scene-list__meta">
             <% if scene.ic_when.present? %><span class="scene-list__when"><%= scene.ic_when %></span> ·<% end %>
             <%= scene.participants.any? ? character_names_sentence(scene.participants, suffix: ->(p) { "(#{term(:storyteller)})" if p.storyteller? }) : "Nobody yet" %>

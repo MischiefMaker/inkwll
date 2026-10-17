@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Inside a Chapter (Version 2.0 branch)
+
+- The story so far: players in a Chapter can write a short summary that sits at its top, so anyone joining can catch up. Its first line shows in the Place's list of Chapters and on the Bookshelf.
+
 ## 2026-10-17 — Finding someone to RP with (Version 2.0 branch)
 
 - Looking for RP: switch it on for a character (on their profile, or the new Looking for RP page in the Menu) with a short "I am…" and "Looking for…". The character gets a mark in Here and on Where, and shows on the Looking for RP page until you switch it off.

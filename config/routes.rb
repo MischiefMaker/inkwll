@@ -85,6 +85,7 @@ Rails.application.routes.draw do
       resource :pause, only: %i[ create destroy ]
       resource :storyteller_wanted, only: %i[ create destroy ]
       resource :ruling_request, only: %i[ create destroy ]
+      resource :summary, only: :update
       resource :public_consent, only: %i[ create destroy ]
       resources :reports, only: %i[ new create ]
       resources :invitations, only: :create

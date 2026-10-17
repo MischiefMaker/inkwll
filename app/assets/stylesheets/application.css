@@ -1981,3 +1981,12 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .census__count { font-variant-numeric: tabular-nums; }
 .census__wanted { border-color: var(--color-accent); color: var(--color-accent); }
 .census__note { font-size: 0.9rem; overflow-wrap: anywhere; }
+
+/* The story so far (Version 2.0) */
+.scene-summary { margin: var(--space) 0; padding: 0.6rem var(--space); background: var(--color-surface); border: 1px solid var(--color-border); border-left: 3px solid var(--color-accent); border-radius: var(--radius); }
+.scene-summary--empty { border-left-color: var(--color-border); }
+.scene-summary__title { margin: 0 0 0.3rem; font-size: 0.95rem; font-family: var(--font-ui); }
+.scene-summary__text p { margin: 0 0 0.5rem; }
+.scene-summary__by { margin: 0; font-size: 0.8rem; }
+.scene-summary__form textarea { width: 100%; }
+.scene-list__summary, .manuscript__summary { margin: 0.15rem 0; font-size: 0.9rem; font-style: italic; overflow-wrap: anywhere; }

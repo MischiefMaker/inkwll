@@ -59,7 +59,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Census of active characters per group. Uses the groups that already exist. **Built on `v2.0`.**
 
 **Theme 3: Inside a Chapter.** New things to do while writing.
-- The story so far, plus the one-line version in the Bookshelf list. Do these together, since the one-line version is the same summary.
+- The story so far, plus the one-line version in the Bookshelf list. Do these together, since the one-line version is the same summary. **Built on `v2.0`.**
 - Chapter speed toggle (live chat or forum speed). Builds on the Chat, Manuscript and Forum layouts that are already built.
 - Mutter (a whisper Passage).
 - In-character letters and texts (a Passage type).

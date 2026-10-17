@@ -4,6 +4,7 @@
     <%= link_to scene.title, scene_path(scene) %>
     <% unless scene.visibility_joinable? %><span class="badge badge--<%= scene.visibility %>"><%= scene_visibility_mark(scene) %><%= scene_visibility_label(scene) %></span><% end %>
   </h2>
+  <% if scene.summary && scene.readable_by?(current_account) %><p class="manuscript__summary"><%= scene.summary_line %></p><% end %>
   <p class="muted manuscript__meta">
     <%= link_to scene.room.name, archives_path(room_id: scene.room_id) %>
     <% if scene.ic_when.present? %>· <span class="manuscript__when"><%= scene.ic_when %></span><% end %>

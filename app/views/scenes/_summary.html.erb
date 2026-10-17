@@ -1,0 +1,22 @@
+<%# "The story so far", pinned at the top of a Chapter. Its players can edit it. %>
+<% editable = participant && !scene.locked? %>
+<% if scene.summary || editable %>
+  <section class="scene-summary<%= " scene-summary--empty" unless scene.summary %>">
+    <h2 class="scene-summary__title">The story so far</h2>
+    <% if scene.summary %>
+      <div class="text scene-summary__text"><%= simple_format scene.summary %></div>
+      <% if scene.summary_by %><p class="muted scene-summary__by">Last updated by <%= scene.summary_by.name %>, <%= time_ago_in_words(scene.summary_at) %> ago.</p><% end %>
+    <% end %>
+    <% if editable %>
+      <details class="scene-summary__edit">
+        <summary class="disclosure__summary"><%= scene.summary ? "Edit the story so far" : "Write a summary for anyone catching up" %></summary>
+        <%= form_with url: scene_summary_path(scene), method: :patch, class: "form scene-summary__form" do |form| %>
+          <%= form.label :summary, "The story so far", class: "visually-hidden" %>
+          <%= form.text_area :summary, value: scene.summary, rows: 4, maxlength: Scene::StorySoFar::SUMMARY_LENGTH %>
+          <small class="hint">A few sentences on what has happened. The first line shows in the list of <%= term(:scene, count: 2).downcase %> and on the <%= term(:logs_collection) %>.</small>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+      </details>
+    <% end %>
+  </section>
+<% end %>

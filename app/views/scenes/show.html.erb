@@ -34,6 +34,7 @@
   </header>
 
   <%= render "scenes/status", scene: @scene, participant: @participant %>
+  <%= render "scenes/summary", scene: @scene, participant: @participant if readable %>
 
   <% if readable %>
     <% poses = @scene.poses.includes(:soul_roll, character: [ :room, :character_group, :profile_values, { icon_attachment: :blob } ]) %>
