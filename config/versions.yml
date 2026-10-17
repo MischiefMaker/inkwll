@@ -2,6 +2,12 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.13
+  commit: b65251bdae0bde49b8fbffeb10e9500fc39b104c
+  date: 2026-10-17
+  notes: |
+    - Rolls: the ask button label is fixed, a Storyteller can call for a roll with Boons and Banes rulings, and Boons and Banes now default to Player's choice.
+    - No database changes; going back to v1.12 is safe.
 - version: v1.12
   commit: dba871f58b761f3152897bc6544368c7b80c8b59
   date: 2026-10-17
