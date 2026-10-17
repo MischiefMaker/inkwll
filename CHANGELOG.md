@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — The starting map has streets
+
+- The sample map a new game starts with now has a street, lane or path in every smaller Area: Uptown, Midtown and Downtown Street in the City; High Street, Hedgerow Lane and The Towpath in the Country; Woodland Track, Mossy Path and Shoreline Trail in the Forest. The streets join north to south, and the buildings and outdoor spaces (Ashcombe Hotel, Central Square, the Trailhead and the rest) sit on them, so you can see Streets, Buildings and Outdoor areas working. Each Area's Enter button now lands on its street. Games that already exist keep the map they have.
+
 ## 2026-10-17 — One step for a Storyteller's call for a roll
 
 - "Call for a roll" now has the Boons and Banes drop-downs right in it (for whichever character you pick, every one starting as "Player's choice"). If nothing is left for the player to choose, the roll happens at once; otherwise it waits for the player to choose and roll.

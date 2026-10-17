@@ -1,6 +1,7 @@
 # Creates a starting map so a fresh game has somewhere to walk around: three
 # top-level Areas (City, Country, Forest), three smaller Areas inside each, and
-# two Settings in every small Area, all linked by Paths. Safe to run more than
+# in every small Area a street (or lane, or path) with two Places on it, all
+# linked by Paths. Safe to run more than
 # once. Rename, rewrite or replace any of it from the admin panel's Building
 # section.
 
@@ -14,11 +15,12 @@ def seed_area(name, description, position:, parent: nil)
 end
 
 # Makes (or finds) a Setting inside an Area.
-def seed_room(area, name, description, starting: false)
+def seed_room(area, name, description, starting: false, kind: "plain")
   Room.find_or_create_by!(name: name) do |room|
     room.area = area
     room.description = description
     room.starting = starting
+    room.kind = kind
   end
 end
 
@@ -27,6 +29,19 @@ end
 def seed_paths(here, there_name, there, back_name)
   Exit.find_or_create_by!(source_room: here, name: there_name) { |e| e.destination_room = there }
   Exit.find_or_create_by!(source_room: there, name: back_name) { |e| e.destination_room = here }
+end
+
+# Joins two streets along a compass direction ("S" from here comes back "N").
+def seed_street_link(here, there_name, there, back_name, direction:)
+  Exit.find_or_create_by!(source_room: here, name: there_name) { |e| e.destination_room = there; e.kind = "street"; e.direction = direction }
+  Exit.find_or_create_by!(source_room: there, name: back_name) { |e| e.destination_room = here; e.kind = "street"; e.direction = Exit.opposite(direction) }
+end
+
+# Puts a building or an outdoor space on a street: a Path from the street in,
+# and Out to come back.
+def seed_on_street(street, there_name, there)
+  Exit.find_or_create_by!(source_room: street, name: there_name) { |e| e.destination_room = there; e.kind = "building" }
+  Exit.find_or_create_by!(source_room: there, name: street.name) { |e| e.destination_room = street; e.kind = "building"; e.direction = "OUT" }
 end
 
 # ---------------------------------------------------------------------------
@@ -54,47 +69,64 @@ downtown = seed_area("Downtown", <<~TEXT.squish, parent: city, position: 2)
   and the kind of alleys that people tell you not to walk down after dark.
 TEXT
 
-grand_avenue = seed_room(uptown, "Grand Avenue", <<~TEXT)
+uptown_street = seed_room(uptown, "Uptown Street", <<~TEXT, kind: "street")
+  A broad street of pale stone terraces, wrought-iron railings and the occasional liveried chauffeur waiting at the kerb. Uptown Street is the way through the quiet, wealthy part of the city, with the Ashcombe Hotel's striped awning halfway along and the leafy sweep of Grand Avenue opening off it. The street runs south toward Midtown, the traffic thickening as it goes.
+TEXT
+
+midtown_street = seed_room(midtown, "Midtown Street", <<~TEXT, kind: "street")
+  Buses, bicycles and a river of people on foot, all in a hurry. Midtown Street is the city's main artery, lined with shopfronts, offices and food carts, and it passes the great open space of Central Square with the glowing windows of the Lamplight Café just beyond. North, the street climbs toward Uptown; south, it dips toward the noise of Downtown.
+TEXT
+
+downtown_street = seed_room(downtown, "Downtown Street", <<~TEXT, kind: "street")
+  Cracked paving, tram wires overhead and shuttered shopfronts that open only when it suits them. Downtown Street is the gritty way through the old part of the city, with the soot-streaked bulk of Union Station on one side and the cobbled lanes of Harbour Market leading off toward the water. It runs north toward Midtown and the cleaner streets beyond.
+TEXT
+
+grand_avenue = seed_room(uptown, "Grand Avenue", <<~TEXT, kind: "outdoor")
   Lined on both sides with tall, stately buildings of pale stone, Grand Avenue has the air of a street that knows exactly how much it is worth. Shop windows glitter with things nobody strictly needs, each display arranged just so, and the pavements are swept so often it seems a crime to walk on them at all. Plane trees stand in neat iron cages at regular intervals, offering a little shade to those who stop long enough to want it.
 
   The avenue runs straight and broad toward the busier streets of Midtown, the traffic thickening the further one goes, while at its quieter top end an old road slips out past the last grand houses toward the distant forest. Halfway along, a striped awning and a pair of revolving doors mark the entrance to the Ashcombe Hotel, a uniformed doorman standing ready to decide whether or not to open them for you.
 TEXT
 
-ashcombe = seed_room(uptown, "The Ashcombe Hotel", <<~TEXT)
+ashcombe = seed_room(uptown, "The Ashcombe Hotel", <<~TEXT, kind: "building")
   The lobby of the Ashcombe is all marble and gilt, a cavernous room designed to make guests feel important and everyone else feel slightly out of place. A chandelier the size of a small carriage hangs from the painted ceiling, throwing scattered light across the chequered floor, while deep velvet armchairs gather in quiet clusters around low tables, the perfect spot for being seen without appearing to want it.
 
   A long mahogany front desk stretches across the far wall, a bell and a ledger waiting at one end and a clerk with a practised smile at the other. Off to one side, a pair of glass doors opens onto a hushed little bar, and the revolving doors at the front lead back out onto Grand Avenue.
 TEXT
 
-central_square = seed_room(midtown, "Central Square", <<~TEXT)
+central_square = seed_room(midtown, "Central Square", <<~TEXT, kind: "outdoor")
   Everything in the city seems to pass through Central Square sooner or later. A great stone fountain sits at its centre, its basin glinting with coins tossed in by the hopeful and the bored, and benches circle it for those with time to spare. Pigeons hold court on the steps of the old clock tower, entirely unbothered by the crowds hurrying around them, and a newspaper stand on the corner shouts the day's headlines to anyone who will listen.
 
   Streets branch off in every direction: uphill toward the quieter, richer avenues of Uptown, and down toward the noise and bustle of Downtown. On the eastern side of the square, a warm glow spills from the windows of the Lamplight Café.
 TEXT
 
-lamplight = seed_room(midtown, "The Lamplight Café", <<~TEXT)
+lamplight = seed_room(midtown, "The Lamplight Café", <<~TEXT, kind: "building")
   Small, cramped and always a little too warm, the Lamplight is the sort of café that regulars refuse to tell anyone about and somehow everyone knows anyway. Mismatched tables crowd the narrow room, each with its own little lamp, and the walls are papered with old posters, postcards and notes pinned up by customers who never came back for them. The smell of coffee and something sweet from the oven hangs over everything.
 
   A scuffed counter runs along one wall, crowded with cake stands and a hissing coffee machine that seems to have a personality of its own. A battered piano sits in the back corner, rarely tuned but often played, and the door beside the window leads back out onto Central Square.
 TEXT
 
-union_station = seed_room(downtown, "Union Station", <<~TEXT)
+union_station = seed_room(downtown, "Union Station", <<~TEXT, kind: "building")
   Built in a grander age and not much cared for since, Union Station is a vast hall of iron and soot-streaked glass. Pigeons roost in the girders high overhead, and the great arched roof catches every echo, so that announcements, footsteps and the shriek of brakes all blur together into one endless roar. Travellers hurry in every direction, dragging cases and children, while porters weave between them with practised indifference.
 
   A departures board clacks and rattles above the ticket windows, listing trains out to the country towns and back again. Wide steps lead up to the street and on toward Midtown, while a side door by the left-luggage office opens onto the clamour of the Harbour Market.
 TEXT
 
-harbour_market = seed_room(downtown, "Harbour Market", <<~TEXT)
+harbour_market = seed_room(downtown, "Harbour Market", <<~TEXT, kind: "outdoor")
   Stalls crowd every inch of this long, cobbled street, so close together that their canvas awnings overlap and turn the whole market into a kind of patchwork tunnel. Fishmongers shout over greengrocers, who shout over the man selling knives, who shouts over everyone. The ground is slick with things best not looked at too closely, and the air carries the mingled scents of salt, smoke and frying onions.
 
   At the far end, the street gives way to the grey water of the harbour, where gulls wheel above the moored boats and wait for someone to drop something. Narrow alleys slip away between the warehouses on either side, and the market's near end comes out by the side door of Union Station.
 TEXT
 
-seed_paths(grand_avenue, "Ashcombe Hotel", ashcombe, "Out")
-seed_paths(central_square, "Lamplight Café", lamplight, "Out")
-seed_paths(union_station, "Harbour Market", harbour_market, "Station")
-seed_paths(grand_avenue, "Midtown", central_square, "Uptown")
-seed_paths(central_square, "Downtown", union_station, "Midtown")
+# The three streets are what people walk along; everything else sits on one.
+seed_street_link(uptown_street, "Midtown Street", midtown_street, "Uptown Street", direction: "S")
+seed_street_link(midtown_street, "Downtown Street", downtown_street, "Midtown Street", direction: "S")
+
+seed_on_street(uptown_street, "Ashcombe Hotel", ashcombe)
+seed_on_street(uptown_street, "Grand Avenue", grand_avenue)
+seed_on_street(midtown_street, "Central Square", central_square)
+seed_on_street(midtown_street, "Lamplight Café", lamplight)
+seed_on_street(downtown_street, "Union Station", union_station)
+seed_on_street(downtown_street, "Harbour Market", harbour_market)
 
 # ---------------------------------------------------------------------------
 # The Country
@@ -121,47 +153,63 @@ riverside = seed_area("Riverside", <<~TEXT.squish, parent: country, position: 2)
   in the water and paths worn smooth along its banks.
 TEXT
 
-village_green = seed_room(village, "Village Green", <<~TEXT)
+high_street = seed_room(village, "High Street", <<~TEXT, kind: "street")
+  The village's one proper street, a crooked ribbon of cobbles between cottages that lean toward each other like gossips. High Street runs from the church to the Crooked Kettle and the green, and on to the lane that leads out toward the farms.
+TEXT
+
+hedgerow_lane = seed_room(farmland, "Hedgerow Lane", <<~TEXT, kind: "street")
+  A narrow lane between high hedges, rutted by cart wheels and muddy for most of the year. Hedgerow Lane wanders past the gates of every farm in the valley, with Farm Lane and the Hay Barn off it, and carries on toward the river.
+TEXT
+
+towpath = seed_room(riverside, "The Towpath", <<~TEXT, kind: "street")
+  A grassy path trodden hard by horses and walkers, following the river through the willows. The Towpath links the old Stone Bridge and the quiet Riverbank, and the lane back up to the farms meets it near the bridge.
+TEXT
+
+village_green = seed_room(village, "Village Green", <<~TEXT, kind: "outdoor")
   A wide stretch of grass sits at the heart of the village, kept short by a pair of grumpy goats who belong to no one in particular. An ancient oak stands at one end, its lowest branch worn smooth by generations of children climbing it, and a weathered stone cross marks the other. Cottages of honey-coloured stone line the edges, their gardens overflowing with roses and runner beans, each one quietly competing with its neighbour.
 
   A little whitewashed halt stands at the bottom of the green, where the train from the city stops twice a day if it remembers to. The lane out of the village winds off toward the farms, and across the way, the crooked sign of the village pub creaks in the breeze.
 TEXT
 
-kettle = seed_room(village, "The Crooked Kettle", <<~TEXT)
+kettle = seed_room(village, "The Crooked Kettle", <<~TEXT, kind: "building")
   The Crooked Kettle has stood on the edge of the green for longer than anyone can say, and it has the sagging beams to prove it. The ceiling is low enough that taller visitors learn to duck the hard way, and the stone floor dips and rises like the countryside outside. A huge inglenook fireplace takes up most of one wall, a fire crackling in it whatever the season, with a sleepy dog sprawled in front of it.
 
   Worn wooden settles and stools are crowded around scarred tables, most of which have a regular who would very much like you to know it is theirs. Behind the bar, a row of dented copper kettles hangs from the beams, and the low front door leads back out onto the Village Green.
 TEXT
 
-farm_lane = seed_room(farmland, "Farm Lane", <<~TEXT)
+farm_lane = seed_room(farmland, "Farm Lane", <<~TEXT, kind: "outdoor")
   This rutted dirt lane winds between high hedgerows thick with brambles, hawthorn and the occasional nest. In summer the air hums with bees and smells of cut hay; in winter the ruts fill with water and the mud tries its best to keep your boots. Gates open here and there onto the fields beyond, where sheep regard passers-by with deep suspicion and the occasional cow leans over to see what's going on.
 
   One way, the lane wanders back toward the village; the other, it slopes down toward the river, the sound of water growing louder as it goes. Partway along, a five-bar gate leans open into a yard where a great old barn sits slumped against the sky.
 TEXT
 
-hay_barn = seed_room(farmland, "The Hay Barn", <<~TEXT)
+hay_barn = seed_room(farmland, "The Hay Barn", <<~TEXT, kind: "building")
   Built of dark timber gone silver with age, the old barn is far bigger inside than it looks from the lane. Hay is stacked in great golden bales almost to the rafters, leaving narrow passages between them that seem made for hiding in, and dust hangs glittering in the bars of light that slip through the gaps in the boards. Swallows dart in and out through the open loft door high above.
 
   Rusting tools and bits of harness hang from nails along the walls, and a wooden ladder, missing at least one rung, climbs up into the hayloft. The wide double doors stand propped open onto the lane, letting in the smell of the fields and the occasional curious hen.
 TEXT
 
-stone_bridge = seed_room(riverside, "The Stone Bridge", <<~TEXT)
+stone_bridge = seed_room(riverside, "The Stone Bridge", <<~TEXT, kind: "outdoor")
   A humped old bridge of mossy grey stone arches over the river here, just wide enough for a cart and not much else. Its parapets are low enough to sit on, and many have, judging by the initials carved into the stone. Below, the water runs clear and slow over smooth pebbles, and the odd trout can be seen holding steady against the current in the shadow of the arches.
 
   The lane climbs up from the farms to cross the bridge, and on the far side the land rises gently toward the dark line of the forest. A narrow path leads down from the end of the bridge to the riverbank itself.
 TEXT
 
-riverbank = seed_room(riverside, "The Riverbank", <<~TEXT)
+riverbank = seed_room(riverside, "The Riverbank", <<~TEXT, kind: "outdoor")
   Willows lean out over the water here, their long branches trailing in the current and turning the bank into a series of green, rustling hideaways. The grass is soft and the ground gently sloping, perfect for picnics, fishing, or simply lying about and doing nothing at all. Dragonflies skim the surface, and somewhere upstream a moorhen complains about something.
 
   A little wooden jetty, more than a little rickety, juts out into the river, a battered rowing boat tied to its end. The path follows the water downstream into the reeds and back up the slope toward the Stone Bridge.
 TEXT
 
-seed_paths(village_green, "Crooked Kettle", kettle, "Out")
-seed_paths(farm_lane, "Hay Barn", hay_barn, "Out")
-seed_paths(stone_bridge, "Riverbank", riverbank, "Bridge")
-seed_paths(village_green, "Farm Lane", farm_lane, "Village")
-seed_paths(farm_lane, "River", stone_bridge, "Farms")
+seed_street_link(high_street, "Hedgerow Lane", hedgerow_lane, "High Street", direction: "E")
+seed_street_link(hedgerow_lane, "The Towpath", towpath, "Hedgerow Lane", direction: "S")
+
+seed_on_street(high_street, "Village Green", village_green)
+seed_on_street(high_street, "Crooked Kettle", kettle)
+seed_on_street(hedgerow_lane, "Farm Lane", farm_lane)
+seed_on_street(hedgerow_lane, "Hay Barn", hay_barn)
+seed_on_street(towpath, "Stone Bridge", stone_bridge)
+seed_on_street(towpath, "Riverbank", riverbank)
 
 # ---------------------------------------------------------------------------
 # The Forest
@@ -188,47 +236,63 @@ lakeshore = seed_area("Lakeshore", <<~TEXT.squish, parent: forest, position: 2)
   restless when the wind comes down off the hills.
 TEXT
 
-trailhead = seed_room(forest_edge, "The Trailhead", <<~TEXT)
+woodland_track = seed_room(forest_edge, "Woodland Track", <<~TEXT, kind: "street")
+  A wide, rutted track where the last fields give way to trees. Woodland Track runs along the forest's edge, past the Trailhead and the Ranger's Cabin, before narrowing and plunging in among the oaks.
+TEXT
+
+mossy_path = seed_room(deep_woods, "Mossy Path", <<~TEXT, kind: "street")
+  A narrow, winding path, soft underfoot with moss and old leaves, where the light comes down green and dim. The Mossy Path threads between the trees to Old Oak Clearing and Fern Hollow, and one branch leads on down toward the lake.
+TEXT
+
+shoreline_trail = seed_room(lakeshore, "Shoreline Trail", <<~TEXT, kind: "street")
+  A pebbly trail that hugs the lake, sometimes on the shingle, sometimes up among the reeds. Shoreline Trail connects Shingle Beach and the Boathouse, and the path back into the woods meets it at the north end.
+TEXT
+
+trailhead = seed_room(forest_edge, "The Trailhead", <<~TEXT, kind: "outdoor")
   The open fields end abruptly here at a ragged wall of trees, as though someone drew a line and told the forest not to cross it. A weathered signpost stands at the start of the trail, its arms pointing in several directions at once and its lettering long since worn to guesses. A wooden stile crosses the old fence, and a noticeboard nailed to a post is layered with faded warnings, lost-dog notices and one or two things that make less sense.
 
   Behind, the land rolls back down toward the river and its bridge. Ahead, the trail plunges into the green gloom of the woods, and just off to the side, a thin curl of smoke rises from the chimney of a small cabin.
 TEXT
 
-cabin = seed_room(forest_edge, "The Ranger's Cabin", <<~TEXT)
+cabin = seed_room(forest_edge, "The Ranger's Cabin", <<~TEXT, kind: "building")
   Built of rough logs and stubbornness, this one-room cabin has clearly weathered more than its share of storms. A pot-bellied stove sits in one corner, almost always lit and almost always with a kettle on, and the walls are crowded with maps, snowshoes, coils of rope and a stuffed owl with an expression of deep disapproval. A narrow cot is pushed beneath the single window.
 
   A big table takes up the middle of the room, strewn with logbooks, lanterns and half-mended gear, with a couple of chairs pulled up to it for visitors. The door, which sticks in wet weather, leads back out to the Trailhead.
 TEXT
 
-clearing = seed_room(deep_woods, "Old Oak Clearing", <<~TEXT)
+clearing = seed_room(deep_woods, "Old Oak Clearing", <<~TEXT, kind: "outdoor")
   Deep in the forest, the trees draw back to leave a rough circle of open ground, and in the middle of it stands an oak so vast and so old it seems less a tree than a landmark. Its roots break the earth in great twisted knots, and its lowest branches sprawl out far enough to shade the whole clearing. Moss carpets everything, and the light that filters through the leaves is green and gold and never quite still.
 
   Paths lead off between the trees in several directions, though not all of them seem to be the same from one day to the next. The widest winds back toward the edge of the forest, while a narrower, damper trail drops down into a hollow choked with ferns.
 TEXT
 
-fern_hollow = seed_room(deep_woods, "Fern Hollow", <<~TEXT)
+fern_hollow = seed_room(deep_woods, "Fern Hollow", <<~TEXT, kind: "outdoor")
   The ground falls away here into a deep, damp hollow, so thick with ferns that they brush at the waist and swallow the path completely in places. A tiny stream trickles somewhere beneath them, more often heard than seen, and the banks are crowded with toadstools in colours that don't look entirely safe. Everything is very quiet, the kind of quiet that makes a person want to whisper.
 
   A fallen tree, long since hollowed out by rot and beetles, lies across the bottom of the dip, large enough to crawl inside. The slope climbs back up to the Old Oak Clearing, and through a gap in the trees, the silver gleam of water hints at the lake beyond.
 TEXT
 
-beach = seed_room(lakeshore, "Shingle Beach", <<~TEXT)
+beach = seed_room(lakeshore, "Shingle Beach", <<~TEXT, kind: "outdoor")
   The trees part to reveal a narrow beach of grey stones, worn smooth and round by the endless lapping of the lake. The water is clear in the shallows and darkens quickly to an inky black further out, and on still days the reflection of the forest is so perfect it's hard to tell which way is up. Driftwood lies bleached and twisted along the tideline, and the remains of an old campfire sit in a ring of blackened stones.
 
   The shore curves away in both directions, hemmed in by the forest. A path climbs back into the trees toward the hollow, and a little way along the beach, a weathered boathouse sits half on land and half on the water.
 TEXT
 
-boathouse = seed_room(lakeshore, "The Boathouse", <<~TEXT)
+boathouse = seed_room(lakeshore, "The Boathouse", <<~TEXT, kind: "building")
   Half built on the shore and half on stilts sunk into the lake, the boathouse creaks and sighs with every ripple. Inside, the light is dim and shifting, reflected up off the water that slaps against the pilings beneath the slatted floor. A couple of rowing boats bob in the open bay, tied to iron rings, while oars, nets and old lifebelts hang from hooks along the walls.
 
   A rickety ladder leads up to a small loft beneath the eaves, where someone once left a blanket, a lantern and a stack of mouldering novels. The wide doors at the front open back onto the stones of Shingle Beach.
 TEXT
 
-seed_paths(trailhead, "Ranger's Cabin", cabin, "Out")
-seed_paths(clearing, "Fern Hollow", fern_hollow, "Clearing")
-seed_paths(beach, "Boathouse", boathouse, "Out")
-seed_paths(trailhead, "Deep Woods", clearing, "Forest's Edge")
-seed_paths(fern_hollow, "Lake", beach, "Hollow")
+seed_street_link(woodland_track, "Mossy Path", mossy_path, "Woodland Track", direction: "S")
+seed_street_link(mossy_path, "Shoreline Trail", shoreline_trail, "Mossy Path", direction: "S")
+
+seed_on_street(woodland_track, "Trailhead", trailhead)
+seed_on_street(woodland_track, "Ranger's Cabin", cabin)
+seed_on_street(mossy_path, "Old Oak Clearing", clearing)
+seed_on_street(mossy_path, "Fern Hollow", fern_hollow)
+seed_on_street(shoreline_trail, "Shingle Beach", beach)
+seed_on_street(shoreline_trail, "Boathouse", boathouse)
 
 # ---------------------------------------------------------------------------
 # Getting between them: the train links the City and Country, the old bridge
@@ -242,9 +306,9 @@ seed_paths(clearing, "Old Road to the City", grand_avenue, "Forest Road")
 
 # Where players arrive when they open each Area.
 {
-  city => central_square, uptown => grand_avenue, midtown => central_square, downtown => union_station,
-  country => village_green, village => village_green, farmland => farm_lane, riverside => stone_bridge,
-  forest => trailhead, forest_edge => trailhead, deep_woods => clearing, lakeshore => beach
+  city => midtown_street, uptown => uptown_street, midtown => midtown_street, downtown => downtown_street,
+  country => high_street, village => high_street, farmland => hedgerow_lane, riverside => towpath,
+  forest => woodland_track, forest_edge => woodland_track, deep_woods => mossy_path, lakeshore => shoreline_trail
 }.each do |area, room|
   area.update!(entrance_room: room) if area.entrance_room.nil?
 end
