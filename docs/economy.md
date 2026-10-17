@@ -120,6 +120,62 @@ who in turn tax their subjects (owner, 2026-10-17). Agreed the same day:
   ones below it. A secret faction's link to its overlord is only shown to
   members of the two factions.
 
+## Domains (land and the people on it) [Proposed]
+
+**Why a separate system.** The owner's Draganic game is very stratified:
+Realms hold Duchies, Duchies hold Counties, Counties hold Baronies, and each
+level owes taxes to the level above. Most of the people paying at the bottom
+are serfs who are NPCs, or really just numbers on a sheet (owner,
+2026-10-17). Factions are guilds, families and social groups, and a
+character can belong to many (owner, 2026-10-17), so they're the wrong
+shape for a chain of land where each piece has exactly one liege. Domains
+are a small system of their own inside the Economy, with their own switch,
+and factions keep their member taxes and dues.
+
+**What a Domain is.** A named piece of land, made by staff:
+
+- **Name and rank:** the Duchy of Niwen; ranks are words staff set per game
+  (Realm, Duchy, County, Barony).
+- **Liege:** the one Domain it sits under, so the County of Aqagia sits under
+  the Duchy of Niwen. Chains can be as deep as the game likes, but can't
+  loop.
+- **Holder:** the character who holds it (Baron Odde holds Everean). Staff
+  can also let a faction hold it, such as a clan, in which case the money
+  goes to that faction's Bank.
+- **People:** a number, such as 1,200 serfs. They're not characters. Staff
+  change the number as the story goes (a plague, a good harvest, new
+  settlers).
+- **Yield:** how much each head brings in per month, set by staff.
+- **Tax to its liege:** a percentage, set by the liege Domain's holder within
+  the staff limit.
+- **Area (optional):** the Area on the grid it matches, so walking into the
+  Duchy of Niwen's Area shows whose land it is.
+
+**How the money flows, once a month:**
+
+1. Each Domain earns people × yield.
+2. Its tax to its liege is paid out of that, upwards, a level at a time, so a
+   Barony pays its County, which pays its Duchy, which pays its Realm, which
+   pays the Crown.
+3. What's left goes to the holder's Purse (or the holding faction's Bank).
+
+Each step is a line on the ledgers, so a holder can see what their land
+earned, what they owed and what they kept. Domains never go into debt: a
+Domain only pays tax on what it earned.
+
+**What players see.** A Domains page shows the tree of land (Realm down to
+Barony) with each holder, much like Draganic's "Lands & Fiefdoms" wiki page
+but kept up to date by the game. A holder sees their Domain's people, yield
+and earnings; the size of other people's earnings stays private, like
+Purses.
+
+**What holders control.** The tax rate their own vassal Domains pay them,
+within the staff limit. Everything else (people, yield, who holds what) is
+staff's, because it's the story.
+
+**Left out on purpose (from Arx's domains):** armies, castles, buildings,
+harvest rolls, and action points.
+
 ## Scheduled payments, in detail
 
 - Payments run once a day on a schedule in real time, like weekly XP. Due
