@@ -31,19 +31,6 @@ def seed_paths(here, there_name, there, back_name)
   Exit.find_or_create_by!(source_room: there, name: back_name) { |e| e.destination_room = here }
 end
 
-# Joins two streets along a compass direction ("S" from here comes back "N").
-def seed_street_link(here, there_name, there, back_name, direction:)
-  Exit.find_or_create_by!(source_room: here, name: there_name) { |e| e.destination_room = there; e.kind = "street"; e.direction = direction }
-  Exit.find_or_create_by!(source_room: there, name: back_name) { |e| e.destination_room = here; e.kind = "street"; e.direction = Exit.opposite(direction) }
-end
-
-# Puts a building or an outdoor space on a street: a Path from the street in,
-# and Out to come back.
-def seed_on_street(street, there_name, there)
-  Exit.find_or_create_by!(source_room: street, name: there_name) { |e| e.destination_room = there; e.kind = "building" }
-  Exit.find_or_create_by!(source_room: there, name: street.name) { |e| e.destination_room = street; e.kind = "building"; e.direction = "OUT" }
-end
-
 # ---------------------------------------------------------------------------
 # The City
 # ---------------------------------------------------------------------------
@@ -67,18 +54,6 @@ TEXT
 downtown = seed_area("Downtown", <<~TEXT.squish, parent: city, position: 2)
   Older, louder and a good deal grimier. Downtown has the station, the market
   and the kind of alleys that people tell you not to walk down after dark.
-TEXT
-
-uptown_street = seed_room(uptown, "Uptown Street", <<~TEXT, kind: "street")
-  A broad street of pale stone terraces, wrought-iron railings and the occasional liveried chauffeur waiting at the kerb. Uptown Street is the way through the quiet, wealthy part of the city, with the Ashcombe Hotel's striped awning halfway along and the leafy sweep of Grand Avenue opening off it. The street runs south toward Midtown, the traffic thickening as it goes.
-TEXT
-
-midtown_street = seed_room(midtown, "Midtown Street", <<~TEXT, kind: "street")
-  Buses, bicycles and a river of people on foot, all in a hurry. Midtown Street is the city's main artery, lined with shopfronts, offices and food carts, and it passes the great open space of Central Square with the glowing windows of the Lamplight Café just beyond. North, the street climbs toward Uptown; south, it dips toward the noise of Downtown.
-TEXT
-
-downtown_street = seed_room(downtown, "Downtown Street", <<~TEXT, kind: "street")
-  Cracked paving, tram wires overhead and shuttered shopfronts that open only when it suits them. Downtown Street is the gritty way through the old part of the city, with the soot-streaked bulk of Union Station on one side and the cobbled lanes of Harbour Market leading off toward the water. It runs north toward Midtown and the cleaner streets beyond.
 TEXT
 
 grand_avenue = seed_room(uptown, "Grand Avenue", <<~TEXT, kind: "outdoor")
@@ -117,17 +92,6 @@ harbour_market = seed_room(downtown, "Harbour Market", <<~TEXT, kind: "outdoor")
   At the far end, the street gives way to the grey water of the harbour, where gulls wheel above the moored boats and wait for someone to drop something. Narrow alleys slip away between the warehouses on either side, and the market's near end comes out by the side door of Union Station.
 TEXT
 
-# The three streets are what people walk along; everything else sits on one.
-seed_street_link(uptown_street, "Midtown Street", midtown_street, "Uptown Street", direction: "S")
-seed_street_link(midtown_street, "Downtown Street", downtown_street, "Midtown Street", direction: "S")
-
-seed_on_street(uptown_street, "Ashcombe Hotel", ashcombe)
-seed_on_street(uptown_street, "Grand Avenue", grand_avenue)
-seed_on_street(midtown_street, "Central Square", central_square)
-seed_on_street(midtown_street, "Lamplight Café", lamplight)
-seed_on_street(downtown_street, "Union Station", union_station)
-seed_on_street(downtown_street, "Harbour Market", harbour_market)
-
 # ---------------------------------------------------------------------------
 # The Country
 # ---------------------------------------------------------------------------
@@ -151,18 +115,6 @@ TEXT
 riverside = seed_area("Riverside", <<~TEXT.squish, parent: country, position: 2)
   A slow, wide river winds its way through the valley, with willows trailing
   in the water and paths worn smooth along its banks.
-TEXT
-
-high_street = seed_room(village, "High Street", <<~TEXT, kind: "street")
-  The village's one proper street, a crooked ribbon of cobbles between cottages that lean toward each other like gossips. High Street runs from the church to the Crooked Kettle and the green, and on to the lane that leads out toward the farms.
-TEXT
-
-hedgerow_lane = seed_room(farmland, "Hedgerow Lane", <<~TEXT, kind: "street")
-  A narrow lane between high hedges, rutted by cart wheels and muddy for most of the year. Hedgerow Lane wanders past the gates of every farm in the valley, with Farm Lane and the Hay Barn off it, and carries on toward the river.
-TEXT
-
-towpath = seed_room(riverside, "The Towpath", <<~TEXT, kind: "street")
-  A grassy path trodden hard by horses and walkers, following the river through the willows. The Towpath links the old Stone Bridge and the quiet Riverbank, and the lane back up to the farms meets it near the bridge.
 TEXT
 
 village_green = seed_room(village, "Village Green", <<~TEXT, kind: "outdoor")
@@ -201,16 +153,6 @@ riverbank = seed_room(riverside, "The Riverbank", <<~TEXT, kind: "outdoor")
   A little wooden jetty, more than a little rickety, juts out into the river, a battered rowing boat tied to its end. The path follows the water downstream into the reeds and back up the slope toward the Stone Bridge.
 TEXT
 
-seed_street_link(high_street, "Hedgerow Lane", hedgerow_lane, "High Street", direction: "E")
-seed_street_link(hedgerow_lane, "The Towpath", towpath, "Hedgerow Lane", direction: "S")
-
-seed_on_street(high_street, "Village Green", village_green)
-seed_on_street(high_street, "Crooked Kettle", kettle)
-seed_on_street(hedgerow_lane, "Farm Lane", farm_lane)
-seed_on_street(hedgerow_lane, "Hay Barn", hay_barn)
-seed_on_street(towpath, "Stone Bridge", stone_bridge)
-seed_on_street(towpath, "Riverbank", riverbank)
-
 # ---------------------------------------------------------------------------
 # The Forest
 # ---------------------------------------------------------------------------
@@ -234,18 +176,6 @@ TEXT
 lakeshore = seed_area("Lakeshore", <<~TEXT.squish, parent: forest, position: 2)
   A wide, dark lake cradled by the trees, still as glass on calm days and
   restless when the wind comes down off the hills.
-TEXT
-
-woodland_track = seed_room(forest_edge, "Woodland Track", <<~TEXT, kind: "street")
-  A wide, rutted track where the last fields give way to trees. Woodland Track runs along the forest's edge, past the Trailhead and the Ranger's Cabin, before narrowing and plunging in among the oaks.
-TEXT
-
-mossy_path = seed_room(deep_woods, "Mossy Path", <<~TEXT, kind: "street")
-  A narrow, winding path, soft underfoot with moss and old leaves, where the light comes down green and dim. The Mossy Path threads between the trees to Old Oak Clearing and Fern Hollow, and one branch leads on down toward the lake.
-TEXT
-
-shoreline_trail = seed_room(lakeshore, "Shoreline Trail", <<~TEXT, kind: "street")
-  A pebbly trail that hugs the lake, sometimes on the shingle, sometimes up among the reeds. Shoreline Trail connects Shingle Beach and the Boathouse, and the path back into the woods meets it at the north end.
 TEXT
 
 trailhead = seed_room(forest_edge, "The Trailhead", <<~TEXT, kind: "outdoor")
@@ -284,16 +214,6 @@ boathouse = seed_room(lakeshore, "The Boathouse", <<~TEXT, kind: "building")
   A rickety ladder leads up to a small loft beneath the eaves, where someone once left a blanket, a lantern and a stack of mouldering novels. The wide doors at the front open back onto the stones of Shingle Beach.
 TEXT
 
-seed_street_link(woodland_track, "Mossy Path", mossy_path, "Woodland Track", direction: "S")
-seed_street_link(mossy_path, "Shoreline Trail", shoreline_trail, "Mossy Path", direction: "S")
-
-seed_on_street(woodland_track, "Trailhead", trailhead)
-seed_on_street(woodland_track, "Ranger's Cabin", cabin)
-seed_on_street(mossy_path, "Old Oak Clearing", clearing)
-seed_on_street(mossy_path, "Fern Hollow", fern_hollow)
-seed_on_street(shoreline_trail, "Shingle Beach", beach)
-seed_on_street(shoreline_trail, "Boathouse", boathouse)
-
 # ---------------------------------------------------------------------------
 # Getting between them: the train links the City and Country, the old bridge
 # road reaches the Forest, and an old road through the woods comes out at
@@ -304,14 +224,10 @@ seed_paths(union_station, "Train to the Country", village_green, "Train to the C
 seed_paths(stone_bridge, "Forest Road", trailhead, "Bridge")
 seed_paths(clearing, "Old Road to the City", grand_avenue, "Forest Road")
 
-# Where players arrive when they open each Area.
-{
-  city => midtown_street, uptown => uptown_street, midtown => midtown_street, downtown => downtown_street,
-  country => high_street, village => high_street, farmland => hedgerow_lane, riverside => towpath,
-  forest => woodland_track, forest_edge => woodland_track, deep_woods => mossy_path, lakeshore => shoreline_trail
-}.each do |area, room|
-  area.update!(entrance_room: room) if area.entrance_room.nil?
-end
+# One street (or lane, or path) in each smaller Area, with that Area's
+# buildings and outdoor spaces on it, and where players arrive when they open
+# each Area.
+StarterStreets.install!
 
 # SOUL's Aspects and Skills, starter Boons and Banes, and profile and
 # application fields, so character creation works straight away.

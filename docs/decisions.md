@@ -28,7 +28,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 
 ## 2026-10-17: The starting map walks along streets (owner)
 
-- In the sample map, each smaller Area has one street (a street, lane or path) that players move along, and its buildings and outdoor spaces hang off it. Existing places were kept. Only new games get this map.
+- In the sample map, each smaller Area has one street (a street, lane or path) that players move along, and its buildings and outdoor spaces hang off it. Existing places were kept. New games get this map, and games that still have the sample places get the streets added once by a migration (StarterStreets).
 
 ## 2026-10-17: Players choose their Boons and Banes on rolls (owner)
 
