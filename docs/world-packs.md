@@ -55,6 +55,7 @@ except `format`.
 - Pictures are named by their key in `images`. PNG, JPEG, GIF or WebP, 5 MB
   each at most. `look.pictures` uses the Look picture names
   (`page_background`, `box_background`, `intro_banner`).
+- A pack's `look` replaces the game's whole look (colours, fonts, extra CSS and the ready-made look it started from), so nothing of an earlier look is left behind. Pictures are only replaced when the pack names them.
 - Fonts are WOFF2 files (they start with `wOF2`), 300 KB each at most and no
   more than 24 per pack. The import stores them in the game and the game's
   stylesheet declares them, so `look.font_body` and `look.font_heading` can

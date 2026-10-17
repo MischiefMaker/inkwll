@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — Importing a look replaces the old one
+
+- When a world pack has a look, Import a world now replaces the game's whole look with it. Before, bits of the earlier look stayed behind: with the Old-school MUSH look, the pack's pages still showed "<OOC>" labels and square MUSH styling.
+
 ## 2026-10-16 — Update every Well skips what's already current
 
 - "Update every Well" no longer redeploys a Well (including this game) that is already on that version.

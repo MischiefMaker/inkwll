@@ -197,6 +197,9 @@ class WorldPack
     def import_look
       return if look.empty?
       settings = GameSetting.current
+      # The pack's look replaces the game's, so nothing of an earlier look
+      # (such as the Old-school MUSH one, with its <OOC> labels) is left behind.
+      settings.assign_attributes(skin_base: nil, skin_colours: {}, skin_dark_colours: {}, skin_dark_mode: true, font_body: nil, font_heading: nil, custom_css: nil)
       settings.apply_preset(look["preset"]) if GameSetting::Skin::PRESETS.key?(look["preset"])
       settings.skin_colours = settings.skin_colours.merge(look["colours"]) if look["colours"].is_a?(Hash)
       settings.skin_dark_colours = look["dark_colours"] if look["dark_colours"].is_a?(Hash)

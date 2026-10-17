@@ -159,4 +159,19 @@ class WorldPackTest < ActiveSupport::TestCase
     assert_raises(WorldPack::Invalid) { pack(fonts: [ font(style: "oblique") ]) }
     assert_raises(WorldPack::Invalid) { pack(fonts: Array.new(WorldPack::MAX_FONTS + 1) { |i| font(family: "Font #{i}") }) }
   end
+
+  test "a pack's look replaces an earlier look, including the Old-school MUSH one" do
+    settings = GameSetting.current
+    settings.apply_preset("mush")
+    settings.update!(custom_css: ".old { color: red; }")
+    assert_equal "mush", settings.skin_base
+
+    pack(look: { "colours" => { "bg" => "#405570" } }).import!(by: accounts(:founder))
+
+    settings.reload
+    assert_nil settings.skin_base
+    assert_nil settings.font_body
+    assert_nil settings.custom_css
+    assert_equal({ "bg" => "#405570" }, settings.skin_colours)
+  end
 end
