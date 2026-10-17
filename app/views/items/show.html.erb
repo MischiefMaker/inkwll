@@ -1,0 +1,60 @@
+<% content_for :title, "#{@item.name} · Inkwll" %>
+
+<article class="item">
+  <p class="breadcrumbs"><%= link_to "#{@item.character.name}'s #{term(:belongings).downcase}", character_path(@item.character, tab: "belongings") %></p>
+  <h1 class="page-title item__name"><%= @item.name %><% if @item.quantity > 1 %> <span class="muted item__quantity">× <%= @item.quantity %></span><% end %>
+    <% if @item.masterwork? %><span class="tag item__masterwork">Masterwork</span><% end %></h1>
+
+  <% if @item.pictures.attached? %>
+    <div class="item__pictures">
+      <% @item.pictures.each do |picture| %><%= image_tag picture, alt: "", class: "item__picture", loading: "lazy" %><% end %>
+    </div>
+  <% end %>
+  <% if @item.description.present? %><div class="item__description text"><%= simple_format(@item.description) %></div><% end %>
+  <%= render "items/features", item: @item %>
+  <% if @item.made? %>
+    <p class="item__maker muted">Made by <%= @item.maker && !@item.maker.retired? ? link_to(@item.maker.name, character_path(@item.maker)) : @item.maker_name %> on <%= @item.made_at.to_date.to_fs(:long) %><%= " (#{@item.item_type.name})" if @item.item_type %>.</p>
+  <% end %>
+  <% if @item.for_sale? && Crafting.enabled? %>
+    <p class="item__for-sale">On the <%= link_to term(:market), market_path %> for <strong><%= money(@item.price) %></strong>.</p>
+  <% end %>
+
+  <% if @mine %>
+    <section class="item__owner">
+      <% if Crafting.enabled? %>
+        <% if @item.for_sale? %>
+          <%= button_to "Take it off the #{term(:market)}", item_listing_path(@item), method: :delete, class: "button button--quiet" %>
+        <% else %>
+          <%= form_with url: item_listing_path(@item), class: "form form--inline item__sell-form" do |form| %>
+            <%= form.label :price, "Sell it on the #{term(:market)} for" %>
+            <%= form.number_field :price, min: 1, required: true, placeholder: Economy.currency_name.capitalize %>
+            <%= form.submit "Put it up for sale", class: "button button--quiet" %>
+          <% end %>
+          <% if @item.quantity > 1 %><p class="hint">The price is for the whole stack.</p><% end %>
+        <% end %>
+      <% end %>
+      <% if @item.flaw_name %>
+        <%= form_with model: @item, url: item_path(@item), method: :patch, class: "form form--inline item__flaw-form" do |form| %>
+          <%= form.label :flaw_name, "What's the flaw?" %>
+          <%= form.text_field :flaw_name, maxlength: 60 %>
+          <%= form.submit "Save", class: "button button--quiet" %>
+        <% end %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% if @staff %>
+    <p class="item__staff"><%= link_to "Change or take it (staff)", edit_admin_item_path(@item) %></p>
+  <% end %>
+
+  <% if @events&.any? %>
+    <section class="item__history">
+      <h2 class="section-title">History</h2>
+      <ul class="item-history">
+        <% @events.each do |event| %>
+          <li class="item-history__event"><span class="muted"><%= event.created_at.to_fs(:short) %></span> <%= event.kind_name %><%= " to #{event.character.name}" if event.character && event.kind.in?(%w[ given traded sold staff_give ]) %><%= " from #{event.other_character.name}" if event.other_character %><%= " · #{event.note}" if event.note %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+</article>

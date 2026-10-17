@@ -1,8 +1,9 @@
 # Crafting (Version 2.0, Theme 9)
 
-**Status: Agreed** with the owner on 2026-10-17 (answers at the end and in
-`decisions.md`). Nothing here is built. It comes after the Economy, and
-waits for the owner's go.
+**Status: Built on the `v2.0` branch** (2026-10-17), waiting for the
+owner to try it. Agreed with the owner on 2026-10-17 (answers at the end and
+in `decisions.md`). Choices Claude made while building are in
+`decisions.md` under "Items and Crafting built on the v2.0 branch".
 
 Crafting comes after the Economy (`economy.md`) and builds on it. It's an
 optional system a game switches on, like Grimoire.

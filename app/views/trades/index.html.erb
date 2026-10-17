@@ -1,0 +1,15 @@
+<% content_for :title, "Trades · Inkwll" %>
+
+<div class="trades">
+  <h1 class="page-title">Open trades</h1>
+  <% if @trades.any? %>
+    <ul class="trades__list">
+      <% @trades.each do |trade| %>
+        <li class="trades__item"><%= link_to "#{trade.from_character.name} and #{trade.to_character.name}", trade_path(trade) %>
+          <span class="muted"><%= time_ago_in_words(trade.updated_at) %> ago</span></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">None of your characters are trading right now.</p>
+  <% end %>
+</div>

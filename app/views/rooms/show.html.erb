@@ -85,6 +85,10 @@
     </section>
   </div>
 
+  <% if Crafting.items_enabled? && (listings = Crafting::ShopListing.where(room: @room).includes(catalogue_item: { image_attachment: :blob }).to_a).any? %>
+    <%= render "rooms/shop", room: @room, listings: listings %>
+  <% end %>
+
   <%= render "scenes/list", room: @room %>
 
   <% if current_account&.can?(:build) %>

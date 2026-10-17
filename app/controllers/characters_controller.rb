@@ -23,6 +23,7 @@ class CharactersController < ApplicationController
     tabs << "inklings" if Inkling.enabled? && (@mine || @staff_view)
     tabs << "grimoire" if Grimoire.enabled? && (@mine || @staff_view)
     tabs << "purse" if Economy.enabled? && (@mine || @staff_view)
+    tabs << "belongings" if Crafting.items_enabled?
     @tab = params[:tab].presence_in(tabs) || "profile"
   end
 

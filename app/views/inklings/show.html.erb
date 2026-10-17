@@ -219,12 +219,17 @@
           <% kinds = [ [ "A note", "note" ] ] %>
           <% kinds = [ [ "XP", "xp" ], [ "A new Boon or Bane", "bnb" ], [ "Progress a Boon or Bane they have", "progress" ], [ "A Culmination", "culmination" ] ] + kinds if Soul.enabled? %>
           <% kinds += [ [ "Money", "money" ] ] if Economy.enabled? %>
+          <% kinds += [ [ "An item from the catalogue", "item" ] ] if Crafting.items_enabled? && Crafting::CatalogueItem.exists? %>
           <%= form.select :reward_type, kinds %>
         </div>
         <% if Soul.enabled? || Economy.enabled? %>
           <div class="form--inline inkling__reward-details">
             <%= form.label :amount, "XP or money", class: "visually-hidden" %>
             <%= form.number_field :amount, min: 1, placeholder: Economy.enabled? ? "XP or #{Economy.currency_name}" : "XP" %>
+            <% if Crafting.items_enabled? && Crafting::CatalogueItem.exists? %>
+              <%= form.label :catalogue_item_id, "Item", class: "visually-hidden" %>
+              <%= form.select :catalogue_item_id, Crafting::CatalogueItem.ordered.map { |item| [ item.name, item.id ] }, include_blank: "Item…" %>
+            <% end %>
             <% if Soul.enabled? %>
             <%= form.label :bnb_id, "Boon or Bane", class: "visually-hidden" %>
             <%= form.select :bnb_id, Soul::Bnb.active.order(:kind, :name).map { |bnb| [ "#{bnb.name} (#{bnb.kind.capitalize})", bnb.id ] }, include_blank: "New Boon or Bane…" %>

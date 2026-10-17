@@ -42,6 +42,8 @@ module AdminMenuHelper
       if Economy.enabled?
         groups["Game systems"] << admin_link("Economy", admin_economy_path, %w[ economy economy_adjustments economy_schedules economy_allowance_changes ])
         groups["Game systems"] << admin_link(term(:domain, count: 2), admin_domains_path, %w[ domains ]) if Domain.enabled? && current_account.can?(:change_game_settings)
+        groups["Game systems"] << admin_link("Item catalogue", admin_catalogue_items_path, %w[ catalogue_items items ])
+        groups["Game systems"] << admin_link("Crafting", admin_crafting_path, %w[ crafting crafting_item_types crafting_features ], (Crafting::Feature.proposed.count if Crafting.enabled?)) if Crafting.enabled?
       end
     end
 

@@ -12,6 +12,15 @@ Short, plain-language notes on what changed. Newest first.
 - Admin → Look can put the Chapter tabs down the left-hand side instead of along the top (phones keep them on top).
 - Tick boxes on Admin → Characters and Admin → Players and staff: tick several (or tick the heading for all), then retire them, put them on the roster, or archive the players in one go.
 
+## 2026-10-17 — Items and Crafting (Version 2.0 branch)
+
+- With the Economy on, every character has a Belongings tab that everyone can see. Players give items (or part of a stack) to other characters, and start a Trade where both sides put in money and items and it goes through once both tick Agree.
+- Admin → Item catalogue: ready-made items staff sell in the shops of chosen Places, and give to characters with a reason. A character standing in a Place can buy from its shop. Inklings can reward a catalogue item.
+- Crafting, switched on under Admin → Features: characters pay a starting cost plus each feature's cost, write up the item with pictures, and roll its Skill. A great roll makes a Masterwork, a complicated one adds a flaw, and a failure loses money. Made items carry their maker's mark.
+- Item features count in rolls as tick boxes beside Boons and Banes, and the Storyteller can rule on them. Flaws always count.
+- A Market page lists everything for sale. Sales count as income for faction income tax.
+- Admin → Crafting: what can be made, features, players' feature proposals, and the costs and limits.
+
 ## 2026-10-17 — Domains (Version 2.0 branch)
 
 - Land in a chain of lieges, such as Realm, Duchy, County and Barony, switched on under Admin → Features (it needs the Economy). Wellkeepers make them under Admin → Domains, with a holder, a number of people and a yield per head.

@@ -1,0 +1,24 @@
+<%= form_with model: item_type, scope: :crafting_item_type, url: item_type.persisted? ? admin_crafting_item_type_path(item_type) : admin_crafting_item_types_path, class: "form crafting-admin__type-form" do |form| %>
+  <%= render "shared/errors", record: item_type %>
+  <div class="form--inline">
+    <%= form.label :name %>
+    <%= form.text_field :name, maxlength: 60, required: true, placeholder: "Sword" %>
+    <%= form.label :base_cost, "Starting cost" %>
+    <%= form.number_field :base_cost, min: 0 %>
+    <% if Soul.enabled? %>
+      <%= form.label :soul_skill_id, "Skill to make it" %>
+      <%= form.collection_select :soul_skill_id, Soul::Skill.order(:name), :id, :name, include_blank: "None (always succeeds)" %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_area :description, rows: 2, maxlength: 2000 %>
+  </div>
+  <% if item_type.persisted? %>
+    <div class="field">
+      <%= form.label :position, "Order (lower comes first)" %>
+      <%= form.number_field :position %>
+    </div>
+  <% end %>
+  <%= form.submit item_type.persisted? ? "Save" : "Add", class: "button button--quiet" %>
+<% end %>

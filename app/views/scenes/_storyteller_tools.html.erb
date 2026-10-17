@@ -32,13 +32,20 @@
           <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: "standard" }, id: "call_difficulty" %>
           <% others.each do |character| %>
             <% entries = character.active_bnbs %>
-            <% next if entries.empty? %>
+            <% extras = character.roll_extras.reject(&:always?) %>
+            <% next if entries.empty? && extras.empty? %>
             <fieldset class="fieldset storyteller-tools__bnbs" data-call-roll-target="group" data-character-id="<%= character.id %>" hidden>
               <legend class="fieldset__legend">Boons and Banes</legend>
               <% entries.each do |entry| %>
                 <div class="field storyteller-tools__bnb">
                   <%= label_tag "call_ruling_#{entry.id}", "#{entry.name} (#{entry.level.capitalize} #{entry.kind.capitalize})" %>
                   <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "choice"), id: "call_ruling_#{entry.id}" %>
+                </div>
+              <% end %>
+              <% extras.each do |extra| %>
+                <div class="field storyteller-tools__bnb storyteller-tools__extra">
+                  <%= label_tag "call_extra_ruling_#{extra.key}", "#{extra.name} (#{extra.level.capitalize} #{extra.kind.capitalize})" %>
+                  <%= select_tag "extra_rulings[#{extra.key}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "choice"), id: "call_extra_ruling_#{extra.key}" %>
                 </div>
               <% end %>
             </fieldset>

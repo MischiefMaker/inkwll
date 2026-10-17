@@ -1,0 +1,5 @@
+<% content_for :title, "#{@catalogue_item.name_was} · Item catalogue · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Item catalogue", admin_catalogue_items_path %></p>
+<h1 class="page-title">Edit <%= @catalogue_item.name_was %></h1>
+<%= render "form", catalogue_item: @catalogue_item %>

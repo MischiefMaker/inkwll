@@ -16,6 +16,7 @@ class Economy::Entry < ApplicationRecord
     "sale" => "Sale",
     "purchase" => "Purchase",
     "craft" => "Crafting",
+    "trade" => "Trade",
     "missed" => "Missed payment"
   }.freeze
 

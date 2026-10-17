@@ -1,0 +1,5 @@
+<% content_for :title, "#{@feature.name_was} · Crafting · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Crafting", admin_crafting_path %></p>
+<h1 class="page-title">Edit <%= @feature.name_was %></h1>
+<%= render "form", feature: @feature %>

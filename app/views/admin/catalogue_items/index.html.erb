@@ -1,0 +1,46 @@
+<% content_for :title, "Item catalogue · Admin · Inkwll" %>
+
+<div class="catalogue-admin">
+  <h1 class="page-title">Item catalogue</h1>
+  <p class="muted">Ready-made items to sell in shops and give as rewards. Tick the <%= term(:room, count: 2).downcase %> whose shops sell each one; a character standing there can buy it for its price.</p>
+
+  <% if @catalogue_items.any? %>
+    <table class="table catalogue-admin__table">
+      <thead class="table__head"><tr class="table__row"><th class="table__heading">Item</th><th class="table__heading">Price</th><th class="table__heading">Sold in</th><th class="table__heading"></th></tr></thead>
+      <tbody class="table__body">
+        <% @catalogue_items.each do |item| %>
+          <tr class="table__row">
+            <td class="table__cell"><%= item.name %></td>
+            <td class="table__cell"><%= money(item.price) %></td>
+            <td class="table__cell"><%= item.rooms.map(&:name).to_sentence.presence || "—" %></td>
+            <td class="table__cell">
+              <%= edit_icon_link(edit_admin_catalogue_item_path(item)) %>
+              <%= delete_icon_button(admin_catalogue_item_path(item), label: "Delete", confirm: "Delete #{item.name}? Characters who own one keep it.") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <h2 class="section-title">Add an item</h2>
+  <%= render "form", catalogue_item: @catalogue_item %>
+
+  <section class="catalogue-admin__give">
+    <h2 class="section-title">Give a character an item</h2>
+    <%= form_with url: admin_items_path, class: "form form--inline catalogue-admin__give-form" do |form| %>
+      <%= form.label :to, "To", class: "visually-hidden" %>
+      <%= form.text_field :to, placeholder: "Character", maxlength: 100, required: true %>
+      <%= form.label :catalogue_item_id, "Item", class: "visually-hidden" %>
+      <%= form.select :catalogue_item_id, Crafting::CatalogueItem.ordered.map { |item| [ item.name, item.id ] }, include_blank: "A new item, named here:" %>
+      <%= form.label :name, "Name", class: "visually-hidden" %>
+      <%= form.text_field :name, placeholder: "Name (for a new item)", maxlength: 80 %>
+      <%= form.label :quantity, "How many", class: "visually-hidden" %>
+      <%= form.number_field :quantity, min: 1, value: 1 %>
+      <%= form.label :reason, "Reason", class: "visually-hidden" %>
+      <%= form.text_field :reason, placeholder: "Reason (goes in its history)", maxlength: 200, required: true %>
+      <%= form.submit "Give", class: "button button--quiet" %>
+    <% end %>
+    <p class="hint">To change or take an item, open it from the character's <%= term(:belongings).downcase %>.</p>
+  </section>
+</div>

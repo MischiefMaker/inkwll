@@ -13,9 +13,7 @@ class Scenes::PendingRollsController < ApplicationController
     by = @scene.participants_for(current_account).find(&:storyteller?)&.character or return head :forbidden
     character = @scene.participants.map(&:character).find { |c| c.id == params[:character_id].to_i } or
       return redirect_to(@scene, alert: "Pick a character in this #{Term[:scene]}.")
-    rulings = params[:rulings].respond_to?(:to_unsafe_h) ? params[:rulings].to_unsafe_h : {}
-    @scene.call_roll!(character, Soul::Skill.find(params[:skill_id]), params[:difficulty], by: by,
-      mandatory_ids: rulings.select { |_, v| v == "must" }.keys, optional_ids: rulings.select { |_, v| v == "choice" }.keys)
+    @scene.call_roll!(character, Soul::Skill.find(params[:skill_id]), params[:difficulty], by: by, **rulings)
     redirect_to @scene
   rescue ArgumentError => e
     redirect_to @scene, alert: e.message
@@ -26,12 +24,10 @@ class Scenes::PendingRollsController < ApplicationController
   def update
     if @pending.ready?
       return head :forbidden unless @pending.character.account_id == current_account.id
-      @scene.finish_roll!(@pending, bnb_ids: params[:bnb_ids])
+      @scene.finish_roll!(@pending, bnb_ids: params[:bnb_ids], extra_keys: params[:extra_keys])
     else
       by = @scene.participants_for(current_account).find(&:storyteller?)&.character or return head :forbidden
-      rulings = params[:rulings].respond_to?(:to_unsafe_h) ? params[:rulings].to_unsafe_h : {}
-      @scene.judge_roll!(@pending, by: by, difficulty_name: params[:difficulty],
-        mandatory_ids: rulings.select { |_, v| v == "must" }.keys, optional_ids: rulings.select { |_, v| v == "choice" }.keys)
+      @scene.judge_roll!(@pending, by: by, difficulty_name: params[:difficulty], **rulings)
     end
     redirect_to @scene
   rescue ArgumentError, Character::SoulSheet::SheetError => e
@@ -46,6 +42,15 @@ class Scenes::PendingRollsController < ApplicationController
   end
 
   private
+    # The Storyteller's "Must count" and "Player's choice" for each Boon and
+    # Bane, and for each extra such as an item's feature.
+    def rulings
+      boons = params[:rulings].respond_to?(:to_unsafe_h) ? params[:rulings].to_unsafe_h : {}
+      extras = params[:extra_rulings].respond_to?(:to_unsafe_h) ? params[:extra_rulings].to_unsafe_h : {}
+      { mandatory_ids: boons.select { |_, v| v == "must" }.keys, optional_ids: boons.select { |_, v| v == "choice" }.keys,
+        mandatory_extra_keys: extras.select { |_, v| v == "must" }.keys, optional_extra_keys: extras.select { |_, v| v == "choice" }.keys }
+    end
+
     def set_pending
       @scene = Scene.find(params[:scene_id])
       raise ActiveRecord::RecordNotFound unless @scene.visible_to?(current_account)

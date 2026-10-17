@@ -196,6 +196,119 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "crafting_catalogue_items", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "price", default: 0, null: false
+    t.integer "feature_ids", default: [], null: false, array: true
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "crafting_features", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "level", default: "minor", null: false
+    t.integer "skill_ids", default: [], null: false, array: true
+    t.integer "item_type_ids", default: [], null: false, array: true
+    t.string "status", default: "approved", null: false
+    t.bigint "proposed_by_id"
+    t.string "decline_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["proposed_by_id"], name: "index_crafting_features_on_proposed_by_id"
+  end
+
+  create_table "crafting_item_events", force: :cascade do |t|
+    t.bigint "item_id"
+    t.string "item_name", null: false
+    t.integer "quantity", default: 1, null: false
+    t.bigint "character_id"
+    t.bigint "other_character_id"
+    t.string "kind", null: false
+    t.string "note"
+    t.bigint "actor_id"
+    t.datetime "created_at", null: false
+    t.index ["actor_id"], name: "index_crafting_item_events_on_actor_id"
+    t.index ["character_id"], name: "index_crafting_item_events_on_character_id"
+    t.index ["item_id"], name: "index_crafting_item_events_on_item_id"
+    t.index ["other_character_id"], name: "index_crafting_item_events_on_other_character_id"
+  end
+
+  create_table "crafting_item_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "base_cost", default: 0, null: false
+    t.bigint "soul_skill_id"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["soul_skill_id"], name: "index_crafting_item_types_on_soul_skill_id"
+  end
+
+  create_table "crafting_items", force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "quantity", default: 1, null: false
+    t.bigint "catalogue_item_id"
+    t.bigint "item_type_id"
+    t.integer "feature_ids", default: [], null: false, array: true
+    t.bigint "maker_id"
+    t.string "maker_name"
+    t.datetime "made_at"
+    t.boolean "masterwork", default: false, null: false
+    t.string "flaw_name"
+    t.integer "flaw_skill_ids", default: [], null: false, array: true
+    t.integer "price"
+    t.datetime "listed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["catalogue_item_id"], name: "index_crafting_items_on_catalogue_item_id"
+    t.index ["character_id"], name: "index_crafting_items_on_character_id"
+    t.index ["item_type_id"], name: "index_crafting_items_on_item_type_id"
+    t.index ["listed_at"], name: "index_crafting_items_on_listed_at"
+    t.index ["maker_id"], name: "index_crafting_items_on_maker_id"
+  end
+
+  create_table "crafting_shop_listings", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "catalogue_item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["catalogue_item_id"], name: "index_crafting_shop_listings_on_catalogue_item_id"
+    t.index ["room_id", "catalogue_item_id"], name: "index_crafting_shop_listings_on_room_id_and_catalogue_item_id", unique: true
+    t.index ["room_id"], name: "index_crafting_shop_listings_on_room_id"
+  end
+
+  create_table "crafting_trade_items", force: :cascade do |t|
+    t.bigint "trade_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_crafting_trade_items_on_item_id"
+    t.index ["trade_id", "item_id"], name: "index_crafting_trade_items_on_trade_id_and_item_id", unique: true
+    t.index ["trade_id"], name: "index_crafting_trade_items_on_trade_id"
+  end
+
+  create_table "crafting_trades", force: :cascade do |t|
+    t.bigint "from_character_id", null: false
+    t.bigint "to_character_id", null: false
+    t.integer "from_money", default: 0, null: false
+    t.integer "to_money", default: 0, null: false
+    t.boolean "from_agreed", default: false, null: false
+    t.boolean "to_agreed", default: false, null: false
+    t.string "status", default: "open", null: false
+    t.bigint "scene_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_character_id"], name: "index_crafting_trades_on_from_character_id"
+    t.index ["scene_id"], name: "index_crafting_trades_on_scene_id"
+    t.index ["to_character_id"], name: "index_crafting_trades_on_to_character_id"
+  end
+
   create_table "domains", force: :cascade do |t|
     t.string "name", null: false
     t.string "rank"
@@ -436,6 +549,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
     t.string "chapter_tabs_side", default: "top", null: false
     t.boolean "domains_enabled", default: false, null: false
     t.integer "domain_tax_max_percent", default: 50, null: false
+    t.boolean "crafting_enabled", default: false, null: false
+    t.integer "crafting_max_features", default: 3, null: false
+    t.string "crafting_highest_level", default: "major", null: false
+    t.integer "crafting_minor_cost", default: 200, null: false
+    t.integer "crafting_major_cost", default: 600, null: false
+    t.integer "crafting_legendary_cost", default: 2000, null: false
     t.boolean "private_game", default: false, null: false
     t.boolean "player_approval_required", default: false, null: false
   end
@@ -948,6 +1067,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
     t.integer "mandatory_bnb_ids", default: [], null: false, array: true
     t.integer "optional_bnb_ids", default: [], null: false, array: true
     t.bigint "judge_id"
+    t.string "mandatory_extra_keys", default: [], null: false, array: true
+    t.string "optional_extra_keys", default: [], null: false, array: true
     t.index ["character_id"], name: "index_soul_pending_rolls_on_character_id"
     t.index ["scene_id"], name: "index_soul_pending_rolls_on_scene_id"
     t.index ["soul_skill_id"], name: "index_soul_pending_rolls_on_soul_skill_id"
@@ -1127,6 +1248,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_000000) do
   add_foreign_key "conversation_members", "accounts"
   add_foreign_key "conversation_members", "characters", column: "via_character_id"
   add_foreign_key "conversation_members", "conversations"
+  add_foreign_key "crafting_features", "characters", column: "proposed_by_id", on_delete: :nullify
+  add_foreign_key "crafting_item_events", "accounts", column: "actor_id", on_delete: :nullify
+  add_foreign_key "crafting_item_events", "characters", column: "other_character_id", on_delete: :nullify
+  add_foreign_key "crafting_item_events", "characters", on_delete: :nullify
+  add_foreign_key "crafting_item_events", "crafting_items", column: "item_id", on_delete: :nullify
+  add_foreign_key "crafting_item_types", "soul_skills", on_delete: :nullify
+  add_foreign_key "crafting_items", "characters", column: "maker_id", on_delete: :nullify
+  add_foreign_key "crafting_items", "characters", on_delete: :cascade
+  add_foreign_key "crafting_items", "crafting_catalogue_items", column: "catalogue_item_id", on_delete: :nullify
+  add_foreign_key "crafting_items", "crafting_item_types", column: "item_type_id", on_delete: :nullify
+  add_foreign_key "crafting_shop_listings", "crafting_catalogue_items", column: "catalogue_item_id", on_delete: :cascade
+  add_foreign_key "crafting_shop_listings", "rooms", on_delete: :cascade
+  add_foreign_key "crafting_trade_items", "crafting_items", column: "item_id", on_delete: :cascade
+  add_foreign_key "crafting_trade_items", "crafting_trades", column: "trade_id", on_delete: :cascade
+  add_foreign_key "crafting_trades", "characters", column: "from_character_id", on_delete: :cascade
+  add_foreign_key "crafting_trades", "characters", column: "to_character_id", on_delete: :cascade
+  add_foreign_key "crafting_trades", "scenes", on_delete: :nullify
   add_foreign_key "domains", "areas", on_delete: :nullify
   add_foreign_key "domains", "characters", column: "holder_character_id", on_delete: :nullify
   add_foreign_key "domains", "domains", column: "liege_id", on_delete: :nullify

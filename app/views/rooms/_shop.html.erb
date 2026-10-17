@@ -1,0 +1,22 @@
+<%# A Place's shop: the catalogue items staff sell here. A character standing here can buy. %>
+<% buyer = current_character if current_character&.approved? && !current_character.retired? && current_character.room_id == room.id %>
+<section class="shop">
+  <h2 class="section-title shop__title">For sale here</h2>
+  <ul class="shop__items">
+    <% listings.map(&:catalogue_item).sort_by { |item| [ item.position, item.name ] }.each do |item| %>
+      <li class="shop__item">
+        <% if item.image.attached? %><%= image_tag item.image, alt: "", class: "shop__image", loading: "lazy" %><% end %>
+        <div class="shop__text">
+          <span class="shop__name"><%= item.name %></span>
+          <strong class="shop__price"><%= money(item.price) %></strong>
+          <% if item.description.present? %><p class="shop__description muted"><%= item.description.truncate(300) %></p><% end %>
+          <% if (features = item.features).any? %><p class="shop__features muted"><%= features.map(&:name).to_sentence %></p><% end %>
+        </div>
+        <% if buyer %>
+          <%= button_to "Buy as #{buyer.name}", room_shop_purchases_path(room), params: { catalogue_item_id: item.id, character_id: buyer.id }, class: "button button--quiet shop__buy" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <% if current_account && !buyer %><p class="hint shop__hint">Your character has to be here to buy something.</p><% end %>
+</section>

@@ -10,4 +10,18 @@ module Soul
   def self.enabled?
     GameSetting.current.soul_enabled?
   end
+
+  # The published hook other systems use to offer extra Boons and Banes for
+  # a character's rolls (Soul::RollExtra), such as item features from
+  # Crafting. Each system registers once, by name:
+  #   Soul.offer_roll_extras(:crafting) { |character| [...] }
+  def self.roll_extra_sources = (@roll_extra_sources ||= {})
+
+  def self.offer_roll_extras(name, &block)
+    roll_extra_sources[name] = block
+  end
+
+  def self.roll_extras_for(character)
+    roll_extra_sources.values.flat_map { |source| Array(source.call(character)) }
+  end
 end

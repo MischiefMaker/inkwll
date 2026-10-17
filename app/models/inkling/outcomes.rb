@@ -4,7 +4,7 @@
 module Inkling::Outcomes
   extend ActiveSupport::Concern
 
-  REWARDS = %w[ xp bnb progress culmination note money ].freeze
+  REWARDS = %w[ xp bnb progress culmination note money item ].freeze
 
   # A SOUL roll by the Inkling's character (or one it's shared with), shown
   # to everyone with access, or only to the roller and staff.
@@ -47,10 +47,11 @@ module Inkling::Outcomes
   end
 
   # Staff granting something for this Inkling. Returns the entry recording it.
-  def reward!(by:, type:, amount: nil, bnb: nil, level: nil, entry: nil, title: nil, note: nil, private: true)
+  def reward!(by:, type:, amount: nil, bnb: nil, level: nil, entry: nil, title: nil, note: nil, private: true, catalogue_item: nil)
     raise ArgumentError, "Pick a kind of reward." unless type.in?(REWARDS)
     raise ArgumentError, "That reward needs SOUL, which is switched off." if type.in?(%w[ xp bnb progress culmination ]) && !Soul.enabled?
     raise ArgumentError, "Money needs the Economy, which is switched off." if type == "money" && !Economy.enabled?
+    raise ArgumentError, "Items need the Economy, which is switched off." if type == "item" && !Crafting.items_enabled?
 
     transaction do
       text = case type
@@ -80,8 +81,13 @@ module Inkling::Outcomes
         raise ArgumentError, "The money must be a positive number." unless amount.positive?
         character.purse.credit!(amount, kind: "inkling", actor: by, note: "#{type_name}: #{title.presence || self.title}")
         Economy.money(amount)
+      when "item"
+        raise ArgumentError, "Pick an item from the catalogue." unless catalogue_item
+        quantity = [ amount.to_i, 1 ].max
+        catalogue_item.give_to!(character, kind: "reward", quantity: quantity, note: "#{type_name}: #{title.presence || self.title}", actor: by)
+        quantity > 1 ? "#{quantity} × #{catalogue_item.name}" : catalogue_item.name
       end
-      Soul::AuditEntry.record!("inkling_reward", "Reward from Inkling #{id}: #{text}", actor: by, character: character) if Soul.enabled? && type != "money"
+      Soul::AuditEntry.record!("inkling_reward", "Reward from Inkling #{id}: #{text}", actor: by, character: character) if Soul.enabled? && type.in?(%w[ xp bnb progress culmination note ])
       add_entry!(account: by, kind: "reward", body: "Reward for #{character.name}: #{text}.", private: private, private_to: character)
     end
   rescue Character::SoulSheet::SheetError, ActiveRecord::RecordInvalid => e

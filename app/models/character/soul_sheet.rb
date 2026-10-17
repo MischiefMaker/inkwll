@@ -128,12 +128,24 @@ module Character::SoulSheet
 
   # --- Rolls -------------------------------------------------------------------
 
+  # Extra Boons and Banes other systems offer for this character's rolls.
+  def roll_extras = Soul.roll_extras_for(self)
+
+  def roll_extras_for_keys(keys, from: roll_extras)
+    keys = Array(keys).map(&:to_s)
+    from.select { |extra| keys.include?(extra.key) }
+  end
+
   # Rolls a Skill against a named difficulty. Boons and Banes tied to the
   # Skill count, unless bnbs says which ones do (a Storyteller choosing).
+  # Extras other systems offer (Soul.roll_extras_for) work the same way, and
+  # the ones marked `always` count whenever they're tied to the Skill.
   # Returns an unsaved Soul::Roll holding the result.
-  def roll_skill(skill, difficulty_name, bnbs: nil, storyteller: nil, random: Random)
+  def roll_skill(skill, difficulty_name, bnbs: nil, extras: nil, storyteller: nil, random: Random)
     difficulty = Soul::Rules.difficulties.fetch(difficulty_name.to_s) { raise SheetError, "Pick a difficulty." }
-    applied = (bnbs || bnbs_for(skill)).map { |entry| { "name" => entry.name, "kind" => entry.kind, "level" => entry.level, "modifier" => entry.modifier } }
+    offered = roll_extras.select { |extra| extra.affects?(skill) }
+    extras = extras.nil? ? offered : extras | offered.select(&:always?)
+    applied = ((bnbs || bnbs_for(skill)) + extras).map { |entry| { "name" => entry.name, "kind" => entry.kind, "level" => entry.level, "modifier" => entry.modifier } }
     net = applied.sum { |entry| entry["modifier"] }
     skill_rating = rating_for(skill)
     bonus = Soul::Rules.aspect_bonus(rating_for(skill.aspect))

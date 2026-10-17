@@ -37,6 +37,10 @@ class GameSetting < ApplicationRecord
   validates :currency_symbol, length: { maximum: 5 }
   validates :economy_starting_amount, :economy_allowance, :economy_dues_max, numericality: { only_integer: true, in: 0..10_000_000 }
   validates :economy_tax_max_percent, :domain_tax_max_percent, numericality: { only_integer: true, in: 0..100 }
+  # Crafting (docs/crafting.md).
+  validates :crafting_max_features, numericality: { only_integer: true, in: 0..100 }
+  validates :crafting_minor_cost, :crafting_major_cost, :crafting_legendary_cost, numericality: { only_integer: true, in: 0..10_000_000 }
+  validates :crafting_highest_level, inclusion: { in: %w[ minor major legendary ] }
   validates :idle_days, numericality: { only_integer: true, in: 1..365 }
   validates :auto_finish_days, numericality: { only_integer: true, in: 1..3650 }
   validate :auto_finish_after_idle

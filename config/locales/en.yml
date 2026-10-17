@@ -47,6 +47,12 @@ en:
     domain:
       one: "Domain"
       other: "Domains"
+    belongings:
+      one: "Belongings"
+      other: "Belongings"
+    market:
+      one: "Market"
+      other: "Markets"
     # Kinds of Path, as headings on a Setting's page. Rename them freely.
     exit_kinds:
       street: "Streets"

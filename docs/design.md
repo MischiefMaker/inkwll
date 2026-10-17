@@ -191,6 +191,10 @@ How they plug in [Proposed, owner agreed in principle]:
 - Finishing a scene awards SOUL XP to its approved participants who posted in
   it. (Built in step 5; see "Step 5 details" in `decisions.md`.)
 - Grimoire spells use SOUL skills, and casting a spell is a SOUL roll.
+- Other systems can offer extra Boons and Banes for a character's rolls
+  through SOUL's one published hook (`Soul.offer_roll_extras`). Crafting
+  uses it for item features; SOUL never needs to know what an item is.
+  (Built on the `v2.0` branch with Crafting; see `crafting.md`.)
 - The rest of the app talks to "the character system" through a small
   interface, so SOUL could be swapped out. Grimoire and Inklings must work
   correctly when they are disabled.

@@ -49,6 +49,7 @@
      system_pages["inklings"] = "Inklings" if Inkling.enabled? && show_private
      system_pages["grimoire"] = "Grimoire" if Grimoire.enabled? && show_private
      system_pages["purse"] = term(:purse) if Economy.enabled? && show_private
+     system_pages["belongings"] = term(:belongings) if Crafting.items_enabled?
      writing_pages = { "logs" => term(:log, count: 2) }
      writing_pages["chapters"] = "Active #{term(:scene, count: 2)}" if @mine || @staff_view
      sections = { "basics" => [ "Basics", { "profile" => "Profile", "application" => "Application", "relationships" => "Relationships", "gallery" => "Image Gallery" } ],

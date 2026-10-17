@@ -1,0 +1,84 @@
+<% content_for :title, "Crafting · Admin · Inkwll" %>
+
+<div class="crafting-admin">
+  <h1 class="page-title">Crafting</h1>
+  <p class="muted">Characters pay an item type's starting cost plus each feature's cost, then<%= " roll the item type's Skill, a step harder for each feature" if Soul.enabled? %>.
+    Features count in their owner's rolls as tick boxes, like Boons. The <%= link_to "item catalogue and shops", admin_catalogue_items_path %> are separate.</p>
+
+  <% if @proposals.any? %>
+    <section class="crafting-admin__proposals">
+      <h2 class="section-title">Features players proposed</h2>
+      <ul class="crafting-admin__list">
+        <% @proposals.each do |feature| %>
+          <li class="crafting-admin__proposal">
+            <strong><%= feature.name %></strong> <span class="muted"><%= feature.summary %><%= ", fits #{feature.item_types.map(&:name).to_sentence}" if feature.item_type_ids.any? %>, from <%= feature.proposed_by&.name || "someone gone" %></span>
+            <% if feature.description.present? %><p class="crafting-admin__description"><%= feature.description %></p><% end %>
+            <div class="form--inline">
+              <%= button_to "Approve", admin_crafting_feature_path(feature), method: :patch, params: { decision: "approve" }, class: "button button--quiet" %>
+              <%= link_to "Edit first", edit_admin_crafting_feature_path(feature) %>
+              <%= form_with url: admin_crafting_feature_path(feature), method: :patch, class: "form form--inline" do |form| %>
+                <%= hidden_field_tag :decision, "decline", id: nil %>
+                <%= form.label :reason, "Reason", class: "visually-hidden", for: "decline_#{feature.id}" %>
+                <%= text_field_tag :reason, nil, placeholder: "Reason (optional)", maxlength: 300, id: "decline_#{feature.id}" %>
+                <%= form.submit "Decline", class: "button button--quiet" %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <section class="crafting-admin__types">
+    <h2 class="section-title">What can be made</h2>
+    <% if @item_types.any? %>
+      <ul class="crafting-admin__list">
+        <% @item_types.each do |item_type| %>
+          <li class="crafting-admin__type"><strong><%= item_type.name %></strong> <%= money(item_type.base_cost) %><%= ", #{item_type.skill.name}" if Soul.enabled? && item_type.skill %>
+            <%= edit_icon_link(edit_admin_crafting_item_type_path(item_type)) %>
+            <%= delete_icon_button(admin_crafting_item_type_path(item_type), label: "Delete", confirm: "Delete #{item_type.name}? Items already made stay.") %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= render "admin/crafting_item_types/form", item_type: @item_type %>
+  </section>
+
+  <section class="crafting-admin__features">
+    <h2 class="section-title">Features</h2>
+    <% if @features.any? %>
+      <ul class="crafting-admin__list">
+        <% @features.each do |feature| %>
+          <li class="crafting-admin__feature"><strong><%= feature.name %></strong> <span class="muted"><%= feature.summary %>, <%= money(feature.cost) %><%= ", fits #{feature.item_types.map(&:name).to_sentence}" if feature.item_type_ids.any? %></span>
+            <%= edit_icon_link(edit_admin_crafting_feature_path(feature)) %>
+            <%= delete_icon_button(admin_crafting_feature_path(feature), label: "Delete", confirm: "Delete #{feature.name}? Items that have it lose it.") %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= render "admin/crafting_features/form", feature: @feature %>
+  </section>
+
+  <% if current_account.can?(:change_game_settings) %>
+    <section class="crafting-admin__settings">
+      <h2 class="section-title">Costs and limits</h2>
+      <%= form_with model: @game_setting, url: admin_crafting_path, method: :patch, class: "form crafting-admin__settings-form" do |form| %>
+        <%= render "shared/errors", record: @game_setting %>
+        <div class="form--inline">
+          <%= form.label :crafting_minor_cost, "A Minor feature costs" %>
+          <%= form.number_field :crafting_minor_cost, min: 0 %>
+          <%= form.label :crafting_major_cost, "Major" %>
+          <%= form.number_field :crafting_major_cost, min: 0 %>
+          <%= form.label :crafting_legendary_cost, "Legendary" %>
+          <%= form.number_field :crafting_legendary_cost, min: 0 %>
+        </div>
+        <p class="hint">Meant to dwarf the starting cost, so anything that affects the game costs far more than something only ornamental.</p>
+        <div class="form--inline">
+          <%= form.label :crafting_highest_level, "Highest level players can choose" %>
+          <%= form.select :crafting_highest_level, Crafting::LEVELS.map { |level| [ level.capitalize, level ] } %>
+          <%= form.label :crafting_max_features, "Features per item (0 for no limit)" %>
+          <%= form.number_field :crafting_max_features, min: 0 %>
+        </div>
+        <%= form.submit "Save", class: "button" %>
+      <% end %>
+    </section>
+  <% end %>
+</div>

@@ -1,0 +1,24 @@
+<%= form_with model: feature, scope: :crafting_feature, url: feature.persisted? ? admin_crafting_feature_path(feature) : admin_crafting_features_path, class: "form crafting-admin__feature-form" do |form| %>
+  <%= render "shared/errors", record: feature %>
+  <div class="form--inline">
+    <%= form.label :name %>
+    <%= form.text_field :name, maxlength: 60, required: true, placeholder: "Well-balanced" %>
+    <%= form.label :level %>
+    <%= form.select :level, Crafting::LEVELS.map { |level| [ "#{level.capitalize} (#{money(Crafting.feature_cost(level))})", level ] } %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "What it does (optional)" %>
+    <%= form.text_area :description, rows: 2, maxlength: 2000 %>
+  </div>
+  <% if Soul.enabled? %>
+    <div class="field">
+      <%= form.label :skill_ids, "Skills it helps, like a Boon" %>
+      <%= form.select :skill_ids, Soul::Skill.order(:name).map { |skill| [ skill.name, skill.id ] }, {}, multiple: true, size: 5 %>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :item_type_ids, "Item types it fits (none ticked means all)" %>
+    <%= form.select :item_type_ids, Crafting::ItemType.ordered.map { |type| [ type.name, type.id ] }, {}, multiple: true, size: 4 %>
+  </div>
+  <%= form.submit feature.persisted? ? "Save" : "Add", class: "button button--quiet" %>
+<% end %>

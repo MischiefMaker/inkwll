@@ -1,0 +1,28 @@
+<%= form_with model: catalogue_item, scope: :crafting_catalogue_item, url: catalogue_item.persisted? ? admin_catalogue_item_path(catalogue_item) : admin_catalogue_items_path, multipart: true, class: "form catalogue-admin__form" do |form| %>
+  <%= render "shared/errors", record: catalogue_item %>
+  <div class="form--inline">
+    <%= form.label :name %>
+    <%= form.text_field :name, maxlength: 80, required: true, placeholder: "Lantern" %>
+    <%= form.label :price %>
+    <%= form.number_field :price, min: 0 %>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Description (optional)" %>
+    <%= form.text_area :description, rows: 2, maxlength: 5000 %>
+  </div>
+  <div class="field">
+    <%= form.label :image, "Picture (optional)" %>
+    <%= form.file_field :image, accept: Crafting::Item::IMAGE_TYPES.join(",") %>
+  </div>
+  <% if Crafting::Feature.approved.any? %>
+    <div class="field">
+      <%= form.label :feature_ids, "Features (optional)" %>
+      <%= form.select :feature_ids, Crafting::Feature.approved.ordered.map { |feature| [ feature.name, feature.id ] }, {}, multiple: true, size: 4 %>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :room_ids, "Sold in the shops of these #{term(:room, count: 2).downcase}" %>
+    <%= form.select :room_ids, Room.order(:name).map { |room| [ room.name, room.id ] }, {}, multiple: true, size: 5 %>
+  </div>
+  <%= form.submit catalogue_item.persisted? ? "Save" : "Add", class: "button button--quiet" %>
+<% end %>

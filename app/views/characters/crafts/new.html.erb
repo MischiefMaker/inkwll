@@ -1,0 +1,113 @@
+<% content_for :title, "Craft · #{@character.name} · Inkwll" %>
+
+<div class="craft">
+  <p class="breadcrumbs"><%= link_to "#{@character.name}'s #{term(:belongings).downcase}", character_path(@character, tab: "belongings") %></p>
+  <h1 class="page-title">Craft something</h1>
+  <p class="text muted craft__intro"><%= @character.name %> pays the cost up front: the item's starting cost plus each feature's.
+    <% if Soul.enabled? %>Then they roll the item's Skill, a step harder for each feature. An exceptional success makes a Masterwork and gives back half the features' cost;
+    a complicated success adds a flaw; a failure loses half the cost, and a catastrophic failure all of it.<% end %>
+    <%= @character.name %> has <strong><%= money(@character.purse.balance) %></strong>.</p>
+
+  <% if @item_types.empty? %>
+    <p class="text muted">Staff haven't said what can be made yet.</p>
+  <% else %>
+    <%= form_with url: character_crafts_path(@character), multipart: true, class: "form craft__form", data: { controller: "bnb-picker" } do |form| %>
+      <div class="field">
+        <%= form.label :item_type_id, "What to make" %>
+        <%= form.select :item_type_id, @item_types.map { |type| [ "#{type.name} (#{money(type.base_cost)}#{", #{type.skill.name}" if Soul.enabled? && type.skill})", type.id, { data: { skill_id: type.skill&.id } } ] },
+              { include_blank: "Pick one" }, required: true, data: { bnb_picker_target: "skill", action: "bnb-picker#pick" } %>
+      </div>
+      <div class="field">
+        <%= form.label :name, "Its name" %>
+        <%= form.text_field :name, maxlength: 80, required: true, placeholder: "A silk dress embroidered with herons" %>
+      </div>
+      <div class="field">
+        <%= form.label :description, "Description (optional)" %>
+        <%= form.text_area :description, rows: 4, maxlength: 5000 %>
+      </div>
+      <div class="field">
+        <%= form.label :pictures, "Pictures (optional, up to #{Crafting::Item::MAX_PICTURES})" %>
+        <%= form.file_field :pictures, multiple: true, accept: Crafting::Item::IMAGE_TYPES.join(",") %>
+        <small class="hint">PNG, JPEG, GIF or WebP, each under 5 MB.</small>
+      </div>
+
+      <% if @features.any? %>
+        <fieldset class="fieldset craft__features">
+          <legend class="fieldset__legend">Features<%= " (up to #{Crafting.max_features})" if Crafting.max_features %></legend>
+          <% @features.each do |feature| %>
+            <label class="field--checkbox craft__feature">
+              <%= check_box_tag "feature_ids[]", feature.id, false, id: "feature_#{feature.id}" %>
+              <strong class="craft__feature-name"><%= feature.name %></strong> <span class="muted"><%= feature.summary %>, <%= money(feature.cost) %><%= ", fits #{feature.item_types.map(&:name).to_sentence}" if feature.item_type_ids.any? %></span>
+            </label>
+          <% end %>
+        </fieldset>
+      <% end %>
+
+      <% if Soul.enabled? %>
+        <% entries = @character.active_bnbs %>
+        <% extras = @character.roll_extras.reject(&:always?) %>
+        <% if entries.any? || extras.any? %>
+          <fieldset class="fieldset craft__bnbs roll-box__bnbs">
+            <legend class="fieldset__legend">Boons and Banes for the roll</legend>
+            <% entries.each do |entry| %>
+              <label class="field--checkbox roll-box__bnb">
+                <%= check_box_tag "bnb_ids[]", entry.id, false, id: "craft_bnb_#{entry.id}", data: { bnb_picker_target: "bnb", skill_ids: entry.skill_ids.join(",") } %>
+                <%= entry.name %> (<%= entry.level.capitalize %> <%= entry.kind.capitalize %>)
+              </label>
+            <% end %>
+            <% extras.each do |extra| %>
+              <label class="field--checkbox roll-box__bnb roll-box__extra">
+                <%= check_box_tag "extra_keys[]", extra.key, false, id: "craft_extra_#{extra.key}", data: { bnb_picker_target: "bnb", skill_ids: extra.skill_ids.join(",") } %>
+                <%= extra.name %> (<%= extra.level.capitalize %> <%= extra.kind.capitalize %>)
+              </label>
+            <% end %>
+          </fieldset>
+        <% end %>
+      <% end %>
+
+      <% chapters = Scene.open.where(id: @character.scene_participants.select(:scene_id)).by_activity.limit(20).select(&:writable?) %>
+      <% if chapters.any? %>
+        <div class="field">
+          <%= form.label :scene_id, "Show it in a #{term(:scene).downcase}" %>
+          <%= form.select :scene_id, chapters.map { |scene| [ scene.title, scene.id ] }, include_blank: "No" %>
+        </div>
+      <% end %>
+      <%= form.submit "Craft it", class: "button", data: { turbo_confirm: "This spends the money now. Craft it?" } %>
+    <% end %>
+  <% end %>
+
+  <section class="craft__propose" id="propose">
+    <h2 class="section-title">Propose a new feature</h2>
+    <p class="hint">Staff look at it and approve or decline it, like a spell proposal.</p>
+    <% if (mine = Crafting::Feature.where(proposed_by: @character).where.not(status: "approved").order(created_at: :desc)).any? %>
+      <ul class="craft__proposals">
+        <% mine.each do |feature| %>
+          <li class="craft__proposal"><%= feature.name %>: <%= feature.proposed? ? "waiting for staff" : "declined#{": #{feature.decline_reason}" if feature.decline_reason.present?}" %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= form_with model: Crafting::Feature.new, scope: :feature, url: character_feature_proposals_path(@character), class: "form craft__propose-form" do |form| %>
+      <div class="form--inline">
+        <%= form.label :name %>
+        <%= form.text_field :name, maxlength: 60, required: true, placeholder: "Concealed pocket" %>
+        <%= form.label :level %>
+        <%= form.select :level, Crafting.levels.map { |level| [ "#{level.capitalize} (#{money(Crafting.feature_cost(level))})", level ] } %>
+      </div>
+      <div class="field">
+        <%= form.label :description, "What it does" %>
+        <%= form.text_area :description, rows: 2, maxlength: 2000 %>
+      </div>
+      <% if Soul.enabled? %>
+        <div class="field">
+          <%= form.label :skill_ids, "Skills it helps" %>
+          <%= form.select :skill_ids, Soul::Skill.order(:name).map { |skill| [ skill.name, skill.id ] }, {}, multiple: true, size: 5 %>
+        </div>
+      <% end %>
+      <div class="field">
+        <%= form.label :item_type_ids, "Fits (leave empty for anything)" %>
+        <%= form.select :item_type_ids, Crafting::ItemType.ordered.map { |type| [ type.name, type.id ] }, {}, multiple: true, size: 4 %>
+      </div>
+      <%= form.submit "Propose it", class: "button button--quiet" %>
+    <% end %>
+  </section>
+</div>

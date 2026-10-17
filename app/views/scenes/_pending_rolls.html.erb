@@ -16,19 +16,26 @@
             wants to roll <%= pending.skill.name %> (asked for <%= pending.difficulty_name.humanize %>).
           <% end %></p>
         <% entries = pending.character.active_bnbs %>
+        <% extras = pending.character.roll_extras.reject(&:always?) %>
         <% if pending.waiting? && storyteller %>
           <%= form_with url: scene_pending_roll_path(scene, pending), method: :patch, class: "form pending-roll__form" do |form| %>
             <div class="field">
               <%= form.label :difficulty, "Difficulty", for: "difficulty_#{pending.id}" %>
               <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: pending.difficulty_name }, id: "difficulty_#{pending.id}" %>
             </div>
-            <% if entries.any? %>
+            <% if entries.any? || extras.any? %>
               <fieldset class="fieldset pending-roll__bnbs">
                 <legend class="fieldset__legend">Boons and Banes</legend>
                 <% entries.each do |entry| %>
                   <div class="field pending-roll__bnb">
                     <%= label_tag "ruling_#{pending.id}_#{entry.id}", "#{entry.name} (#{entry.level.capitalize} #{entry.kind.capitalize})" %>
                     <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "choice"), id: "ruling_#{pending.id}_#{entry.id}" %>
+                  </div>
+                <% end %>
+                <% extras.each do |extra| %>
+                  <div class="field pending-roll__bnb pending-roll__extra">
+                    <%= label_tag "extra_ruling_#{pending.id}_#{extra.key}", "#{extra.name} (#{extra.level.capitalize} #{extra.kind.capitalize})" %>
+                    <%= select_tag "extra_rulings[#{extra.key}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "choice"), id: "extra_ruling_#{pending.id}_#{extra.key}" %>
                   </div>
                 <% end %>
               </fieldset>
@@ -40,18 +47,25 @@
           <% end %>
         <% elsif pending.ready? && own?(pending.character) %>
           <%= form_with url: scene_pending_roll_path(scene, pending), method: :patch, class: "form pending-roll__form" do |form| %>
-            <% required = entries.select { |e| pending.mandatory_bnb_ids.include?(e.id) } %>
+            <% required = entries.select { |e| pending.mandatory_bnb_ids.include?(e.id) } + extras.select { |e| pending.mandatory_extra_keys.include?(e.key) } %>
             <% optional = entries.select { |e| pending.optional_bnb_ids.include?(e.id) } %>
+            <% optional_extras = extras.select { |e| pending.optional_extra_keys.include?(e.key) } %>
             <% if required.any? %>
               <p class="text pending-roll__required">Counting for this roll: <%= required.map { |e| "#{e.name} (#{e.level.capitalize} #{e.kind.capitalize})" }.to_sentence %>.</p>
             <% end %>
-            <% if optional.any? %>
+            <% if optional.any? || optional_extras.any? %>
               <fieldset class="fieldset pending-roll__bnbs">
                 <legend class="fieldset__legend">Boons and Banes you can choose to apply</legend>
                 <% optional.each do |entry| %>
                   <label class="field--checkbox pending-roll__bnb">
                     <%= check_box_tag "bnb_ids[]", entry.id, entry.affects?(pending.skill), id: "bnb_#{pending.id}_#{entry.id}" %>
                     <%= entry.name %> (<%= entry.level.capitalize %> <%= entry.kind.capitalize %>)
+                  </label>
+                <% end %>
+                <% optional_extras.each do |extra| %>
+                  <label class="field--checkbox pending-roll__bnb pending-roll__extra">
+                    <%= check_box_tag "extra_keys[]", extra.key, extra.affects?(pending.skill), id: "extra_#{pending.id}_#{extra.key}" %>
+                    <%= extra.name %> (<%= extra.level.capitalize %> <%= extra.kind.capitalize %>)
                   </label>
                 <% end %>
               </fieldset>

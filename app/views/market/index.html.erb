@@ -1,0 +1,38 @@
+<% content_for :title, "#{term(:market)} · Inkwll" %>
+
+<div class="market">
+  <h1 class="page-title"><%= term(:market) %></h1>
+  <p class="text muted market__intro">Everything characters are selling. The price goes to the seller, and the item moves to the buyer's <%= term(:belongings).downcase %>.</p>
+
+  <% if @items.any? %>
+    <ul class="market__items">
+      <% @items.each do |item| %>
+        <li class="market__item">
+          <% if item.pictures.attached? %><%= image_tag item.pictures.first, alt: "", class: "market__image", loading: "lazy" %><% end %>
+          <div class="market__text">
+            <%= link_to item.name, item_path(item), class: "market__name" %><% if item.quantity > 1 %> <span class="muted">× <%= item.quantity %></span><% end %>
+            <% if item.masterwork? %><span class="tag market__masterwork">Masterwork</span><% end %>
+            <strong class="market__price"><%= money(item.price) %></strong>
+            <span class="market__seller muted">sold by <%= link_to item.character.name, character_path(item.character) %><%= ", made by #{item.maker_name}" if item.made? %></span>
+            <%= render "items/features", item: item %>
+          </div>
+          <% buyers = @buyers.reject { |buyer| buyer.id == item.character_id } %>
+          <% if buyers.any? %>
+            <%= form_with url: item_purchase_path(item), class: "form form--inline market__buy-form" do |form| %>
+              <% if buyers.one? %>
+                <%= hidden_field_tag :character_id, buyers.first.id, id: nil %>
+                <%= form.submit "Buy as #{buyers.first.name}", class: "button button--quiet" %>
+              <% else %>
+                <%= form.label :character_id, "Buy as", class: "visually-hidden", for: "buyer_#{item.id}" %>
+                <%= select_tag :character_id, options_from_collection_for_select(buyers, :id, :name, current_character&.id), id: "buyer_#{item.id}" %>
+                <%= form.submit "Buy", class: "button button--quiet" %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted">Nothing is for sale yet.</p>
+  <% end %>
+</div>

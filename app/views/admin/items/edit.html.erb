@@ -1,0 +1,42 @@
+<% content_for :title, "#{@item.name_was} · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "#{@item.character.name}'s #{term(:belongings).downcase}", character_path(@item.character, tab: "belongings") %></p>
+<h1 class="page-title">Change <%= @item.name_was %></h1>
+
+<%= form_with model: @item, scope: :crafting_item, url: admin_item_path(@item), method: :patch, class: "form item-admin__form" do |form| %>
+  <%= render "shared/errors", record: @item %>
+  <div class="form--inline">
+    <%= form.label :name %>
+    <%= form.text_field :name, maxlength: 80, required: true %>
+    <%= form.label :quantity, "How many" %>
+    <%= form.number_field :quantity, min: 1 %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 4, maxlength: 5000 %>
+  </div>
+  <% if Crafting::Feature.approved.any? %>
+    <div class="field">
+      <%= form.label :feature_ids, "Features" %>
+      <%= form.select :feature_ids, Crafting::Feature.approved.ordered.map { |feature| [ feature.name, feature.id ] }, {}, multiple: true, size: 4 %>
+    </div>
+  <% end %>
+  <% if @item.flaw_name %>
+    <div class="field">
+      <%= form.label :flaw_name, "Flaw" %>
+      <%= form.text_field :flaw_name, maxlength: 60 %>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= label_tag :reason, "Reason (goes in its history)" %>
+    <%= text_field_tag :reason, nil, maxlength: 200, required: true %>
+  </div>
+  <%= form.submit "Save", class: "button" %>
+<% end %>
+
+<h2 class="section-title">Take it away</h2>
+<%= form_with url: admin_item_path(@item), method: :delete, class: "form form--inline item-admin__take-form" do |form| %>
+  <%= label_tag :take_reason, "Reason", class: "visually-hidden" %>
+  <%= text_field_tag :reason, nil, placeholder: "Reason (goes in its history)", maxlength: 200, required: true, id: "take_reason" %>
+  <%= form.submit "Take it", class: "button button--quiet", data: { turbo_confirm: "Take #{@item.name} from #{@item.character.name}?" } %>
+<% end %>

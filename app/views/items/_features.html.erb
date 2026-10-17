@@ -1,0 +1,12 @@
+<%# An item's features and any flaw, as a short list. %>
+<% features = item.features %>
+<% if features.any? || item.flaw_name %>
+  <ul class="item-features">
+    <% features.each do |feature| %>
+      <li class="item-features__feature"><strong class="item-features__name"><%= feature.name %></strong> <span class="muted"><%= feature.summary %></span></li>
+    <% end %>
+    <% if item.flaw_name %>
+      <li class="item-features__flaw"><strong class="item-features__name"><%= item.flaw_name %></strong> <span class="muted">Minor Bane (a flaw)</span></li>
+    <% end %>
+  </ul>
+<% end %>

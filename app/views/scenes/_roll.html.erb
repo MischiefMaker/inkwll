@@ -1,5 +1,6 @@
 <%# Rolling a SOUL Skill. The game posts the result into the Chapter. %>
 <% entries = participant.character.active_bnbs %>
+<% extras = participant.character.roll_extras %>
 <details class="roll-box">
   <summary class="disclosure__summary roll-box__summary">Roll a Skill</summary>
   <%= form_with url: scene_rolls_path(scene), class: "form roll-box__form", data: { controller: "bnb-picker" } do |form| %>
@@ -8,13 +9,24 @@
       <%= form.label :skill_id, "Skill" %>
       <%= form.select :skill_id, Soul::Aspect.ordered.includes(:skills).map { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }.to_h.then { |groups| grouped_options_for_select(groups) }, {}, data: { bnb_picker_target: "skill", action: "bnb-picker#pick" } %>
     </div>
-    <% if entries.any? %>
+    <% if entries.any? || extras.any? %>
       <fieldset class="fieldset roll-box__bnbs">
         <legend class="fieldset__legend">Boons and Banes that apply</legend>
         <% entries.each do |entry| %>
           <label class="field--checkbox roll-box__bnb">
             <%= check_box_tag "bnb_ids[]", entry.id, false, id: "roll_bnb_#{entry.id}", data: { bnb_picker_target: "bnb", skill_ids: entry.skill_ids.join(",") } %>
             <%= entry.name %> (<%= entry.level.capitalize %> <%= entry.kind.capitalize %>)
+          </label>
+        <% end %>
+        <%# Extras from other systems, such as features of items the character owns. Flaws always count. %>
+        <% extras.each do |extra| %>
+          <label class="field--checkbox roll-box__bnb roll-box__extra<%= " roll-box__extra--always" if extra.always? %>">
+            <% if extra.always? %>
+              <%= check_box_tag "extra_keys[]", extra.key, true, id: "roll_extra_#{extra.key}", disabled: true %>
+            <% else %>
+              <%= check_box_tag "extra_keys[]", extra.key, false, id: "roll_extra_#{extra.key}", data: { bnb_picker_target: "bnb", skill_ids: extra.skill_ids.join(",") } %>
+            <% end %>
+            <%= extra.name %> (<%= extra.level.capitalize %> <%= extra.kind.capitalize %><%= ", always counts on its Skills" if extra.always? %>)
           </label>
         <% end %>
       </fieldset>

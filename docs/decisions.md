@@ -18,6 +18,27 @@ The owner asked Claude to carry on through the Version 2.0 roadmap on the `v2.0`
 - **Away notice** is set on the player's own profile (My Profile → edit): a date up to a year ahead and an optional short note. It shows on every Chapter the player is in, beside whose turn it is and on the cast list, as "Away until Mon 20 Oct: note", and stops showing after that day. It belongs to the player, so it covers all their characters. It doesn't skip their turns by itself; Storytellers can still Skip.
 - **New player badge:** a small "New" mark for an account's first 14 days, beside the player's name in the OOC Chat, and beside their characters in Here (on a Place and in a Chapter's "Here now") and in the Character Directory. On a character it only says the player is new, never who they are, so it's safe when players are hidden. Roster characters don't get it.
 
+## 2026-10-17: Items and Crafting built on the v2.0 branch (Claude's choices)
+
+Choices Claude made while building items and Crafting, without the owner. Each one can be changed.
+
+- Crafting has its own switch under Admin → Features, off by default, and needs the Economy. Items, Belongings, shops, Give and Trade come with the Economy on its own, as agreed.
+- **Shops:** staff tick, on each catalogue item, which Places sell it, at the catalogue price. A character has to be standing in the Place to buy, so shopping feels like part of the grid. Shop purchases and crafting costs take the money out of the game.
+- **Give:** a whole item or part of a stack, optionally shown in a Chapter. A part given away becomes its own stack.
+- **Trade:** started from Belongings by typing a name, with its own page for each side's money and items and an Agree button for each. Either side can call it off. An item that leaves its owner some other way drops out of their open trades and clears the ticks. If someone can no longer cover their side when the second person agrees, it doesn't go through and the ticks are cleared.
+- **The Market** is in the menu while Crafting is on. A price covers the whole stack. A buyer picks which of their approved characters is buying. Taking an item off the Market, giving it or trading it takes it off sale.
+- **The roll:** starts at Standard and is one step harder per feature (Difficult, Hard, Extreme...). The player ticks Boons and Banes as for any roll, and item features too. The whole cost is paid up front; a Masterwork gives back half the features' cost and a failure gives back half the whole cost. An item type with no Skill, or a game without SOUL, always succeeds.
+- **Flaws:** a complicated success adds a flaw called "Flawed", a Minor Bane on the Skills the item's features help. Its owner can rename it on the item's page. An ornamental item's flaw has no Skills, so it's only words. Flaws always count in rolls and aren't offered to the Storyteller as a choice.
+- **Costs and limits:** feature costs are set once for the game by level, starting at Minor 200, Major 600 and Legendary 2,000 (the plan's example). Players can choose up to Major to start, and items have up to 3 features (0 means no limit). Wellkeepers change these under Admin → Crafting.
+- A feature with no item types ticked fits anything. Catalogue items can have features too.
+- Items can have up to 4 pictures, image-only and under 5 MB each.
+- After making an item, players can't change its name or description; staff can, with a reason. Every change to an item (made, bought, given, traded, sold, staff changes) goes in its history, which only its owner and staff see.
+- Staff who review applications run the item catalogue, give, change and take items, and manage item types, features and players' feature proposals. The proposer gets an alert with the answer.
+- Each item's feature is its own tick box in the roll box, so two Well-balanced swords offer two boxes. Item features only count while Crafting and SOUL are both on.
+- SOUL gained one general hook, `Soul.offer_roll_extras`, for other systems to offer extra Boons and Banes; the Storyteller's rulings cover them too. SOUL's own Boons and Banes are untouched.
+- An Inkling can reward an item from the catalogue, with the amount box giving how many.
+- Players get an alert when they're given an item, when a trade changes or goes through, when something of theirs sells, and when staff answer a feature proposal or give or take an item.
+
 ## 2026-10-17: Domains built on the v2.0 branch (Claude's choices)
 
 Choices Claude made while building Domains, without the owner. Each one can be changed.

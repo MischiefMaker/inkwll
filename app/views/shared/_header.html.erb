@@ -34,6 +34,7 @@
         <%= link_to roster_path, class: "menu__link" do %><%= icon(:roster, size: 16, css: "menu__icon") %>Roster<% end %>
         <% if Faction.enabled? %><%= link_to factions_path, class: "menu__link" do %><%= icon(:banner, size: 16, css: "menu__icon") %><%= term(:faction, count: 2) %><% end %><% end %>
         <% if Domain.enabled? %><%= link_to domains_path, class: "menu__link" do %><%= icon(:compass, size: 16, css: "menu__icon") %><%= term(:domain, count: 2) %><% end %><% end %>
+        <% if Crafting.enabled? %><%= link_to market_path, class: "menu__link" do %><%= icon(:banner, size: 16, css: "menu__icon") %><%= term(:market) %><% end %><% end %>
         <%= link_to archives_path, class: "menu__link" do %><%= icon(:bookshelf, size: 16, css: "menu__icon") %><%= term(:logs_collection) %><% end %>
 
         <p class="menu__heading menu__heading--community">Community and help</p>

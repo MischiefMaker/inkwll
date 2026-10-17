@@ -1,0 +1,5 @@
+<% content_for :title, "#{@item_type.name_was} · Crafting · Admin · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Crafting", admin_crafting_path %></p>
+<h1 class="page-title">Edit <%= @item_type.name_was %></h1>
+<%= render "form", item_type: @item_type %>

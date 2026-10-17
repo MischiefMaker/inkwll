@@ -1892,3 +1892,33 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 
 /* The "New" mark for a player's first two weeks */
 .new-player { margin-left: 0.3rem; font-size: 0.7rem; vertical-align: middle; }
+
+/* Items and Crafting: Belongings, item pages, shops, the Market, trades */
+.belongings__items, .market__items, .shop__items { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.5rem; }
+.belongings__item, .market__item, .shop__item { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.75rem; padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.belongings__image, .market__image, .shop__image { width: 4rem; height: 4rem; object-fit: cover; border-radius: var(--radius); }
+.belongings__text, .market__text, .shop__text { flex: 1 1 14rem; }
+.belongings__name, .market__name, .shop__name { font-weight: 600; }
+.belongings__maker, .market__seller { margin-left: 0.25rem; font-size: 0.9rem; }
+.market__price, .shop__price { margin-left: 0.5rem; }
+.belongings__give, .belongings__trade, .belongings__craft { margin: 0.5rem 0; }
+.belongings__give-form, .belongings__trade-form, .market__buy-form, .item__sell-form, .item__flaw-form, .catalogue-admin__give-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.belongings__quantity-field, .trade__quantity { width: 5rem; }
+.belongings__trades, .trades__list { list-style: none; margin: 0; padding: 0; }
+.item-features { list-style: none; margin: 0.25rem 0; padding: 0; font-size: 0.9rem; }
+.item-features__flaw .item-features__name { font-style: italic; }
+.item__pictures { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0; }
+.item__picture { max-width: 16rem; max-height: 16rem; border-radius: var(--radius); }
+.item__owner, .item__history { margin: 1rem 0; }
+.item-history { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
+.shop { margin: 1rem 0; }
+.trade__sides { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+.trade__side { padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--radius); }
+.trade__side--mine { background: var(--color-surface); }
+.trade__money { width: 7rem; }
+.trade__agree { margin-top: 0.5rem; }
+.craft__feature { display: block; margin: 0.25rem 0; }
+.craft__propose { margin-top: 2rem; }
+.crafting-admin section, .catalogue-admin section { margin-bottom: 1.5rem; }
+.crafting-admin__list { list-style: none; margin: 0 0 0.75rem; padding: 0; display: grid; gap: 0.35rem; }
+.roll-box__extra--always { opacity: 0.85; font-style: italic; }

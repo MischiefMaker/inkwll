@@ -13,8 +13,10 @@ class Scenes::RollsController < ApplicationController
       scene.ask_storyteller_to_roll!(character, skill, params[:difficulty])
       redirect_to scene, notice: "Asked the #{Term[:storyteller]}. Your roll happens when they judge it."
     else
-      chosen = params[:confirmed] == "1" ? character.active_bnbs.select { |entry| Array(params[:bnb_ids]).map(&:to_i).include?(entry.id) } : nil
-      scene.roll!(character, skill, params[:difficulty], bnbs: chosen)
+      confirmed = params[:confirmed] == "1"
+      chosen = confirmed ? character.active_bnbs.select { |entry| Array(params[:bnb_ids]).map(&:to_i).include?(entry.id) } : nil
+      extras = confirmed ? character.roll_extras_for_keys(params[:extra_keys]) : nil
+      scene.roll!(character, skill, params[:difficulty], bnbs: chosen, extras: extras)
       redirect_to scene
     end
   rescue ArgumentError => e

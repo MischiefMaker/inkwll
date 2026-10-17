@@ -41,14 +41,30 @@ Rails.application.routes.draw do
       resources :roster_applications, only: %i[ new create ]
       resources :payments, only: :create
       resources :payment_schedules, only: %i[ create destroy ]
+      resources :item_gifts, only: :create
+      resources :trades, only: :create
+      resources :crafts, only: %i[ new create ]
+      resources :feature_proposals, only: :create
     end
   end
+  # Items (Crafting): an item's page, putting it on the Market and buying it.
+  resources :items, only: %i[ show update ] do
+    scope module: :items do
+      resource :listing, only: %i[ create destroy ]
+      resource :purchase, only: :create
+    end
+  end
+  resources :trades, only: %i[ index show update destroy ] do
+    member { post :agree }
+  end
+  get "market", to: "market#index"
   resource :active_character, only: :update
   resources :areas, only: :show
   resources :saved_places, only: :index, path: "my_places"
   resources :players, only: %i[ index show ], param: :name
   resource :player_profile, only: %i[ edit update ]
   resources :rooms, only: %i[ index show ] do
+    resources :shop_purchases, only: :create, module: :rooms
     resource :travel, only: :create
     resource :saved_place, only: %i[ create destroy ]
   end
@@ -208,6 +224,11 @@ Rails.application.routes.draw do
     resources :economy_schedules, only: %i[ create destroy ]
     resources :economy_allowance_changes, only: %i[ create destroy ]
     resources :domains, except: %i[ show new ]
+    resources :catalogue_items, except: %i[ show new ]
+    resources :items, only: %i[ create edit update destroy ]
+    resource :crafting, only: %i[ show update ], controller: "crafting"
+    resources :crafting_item_types, except: %i[ show new index ]
+    resources :crafting_features, except: %i[ show new index ]
     resources :reports, only: %i[ index show update ]
     resources :poses, only: [] do
       resource :hiding, only: :create

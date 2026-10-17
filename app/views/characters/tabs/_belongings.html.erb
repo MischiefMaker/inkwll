@@ -1,0 +1,76 @@
+<%# Everything the character owns. Everyone can see a character's
+    Belongings; their player can give, trade and craft from here. %>
+<% mine = manages?(character) %>
+<% can_act = mine && character.approved? && !character.retired? %>
+<% items = character.items.ordered.includes(pictures_attachments: :blob) %>
+
+<div class="belongings">
+  <% if items.any? %>
+    <ul class="belongings__items">
+      <% items.each do |item| %>
+        <li class="belongings__item">
+          <% if item.pictures.attached? %><%= image_tag item.pictures.first, alt: "", class: "belongings__image", loading: "lazy" %><% end %>
+          <div class="belongings__text">
+            <%= link_to item.name, item_path(item), class: "belongings__name" %><% if item.quantity > 1 %> <span class="muted belongings__quantity">× <%= item.quantity %></span><% end %>
+            <% if item.masterwork? %><span class="tag belongings__masterwork">Masterwork</span><% end %>
+            <% if item.for_sale? && Crafting.enabled? %><span class="tag belongings__for-sale">For sale, <%= money(item.price) %></span><% end %>
+            <% if item.made? %><span class="belongings__maker muted">made by <%= item.maker_name %></span><% end %>
+            <%= render "items/features", item: item %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text muted"><%= character.name %> doesn't own anything yet.</p>
+  <% end %>
+
+  <% if can_act %>
+    <% chapters = Scene.open.where(id: character.scene_participants.select(:scene_id)).by_activity.limit(20).select(&:writable?) %>
+    <% if Crafting.enabled? %>
+      <p class="belongings__craft"><%= link_to "Craft something", new_character_craft_path(character), class: "button button--quiet" %></p>
+    <% end %>
+
+    <% if items.any? %>
+      <details class="belongings__give">
+        <summary class="disclosure__summary">Give something</summary>
+        <%= form_with url: character_item_gifts_path(character), class: "form form--inline belongings__give-form" do |form| %>
+          <%= form.label :item_id, "What", class: "visually-hidden" %>
+          <%= form.select :item_id, items.map { |item| [ item.quantity > 1 ? "#{item.name} (#{item.quantity})" : item.name, item.id ] } %>
+          <%= form.label :quantity, "How many", class: "visually-hidden" %>
+          <%= form.number_field :quantity, min: 1, placeholder: "All", class: "belongings__quantity-field" %>
+          <%= form.label :to, "To", class: "visually-hidden" %>
+          <%= form.text_field :to, placeholder: "Character", maxlength: 100, required: true %>
+          <% if chapters.any? %>
+            <%= form.label :scene_id, "Show in a #{term(:scene).downcase}", class: "visually-hidden" %>
+            <%= form.select :scene_id, chapters.map { |scene| [ "Show in #{scene.title}", scene.id ] }, include_blank: "Don't show in a #{term(:scene).downcase}" %>
+          <% end %>
+          <%= form.submit "Give", class: "button button--quiet" %>
+        <% end %>
+      </details>
+    <% end %>
+
+    <details class="belongings__trade">
+      <summary class="disclosure__summary">Trade with someone</summary>
+      <%= form_with url: character_trades_path(character), class: "form form--inline belongings__trade-form" do |form| %>
+        <%= form.label :to, "With", class: "visually-hidden" %>
+        <%= form.text_field :to, placeholder: "Character", maxlength: 100, required: true %>
+        <% if chapters.any? %>
+          <%= form.label :scene_id, "Show in a #{term(:scene).downcase}", class: "visually-hidden" %>
+          <%= form.select :scene_id, chapters.map { |scene| [ "Show in #{scene.title}", scene.id ] }, include_blank: "Don't show in a #{term(:scene).downcase}" %>
+        <% end %>
+        <%= form.submit "Start a trade", class: "button button--quiet" %>
+      <% end %>
+      <p class="hint">Both of you put in money and items, and it goes through once you both tick Agree.</p>
+    </details>
+
+    <% if (trades = character.trades.open.includes(:from_character, :to_character)).any? %>
+      <h2 class="section-title">Open trades</h2>
+      <ul class="belongings__trades">
+        <% trades.each do |trade| %>
+          <li class="belongings__trade-link"><%= link_to "With #{trade.other(character).name}", trade_path(trade) %>
+            <% if trade.agreed?(trade.other(character)) %><span class="tag">They've agreed</span><% end %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

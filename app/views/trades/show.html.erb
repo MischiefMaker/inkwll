@@ -1,0 +1,52 @@
+<% content_for :title, "Trade · Inkwll" %>
+
+<div class="trade">
+  <h1 class="page-title">Trade between <%= @trade.from_character.name %> and <%= @trade.to_character.name %></h1>
+  <p class="text muted trade__intro">
+    <% if @trade.done? %>This trade went through.<% elsif !@trade.open? %>This trade was called off.<% else %>Each side puts in money and items. It goes through once both tick Agree; changing either offer clears both ticks.<% end %>
+  </p>
+
+  <div class="trade__sides">
+    <% @trade.characters.each do |character| %>
+      <section class="trade__side<%= " trade__side--mine" if @mine.include?(character) %>">
+        <h2 class="section-title trade__name"><%= character.name %> gives</h2>
+        <p class="trade__offer"><%= @trade.summary_for(character) %></p>
+        <% if @trade.open? %>
+          <p class="trade__agreed muted"><%= @trade.agreed?(character) ? "✓ Agreed" : "Hasn't agreed yet" %></p>
+        <% end %>
+
+        <% if @trade.open? && @mine.include?(character) %>
+          <% offered = @trade.items_from(character).to_h { |line| [ line.item_id, line.quantity ] } %>
+          <%= form_with url: trade_path(@trade), method: :patch, class: "form trade__form" do |form| %>
+            <%= hidden_field_tag :character_id, character.id, id: nil %>
+            <div class="form--inline">
+              <%= form.label :money, Economy.currency_name.capitalize %>
+              <%= form.number_field :money, min: 0, value: @trade.money_from(character), class: "trade__money" %>
+              <span class="muted">(<%= character.name %> has <%= money(character.purse.balance) %>)</span>
+            </div>
+            <% if character.items.any? %>
+              <fieldset class="fieldset trade__items">
+                <legend class="fieldset__legend">Items</legend>
+                <% character.items.ordered.each do |item| %>
+                  <div class="form--inline trade__item">
+                    <%= label_tag "items_#{item.id}", item.name %>
+                    <%= number_field_tag "items[#{item.id}]", offered[item.id] || 0, min: 0, max: item.quantity, id: "items_#{item.id}", class: "trade__quantity" %>
+                    <span class="muted">of <%= item.quantity %></span>
+                  </div>
+                <% end %>
+              </fieldset>
+            <% end %>
+            <%= form.submit "Save #{character.name}'s offer", class: "button button--quiet" %>
+          <% end %>
+          <% unless @trade.agreed?(character) %>
+            <%= button_to "Agree", agree_trade_path(@trade), params: { character_id: character.id }, class: "button trade__agree" %>
+          <% end %>
+        <% end %>
+      </section>
+    <% end %>
+  </div>
+
+  <% if @trade.open? && @mine.any? %>
+    <%= button_to "Call it off", trade_path(@trade), method: :delete, class: "button-link trade__cancel", form: { data: { turbo_confirm: "Call off this trade?" } } %>
+  <% end %>
+</div>
