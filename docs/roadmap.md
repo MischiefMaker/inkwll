@@ -85,7 +85,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 
 **Theme 8: The physical world.**
 - Mini-map. One feature: the map shows only the Streets, and the buildings appear once you're on that street. It uses the Streets that already exist, so it needs no new grid. **Built on `v2.0`.**
-- Weather system. Details still to be decided.
+- Weather system. Details still to be decided. **A simple version is built on `v2.0`** (seasonal weather shown on Places and Chapters); the rest waits for a design talk.
 
 **Theme 9: Big new systems (each needs a design talk first).** Both are optional systems that a game switches on or off, like Grimoire.
 - Crafting. Designed with the Economy (`crafting.md`). **Built on the `v2.0` branch (2026-10-17), waiting for you to try it.**

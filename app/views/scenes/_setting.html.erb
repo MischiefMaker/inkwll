@@ -11,6 +11,7 @@
       <%= render "areas/breadcrumbs", area: room.area, include_self: true, skip_home: true %>
       <p class="scene-setting__name"><%= link_to room.name, room_path(room) %></p>
     </div>
+    <%= render "rooms/weather", room: room %>
     <% if room.description.present? %>
       <details class="scene-setting__description">
         <summary class="disclosure__summary">About this <%= term(:room).downcase %></summary>

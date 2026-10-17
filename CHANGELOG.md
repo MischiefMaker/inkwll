@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — The physical world (Version 2.0 branch)
 
 - Mini-map: each Place shows a small map of the streets nearby, and on a street, the buildings along it.
+- Weather: the weather now shows on each Place and in Chapters, and games can let it change by itself with the in-game season.
 
 ## 2026-10-17 — The wiki (Version 2.0 branch)
 

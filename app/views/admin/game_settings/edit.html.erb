@@ -70,8 +70,17 @@
   <div class="field">
     <%= form.label :weather, "Today's weather (optional)" %>
     <%= form.text_field :weather, maxlength: 200, placeholder: "Rain over the hills, clearing by evening" %>
-    <small class="hint">Shown with the game date on the front page. Change it whenever you like.</small>
+    <small class="hint">Shown with the game date on the front page, and on each <%= term(:room).downcase %> and <%= term(:scene).downcase %>. Change it whenever you like.</small>
   </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :weather_auto %>
+    <%= form.label :weather_auto, "When today's weather is empty, the game makes its own" %>
+  </div>
+  <div class="field field--checkbox">
+    <%= form.check_box :weather_southern %>
+    <%= form.label :weather_southern, "Southern seasons (summer in December)" %>
+  </div>
+  <p class="muted">The game's own weather follows the season of the game's date and changes every few hours. Writing today's weather above takes over until you empty it again.</p>
 
   <div class="field field--checkbox">
     <%= form.check_box :players_public %>

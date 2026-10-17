@@ -9,7 +9,7 @@ class Admin::GameSettingsController < Admin::BaseController
   def update
     @game_setting = GameSetting.current
     if @game_setting.update(params.expect(game_setting: [ :game_name, :game_blurb, :icon, :remove_icon, :email_required, :approval_required, :private_game, :player_approval_required, :character_spotlight, :require_icon,
-      :players_public, :ic_today, :ic_days_per_day, :weather, :auto_skip, :turn_minutes, :idle_days, :auto_finish_days, :roster_idle_days, :roster_claim, :roster_resubmit ]))
+      :players_public, :ic_today, :ic_days_per_day, :weather, :weather_auto, :weather_southern, :auto_skip, :turn_minutes, :idle_days, :auto_finish_days, :roster_idle_days, :roster_claim, :roster_resubmit ]))
       redirect_to edit_admin_game_settings_path, notice: "Game settings saved."
     else
       render :edit, status: :unprocessable_entity

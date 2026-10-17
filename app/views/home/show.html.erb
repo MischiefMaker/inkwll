@@ -11,7 +11,7 @@
 <div class="game-status">
   <p class="game-time">
     <span class="game-time__date">It is <%= IcClock.today.to_fs(:long) %>.</span>
-    <% if settings.weather %><span class="game-time__weather"><%= settings.weather %></span><% end %>
+    <% if (weather = Weather.now(settings)) %><span class="game-time__weather"><%= weather %></span><% end %>
   </p>
 
   <% if current_character %>

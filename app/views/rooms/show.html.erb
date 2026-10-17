@@ -19,6 +19,7 @@
 
   <%# No drawn banner when the Area's own banner is already shown above. %>
   <%= render "shared/description", record: @room, default_banner: !@room.area&.image&.attached? %>
+  <%= render "rooms/weather", room: @room %>
 
   <% here = current_character&.room_id == @room.id %>
   <% unless here %>

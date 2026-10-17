@@ -1,0 +1,9 @@
+<%# The weather, for a Place: as it is out on a street or outdoors, or what it's
+    doing outside when indoors. %>
+<% if (weather = Weather.now) %>
+  <% outside = room.kind.in?(%w[ street outdoor ]) %>
+  <p class="weather weather--<%= outside ? "outdoor" : "indoor" %>">
+    <span class="weather__label"><%= outside ? "Weather" : "Outside" %>:</span>
+    <span class="weather__words"><%= weather %></span>
+  </p>
+<% end %>
