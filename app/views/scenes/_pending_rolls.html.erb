@@ -9,7 +9,7 @@
       <div class="pending-roll" id="<%= dom_id pending %>">
         <p class="text pending-roll__what"><strong class="emphasis"><%= pending.character.name %></strong>
           <% if pending.ready? %>
-            will roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>) once they pick their Boons and Banes.
+            has the <%= pending.difficulty_name.humanize %> <%= pending.skill.name %> roll set and is choosing which Boons and Banes to add.
           <% elsif pending.called? %>
             was asked to roll <%= pending.skill.name %> (<%= pending.difficulty_name.humanize %>).
           <% else %>

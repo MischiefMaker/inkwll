@@ -23,16 +23,29 @@
     <% if others.any? && scene.writable? %>
       <section class="storyteller-tools__section storyteller-tools__call">
         <h3 class="subsection-title">Call for a roll</h3>
-        <%= form_with url: scene_pending_rolls_path(scene), class: "form form--inline storyteller-tools__call-form" do |form| %>
+        <%= form_with url: scene_pending_rolls_path(scene), class: "form form--inline storyteller-tools__call-form", data: { controller: "call-roll" } do |form| %>
           <%= form.label :character_id, "Who", class: "visually-hidden", for: "call_character" %>
-          <%= form.select :character_id, others.map { |c| [ c.name, c.id ] }, {}, id: "call_character" %>
+          <%= form.select :character_id, others.map { |c| [ c.name, c.id ] }, {}, { id: "call_character", data: { call_roll_target: "character", action: "call-roll#show" } } %>
           <%= form.label :skill_id, "Skill", class: "visually-hidden", for: "call_skill" %>
-          <%= form.select :skill_id, grouped_options_for_select(Soul::Aspect.ordered.includes(:skills).to_h { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }), {}, id: "call_skill" %>
+          <%= form.select :skill_id, grouped_options_for_select(Soul::Aspect.ordered.includes(:skills).to_h { |aspect| [ aspect.name, aspect.skills.map { |s| [ s.name, s.id ] } ] }), {}, { id: "call_skill", data: { call_roll_target: "skill", action: "call-roll#preset" } } %>
           <%= form.label :difficulty, "Difficulty", class: "visually-hidden", for: "call_difficulty" %>
           <%= form.select :difficulty, Soul::Rules.difficulties.map { |name, number| [ "#{name.humanize} (#{number})", name ] }, { selected: "standard" }, id: "call_difficulty" %>
+          <% others.each do |character| %>
+            <% entries = character.active_bnbs %>
+            <% next if entries.empty? %>
+            <fieldset class="fieldset storyteller-tools__bnbs" data-call-roll-target="group" data-character-id="<%= character.id %>" hidden>
+              <legend class="fieldset__legend">Boons and Banes</legend>
+              <% entries.each do |entry| %>
+                <div class="field storyteller-tools__bnb">
+                  <%= label_tag "call_ruling_#{entry.id}", "#{entry.name} (#{entry.level.capitalize} #{entry.kind.capitalize})" %>
+                  <%= select_tag "rulings[#{entry.id}]", options_for_select([ [ "Must count", "must" ], [ "Player's choice", "choice" ], [ "Doesn't count", "no" ] ], "no"), id: "call_ruling_#{entry.id}", data: { call_roll_target: "ruling", skill_ids: entry.skill_ids.join(",") } %>
+                </div>
+              <% end %>
+            </fieldset>
+          <% end %>
           <%= form.submit "Call for it", class: "button button--quiet" %>
         <% end %>
-        <p class="hint">It waits above until you set the difficulty and rule on their Boons and Banes; then they pick any optional ones and roll.</p>
+        <p class="hint">Mark each Boon and Bane as must count, the player's choice, or doesn't count. If nothing is left for the player to choose, it rolls straight away; otherwise it waits above for them to choose and roll.</p>
       </section>
     <% end %>
 

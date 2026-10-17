@@ -13,7 +13,9 @@ class Scenes::PendingRollsController < ApplicationController
     by = @scene.participants_for(current_account).find(&:storyteller?)&.character or return head :forbidden
     character = @scene.participants.map(&:character).find { |c| c.id == params[:character_id].to_i } or
       return redirect_to(@scene, alert: "Pick a character in this #{Term[:scene]}.")
-    @scene.call_roll!(character, Soul::Skill.find(params[:skill_id]), params[:difficulty], by: by)
+    rulings = params[:rulings].respond_to?(:to_unsafe_h) ? params[:rulings].to_unsafe_h : {}
+    @scene.call_roll!(character, Soul::Skill.find(params[:skill_id]), params[:difficulty], by: by,
+      mandatory_ids: rulings.select { |_, v| v == "must" }.keys, optional_ids: rulings.select { |_, v| v == "choice" }.keys)
     redirect_to @scene
   rescue ArgumentError => e
     redirect_to @scene, alert: e.message

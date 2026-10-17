@@ -2,6 +2,11 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — One step for a Storyteller's call for a roll
+
+- "Call for a roll" now has the Boons and Banes drop-downs right in it (for whichever character you pick, preset for the chosen Skill). If nothing is left for the player to choose, the roll happens at once; otherwise it waits for the player to choose and roll.
+- The "Roll with the Storyteller" button shows its name again instead of "1".
+
 ## 2026-10-17 — Choosing Boons and Banes on rolls
 
 - The roll box lists the character's Boons and Banes as tick boxes. Picking a Skill ticks the ones that affect it; the player can untick them or tick others, then rolls, with no extra step.

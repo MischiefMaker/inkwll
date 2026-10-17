@@ -8,7 +8,7 @@ class StorytellerToolsTest < ActionDispatch::IntegrationTest
     characters(:wren).soul_ratings.create!(trait: soul_skills(:wit), rating: 4)
   end
 
-  test "the Storyteller calls for a roll, then judges it" do
+  test "the Storyteller calls for a roll and it rolls at once when the player has nothing to choose" do
     sign_in_as(accounts(:bob))
     get scene_path(@scene)
     assert_select ".storyteller-tools"
@@ -16,13 +16,25 @@ class StorytellerToolsTest < ActionDispatch::IntegrationTest
     assert_select ".storyteller-sheet__skills", text: /Wit 4/
 
     post scene_pending_rolls_path(@scene), params: { character_id: characters(:wren).id, skill_id: soul_skills(:wit).id, difficulty: "hard" }
-    pending = @scene.pending_rolls.waiting.last
+    pending = @scene.pending_rolls.last
     assert_equal characters(:wren), pending.character
+    assert pending.called?
+    assert pending.rolled?
     assert @scene.poses.exists?(body: "The Storyteller calls for a Wit roll from Wren.")
+    assert_equal 1, @scene.poses.roll.count
+  end
 
-    assert_difference -> { @scene.poses.roll.count } do
-      patch scene_pending_roll_path(@scene, pending), params: { difficulty: "hard" }
+  test "a called roll with optional Boons and Banes waits for the player" do
+    bane = Soul::Bnb.create!(kind: "bane", name: "Hexed")
+    entry = characters(:wren).add_bnb!(bane, level: "minor", skill_ids: [ soul_skills(:wit).id ], explanation: "", source: "staff")
+    sign_in_as(accounts(:bob))
+    get scene_path(@scene)
+    assert_select "select[name='rulings[#{entry.id}]'][data-skill-ids='#{soul_skills(:wit).id}']"
+
+    assert_no_difference -> { @scene.poses.roll.count } do
+      post scene_pending_rolls_path(@scene), params: { character_id: characters(:wren).id, skill_id: soul_skills(:wit).id, difficulty: "hard", rulings: { entry.id.to_s => "choice" } }
     end
+    assert @scene.pending_rolls.last.ready?
   end
 
   test "players who aren't the Storyteller can't call rolls or see the tools" do
