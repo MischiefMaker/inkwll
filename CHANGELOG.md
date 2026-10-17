@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — The world's history and events (Version 2.0 branch)
 
 - World timeline: staff mark finished Chapters as world events, and a World timeline page lists them in the game's own date order with who was there.
+- Event calendar: players add events at a Place and time, characters sign up, and a Chapter opens for it when it starts. Times show in your own time zone.
 
 ## 2026-10-17 — NPCs and groups (Version 2.0 branch)
 

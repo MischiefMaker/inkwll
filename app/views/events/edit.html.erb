@@ -1,0 +1,7 @@
+<% content_for :title, "#{@event.title} · Events · Inkwll" %>
+
+<p class="breadcrumbs"><%= link_to "Events", events_path %> · <%= link_to @event.title, event_path(@event) %></p>
+<h1 class="page-title">Change <%= @event.title_was %></h1>
+<%= render "form", event: @event %>
+<%= button_to "Cancel the event", event_path(@event), method: :delete, class: "button-link event-form__cancel",
+      form: { data: { turbo_confirm: "Cancel #{@event.title}? Everyone can still see it was cancelled." } } %>

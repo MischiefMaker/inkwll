@@ -73,7 +73,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 
 **Theme 5: The world's history and events.**
 - World timeline. Staff mark finished Chapters as world events. **Built on `v2.0`.**
-- Event calendar with sign-ups. A Chapter opens when the event starts.
+- Event calendar with sign-ups. A Chapter opens when the event starts. **Built on `v2.0`.**
 
 **Theme 6: The wiki.**
 - More Wiki features from Wikidot, starting with ListPages.

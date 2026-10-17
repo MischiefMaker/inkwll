@@ -63,6 +63,8 @@
               The <%= term(:storyteller).downcase %> sent <%= alert.character&.name || "you" %> a private aside in <%= chapter %>.
             <% when "finished" %>
               <%= chapter %> was finished.
+            <% when "event" %>
+              <% if alert.event %><%= link_to alert.event.title, event_path(alert.event), class: "alerts__event" %><% else %>An event<% end %> has started<% if scene %>: join in at <%= chapter %><% end %>.
             <% end %>
           </p>
           <time class="alerts__time muted" datetime="<%= alert.updated_at.iso8601 %>"><%= time_ago_in_words(alert.updated_at) %> ago</time>

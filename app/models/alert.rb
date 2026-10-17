@@ -8,7 +8,7 @@
 # New Passages (and turns) in the same Chapter add to one unread alert
 # rather than making a new one each time, so the bell doesn't fill up.
 class Alert < ApplicationRecord
-  KINDS = %w[ passage turn mention finished inkling faction_request faction_accepted faction_declined money item lfrp_nudge aside ].freeze
+  KINDS = %w[ passage turn mention finished inkling faction_request faction_accepted faction_declined money item lfrp_nudge aside event ].freeze
   COLLAPSING_KINDS = %w[ passage turn inkling ].freeze
   KEEP_READ_FOR = 30.days
   SHOWN = 50
@@ -19,18 +19,19 @@ class Alert < ApplicationRecord
   belongs_to :pose, optional: true
   belongs_to :inkling, optional: true
   belongs_to :faction, optional: true
+  belongs_to :event, optional: true
 
   validates :kind, inclusion: { in: KINDS }
 
   scope :unread, -> { where(read_at: nil) }
   scope :newest_first, -> { order(updated_at: :desc) }
 
-  def self.notify!(account, kind, scene: nil, inkling: nil, character: nil, pose: nil, faction: nil, note: nil)
+  def self.notify!(account, kind, scene: nil, inkling: nil, character: nil, pose: nil, faction: nil, event: nil, note: nil)
     existing = unread.find_by(account: account, kind: kind, scene: scene, inkling: inkling) if kind.in?(COLLAPSING_KINDS)
     if existing
       existing.update!(count: existing.count + 1, pose: pose || existing.pose, character: character || existing.character, updated_at: Time.current)
     else
-      create!(account: account, kind: kind, scene: scene, inkling: inkling, character: character, pose: pose, faction: faction, note: note&.first(250))
+      create!(account: account, kind: kind, scene: scene, inkling: inkling, character: character, pose: pose, faction: faction, event: event, note: note&.first(250))
     end
     account.broadcast_alert_count
   end

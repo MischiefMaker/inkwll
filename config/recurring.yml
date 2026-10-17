@@ -40,3 +40,6 @@ production:
   domain_income:
     class: DomainIncomeJob
     schedule: "0 2 1 * *"
+  event_start:
+    class: EventStartJob
+    schedule: every 5 minutes

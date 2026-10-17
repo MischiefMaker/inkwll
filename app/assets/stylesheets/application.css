@@ -1865,6 +1865,21 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .world-event__mark { margin: 0 0 0.5rem; }
 .world-event__form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
 .world-event__form input[type=text] { width: auto; flex: 1 1 16rem; }
+/* The event calendar. */
+.events__list, .event-page__list { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 0.75rem; }
+.event-card { padding: 0.75rem 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.event-card--cancelled { opacity: 0.7; }
+.event-card--cancelled .event-card__title { text-decoration: line-through; }
+.event-card__when { margin: 0; font-size: 0.85rem; font-weight: 600; color: var(--color-accent); }
+.event-card__title { margin: 0.15rem 0; font-size: 1.1rem; }
+.event-card__meta { margin: 0; font-size: 0.9rem; }
+.event-page__meta { font-weight: 600; }
+.event-page__started { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.event-page__signup { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.event-page__signup-link { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 600; }
+.event-page__drop { margin-left: auto; }
+.event-page__signup-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.event-form__cancel { margin-top: 1rem; }
 
 /* Tick boxes on the admin lists, and the "with the ticked ones" form */
 .admin-batch { margin: var(--space) 0; align-items: center; gap: 0.5rem; }

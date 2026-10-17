@@ -136,6 +136,9 @@ Rails.application.routes.draw do
   get "storyteller-wanted", to: "storyteller_wanted#index", as: :storyteller_wanted
   resource :account_waiting, only: :show, path: "waiting"
   get "timeline", to: "timeline#index", as: :timeline
+  resources :events, only: %i[ index show new create edit update destroy ] do
+    resources :signups, only: %i[ create destroy ], module: :events
+  end
   resources :groups, only: %i[ show update ] do
     resources :members, only: :update, module: :groups
   end

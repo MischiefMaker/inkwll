@@ -1,0 +1,30 @@
+<%= form_with model: event, class: "form event-form", data: { controller: "event-time", event_time_utc_value: event.starts_at&.utc&.iso8601 } do |form| %>
+  <%= render "shared/errors", record: event %>
+  <% if event.new_record? %>
+    <div class="field">
+      <%= form.label :host_id, "Hosted by" %>
+      <%= form.select :host_id, @hosts.map { |c| [ c.name, c.id ] }, selected: (current_character&.id if @hosts.include?(current_character)) %>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :title, "What's happening" %>
+    <%= form.text_field :title, required: true, maxlength: Event::TITLE_LENGTH, placeholder: "The Midwinter Ball" %>
+  </div>
+  <div class="field">
+    <%= form.label :room_id, "Where" %>
+    <%= form.select :room_id, Room.listed.order(:name).map { |room| [ room.name, room.id ] }, include_blank: "Choose a #{term(:room).downcase}" %>
+  </div>
+  <div class="field">
+    <%= form.label :starts_at, "When it starts (your own time)" %>
+    <%= form.datetime_local_field :starts_at, value: event.starts_at&.utc&.strftime("%Y-%m-%dT%H:%M"), required: true,
+          data: { event_time_target: "field", action: "event-time#update" } %>
+    <%= hidden_field_tag :utc_offset, 0, data: { event_time_target: "offset" } %>
+    <small class="hint">A <%= term(:scene).downcase %> opens at the <%= term(:room).downcase %> when it starts, and everyone signed up gets an alert.</small>
+  </div>
+  <div class="field">
+    <%= form.label :description, "Details (optional)" %>
+    <%= form.text_area :description, rows: 5, maxlength: Event::DESCRIPTION_LENGTH %>
+    <small class="hint">Also used as the <%= term(:scene).downcase %>'s "story so far" when it opens.</small>
+  </div>
+  <%= form.submit (event.new_record? ? "Add to the calendar" : "Save"), class: "button" %>
+<% end %>

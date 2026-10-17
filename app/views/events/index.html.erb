@@ -1,0 +1,25 @@
+<% content_for :title, "Events · Inkwll" %>
+
+<div class="events">
+  <h1 class="page-title">Events</h1>
+  <p class="text muted events__intro">Things happening in the world. Sign a character up, and when the time comes a <%= term(:scene).downcase %> opens at the <%= term(:room).downcase %>. Times are shown in your own time zone.</p>
+  <% if current_account %>
+    <p class="events__new"><%= link_to "Add an event", new_event_path, class: "button button--quiet" %></p>
+  <% end %>
+
+  <section class="events__upcoming">
+    <h2 class="section-title">Coming up</h2>
+    <% if @upcoming.any? %>
+      <ul class="events__list"><%= render partial: "events/event", collection: @upcoming %></ul>
+    <% else %>
+      <p class="text muted">Nothing planned yet.</p>
+    <% end %>
+  </section>
+
+  <% if @recent.any? %>
+    <section class="events__recent">
+      <h2 class="section-title">Lately</h2>
+      <ul class="events__list"><%= render partial: "events/event", collection: @recent %></ul>
+    </section>
+  <% end %>
+</div>

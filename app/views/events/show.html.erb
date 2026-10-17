@@ -1,0 +1,52 @@
+<% content_for :title, "#{@event.title} · Events · Inkwll" %>
+
+<article class="event-page<%= " event-page--cancelled" if @event.cancelled? %>">
+  <p class="breadcrumbs"><%= link_to "Events", events_path %></p>
+  <h1 class="page-title event-page__title"><%= @event.title %></h1>
+  <p class="event-page__meta">
+    <%= local_time(@event.starts_at, "event-page__time") %>
+    · <%= link_to @event.room.name, room_path(@event.room) %>
+    <% if @event.host %>· hosted by <%= link_to @event.host.name, character_path(@event.host), **character_name_options(@event.host, "event-page__host") %><% end %>
+  </p>
+  <% if @event.cancelled? %>
+    <p class="notice-box event-page__cancelled">This event was cancelled.</p>
+  <% elsif @event.opened? %>
+    <p class="notice-box event-page__started">
+      It has started.
+      <% if @event.scene %><%= link_to "Go to the #{term(:scene).downcase}", scene_path(@event.scene), class: "button event-page__chapter" %><% end %>
+    </p>
+  <% end %>
+  <% if @event.description %><div class="text event-page__description"><%= simple_format(@event.description) %></div><% end %>
+  <% if @event.changeable_by?(current_account) && @event.open_for_signups? %>
+    <p class="event-page__change"><%= link_to "Change or cancel", edit_event_path(@event) %></p>
+  <% end %>
+
+  <section class="event-page__signups">
+    <h2 class="section-title">Signed up</h2>
+    <% if @signups.any? %>
+      <ul class="event-page__list">
+        <% @signups.each do |signup| %>
+          <li class="event-page__signup">
+            <%= link_to character_path(signup.character), class: "event-page__signup-link" do %>
+              <%= character_icon(signup.character, size: :small) %>
+              <%= tag.span signup.character.name, **character_name_options(signup.character, "event-page__signup-name") %>
+            <% end %>
+            <% if @event.open_for_signups? && current_account && (signup.character.account_id == current_account.id || @event.changeable_by?(current_account)) %>
+              <%= button_to "Take off the list", event_signup_path(@event, signup), method: :delete, class: "button-link event-page__drop" %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text muted">Nobody yet.</p>
+    <% end %>
+
+    <% if @event.open_for_signups? && @choices.any? %>
+      <%= form_with url: event_signups_path(@event), class: "form form--inline event-page__signup-form" do |form| %>
+        <%= form.label :character_id, "Sign up", class: "visually-hidden" %>
+        <%= form.select :character_id, @choices.map { |c| [ c.name, c.id ] }, selected: (current_character&.id if @choices.include?(current_character)) %>
+        <%= form.submit "Sign up", class: "button button--quiet" %>
+      <% end %>
+    <% end %>
+  </section>
+</article>

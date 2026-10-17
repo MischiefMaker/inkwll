@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_143000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_143100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -99,9 +99,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143000) do
     t.bigint "inkling_id"
     t.bigint "faction_id"
     t.string "note"
+    t.bigint "event_id"
     t.index ["account_id", "read_at"], name: "index_alerts_on_account_id_and_read_at"
     t.index ["account_id"], name: "index_alerts_on_account_id"
     t.index ["character_id"], name: "index_alerts_on_character_id"
+    t.index ["event_id"], name: "index_alerts_on_event_id"
     t.index ["faction_id"], name: "index_alerts_on_faction_id"
     t.index ["inkling_id"], name: "index_alerts_on_inkling_id"
     t.index ["pose_id"], name: "index_alerts_on_pose_id"
@@ -400,6 +402,35 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143000) do
     t.index ["created_by_id"], name: "index_economy_schedules_on_created_by_id"
     t.index ["from_account_id"], name: "index_economy_schedules_on_from_account_id"
     t.index ["to_account_id"], name: "index_economy_schedules_on_to_account_id"
+  end
+
+  create_table "event_signups", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "character_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_event_signups_on_character_id"
+    t.index ["event_id", "character_id"], name: "index_event_signups_on_event_id_and_character_id", unique: true
+    t.index ["event_id"], name: "index_event_signups_on_event_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.bigint "room_id", null: false
+    t.datetime "starts_at", null: false
+    t.bigint "host_id"
+    t.bigint "created_by_id"
+    t.bigint "scene_id"
+    t.datetime "opened_at"
+    t.datetime "cancelled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_events_on_created_by_id"
+    t.index ["host_id"], name: "index_events_on_host_id"
+    t.index ["room_id"], name: "index_events_on_room_id"
+    t.index ["scene_id"], name: "index_events_on_scene_id"
+    t.index ["starts_at"], name: "index_events_on_starts_at"
   end
 
   create_table "exits", force: :cascade do |t|
@@ -1303,6 +1334,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alerts", "accounts", on_delete: :cascade
   add_foreign_key "alerts", "characters", on_delete: :cascade
+  add_foreign_key "alerts", "events", on_delete: :cascade
   add_foreign_key "alerts", "factions", on_delete: :cascade
   add_foreign_key "alerts", "inklings", on_delete: :cascade
   add_foreign_key "alerts", "poses", on_delete: :nullify
@@ -1349,6 +1381,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_143000) do
   add_foreign_key "economy_schedules", "characters", column: "created_by_character_id", on_delete: :nullify
   add_foreign_key "economy_schedules", "economy_accounts", column: "from_account_id", on_delete: :cascade
   add_foreign_key "economy_schedules", "economy_accounts", column: "to_account_id", on_delete: :cascade
+  add_foreign_key "event_signups", "characters", on_delete: :cascade
+  add_foreign_key "event_signups", "events", on_delete: :cascade
+  add_foreign_key "events", "accounts", column: "created_by_id", on_delete: :nullify
+  add_foreign_key "events", "characters", column: "host_id", on_delete: :nullify
+  add_foreign_key "events", "rooms", on_delete: :cascade
+  add_foreign_key "events", "scenes", on_delete: :nullify
   add_foreign_key "exits", "rooms", column: "destination_room_id"
   add_foreign_key "exits", "rooms", column: "source_room_id"
   add_foreign_key "faction_memberships", "characters", on_delete: :cascade

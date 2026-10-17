@@ -1,0 +1,12 @@
+<%# One event in the calendar's list. %>
+<li class="event-card<%= " event-card--cancelled" if event.cancelled? %><%= " event-card--started" if event.opened? %>">
+  <p class="event-card__when"><%= local_time(event.starts_at, "event-card__time") %></p>
+  <h3 class="event-card__title"><%= link_to event.title, event_path(event) %></h3>
+  <p class="event-card__meta muted">
+    <%= link_to event.room.name, room_path(event.room) %>
+    <% if event.host %>· hosted by <%= link_to event.host.name, character_path(event.host) %><% end %>
+    <% if event.open_for_signups? %>· <%= pluralize(event.signups.size, "sign-up") %><% end %>
+    <% if event.cancelled? %>· <span class="badge event-card__badge event-card__badge--cancelled">Cancelled</span><% end %>
+    <% if event.opened? && event.scene %>· <%= link_to "Read the #{term(:scene).downcase}", scene_path(event.scene), class: "event-card__chapter" %><% end %>
+  </p>
+</li>
