@@ -1,8 +1,7 @@
 # Economy (Version 2.0, Theme 9)
 
 **Status: Agreed** with the owner on 2026-10-17 (answers at the end and in
-`decisions.md`), except "Factions taxing factions", which is still
-[Proposed]. Nothing here is built. It waits for factions (Theme 4) and
+`decisions.md`). Nothing here is built. It waits for factions (Theme 4) and
 the owner's go.
 
 Economy comes first and Crafting after it (owner, 2026-10-17). Crafting gets
@@ -96,10 +95,10 @@ Staff can set the highest rate a faction may charge. A member who can't pay
 their dues isn't pushed into debt. The payment is skipped, the managers see
 it on the Bank's list, and what happens next is up to the story.
 
-### Factions taxing factions [Proposed]
+### Factions taxing factions
 
 The owner wants factions to tax each other too, like a king taxing his lords,
-who in turn tax their subjects (owner, 2026-10-17). Claude's proposal:
+who in turn tax their subjects (owner, 2026-10-17). Agreed the same day:
 
 - **Under another faction.** Staff can set a faction as being under one
   other faction (its overlord), so the Lords of the North sit under the
@@ -218,3 +217,8 @@ taxes and managers. Until factions exist, nothing here is built.
 - **A character in several factions** is taxed by each faction separately.
 - **Characters can set up their own scheduled payments** from their own
   Purse.
+- **Factions can tax factions:** staff decide which faction is under which,
+  each faction has at most one overlord, and tribute is a share of the tax
+  the lower faction collects plus fixed dues.
+- **Faction Banks can pay** any character or another faction's Bank, once
+  or on a schedule.
