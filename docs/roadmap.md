@@ -83,7 +83,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - Deploy a new game from the web. The Wells page (step 12) already does most of this. Claude suggests marking it as covered once 12c and 12d are done.
 
 **Theme 8: The physical world.**
-- Mini-map. There are two notes for it (Streets making up a map, and Places on a grid). Claude suggests building them as one feature. The Streets version needs no new data, so it could come first.
+- Mini-map. One feature: the map shows only the Streets, and the buildings appear once you're on that street. It uses the Streets that already exist, so it needs no new grid.
 - Weather system. Details still to be decided.
 
 **Theme 9: Big new systems (each needs a design talk first).** Both are optional systems that a game switches on or off, like Grimoire.
@@ -96,7 +96,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 
 **Questions for the owner** (these stay open until answered):
 1. Is this order right, or should any theme move up?
-2. Should the two NPC notes become one feature, and the two mini-map notes too?
+2. Should the two NPC notes become one feature? (The two mini-map notes are now one, owner 2026-10-17.)
 3. Can "Deploy a new game from the web" count as covered by the Wells page?
 4. Should the research item close, and do any of ideas 45 to 47 join the list?
 
@@ -106,7 +106,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 - **Factions or teams (in addition to groups):** a character can belong to several, and each membership can be public or secret. For example, publicly in their family faction and secretly in an assassin's guild. They tie into Inklings, so an Inkling can be shared with a faction (owner, 2026-10-16). Note only, not built.
 - **Chapter speed toggle:** a switch on a Chapter between live chat (instant, like the Chat look we have now) and forum speed (asynchronous, with a forum-style posting area). The toggle changes how the page looks and feels to match (owner, 2026-10-17). Note only, not built.
 - **Destroy a Well:** a Founder button on the Wells page to destroy a Well, only after it has been turned off first. It takes a backup first that can be used to restore it later, in the same JSON format the world export/import already uses (owner, 2026-10-17). Note only, not built.
-- **Mini-map:** the Streets (Paths of type Street) make up a map; buildings and outdoor spaces sit on streets (owner, 2026-10-15). Note only, not built.
+- **Mini-map:** the Streets (Paths of type Street) make up a map; buildings and outdoor spaces sit on streets (owner, 2026-10-15). The map shows only the streets, and when you're on a street you see its buildings (owner, 2026-10-17). Note only, not built.
 - **Private Game option:** an admin setting that turns off guests, so you must be logged in to see anything. The main URL redirects to the login page when you're not logged in. Registering could also take an optional admin approval step before a new player can take part (owner, 2026-10-15). Note only, not built.
 - **More Wiki features from Wikidot:** borrow ideas from Wikidot's modules (https://www.wikidot.com/doc-modules:start), especially ListPages (lists of pages filtered by tag, category and so on) (owner, 2026-10-15). Note only, not built.
 - **Wiki Infoboxes:** a boxed summary of facts at the side of a wiki page, like Wikimedia's infoboxes, or done the Wikidot way (owner, 2026-10-15). Style still to be decided. Note only, not built.
@@ -120,7 +120,6 @@ The order goes from small, everyday improvements to big new systems. The early t
 - **Deploy a new game from the web:** an admin section, for the top level of staff only, that rolls out a new game (its own install and database, as decided) without using the command line.
 - **Crafting:** characters make items (owner, 2026-10-14). An optional system each game can switch on, like Grimoire (owner, 2026-10-17). Details to be decided.
 - **Economy:** money or trade between characters (owner, 2026-10-14). An optional system each game can switch on, like Grimoire (owner, 2026-10-17). Details to be decided.
-- **Mini map:** a small map of the Settings around you, beyond the compass's next step. Needs each Setting placed on a grid first (owner, 2026-10-14).
 - **IC or OOC Boards:** an admin setting on each Board for whether people post in character or out of character (owner, 2026-10-15). OOC posts show the player name, as now. IC posts let the poster choose which of their characters to post as, for IC boards or posting things as your character. Details to be decided.
 - **Templates beyond CSS:** let games change the page layouts themselves, not just colours and fonts. Study how Jcink's template system works for inspiration first: https://jcink.com/wiki/jfh-html-templates
 
