@@ -1,11 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 // The box for writing a Passage. Warns before posting out of turn, clears
-// itself after posting, and posts on Ctrl+Enter (Cmd+Enter on a Mac).
+// itself after posting, and posts on Ctrl+Enter (Cmd+Enter on a Mac). In a
+// live-chat Chapter plain Enter posts, and Shift+Enter starts a new line.
 // Players can also post as an NPC, narration or an OOC line; only Passages
 // and NPC Passages take a turn.
 export default class extends Controller {
   static targets = ["body", "anyway", "warning", "warningText", "kind", "npc", "npcName", "label"]
+  static values = { enterPosts: Boolean }
 
   get kind() {
     return this.kindTargets.find(input => input.checked)?.value || "passage"
@@ -54,7 +56,9 @@ export default class extends Controller {
   }
 
   shortcut(event) {
-    if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+    if (event.key !== "Enter" || event.isComposing) return
+    const plainEnter = this.enterPostsValue && !event.shiftKey && !event.altKey && event.target === this.bodyTarget
+    if (event.ctrlKey || event.metaKey || plainEnter) {
       event.preventDefault()
       this.element.requestSubmit()
     }

@@ -73,6 +73,7 @@
           <label class="field--checkbox"><%= form.radio_button :visibility, "private" %> <%= t("terms.scene_visibility.private") %>: others can see who's in it, but only invited characters can read or join.</label>
           <label class="field--checkbox"><%= form.radio_button :visibility, "hidden" %> <%= t("terms.scene_visibility.hidden") %>: only invited characters know it exists.</label>
         </fieldset>
+        <%= scene_speed_fieldset(form) %>
         <div class="field">
           <%= form.label :pose_mode, "Turns" %>
           <%= form.select :pose_mode, Scene.pose_modes.keys.map { |mode| [ pose_mode_label(mode), mode ] } %>

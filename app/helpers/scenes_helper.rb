@@ -92,15 +92,24 @@ module ScenesHelper
     end
   end
 
-  # The game's Chapter layout from Admin → Look: "manuscript", "forum" or "chat".
+  # The Chapter layout: the Chapter's speed if it has one (live chat
+  # looks like Chat, forum speed like Forum), otherwise the game's layout from
+  # Admin → Look: "manuscript", "forum" or "chat".
   def chapter_layout
-    @chapter_layout ||= GameSetting.current.chapter_layout
+    @chapter_layout ||= @scene&.layout_for_speed || GameSetting.current.chapter_layout
+  end
+
+  SPEED_LABELS = { "" => "The game's usual look", "live" => "Live chat", "forum" => "Forum speed" }.freeze
+
+  def scene_speed_fieldset(form)
+    render "scenes/speed_field", form: form
   end
 
   # Classes on a Chapter page that pick its layout, for the stylesheet.
   def chapter_layout_classes
     setting = GameSetting.current
     classes = [ "scene--layout-#{chapter_layout}" ]
+    classes << "scene--speed-#{@scene.speed}" if @scene&.speed
     if chapter_layout == "manuscript"
       classes << "scene--cast-#{setting.chapter_cast_portraits}" << "scene--portraits-#{setting.chapter_passage_portraits}"
     end

@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — Inside a Chapter (Version 2.0 branch)
 
 - The story so far: players in a Chapter can write a short summary that sits at its top, so anyone joining can catch up. Its first line shows in the Place's list of Chapters and on the Bookshelf.
+- Chapter speed: pick "Live chat" (chat look, Enter posts) or "Forum speed" (forum look, a big writing box) when starting a Chapter or in its settings.
 
 ## 2026-10-17 — Finding someone to RP with (Version 2.0 branch)
 

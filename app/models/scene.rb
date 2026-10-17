@@ -41,6 +41,11 @@ class Scene < ApplicationRecord
   before_create { self.number ||= (Scene.maximum(:number) || 0) + 1 }
   # Only labels staff have defined.
   before_validation { self.label_ids = SceneLabel.where(id: Array(label_ids).compact_blank).ordered.pluck(:id) if label_ids_changed? }
+  # The Chapter speed toggle: live chat or forum speed, each with its own
+  # look. Empty uses the game's usual look.
+  SPEEDS = { "live" => "chat", "forum" => "forum" }.freeze
+  normalizes :speed, with: ->(s) { s.presence }
+  validates :speed, inclusion: { in: SPEEDS.keys }, allow_nil: true
   validates :turn_minutes, numericality: { only_integer: true, in: 1..120 }
   validate :hidden_stays_hidden_without_agreement, on: :update
 
@@ -123,6 +128,9 @@ class Scene < ApplicationRecord
   def finished?
     finished_at.present?
   end
+
+  # The Chapter look its speed asks for, or nil for the game's usual look.
+  def layout_for_speed = SPEEDS[speed]
 
   def locked?
     locked_at.present?

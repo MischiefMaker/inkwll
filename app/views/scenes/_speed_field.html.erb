@@ -1,0 +1,7 @@
+<fieldset class="field scene-form__speed">
+  <legend class="fieldset__legend">Speed</legend>
+  <label class="field--checkbox"><%= form.radio_button :speed, "", checked: form.object.speed.blank? %> The game's usual look.</label>
+  <label class="field--checkbox"><%= form.radio_button :speed, "live" %> Live chat: everyone is here now. Short <%= term(:pose, count: 2).downcase %>, a chat look, and Enter posts.</label>
+  <label class="field--checkbox"><%= form.radio_button :speed, "forum" %> Forum speed: post when you can. Long <%= term(:pose, count: 2).downcase %> in a big writing box, shown as forum posts.</label>
+  <small class="hint">Forum speed suits <%= term(:scene, count: 2).downcase %> without auto-skip, since days can pass between turns.</small>
+</fieldset>

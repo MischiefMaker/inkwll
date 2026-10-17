@@ -22,6 +22,7 @@
       <span class="badge badge--<%= @scene.visibility %>"><%= scene_visibility_mark(@scene) %><%= scene_visibility_label(@scene) %></span>
       <% if @scene.ic_when.present? %><span class="scene__when"><%= @scene.ic_when %></span> ·<% end %>
       <%= scene_mode_summary(@scene) %>
+      <% if @scene.speed %>· <span class="scene__speed scene__speed--<%= @scene.speed %>"><%= ScenesHelper::SPEED_LABELS[@scene.speed] %></span><% end %>
       <%= scene_labels(@scene) %>
       <% if @scene.participating?(current_account) && @scene.writable? %>
         · <%= link_to "#{term(:scene)} settings", edit_scene_path(@scene) %>

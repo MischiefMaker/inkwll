@@ -40,6 +40,7 @@
       <small class="hint">A <%= t("terms.scene_visibility.#{@scene.visibility_was}") %> <%= term(:scene).downcase %> only opens up when every player agrees, below.</small>
     <% end %>
   </fieldset>
+  <%= scene_speed_fieldset(form) %>
   <div class="field">
     <%= form.label :pose_mode, "Turns" %>
     <%= form.select :pose_mode, Scene.pose_modes.keys.map { |mode| [ pose_mode_label(mode), mode ] } %>

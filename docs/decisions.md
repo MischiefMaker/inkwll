@@ -11,6 +11,7 @@ To add one: copy an entry, put it at the top, and fill in today's date.
 The owner asked Claude to carry on through the roadmap without asking and to record every choice. Each line below is Claude's call; the owner can change any of it.
 
 - **The story so far** is a summary of up to 1,500 characters pinned under a Chapter's heading. Any player in the Chapter can write or edit it, including after it's finished (so the Manuscript can get a proper summary), but not while staff have it locked. It shows who last updated it and when. Its first 150 characters, on one line, show under the Chapter's title in the Place's list of Chapters and on the Bookshelf, but only to people who can read that Chapter, so a private Chapter's summary doesn't leak.
+- **Chapter speed** is a choice when starting a Chapter and in its settings, with three options: "The game's usual look" (the default, so nothing changes unless players pick), "Live chat" and "Forum speed". Live chat uses the Chat look, a small writing box, and Enter posts (Shift+Enter for a new line). Forum speed uses the Forum look and a big writing box, keeping Ctrl+Enter. The heading shows which one a Chapter uses. Picking forum speed doesn't switch auto-skip off by itself; the form suggests it instead, so the players stay in charge of their turns.
 
 ## 2026-10-17: Version 2.0 finding RP (Theme 2), decided by Claude
 

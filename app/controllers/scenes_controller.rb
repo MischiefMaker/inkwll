@@ -69,7 +69,7 @@ class ScenesController < ApplicationController
     # A new Chapter takes its date here; later changes go through
     # Scene#change_ic_date! so the Chapter gets a line about it.
     def scene_params
-      permitted = [ :title, :subtitle, :visibility, :pose_mode, :auto_skip, :turn_minutes, label_ids: [] ]
+      permitted = [ :title, :subtitle, :visibility, :pose_mode, :speed, :auto_skip, :turn_minutes, label_ids: [] ]
       permitted.unshift(:ic_date, :ic_time) if action_name == "create"
       params.expect(scene: permitted)
     end
