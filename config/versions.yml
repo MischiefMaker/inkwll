@@ -2,6 +2,13 @@
 # Claude adds one when a commit on main has passed the tests and run on
 # inkwll.com. The notes say what changed in plain words, and whether going
 # back past this version is unsafe. See docs/wells.md.
+- version: v1.11
+  commit: 5da0e1437177adf22af9ff5621fc748283a8631b
+  date: 2026-10-17
+  notes: |
+    - Importing a world pack now replaces the game's whole look, so nothing is left over from an earlier skin (such as the old <OOC> chat label).
+    - The last three built-in fonts (Great Vibes, Amatic SC, Oswald) are removed; fonts now come only from world packs. Re-import the Last Call of the Wild pack after updating.
+    - No database change; going back is safe.
 - version: v1.10
   commit: 15feb831c02221159e5d82c4afae79dc0c386720
   date: 2026-10-16
