@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_141000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_142000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -144,6 +144,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_141000) do
     t.datetime "updated_at", null: false
     t.boolean "needs_players", default: false, null: false
     t.string "wanted_note"
+    t.text "ranks"
   end
 
   create_table "characters", force: :cascade do |t|
@@ -174,6 +175,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_141000) do
     t.datetime "lfrp_at"
     t.string "lfrp_i_am"
     t.string "lfrp_looking_for"
+    t.string "group_rank"
+    t.boolean "group_leader", default: false, null: false
     t.index "lower((name)::text)", name: "index_characters_on_lower_name", unique: true
     t.index ["account_id"], name: "index_characters_on_account_id"
     t.index ["character_group_id"], name: "index_characters_on_character_group_id"
@@ -468,6 +471,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_141000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "in_character", default: false, null: false
+    t.bigint "character_group_id"
+    t.index ["character_group_id"], name: "index_forum_boards_on_character_group_id", unique: true
   end
 
   create_table "forum_posts", force: :cascade do |t|
@@ -1346,6 +1351,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_141000) do
   add_foreign_key "faction_requests", "accounts", column: "decided_by_id", on_delete: :nullify
   add_foreign_key "faction_requests", "characters", on_delete: :cascade
   add_foreign_key "faction_requests", "factions", on_delete: :cascade
+  add_foreign_key "forum_boards", "character_groups", on_delete: :cascade
   add_foreign_key "forum_posts", "accounts", on_delete: :nullify
   add_foreign_key "forum_posts", "characters", on_delete: :nullify
   add_foreign_key "forum_posts", "forum_topics", column: "topic_id", on_delete: :cascade

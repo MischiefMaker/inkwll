@@ -5,7 +5,7 @@ class Admin::ForumBoardsController < Admin::BaseController
   before_action :set_board, only: %i[ edit update destroy ]
 
   def index
-    @boards = ForumBoard.ordered
+    @boards = ForumBoard.general.ordered
     @board = ForumBoard.new
   end
 
@@ -15,7 +15,7 @@ class Admin::ForumBoardsController < Admin::BaseController
     if @board.save
       redirect_to admin_forum_boards_path, notice: "#{@board.name} added."
     else
-      @boards = ForumBoard.ordered
+      @boards = ForumBoard.general.ordered
       render :index, status: :unprocessable_entity
     end
   end
@@ -38,7 +38,7 @@ class Admin::ForumBoardsController < Admin::BaseController
 
   private
     def set_board
-      @board = ForumBoard.find(params[:id])
+      @board = ForumBoard.general.find(params[:id])
     end
 
     def board_params

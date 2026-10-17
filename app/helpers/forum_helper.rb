@@ -4,7 +4,8 @@ module ForumHelper
     "everyone" => "Anyone with an account",
     "staff" => "Staff only",
     "senior_staff" => "Scribes and Wellkeepers only",
-    "nobody" => "Nobody (no replies)"
+    "nobody" => "Nobody (no replies)",
+    "group_members" => "The group's members"
   }.freeze
 
   # A post's Markdown as HTML, made safe the same way as wiki pages.

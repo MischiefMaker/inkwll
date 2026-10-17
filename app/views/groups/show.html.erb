@@ -1,0 +1,76 @@
+<% content_for :title, "#{@group.name} · Inkwll" %>
+
+<article class="group-page character-group-<%= @group.id %>" style="--group-colour: <%= @group.colour %>">
+  <p class="breadcrumbs"><%= link_to "Character directory", directory_path %></p>
+  <h1 class="page-title group-page__name"><%= @group.name %></h1>
+  <% if @group.description.present? %><p class="text group-page__description"><%= @group.description %></p><% end %>
+  <% if @group.needs_players? %>
+    <p class="notice-box group-page__wanted"><span class="badge group-page__wanted-badge">Needs players</span> <%= @group.wanted_note %></p>
+  <% end %>
+
+  <section class="group-page__members">
+    <h2 class="section-title">Members</h2>
+    <% if @members.any? %>
+      <ul class="group-page__list">
+        <% @members.each do |character| %>
+          <li class="group-page__member<%= " group-page__member--leader" if character.group_leader? %>">
+            <%= link_to character_path(character), class: "group-page__member-link" do %>
+              <%= character_icon(character, size: :small) %>
+              <%= tag.span character.name, **character_name_options(character, "group-page__member-name") %>
+            <% end %>
+            <% if character.group_leader? %><span class="tag group-page__tag group-page__tag--leader">Leader</span><% end %>
+            <% if character.group_rank %><span class="group-page__rank muted"><%= character.group_rank %></span><% end %>
+            <% if @manager && (@group.rank_names.any? || @staff) %>
+              <details class="group-page__manage">
+                <summary class="disclosure__summary group-page__manage-summary">Change</summary>
+                <%= form_with model: character, url: group_member_path(@group, character), method: :patch, namespace: "member_#{character.id}", class: "form form--inline group-page__manage-form" do |form| %>
+                  <%= form.label :group_rank, "Rank for #{character.name}", class: "visually-hidden" %>
+                  <%= form.select :group_rank, @group.rank_names, include_blank: "No rank" %>
+                  <% if @staff %><span class="field--checkbox"><%= form.check_box :group_leader %> <%= form.label :group_leader, "Leader" %></span><% end %>
+                  <%= form.submit "Save", class: "button button--quiet" %>
+                <% end %>
+              </details>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text muted">Nobody yet.</p>
+    <% end %>
+    <p class="group-page__directory"><%= link_to "Everyone in #{@group.name} in the directory", directory_path(group: @group.id) %></p>
+  </section>
+
+  <% if @manager %>
+    <details class="group-page__ranks">
+      <summary class="disclosure__summary group-page__ranks-summary">Ranks</summary>
+      <%= form_with model: @group, url: group_path(@group), method: :patch, class: "form group-page__ranks-form" do |form| %>
+        <div class="field">
+          <%= form.label :ranks, "One rank per line, highest first" %>
+          <%= form.text_area :ranks, rows: 6, maxlength: 2_000, placeholder: "Lord\nKnight\nSquire" %>
+          <small class="hint">Up to <%= CharacterGroup::MAX_RANKS %>. Members are listed in this order. A rank taken off the list stays on its members until you change it.</small>
+        </div>
+        <%= form.submit "Save ranks", class: "button button--quiet" %>
+      <% end %>
+    </details>
+  <% end %>
+
+  <section class="group-page__board">
+    <h2 class="section-title"><%= link_to @board.name, forum_board_path(@board) %></h2>
+    <p class="muted group-page__board-rules">In character. Everyone can read it; only <%= @group.name %>'s characters post.</p>
+    <% if @topics.any? %>
+      <ul class="group-page__topics">
+        <% @topics.each do |topic| %>
+          <li class="group-page__topic">
+            <%= link_to topic.title, forum_topic_path(topic) %>
+            <span class="muted group-page__topic-meta">by <%= forum_poster(topic) %>, <%= time_ago_in_words(topic.last_posted_at) %> ago</span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text muted">No <%= term(:forum_topic, count: 2).downcase %> yet.</p>
+    <% end %>
+    <% if @board.may_start_topic?(current_account) %>
+      <p class="group-page__start"><%= link_to "Start a #{term(:forum_topic).downcase}", new_forum_board_forum_topic_path(@board), class: "button button--quiet" %></p>
+    <% end %>
+  </section>
+</article>

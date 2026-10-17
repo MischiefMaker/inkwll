@@ -50,6 +50,10 @@ class Character < ApplicationRecord
 
   before_validation :place_in_starting_room, on: :create
   before_validation -> { self.status = "draft" if GameSetting.current.approval_required? && !gm? }, on: :create
+  # A new group starts the character afresh: no rank, not a leader.
+  before_save -> { self.group_rank = nil; self.group_leader = false }, if: -> { persisted? && character_group_id_changed? }
+  normalizes :group_rank, with: ->(r) { r.squish.presence }
+  validates :group_rank, length: { maximum: CharacterGroup::RANK_LENGTH }
 
   after_commit :refresh_rooms, on: [ :create, :update ], if: :saved_change_to_room_id?
   after_commit -> { StaffWaiting.refresh_bells! }, if: -> { saved_change_to_status? || saved_change_to_roster_requested_at? }

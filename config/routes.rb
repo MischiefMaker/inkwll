@@ -135,6 +135,9 @@ Rails.application.routes.draw do
   resources :npcs, only: :index
   get "storyteller-wanted", to: "storyteller_wanted#index", as: :storyteller_wanted
   resource :account_waiting, only: :show, path: "waiting"
+  resources :groups, only: %i[ show update ] do
+    resources :members, only: :update, module: :groups
+  end
   resources :factions, only: %i[ index show ] do
     resources :memberships, only: %i[ create update destroy ], module: :factions
     resources :requests, only: %i[ create update destroy ], module: :factions

@@ -7,7 +7,7 @@
     <div class="profile-box__portrait"><%= character_icon(@character, size: :large) %></div>
     <div class="character-profile__heading profile-box__heading">
       <%= tag.h1 @character.name, **character_name_options(@character, "page-title character-profile__name") %>
-      <% if @character.character_group %><p class="character-profile__group"><%= @character.character_group.name %></p><% end %>
+      <% if @character.character_group %><p class="character-profile__group"><%= link_to @character.character_group.name, group_path(@character.character_group) %><% if @character.group_rank %> <span class="character-profile__rank muted"><%= @character.group_rank %></span><% end %></p><% end %>
       <% if Faction.enabled? && (memberships = @character.visible_faction_memberships_for(current_account)).any? %>
         <ul class="character-profile__factions">
           <% memberships.each do |membership| %>

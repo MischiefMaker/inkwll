@@ -1,6 +1,10 @@
 <% content_for :title, "#{@board.name} · Inkwll" %>
 
-<p class="breadcrumbs"><%= link_to term(:forum_board, count: 2), forum_boards_path %></p>
+<% if @board.character_group %>
+  <p class="breadcrumbs"><%= link_to @board.character_group.name, group_path(@board.character_group) %></p>
+<% else %>
+  <p class="breadcrumbs"><%= link_to term(:forum_board, count: 2), forum_boards_path %></p>
+<% end %>
 <h1 class="page-title forum-board-page__name"><%= @board.name %></h1>
 <% if @board.description.present? %>
   <p class="text forum-board-page__description"><%= @board.description %></p>

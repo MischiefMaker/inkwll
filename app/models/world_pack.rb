@@ -375,7 +375,7 @@ class WorldPack
     end
 
     def board_for(b)
-      ForumBoard.find_by(name: b["name"]) || (ForumBoard.find_by(name: b["was"]) if b["was"].present?)
+      ForumBoard.general.find_by(name: b["name"]) || (ForumBoard.general.find_by(name: b["was"]) if b["was"].present?)
     end
 
     def import_boards

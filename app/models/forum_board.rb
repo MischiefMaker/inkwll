@@ -16,21 +16,29 @@ class ForumBoard < ApplicationRecord
   # for a board such as News where threads are announcements.
   POSTERS = %w[ everyone staff senior_staff nobody ].freeze
   STARTERS = POSTERS - %w[ nobody ]
+  # A character group's own board: only the group's characters post.
+  GROUP_POSTERS = %w[ group_members ].freeze
 
+  belongs_to :character_group, optional: true
   has_many :topics, class_name: "ForumTopic", foreign_key: :board_id, inverse_of: :board, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 80 }
   validates :description, length: { maximum: 1_000 }
-  validates :who_can_start, inclusion: { in: STARTERS }
-  validates :who_can_reply, inclusion: { in: POSTERS }
+  validates :who_can_start, inclusion: { in: STARTERS + GROUP_POSTERS }
+  validates :who_can_reply, inclusion: { in: POSTERS + GROUP_POSTERS }
 
   scope :ordered, -> { order(:position, :name) }
+  # The boards staff make, listed on the front page; group boards live on
+  # their group's page instead.
+  scope :general, -> { where(character_group_id: nil) }
 
   # On an in-character board people post as one of their characters: approved
-  # and still played.
+  # and still played. On a group's board, only its members.
   def characters_for(account)
     return Character.none unless account
-    account.characters.active.order(:name).select(&:can_play?)
+    characters = account.characters.active.order(:name)
+    characters = characters.where(character_group_id: character_group_id, on_roster_at: nil) if character_group_id
+    characters.select(&:can_play?)
   end
 
   def may_start_topic?(account)
@@ -69,6 +77,7 @@ class ForumBoard < ApplicationRecord
       when "everyone" then true
       when "staff" then account.staff?
       when "senior_staff" then account.scribe? || account.wellkeeper?
+      when "group_members" then characters_for(account).any?
       else false
       end
     end

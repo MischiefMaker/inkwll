@@ -8,7 +8,7 @@
     <% elsif @unapproved %>
       Characters still being written or waiting for staff. Only staff see this tab.
     <% elsif @group %>
-      Everyone in <%= @group.name %>.
+      Everyone in <%= @group.name %>. <%= link_to "#{@group.name}'s page", group_path(@group), class: "directory__group-page" %>
     <% else %>
       Every approved character being played.
     <% end %>
@@ -23,7 +23,7 @@
         <% census.each do |row| %>
           <li class="census__item<%= " census__item--wanted" if row.group&.needs_players? %>">
             <% if row.group %>
-              <%= link_to row.group.name, directory_path(group: row.group.id), class: "census__group character-group-#{row.group.id}", style: "--group-colour: #{row.group.colour}" %>
+              <%= link_to row.group.name, group_path(row.group), class: "census__group character-group-#{row.group.id}", style: "--group-colour: #{row.group.colour}" %>
             <% else %>
               <span class="census__group census__group--none">No group</span>
             <% end %>

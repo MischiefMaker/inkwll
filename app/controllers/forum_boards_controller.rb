@@ -4,7 +4,7 @@ class ForumBoardsController < ApplicationController
   allow_previews
 
   def index
-    @boards = ForumBoard.ordered.with_attached_icon.with_attached_image
+    @boards = ForumBoard.general.ordered.with_attached_icon.with_attached_image
   end
 
   def show
