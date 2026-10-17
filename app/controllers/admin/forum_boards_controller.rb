@@ -42,6 +42,6 @@ class Admin::ForumBoardsController < Admin::BaseController
     end
 
     def board_params
-      params.expect(forum_board: [ :name, :description, :position, :who_can_start, :who_can_reply, :icon, :remove_icon, :image, :remove_image ])
+      params.expect(forum_board: [ :name, :description, :position, :who_can_start, :who_can_reply, :in_character, :icon, :remove_icon, :image, :remove_image ])
     end
 end

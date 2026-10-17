@@ -20,11 +20,12 @@ class ForumTopicsController < ApplicationController
     @post = ForumPost.new(body: params.dig(:forum_topic, :body))
     @topic.validate
     @post.validate
+    @post.errors.add(:base, "Choose which of your characters to post as.") if @board.in_character? && !posting_as
     @post.errors.delete(:topic)
     if @topic.errors.any? || @post.errors.any?
       render :new, status: :unprocessable_entity
     else
-      topic = ForumTopic.start!(board: @board, account: current_account, title: @topic.title, body: @post.body)
+      topic = ForumTopic.start!(board: @board, account: current_account, title: @topic.title, body: @post.body, character: posting_as)
       redirect_to forum_topic_path(topic), notice: "Thread started."
     end
   end
@@ -34,7 +35,7 @@ class ForumTopicsController < ApplicationController
     @page = [ params[:page].to_i, 1 ].max
     @pages = [ (@topic.posts.count / ForumTopic::PER_PAGE.to_f).ceil, 1 ].max
     @page = @pages if params[:page] == "last"
-    @posts = @topic.posts.includes(account: { icon_attachment: :blob })
+    @posts = @topic.posts.includes({ account: { icon_attachment: :blob } }, { character: [ :character_group, { icon_attachment: :blob } ] })
       .offset((@page - 1) * ForumTopic::PER_PAGE).limit(ForumTopic::PER_PAGE)
     @reply = @topic.posts.new if @topic.may_reply?(current_account)
   end
@@ -68,6 +69,12 @@ class ForumTopicsController < ApplicationController
 
     def set_topic
       @topic = ForumTopic.find(params[:id])
+    end
+
+    # On an in-character board, the character chosen in "Post as".
+    def posting_as
+      return unless @board.in_character?
+      @posting_as ||= @board.characters_for(current_account).find { |character| character.id == params.dig(:forum_topic, :character_id).to_i }
     end
 
     def require_starter

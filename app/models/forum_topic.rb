@@ -2,6 +2,7 @@
 # are replies. Moderators can pin a thread to the top of its board or lock it
 # so nobody can reply.
 class ForumTopic < ApplicationRecord
+  belongs_to :character, optional: true
   PER_PAGE = 30
 
   belongs_to :board, class_name: "ForumBoard", inverse_of: :topics
@@ -27,10 +28,10 @@ class ForumTopic < ApplicationRecord
   end
 
   # Starts a thread with its opening post, in one go.
-  def self.start!(board:, account:, title:, body:)
+  def self.start!(board:, account:, title:, body:, character: nil)
     transaction do
-      topic = board.topics.create!(account: account, title: title)
-      topic.posts.create!(account: account, body: body)
+      topic = board.topics.create!(account: account, title: title, character: character)
+      topic.posts.create!(account: account, body: body, character: character)
       topic
     end
   end

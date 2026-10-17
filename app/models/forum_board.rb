@@ -26,6 +26,13 @@ class ForumBoard < ApplicationRecord
 
   scope :ordered, -> { order(:position, :name) }
 
+  # On an in-character board people post as one of their characters: approved
+  # and still played.
+  def characters_for(account)
+    return Character.none unless account
+    account.characters.active.order(:name).select(&:can_play?)
+  end
+
   def may_start_topic?(account)
     allowed?(who_can_start, account)
   end

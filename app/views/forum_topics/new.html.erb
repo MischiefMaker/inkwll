@@ -10,7 +10,8 @@
   <div class="field">
     <%= form.label :body, "Message" %>
     <%= form.text_area :body, value: @post.body, rows: 10, required: true, maxlength: 20_000, data: { draft_target: "field", action: "input->draft#save" } %>
-    <small class="hint">Markdown works here, as on the wiki: **bold**, *italic*, [links](https://example.com) and lists. It's posted under your player name.</small>
+    <small class="hint">Markdown works here, as on the wiki: **bold**, *italic*, [links](https://example.com) and lists.<%= " It's posted under your player name." unless @board.in_character? %></small>
   </div>
+  <%= render "forum_topics/post_as", form: form, board: @board %>
   <%= form.submit "Post #{term(:forum_topic).downcase}", class: "button" %>
 <% end %>

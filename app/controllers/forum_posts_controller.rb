@@ -12,6 +12,10 @@ class ForumPostsController < ApplicationController
       return redirect_to forum_topic_path(@topic), alert: "You can't reply in this thread."
     end
     @reply = @topic.posts.new(account: current_account, body: params.dig(:forum_post, :body))
+    if @topic.board.in_character?
+      @reply.character = @topic.board.characters_for(current_account).find { |character| character.id == params.dig(:forum_post, :character_id).to_i }
+      return redirect_to forum_topic_path(@topic, page: "last"), alert: "Choose which of your characters to post as." unless @reply.character
+    end
     if @reply.save
       redirect_to forum_topic_path(@topic, page: "last", anchor: helpers.dom_id(@reply))
     else

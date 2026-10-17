@@ -23,6 +23,13 @@ module ForumHelper
   end
 
   # The player's name (posts are out of character), linked to their profile.
+  # Who wrote a post or started a thread: the character on an in-character
+  # board, otherwise the player.
+  def forum_poster(record)
+    return forum_author(record.account) unless record.character
+    link_to record.character.name, character_path(record.character), **character_name_options(record.character, "forum-author forum-author--character")
+  end
+
   def forum_author(account)
     return tag.span("a departed player", class: "forum-author forum-author--gone muted") unless account
     link_to account.display_name, player_path(account.username), class: "forum-author"

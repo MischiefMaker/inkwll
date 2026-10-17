@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_140000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_141000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -467,6 +467,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_140000) do
     t.string "who_can_reply", default: "everyone", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "in_character", default: false, null: false
   end
 
   create_table "forum_posts", force: :cascade do |t|
@@ -476,7 +477,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_140000) do
     t.datetime "edited_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "character_id"
     t.index ["account_id"], name: "index_forum_posts_on_account_id"
+    t.index ["character_id"], name: "index_forum_posts_on_character_id"
     t.index ["topic_id", "created_at"], name: "index_forum_posts_on_topic_id_and_created_at"
     t.index ["topic_id"], name: "index_forum_posts_on_topic_id"
   end
@@ -491,9 +494,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_140000) do
     t.integer "posts_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "character_id"
     t.index ["account_id"], name: "index_forum_topics_on_account_id"
     t.index ["board_id", "last_posted_at"], name: "index_forum_topics_on_board_id_and_last_posted_at"
     t.index ["board_id"], name: "index_forum_topics_on_board_id"
+    t.index ["character_id"], name: "index_forum_topics_on_character_id"
   end
 
   create_table "gallery_images", force: :cascade do |t|
@@ -1342,8 +1347,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_140000) do
   add_foreign_key "faction_requests", "characters", on_delete: :cascade
   add_foreign_key "faction_requests", "factions", on_delete: :cascade
   add_foreign_key "forum_posts", "accounts", on_delete: :nullify
+  add_foreign_key "forum_posts", "characters", on_delete: :nullify
   add_foreign_key "forum_posts", "forum_topics", column: "topic_id", on_delete: :cascade
   add_foreign_key "forum_topics", "accounts", on_delete: :nullify
+  add_foreign_key "forum_topics", "characters", on_delete: :nullify
   add_foreign_key "forum_topics", "forum_boards", column: "board_id", on_delete: :cascade
   add_foreign_key "gallery_images", "characters"
   add_foreign_key "grimoire_branches", "soul_skills"

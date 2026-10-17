@@ -18,7 +18,7 @@
       <span class="forum-board__count"><%= count.zero? ? "No #{term(:forum_topic, count: 2).downcase} yet" : pluralize(count, term(:forum_topic).downcase) %></span>
       <% if latest %>
         <span class="forum-board__latest">Latest: <%= link_to latest.topic.title, forum_topic_path(latest.topic, page: "last", anchor: dom_id(latest)) %>,
-          by <%= forum_author(latest.account) %>, <%= time_ago_in_words(latest.created_at) %> ago</span>
+          by <%= forum_poster(latest) %>, <%= time_ago_in_words(latest.created_at) %> ago</span>
       <% end %>
     </p>
   </div>

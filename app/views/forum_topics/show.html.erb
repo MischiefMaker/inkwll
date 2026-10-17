@@ -14,8 +14,12 @@
   <% @posts.each do |post| %>
     <article class="forum-post" id="<%= dom_id post %>">
       <header class="forum-post__header">
-        <% if post.account %><%= player_avatar(post.account) %><% end %>
-        <%= forum_author(post.account) %>
+        <% if post.character %>
+          <%= character_icon(post.character) %>
+        <% elsif post.account %>
+          <%= player_avatar(post.account) %>
+        <% end %>
+        <%= forum_poster(post) %>
         <time class="forum-post__time muted" datetime="<%= post.created_at.iso8601 %>"><%= post.created_at.to_fs(:long) %></time>
         <% if post.edited_at %><span class="forum-post__edited muted">(edited)</span><% end %>
         <span class="forum-post__actions">
@@ -40,8 +44,9 @@
     <div class="field">
       <%= form.label :body, "Your reply", class: "visually-hidden" %>
       <%= form.text_area :body, rows: 6, required: true, maxlength: 20_000, data: { draft_target: "field", action: "input->draft#save" } %>
-      <small class="hint">Markdown works here. It's posted under your player name.</small>
+      <small class="hint">Markdown works here.<%= " It's posted under your player name." unless @board.in_character? %></small>
     </div>
+    <%= render "forum_topics/post_as", form: form, board: @board %>
     <%= form.submit "Post reply", class: "button" %>
   <% end %>
 <% elsif @topic.locked? %>

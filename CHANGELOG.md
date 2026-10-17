@@ -5,6 +5,7 @@ Short, plain-language notes on what changed. Newest first.
 ## 2026-10-17 — NPCs and groups (Version 2.0 branch)
 
 - NPCs: staff keep the game's recurring NPCs under Admin → NPCs, with a picture, a description and private notes. Whoever runs a Chapter can pick one when posting as an NPC, and an NPCs page lists them for everyone.
+- In-character boards: staff can mark a board as in character, and people post there as one of their characters.
 
 ## 2026-10-17 — Inside a Chapter (Version 2.0 branch)
 

@@ -68,7 +68,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 **Theme 4: NPCs, groups and factions.** Who characters are and who they belong to.
 - NPCs (one feature, owner 2026-10-17): staff make NPCs in the admin panel, and anyone running a Chapter can pick one. **Built on `v2.0`.**
 - Group pages, ranks and an IC board.
-- IC or OOC Boards. Do this with the group pages, since a group's IC board needs it.
+- IC or OOC Boards. Do this with the group pages, since a group's IC board needs it. **Built on `v2.0`.**
 - Factions or teams, public or secret, tied into Inklings. **Built on the `v2.0` branch (2026-10-17), waiting for you to try it.** The owner started Version 2.0 with factions, ahead of the rest of this theme. See "Factions" in `decisions.md`.
 
 **Theme 5: The world's history and events.**

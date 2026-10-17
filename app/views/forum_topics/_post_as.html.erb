@@ -1,0 +1,13 @@
+<%# On an in-character board, which of the player's characters to post as. %>
+<% if board.in_character? %>
+  <% characters = board.characters_for(current_account) %>
+  <div class="field forum-post-as">
+    <%= form.label :character_id, "Post as" %>
+    <% if characters.any? %>
+      <%= form.select :character_id, characters.map { |character| [ character.name, character.id ] }, { selected: current_character&.id } %>
+      <small class="hint">This is an in-character board, so it's posted as your character, not under your player name.</small>
+    <% else %>
+      <p class="muted">This is an in-character board. You need an approved character to post here.</p>
+    <% end %>
+  </div>
+<% end %>

@@ -18,6 +18,10 @@
     <%= form.select :who_can_reply, forum_poster_options(ForumBoard::POSTERS) %>
     <small class="hint">Scribes and Wellkeepers can always pin, lock and delete <%= term(:forum_topic, count: 2).downcase %>, and reply in locked ones.</small>
   </div>
+  <div class="field field--checkbox forum-board-form__in-character">
+    <%= form.check_box :in_character %>
+    <%= form.label :in_character, "In character: people post as one of their characters, not under their player name" %>
+  </div>
   <% if board.persisted? %>
     <div class="field">
       <%= form.label :position, "Order (lower comes first)" %>
