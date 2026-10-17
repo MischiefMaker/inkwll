@@ -4,6 +4,6 @@
 <% passages.each do |pose| %>
   <div style="border-top:1px solid #ddd;padding:12px 0">
     <p style="margin:0 0 6px"><strong><%= pose_byline(pose) %></strong></p>
-    <%= simple_format pose.body, style: "margin:0 0 8px" %>
+    <%= simple_format pose.body_for(@account), style: "margin:0 0 8px" %>
   </div>
 <% end %>

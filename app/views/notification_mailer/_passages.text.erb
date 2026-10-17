@@ -4,6 +4,6 @@
 <% end %>
 <% passages.each do |pose| %>
 -- <%= pose_byline(pose) %> --
-<%= pose.body %>
+<%= pose.body_for(@account) %>
 
 <% end %>

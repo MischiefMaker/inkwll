@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_110000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -761,6 +761,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_100000) do
     t.datetime "updated_at", null: false
     t.datetime "hidden_by_staff_at"
     t.string "npc_name"
+    t.bigint "to_character_ids", default: [], null: false, array: true
+    t.text "overheard_body"
     t.index ["character_id"], name: "index_poses_on_character_id"
     t.index ["scene_id", "sequence"], name: "index_poses_on_scene_id_and_sequence", unique: true
     t.index ["scene_id"], name: "index_poses_on_scene_id"

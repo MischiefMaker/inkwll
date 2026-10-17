@@ -9,7 +9,7 @@
 
 <% if @report.pose %>
   <blockquote class="report-quote">
-    <strong class="emphasis"><%= @report.pose.character&.name %>:</strong> <%= truncate(@report.pose.body, length: 400) %>
+    <strong class="emphasis"><%= @report.pose.character&.name %>:</strong> <%= truncate(@report.pose.body_for(current_account), length: 400) %>
   </blockquote>
 <% end %>
 

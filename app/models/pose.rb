@@ -9,6 +9,8 @@
 #   doesn't count as unread or in emails, and is left out of the Manuscript.
 # - roll: a SOUL roll, written by the game with the result. It doesn't take
 #   a turn and can't be edited.
+# - mutter: whispered to one character (see Pose::Whispers). Others only see
+#   the overheard version. It doesn't take a turn.
 # - system: lines from the game, such as "Wren joins the Chapter.", with no
 #   character.
 #
@@ -20,11 +22,13 @@ class Pose < ApplicationRecord
   belongs_to :character, optional: true
   has_one :soul_roll, class_name: "Soul::Roll", dependent: :nullify
 
-  enum :kind, { passage: "passage", npc: "npc", narration: "narration", ooc: "ooc", roll: "roll", system: "system" }, validate: true
+  include Whispers
+
+  enum :kind, { passage: "passage", npc: "npc", narration: "narration", ooc: "ooc", roll: "roll", system: "system", mutter: "mutter" }, validate: true
 
   # Kinds that are part of the story: shown in Manuscripts, counted as unread
   # and sent in emails.
-  STORY_KINDS = %w[ passage npc narration roll ].freeze
+  STORY_KINDS = %w[ passage npc narration roll mutter ].freeze
   # Kinds that take the poster's turn.
   TURN_KINDS = %w[ passage npc ].freeze
 

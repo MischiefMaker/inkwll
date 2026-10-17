@@ -1990,3 +1990,8 @@ button.compass__point--path:hover { background: var(--color-accent); color: var(
 .scene-summary__by { margin: 0; font-size: 0.8rem; }
 .scene-summary__form textarea { width: 100%; }
 .scene-list__summary, .manuscript__summary { margin: 0.15rem 0; font-size: 0.9rem; font-style: italic; overflow-wrap: anywhere; }
+
+/* Mutter (Version 2.0) */
+.pose__mutter-to { margin: 0 0 0.25rem; font-size: 0.85rem; font-style: italic; }
+.pose__body--overheard { font-style: italic; opacity: 0.8; }
+.composer__mutter { margin-bottom: 0.5rem; }

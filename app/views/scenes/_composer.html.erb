@@ -9,7 +9,7 @@
     <% kinds = scene.postable_kinds(participant) %>
     <fieldset class="composer__kinds">
       <legend class="visually-hidden">What to post</legend>
-      <% { "passage" => term(:pose), "npc" => "NPC", "narration" => "Narration", "ooc" => "OOC" }.each do |kind, label| %>
+      <% { "passage" => term(:pose), "npc" => "NPC", "narration" => "Narration", "mutter" => "Mutter", "ooc" => "OOC" }.each do |kind, label| %>
         <% next unless kinds.include?(kind) %>
         <label class="composer__kind">
           <%= form.radio_button :kind, kind, checked: kind == "passage", data: { composer_target: "kind", action: "composer#kindChanged" } %>
@@ -21,10 +21,18 @@
       <%= form.label :npc_name, "NPC's name" %>
       <%= form.text_field :npc_name, maxlength: 60, data: { composer_target: "npcName" } %>
     </div>
+    <% if kinds.include?("mutter") %>
+      <div class="composer__mutter" hidden data-composer-target="mutter">
+        <%= form.label :to, "Mutter to" %>
+        <%= form.select :to, scene.participants.reject { |p| p.character_id == participant.character_id }.map { |p| [ p.character.name, p.character_id ] }, {}, data: { composer_target: "mutterTo" } %>
+        <small class="hint">They hear all of it. Everyone else only catches a few words.</small>
+      </div>
+    <% end %>
     <%= form.label :body, "Write a #{term(:pose).downcase} as #{participant.character.name}", class: "composer__label",
           data: { composer_target: "label", passage: "Write a #{term(:pose).downcase} as #{participant.character.name}",
                   npc: "Write as the NPC (played by #{participant.character.name})",
                   narration: "Write narration: set the scene or describe what happens",
+                  mutter: "Mutter, as #{participant.character.name}. It doesn't take a turn.",
                   ooc: "Out of character (brb, timing, questions). It doesn't take a turn." } %>
     <%= form.text_area :body, rows: { "live" => 2, "forum" => 10 }.fetch(scene.speed, 3), required: true, data: { composer_target: "body", draft_target: "field", action: "input->draft#save" } %>
     <div class="composer__warning" hidden data-composer-target="warning">

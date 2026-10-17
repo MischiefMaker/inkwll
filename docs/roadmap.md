@@ -61,7 +61,7 @@ The order goes from small, everyday improvements to big new systems. The early t
 **Theme 3: Inside a Chapter.** New things to do while writing.
 - The story so far, plus the one-line version in the Bookshelf list. Do these together, since the one-line version is the same summary. **Built on `v2.0`.**
 - Chapter speed toggle (live chat or forum speed). Builds on the Chat, Manuscript and Forum layouts that are already built. **Built on `v2.0`.**
-- Mutter (a whisper Passage).
+- Mutter (a whisper Passage). **Built on `v2.0`.**
 - In-character letters and texts (a Passage type).
 - Live private chat and pages, plus private Storyteller asides. Builds on Messages.
 
