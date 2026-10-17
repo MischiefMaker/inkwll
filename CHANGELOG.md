@@ -2,6 +2,10 @@
 
 Short, plain-language notes on what changed. Newest first.
 
+## 2026-10-17 — A font box for big titles
+
+- Admin → Look has a third font box, "Font for big titles", beside text and headings. The game's name on the front page and the titles of forum sections use it, so a script font like Great Vibes can be changed without touching CSS. Left empty, they use the heading font as before.
+
 ## 2026-10-17 — No fonts are built into Inkwll any more
 
 - Great Vibes, Amatic SC and Oswald, the last fonts that came with Inkwll itself, are gone. Last Call of the Wild now brings its own copies in its world pack, as every game's fonts do.

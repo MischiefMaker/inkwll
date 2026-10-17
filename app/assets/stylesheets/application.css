@@ -51,6 +51,8 @@ body {
 a { color: var(--color-accent); }
 
 h1, h2, h3 { font-family: var(--font-heading, var(--font-ui)); line-height: 1.2; }
+/* Big titles can have a font of their own (Admin → Look); without one, the heading font. */
+.game-intro__title, .forum-section__title { font-family: var(--font-title, var(--font-heading, var(--font-ui))); }
 h2 { font-size: 1.1rem; margin-top: calc(var(--space) * 1.5); }
 
 .muted { color: var(--color-muted); }

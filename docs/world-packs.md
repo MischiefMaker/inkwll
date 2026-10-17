@@ -35,7 +35,7 @@ except `format`.
   "game": { "name": "…", "blurb": "…", "icon": "icon" },
   "look": {
     "preset": "…", "colours": { "bg": "#405570" }, "dark_colours": {}, "dark_mode": false,
-    "font_body": "Oswald, sans-serif", "font_heading": "'Amatic SC', serif",
+    "font_body": "Oswald, sans-serif", "font_heading": "'Amatic SC', serif", "font_title": "'Great Vibes', cursive",
     "custom_css": "…", "pictures": { "intro_banner": "banner" }
   },
   "areas": [ { "name": "Hogwarts", "parent": null, "summary": "…", "description": "…",
@@ -58,7 +58,7 @@ except `format`.
 - A pack's `look` replaces the game's whole look (colours, fonts, extra CSS and the ready-made look it started from), so nothing of an earlier look is left behind. Pictures are only replaced when the pack names them.
 - Fonts are WOFF2 files (they start with `wOF2`), 300 KB each at most and no
   more than 24 per pack. The import stores them in the game and the game's
-  stylesheet declares them, so `look.font_body` and `look.font_heading` can
+  stylesheet declares them, so `look.font_body`, `look.font_heading` and `look.font_title` can
   name the family. They are served from the game itself, because the content
   security policy blocks font sites. The weight is 100 to 900 and the style
   `normal` or `italic`; the family can only have letters, numbers, spaces and

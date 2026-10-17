@@ -61,9 +61,9 @@ module GameSetting::Skin
     validate :pictures_are_reasonable
 
     before_create { apply_preset(DEFAULT_PRESET) }
-    normalizes :font_body, :font_heading, with: ->(f) { f.squish.presence }
+    normalizes :font_body, :font_heading, :font_title, with: ->(f) { f.squish.presence }
     normalizes :custom_css, with: ->(css) { css.presence }
-    validates :font_body, :font_heading, length: { maximum: 200 }, format: { with: FONT_FORMAT, message: "can only have letters, numbers, spaces, commas, hyphens and quotes" }, allow_nil: true
+    validates :font_body, :font_heading, :font_title, length: { maximum: 200 }, format: { with: FONT_FORMAT, message: "can only have letters, numbers, spaces, commas, hyphens and quotes" }, allow_nil: true
     validates :custom_css, length: { maximum: 50_000 }
     validate :skin_colours_are_colours
     validate :font_quotes_are_closed
@@ -97,6 +97,7 @@ module GameSetting::Skin
     self.skin_dark_colours = preset[:dark_colours] || {}
     self.skin_dark_mode = preset[:dark_mode]
     self.font_heading = preset[:font_heading]
+    self.font_title = nil
   end
 
   # Which ready-made look the colours match, if any.
@@ -106,7 +107,7 @@ module GameSetting::Skin
   end
 
   def skinned?
-    PICTURES.keys.any? { |picture| send(picture).attached? } || skin_colours.any? || skin_dark_colours.any? || !skin_dark_mode? || font_body || font_heading || custom_css || skin_fonts.any?
+    PICTURES.keys.any? { |picture| send(picture).attached? } || skin_colours.any? || skin_dark_colours.any? || !skin_dark_mode? || font_body || font_heading || font_title || custom_css || skin_fonts.any?
   end
 
   # The stylesheet itself. Every value in it has been checked above, except
@@ -118,6 +119,7 @@ module GameSetting::Skin
     COLOURS.each_key { |key| lines << "  --color-#{key}: #{colour(key)};" if skin_colours[key] }
     lines << "  --font-body: #{font_body};" << "  --font-ui: #{font_body};" if font_body
     lines << "  --font-heading: #{font_heading};" if font_heading
+    lines << "  --font-title: #{font_title};" if font_title
     PICTURES.each do |picture, (variable, _label, _hint)|
       file = send(picture)
       lines << "  #{variable}: url(\"#{Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)}\");" if file.attached?
@@ -150,7 +152,7 @@ module GameSetting::Skin
     end
 
     def font_quotes_are_closed
-      %i[ font_body font_heading ].each do |field|
+      %i[ font_body font_heading font_title ].each do |field|
         value = self[field].to_s
         errors.add(field, "has a quote mark that isn't closed") if value.count("'").odd? || value.count('"').odd?
       end

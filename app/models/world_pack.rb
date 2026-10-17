@@ -199,12 +199,12 @@ class WorldPack
       settings = GameSetting.current
       # The pack's look replaces the game's, so nothing of an earlier look
       # (such as the Old-school MUSH one, with its <OOC> labels) is left behind.
-      settings.assign_attributes(skin_base: nil, skin_colours: {}, skin_dark_colours: {}, skin_dark_mode: true, font_body: nil, font_heading: nil, custom_css: nil)
+      settings.assign_attributes(skin_base: nil, skin_colours: {}, skin_dark_colours: {}, skin_dark_mode: true, font_body: nil, font_heading: nil, font_title: nil, custom_css: nil)
       settings.apply_preset(look["preset"]) if GameSetting::Skin::PRESETS.key?(look["preset"])
       settings.skin_colours = settings.skin_colours.merge(look["colours"]) if look["colours"].is_a?(Hash)
       settings.skin_dark_colours = look["dark_colours"] if look["dark_colours"].is_a?(Hash)
       settings.skin_dark_mode = look["dark_mode"] if look.key?("dark_mode")
-      %w[ font_body font_heading custom_css ].each { |field| settings[field] = look[field] if look.key?(field) }
+      %w[ font_body font_heading font_title custom_css ].each { |field| settings[field] = look[field] if look.key?(field) }
       (look["pictures"] || {}).each do |picture, key|
         attach(settings, picture, key) if GameSetting::Skin::PICTURES.key?(picture)
       end

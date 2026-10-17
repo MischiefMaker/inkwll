@@ -8,7 +8,7 @@ class WorldPackTest < ActiveSupport::TestCase
       "format" => WorldPack::FORMAT,
       "name" => "Test World",
       "game" => { "name" => "Old Game", "blurb" => "It was the best of times.", "icon" => "pixel" },
-      "look" => { "font_body" => "Oswald, sans-serif", "custom_css" => ".x { color: red; }" },
+      "look" => { "font_body" => "Oswald, sans-serif", "font_title" => "Great Vibes, cursive", "custom_css" => ".x { color: red; }" },
       "areas" => [
         { "name" => "Hogwarts", "summary" => "A school.", "entrance" => "Foyer", "image" => "pixel" },
         { "name" => "Grounds", "parent" => "Hogwarts" }
@@ -47,6 +47,7 @@ class WorldPackTest < ActiveSupport::TestCase
     assert_equal "Old Game", settings.game_name
     assert settings.icon.attached?
     assert_equal "Oswald, sans-serif", settings.font_body
+    assert_equal "Great Vibes, cursive", settings.font_title
 
     hogwarts = Area.find_by!(name: "Hogwarts")
     assert_equal hogwarts, Area.find_by!(name: "Grounds").parent
